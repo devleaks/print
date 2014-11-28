@@ -1,6 +1,7 @@
 {
     "name": "devleaks/print",
     "description": "devleaks Order and Work Order Management",
+	"version": "1.0.0",
     "keywords": ["yii2"],
     "type": "project",
     "license": "BSD-3-Clause",
