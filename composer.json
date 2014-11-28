@@ -1,0 +1,86 @@
+{
+    "name": "devleaks/wom",
+    "description": "devleaks Order and Work Order Management",
+    "keywords": ["yii2", "framework", "basic", "application template"],
+    "homepage": "http://www.yiiframework.com/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
+        "forum": "http://www.yiiframework.com/forum/",
+        "wiki": "http://www.yiiframework.com/wiki/",
+        "irc": "irc://irc.freenode.net/yii",
+        "source": "https://github.com/yiisoft/yii2"
+    },
+    "minimum-stability": "dev",
+	"prefer-stable": true,
+	"repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/devleaks/yii2-introjs"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-bootstrap": "*",
+        "yiisoft/yii2-swiftmailer": "*",
+        "dektrium/yii2-user": "*",
+        "yurkinx/yii2-image": "dev-master",
+        "kartik-v/yii2-widgets": "dev-master",
+        "2amigos/yii2-gallery-widget": "*",
+        "mdmsoft/yii2-ar-behaviors": "*",
+        "raoul2000/yii2-bootswatch-asset": "*",
+        "miloschuman/yii2-highcharts-widget": "*",
+        "2amigos/yii2-qrcode-helper": "*",
+        "kartik-v/yii2-datecontrol": "dev-master",
+        "kartik-v/yii2-helpers": "dev-master",
+        "yiisoft/yii2-jui": "*",
+        "kartik-v/yii2-builder": "dev-master",
+        "kartik-v/yii2-detail-view": "*",
+        "kartik-v/yii2-grid": "*",
+        "sjaakp/yii2-bandoneon": "*",
+        "kartik-v/yii2-icons": "dev-master",
+        "kartik-v/yii2-mpdf": "dev-master",
+        "insolita/yii2-iconpicker": "*",
+        "kartik-v/yii2-markdown": "dev-master",
+        "kartik-v/yii2-label-inplace": "*",
+        "kartik-v/yii2-money": "*",
+		"devleaks/yii2-introjs": "dev-master",
+        "bower-asset/intro.js": "*",
+        "bower-asset/chardin.js": "*"
+    },
+    "require-dev": {
+        "yiisoft/yii2-codeception": "*",
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "yiisoft/yii2-faker": "*",
+        "jamband/yii2-schemadump": "*"
+    },
+    "config": {
+        "process-timeout": 1800
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "yii\\composer\\Installer::postCreateProject"
+        ]
+    },
+    "extra": {
+        "yii\\composer\\Installer::postCreateProject": {
+            "setPermission": [
+                {
+                    "runtime": "0777",
+                    "web/assets": "0777",
+                    "yii": "0755"
+                }
+            ],
+            "generateCookieValidationKey": [
+                "config/web.php"
+            ]
+        },
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
+    }
+}

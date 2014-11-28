@@ -1,0 +1,64 @@
+<?php
+
+use app\models\Work;
+use kartik\helpers\Html;
+use kartik\grid\GridView;
+use kartik\icons\Icon;
+use yii\helpers\Url;
+
+Icon::map($this);
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\WorkSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = Yii::t('store', 'Works');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work']];
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="work-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+	        [
+				'attribute' => 'order_name',
+	            'label' => Yii::t('store', 'Order'),
+	            'value' => function ($model, $key, $index, $widget) {
+	                    return Html::a($model->getOrder()->one()->name, Url::to(['/order/order/view', 'id' => $model->order_id]));
+	            },
+	            'format' => 'raw',
+	        ],
+			[
+				'attribute' => 'due_date',
+				'format' => 'date',
+			],
+	        [
+	            'attribute' => 'status',
+	            'filter' => Work::getStatuses(),
+	            'value' => function ($model, $key, $index, $widget) {
+	                    return $model->getStatusLabel();
+	            },
+	            'format' => 'raw',
+				'hAlign' => GridView::ALIGN_CENTER,
+	        ],
+	        [
+	            'label' => Yii::t('store', 'Tasks'),
+	            'value' => function ($model, $key, $index, $widget) {
+	                    return $model->getTaskIcons(true, true, true);
+	            },
+				'hAlign' => GridView::ALIGN_CENTER,
+	            'format' => 'raw',
+	        ],
+            [	'class' => 'yii\grid\ActionColumn',
+				'template' => '{view} {delete}'
+			],
+        ],
+    ]); ?>
+
+</div>

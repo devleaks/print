@@ -1,0 +1,91 @@
+<?php
+
+use app\models\WorkLineSearch;
+use kartik\detail\DetailView;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
+use yii\helpers\Url;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\Work */
+
+$this->title = $model->order->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'All Works'), 'url' => ['index']];
+if(isset($order_line)) {
+	$this->params['breadcrumbs'][] = ['label' => $model->getOrder()->one()->name, 'url' => Url::to(['/work/work/view', 'id' => $model->id])];
+	$this->params['breadcrumbs'][] = $order_line->getItem()->one()->libelle_long;
+} else {
+	$this->params['breadcrumbs'][] = $this->title;
+}
+?>
+<div class="work-view">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+	<div class="row">
+	<div class="col-lg-8">
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            //'id',
+            [
+                'attribute'=>'order_id',
+                'label'=>Yii::t('store','Order'),
+                'value'=>Html::a($model->getOrder()->one()->name, Url::to(['/order/order/view', 'id' => $model->order_id])),
+				'format' => 'raw',
+            ],
+//            'order_id',
+            [
+                'attribute'=>'created_at',
+				'value' => Yii::$app->formatter->asDateTime($model->created_at).' '.Yii::t('store', 'by').' '.$model->createdBy->username,
+            ],
+            [
+                'attribute'=>'updated_at',
+				'value' => Yii::$app->formatter->asDateTime($model->updated_at).' '.Yii::t('store', 'by').' '.$model->updatedBy->username,
+            ],
+            [
+                'attribute'=>'due_date',
+				'value' => $model->due_date,
+				'format' => 'date'
+            ],
+            [
+                'attribute'=>'status',
+                'label'=>Yii::t('store','Order'),
+                'value'=>$model->getStatusLabel(),
+	            'format' => 'raw',
+            ],
+        ],
+    ]) ?>
+		</div>
+
+        <div class="col-lg-4">
+			<?= $this->render('_pictures', [
+					'model' => $model,
+				])
+			?>
+		</div>
+
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+<?php
+	$searchModel = new WorkLineSearch();
+	$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+	if(isset($order_line))
+	    $dataProvider->query->andWhere(['work_id' => $model->id])->andWhere(['order_line_id' => $order_line->id]); //->orderBy('position');
+	else
+	    $dataProvider->query->andWhere(['work_id' => $model->id]); //->orderBy('position');
+
+    echo $this->render('../work-line/list', [
+        'dataProvider' => $dataProvider,
+		'searchModel' => $searchModel,
+    ]);
+?>
+		</div>
+	</div>
+
+</div>
