@@ -1,7 +1,7 @@
 {
-    "name": "devleaks/wom",
+    "name": "devleaks/print",
     "description": "devleaks Order and Work Order Management",
-    "keywords": ["yii2", "framework", "basic", "application template"],
+    "keywords": ["yii2"],
     "type": "project",
     "license": "BSD-3-Clause",
     "minimum-stability": "dev",
