@@ -35,7 +35,8 @@ class OrderLineDetail extends _OrderLineDetail
     {
         return array_merge(parent::rules(), [
 			// added for computation.
-            [['free_item_price_htva', 'free_item_vat'], 'number'],
+			//[['unit_price'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
+            [['free_item_price_htva', 'free_item_vat'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
             [['free_item_libelle'], 'string', 'max' => 80],
             [['free_item_libelle', 'free_item_price_htva', 'free_item_vat'], 'safe'],
        ]);

@@ -159,6 +159,10 @@ SCRIPT;
 		if($browser['code'] == 'safari' && $version <= 535) {
 			echo $form->field($model, 'image[]')->fileInput();
 		} else {
+			$items = [];
+		    foreach($model->getPictures()->all() as $picture)
+				$items[] = Html::img($picture->getThumbnailUrl());
+
 			echo $form->field($model, 'image[]')->widget(FileInput::classname(), [
 		        'options' => ['accept' => 'image/jpeg, image/png, image/gif', 'multiple' => true],
 		        'pluginOptions' => [

@@ -63,6 +63,8 @@ Icon::map($this);
 			[
 				'attribute' => 'updated_at',
 				'format' => 'datetime',
+				'value' => function ($model, $key, $index, $widget) {
+					return new DateTime($model->updated_at);
 			],
 	        [
 				'attribute' => 'updated_by',

@@ -2,13 +2,9 @@
 use app\models\Task;
 use app\models\Work;
 use app\models\WorkLine;
-use app\assets\BadgeAsset;
 
 $this->title = Yii::t('store', 'Works');
 $this->params['breadcrumbs'][] = $this->title;
-
-BadgeAsset::register($this);
-
 ?>
 <div class="work-default-index">
 	

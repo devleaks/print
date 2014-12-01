@@ -4,12 +4,12 @@ use app\models\Item;
 use app\models\OrderLineDetail;
 use app\models\Parameter;
 use kartik\builder\Form;
-use kartik\money\MaskMoney;
 use sjaakp\bandoneon\Bandoneon;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\OrderLine */
@@ -224,19 +224,27 @@ Class set-unit-price added to all price options that provoque adjustment of item
 						],
 				        'free_item_price_htva' => [
 							'type' => Form::INPUT_WIDGET,
-							'widgetClass'=>MaskMoney::className(),
-							'options' => ['pluginOptions' => [
-						        'prefix' => '',
-						        'suffix' => ' €',
-								'thousands' => '.',
-								'decimal' => ',',
-								'precision' => 2,
-						    ]],	
+							'widgetClass'=>MaskedInput::className(),
+							'options' => ['clientOptions' => [
+							        'alias' =>  'decimal',
+ 									'radixPoint' => ",",
+							        'groupSeparator' => '',
+							        'autoGroup' => false
+								]
+							],	
 						],
 				        'free_item_vat' => [
-							'type' => Form::INPUT_TEXT,
+							'type' => Form::INPUT_WIDGET,
+							'widgetClass'=>MaskedInput::className(),
+							'options' => ['clientOptions' => [
+							        'alias' =>  'decimal',
+ 									'radixPoint' => ",",
+							        'groupSeparator' => '',
+							        'autoGroup' => false
+								], 
+								'class' => 'form-control input-group '.$class_prefix . $free_item->id
+							],	
 							'fieldConfig' => ['addon' => ['append' => ['content'=>'%']]],
-							'options' => ['class' => 'form-control input-group '.$class_prefix . $free_item->id],
 						],
 					],
 				])

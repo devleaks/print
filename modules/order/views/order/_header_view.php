@@ -65,11 +65,13 @@ $client = $model->getClient()->one();
 			            [
 			                'attribute'=>'created_at',
 							'format' => 'datetime',
+							'value' => new DateTime($model->updated_at),
 							'options' => ['readonly' => true]
 			            ],
 			            [
 			                'attribute'=>'updated_at',
 							'format' => 'datetime',
+							'value' => new DateTime($model->updated_at),
 							'options' => ['readonly' => true]
 			            ],
 //			            [

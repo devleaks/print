@@ -55,6 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'updated_at',
 	            'label' => Yii::t('store', 'Last Update'),
 				'format' => 'datetime',
+				'value' => function ($model, $key, $index, $widget) {
+					return new DateTime($model->updated_at);
+				}
 			],
 	        [
 	            'label' => Yii::t('store', 'Status'),

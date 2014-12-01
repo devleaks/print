@@ -42,7 +42,9 @@ SCRIPT;
     <div class="row">
 	
         <div class="col-lg-6">
-
+		<div id="client-intro" data-intro="Client de la commande.
+Il est obligatoire d'en préciser un.
+Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter un nouveau">
 		<?= Form::widget([
 				    'model' => $model,
 				    'form' => $form,
@@ -80,9 +82,11 @@ SCRIPT;
 				])
 		?>
 	
-		<?= Html::a(Yii::t('store', 'Create Client'), ['../store/client/new', 'ret' => $model->order_type], ['class' => 'btn btn-warning']) ?>
+		<?= Html::a(Yii::t('store', 'Create Client'), ['../store/client/new', 'ret' => $model->order_type],
+		['class' => 'btn btn-warning', 'data-intro' => "Pour aller vers l'écran d'ajout d'un nouveau client"]) ?>
 
 		<p></p>
+		</div>
 			
 		<?= Form::widget([
 				    'model' => $model,
@@ -95,7 +99,9 @@ SCRIPT;
 							'options' => ['pluginOptions' => [
 				                'format' => 'yyyy-mm-dd',
 				                'todayHighlight' => true
-				            ]],
+				            	],
+								'options' => ['data-intro' => "Vous devez mentionner une date de livraison pour la commande. Si la date de livraison n'a pas d'importance, entrez la date du jour."],
+							],
 				            'columnOptions' => ['colspan' => 2],
 						],
 				        'days' => [

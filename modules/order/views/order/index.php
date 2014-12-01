@@ -60,9 +60,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format' => 'date',
 			],
 			[
-				'attribute' => 'updated_at',
 	            'label' => Yii::t('store', 'Last Update'),
+				'attribute' => 'updated_at',
 				'format' => 'datetime',
+				'value' => function ($model, $key, $index, $widget) {
+					return new DateTime($model->updated_at);
+				}
 			],
 	        [
 	            'label' => Yii::t('store', 'Status'),
@@ -82,6 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'hAlign' => GridView::ALIGN_CENTER,
 	            'format' => 'raw',
 				'noWrap' => true,
+				'options' => ['class' => 'IntroJS1'],
 	        ],
             [	// freely let update or delete if accessed throught this screen.
 				'class' => 'yii\grid\ActionColumn',
@@ -93,3 +97,15 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
 </div>
+<script type="text/javascript">
+<?php
+$this->beginBlock('JS_INIT'); ?>
+function addIntroJs(sid,intro) { $(sid).attr('data-intro', intro); }
+addIntroJs('a[data-sort="name"]', "Tri pour cette colonne");
+addIntroJs('table thead tr', "Champs de tri");
+addIntroJs('input[name="DocumentSearch[name]"]', "Champ de recherche pour cette colonne");
+addIntroJs('.filters', "Champs de sélection");
+<?php $this->endBlock(); ?>
+</script>
+<?php
+$this->registerJs($this->blocks['JS_INIT'], yii\web\View::POS_END);
