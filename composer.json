@@ -1,7 +1,6 @@
 {
     "name": "devleaks/print",
     "description": "devleaks Order and Work Order Management",
-	"version": "1.0.0",
     "type": "project",
     "keywords": ["yii2"],
     "license": "BSD-3-Clause",
@@ -59,18 +58,6 @@
         ]
     },
     "extra": {
-        "yii\\composer\\Installer::postCreateProject": {
-            "setPermission": [
-                {
-                    "runtime": "0777",
-                    "web/assets": "0777",
-                    "yii": "0755"
-                }
-            ],
-            "generateCookieValidationKey": [
-                "config/web.php"
-            ]
-        },
         "asset-installer-paths": {
             "npm-asset-library": "vendor/npm",
             "bower-asset-library": "vendor/bower"
