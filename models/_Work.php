@@ -8,17 +8,17 @@ use Yii;
  * This is the model class for table "work".
  *
  * @property integer $id
- * @property integer $order_id
  * @property string $created_at
  * @property string $updated_at
  * @property integer $created_by
  * @property integer $updated_by
  * @property string $status
  * @property string $due_date
+ * @property integer $document_id
  *
- * @property User $updatedBy
- * @property Order $order
+ * @property Document $document
  * @property User $createdBy
+ * @property User $updatedBy
  * @property WorkLine[] $workLines
  */
 class _Work extends \yii\db\ActiveRecord
@@ -37,9 +37,9 @@ class _Work extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'due_date'], 'required'],
-            [['order_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at', 'due_date'], 'safe'],
+            [['created_by', 'updated_by', 'document_id'], 'integer'],
+            [['due_date', 'document_id'], 'required'],
             [['status'], 'string', 'max' => 20]
         ];
     }
@@ -51,30 +51,22 @@ class _Work extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('store', 'ID'),
-            'order_id' => Yii::t('store', 'Order ID'),
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'created_by' => Yii::t('store', 'Created By'),
             'updated_by' => Yii::t('store', 'Updated By'),
             'status' => Yii::t('store', 'Status'),
             'due_date' => Yii::t('store', 'Due Date'),
+            'document_id' => Yii::t('store', 'Document ID'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUpdatedBy()
+    public function getDocument()
     {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrder()
-    {
-        return $this->hasOne(Order::className(), ['id' => 'order_id']);
+        return $this->hasOne(Document::className(), ['id' => 'document_id']);
     }
 
     /**
@@ -83,6 +75,14 @@ class _Work extends \yii\db\ActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
     /**

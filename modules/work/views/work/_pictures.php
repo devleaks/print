@@ -3,11 +3,11 @@
 use dosamigos\gallery\Gallery;
 
 ?>
-<div class="order-line-picture">
+<div class="document-line-picture">
 
 <?php
     $pics = array();
-    foreach($model->getOrder()->one()->getOrderLines()->each() as $ol)
+    foreach($model->getDocument()->one()->getDocumentLines()->each() as $ol)
     	foreach($ol->getPictures()->all() as $picture) {
 	        $pics[] = [
 	            'url' => $picture->getUrl(),

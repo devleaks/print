@@ -2,8 +2,8 @@
 
 namespace app\modules\work\controllers;
 
-use app\models\Order;
-use app\models\OrderSearch;
+use app\models\Document;
+use app\models\DocumentSearch;
 use yii;
 use yii\web\Controller;
 

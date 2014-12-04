@@ -21,7 +21,7 @@ class WorkLineSearch extends WorkLine
     public function rules()
     {
         return [
-            [['id', 'work_id', 'created_by', 'updated_by', 'order_line_id', 'task_id', 'position', 'item_id'], 'integer'],
+            [['id', 'work_id', 'created_by', 'updated_by', 'document_line_id', 'task_id', 'position', 'item_id'], 'integer'],
             [['created_at', 'updated_at', 'status', 'note', 'due_date'], 'safe'],
 			[['item_name', 'task_name'], 'safe'],
         ];
@@ -74,7 +74,7 @@ class WorkLineSearch extends WorkLine
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'due_date' => $this->due_date,
-            'order_line_id' => $this->order_line_id,
+            'document_line_id' => $this->document_line_id,
             'task_id' => $this->task_id,
             'position' => $this->position,
             'item_id' => $this->item_id,

@@ -73,7 +73,7 @@ class WorkLine extends _WorkLine
 	 */
 	protected function setStatusOfPreceedingTasks($status) {
 		$preceedingTasks = WorkLine::find()
-			->andWhere(['order_line_id' => $this->order_line_id])
+			->andWhere(['document_line_id' => $this->document_line_id])
 			->andWhere(['<', 'position', $this->position])
 		;
 		foreach($preceedingTasks->each() as $wl) {

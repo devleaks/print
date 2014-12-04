@@ -11,7 +11,7 @@ $this->title = 'Labo JJ Micheli @Work';
     </p>
 
 	<ul>
-	    <li><a href="<?= Yii::$app->homeUrl ?>/order/order/bills"><?= Yii::t('store', 'Bills')?></a></li>
+	    <li><a href="<?= Yii::$app->homeUrl ?>/order/document/bills"><?= Yii::t('store', 'Bills')?></a></li>
 	</ul>
 
 </div>

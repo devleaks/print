@@ -133,11 +133,11 @@ class ClientController extends Controller
 				$model->reference_interne = 'YII-'.$model->id;
 			}*/
 			if($ret == Document::TYPE_BID)
-            	return $this->redirect(['../order/order/create-bid', 'id' => $model->id]);
+            	return $this->redirect(['../document/document/create-bid', 'id' => $model->id]);
 			else if($ret == Document::TYPE_BID)
-            	return $this->redirect(['../order/order/create-bill', 'id' => $model->id]);
+            	return $this->redirect(['../document/document/create-bill', 'id' => $model->id]);
 			else
-            	return $this->redirect(['../order/order/create', 'id' => $model->id]);
+            	return $this->redirect(['../document/document/create', 'id' => $model->id]);
         } else {
             return $this->render('new', [
                 'model' => $model,
@@ -156,7 +156,7 @@ class ClientController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['../order/order/create', 'id' => $model->id]);
+            return $this->redirect(['../document/document/create', 'id' => $model->id]);
         } else {
             return $this->render('maj', [
                 'model' => $model,

@@ -112,7 +112,7 @@ class Item extends _Item
 	 * create work line elements for Item from its associated tasks.
 	 *
 	 * @param $work Work model to attach WorkLine object to.
-	 * @param $order_line OrderLine model in which Item is used.
+	 * @param $order_line DocumentLine model in which Item is used.
 	 */
 	public function createTasks($work, $order_line) {
 		$wlCreated = false;
@@ -124,7 +124,7 @@ class Item extends _Item
 			$wl->work_id = $work->id;
 			$wl->task_id = $task->id;
 			$wl->item_id = $this->id;
-			$wl->order_line_id = $order_line->id;
+			$wl->document_line_id = $order_line->id;
 			$wl->due_date = $order_line->due_date;
 			if($itp = ItemTask::findOne(['item_id' => $this->id, 'task_id' => $task->id]))
 				$wl->position = $itp->position;
@@ -139,7 +139,7 @@ class Item extends _Item
 			$wl->work_id = $work->id;
 			$wl->task_id = $defaultTaskId;
 			$wl->item_id = $this->id;
-			$wl->order_line_id = $order_line->id;
+			$wl->document_line_id = $order_line->id;
 			$wl->due_date = $order_line->due_date;
 			$wl->position = 100;
 			$wl->status = Work::STATUS_TODO;

@@ -10,13 +10,13 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $name
- * @property integer $order_line_id
+ * @property integer $document_line_id
  * @property string $created_at
  * @property string $updated_at
  * @property string $mimetype
  * @property string $filename
  *
- * @property OrderLine $orderLine
+ * @property DocumentLine $orderLine
  */
 class Picture extends _Picture
 {
@@ -125,21 +125,21 @@ class Picture extends _Picture
 	}
 
 	/**
-	 * Deep copy Picture model for a supplied orderline. Copies both image and thumbnail.
+	 * Deep copy Picture model for a supplied documentline. Copies both image and thumbnail.
 	 *
-	 * @param integer order_line_id Destination OrderLine identifier
+	 * @param integer document_line_id Destination DocumentLine identifier
 	 */
-	public function deepCopy($order_line_id) {
+	public function deepCopy($document_line_id) {
 		// create a copy Picture object
 		$copy = new Picture($this->attributes);
 		$copy->id = null;
-		$copy->order_line_id = $order_line_id;
+		$copy->document_line_id = $document_line_id;
 		// get old order line   BASE/OL/FN.EXT
 		$fs = strpos($copy->filename, DIRECTORY_SEPARATOR);
 		$ss = strpos($copy->filename, DIRECTORY_SEPARATOR, $fs + 1);
 		$old = substr($copy->filename, $fs, $ss - $fs + 1); // /123/
  		//Yii::trace('Fn: '.$copy->filename.', fs='.$fs.', ss='.$ss.', old='.$old);
-		$copy->filename = str_replace($old, DIRECTORY_SEPARATOR.$order_line_id.DIRECTORY_SEPARATOR, $copy->filename);
+		$copy->filename = str_replace($old, DIRECTORY_SEPARATOR.$document_line_id.DIRECTORY_SEPARATOR, $copy->filename);
  		//Yii::trace('Fw: '.$copy->filename);
 		
 		// now copies files	(duplicate dir with images)	

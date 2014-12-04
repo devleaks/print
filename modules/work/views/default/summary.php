@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					if( $work = $model->getWorks()->one() ) {
 		 				return Html::a(Yii::t('store', 'Details'), ['/work/work/view', 'id' => $work->id], ['class' => 'btn-sm btn-primary']);
 					} else {
-		 				return Html::a(Yii::t('store', 'Submit work'), ['/order/order/submit', 'id' => $model->id], [
+		 				return Html::a(Yii::t('store', 'Submit work'), ['/order/document/submit', 'id' => $model->id], [
 		                        'class' => 'btn btn-primary',
 		                        'data-method' => 'post',
 		                        'data-confirm' => Yii::t('store', 'Submit work?')

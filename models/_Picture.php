@@ -9,13 +9,13 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
- * @property integer $order_line_id
+ * @property integer $document_line_id
  * @property string $created_at
  * @property string $updated_at
  * @property string $mimetype
  * @property string $filename
  *
- * @property OrderLine $orderLine
+ * @property DocumentLine $orderLine
  */
 class _Picture extends \yii\db\ActiveRecord
 {
@@ -33,8 +33,8 @@ class _Picture extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'order_line_id', 'mimetype', 'filename'], 'required'],
-            [['order_line_id'], 'integer'],
+            [['name', 'document_line_id', 'mimetype', 'filename'], 'required'],
+            [['document_line_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'mimetype'], 'string', 'max' => 80],
             [['filename'], 'string', 'max' => 255]
@@ -49,7 +49,7 @@ class _Picture extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('store', 'ID'),
             'name' => Yii::t('store', 'Name'),
-            'order_line_id' => Yii::t('store', 'Order Line ID'),
+            'document_line_id' => Yii::t('store', 'Order Line ID'),
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'mimetype' => Yii::t('store', 'Mimetype'),
@@ -60,8 +60,8 @@ class _Picture extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrderLine()
+    public function getDocumentLine()
     {
-        return $this->hasOne(OrderLine::className(), ['id' => 'order_line_id']);
+        return $this->hasOne(DocumentLine::className(), ['id' => 'document_line_id']);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
-use app\models\OrderLine;
-use app\models\OrderLineSearch;
+use app\models\DocumentLine;
+use app\models\DocumentLineSearch;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -9,11 +9,11 @@ use yii\helpers\Url;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\OrderLineSearch */
+/* @var $searchModel app\models\DocumentLineSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 ?>
-<div class="order-line-print">
+<div class="document-line-print">
 
     <?= GridView::widget([
 			'dataProvider' => $dataProvider,
@@ -23,7 +23,7 @@ use kartik\grid\GridView;
 				//['class' => 'kartik\grid\SerialColumn'],
 
 				// 'id',
-				// 'order_id',
+				// 'document_id',
 				// 'position',
 				'item.reference',
 				[

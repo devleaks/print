@@ -13,8 +13,13 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
 	<ul>
-	    <li><a href="<?= Url::to(['/accnt/extraction']) ?>"><?= Yii::t('store', 'Extraction')?></a></li>
-	    <li><a href="#"><?= Yii::t('store', 'New year')?></a></li>
+	    <li><a href="<?= Url::to(['/accnt/payment/index-by-type']) ?>"><?= Yii::t('store', 'Daily Summary')?></a></li>
+	</ul>
+	<ul>
+	    <li><a href="<?= Url::to(['/accnt/bill']) ?>"><?= Yii::t('store', 'Unpaid Bills')?></a></li>
+	</ul>
+	<ul>
+	    <li><a href="<?= Url::to(['/accnt/extraction']) ?>"><?= Yii::t('store', 'Monthly Extraction')?></a></li>
 	</ul>
 
 </div>

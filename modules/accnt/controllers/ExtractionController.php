@@ -3,11 +3,13 @@
 namespace app\modules\accnt\controllers;
 
 use Yii;
+use app\models\Bill;
 use app\models\Extraction;
 use app\models\ExtractionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * ExtractionController implements the CRUD actions for Extraction model.
@@ -48,8 +50,21 @@ class ExtractionController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+		$model = $this->findModel($id);
+		if($model->extraction_type == Extraction::TYPE_DATE) {
+			$date_from = $model->date_from;
+			$date_to = str_replace($model->date_to, '00:00:00', '23:59:59');
+			$bills = Bill::find()
+							->andWhere(['>=','created_at',$date_from])
+							->andWhere(['<=','created_at',$date_to]);
+		} else { // Extraction::TYPE_REFN
+			Yii::$app->session->setFlash('warning', Yii::t('store', 'Function is not available yet.'));
+			$bills = Bill::find()
+							->andWhere(['>=','id',$model->document_from])
+							->andWhere(['<=','id',$model->document_to]);
+		}
+        return $this->render('bills', [
+            'dataProvider' => new ActiveDataProvider(['query'=>$bills]),
         ]);
     }
 
@@ -118,4 +133,19 @@ class ExtractionController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+
+	public function actionBulkAction() {
+		if(isset($_POST))
+			if(isset($_POST['action'])) {
+				$action = $_POST['action'];
+				if(in_array($action, [Bill::ACTION_EXTRACT])) {
+					if(isset($_POST['keylist'])) {
+				        return $this->render('extract', [
+				            'bills' => Bill::find()->where(['id' => $_POST['keylist']]),
+				        ]);
+					}
+				}
+			}
+	}
 }

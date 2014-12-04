@@ -41,10 +41,10 @@ function getVal(s) {
  *	Changes in main order line
  *  Compute prices with quantity and VAT, triggers compute rebate/supplement
  */
-$("#orderline-quantity, #orderline-unit_price, #orderline-vat").change( function() {
-	$("#orderline-price_htva").val(arrondir2( $("#orderline-quantity").val()   * $("#orderline-unit_price").val() ));
-	$("#orderline-price_tvac").val(arrondir2( $("#orderline-price_htva").val() * (1 + $("#orderline-vat").val() / 100) ));
-	$("#orderline-extra_amount").trigger("change");
+$("#documentline-quantity, #documentline-unit_price, #documentline-vat").change( function() {
+	$("#documentline-price_htva").val(arrondir2( $("#documentline-quantity").val()   * $("#documentline-unit_price").val() ));
+	$("#documentline-price_tvac").val(arrondir2( $("#documentline-price_htva").val() * (1 + $("#documentline-vat").val() / 100) ));
+	$("#documentline-extra_amount").trigger("change");
 });
 
 
@@ -52,25 +52,25 @@ $("#orderline-quantity, #orderline-unit_price, #orderline-vat").change( function
  *	Changes in main order line
  *  Compute rebate/supplement
  */
-$("#orderline-extra_amount, #orderline-extra_type").change( function() {
-	extra_type = $("#orderline-extra_type").val();
+$("#documentline-extra_amount, #documentline-extra_type").change( function() {
+	extra_type = $("#documentline-extra_type").val();
 	if(extra_type != '') {
-		amount = parseFloat(extra_type.indexOf("PERCENT") > -1 ? $("#orderline-price_htva").val() * ($("#orderline-extra_amount").val()/100) : $("#orderline-extra_amount").val());
+		amount = parseFloat(extra_type.indexOf("PERCENT") > -1 ? $("#documentline-price_htva").val() * ($("#documentline-extra_amount").val()/100) : $("#documentline-extra_amount").val());
 		if(amount > 0) {
 			asigne = extra_type.indexOf("SUPPLEMENT_") > -1 ? 1 : -1;
 			amount = arrondir2(asigne * amount);
-			$("#orderline-extra_htva").val(amount);
-			$("#orderline-final_htva").val(arrondir2(parseFloat($("#orderline-price_htva").val()) + amount));
-			$("#orderline-final_tvac").val(arrondir2(parseFloat($("#orderline-final_htva").val()) * (1 + $("#orderline-vat").val() / 100)));
+			$("#documentline-extra_htva").val(amount);
+			$("#documentline-final_htva").val(arrondir2(parseFloat($("#documentline-price_htva").val()) + amount));
+			$("#documentline-final_tvac").val(arrondir2(parseFloat($("#documentline-final_htva").val()) * (1 + $("#documentline-vat").val() / 100)));
 		} else if (amount == 0) {
-			$("#orderline-extra_htva").val('');
-			$("#orderline-final_htva").val('');
-			$("#orderline-final_tvac").val('');
+			$("#documentline-extra_htva").val('');
+			$("#documentline-final_htva").val('');
+			$("#documentline-final_tvac").val('');
 		}
 	} else {
-		$("#orderline-extra_htva").val('');
-		$("#orderline-final_htva").val('');
-		$("#orderline-final_tvac").val('');
+		$("#documentline-extra_htva").val('');
+		$("#documentline-final_htva").val('');
+		$("#documentline-final_tvac").val('');
 	}
 });
 
@@ -102,7 +102,7 @@ function getReference(id) {
  *	Computations for Chromaluxe
  */
 function chromaluxe_price(w, h) {
-	which = $('input[name="OrderLineDetail[chroma_type]"]:checked').val();
+	which = $('input[name="DocumentLineDetail[chroma_type]"]:checked').val();
 	max_area = params['SublimationMaxHeight'].value_int * params['SublimationMaxWidth'].value_int;
 	work_area   = width * height;
 	if(work_area <= params['ChromaLuxeXS'].value_number) {
@@ -119,33 +119,33 @@ function chromaluxe_price(w, h) {
 		store_values.error_str = "Surface supérieure à 18700 cm2.";
 	}
 	price = arrondir_sup(price);
-	$("#orderlinedetail-price_chroma:enabled").val(price);
+	$("#documentlinedetail-price_chroma:enabled").val(price);
 	return price;
 }
 
 /** renfort */
 function chromaluxe_renfort_price(w, h) {
-	frame_id = parseInt($("#orderlinedetail-frame_id:enabled").val());
+	frame_id = parseInt($("#documentlinedetail-frame_id:enabled").val());
 	console.log('renfort: frame: '+frame_id);
 	price = 0;
 	if(frame_id > 0) {
 		if(w > 50 || h > 70) { // force renfort, but it is free
-			$("#orderlinedetail-renfort_bool:enabled").prop('checked', 'checked');
-			$("#orderlinedetail-renfort_bool").prop('disabled', true); //PROBLEM WITH MULTIPLE RENFORT & DISABLED: Must add class for item.
-			$("#orderlinedetail-price_renfort:enabled").val(0);
+			$("#documentlinedetail-renfort_bool:enabled").prop('checked', 'checked');
+			$("#documentlinedetail-renfort_bool").prop('readonly', true); //PROBLEM WITH MULTIPLE RENFORT & DISABLED: Must add class for item.
+			$("#documentlinedetail-price_renfort:enabled").val(0);
 		}
 	} else {
-		$("#orderlinedetail-renfort_bool").prop('disabled', false);
-		renfort = $("#orderlinedetail-renfort_bool:enabled").is(':checked');
+		$("#documentlinedetail-renfort_bool").prop('disabled', false);
+		renfort = $("#documentlinedetail-renfort_bool:enabled").is(':checked');
 		console.log('Refort?'+renfort);
 		if(renfort) {
 			console.log('Renfort price: '+items['Renfort'].price);
 			price = 2 * (w + h - 40) * items['Renfort'].price / 100;
 			if(price < items['RenfortPrixMin'].price) price = items['RenfortPrixMin'].price;
 			price = arrondir_sup(price);
-			$("#orderlinedetail-price_renfort:enabled").val(price);
+			$("#documentlinedetail-price_renfort:enabled").val(price);
 		} else {
-			$("#orderlinedetail-price_renfort:enabled").val('');
+			$("#documentlinedetail-price_renfort:enabled").val('');
 		}
 	}
 	return price;
@@ -189,7 +189,7 @@ function exhibit_montage_price(w, h) {
 /** frame and montage */
 function chromaluxe_frame_montage_price(w, h) {
 	price_frame = 0;
-	frame_id = parseInt($("#orderlinedetail-frame_id:enabled").val());
+	frame_id = parseInt($("#documentlinedetail-frame_id:enabled").val());
 	console.log('frame: '+frame_id);
 	if(frame_id > 0) {
 		frame = getItem(frame_id);
@@ -216,19 +216,19 @@ function chromaluxe_frame_montage_price(w, h) {
 					break;
 			}
 			//console.log('frame / refort price: '+price);
-			$("#orderlinedetail-price_frame:enabled").val(price_frame);
-			montage = $("#orderlinedetail-montage_bool:enabled").is(':checked');
+			$("#documentlinedetail-price_frame:enabled").val(price_frame);
+			montage = $("#documentlinedetail-montage_bool:enabled").is(':checked');
 			console.log('montage:'+montage);
 			if(montage) {
-				$("#orderlinedetail-price_montage:enabled").val(price_montage);
+				$("#documentlinedetail-price_montage:enabled").val(price_montage);
 				price_frame += price_montage;
 			} else
-				$("#orderlinedetail-price_montage:enabled").val('');
+				$("#documentlinedetail-price_montage:enabled").val('');
 
 		}
 	} else {
-		$("#orderlinedetail-price_frame:enabled").val('');
-		$("#orderlinedetail-price_montage:enabled").val('');
+		$("#documentlinedetail-price_frame:enabled").val('');
+		$("#documentlinedetail-price_montage:enabled").val('');
 	}
 	return price_frame;
 }
@@ -241,10 +241,10 @@ function chromaluxe_taches_price(w, h) {
 
 /** MAIN */
 function chroma_price() {
-	width = parseInt($("#orderline-work_width").val());
+	width = parseInt($("#documentline-work_width").val());
 	console.log('w '+width);
 	if(width > 0) {
-		height = parseInt($("#orderline-work_height").val());
+		height = parseInt($("#documentline-work_height").val());
 		console.log('h '+height);
 		if(height > 0) { // we have both
 			// convention: width is smallest dimension
@@ -254,7 +254,7 @@ function chroma_price() {
 			if(width > params['SublimationMaxWidth'].value_int || height > params['SublimationMaxHeight'].value_int) {
 				store_values.error_str = "Largeur ou hauteur trop grande.";
 			} else {
-				which = $('input[name="OrderLineDetail[chroma_id]"]:checked').val();
+				which = $('input[name="DocumentLineDetail[chroma_id]"]:checked').val();
 				console.log('chromaluxe type:'+which);
 				if(typeof(which) !== 'undefined') {
 					// we have all data we need, let's compute the item ChromaLuxe price
@@ -279,8 +279,8 @@ function chroma_price() {
 					if(store_values.error_str) return;
 
 					item_price = arrondir2(item_price);
-					$("#orderline-unit_price").val(item_price);
-					$("#orderline-unit_price").trigger('change');
+					$("#documentline-unit_price").val(item_price);
+					$("#documentline-unit_price").trigger('change');
 					return;
 				} else {
 					store_values.error_str = "Vous devez préciser le type de ChromaLuxe.";
@@ -304,17 +304,17 @@ function chroma_price() {
  *	Computations for Fine Art
  */
 function fineart_price() {
-	$("#orderline-unit_price").val(
-		  getVal('#orderlinedetail-price_tirage:enabled')
-		+ getVal('#orderlinedetail-price_support:enabled')
-		+ getVal('#orderlinedetail-price_protection:enabled')
-		+ getVal('#orderlinedetail-price_collage:enabled')
+	$("#documentline-unit_price").val(
+		  getVal('#documentlinedetail-price_tirage:enabled')
+		+ getVal('#documentlinedetail-price_support:enabled')
+		+ getVal('#documentlinedetail-price_protection:enabled')
+		+ getVal('#documentlinedetail-price_collage:enabled')
 	);
-	$("#orderline-unit_price").trigger('change');
+	$("#documentline-unit_price").trigger('change');
 }
 
 function compute_price() {
-	item_id = $("#orderline-item_id").val();
+	item_id = $("#documentline-item_id").val();
 	//console.log('item_id='+item_id);
 	switch(parseInt(item_id)) {
 		case store_values.item_id.chroma:
@@ -339,91 +339,96 @@ $("#methodForm").submit(function(e){
 /**
  *	jQuery hooks: If element changes, recompute order line prices
  */
-$(".compute-price, #orderline-work_width, #orderline-work_height, input[name='OrderLineDetail[chroma_id]']").change(function() {
+$(".compute-price, #documentline-work_width, #documentline-work_height, input[name='DocumentLineDetail[chroma_id]']").change(function() {
 	compute_price();
 });
 
-$("#orderlinedetail-tirage_id:enabled").change(function() {
+$("#documentlinedetail-frame_id:enabled").change(function() {
+	frame_id = parseInt($("#documentlinedetail-frame_id:enabled").val());
+	$("#documentlinedetail-montage_bool").prop('disabled', isNaN(frame_id));
+});
+
+$("#documentlinedetail-tirage_id:enabled").change(function() {
 	item_id = $(this).val();
 	if(isNaN(item_id)) { // none selected
-		$('#orderlinedetail-price_tirage:enabled').val('');
-		$('#orderlinedetail-price_support:enabled').val('');
-		$('#orderlinedetail-price_protection:enabled').val('');
-		$('#orderlinedetail-price_collage:enabled').val('');	
+		$('#documentlinedetail-price_tirage:enabled').val('');
+		$('#documentlinedetail-price_support:enabled').val('');
+		$('#documentlinedetail-price_protection:enabled').val('');
+		$('#documentlinedetail-price_collage:enabled').val('');	
 	}
 	item = getItemDescription(item_id);
-	$('#orderlinedetail-price_tirage:enabled').val(item.prix_de_vente);
+	$('#documentlinedetail-price_tirage:enabled').val(item.prix_de_vente);
 	// enable or disable options depending on paper type
 	paper_type = item.fournisseur;
 	console.log(paper_type);
 	// hide all
-	$('div.field-orderlinedetail-finish_id').toggle(false);
-	$('div.field-orderlinedetail-note').toggle(false);
-	$('div.field-orderlinedetail-support_id').toggle(false);
-	$('div.field-orderlinedetail-price_support').toggle(false);
-	$('div.field-orderlinedetail-protection_id').toggle(false);
-	$('div.field-orderlinedetail-price_protection').toggle(false);
-	$('div.field-orderlinedetail-collage_id').toggle(false);
-	$('div.field-orderlinedetail-price_collage').toggle(false);
+	$('div.field-documentlinedetail-finish_id').toggle(false);
+	$('div.field-documentlinedetail-note').toggle(false);
+	$('div.field-documentlinedetail-support_id').toggle(false);
+	$('div.field-documentlinedetail-price_support').toggle(false);
+	$('div.field-documentlinedetail-protection_id').toggle(false);
+	$('div.field-documentlinedetail-price_protection').toggle(false);
+	$('div.field-documentlinedetail-collage_id').toggle(false);
+	$('div.field-documentlinedetail-price_collage').toggle(false);
 	// show what is necessary and reset others option values
 	switch(paper_type) {
 		case 'Papier Photo':
-			$('div.field-orderlinedetail-finish_id').toggle(true);
-			$('#orderlinedetail-price_support:enabled').val('');
-			$('#orderlinedetail-price_protection:enabled').val('');
-			$('#orderlinedetail-price_collage:enabled').val('');	
+			$('div.field-documentlinedetail-finish_id').toggle(true);
+			$('#documentlinedetail-price_support:enabled').val('');
+			$('#documentlinedetail-price_protection:enabled').val('');
+			$('#documentlinedetail-price_collage:enabled').val('');	
 			break;
 		case 'Papier Fine Art':
-			$('div.field-orderlinedetail-note').toggle(true);
-			$('div.field-orderlinedetail-protection_id').toggle(true);
-			$('div.field-orderlinedetail-price_protection').toggle(true);
-			$('div.field-orderlinedetail-finish_id input[type="radio"]').prop('checked',false);
-			$('#orderlinedetail-price_support:enabled').val('');
-			$('#orderlinedetail-price_collage:enabled').val('');
-			$("#orderlinedetail-protection_id:enabled").trigger('change');
+			$('div.field-documentlinedetail-note').toggle(true);
+			$('div.field-documentlinedetail-protection_id').toggle(true);
+			$('div.field-documentlinedetail-price_protection').toggle(true);
+			$('div.field-documentlinedetail-finish_id input[type="radio"]').prop('checked',false);
+			$('#documentlinedetail-price_support:enabled').val('');
+			$('#documentlinedetail-price_collage:enabled').val('');
+			$("#documentlinedetail-protection_id:enabled").trigger('change');
 			break;
 		case 'Canvas':
-			$('div.field-orderlinedetail-support_id').toggle(true);
-			$('div.field-orderlinedetail-price_support').toggle(true);
-			$('div.field-orderlinedetail-finish_id input[type="radio"]').prop('checked',false);
-			$('#orderlinedetail-price_protection:enabled').val('');
-			$('#orderlinedetail-price_collage:enabled').val('');	
-			$("#orderlinedetail-support_id:enabled").trigger('change');
+			$('div.field-documentlinedetail-support_id').toggle(true);
+			$('div.field-documentlinedetail-price_support').toggle(true);
+			$('div.field-documentlinedetail-finish_id input[type="radio"]').prop('checked',false);
+			$('#documentlinedetail-price_protection:enabled').val('');
+			$('#documentlinedetail-price_collage:enabled').val('');	
+			$("#documentlinedetail-support_id:enabled").trigger('change');
 			break;
 	}
 	// adjust displayed prices
 	compute_price();	
 });
 
-$("#orderlinedetail-support_id:enabled").change(function() {
+$("#documentlinedetail-support_id:enabled").change(function() {
 	item_id = parseInt($(this).val());
 	if(isNaN(item_id)) { // none selected
-		$('#orderlinedetail-price_support:enabled').val('');
+		$('#documentlinedetail-price_support:enabled').val('');
 	} else {
 		item = getItemDescription(item_id);
-		$('#orderlinedetail-price_support:enabled').val(item.prix_de_vente);
+		$('#documentlinedetail-price_support:enabled').val(item.prix_de_vente);
 	}
 	compute_price();	
 });
 
-$("#orderlinedetail-protection_id:enabled").change(function() {
+$("#documentlinedetail-protection_id:enabled").change(function() {
 	item_id = parseInt($(this).val());
 	if(isNaN(item_id)) { // none selected
-		$('#orderlinedetail-price_protection:enabled').val('');
+		$('#documentlinedetail-price_protection:enabled').val('');
 	} else {
 		item = getItemDescription(item_id);
-		$('#orderlinedetail-price_protection:enabled').val(item.prix_de_vente);
+		$('#documentlinedetail-price_protection:enabled').val(item.prix_de_vente);
 	}
 	compute_price();	
 });
 
-$("#orderlinedetail-collage_id:enabled").change(function() {
+$("#documentlinedetail-collage_id:enabled").change(function() {
 	item_id = parseInt($(this).val());
 	if(isNaN(item_id)) { // none selected
-		$('#orderlinedetail-price_collage:enabled').val('');
+		$('#documentlinedetail-price_collage:enabled').val('');
 	} else {
 		item = getItemDescription(item_id);
-		$('#orderlinedetail-price_collage:enabled').val(item.prix_de_vente);
+		$('#documentlinedetail-price_collage:enabled').val(item.prix_de_vente);
 	}
 	compute_price();	
 });
@@ -433,13 +438,13 @@ $("#orderlinedetail-collage_id:enabled").change(function() {
 /**
  *	Item with free name, price, and VAT
  */
-$("#orderlinedetail-free_item_price_htva:enabled, #orderlinedetail-free_item_vat:enabled").change(function() {
-	$("#orderline-unit_price").val($("#orderlinedetail-free_item_price_htva:enabled").val().replace(",","."));
-	$("#orderline-vat").val($("#orderlinedetail-free_item_vat:enabled").val().replace(",","."));
-	$("#orderline-unit_price").trigger('change');
+$("#documentlinedetail-free_item_price_htva:enabled, #documentlinedetail-free_item_vat:enabled").change(function() {
+	$("#documentline-unit_price").val($("#documentlinedetail-free_item_price_htva:enabled").val().replace(",","."));
+	$("#documentline-vat").val($("#documentlinedetail-free_item_vat:enabled").val().replace(",","."));
+	$("#documentline-unit_price").trigger('change');
 });
 
-$('#orderlinedetail-submit').submit(function(e) {
+$('#documentlinedetail-submit').submit(function(e) {
 	console.log('intercepted: '+$("#store-missing-data").is(":visible"))
 	e.preventDefault();
 	if(! $("#store-missing-data").is(":visible") )
@@ -447,8 +452,8 @@ $('#orderlinedetail-submit').submit(function(e) {
 });
 
 function free_item_update() {
-	$("#orderline-unit_price").prop('readonly', false);
-	$("#orderline-vat").prop('readonly', false);
+	$("#documentline-unit_price").prop('readonly', false);
+	$("#documentline-vat").prop('readonly', false);
 }
 
 /**
@@ -474,18 +479,18 @@ $(".order-option").click(function () {
 
 	item_name = $(this).data('item_name');
 	item_vat = $(this).data('item_vat');
-	$("#orderline-item_id").val(item_id);
-	$("#orderline-vat").val(item_vat);
+	$("#documentline-item_id").val(item_id);
+	$("#documentline-vat").val(item_vat);
 	console.log('item id:'+item_id);
 	if(item_id == store_values.item_id.fineart) {
-		$('div.field-orderlinedetail-finish_id').toggle(false);
-		$('div.field-orderlinedetail-note').toggle(false);
-		$('div.field-orderlinedetail-support_id').toggle(false);
-		$('div.field-orderlinedetail-price_support').toggle(false);
-		$('div.field-orderlinedetail-protection_id').toggle(false);
-		$('div.field-orderlinedetail-price_protection').toggle(false);
-		$('div.field-orderlinedetail-collage_id').toggle(false);
-		$('div.field-orderlinedetail-price_collage').toggle(false);		
+		$('div.field-documentlinedetail-finish_id').toggle(false);
+		$('div.field-documentlinedetail-note').toggle(false);
+		$('div.field-documentlinedetail-support_id').toggle(false);
+		$('div.field-documentlinedetail-price_support').toggle(false);
+		$('div.field-documentlinedetail-protection_id').toggle(false);
+		$('div.field-documentlinedetail-price_protection').toggle(false);
+		$('div.field-documentlinedetail-collage_id').toggle(false);
+		$('div.field-documentlinedetail-price_collage').toggle(false);		
 	}
 
 	///ATTENTION SELECT_DISPLAY_ID HARDCODED HERE
@@ -496,5 +501,8 @@ $(".order-option").click(function () {
 		$('#select2-chosen-1').html(item_name);
 
 	console.log('item '+item_id+' set');
+
+	$("#documentlinedetail-frame_id:enabled").trigger('change');
+
 	compute_price();
 });

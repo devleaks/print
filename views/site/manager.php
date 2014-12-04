@@ -12,6 +12,7 @@ $this->title = 'Labo JJ Micheli @Work';
 
         <p>
 			<a class="btn btn-lg btn-primary" href="<?=Yii::$app->homeUrl?>order/order/create-bid">Nouveau devis</a>
+			<a class="btn btn-lg btn-primary" href="<?=Yii::$app->homeUrl?>order/order/create-ticket">Nouvelle vente</a>
 			<a class="btn btn-lg btn-success" href="<?=Yii::$app->homeUrl?>order/order/create">Nouvelle commande</a>
 			
 			<?= $this->render('_form'); ?>

@@ -10,6 +10,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/devleaks/yii2-introjs"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/devleaks/yii2-chardinjs"
         }
     ],
     "require": {
@@ -40,7 +44,9 @@
         "kartik-v/yii2-money": "*",
 		"devleaks/yii2-introjs": "dev-master",
         "bower-asset/intro.js": "*",
-        "bower-asset/chardin.js": "*"
+        "bower-asset/chardin.js": "*",
+        "2amigos/yii2-grid-view-library": "*",
+        "devleaks/yii2-chardinjs": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use app\models\Parameter;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
@@ -12,20 +11,24 @@ use yii\helpers\Url;
  * Base class for all things common to bid, order, and bill
  *
  */
-class Document extends _Order
+class Document extends _Document
 {
 	/** Order "type" */
+	/** Devis */
 	const TYPE_BID = 'BID';
-	/** */
+	/** Commande */
 	const TYPE_ORDER = 'ORDER';
-	/** */
+	/** Facture */
 	const TYPE_BILL = 'BILL';
 	/** Note de crédit */
 	const TYPE_CREDIT = 'CREDIT';
-	/** Note de crédit */
+	/** Bon de livraison */
 	const TYPE_BOM = 'BOM';
+	/** Ticket de caisse */
+	const TYPE_TICKET = 'TICKET';
 	
-	/** Bid/Order/Bill status */
+	
+	/** Document status */
 	const STATUS_CREATED = 'CREATED';	
 	/** */
 	const STATUS_OPEN = 'OPEN';
@@ -39,6 +42,8 @@ class Document extends _Order
 	const STATUS_NOTE = 'NOTIFIED';
 	/** */
 	const STATUS_PAID = 'PAID';
+	/** */
+	const STATUS_SOLDE = 'SOLDE';
 	/** */
 	const STATUS_CANCELLED = 'CANCELLED';
 	/** */
@@ -78,21 +83,23 @@ class Document extends _Order
 	public static function findDocument($id) {
 		$model = Document::findOne($id);
 		if($model)
-			switch($model->order_type) {
+			switch($model->document_type) {
 				case Document::TYPE_BID:	return Bid::findOne($id);	break;
 				case Document::TYPE_ORDER:	return Order::findOne($id);	break;
 				case Document::TYPE_BILL:	return Bill::findOne($id);	break;
 				case Document::TYPE_CREDIT:	return Credit::findOne($id);break;
+				case Document::TYPE_TICKET:	return Ticket::findOne($id);break;
 			}
 		return null;
 	}
 	
 	protected function newCopy($new_type = null) {
-		switch($new_type ? $new_type : $this->order_type) {
+		switch($new_type ? $new_type : $this->document_type) {
 			case Document::TYPE_BID:	return new Bid($this->attributes);	break;
 			case Document::TYPE_ORDER:	return new Order($this->attributes);	break;
 			case Document::TYPE_BILL:	return new Bill($this->attributes);	break;
 			case Document::TYPE_CREDIT:	return new Credit($this->attributes);break;
+			case Document::TYPE_TICKET:	return new Ticket($this->attributes);break;
 		}
 		return null;
 	}
@@ -109,28 +116,32 @@ class Document extends _Order
 	public static function getTypeLabel($type, $plural = false) {
 		switch($type) {
 			case Document::TYPE_BID:
-				$doc_singular = 'Bid';
-				$doc_plural = 'Bids';
+				$doc_singular = Yii::t('store', 'Bid');
+				$doc_plural = Yii::t('store', 'Bids');
 				break;
 			case Document::TYPE_BILL:
-				$doc_singular = 'Bill';
-				$doc_plural = 'Bills';
+				$doc_singular = Yii::t('store', 'Bill');
+				$doc_plural = Yii::t('store', 'Bills');
 				break;
 			case Document::TYPE_CREDIT:
-				$doc_singular = 'Credit note';
-				$doc_plural = 'Credit notes';
+				$doc_singular = Yii::t('store', 'Credit note');
+				$doc_plural = Yii::t('store', 'Credit notes');
 				break;
 			case Document::TYPE_ORDER:
-				$doc_singular = 'Order';
-				$doc_plural = 'Orders';
+				$doc_singular = Yii::t('store', 'Order');
+				$doc_plural = Yii::t('store', 'Orders');
 				break;
 			case Document::TYPE_BOM:
-				$doc_singular = 'Bon de livraison';
-				$doc_plural = 'Bons de livraison';
+				$doc_singular = Yii::t('store', 'Bill of Material');
+				$doc_plural = Yii::t('store', 'Bills of Material');
+				break;
+			case Document::TYPE_TICKET:
+				$doc_singular = Yii::t('store', 'Sales Ticket');
+				$doc_plural = Yii::t('store', 'Sales Tickets');
 				break;
 			default:
-				$doc_singular = 'Document';
-				$doc_plural = 'Documents';
+				$doc_singular = Yii::t('store', 'Document');
+				$doc_plural = Yii::t('store', 'Documents');
 				break;
 		}
 		return $plural ? $doc_plural : $doc_singular;
@@ -147,6 +158,7 @@ class Document extends _Order
 			self::STATUS_CANCELLED => Yii::t('store', self::STATUS_CANCELLED),
 			self::STATUS_CLOSED => Yii::t('store', self::STATUS_CLOSED),
 			self::STATUS_CREATED => Yii::t('store', self::STATUS_CREATED),
+			self::STATUS_SOLDE => Yii::t('store', self::STATUS_SOLDE),
 			self::STATUS_DONE => Yii::t('store', self::STATUS_DONE),
 			self::STATUS_NOTE => Yii::t('store', self::STATUS_NOTE),
 			self::STATUS_OPEN => Yii::t('store', self::STATUS_OPEN),
@@ -167,6 +179,7 @@ class Document extends _Order
 			self::TYPE_ORDER => Yii::t('store', self::TYPE_ORDER),
 			self::TYPE_BILL => Yii::t('store', self::TYPE_BILL),
 			self::TYPE_CREDIT => Yii::t('store', self::TYPE_CREDIT),
+			self::TYPE_TICKET => Yii::t('store', self::TYPE_TICKET),
 		];
 	}
 	
@@ -182,6 +195,7 @@ class Document extends _Order
 			self::STATUS_CANCELLED => 'warning',
 			self::STATUS_CLOSED => 'success',
 			self::STATUS_CREATED => 'success',
+			self::STATUS_SOLDE => 'primary',
 			self::STATUS_DONE => 'success',
 			self::STATUS_NOTE => 'info',
 			self::STATUS_OPEN => 'primary',
@@ -200,7 +214,7 @@ class Document extends _Order
 			$w->deleteCascade();
 
 		/** Delete order lines */
-		foreach($this->getOrderLines()->each() as $ol)
+		foreach($this->getDocumentLines()->each() as $ol)
 			$ol->deleteCascade();
 
 		$this->delete();
@@ -212,11 +226,11 @@ class Document extends _Order
 	 */
 	public function hasRebate() {
 		$item = Item::findOne(['reference' => Item::TYPE_REBATE]);
-		return $item ? OrderLine::find()->where(['order_id' => $this->id, 'item_id' => $item->id])->count() > 0 : false;
+		return $item ? DocumentLine::find()->where(['document_id' => $this->id, 'item_id' => $item->id])->count() > 0 : false;
 	}
 
 	/**
-	 * update price of an order by summing orderline prices
+	 * update price of an order by summing document line prices
 	 * set the value value of order-level rebate/supplement line if any.
 	 * update total order price.
 	 */
@@ -225,7 +239,7 @@ class Document extends _Order
 		$this->price_tvac = 0;
 		$rebate_line = null;
 
-		foreach($this->getOrderLines()->each() as $ol) { // gross +/- extra
+		foreach($this->getDocumentLines()->each() as $ol) { // gross +/- extra
 			if($ol->item->reference === Item::TYPE_REBATE)  // global rebate line
 				$rebate_line = $ol;
 			else {
@@ -284,17 +298,32 @@ class Document extends _Order
 	public function updateStatus() {
 	}
 
+	/** 
+	 * Update status and reports to parent Work model
+	 */
+	public function isPaid() {
+		return (($this->price_tvac - $this->prepaid) < 0.01);
+	}
+
+	public function latestPayment() {
+		$payments = $this->getPayments();
+		$payments->orderBy('created_at desc');
+		$last = $payments->one();
+		return $last ? $last->amount : 0;
+	}
+
+
 	/**
-	 * creates a copy of a document object with a *copy* of all its dependent objects (orderlines, etc.)
+	 * creates a copy of a document object with a *copy* of all its dependent objects (documentlines, etc.)
 	 *
      * @return app\models\Document the copy
 	 */
 	public function deepCopy($new_type = null) {
 		$copy = $this->newCopy($new_type);
-		if($new_type) $copy->order_type = $new_type;	// the copy has overwritten the requested type
+		if($new_type) $copy->document_type = $new_type;	// the copy has overwritten the requested type
 		$copy->id = null;								// we reset the id to get a new one
 		$copy->save();
-		foreach($this->getOrderLines()->each() as $sub)
+		foreach($this->getDocumentLines()->each() as $sub)
 			$sub->deepCopy($copy->id);
 		return $copy;
 	}
@@ -309,31 +338,31 @@ class Document extends _Order
      * @return app\models\Document the copy
      */
 	public function convert() {
-		if($this->order_type == self::TYPE_BILL) // no next operation after billing
+		if($this->document_type == self::TYPE_BILL) // no next operation after billing
 			return null;
 
-		$next_type = $this->order_type == Document::TYPE_BID ? Document::TYPE_ORDER :
-						$this->order_type == Document::TYPE_ORDER ? Document::TYPE_BILL : null;
+		$next_type = $this->document_type == Document::TYPE_BID ? Document::TYPE_ORDER :
+						$this->document_type == Document::TYPE_ORDER ? Document::TYPE_BILL : null;
 
      	/** if a following document already exists, it returns it rather than create a new one. */
-		if( $existing_next = $this->find()->andWhere(['parent_id' => $this->id])->andWhere(['order_type' => $next_type])->one() )
+		if( $existing_next = $this->find()->andWhere(['parent_id' => $this->id])->andWhere(['document_type' => $next_type])->one() )
 			return $existing_next;
 
-		$new_type = ($this->order_type == self::TYPE_BID) ? self::TYPE_ORDER : self::TYPE_BILL;
+		$new_type = ($this->document_type == self::TYPE_BID) ? self::TYPE_ORDER : self::TYPE_BILL;
 		$copy = $this->deepCopy($new_type);
 		$copy->parent_id = $this->id;
 		
-		if($this->order_type == self::TYPE_BID) { // if coming from bid to order, need to change reference to official order reference
+		if($this->document_type == self::TYPE_BID) { // if coming from bid to order, need to change reference to official order reference
 			$copy->name = substr($copy->due_date,0,4).'-'.Sequence::nextval('order_number');
 		}
 		
 		$copy->status = self::STATUS_OPEN;
 		$copy->save();
 		
-		if($copy->order_type == self::TYPE_ORDER && Parameter::isTrue('application', 'auto_submit_work')) {
+		if($copy->document_type == self::TYPE_ORDER && Parameter::isTrue('application', 'auto_submit_work')) {
 			Yii::trace('auto_submit_work for '.$copy->id);
 			$work = $copy->createWork();
-		} if($copy->order_type == self::TYPE_BILL && Parameter::isTrue('application', 'auto_send_bill')) {
+		} if($copy->document_type == self::TYPE_BILL && Parameter::isTrue('application', 'auto_send_bill')) {
 			Yii::trace('auto_send_bill for '.$copy->id);
 			$copy->send();
 		}
@@ -394,7 +423,7 @@ class Document extends _Order
 	 */
 	public function hasDetail() {
 		$hasDetail = false;
-		foreach($this->getOrderLines()->each() as $ol)
+		foreach($this->getDocumentLines()->each() as $ol)
 			if($ol->hasDetail()) $hasDetail = true;
 		return $hasDetail;
 	}
@@ -404,7 +433,7 @@ class Document extends _Order
 	 */
 	public function hasPicture() {
 		$hasPicture = false;
-		foreach($this->getOrderLines()->each() as $ol)
+		foreach($this->getDocumentLines()->each() as $ol)
 			if($ol->hasPicture()) $hasPicture = true;
 		return $hasPicture;
 	}
@@ -438,7 +467,7 @@ class Document extends _Order
 	 * @return string HTML fragment
 	 */
 	public function getActions($baseclass = 'btn btn-xs btn-block', $show_work = false, $template = '{icon} {text}') {
-		$ret = Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/order/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
+		$ret = Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
 		return $ret;
 	}
 

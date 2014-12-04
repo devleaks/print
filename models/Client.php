@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use app\models\Order;
+use app\models\Document;
 use kartik\helpers\Html as KHtml;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;

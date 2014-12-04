@@ -14,7 +14,7 @@ class Bid extends Document
 	public static function defaultScope($query)
     {
 		Yii::trace('defaultScope', 'app');
-        $query->andWhere(['order_type' => self::TYPE_BID]);
+        $query->andWhere(['document_type' => self::TYPE_BID]);
     }
 
     /**
@@ -24,18 +24,18 @@ class Bid extends Document
 		$ret = '';
 		switch($this->status) {
 			case $this::STATUS_OPEN:
-				$ret .= Html::a($this->getButton($template, 'pencil', 'Modify'), ['/order/order-line/create', 'id' => $this->id], [
+				$ret .= Html::a($this->getButton($template, 'pencil', 'Modify'), ['/order/document-line/create', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Modify'),
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
 					]);
-				$ret .= ' '.Html::a($this->getButton($template, 'ok', 'Convert to Order'), ['/order/order/convert', 'id' => $this->id], [
+				$ret .= ' '.Html::a($this->getButton($template, 'ok', 'Convert to Order'), ['/order/document/convert', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Convert to Order'),
 					'class' => $baseclass . ' btn-success',
 					'data-method' => 'post',
 					'data-confirm' => Yii::t('store', 'Convert to order?')
 					]);
-				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/order/cancel', 'id' => $this->id], [
+				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/document/cancel', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Cancel'),
 					'class' => $baseclass . ' btn-warning',
 					'data-method' => 'post',
@@ -43,9 +43,9 @@ class Bid extends Document
 					]);
 				break;
 			case $this::STATUS_CLOSED:
-				if( $order = $this->getOrders()->where(['order_type' => Order::TYPE_ORDER])->one() )
+				if( $order = $this->getDocuments()->where(['document_type' => Order::TYPE_ORDER])->one() )
 					$ret .= ' '.Html::a('<span class="label label-success">'.Yii::t('store', 'Order Placed').'</span>',
-										['/order/order/view', 'id' => $order->id], ['data-method' => 'post', 'title' => Yii::t('store', 'View Order')]);
+										['/order/document/view', 'id' => $order->id], ['data-method' => 'post', 'title' => Yii::t('store', 'View Order')]);
 				else
 					$ret .= ' <span class="label label-success">'.Yii::t('store', 'Order Placed').'</span>';
 				break;
@@ -53,9 +53,9 @@ class Bid extends Document
 				$ret .= ' <span class="label label-primary">'.Yii::t('store', 'Cancelled').'</span>';
 				break;
 		}
-		$ret .= ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/order/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')]);
-		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/order/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
-		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/order/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'View')]);
+		$ret .= ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')]);
+		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/document/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
+		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'View')]);
 		return $ret;
 	}
 

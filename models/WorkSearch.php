@@ -20,7 +20,7 @@ class WorkSearch extends Work
     public function rules()
     {
         return [
-            [['id', 'order_id', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'document_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at', 'status', 'due_date'], 'safe'],
 			[['order_name'], 'safe'],
         ];
@@ -45,15 +45,15 @@ class WorkSearch extends Work
     public function search($params)
     {
         $query = Work::find();
-		$query->joinWith('order');
+		$query->joinWith('document');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
 		$dataProvider->sort->attributes['order_name'] = [
-		    'asc' => ['order.name' => SORT_ASC],
-		    'desc' => ['order.name' => SORT_DESC],
+		    'asc' => ['document.name' => SORT_ASC],
+		    'desc' => ['document.name' => SORT_DESC],
 		];
 
         if (!($this->load($params) && $this->validate())) {
@@ -62,7 +62,7 @@ class WorkSearch extends Work
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'order_id' => $this->order_id,
+            'document_id' => $this->document_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
@@ -70,8 +70,8 @@ class WorkSearch extends Work
             'due_date' => $this->due_date,
         ]);
 
-        $query->andFilterWhere(['like', 'status', $this->status])
-    		  ->andFilterWhere(['like', 'order.name', $this->order_name]);
+        $query->andFilterWhere(['like', 'work.status', $this->status])
+    		  ->andFilterWhere(['like', 'document.name', $this->order_name]);
 
         return $dataProvider;
     }

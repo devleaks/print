@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	        [
 	            'label' => Yii::t('store', 'Commande'),
 	            'value' => function ($model, $key, $index, $widget) {
-	                return $model->work->order->name;
+	                return $model->work->document->name;
 	            },
 	            'format' => 'raw',
 	        ],

@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Order;
+use app\models\Document;
 use app\models\Task;
 use app\models\User;
 use app\models\Work;
@@ -13,7 +13,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\WorkLineSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('store', 'Tasks '.Order::getDateWords($day));
+$this->title = Yii::t('store', 'Tasks '.Document::getDateWords($day));
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,9 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            'work.order.name',
+            'work.document.name',
 			[
-				'attribute' => 'work.order.due_date',
+				'attribute' => 'work.document.due_date',
 				'format' => 'date'
 			],
 	        [

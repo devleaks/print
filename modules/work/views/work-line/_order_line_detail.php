@@ -4,9 +4,9 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\OrderLine */
+/* @var $model app\models\DocumentLine */
 ?>
-<div class="order-line-detail-view">
+<div class="document-line-detail-view">
 
 	<?= $model->getDescription() ?>
 

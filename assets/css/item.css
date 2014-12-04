@@ -1,5 +1,5 @@
-#orderline-image_add label,
-#orderlinedetail-tirage_id label,
-#orderlinedetail-chroma_id label {
+#documentline-image_add label,
+#documentlinedetail-tirage_id label,
+#documentlinedetail-chroma_id label {
 	padding-right: 4em;
 }

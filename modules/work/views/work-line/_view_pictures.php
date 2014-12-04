@@ -3,7 +3,7 @@
 use dosamigos\gallery\Gallery;
 
 ?>
-<div class="order-line-picture">
+<div class="document-line-picture">
 
 <?php
     $pics = array();

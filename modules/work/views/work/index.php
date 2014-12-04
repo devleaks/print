@@ -19,7 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="work-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -30,7 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'order_name',
 	            'label' => Yii::t('store', 'Order'),
 	            'value' => function ($model, $key, $index, $widget) {
-	                    return Html::a($model->getOrder()->one()->name, Url::to(['/order/order/view', 'id' => $model->order_id]));
+                    return in_array(Yii::$app->user->identity->role, ['manager', 'admin']) ? 
+							Html::a($model->document->name, Url::to(['/order/document/view', 'id' => $model->document_id]))
+							 : $model->document->name;
 	            },
 	            'format' => 'raw',
 	        ],

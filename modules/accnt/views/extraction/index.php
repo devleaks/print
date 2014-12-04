@@ -8,6 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('store', 'Extractions');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="extraction-index">
@@ -23,8 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'extraction_type',
             'date_from',
             'date_to',
-            'order_from',
-            'order_to',
+            'document_from',
+            'document_to',
             'created_at',
 
             ['class' => 'yii\grid\ActionColumn'],

@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Order;
+use app\models\Document;
 use app\models\Work;
 use kartik\helpers\Html;
 use yii\helpers\Url;

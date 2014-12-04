@@ -4,8 +4,95 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6b48763ffad5fa92d93969091990f585",
+    "hash": "d5d5d50bdbdf5535d82f769cc866d0a5",
     "packages": [
+        {
+            "name": "2amigos/yii2-dosamigos-asset-bundle",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-dosamigos-asset-bundle.git",
+                "reference": "39316c82cf25a884b9037e758968e1323b4add33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-dosamigos-asset-bundle/zipball/39316c82cf25a884b9037e758968e1323b4add33",
+                "reference": "39316c82cf25a884b9037e758968e1323b4add33",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\assets\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "ramirez.cobos@gmail.com",
+                    "homepage": "http://2amigos.us"
+                }
+            ],
+            "description": "2amigOS! Asset Bundle for Yii2.",
+            "keywords": [
+                "asset",
+                "component",
+                "extension",
+                "yii"
+            ],
+            "time": "2014-09-01 13:43:36"
+        },
+        {
+            "name": "2amigos/yii2-editable-widget",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-editable-widget.git",
+                "reference": "ba31e2401af3cf16a4ea655c0a87cac67f12393e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-editable-widget/zipball/ba31e2401af3cf16a4ea655c0a87cac67f12393e",
+                "reference": "ba31e2401af3cf16a4ea655c0a87cac67f12393e",
+                "shasum": ""
+            },
+            "require": {
+                "ivaynberg/select2": "3.5.0",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\editable\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "ramirez.cobos@gmail.com",
+                    "homepage": "http://2amigos.us"
+                }
+            ],
+            "description": "X-Editable widget for Yii2.",
+            "keywords": [
+                "extension",
+                "widget",
+                "x-editable",
+                "yii"
+            ],
+            "time": "2014-08-20 14:40:53"
+        },
         {
             "name": "2amigos/yii2-gallery-widget",
             "version": "0.1.0",
@@ -48,6 +135,51 @@
                 "yii"
             ],
             "time": "2014-04-07 22:24:40"
+        },
+        {
+            "name": "2amigos/yii2-grid-view-library",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-grid-view-library.git",
+                "reference": "c047506baed4fe718bdad08d629a4a86b7b4f731"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-grid-view-library/zipball/c047506baed4fe718bdad08d629a4a86b7b4f731",
+                "reference": "c047506baed4fe718bdad08d629a4a86b7b4f731",
+                "shasum": ""
+            },
+            "require": {
+                "2amigos/yii2-dosamigos-asset-bundle": "0.1.*",
+                "2amigos/yii2-editable-widget": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\grid\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "ramirez.cobos@gmail.com",
+                    "homepage": "http://2amigos.us"
+                }
+            ],
+            "description": "GridView Widget Extensions for Yii2.",
+            "keywords": [
+                "extension",
+                "grid",
+                "widget",
+                "yii"
+            ],
+            "time": "2014-09-12 17:20:06"
         },
         {
             "name": "2amigos/yii2-qrcode-helper",
@@ -257,16 +389,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.1.41",
+            "version": "3.1.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/jquery.inputmask.git",
-                "reference": "9c2c236cf29b3e78b635f2ba3c588174336d9228"
+                "reference": "ba392f1c9c1f7a05d1b89a5e49cbd0610face768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/9c2c236cf29b3e78b635f2ba3c588174336d9228",
-                "reference": "9c2c236cf29b3e78b635f2ba3c588174336d9228",
+                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/ba392f1c9c1f7a05d1b89a5e49cbd0610face768",
+                "reference": "ba392f1c9c1f7a05d1b89a5e49cbd0610face768",
                 "shasum": ""
             },
             "require": {
@@ -422,6 +554,52 @@
             "time": "2014-10-25 16:16:49"
         },
         {
+            "name": "components/jquery",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jquery.git",
+                "reference": "9e2c56ed9f17e6b55de97ae64a3ed0cf17cd30d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jquery/zipball/9e2c56ed9f17e6b55de97ae64a3ed0cf17cd30d4",
+                "reference": "9e2c56ed9f17e6b55de97ae64a3ed0cf17cd30d4",
+                "shasum": ""
+            },
+            "require": {
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.js"
+                    ],
+                    "files": [
+                        "jquery.min.js",
+                        "jquery.min.map",
+                        "jquery-migrate.js",
+                        "jquery-migrate.min.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Resig",
+                    "email": "jeresig@gmail.com",
+                    "homepage": "http://ejohn.org/"
+                }
+            ],
+            "description": "jQuery JavaScript Library",
+            "homepage": "http://jquery.com",
+            "time": "2014-07-02 11:52:43"
+        },
+        {
             "name": "dektrium/yii2-user",
             "version": "v0.8.1",
             "source": {
@@ -477,6 +655,54 @@
                 "yii2-user"
             ],
             "time": "2014-10-13 15:57:00"
+        },
+        {
+            "name": "devleaks/yii2-chardinjs",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/devleaks/yii2-chardinjs.git",
+                "reference": "2045c6bbcb4e547924dcab588cb17085546ebe46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/devleaks/yii2-chardinjs/zipball/2045c6bbcb4e547924dcab588cb17085546ebe46",
+                "reference": "2045c6bbcb4e547924dcab588cb17085546ebe46",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/chardin.js": "*",
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-bootstrap": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "devleaks\\chardinjs\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pierre M",
+                    "email": "devleaks.be@gmail.com"
+                }
+            ],
+            "description": "Yii2 asset bundle wrapper around chardinjs library",
+            "keywords": [
+                "chardinjs",
+                "extension",
+                "help",
+                "webtour",
+                "yii2"
+            ],
+            "support": {
+                "source": "https://github.com/devleaks/yii2-chardinjs/tree/master",
+                "issues": "https://github.com/devleaks/yii2-chardinjs/issues"
+            },
+            "time": "2014-12-04 15:09:36"
         },
         {
             "name": "devleaks/yii2-introjs",
@@ -660,6 +886,49 @@
                 "yii2"
             ],
             "time": "2014-11-19 04:23:54"
+        },
+        {
+            "name": "ivaynberg/select2",
+            "version": "3.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ivaynberg/select2.git",
+                "reference": "6ef7155df756837e1378230193d95fce1180a7cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ivaynberg/select2/zipball/6ef7155df756837e1378230193d95fce1180a7cb",
+                "reference": "6ef7155df756837e1378230193d95fce1180a7cb",
+                "shasum": ""
+            },
+            "require": {
+                "components/jquery": ">=1.7.1",
+                "robloach/component-installer": "*"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "select2.js"
+                    ],
+                    "files": [
+                        "select2.js",
+                        "select2_locale_*.js",
+                        "select2.css",
+                        "select2-bootstrap.css",
+                        "select2-spinner.gif",
+                        "select2.png",
+                        "select2x2.png"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Select2 is a jQuery based replacement for select boxes.",
+            "homepage": "http://ivaynberg.github.io/select2/",
+            "time": "2014-06-16 23:29:53"
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
@@ -883,12 +1152,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-builder.git",
-                "reference": "041eb3c4840c1d73e1ea574eff3dedd5ed28d4d2"
+                "reference": "a28f3164e2bb92e8b00901519c6ab1430b384c74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/041eb3c4840c1d73e1ea574eff3dedd5ed28d4d2",
-                "reference": "041eb3c4840c1d73e1ea574eff3dedd5ed28d4d2",
+                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/a28f3164e2bb92e8b00901519c6ab1430b384c74",
+                "reference": "a28f3164e2bb92e8b00901519c6ab1430b384c74",
                 "shasum": ""
             },
             "require": {
@@ -922,7 +1191,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2014-11-27 13:24:05"
+            "time": "2014-12-01 14:00:35"
         },
         {
             "name": "kartik-v/yii2-datecontrol",
@@ -1021,16 +1290,16 @@
         },
         {
             "name": "kartik-v/yii2-grid",
-            "version": "v2.6.0",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "ea3ec24efc8b0c5699790ba1a0b0ddf7ab1f8265"
+                "reference": "46eb2a7e4fda47216330eaf394366c19c02f330b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/ea3ec24efc8b0c5699790ba1a0b0ddf7ab1f8265",
-                "reference": "ea3ec24efc8b0c5699790ba1a0b0ddf7ab1f8265",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/46eb2a7e4fda47216330eaf394366c19c02f330b",
+                "reference": "46eb2a7e4fda47216330eaf394366c19c02f330b",
                 "shasum": ""
             },
             "require": {
@@ -1061,7 +1330,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2014-11-19 20:48:47"
+            "time": "2014-12-02 10:57:31"
         },
         {
             "name": "kartik-v/yii2-helpers",
@@ -1158,16 +1427,16 @@
         },
         {
             "name": "kartik-v/yii2-krajee-base",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-krajee-base.git",
-                "reference": "0c4d3907f9b47036696d22ed8b8b2e0af5e6a2e7"
+                "reference": "40bf7a9628a2820f142e3621eb34f91df1a4f831"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/0c4d3907f9b47036696d22ed8b8b2e0af5e6a2e7",
-                "reference": "0c4d3907f9b47036696d22ed8b8b2e0af5e6a2e7",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/40bf7a9628a2820f142e3621eb34f91df1a4f831",
+                "reference": "40bf7a9628a2820f142e3621eb34f91df1a4f831",
                 "shasum": ""
             },
             "require": {
@@ -1200,7 +1469,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2014-11-25 07:58:40"
+            "time": "2014-11-28 19:16:36"
         },
         {
             "name": "kartik-v/yii2-label-inplace",
@@ -1401,16 +1670,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-activeform",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-activeform.git",
-                "reference": "33399c3c44141f5a9e013e9829402d2ca6642bdf"
+                "reference": "d3d9a00865b6af1ef8412388186892054e5c0dda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-activeform/zipball/33399c3c44141f5a9e013e9829402d2ca6642bdf",
-                "reference": "33399c3c44141f5a9e013e9829402d2ca6642bdf",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-activeform/zipball/d3d9a00865b6af1ef8412388186892054e5c0dda",
+                "reference": "d3d9a00865b6af1ef8412388186892054e5c0dda",
                 "shasum": ""
             },
             "require": {
@@ -1444,7 +1713,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2014-11-26 10:04:45"
+            "time": "2014-12-01 13:57:47"
         },
         {
             "name": "kartik-v/yii2-widget-affix",
@@ -1596,16 +1865,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-datepicker",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-datepicker.git",
-                "reference": "85feee443914c55f82692e4e7bb57e4bdad03491"
+                "reference": "d0115019fab6275a5391cedd28ca53b4609ef8ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/85feee443914c55f82692e4e7bb57e4bdad03491",
-                "reference": "85feee443914c55f82692e4e7bb57e4bdad03491",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/d0115019fab6275a5391cedd28ca53b4609ef8ef",
+                "reference": "d0115019fab6275a5391cedd28ca53b4609ef8ef",
                 "shasum": ""
             },
             "require": {
@@ -1641,20 +1910,20 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2014-11-08 18:40:45"
+            "time": "2014-11-28 19:18:20"
         },
         {
             "name": "kartik-v/yii2-widget-datetimepicker",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-datetimepicker.git",
-                "reference": "91e43feae986aad654d5efdf4febaa7e1541021f"
+                "reference": "a2860eade35d69642ed60fea83c9a69c03741516"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/91e43feae986aad654d5efdf4febaa7e1541021f",
-                "reference": "91e43feae986aad654d5efdf4febaa7e1541021f",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/a2860eade35d69642ed60fea83c9a69c03741516",
+                "reference": "a2860eade35d69642ed60fea83c9a69c03741516",
                 "shasum": ""
             },
             "require": {
@@ -1677,7 +1946,7 @@
                     "homepage": "http://www.krajee.com/"
                 }
             ],
-            "description": "Enhanced Yii2 wrapper for the bootstrap datetimepicker plugin (sub repo split from yii2-widgets).",
+            "description": "Enhanced Yii2 wrapper for the bootstrap datetimepicker plugin (sub repo split from yii2-widgets)",
             "homepage": "https://github.com/kartik-v/yii2-widget-datetimepicker",
             "keywords": [
                 "datetime",
@@ -1690,7 +1959,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2014-11-08 18:48:07"
+            "time": "2014-11-28 19:20:18"
         },
         {
             "name": "kartik-v/yii2-widget-depdrop",
@@ -2804,17 +3073,17 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.5.7",
+            "version": "v2.6.0",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "ffe6e27a57e31262c3204a0955076c27c54c8e7e"
+                "reference": "dc88f75d1c07791e5733f90be747961dce26cf05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/ffe6e27a57e31262c3204a0955076c27c54c8e7e",
-                "reference": "ffe6e27a57e31262c3204a0955076c27c54c8e7e",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/dc88f75d1c07791e5733f90be747961dce26cf05",
+                "reference": "dc88f75d1c07791e5733f90be747961dce26cf05",
                 "shasum": ""
             },
             "require": {
@@ -2823,7 +3092,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
@@ -2847,7 +3116,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2014-11-03 19:48:45"
+            "time": "2014-11-04 14:29:39"
         },
         {
             "name": "thomaspark/bootswatch",

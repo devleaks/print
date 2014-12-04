@@ -5,10 +5,10 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Order;
+use app\models\Document;
 
 /**
- * OrderSearch represents the model behind the search form about `app\models\Order`.
+ * OrderSearch represents the model behind the search form about `app\models\Document`.
  */
 class DocumentSearch extends Document
 {
@@ -21,7 +21,7 @@ class DocumentSearch extends Document
     {
         return [
             [['id', 'parent_id', 'client_id', 'created_by', 'updated_by', 'vat_bool'], 'integer'],
-            [['order_type', 'name', 'due_date', 'note', 'status', 'created_at', 'updated_at', 'lang', 'reference', 'reference_client'], 'safe'],
+            [['document_type', 'name', 'due_date', 'note', 'status', 'created_at', 'updated_at', 'lang', 'reference', 'reference_client'], 'safe'],
             [['price_htva', 'price_tvac'], 'number'],
             [['client_name'], 'safe'],
         ];
@@ -37,6 +37,17 @@ class DocumentSearch extends Document
         ]);
     }
 
+	protected function newSearch($new_type = null) {
+		switch($new_type ? $new_type : $this->document_type) {
+			case Document::TYPE_BID:	return new SearchBid($this->attributes);	break;
+			case Document::TYPE_ORDER:	return new SearchOrder($this->attributes);	break;
+			case Document::TYPE_BILL:	return new SearchBill($this->attributes);	break;
+			case Document::TYPE_CREDIT:	return new SearchCredit($this->attributes);break;
+			case Document::TYPE_TICKET:	return new SearchTicket($this->attributes);break;
+		}
+		return null;
+	}
+	
     /**
      * Creates data provider instance with search query applied
      *
@@ -64,26 +75,26 @@ class DocumentSearch extends Document
         }
 
         $query->andFilterWhere([
-            'order.id' => $this->id,
-            'order.parent_id' => $this->parent_id,
-            'order.client_id' => $this->client_id,
-            'order.due_date' => $this->due_date,
-            'order.created_at' => $this->created_at,
-            'order.updated_at' => $this->updated_at,
-            'order.price_htva' => $this->price_htva,
-            'order.price_tvac' => $this->price_tvac,
-            'order.created_by' => $this->created_by,
-            'order.updated_by' => $this->updated_by,
-            'order.vat_bool' => $this->vat_bool,
+            'document.id' => $this->id,
+            'document.parent_id' => $this->parent_id,
+            'document.client_id' => $this->client_id,
+            'document.due_date' => $this->due_date,
+            'document.created_at' => $this->created_at,
+            'document.updated_at' => $this->updated_at,
+            'document.price_htva' => $this->price_htva,
+            'document.price_tvac' => $this->price_tvac,
+            'document.created_by' => $this->created_by,
+            'document.updated_by' => $this->updated_by,
+            'document.vat_bool' => $this->vat_bool,
         ]);
 
-        $query->andFilterWhere(['like', 'order.order_type', $this->order_type])
-            ->andFilterWhere(['like', 'order.name', $this->name])
-            ->andFilterWhere(['like', 'order.note', $this->note])
-            ->andFilterWhere(['like', 'order.status', $this->status])
-            ->andFilterWhere(['like', 'order.lang', $this->lang])
-            ->andFilterWhere(['like', 'order.reference', $this->reference])
-            ->andFilterWhere(['like', 'order.reference_client', $this->reference_client])
+        $query->andFilterWhere(['like', 'document.document_type', $this->document_type])
+            ->andFilterWhere(['like', 'document.name', $this->name])
+            ->andFilterWhere(['like', 'document.note', $this->note])
+            ->andFilterWhere(['like', 'document.status', $this->status])
+            ->andFilterWhere(['like', 'document.lang', $this->lang])
+            ->andFilterWhere(['like', 'document.reference', $this->reference])
+            ->andFilterWhere(['like', 'document.reference_client', $this->reference_client])
             ->andFilterWhere(['like', 'client.nom', $this->client_name]);
 
         return $dataProvider;

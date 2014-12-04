@@ -8,13 +8,20 @@ use yii\helpers\Url;
 
 class Bill extends Document
 {
+	/** Bulk action ID */
+	const ACTION_PAYMENT_RECEIVED = 'PAY';
+	/** Bulk action ID */
+	const ACTION_SEND_REMINDER = 'SEND';
+	/** Bulk action ID */
+	const ACTION_EXTRACT = 'EXTRACT';
+	
     /**
      * @inheritdoc
 	 */
 	public static function defaultScope($query)
     {
 		Yii::trace('defaultScope Bill', 'app');
-        $query->andWhere(['order_type' => self::TYPE_BILL]);
+        $query->andWhere(['document_type' => self::TYPE_BILL]);
     }
 
 	/**
@@ -43,7 +50,7 @@ class Bill extends Document
 				$line = 1;
 				if(! $model) {
 					$model = new Bill();
-					$model->order_type = self::TYPE_BILL;
+					$model->document_type = self::TYPE_BILL;
 					$model->id = null;
 					$model->client_id = $bom->client_id;
 					$model->due_date = $bom->due_date;
@@ -56,7 +63,7 @@ class Bill extends Document
 					$model->save();
 				}
 				// add order lines from bom to bill
-				foreach($bom->getOrderLines()->each() as $ol) {
+				foreach($bom->getDocumentLines()->each() as $ol) {
 					/*
 					if($ol->item->reference === Item::TYPE_REBATE) { // global rebate line not allowed in BOM
 						foreach($boms->each() as $bom) {
@@ -109,7 +116,7 @@ class Bill extends Document
 		$ret = '';
 		switch($this->status) {
 			case $this::STATUS_OPEN:
-				$ret .= Html::a($this->getButton($template, 'credit-card', 'Send Bill'), ['/order/order/sent', 'id' => $this->id], [
+				$ret .= Html::a($this->getButton($template, 'credit-card', 'Send Bill'), ['/order/document/sent', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Send Bill'),
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
@@ -117,7 +124,7 @@ class Bill extends Document
 					]);
 				break;
 			case $this::STATUS_NOTE:
-				$ret .= Html::a($this->getButton($template, 'euro', 'Paiement Received'), ['/order/order/paid', 'id' => $this->id], [
+				$ret .= Html::a($this->getButton($template, 'euro', 'Paiement Received'), ['/order/document/paid', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Paiement Received'),
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
@@ -128,9 +135,9 @@ class Bill extends Document
 				$ret .= '<span class="label label-success">'.Yii::t('store', 'Paiement Received').'</span>';
 				break;
 		}
-		$ret .= ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/order/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')]);
-		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/order/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
-		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/order/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'View')]);
+		$ret .= ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')]);
+		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/document/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
+		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'View')]);
 		return $ret;
 	}
 

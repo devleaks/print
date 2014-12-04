@@ -18,9 +18,9 @@ class BillSearch extends Bill
     public function rules()
     {
         return [
-            [['id', 'parent_id', 'client_id', 'created_by', 'updated_by', 'vat_bool'], 'integer'],
-            [['order_type', 'name', 'due_date', 'note', 'status', 'created_at', 'updated_at', 'lang', 'reference', 'reference_client'], 'safe'],
-            [['price_htva', 'price_tvac'], 'number'],
+            [['id', 'parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by'], 'integer'],
+            [['name', 'reference', 'reference_client', 'due_date', 'paiement_method', 'note', 'lang', 'status', 'created_at', 'updated_at', 'document_type'], 'safe'],
+            [['price_htva', 'price_tvac', 'prepaid', 'vat'], 'number'],
         ];
     }
 
@@ -57,22 +57,26 @@ class BillSearch extends Bill
             'parent_id' => $this->parent_id,
             'client_id' => $this->client_id,
             'due_date' => $this->due_date,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'price_htva' => $this->price_htva,
             'price_tvac' => $this->price_tvac,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
+            'prepaid' => $this->prepaid,
+            'vat' => $this->vat,
             'vat_bool' => $this->vat_bool,
+            'bom_bool' => $this->bom_bool,
+            'created_at' => $this->created_at,
+            'created_by' => $this->created_by,
+            'updated_at' => $this->updated_at,
+            'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'order_type', $this->order_type])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'note', $this->note])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'lang', $this->lang])
+        $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'reference', $this->reference])
-            ->andFilterWhere(['like', 'reference_client', $this->reference_client]);
+            ->andFilterWhere(['like', 'reference_client', $this->reference_client])
+            ->andFilterWhere(['like', 'paiement_method', $this->paiement_method])
+            ->andFilterWhere(['like', 'note', $this->note])
+            ->andFilterWhere(['like', 'lang', $this->lang])
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'document_type', $this->document_type]);
 
         return $dataProvider;
     }

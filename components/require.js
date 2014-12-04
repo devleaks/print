@@ -2018,6 +2018,16 @@ var requirejs, require, define;
     req(cfg);
 }(this));
 var components = {
+    "packages": [
+        {
+            "name": "jquery",
+            "main": "jquery-built.js"
+        },
+        {
+            "name": "select2",
+            "main": "select2-built.js"
+        }
+    ],
     "baseUrl": "components"
 };
 if (typeof require !== "undefined" && require.config) {

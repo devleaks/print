@@ -13,11 +13,10 @@ use Yii;
  * @property string $extraction_type
  * @property string $date_from
  * @property string $date_to
- * @property integer $order_from
- * @property integer $order_to
+ * @property integer $document_from
+ * @property integer $document_to
  *
- * @property Order $orderTo
- * @property Order $orderFrom
+ * @property Document $documentFrom
  * @property ExtractionLine[] $extractionLines
  */
 class _Extraction extends \yii\db\ActiveRecord
@@ -37,7 +36,7 @@ class _Extraction extends \yii\db\ActiveRecord
     {
         return [
             [['created_at', 'updated_at', 'date_from', 'date_to'], 'safe'],
-            [['order_from', 'order_to'], 'integer'],
+//            [['document_from', 'document_to'], 'integer'],
             [['extraction_type'], 'string', 'max' => 20]
         ];
     }
@@ -54,25 +53,17 @@ class _Extraction extends \yii\db\ActiveRecord
             'extraction_type' => Yii::t('store', 'Extraction Type'),
             'date_from' => Yii::t('store', 'Date From'),
             'date_to' => Yii::t('store', 'Date To'),
-            'order_from' => Yii::t('store', 'Order From'),
-            'order_to' => Yii::t('store', 'Order To'),
+            'document_from' => Yii::t('store', 'Document From'),
+            'document_to' => Yii::t('store', 'Document To'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrderTo()
+    public function getDocumentFrom()
     {
-        return $this->hasOne(Order::className(), ['id' => 'order_to']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrderFrom()
-    {
-        return $this->hasOne(Order::className(), ['id' => 'order_from']);
+        return $this->hasOne(Document::className(), ['id' => 'document_from']);
     }
 
     /**

@@ -42,9 +42,9 @@ use Yii;
  * @property ItemOption[] $itemOptions
  * @property ItemTask[] $itemTasks
  * @property Option[] $options
- * @property OrderLine[] $orderLines
- * @property OrderLineDetail[] $orderLineDetails
- * @property OrderLineOption[] $orderLineOptions
+ * @property DocumentLine[] $orderLines
+ * @property DocumentLineDetail[] $orderLineDetails
+ * @property DocumentLineOption[] $orderLineOptions
  * @property WorkLine[] $workLines
  */
 class _Item extends \yii\db\ActiveRecord
@@ -140,25 +140,25 @@ class _Item extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrderLines()
+    public function getDocumentLines()
     {
-        return $this->hasMany(OrderLine::className(), ['item_id' => 'id']);
+        return $this->hasMany(DocumentLine::className(), ['item_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrderLineDetails()
+    public function getDocumentLineDetails()
     {
-        return $this->hasMany(OrderLineDetail::className(), ['frame_id' => 'id']);
+        return $this->hasMany(DocumentLineDetail::className(), ['frame_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrderLineOptions()
+    public function getDocumentLineOptions()
     {
-        return $this->hasMany(OrderLineOption::className(), ['item_id' => 'id']);
+        return $this->hasMany(DocumentLineOption::className(), ['item_id' => 'id']);
     }
 
     /**

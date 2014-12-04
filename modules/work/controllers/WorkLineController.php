@@ -3,7 +3,7 @@
 namespace app\modules\work\controllers;
 
 use Yii;
-use app\models\Order;
+use app\models\Document;
 use app\models\Task;
 use app\models\Work;
 use app\models\WorkLine;
@@ -39,7 +39,7 @@ class WorkLineController extends Controller
     {
         $searchModel = new WorkLineSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere(['!=', 'status', Work::STATUS_DONE]);
+		$dataProvider->query->andWhere(['!=', 'work_line.status', Work::STATUS_DONE]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -141,7 +141,7 @@ class WorkLineController extends Controller
      */
     public function actionList($id = 0)
     {
-		$where = Order::getDateClause(intval($id));
+		$where = Document::getDateClause(intval($id));
 	
         $searchModel = new WorkLineSearch();
         $dataProvider = new ActiveDataProvider([
@@ -257,7 +257,7 @@ class WorkLineController extends Controller
 	}
 	
 	public static function getBadge($id) {
-		$where = Order::getDateClause(intval($id));
+		$where = Document::getDateClause(intval($id));
 		$all= $id = -2
 			?   self::find()->count()
 			:	self::find()

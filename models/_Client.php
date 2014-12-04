@@ -149,7 +149,7 @@ class _Client extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrders()
+    public function getDocuments()
     {
         return $this->hasMany(Order::className(), ['client_id' => 'id']);
     }

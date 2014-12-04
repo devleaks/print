@@ -9,15 +9,16 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\Work */
 
-$this->title = $model->order->name;
+$this->title = $model->document->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'All Works'), 'url' => ['index']];
 if(isset($order_line)) {
-	$this->params['breadcrumbs'][] = ['label' => $model->getOrder()->one()->name, 'url' => Url::to(['/work/work/view', 'id' => $model->id])];
+	$this->params['breadcrumbs'][] = ['label' => $model->getDocument()->one()->name, 'url' => Url::to(['/work/work/view', 'id' => $model->id])];
 	$this->params['breadcrumbs'][] = $order_line->getItem()->one()->libelle_long;
 } else {
 	$this->params['breadcrumbs'][] = $this->title;
 }
+$can_view = in_array(Yii::$app->user->identity->role, ['manager', 'admin']);
 ?>
 <div class="work-view">
 
@@ -31,12 +32,13 @@ if(isset($order_line)) {
         'attributes' => [
             //'id',
             [
-                'attribute'=>'order_id',
+                'attribute'=>'document_id',
                 'label'=>Yii::t('store','Order'),
-                'value'=>Html::a($model->getOrder()->one()->name, Url::to(['/order/order/view', 'id' => $model->order_id])),
+//				'value'=>Html::a($model->getDocument()->one()->name, Url::to(['/order/document/view', 'id' => $model->document_id])),
+                'value'=>$can_view ? Html::a($model->getDocument()->one()->name, Url::to(['/order/document/view', 'id' => $model->document_id])) : $model->getDocument()->one()->name,
 				'format' => 'raw',
             ],
-//            'order_id',
+//            'document_id',
             [
                 'attribute'=>'created_at',
 				'value' => Yii::$app->formatter->asDateTime($model->created_at).' '.Yii::t('store', 'by').' '.$model->createdBy->username,
@@ -76,7 +78,7 @@ if(isset($order_line)) {
 	$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 	if(isset($order_line))
-	    $dataProvider->query->andWhere(['work_id' => $model->id])->andWhere(['order_line_id' => $order_line->id]); //->orderBy('position');
+	    $dataProvider->query->andWhere(['work_id' => $model->id])->andWhere(['document_line_id' => $order_line->id]); //->orderBy('position');
 	else
 	    $dataProvider->query->andWhere(['work_id' => $model->id]); //->orderBy('position');
 

@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 <div class="search-form">
 
-    <?php $form = ActiveForm::begin(['action' => Url::to(['/order/order/search'])]); ?>
+    <?php $form = ActiveForm::begin(['action' => Url::to(['/order/document/search'])]); ?>
 
     <?= Html::textInput('search', null, ['maxlength' => 40, 'class' => 'input-lg']) ?>
 

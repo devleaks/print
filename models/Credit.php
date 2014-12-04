@@ -14,7 +14,7 @@ class Credit extends Order
 	public static function defaultScope($query)
     {
 		Yii::trace('defaultScope', 'app');
-        $query->andWhere(['order_type' => self::TYPE_CREDIT]);
+        $query->andWhere(['document_type' => self::TYPE_CREDIT]);
     }
 
 
@@ -25,14 +25,14 @@ class Credit extends Order
 		$ret = '';
 		switch($this->status) {
 			case $this::STATUS_OPEN:
-				$ret .= Html::a($this->getButton($template, 'send', 'Send Credit Note'), ['/order/order/sent', 'id' => $this->id],[
+				$ret .= Html::a($this->getButton($template, 'send', 'Send Credit Note'), ['/order/document/sent', 'id' => $this->id],[
 					'title' => Yii::t('store', 'Send Credit Note'),
 					'class' => $baseclass . ' btn-primary',
 					'data-confirm' => Yii::t('store', 'Send credit note?')
 				]);
 				break;
 			case $this::STATUS_NOTE:
-				$ret .= Html::a($this->getButton($template, 'envelope', 'Paid'), ['/order/order/paid', 'id' => $this->id],[
+				$ret .= Html::a($this->getButton($template, 'envelope', 'Paid'), ['/order/document/paid', 'id' => $this->id],[
 					'title' => Yii::t('store', 'Paid'),
 					'class' => $baseclass . ' btn-primary',
 					'data-confirm' => Yii::t('store', 'Paiement sent?')

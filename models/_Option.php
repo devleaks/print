@@ -20,7 +20,7 @@ use Yii;
  *
  * @property ItemOption[] $itemOptions
  * @property Item $item
- * @property OrderLineOption[] $orderLineOptions
+ * @property DocumentLineOption[] $orderLineOptions
  */
 class _Option extends \yii\db\ActiveRecord
 {
@@ -84,8 +84,8 @@ class _Option extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrderLineOptions()
+    public function getDocumentLineOptions()
     {
-        return $this->hasMany(OrderLineOption::className(), ['option_id' => 'id']);
+        return $this->hasMany(DocumentLineOption::className(), ['option_id' => 'id']);
     }
 }

@@ -7,8 +7,8 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\WorkLine */
-$order = $model->getOrderLine()->one()->getOrder()->one();
-$order_line = $model->getOrderLine()->one();
+$order = $model->getDocumentLine()->one()->getDocument()->one();
+$order_line = $model->getDocumentLine()->one();
 $this->title = $model->getTask()->one()->name;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work']];
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = Html::encode($this->title);
 <div class="work-line-view">
 
 	<?= $this->render('_order_line', [ // there should only be one order line for this work line
-	        'model' => $model->getOrderLine()->one(),
+	        'model' => $model->getDocumentLine()->one(),
 		])
 	?>
 
@@ -38,7 +38,6 @@ $this->params['breadcrumbs'][] = Html::encode($this->title);
                 'label'=>Yii::t('store','Tâche'),
                 'value'=> $model->task->name,
 			],
-            'note',
             [
                 'attribute'=>'status',
                 'label'=>Yii::t('store','Status'),
@@ -47,14 +46,15 @@ $this->params['breadcrumbs'][] = Html::encode($this->title);
             [
                 'attribute'=>'status',
                 'label'=>Yii::t('store','Updated'),
-                'value'=> $model->getUpdatedBy()->one()->username . ' ' . Yii::t('store', 'at') . ' ' . $model->updated_at,
+                'value'=> $model->getUpdatedBy()->one()->username . ' ' . Yii::t('store', 'at') . ' ' . Yii::$app->formatter->asDateTime($model->updated_at),
 			],
+            'note',
 //          [
 //              'attribute'=>'status',
 //              'label'=>Yii::t('store','Created'),
 //              'value'=> $model->getCreatedBy()->one()->username . ' ' . Yii::t('store', 'at') . ' ' . $model->created_at,
 //			],
-            // 'order_line_id',
+            // 'document_line_id',
         ],
     ]) ?>
 

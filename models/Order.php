@@ -19,43 +19,34 @@ class Order extends Document
 	public static function defaultScope($query)
     {
 		Yii::trace('defaultScope', 'app');
-        $query->andWhere(['order_type' => self::TYPE_ORDER]);
+        $query->andWhere(['document_type' => self::TYPE_ORDER]);
     }
 
 	
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrderLines() // modified to have the global rebate line always LAST
+    public function getDocumentLines() // modified to have the global rebate line always LAST
     {
 		$item = Item::findOne(['reference' => Item::TYPE_REBATE]);
-		$special_line_query = OrderLine::find()
-							->andWhere(['order_id' => $this->id])
+		$special_line_query = DocumentLine::find()
+							->andWhere(['document_id' => $this->id])
 							->andWhere(['item_id' => $item->id]);
 							
-		$query = OrderLine::find()
-							->andWhere(['order_id' => $this->id])
+		$query = DocumentLine::find()
+							->andWhere(['document_id' => $this->id])
 							->andWhere(['!=', 'item_id', $item->id])
 							->union($special_line_query);
 
         return $query;
-        // return $this->hasMany(OrderLine::className(), ['order_id' => 'id']); // this is the original line
+        // return $this->hasMany(DocumentLine::className(), ['document_id' => 'id']); // this is the original line
     }
-
-	/** 
-	 * Update status and reports to parent Work model
-	 */
-	public function setStatus($status) {
-		$this->status = $status;
-		$this->save();
-		$this->updateStatus();
-	}
-
 
 	/**
 	 * @inheritdoc
 	 */
 	public function updateStatus() {
+		Yii::trace('Order::updateStatus');
 		if($this->status == self::STATUS_DONE)
 			$this->completed();
 	}
@@ -63,7 +54,8 @@ class Order extends Document
     /**
      * If order is completed, send email to client, and create bill if parameters allow it.
 	 */
-	protected function completed() {
+	private function completed() {
+		Yii::trace('Order::completed');
 		// 1. notify client of completion
 		if(Parameter::isTrue('application', 'auto_notify_completion')) {
 			if($this->client->email != '') {
@@ -75,9 +67,9 @@ class Order extends Document
 				Yii::$app->mailer->compose()
 				    ->setFrom('labojjmicheli@gmail.com')
 				    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )	// <=== FORCE DEV EMAIL TO TEST ADDRESS
-				    ->setSubject(Yii::t('store', $this->order_type).' '.$this->name)				// @todo: msg dans la langue du client
+				    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)				// @todo: msg dans la langue du client
 					->setTextBody(Yii::t('store', 'Your {document} is ready.', [
-    									'document' => Yii::t('store', $this->order_type).' '.$this->name]))
+    									'document' => Yii::t('store', $this->document_type).' '.$this->name]))
 				    ->send();
 
 				Yii::$app->language = $lang_before;
@@ -105,13 +97,13 @@ class Order extends Document
 		if( $existing_work = $this->getWorks()->one() )
 			return $existing_work;
 		$work = new Work();
-		$work->order_id = $this->id;
+		$work->document_id = $this->id;
 		$work->due_date = $this->due_date;
 		$work->status = Work::STATUS_TODO;
 		$work->save(); // to generate id
-		//Yii::trace('order '.$this->id);
+		Yii::trace('order '.$this->id);
 		
-		foreach($this->getOrderLines()->each() as $ol)
+		foreach($this->getDocumentLines()->each() as $ol)
 			$ol->createTask($work, $defaultWork);
 
 		// if work to do, set order status to do, otherwise, it is done.
@@ -152,19 +144,19 @@ class Order extends Document
 
 		switch($this->status) {
 			case $this::STATUS_CREATED:
-				$ret .= Html::a($this->getButton($template, 'plus', 'Add Items'), ['/order/order-line/create', 'id' => $this->id], [
+				$ret .= Html::a($this->getButton($template, 'plus', 'Add Items'), ['/order/document-line/create', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Add Items'),
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
 					]);
 				break;
 			case $this::STATUS_OPEN:
-				$ret .= Html::a($this->getButton($template, 'pencil', 'Update'), ['/order/order-line/create', 'id' => $this->id], [
+				$ret .= Html::a($this->getButton($template, 'pencil', 'Update'), ['/order/document-line/create', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Update'),
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
 					]);
-				$ret .= ' '.Html::a($this->getButton($template, 'tasks', 'Submit Work'), ['/order/order/submit', 'id' => $this->id], [
+				$ret .= ' '.Html::a($this->getButton($template, 'tasks', 'Submit Work'), ['/order/document/submit', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Submit Work'),
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
@@ -191,7 +183,7 @@ class Order extends Document
 						'class' => $baseclass . ' btn-primary',
 						'data-method' => 'post',
 						]);
-				$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/order/order/terminate', 'id' => $this->id], [
+				$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/order/document/terminate', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Terminate'),
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
@@ -199,7 +191,7 @@ class Order extends Document
 					]);
 				break;
 			case $this::STATUS_DONE:
-				$ret .= Html::a($this->getButton($template, 'credit-card', 'Bill To'), ['/order/order/convert', 'id' => $this->id], [
+				$ret .= Html::a($this->getButton($template, 'credit-card', 'Bill To'), ['/order/document/convert', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Bill To'),
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
@@ -213,21 +205,21 @@ class Order extends Document
 				$bill = $this->bom_bool ?
 					Bill::findOne($this->parent_id) // for BOM we set inverse relation, parent_id points to collective bill
 					:
-					$this->getOrders()->where(['order_type' => Order::TYPE_BILL])->one(); // or Bill::findOne(['parent_id'=>$this->id]) ?
+					$this->getDocuments()->where(['document_type' => Order::TYPE_BILL])->one(); // or Bill::findOne(['parent_id'=>$this->id]) ?
 					
 				if( $bill )
 					$ret .= ' '.Html::a('<span class="label label-success">'.Yii::t('store', 'Billed').'</span>',
-										['/order/order/view', 'id' => $bill->id], ['title' => Yii::t('store', 'View Bill'), 'data-method' => 'post']);
+										['/order/document/view', 'id' => $bill->id], ['title' => Yii::t('store', 'View Bill'), 'data-method' => 'post']);
 				else
 					$ret .= ' <span class="label label-success">'.Yii::t('store', 'Billed').'</span>';
 
 				break;
 		}
-		$ret .= ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/order/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')]);
-		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/order/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
-		$ret .= ' '.Html::a($this->getButton($template, 'tag', 'Labels'), ['/order/order/labels', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Labels')]);
-		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/order/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
-		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/order/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'View')]);
+		$ret .= ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')]);
+		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/document/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
+		$ret .= ' '.Html::a($this->getButton($template, 'tag', 'Labels'), ['/order/document/labels', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Labels')]);
+		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/document/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
+		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'View')]);
 		return $ret;
 	}
 	

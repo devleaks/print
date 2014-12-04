@@ -51,8 +51,10 @@ Icon::map($this);
             [
                 'label'=>Yii::t('store','Order'),
 	            'value'=> function ($model, $key, $index, $widget) {
-					return Html::a($model->getWork()->one()->getOrder()->one()->name,
-								Url::to(['/order/order/view', 'id' => $model->getWork()->one()->getOrder()->one()->id]));
+					return in_array(Yii::$app->user->identity->role, ['manager', 'admin']) ?
+							Html::a($model->getWork()->one()->getDocument()->one()->name,
+								Url::to(['/order/document/view', 'id' => $model->getWork()->one()->getDocument()->one()->id]))
+							: $model->getWork()->one()->getDocument()->one()->name ;
 				},
             	'format' => 'raw',
             ],
@@ -99,7 +101,7 @@ Icon::map($this);
 	        [
 	            'label' => Yii::t('store', 'Quantity'),
 	            'value' => function ($model, $key, $index, $widget) {
-	                return $model->getOrderLine()->one()->quantity;
+	                return $model->getDocumentLine()->one()->quantity;
 	            },
 				'hAlign' => GridView::ALIGN_CENTER,
 	            'format' => 'raw',
@@ -107,7 +109,7 @@ Icon::map($this);
 	        [
 	            'label' => Yii::t('store', 'Options'),
 	            'value' => function ($model, $key, $index, $widget) {
-					$det = $model->getOrderLine()->one()->getOrderLineDetails()->one();
+					$det = $model->getDocumentLine()->one()->getDocumentLineDetails()->one();
 	                return $det ? $det->getDescription() : Yii::t('store', 'None');
 	            },
 	            'format' => 'raw',
@@ -115,7 +117,7 @@ Icon::map($this);
 	        [
 	            'label' => Yii::t('store', 'Width'),
 	            'value' => function ($model, $key, $index, $widget) {
-					return $model->orderLine->work_width;
+					return $model->documentLine->work_width;
 	            },
 				'hAlign' => GridView::ALIGN_CENTER,
 	            'format' => 'raw',
@@ -123,7 +125,7 @@ Icon::map($this);
 	        [
 	            'label' => Yii::t('store', 'Height'),
 	            'value' => function ($model, $key, $index, $widget) {
-					return $model->orderLine->work_height;
+					return $model->documentLine->work_height;
 	            },
 				'hAlign' => GridView::ALIGN_CENTER,
 	            'format' => 'raw',
@@ -132,7 +134,7 @@ Icon::map($this);
 				'class' => '\kartik\grid\DataColumn',
 				'label' => Yii::t('store', 'Picture'),
 	            'value' => function ($model, $key, $index, $widget) {
-					$pic = $model->getOrderLine()->one()->getPictures()->one();
+					$pic = $model->getDocumentLine()->one()->getPictures()->one();
 					return $pic ? Html::img(Url::to($pic->getThumbnailUrl(), true)) : '';
 					// placeholder: Yii::$app->homeUrl . 'assets/i/thumbnail.png';
                 },

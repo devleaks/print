@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model app\models\Order */
+/* @var $model app\models\Document */
 ?>
 <div class="order-print-header">
 	

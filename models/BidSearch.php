@@ -19,7 +19,7 @@ class BidSearch extends Bid
     {
         return [
             [['id', 'parent_id', 'client_id', 'created_by', 'updated_by', 'vat_bool'], 'integer'],
-            [['order_type', 'name', 'due_date', 'note', 'status', 'created_at', 'updated_at', 'lang', 'reference', 'reference_client'], 'safe'],
+            [['document_type', 'name', 'due_date', 'note', 'status', 'created_at', 'updated_at', 'lang', 'reference', 'reference_client'], 'safe'],
             [['price_htva', 'price_tvac'], 'number'],
         ];
     }
@@ -66,7 +66,7 @@ class BidSearch extends Bid
             'vat_bool' => $this->vat_bool,
         ]);
 
-        $query->andFilterWhere(['like', 'order_type', $this->order_type])
+        $query->andFilterWhere(['like', 'document_type', $this->document_type])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'note', $this->note])
             ->andFilterWhere(['like', 'status', $this->status])

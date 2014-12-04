@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 $this->title = 'Labo JJ Micheli';
 ?>
@@ -11,8 +12,9 @@ $this->title = 'Labo JJ Micheli';
         <p class="lead">Vous avez accès à toutes les fonctions d'administration et de gestion de l'application.</p>
 
         <p>
-			<a class="btn btn-lg btn-success" href="<?=Yii::$app->homeUrl?>order/order/create-bid">Nouveau devis</a>
-			<a class="btn btn-lg btn-primary" href="<?=Yii::$app->homeUrl?>order/order/create">Nouvelle commande</a>
+			<a class="btn btn-lg btn-primary" href="<?= Url::to(['/order/document/create-bid']) ?>">Nouveau devis</a>
+			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create-ticket']) ?>">Nouvelle vente</a>
+			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create']) ?>">Nouvelle commande</a>
 			
 			<?= $this->render('_form'); ?>
 		</p>
@@ -26,14 +28,14 @@ $this->title = 'Labo JJ Micheli';
 
                 <p>Inscrire de nouveaux devis, de nouvelles commandes, gérer leur suivi...</p>
 
-                <p><a class="btn btn-primary" href="<?=Yii::$app->homeUrl?>order/">Commandes &raquo;</a></p>
+                <p><a class="btn btn-primary" href="<?= Url::to(['/order/']) ?>">Commandes &raquo;</a></p>
             </div>
             <div class="col-lg-6">
                 <h2>Gestion des Travaux</h2>
 
                 <p>Travaux à faire, travaux en cours, état d'avancement des travaux d'une commande.</p>
 
-                <p><a class="btn btn-primary" href="<?=Yii::$app->homeUrl?>work/">Travaux &raquo;</a></p>
+                <p><a class="btn btn-primary" href="<?= Url::to(['/work/']) ?>">Travaux &raquo;</a></p>
             </div>
         </div>
 
@@ -43,14 +45,14 @@ $this->title = 'Labo JJ Micheli';
 
                 <p>Gestion des clients, gestion des articles, gestion des tâches à accomplir.</p>
 
-                <p><a class="btn btn-primary" href="<?=Yii::$app->homeUrl?>store/">Magasin &raquo;</a></p>
+                <p><a class="btn btn-primary" href="<?= Url::to(['/store/']) ?>">Magasin &raquo;</a></p>
             </div>
             <div class="col-lg-6">
                 <h2>Gestion de l'Application</h2>
 
                 <p>Gestion de l'accès à l'application, gestion des utilisateurs de l'application, gestion des paramètres.</p>
 
-                <p><a class="btn btn-primary" href="<?=Yii::$app->homeUrl?>admin/">Application &raquo;</a></p>
+                <p><a class="btn btn-primary" href="<?= Url::to(['/admin/']) ?>">Application &raquo;</a></p>
             </div>
         </div>
 

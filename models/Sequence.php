@@ -36,6 +36,15 @@ class Sequence extends \yii\db\ActiveRecord
         ];
     }
 
+	public function reset() {
+		$curyear = date('y');
+		if($this->sequence_year != $curyear) { // reset
+			$this->sequence_year = $curyear;
+			$this->sequence_cur_value = $this->sequence_min_value;
+			$this->save();
+		}
+	}
+
     /**
      * @inheritdoc
      */
@@ -55,6 +64,7 @@ class Sequence extends \yii\db\ActiveRecord
 	 */
 	public static function currval($name) {
 		$seq = self::find()->where(['sequence_name' => $name])->one();
+		if($seq) $seq->reset();
 		return $seq ? $seq->sequence_cur_value : null;
 	}
 
@@ -62,6 +72,7 @@ class Sequence extends \yii\db\ActiveRecord
 	 */
 	public static function nextval($name) {
 		$seq = self::find()->where(['sequence_name' => $name])->one();
+		if($seq) $seq->reset();
 		if ( $seq ) {
 			$seq->sequence_cur_value += $seq->sequence_increment;
 			$seq->save();

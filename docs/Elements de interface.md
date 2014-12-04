@@ -14,4 +14,4 @@ Pages contenant des informations sur les éléments de pages:
 
 1. [Page d'accueil](/print/)
 2. [Page de menus](/print/order/)
-3. [Page de recherche](/print/order/order/)
+3. [Page de recherche](/print/order/document/)

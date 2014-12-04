@@ -11,18 +11,6 @@ use kartik\icons\Icon;
 /**
  * This is the model class for table "work".
  *
- * @property integer $id
- * @property integer $order_id
- * @property string $created_at
- * @property string $updated_at
- * @property integer $created_by
- * @property integer $updated_by
- * @property string $status
- *
- * @property User $updatedBy
- * @property Order $order
- * @property User $createdBy
- * @property WorkLine[] $workLines
  */
 class Work extends _Work
 {
@@ -60,6 +48,28 @@ class Work extends _Work
         ];
     }
 
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDocument()
+    {	// hacked to return proper document type
+		$temp = $this->hasOne(Document::className(), ['id' => 'document_id'])->one();
+		if(!$temp)
+			return $this->hasOne(Document::className(), ['id' => 'document_id']);
+		switch($temp->document_type) {
+			case Document::TYPE_ORDER:
+				return $this->hasOne(Order::className(), ['id' => 'document_id']);
+				break;
+			case Document::TYPE_TICKET:
+				return $this->hasOne(Ticket::className(), ['id' => 'document_id']);
+				break;
+			default:
+				return $this->hasOne(Document::className(), ['id' => 'document_id']);
+				break;
+		}
+    }
+
 	/** 
 	 * Assign a color for each status
 	 */
@@ -88,6 +98,21 @@ class Work extends _Work
 	/** 
 	 * Update status depending on children WorkLines
 	 */
+	
+	/** Utility function: Returns Order Status to set for supplied Work Status or for current Work model */
+	public function getOrderStatus($work_status = null) {
+		if($work_status == null) $work_status = $this->status;
+		
+		$order_status = null;
+		switch($work_status) {
+			case Work::STATUS_WARN: $order_status = Order::STATUS_WARN; break;
+			case Work::STATUS_DONE: $order_status = Order::STATUS_DONE; break;
+			case Work::STATUS_BUSY: $order_status = Order::STATUS_BUSY; break;
+			case Work::STATUS_TODO: $order_status = Order::STATUS_TODO; break;
+		}
+		return $order_status;
+	}
+	
 	public function updateStatus() {
 		$total = $this->getWorkLines()->count();
 		$busy = $this->getWorkLines()->andWhere(['status' => Work::STATUS_BUSY])->count();
@@ -97,20 +122,21 @@ class Work extends _Work
 		$order_status = null;
 		if($warn > 0) {
 			$this->status = self::STATUS_WARN;
-			$order_status = Order::STATUS_WARN;
+			$order_status = $this->getOrderStatus(Work::STATUS_WARN);
 		} else if($total == $done) {
 			$this->status = self::STATUS_DONE;
-			$order_status = Order::STATUS_DONE;
+			$order_status = $this->getOrderStatus(Work::STATUS_DONE);
 		} else if($busy > 0 || $done > 0) {
 			$this->status = self::STATUS_BUSY;
-			$order_status = Order::STATUS_BUSY;
+			$order_status = $this->getOrderStatus(Work::STATUS_BUSY);
 		} else {
 			$this->status = self::STATUS_TODO;
-			$order_status = Order::STATUS_TODO;
+			$order_status = $this->getOrderStatus(Work::STATUS_TODO);
 		}
 		$this->save();
-		$this->getOrder()->one()->setStatus($order_status);
+		$this->getDocument()->one()->setStatus($order_status);
 	}
+
 	
 	public static function getBadge($id) {
 		$where = Order::getDateClause(intval($id));
@@ -157,7 +183,7 @@ class Work extends _Work
 		}
 		$this->status = Work::STATUS_DONE;
 		$this->save();
-		$this->order->setStatus(Order::STATUS_DONE);
+		$this->document->setStatus(Order::STATUS_DONE);
 	}
 
 	/**
@@ -166,7 +192,7 @@ class Work extends _Work
 	 */
 	public function getTaskIcons($colors = false, $link = false, $button = false) {
 		$str = '';
-		foreach($this->getWorkLines()->orderBy('order_line_id, position')->each() as $wl) {
+		foreach($this->getWorkLines()->orderBy('document_line_id, position')->each() as $wl) {
 			$icon = $wl->task->icon;
 			if($colors)
 				$color = $wl->status == Work::STATUS_DONE ? 'success' :

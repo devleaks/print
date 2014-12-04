@@ -3,8 +3,8 @@
 namespace app\modules\work\controllers;
 
 use Yii;
-use app\models\Order;
-use app\models\OrderLine;
+use app\models\Document;
+use app\models\DocumentLine;
 use app\models\Work;
 use app\models\WorkSearch;
 use yii\web\Controller;
@@ -63,8 +63,8 @@ class WorkController extends Controller
      */
     public function actionLine($id)
     {
-		$ol = OrderLine::findOne($id);
-		$work = $ol->getOrder()->one()->getWorks()->one();
+		$ol = DocumentLine::findOne($id);
+		$work = $ol->getDocument()->one()->getWorks()->one();
 		
         return $this->render('view', [
             'model' => $work, // $this->findModel($work->id),
@@ -144,7 +144,7 @@ class WorkController extends Controller
      */
     public function actionList($id = 0)
     {
-		$where = Order::getDateClause(intval($id));
+		$where = Document::getDateClause(intval($id));
 	
         $searchModel = new WorkSearch();
         $dataProvider = new ActiveDataProvider([

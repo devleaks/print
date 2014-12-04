@@ -16,7 +16,7 @@ use Yii;
  * @property string $status
  * @property string $note
  * @property string $due_date
- * @property integer $order_line_id
+ * @property integer $document_line_id
  * @property integer $task_id
  * @property integer $position
  * @property integer $item_id
@@ -25,7 +25,7 @@ use Yii;
  * @property Work $work
  * @property Task $task
  * @property Item $item
- * @property OrderLine $orderLine
+ * @property DocumentLine $orderLine
  * @property User $createdBy
  */
 class _WorkLine extends \yii\db\ActiveRecord
@@ -44,8 +44,8 @@ class _WorkLine extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['work_id', 'due_date', 'order_line_id', 'task_id', 'item_id'], 'required'],
-            [['work_id', 'created_by', 'updated_by', 'order_line_id', 'task_id', 'position', 'item_id'], 'integer'],
+            [['work_id', 'due_date', 'document_line_id', 'task_id', 'item_id'], 'required'],
+            [['work_id', 'created_by', 'updated_by', 'document_line_id', 'task_id', 'position', 'item_id'], 'integer'],
             [['created_at', 'updated_at', 'due_date'], 'safe'],
             [['status'], 'string', 'max' => 20],
             [['note'], 'string', 'max' => 160]
@@ -67,7 +67,7 @@ class _WorkLine extends \yii\db\ActiveRecord
             'status' => Yii::t('store', 'Status'),
             'note' => Yii::t('store', 'Note'),
             'due_date' => Yii::t('store', 'Due Date'),
-            'order_line_id' => Yii::t('store', 'Order Line ID'),
+            'document_line_id' => Yii::t('store', 'Order Line ID'),
             'task_id' => Yii::t('store', 'Task ID'),
             'position' => Yii::t('store', 'Position'),
             'item_id' => Yii::t('store', 'Item ID'),
@@ -109,9 +109,9 @@ class _WorkLine extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrderLine()
+    public function getDocumentLine()
     {
-        return $this->hasOne(OrderLine::className(), ['id' => 'order_line_id']);
+        return $this->hasOne(DocumentLine::className(), ['id' => 'document_line_id']);
     }
 
     /**
