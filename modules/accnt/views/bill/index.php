@@ -9,10 +9,8 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-if(!isset($document_type))
-	$document_type = Document::TYPE_BILL;
 
-$this->title = Yii::t('store', Document::getTypeLabel($document_type, true));
+$this->title = Yii::t('store', Document::getTypeLabel(Document::TYPE_BILL, true));
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -33,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	        'showFooter'=>false
 	    ],
 		'panelHeadingTemplate' => '{heading}',
+		'showPageSummary' => true,
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
 	        [
@@ -110,7 +109,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				'rowSelectedClass' => Gridview::TYPE_INFO,
 			],
         ],
-		'showPageSummary' => true,
     ]); ?>
 
 </div>

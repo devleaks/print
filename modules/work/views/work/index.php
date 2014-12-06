@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 	        [
 				'attribute' => 'order_name',
-	            'label' => Yii::t('store', 'Order'),
+				'label' => Yii::t('store', 'Order'),
 	            'value' => function ($model, $key, $index, $widget) {
                     return in_array(Yii::$app->user->identity->role, ['manager', 'admin']) ? 
 							Html::a($model->document->name, Url::to(['/order/document/view', 'id' => $model->document_id]))

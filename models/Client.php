@@ -7,6 +7,7 @@ use app\models\Document;
 use kartik\helpers\Html as KHtml;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "client".
@@ -33,7 +34,7 @@ class Client extends _Client
     /**
      * create client label for on screen display
 	 */
-    public function makeAddress($upd_link = false, $ret = Document::TYPE_ORDER)
+    public function makeAddress($upd_link = false, $type = Document::TYPE_ORDER)
     {
 	 	$addr  = '<address>';
 		$addr .= $this->adresse;
@@ -46,8 +47,9 @@ class Client extends _Client
 		$addr .= '</address>';
 //		return KHtml::well($addr, KHtml::SIZE_TINY);
 		return KHtml::panel([
-		        'heading' => $this->prenom.' '.$this->nom.($upd_link ?
-						Html::a('<i class="glyphicon glyphicon-pencil pull-right"></i>', ['../store/client/maj', 'id' => $this->id, 'ret' => $ret])
+		        'heading' => $this->prenom.' '.$this->nom.($this->autre_nom ? ' - '.$this->autre_nom : '')
+						.($upd_link ?
+						Html::a('<i class="glyphicon glyphicon-pencil pull-right"></i>', Url::to(['/store/client/maj', 'id' => $this->id, 'type' => $type]))
 						: ''),
 			    'headingTitle' => true,
 		        'body' => $addr,

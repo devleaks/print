@@ -29,12 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            'work.document.name',
+			[
+				'attribute' => 'work.document.name',
+				'noWrap' => true,
+			],
 			[
 				'attribute' => 'work.document.due_date',
 				'format' => 'date'
 			],
 	        [
+				'attribute' => 'item_name',
 	            'label' => Yii::t('store', 'Item'),
 	            'value' => function ($model, $key, $index, $widget) {
 	                return $model->item->libelle_court;
@@ -43,9 +47,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'format' => 'raw',
 	        ],
 	        [
-				'attribute' => 'task_id',
+				'attribute' => 'task_name',
 	            'label' => Yii::t('store', 'Task'),
-				'filter' => ArrayHelper::map(Task::find()->asArray()->all(), 'id', 'name'),
+				'filter' => ArrayHelper::map(Task::find()->asArray()->all(), 'name', 'name'),
 	            'value' => function ($model, $key, $index, $widget) {
 					$wi = $model->getTask()->one();
 	                return $wi ? $wi->name : '';
@@ -62,7 +66,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				'hAlign' => GridView::ALIGN_CENTER,
             	'format' => 'raw',
             ],
-            'updated_at',
+			[
+	            'label' => Yii::t('store', 'Last Update'),
+				'attribute' => 'updated_at',
+				'format' => 'datetime',
+				'value' => function ($model, $key, $index, $widget) {
+					return new DateTime($model->updated_at);
+				}
+			],
 	        [
 				'attribute' => 'updated_by',
 				'filter' => ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username'),
@@ -73,7 +84,13 @@ $this->params['breadcrumbs'][] = $this->title;
 	            },
 	            'format' => 'raw',
 	        ],
-            'created_at',
+			[
+				'attribute' => 'created_at',
+				'format' => 'datetime',
+				'value' => function ($model, $key, $index, $widget) {
+					return new DateTime($model->updated_at);
+				}
+			],
 	        [
 				'attribute' => 'created_by',
 				'filter' => ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username'),

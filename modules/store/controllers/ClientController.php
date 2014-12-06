@@ -9,6 +9,7 @@ use app\models\Document;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 
 /**
  * ClientController implements the CRUD actions for Client model.
@@ -133,11 +134,11 @@ class ClientController extends Controller
 				$model->reference_interne = 'YII-'.$model->id;
 			}*/
 			if($ret == Document::TYPE_BID)
-            	return $this->redirect(['../document/document/create-bid', 'id' => $model->id]);
+            	return $this->redirect(Url::to(['/order/document/create-bid', 'id' => $model->id]));
 			else if($ret == Document::TYPE_BID)
-            	return $this->redirect(['../document/document/create-bill', 'id' => $model->id]);
+            	return $this->redirect(Url::to(['/order/document/create-bill', 'id' => $model->id]));
 			else
-            	return $this->redirect(['../document/document/create', 'id' => $model->id]);
+            	return $this->redirect(Url::to(['/order/document/create', 'id' => $model->id]));
         } else {
             return $this->render('new', [
                 'model' => $model,
@@ -151,12 +152,12 @@ class ClientController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionMaj($id)
+    public function actionMaj($id, $type)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['../document/document/create', 'id' => $model->id]);
+            return $this->redirect(Url::to(['/order/document/create', 'id' => $model->id, 'type' => $type]));
         } else {
             return $this->render('maj', [
                 'model' => $model,

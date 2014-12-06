@@ -75,10 +75,14 @@ Icon::map($this);
 				'hAlign' => GridView::ALIGN_CENTER,
             	'format' => 'raw',
             ],
-            [
+			[
+	            'label' => Yii::t('store', 'Last Update'),
 				'attribute' => 'updated_at',
-            	'format' => 'datetime',
-            ],
+				'format' => 'datetime',
+				'value' => function ($model, $key, $index, $widget) {
+					return new DateTime($model->updated_at);
+				}
+			],
 	        [
 				'attribute' => 'updated_by',
 	            'label' => Yii::t('store', 'Updated By'),
@@ -91,6 +95,7 @@ Icon::map($this);
 	            'format' => 'raw',
 	        ],
 	        [
+				'attribute' => 'item_name',
 	            'label' => Yii::t('store', 'Item'),
 	            'value' => function ($model, $key, $index, $widget) {
 	                return $model->item->libelle_court;

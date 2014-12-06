@@ -19,7 +19,8 @@ Yii::$app->language = $lang;
 
 	<?= $this->render('../document-line/_print', [
 	        'dataProvider' => new ActiveDataProvider([
-					'query' => $model->getDocumentLines()
+					'query' => $model->getDocumentLines(),
+					'pagination' => false,
 			]),
 			'order' => $model
 	    ])

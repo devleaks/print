@@ -144,12 +144,17 @@ class WorkController extends Controller
      */
     public function actionList($id = 0)
     {
-		$where = Document::getDateClause(intval($id));
+		$where = Document::getDateClause(intval($id), 'work');
+		Yii::trace($where);
 	
         $searchModel = new WorkSearch();
-        $dataProvider = new ActiveDataProvider([
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		//@hack
+		$dataProvider->query->andWhere($where);
+
+/*        $dataProvider = new ActiveDataProvider([
 			'query' => Work::find()->andWhere($where)
-		]);
+		]);*/
 
         return $this->render('list-by-date', [
             'searchModel' => $searchModel,

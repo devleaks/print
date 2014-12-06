@@ -67,23 +67,23 @@ class WorkLineSearch extends WorkLine
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'work_id' => $this->work_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
-            'due_date' => $this->due_date,
-            'document_line_id' => $this->document_line_id,
-            'task_id' => $this->task_id,
-            'position' => $this->position,
-            'item_id' => $this->item_id,
+            'work_line.id' => $this->id,
+            'work_line.work_id' => $this->work_id,
+            'work_line.item_id' => $this->item_id,
+            'work_line.task_id' => $this->task_id,
+            'work_line.position' => $this->position,
+            'work_line.due_date' => $this->due_date,
+            'work_line.document_line_id' => $this->document_line_id,
+            'work_line.created_at' => $this->created_at,
+            'work_line.updated_at' => $this->updated_at,
+            'work_line.created_by' => $this->created_by,
+            'work_line.updated_by' => $this->updated_by,
         ]);
 
         $query->andFilterWhere(['like', 'work_line.status', $this->status])
-            ->andFilterWhere(['like', 'work_line.note', $this->note]);
+              ->andFilterWhere(['like', 'work_line.note', $this->note]);
 
-		$query->andFilterWhere(['like', 'item.name', $this->item_name]);
+		$query->andFilterWhere(['like', 'item.libelle_long', $this->item_name]);
 		$query->andFilterWhere(['like', 'task.name', $this->task_name]);
 
         return $dataProvider;

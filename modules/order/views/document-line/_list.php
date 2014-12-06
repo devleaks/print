@@ -39,14 +39,15 @@ $contentAfter = $this->render('../document/_footer_print', ['model' => $order]);
 					]
 			 	]
 			],*/
-			'toolbar' => false,
+//			'toolbar' => false,
+			'export' => false,
 			'panel' => [
 		        'heading'=> '<h3 class="panel-title">'.Yii::t('store', 'Items').'</h3>',
-		        'before'=> false,
+		        'before'=> ' ',
 		        'after'=> false, // Html::submitButton(Yii::t('store', 'Partial BOM'), ['class' => 'btn btn-primary']),
-				'footer' => false,
+				'footer' => ' ',
 		    ],
-			'panelHeadingTemplate' => '{heading}',
+			//'panelHeadingTemplate' => '{heading}',
 			'columns' => [
 				['class' => 'kartik\grid\SerialColumn'],
 				//'item.reference',

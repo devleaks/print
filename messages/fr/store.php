@@ -76,6 +76,7 @@ return [
 	'Create Credit note' => 'Ajouter une note de crédit',
 	'Create Credit' => 'Ajouter une note de crédit',
 	'Create Document' => 'Créer un nouveau document',
+	'Create Doc' => 'Créer un nouveau document',
 	'Create Item' => 'Ajouter un article',
 	'Create Order' => 'Créer une commande',
 	'Create Parameter' => 'Ajouter un paramètre',

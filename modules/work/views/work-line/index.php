@@ -34,8 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	        ],
 	        [
 	            'label' => Yii::t('store', 'Task'),
-				'attribute' => 'task_id',
-				'filter' => ArrayHelper::map(Task::find()->asArray()->all(), 'id', 'name'),
+				'attribute' => 'task_name',
+				'filter' => ArrayHelper::map(Task::find()->asArray()->all(), 'name', 'name'),
 	            'value' => function ($model, $key, $index, $widget) {
 	                return $model->task->name;
 	            },

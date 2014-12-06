@@ -5,12 +5,13 @@ use app\assets\DateDiff;
 use app\models\Document;
 use app\models\User;
 use kartik\builder\Form;
-use kartik\widgets\ActiveForm;
 use kartik\date\DatePicker;
+use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
 use kartik\widgets\SwitchInput;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
@@ -84,7 +85,7 @@ Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter u
 				])
 		?>
 	
-		<?= Html::a(Yii::t('store', 'Create Client'), ['../store/client/new', 'ret' => $model->document_type],
+		<?= Html::a(Yii::t('store', 'Create Client'), Url::to(['/store/client/new', 'ret' => $model->document_type]),
 		['class' => 'btn btn-warning', 'data-intro' => "Pour aller vers l'écran d'ajout d'un nouveau client"]) ?>
 
 		<p></p>
@@ -111,7 +112,7 @@ Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter u
 				            'columnOptions' => ['colspan' => 1],
 							'label' => Yii::t('store', 'Delay'),
 							'value' => Html::label(Yii::t('store', 'Delay')  , 'days', ['class' => 'control-label'])
-									 . Html::textInput('days', 8, ['id' => 'daysComputed', 'class' => 'form-control', 'readonly' => true]),
+									 . Html::textInput('days', 0, ['id' => 'daysComputed', 'class' => 'form-control', 'readonly' => true]),
 						],
 						'created_by' => [
 							'type' => Form::INPUT_DROPDOWN_LIST,

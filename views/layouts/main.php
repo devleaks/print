@@ -2,6 +2,7 @@
 use app\assets\AppAsset;
 use app\assets\CalculatorAsset;
 use devleaks\introjs\IntroJSAsset;
+use devleaks\chardinjs\ChardinJSAsset;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Html;
@@ -10,6 +11,7 @@ use yii\widgets\Breadcrumbs;
 AppAsset::register($this);
 CalculatorAsset::register($this);
 IntroJSAsset::register($this);
+ChardinJSAsset::register($this);
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -37,11 +39,13 @@ IntroJSAsset::register($this);
             ]);
 
 			$menu = [];
-			$menu[] = ['label' => Yii::$app->formatter->asDate(date('c')),
-				'url' => "javascript:introJs().setOptions({ 'nextLabel': 'Suivant', 'prevLabel': 'Précédent', 'doneLabel': 'Terminé', 'skipLabel': 'Sortir' }).start();"];
+			$menu[] = ['label' => Yii::$app->formatter->asDate(date('c')), 'url' => "#"];
+				
             if(!Yii::$app->user->isGuest) {
+
 				$work_menu = [];
-                $work_menu[] = ['label' => Yii::t('store', 'Orders'), 'url' => ['/order/']];
+				if(Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'admin')
+                	$work_menu[] = ['label' => Yii::t('store', 'Orders'), 'url' => ['/order/']];
                 $work_menu[] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work/']];
 				if(Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'admin')
                 	$work_menu[] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store/']];
@@ -50,13 +54,26 @@ IntroJSAsset::register($this);
 
                	$work_menu[] = ['label' => Yii::t('store', 'Calculator'), 'url' => ['/assets/calculator/'], 'linkOptions' => ['target' => '_blank']];
 
-                $menu[] = ['label' => Yii::t('store', 'Menu'), 'items' => $work_menu];
-                $menu[] = ['label' => Yii::t('store', 'Help'), 'url' => ['/site/help']];
+			$menu[] = ['label' => Yii::t('store', 'Menu'), 'items' => $work_menu];
+
+
+				$help_menu = [];
+				$help_menu[] = ['label' => 'Chardin',
+					'url' => "javascript:$('body').chardinJs('start');"];
+				$help_menu[] = ['label' => 'Intro',
+					'url' => "javascript:introJs().setOptions({ 'nextLabel': 'Suivant', 'prevLabel': 'Précédent', 'doneLabel': 'Terminé', 'skipLabel': 'Sortir' }).start();"];
+				$help_menu[] = ['label' => 'Documentation',
+					'url' => ['/site/help']];
+
+			$menu[] = ['label' => Yii::t('store', 'Help'), 'items' => $help_menu/*'url' => ['/site/help']*/];
+
 
 				$user_menu = [];
                 $user_menu[] = ['label' => Yii::t('store', 'Profile'), 'url' => ['/user/settings']];
                 $user_menu[] = ['label' => Yii::t('store', 'Logout'), 'url' => ['/user/security/logout'], 'linkOptions' => ['data-method' => 'post']];
-                $menu[] = ['label' => Yii::$app->user->identity->username, 'items' => $user_menu];
+
+            $menu[] = ['label' => Yii::$app->user->identity->username, 'items' => $user_menu];
+
             } else
 				$menu[] = ['label' => 'Login', 'url' => ['/user/security/login']];
 

@@ -61,13 +61,13 @@ class WorkSearch extends Work
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'document_id' => $this->document_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
-            'due_date' => $this->due_date,
+            'work.id' => $this->id,
+            'work.document_id' => $this->document_id,
+            'work.created_at' => $this->created_at,
+            'work.updated_at' => $this->updated_at,
+            'work.created_by' => $this->created_by,
+            'work.updated_by' => $this->updated_by,
+            'work.due_date' => $this->due_date,
         ]);
 
         $query->andFilterWhere(['like', 'work.status', $this->status])

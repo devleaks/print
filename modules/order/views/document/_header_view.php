@@ -40,6 +40,7 @@ $client = $model->getClient()->one();
 					'formOptions' => [
 						'action' => Url::to(['/order/document/live-update', 'id'=>$model->id]),
 					],
+					'labelColOptions' => ['style' => 'width: 30%'],
 			        'attributes' => [
 			            //'id',
 			            //'client_id',
@@ -74,19 +75,19 @@ $client = $model->getClient()->one();
 							'value' => new DateTime($model->updated_at),
 							'options' => ['readonly' => true]
 			            ],
-//			            [
-//			                'attribute'=>'bom_bool',
-//			                'label'=> Yii::t('store','Bon de livraison'),
-//							'format' => 'raw',
-//							'value' => $model->bom_bool
-//											? '<span class="label label-success">'.Yii::t('store','Yes').'</span>'
-//											: '<span class="label label-danger">' .Yii::t('store','No') .'</span>',
-//							'type' => DetailView::INPUT_SWITCH,
-//							'widgetOptions' => ['pluginOptions' => [
-//								'onText' => Yii::t('store', 'Yes'),
-//								'offText' =>  Yii::t('store', 'No'),
-//							]]
-//			            ],
+			            [
+			                'attribute'=>'bom_bool',
+			                'label'=> Yii::t('store','Bon de livraison'),
+							'format' => 'raw',
+							'value' => $model->bom_bool
+											? '<span class="label label-success">'.Yii::t('store','Yes').'</span>'
+											: '<span class="label label-danger">' .Yii::t('store','No') .'</span>',
+							'type' => DetailView::INPUT_SWITCH,
+							'widgetOptions' => ['pluginOptions' => [
+								'onText' => Yii::t('store', 'Yes'),
+								'offText' =>  Yii::t('store', 'No'),
+							]]
+			            ],
 			            [
 			                'attribute'=>'price_tvac',
 			                'label'=> Yii::t('store','Solde'),

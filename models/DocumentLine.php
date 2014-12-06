@@ -27,7 +27,9 @@ use yii\db\ActiveRecord;
  */
 class DocumentLine extends _DocumentLine
 {
-	/** Bid/Order/Bill status */
+	/** Maximum number of images with one order line */
+	const MAX_IMAGES = 20;	
+	/** Image verbs */
 	const IMAGE_ADD = 'ADD';	
 	/** */
 	const IMAGE_REPLACE = 'REPLACE';
@@ -49,7 +51,7 @@ class DocumentLine extends _DocumentLine
 
             // added for file upload.
             [['image', 'image_add'], 'safe'],
-            [['image'], 'file', 'maxFiles' => 3, 'extensions' => 'jpg, png, gif', 'mimeTypes' => 'image/jpeg, image/png, image/gif',],
+            [['image'], 'file', 'maxFiles' => self::MAX_IMAGES, 'extensions' => 'jpg, png, gif', 'mimeTypes' => 'image/jpeg, image/png, image/gif',],
        ]);
     }
 
@@ -212,7 +214,7 @@ class DocumentLine extends _DocumentLine
 			$str .= ' '.$this->work_width.'×'.$this->work_height;
 		
 		if($detail = $this->getDetail())
-			$str .= ' ['.$detail->getDescription(true).']';
+			$str .= ' ('.$detail->getDescription(true).')';
 
 		if($this->item->reference != '#' && $this->note != '') // for free text item, comment IS the label
 			$str .= ' ('.$this->note.')';

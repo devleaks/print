@@ -34,7 +34,7 @@ class BillController extends Controller
     {
         $searchModel = new BillSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere(['!=','status',Bill::STATUS_CLOSED]);
+		$dataProvider->query->andWhere(['!=','document.status',Bill::STATUS_CLOSED]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

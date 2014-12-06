@@ -144,11 +144,9 @@ class WorkLineController extends Controller
 		$where = Document::getDateClause(intval($id));
 	
         $searchModel = new WorkLineSearch();
-        $dataProvider = new ActiveDataProvider([
-			'query' => WorkLine::find()
-						->andWhere($where)
-						->andWhere(['!=', 'status', Work::STATUS_DONE])
-		]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere($where)
+						->andWhere(['!=', 'work_line.status', Work::STATUS_DONE]);
 
         return $this->render('list-by-date', [
             'searchModel' => $searchModel,
@@ -167,11 +165,9 @@ class WorkLineController extends Controller
 		$task = $this->findTask($id);
 		
 		$searchModel = new WorkLineSearch();
-        $dataProvider = new ActiveDataProvider([
-			'query' => WorkLine::find()
-						->andWhere(['task_id' => $id])
-						->andWhere(['!=', 'status', Work::STATUS_DONE])
-		]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere(['work_line.task_id' => $id])
+							->andWhere(['!=', 'work_line.status', Work::STATUS_DONE]);
 
         return $this->render('list-by-type', [
             'searchModel' => $searchModel,

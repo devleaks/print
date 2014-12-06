@@ -1,8 +1,12 @@
 {
-"name" : "devleaks-print",
-"description": "Print is a order and work order management system.",
-"homepage": "http://github.com/devleaks/print",
-"author": "Pierre M",
-"repository": {"type": "git", "url": "http://github.com/devleaks/print"},
-"version": "1.0.0",
+	"name" : "devleaks/print",
+	"description": "Print is a order and work order management system.",
+	"version": "1.0.0",
+	"homepage": "http://github.com/devleaks/print",
+	"author": "Pierre M",
+	"source": {
+		"type": "git",
+		"url": "http://github.com/devleaks/print",
+		"reference": "master"
+	},
 }

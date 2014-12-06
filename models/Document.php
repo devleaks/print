@@ -375,30 +375,32 @@ class Document extends _Document
 	
 	/**
 	 *
+	 * Note: $table introduced when joining several tables with due_date (ex. document and work)
 	 */
-	public static function getDateClause($id = null) {
+	public static function getDateClause($id, $table = null) {
+		$column = $table ? $table.'.due_date' : 'due_date';
 		switch(intval($id)) {
 			case 1: // tomorrow
 			case 2: // after tomorrow
 				$dayofweek = date('N'); // Mon=1, Sun=7
 				$nextday = ($dayofweek > 4) ? $id + 2 : $id;
 				$day = date('Y-m-d', strtotime('now + '.$nextday.' days'));
-				$where = ['due_date' => $day];
+				$where = [$column => $day];
 				break;
 			case 7: // this week
 				$day = date('Y-m-d', strtotime('now + 7 days'));
-				$where = ['<', 'due_date', $day];
+				$where = ['<', $column, $day];
 				break;
 			case -1: // late
 				$day = date('Y-m-d', strtotime('today'));
-				$where = ['<', 'due_date', $day];
+				$where = ['<', $column, $day];
 				break;
 			case 0: // today
 				$day = date('Y-m-d', strtotime('today'));
-				$where = ['due_date' => $day];
+				$where = [$column => $day];
 				break;
 			default: // today
-				$where = ['is not', 'due_date', null];
+				$where = ['is not', $column, null];
 				break;
 		}
 		return $where;
@@ -407,7 +409,7 @@ class Document extends _Document
 	/**
 	 *
 	 */
-	public static function getDateWords($id) {
+	public static function getDateWords($id = null) {
 		switch(intval($id)) {
 			case 1: $title = 'for tomorrow'; break;
 			case 2: $title = 'for after tomorrow'; break;

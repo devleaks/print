@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="order-index">
 
     <h1><?= Html::encode($this->title) ?>
-        <?= $document_type == Document::TYPE_BOM ? '' : Html::a(Yii::t('store', 'Create').' '.Document::getTypeLabel($document_type), ['create-'.strtolower($document_type)],
+        <?= Html::a(Yii::t('store', 'Create '.ucfirst(strtolower($document_type))), ['create-'.strtolower($document_type)],
 			['class' => 'btn btn-success']) ?>
     </h1>
 

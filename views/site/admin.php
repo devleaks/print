@@ -5,7 +5,7 @@ $this->title = 'Labo JJ Micheli';
 ?>
 <div class="admin-index">
 
-    <div class="jumbotron" data-intro='Menu principal rapide vers les fonctions les plus utilisées'>
+    <div class="jumbotron" data-intro='Menu principal rapide vers les fonctions les plus utilisées' data-position='top'>
         <h1>Bienvenue</h1>
 
         <p class="lead">Vous pouvez enregistrer de nouvelles commandes.</p>
@@ -20,10 +20,10 @@ $this->title = 'Labo JJ Micheli';
 		</p>
     </div>
 
-    <div class="body-content" data-intro='Menus secondaires vers la gestion courante'>
+    <div class="body-content" data-intro='Menus secondaires vers la gestion courante' data-position='top'>
 
         <div class="row">
-            <div class="col-lg-6" data-intro='Menu secondaire vers la gestion courante des commandes, etc.'>
+            <div class="col-lg-6" data-intro='Menu secondaire vers la gestion courante des commandes, etc.' data-position='right'>
                 <h2>Gestion des Commandes</h2>
 
                 <p>Inscrire de nouveaux devis, de nouvelles commandes, gérer leur suivi...</p>
