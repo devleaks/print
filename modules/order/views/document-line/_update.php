@@ -217,6 +217,12 @@ SCRIPT;
         <?= Html::submitButton(Yii::t('store', 'Update Order Line'), ['class' => 'btn btn-primary']) ?>
     </div>
 
-
-
 </div>
+<script type="text/javascript">
+<?php
+$this->beginBlock('JS_INIT'); ?>
+$("#documentline-quantity").trigger('change');
+<?php $this->endBlock(); ?>
+</script>
+<?php
+$this->registerJs($this->blocks['JS_INIT'], yii\web\View::POS_END);

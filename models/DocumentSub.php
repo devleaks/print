@@ -7,12 +7,12 @@ class DocumentSub extends Document
 
     public static function find()
     {
-        return new DocumentQuery(get_called_class(), ['document_type' => self::TYPE]);
+        return new DocumentQuery(get_called_class(), ['type' => self::TYPE]);
     }
 
     public function beforeSave($insert)
     {
-        $this->type = self::TYPE;
+        $this->document_type = self::TYPE;
         return parent::beforeSave($insert);
     }
 }

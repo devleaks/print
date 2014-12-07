@@ -36,11 +36,14 @@ class Sequence extends \yii\db\ActiveRecord
         ];
     }
 
+	/**
+	 *  Reset numbers at first use of a new year
+	 */
 	public function reset() {
-		$curyear = date('y');
+		$curyear = date('Y'); // YYYY
 		if($this->sequence_year != $curyear) { // reset
-			$this->sequence_year = $curyear;
 			$this->sequence_cur_value = $this->sequence_min_value;
+			$this->sequence_year = $curyear;
 			$this->save();
 		}
 	}

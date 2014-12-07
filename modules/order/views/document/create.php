@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Document;
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 
@@ -27,12 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
 			'form' => $form,
 		])
 	?>
-
+<?php if($model->document_type != Document::TYPE_CREDIT): ?>
 	<?= $this->render('../document-line/_list_add', [
 			'order' => $model,
 			'form' => $form,
 		])
 	?>
+<?php endif; ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('store', 'Add Item'), ['class' => 'btn btn-primary']) ?>

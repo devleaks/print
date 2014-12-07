@@ -4,7 +4,7 @@ namespace app\models;
 use yii\db\ActiveQuery;
 
 class DocumentQuery extends ActiveQuery {
-    public $document_type;
+    public $type;
 
     public function prepare($builder)
     {

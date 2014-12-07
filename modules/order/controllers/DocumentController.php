@@ -186,7 +186,20 @@ class DocumentController extends Controller
 			if ($model->save()) {
 				$model->status = Document::STATUS_OPEN;
 				$model->save();
-				$addDocumentLine = DocumentLineController::addFirstLine($model);
+				if($model->document_type == Document::TYPE_CREDIT) {
+					$credit_item = Item::findOne(['reference' => Item::TYPE_CREDIT]);
+					$model_line = new DocumentLine([
+						'document_id' => $model->id,
+						'item_id' => $credit_item->id,
+						'quantity' => 1,
+						'unit_price' => 0,
+						'vat' => $credit_item->taux_de_tva,
+						'due_date' => $model->due_date,
+					]);
+					$model_line->save();
+					return $this->redirect(['document-line/update', 'id' => $model_line->id]);
+				} else
+					$addDocumentLine = DocumentLineController::addFirstLine($model);
 				$model->updatePrice();
 				return $this->redirect(['document-line/create', 'id' => $model->id]);
 			}

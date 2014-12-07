@@ -22,6 +22,7 @@ class Item extends _Item
 	/** item reference for special line "REMISE" */
 	const TYPE_REBATE = '%';
 	const TYPE_FREE   = '#';
+	const TYPE_CREDIT = 'Credit';
 
 	/** */
 	const EXTRA_REBATE_FIX		= '-';
