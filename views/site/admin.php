@@ -5,7 +5,7 @@ $this->title = 'Labo JJ Micheli';
 ?>
 <div class="admin-index">
 
-    <div class="jumbotron" data-intro='Menu principal rapide vers les fonctions les plus utilisées' data-position='top'>
+    <div class="jumbotron" data-intro='Menu principal rapide vers les fonctions les plus utilisées' data-position='bottom'>
         <h1>Bienvenue</h1>
 
         <p class="lead">Vous pouvez enregistrer de nouvelles commandes.</p>
@@ -13,8 +13,8 @@ $this->title = 'Labo JJ Micheli';
 
         <p>
 			<a class="btn btn-lg btn-primary" href="<?= Url::to(['/order/document/create-bid']) ?>">Nouveau devis</a>
-			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create-ticket']) ?>">Nouvelle vente</a>
 			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create']) ?>">Nouvelle commande</a>
+			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create-ticket']) ?>">Comptoir</a>
 			
 			<?= $this->render('_form'); ?>
 		</p>

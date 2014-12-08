@@ -27,8 +27,6 @@
 		"bower-asset/chardin.js": "*",
 		"bower-asset/intro.js": "*",
 		"dektrium/yii2-user": "*",
-		"devleaks/yii2-chardinjs": "~1.0",
-		"devleaks/yii2-introjs": "~1.0",
 		"insolita/yii2-iconpicker": "*",
 		"kartik-v/yii2-builder": "dev-master",
 		"kartik-v/yii2-datecontrol": "dev-master",
@@ -47,7 +45,9 @@
 		"sjaakp/yii2-bandoneon": "*",
 		"yiisoft/yii2-jui": "*",
 		"yurkinx/yii2-image": "dev-master",
-        "kartik-v/yii2-widget-datepicker": "*"  
+        "kartik-v/yii2-widget-datepicker": "*",
+		"devleaks/yii2-chardinjs": "~1.0",
+		"devleaks/yii2-introjs": "~1.0"
   },
     "require-dev": {
 		"yiisoft/yii2-codeception": "*",

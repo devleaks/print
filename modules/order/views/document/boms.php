@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-	<?php $form = ActiveForm::begin(['action' => Url::to(['order/bill-boms'])]) ?>
+	<?php $form = ActiveForm::begin(['action' => Url::to(['document/bill-boms'])]) ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

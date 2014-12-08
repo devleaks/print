@@ -58,12 +58,9 @@ ChardinJSAsset::register($this);
 
 
 				$help_menu = [];
-				$help_menu[] = ['label' => 'Chardin',
-					'url' => "javascript:$('body').chardinJs('start');"];
-				$help_menu[] = ['label' => 'Intro',
-					'url' => "javascript:introJs().setOptions({ 'nextLabel': 'Suivant', 'prevLabel': 'Précédent', 'doneLabel': 'Terminé', 'skipLabel': 'Sortir' }).start();"];
-				$help_menu[] = ['label' => 'Documentation',
-					'url' => ['/site/help']];
+				$help_menu[] = ['label' => 'Chardin',		'url' => "javascript:do_chardinjs();"];
+				$help_menu[] = ['label' => 'Intro',			'url' => "javascript:do_introjs();"];
+				$help_menu[] = ['label' => 'Documentation',	'url' => ['/site/help']];
 
 			$menu[] = ['label' => Yii::t('store', 'Help'), 'items' => $help_menu/*'url' => ['/site/help']*/];
 
@@ -114,8 +111,21 @@ ChardinJSAsset::register($this);
             <p class="pull-left">&copy; Labo JJ Micheli <?= date('Y') ?></p>
         </div>
     </footer>
+<script type="text/javascript">
+<?php
+$this->beginBlock('JS_INIT'); ?>
+function do_introjs() {
+	introJs().setOptions({ 'nextLabel': 'Suivant', 'prevLabel': 'Précédent', 'doneLabel': 'Terminé', 'skipLabel': 'Sortir' }).start();
+}
+function do_chardinjs() {
+	$('body').chardinJs('start');
+}
+<?php $this->endBlock(); ?>
+</script>
+<?php
+$this->registerJs($this->blocks['JS_INIT'], yii\web\View::POS_END);
 
-<?php $this->endBody() ?>
+$this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

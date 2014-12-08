@@ -18,7 +18,7 @@ $contentAfter = $this->render('../document/_footer_print', ['model' => $order]);
 <div class="document-line-list">
 <p></p>
 
-	<?php $form = ActiveForm::begin(['action' => Url::to(['order/bom', 'id' => $order->id])]) ?>
+	<?php $form = ActiveForm::begin(['action' => Url::to(['document/bom', 'id' => $order->id])]) ?>
 
     <?= GridView::widget([
 			'dataProvider' => $dataProvider,
