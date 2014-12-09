@@ -37,9 +37,11 @@ $capture->submit = 1;
 	<?= $form->field($capture, 'amount')->textInput() ?>
 	<?= $form->field($capture, 'total')->textInput(['readonly' => true]) ?>
 	<?= $form->field($capture, 'method')->dropDownList(Payment::getPaymentMethods()) ?>
+	<?php if(!$model->getWorks()->exists() && !$model->getPayments()->exists()): ?>
 	<?= $form->field($capture, 'submit')->widget(SwitchInput::className(),
 		['pluginOptions' => ['onText' => Yii::t('store', 'Yes'), 'offText' =>  Yii::t('store', 'No')]
 	]) ?>
+	<?php endif; ?>
 
 	<div class="modal-footer our-modal-footer">
 	<div class="form-group our-form-group">

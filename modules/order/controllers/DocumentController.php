@@ -50,7 +50,7 @@ class DocumentController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager', 'compta'],
+	                    'roles' => ['admin', 'manager', 'compta', 'employee'],
 	                ],
 	            ],
 	        ],
@@ -329,7 +329,13 @@ class DocumentController extends Controller
 	}
 	
 	public function actionTerminate($id) {
-		return $this->actionUpdateStatus($id, Document::STATUS_DONE);
+		$model = $this->findModel($id);
+		if($model->document_type == Document::TYPE_TICKET) {			
+			$solde = $model->price_tvac - $model->prepaid;
+			return $this->actionUpdateStatus($model->id, $solde < 0.01 ? Document::STATUS_DONE : Document::STATUS_SOLDE);
+		}
+		else
+			return $this->actionUpdateStatus($id, Document::STATUS_DONE);
 		/*
 		$model = $this->findModel($id);
 		if($work = $model->getWorks()->one())
@@ -421,10 +427,12 @@ class DocumentController extends Controller
 			Yii::trace('Solde:'.$solde.'.');
 
 			$work = null;
+			$status = null;
 			if($capturePayment->submit) {
 				$work = $model->createWork();
+				$status = $work ? $work->getOrderStatus() : Document::STATUS_TODO;
 			}
-			return $this->actionUpdateStatus($model->id, $work ? $work->getOrderStatus() : ($solde < 0.01 ? Document::STATUS_CLOSED : Document::STATUS_SOLDE));
+			return $this->actionUpdateStatus($model->id, $status ? $status : ($solde < 0.01 ? Document::STATUS_CLOSED : Document::STATUS_SOLDE));
 		}
 		Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem reading payment capture.'));
 	}

@@ -11,7 +11,6 @@ use yii\data\ActiveDataProvider;
  */
 class TicketSearch extends Ticket
 {
-{
 	public $client_name;
 
     /**

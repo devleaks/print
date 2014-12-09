@@ -35,10 +35,10 @@ class CapturePayment extends Model
     public function attributeLabels()
     {
         return [
-            'total' => Yii::t('store', 'Total'),
+            'total'  => Yii::t('store', 'Total'),
             'amount' => Yii::t('store', 'Amount'),
             'method' => Yii::t('store', 'Payment Method'),
-            'save' => Yii::t('store', 'Submit Work?'),
+            'submit' => Yii::t('store', 'Submit work?'),
         ];
     }
 }

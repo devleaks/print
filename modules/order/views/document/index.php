@@ -12,8 +12,14 @@ use yii\helpers\Html;
 if(!isset($document_type))
 	$document_type = 'doc';
 
+$role = null;
+if(isset(Yii::$app->user))
+	if(isset(Yii::$app->user->identity))
+		if(isset(Yii::$app->user->identity->role))
+			$role = Yii::$app->user->identity->role;
+
 $this->title = Yii::t('store', Document::getTypeLabel($document_type, true));
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['/order']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/order']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">
