@@ -20,6 +20,22 @@ class WorkController extends Controller
     public function behaviors()
     {
         return [
+	        'access' => [
+	            'class' => 'yii\filters\AccessControl',
+	            'ruleConfig' => [
+	                'class' => 'app\components\AccessRule'
+	            ],
+	            'rules' => [
+	                [
+	                    'allow' => false,
+	                    'roles' => ['?']
+               		],
+					[
+	                    'allow' => true,
+	                    'roles' => ['admin', 'manager', 'worker'],
+	                ],
+	            ],
+	        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -162,5 +178,19 @@ class WorkController extends Controller
 			'day' => $id,
         ]);
     }
+
+	/**
+	 *	Terminate all tasks of a work.
+	 */
+	public function actionTerminate($id) {
+		$model = $this->findModel($id);
+		$model->terminate(); // should only be one, at most
+		$document = $model->getDocument()->one();
+		$document->refresh();
+        return $this->render('../../../order/views/document/view', [
+            'model' => $document,
+        ]);
+	}
+
 
 }

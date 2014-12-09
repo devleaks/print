@@ -54,18 +54,25 @@ class Ticket extends Order
 				break;
 			case $this::STATUS_TODO:
 			case $this::STATUS_BUSY:
-				if( $work  )
+				if( $work  ) {
 					$ret .= Html::a($this->getButton($template, 'tasks', 'Work'), ['/work/work/view', 'id' => $work->id], [
 						'title' => Yii::t('store', 'Work'),
 						'class' => $baseclass . ' btn-primary',
 						'data-method' => 'post',
 						]);
-				$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/order/document/terminate', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Terminate'),
-					'class' => $baseclass . ' btn-primary',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Terminate all tasks?')
-					]);
+					$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/work/work/terminate', 'id' => $work->id], [
+						'title' => Yii::t('store', 'Terminate'),
+						'class' => $baseclass . ' btn-primary',
+						'data-method' => 'post',
+						'data-confirm' => Yii::t('store', 'Terminate all tasks?')
+						]);
+				} else
+					$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/order/document/terminate', 'id' => $this->id], [
+						'title' => Yii::t('store', 'Terminate'),
+						'class' => $baseclass . ' btn-primary',
+						'data-method' => 'post',
+						'data-confirm' => Yii::t('store', 'Order is ready?')
+						]);
 				break;
 			case $this::STATUS_DONE:
 			case $this::STATUS_SOLDE:

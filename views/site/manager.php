@@ -1,19 +1,20 @@
 <?php
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 $this->title = 'Labo JJ Micheli @Work';
 ?>
 <div class="admin-index">
 
-    <div class="jumbotron">
+    <div class="jumbotron" data-intro='Menu principal rapide vers les fonctions les plus utilisées' data-position='bottom'>
         <h1>Bienvenue</h1>
 
-        <p class="lead">Vous pouvez enregistrer de nouveaux devis et de nouvelles commandes.</p>
-        <p class="lead">Vous avez accès à toutes les fonctions de gestion.</p>
+        <p class="lead">Vous pouvez enregistrer de nouvelles commandes.</p>
+        <p class="lead">Vous avez accès à toutes les fonctions d'administration et de gestion de l'application.</p>
 
         <p>
-			<a class="btn btn-lg btn-primary" href="<?=Yii::$app->homeUrl?>order/order/create-bid">Nouveau devis</a>
-			<a class="btn btn-lg btn-primary" href="<?=Yii::$app->homeUrl?>order/order/create-ticket">Nouvelle vente</a>
-			<a class="btn btn-lg btn-success" href="<?=Yii::$app->homeUrl?>order/order/create">Nouvelle commande</a>
+			<a class="btn btn-lg btn-primary" href="<?= Url::to(['/order/document/create-bid']) ?>">Nouveau devis</a>
+			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create']) ?>">Nouvelle commande</a>
+			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create-ticket']) ?>">Comptoir</a>
 			
 			<?= $this->render('_form'); ?>
 		</p>

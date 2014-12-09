@@ -22,9 +22,12 @@ class UserController extends Controller
 	            'ruleConfig' => [
 	                'class' => 'app\components\AccessRule'
 	            ],
-            	'only' => ['create', 'update', 'delete'],
 	            'rules' => [
 	                [
+	                    'allow' => false,
+	                    'roles' => ['?']
+               		],
+					[
 	                    'allow' => true,
 	                    'roles' => ['admin'],
 	                ],

@@ -18,6 +18,22 @@ class PaymentController extends Controller
     public function behaviors()
     {
         return [
+	        'access' => [
+	            'class' => 'yii\filters\AccessControl',
+	            'ruleConfig' => [
+	                'class' => 'app\components\AccessRule'
+	            ],
+	            'rules' => [
+	                [
+	                    'allow' => false,
+	                    'roles' => ['?']
+               		],
+					[
+	                    'allow' => true,
+	                    'roles' => ['admin', 'compta'],
+	                ],
+	            ],
+	        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

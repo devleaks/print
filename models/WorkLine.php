@@ -97,4 +97,31 @@ class WorkLine extends _WorkLine
 		$color = Work::getStatusColors();
 		return '<span class="label label-'.$color[$this->status].'">'.Yii::t('store', $this->status).'</span>';
 	}
+
+
+	public static function getBadge($id) {
+		$where = Order::getDateClause(intval($id));
+		$color = [
+			Work::STATUS_DONE => 'success',
+			Work::STATUS_BUSY => 'warning',
+			Work::STATUS_TODO => 'primary',
+			Work::STATUS_WARN => 'danger',
+		];
+		$icon = [
+			Work::STATUS_DONE => 'ok',
+			Work::STATUS_BUSY => 'inbox',
+			Work::STATUS_TODO => 'play-circle',
+			Work::STATUS_WARN => 'warning-sign',
+		];
+		$str = '';
+		foreach(array(Work::STATUS_DONE, Work::STATUS_BUSY, Work::STATUS_TODO, Work::STATUS_WARN) as $status) {
+			$cnt = self::find()
+				->andWhere($where)
+				->andWhere(['status' => $status])
+				->count();
+			$str .= '<span class="badge alert-'.$color[$status].'"><i class="glyphicon glyphicon-'.$icon[$status].'"></i> '.$cnt.'</span>';
+		}
+		return $str;
+	}
+	
 }

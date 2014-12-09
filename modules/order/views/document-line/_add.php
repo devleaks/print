@@ -23,7 +23,10 @@ ItemAsset::register($this);
 // url to submit search terms and get result back
 $url = Url::to(['document-line/item-list']);
 
-if(!isset($model->quantity) || $model->quantity == '') $model->quantity = 1;
+if(!isset($model->quantity) || $model->quantity == '') {
+	$model->quantity = 1;
+	$model->quantity_virgule = 1;
+}
 
 // Script to initialize the selection based on the value of the select2 element
 $initScript = <<< SCRIPT
@@ -113,7 +116,7 @@ SCRIPT;
 		    'form' => $form,
 		    'columns' => 12,
 		    'attributes' => [       // 1 column layout
-		        'quantity' => [
+		        'quantity_virgule' => [
 					'label' => Html::label(Yii::t('store', 'Qté')),
 					'type' => Form::INPUT_TEXT
 				],
@@ -143,7 +146,7 @@ SCRIPT;
 					'items' => array_merge(["" => ""], Parameter::getSelectList('extra', 'value_text')),
 		            'columnOptions' => ['colspan' => 2],
 				],
-		        'extra_amount' => [
+		        'extra_amount_virgule' => [
 					'label' => Html::label('% / €'),
 					'type' => Form::INPUT_TEXT
 				],
@@ -169,7 +172,9 @@ SCRIPT;
 			],
 		])
 	?>
-	
+	<?= Html::activeHiddenInput($model, 'quantity') ?>
+	<?= Html::activeHiddenInput($model, 'extra_amount') ?>
+
 	<hr>
 	<?= $this->render('../document-line-detail/_options', [
 		    'model' => $model,

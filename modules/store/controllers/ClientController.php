@@ -24,9 +24,12 @@ class ClientController extends Controller
 	            'ruleConfig' => [
 	                'class' => 'app\components\AccessRule'
 	            ],
-            	'only' => ['update', 'live-update', 'delete', 'maj', 'create'],
 	            'rules' => [
 	                [
+	                    'allow' => false,
+	                    'roles' => ['?']
+               		],
+					[
 	                    'allow' => true,
 	                    'roles' => ['admin', 'manager'],
 	                ],

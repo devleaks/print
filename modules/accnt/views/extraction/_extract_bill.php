@@ -28,9 +28,9 @@ Header:
 
       CrcyDoc:              EUR
 
-      AmountCrcyDoc:        <?= $model->price_tvac ?>
+      AmountCrcyDoc:        <?= number_format($model->price_tvac, 2, ',', '') ?>
 
-      AmountCrcyBase:       <?= $model->price_tvac ?>
+      AmountCrcyBase:       <?= number_format($model->price_tvac, 2, ',', '') ?>
 
 }
 <?= $this->render('_extract_bill_lines', ['model' => $model->getDocumentLines()]) ?>

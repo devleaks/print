@@ -14,7 +14,7 @@ $this->title = 'Labo JJ Micheli @Work';
     <div class="body-content">
 
         <div class="row">
-            <div class="col-lg-6">
+			<div class="col-md-6 col-md-offset-3">
                 <h2>Gestion des Travaux</h2>
 
                 <p>Travaux à faire, travaux en cours, état d'avancement des travaux d'une commande.</p>

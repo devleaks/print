@@ -39,6 +39,10 @@ class DocumentLine extends _DocumentLine
 	public $final_htva;
 	public $final_tvac;
 
+	public $quantity_virgule;
+	public $unit_price_virgule;
+	public $vat_virgule;
+	public $extra_amount_virgule;
     /**
      * @inheritdoc
      */
@@ -47,7 +51,7 @@ class DocumentLine extends _DocumentLine
         return array_merge(parent::rules(), [
 			// added for computation.
             [['final_htva', 'final_tvac'], 'number'],
-			//[['unit_price'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
+			[['quantity_virgule', 'unit_price', 'vat_virgule', 'extra_amount_virgule'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
 
             // added for file upload.
             [['image', 'image_add'], 'safe'],

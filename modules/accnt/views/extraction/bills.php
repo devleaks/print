@@ -2,6 +2,7 @@
 
 use app\models\Bill;
 use app\models\Document;
+use kartik\widgets\ActiveForm;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -18,6 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bill-index">
 
+	<?php $form = ActiveForm::begin(['action' => Url::to(['bulk-action'])]) ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
@@ -28,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	        'heading'=>'<h3 class="panel-title">'.Yii::t('store', 'Bills for Transfer').'</h3>',
 	        'before'=> '',
 	        'after'=> Html::label(Yii::t('store', 'Selection')).' : '.
-    			Html::button('<i class="glyphicon glyphicon-book"></i> '.Yii::t('store', 'Extract'),
+    			Html::submitButton('<i class="glyphicon glyphicon-book"></i> '.Yii::t('store', 'Extract'),
 							['class' => 'btn btn-primary actionButton', 'data-action' => Bill::ACTION_EXTRACT])
 				,
 	        'showFooter'=>false
@@ -93,29 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		'showPageSummary' => true,
     ]); ?>
 
-</div>
-<script type="text/javascript">
-<?php $this->beginBlock('JS_SUBMIT_STATUS') ?>
-$('.actionButton').click(function () {
-	var action = $(this).data('action');
-	console.log('doing for '+action);
-	var keys = $('#w0').yiiGridView('getSelectedRows');
-	console.log('doing for '+keys);
-	$.ajax({
-		type: "POST",
-		url: "<?= Url::to(['/accnt/extraction/bulk-action']) ?>",
-		dataType: 'json',
-		data: {
-			keylist: keys,
-			action: action
-		},
-		success: function(data) {
-			alert('I did it! Processed checked rows.');
-		},
-	});
-});
-<?php $this->endBlock(); ?>
-</script>
 
-<?php
-$this->registerJs($this->blocks['JS_SUBMIT_STATUS'], yii\web\View::POS_END);
+    <?php ActiveForm::end(); ?>
+
+</div>

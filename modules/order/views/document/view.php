@@ -12,8 +12,8 @@ use yii\widgets\DetailView;
 
 $this->title = $model->name;
 
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', Document::getTypeLabel($model->document_type, true)), 'url' => [strtolower($model->document_type).'s']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['/order']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', Document::getTypeLabel($model->document_type, true)), 'url' => ['/order/document/'.strtolower($model->document_type).'s']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-view">

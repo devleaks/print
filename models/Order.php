@@ -65,11 +65,11 @@ class Order extends Document
 				Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
 
 				Yii::$app->mailer->compose()
-				    ->setFrom('labojjmicheli@gmail.com')
+				    ->setFrom(['labojjmicheli@gmail.com' => 'Labo JJ Micheli'])						// From label could be a param
 				    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )	// <=== FORCE DEV EMAIL TO TEST ADDRESS
 				    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)				// @todo: msg dans la langue du client
 					->setTextBody(Yii::t('store', 'Your {document} is ready.', [
-    									'document' => Yii::t('store', $this->document_type).' '.$this->name]))
+    									'document' => strtolower(Yii::t('store', $this->document_type)).' '.$this->name]))
 				    ->send();
 
 				Yii::$app->language = $lang_before;
@@ -107,13 +107,11 @@ class Order extends Document
 			$ol->createTask($work, $defaultWork);
 
 		// if work to do, set order status to do, otherwise, it is done.
-		if ($work->getWorkLines()->count() > 0) {
-			$this->setStatus(Order::STATUS_TODO);
-		} else {
+		if ($work->getWorkLines()->count() == 0) {
 			$work->delete();
 			$work = null;
-			$this->setStatus(Order::STATUS_DONE);
 		}
+		$this->setStatus(Order::STATUS_TODO);
 		// $this->save(); // saved in updateStatus()
 		return $work;
 	}
@@ -177,18 +175,25 @@ class Order extends Document
 						]).' ';
 			case $this::STATUS_TODO:
 			case $this::STATUS_BUSY:
-				if( $work  )
+				if( $work  ) { // there should always be a work if doc status is TODO or BUSY
 					$ret .= Html::a($this->getButton($template, 'tasks', 'Work'), ['/work/work/view', 'id' => $work->id], [
 						'title' => Yii::t('store', 'Work'),
 						'class' => $baseclass . ' btn-primary',
 						'data-method' => 'post',
 						]);
-				$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/order/document/terminate', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Terminate'),
-					'class' => $baseclass . ' btn-primary',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Terminate all tasks?')
-					]);
+					$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/work/work/terminate', 'id' => $work->id], [
+						'title' => Yii::t('store', 'Terminate'),
+						'class' => $baseclass . ' btn-primary',
+						'data-method' => 'post',
+						'data-confirm' => Yii::t('store', 'Terminate all tasks?')
+						]);
+				} else
+					$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/order/document/terminate', 'id' => $this->id], [
+						'title' => Yii::t('store', 'Terminate'),
+						'class' => $baseclass . ' btn-primary',
+						'data-method' => 'post',
+						'data-confirm' => Yii::t('store', 'Order is ready?')
+						]);
 				break;
 			case $this::STATUS_DONE:
 				$ret .= Html::a($this->getButton($template, 'credit-card', 'Bill To'), ['/order/document/convert', 'id' => $this->id], [

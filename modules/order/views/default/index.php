@@ -3,6 +3,12 @@ use yii\helpers\Url;
 
 $this->title = Yii::t('store', 'Orders');
 $this->params['breadcrumbs'][] = $this->title;
+$role = null;
+if(isset(Yii::$app->user))
+	if(isset(Yii::$app->user->identity))
+		if(isset(Yii::$app->user->identity->role))
+			$role = Yii::$app->user->identity->role;
+
 ?>
 <div class="order-default-index">
     <h1><?= Yii::t('store', 'Orders') ?></h1>
@@ -10,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
     </p>
 	<div data-intro='Menu secondaire vers options de recherches et actions'>
-	<?php if(in_array(Yii::$app->user->identity->role, ['manager', 'admin'])): ?>
+	<?php if(in_array($role, ['manager', 'admin'])): ?>
 	<ul>
 	    <li><a href="<?= Url::to(['/order/document/create-ticket']) ?>"><strong><?= Yii::t('store', 'New ticket')?></strong></a></li>
 	</ul>
@@ -35,10 +41,14 @@ $this->params['breadcrumbs'][] = $this->title;
 	    <li><a href="<?= Url::to(['/order/document/credits']) ?>"><?= Yii::t('store', 'Credit Notes')?></a></li>
 	</ul>
 
-	<?php else: ?>
+	<?php elseif(in_array($role, ['compta'])): ?>
 	<ul>
+	    <li><a href="<?= Url::to(['/order/document/bids']) ?>"><?= Yii::t('store', 'Bids')?></a></li>
 	    <li><a href="<?= Url::to(['/order/document/orders']) ?>"><?= Yii::t('store', 'Orders')?></a></li>
+	    <li><a href="<?= Url::to(['/order/document/bills']) ?>"><?= Yii::t('store', 'Bills')?></a></li>
+	    <li><a href="<?= Url::to(['/order/document/credits']) ?>"><?= Yii::t('store', 'Credit Notes')?></a></li>
 	</ul>
+
 	<?php endif; ?>
 	</div>
 

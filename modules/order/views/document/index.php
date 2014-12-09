@@ -13,7 +13,7 @@ if(!isset($document_type))
 	$document_type = 'doc';
 
 $this->title = Yii::t('store', Document::getTypeLabel($document_type, true));
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['/order']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">

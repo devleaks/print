@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-md-6 col-md-offset-3">
 
 	<div class="panel panel-default">
-  		<div class="panel-heading"><?= Yii::t('store', 'Tasks')?></div>
+  		<div class="panel-heading"><?= Yii::t('store', 'Tasks by Type')?></div>
   		<div class="panel-body">
 			<div class="list-group">
 				<?= $this->render('_tasks_by_type') ?>
@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 
 	<div class="panel panel-default">
-  		<div class="panel-heading"><?= Yii::t('store', 'Works')?></div>
+  		<div class="panel-heading"><?= Yii::t('store', 'Works') . ' ('.Yii::t('store', 'Orders').')'?></div>
 
   		<div class="panel-body">
 			<div class="list-group">
@@ -35,21 +35,45 @@ $this->params['breadcrumbs'][] = $this->title;
 			</div>
   		</div>
 	</div>
+
+	<div class="alert alert-default">
+		<a href="#" class="close" data-dismiss="alert">&times;</a>
+		<div style="width:23%;display:inline-block">
+			<span class="badge alert-danger"><i class="glyphicon glyphicon-warning-sign"></i> 22</span> En retard
+		</div>
+		<div style="width:23%;display:inline-block">
+			<span class="badge alert-default"><i class="glyphicon glyphicon-play-circle"></i> 22</span> A faire
+		</div>
+		<div style="width:23%;display:inline-block">
+			<span class="badge alert-warning"><i class="glyphicon glyphicon-inbox"></i> 22</span> En cours
+		</div>
+		<div style="width:23%;display:inline-block">
+			<span class="badge alert-success"><i class="glyphicon glyphicon-ok"></i> 22</span> Terminé
+		</div>
+	</div>
+
 	
 	<div class="panel panel-default">
-  		<div class="panel-heading"><?= Yii::t('store', 'Tasks')?></div>
+  		<div class="panel-heading"><?= Yii::t('store', 'Tasks by Date')?></div>
   		<div class="panel-body">
 			<div class="list-group">
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/" class="list-group-item"><?= Work::getBadge(-2) ?><?= Yii::t('store', 'All Tasks')?></a>
+				<a href="<?= Yii::$app->homeUrl ?>work/work-line/" class="list-group-item"><?= WorkLine::getBadge(-2) ?><?= Yii::t('store', 'All Tasks')?></a>
 				<a href="<?= Yii::$app->homeUrl ?>work/work-line/mine" class="list-group-item"><?= Yii::t('store', 'My Tasks')?></a>
 
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=-1" class="list-group-item"><?= Work::getBadge(-1) ?>Tâches en retard</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list" class="list-group-item"><?= Work::getBadge(0) ?>Tâches pour aujourd'hui</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=1" class="list-group-item"><?= Work::getBadge(1) ?>Tâches pour demain</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=2" class="list-group-item"><?= Work::getBadge(2) ?>Tâches pour après-demain</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=7" class="list-group-item"><?= Work::getBadge(7) ?>Tâches pour les 7 prochains jours</a>
+				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=-1" class="list-group-item"><?= WorkLine::getBadge(-1) ?>Tâches en retard</a>
+				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list" class="list-group-item"><?= WorkLine::getBadge(0) ?>Tâches pour aujourd'hui</a>
+				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=1" class="list-group-item"><?= WorkLine::getBadge(1) ?>Tâches pour demain</a>
+				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=2" class="list-group-item"><?= WorkLine::getBadge(2) ?>Tâches pour après-demain</a>
+				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=7" class="list-group-item"><?= WorkLine::getBadge(7) ?>Tâches pour les 7 prochains jours</a>
 			</div>
   		</div>
+	</div>
+	
+	<div class="alert alert-info">
+	<a href="#" class="close" data-dismiss="alert">&times;</a>
+	<p>Les tâches terminées (décomptes en vert <span class="badge alert-success"><i class="glyphicon glyphicon-ok"></i> 22</span> ci-dessus)
+	ne sont pas affichées dans les listes des tâches à accomplir.</p>
+	<p>Pour voir les tâches terminées, sélectionner les travaux.</p>
 	</div>
 
 </div>

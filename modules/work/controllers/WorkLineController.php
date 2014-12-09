@@ -22,6 +22,22 @@ class WorkLineController extends Controller
     public function behaviors()
     {
         return [
+	        'access' => [
+	            'class' => 'yii\filters\AccessControl',
+	            'ruleConfig' => [
+	                'class' => 'app\components\AccessRule'
+	            ],
+	            'rules' => [
+	                [
+	                    'allow' => false,
+	                    'roles' => ['?']
+               		],
+					[
+	                    'allow' => true,
+	                    'roles' => ['admin', 'manager', 'worker'],
+	                ],
+	            ],
+	        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -183,11 +199,10 @@ class WorkLineController extends Controller
     public function actionMine()
     {
         $searchModel = new WorkLineSearch();
-        $dataProvider = new ActiveDataProvider([
-			'query' => WorkLine::find()
-						->andWhere(['updated_by' => Yii::$app->user->id])
-						->andWhere(['status' => Work::STATUS_BUSY]),
-		]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query
+						->andWhere(['work_line.updated_by' => Yii::$app->user->id])
+						->andWhere(['work_line.status' => Work::STATUS_BUSY]);
 
         return $this->render('mine', [
             'searchModel' => $searchModel,

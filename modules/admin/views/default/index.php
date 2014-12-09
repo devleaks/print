@@ -1,5 +1,11 @@
+<?php
+use yii\helpers\Url;
+
+$this->title = Yii::t('store', 'Application');
+$this->params['breadcrumbs'][] = $this->title;
+?>
 <div class="admin-default-index">
-    <h1><?= Yii::t('store', 'Administration') ?></h1>
+    <h1><?= $this->title ?></h1>
 
     <p>
     </p>

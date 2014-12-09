@@ -25,11 +25,6 @@ ItemAsset::register($this);
 $url = \yii\helpers\Url::to(['document-line/item-list']);
 if(!isset($model->image_add)) $model->image_add = DocumentLine::IMAGE_ADD;
 
-$model->quantity_virgule = number_format($model->quantity, 2, ',', '');
-$model->unit_price_virgule = number_format($model->unit_price, 2, ',', '');
-$model->vat_virgule = number_format($model->vat, 2, ',', '');
-$model->extra_amount_virgule = number_format($model->extra_amount, 2, ',', '');
-
 // Script to initialize the selection based on the value of the select2 element
 $initScript = <<< SCRIPT
 function (element, callback) {
@@ -74,14 +69,14 @@ SCRIPT;
 		    'form' => $form,
 		    'columns' => 6,
 		    'attributes' => [       // 1 column layout
-		        'quantity_virgule' => [
+		        'quantity' => [
 					'type' => Form::INPUT_TEXT
 				],
-		        'unit_price_virgule' => [
+		        'unit_price' => [
 					'type' => Form::INPUT_TEXT,
 					'options' => ['readonly' => true]
 				],
-		        'vat_virgule' => [
+		        'vat' => [
 					'type' => Form::INPUT_TEXT,
 					'options' => ['readonly' => true]
 				],
@@ -110,9 +105,8 @@ SCRIPT;
 					'type' => Form::INPUT_DROPDOWN_LIST,
 					'items' => array_merge(["" => ""], Parameter::getSelectList('extra', 'value_text')),
 				],
-		        'extra_amount_virgule' => [
-					'label' => Html::label('% / €'),
-					'type' => Form::INPUT_TEXT,
+		        'extra_amount' => [
+					'type' => Form::INPUT_TEXT
 				],
 		        'extra_htva' => [
 					'type' => Form::INPUT_TEXT,
@@ -129,10 +123,6 @@ SCRIPT;
 			],
 		])
 	?>
-	<?= Html::activeHiddenInput($model, 'quantity') ?>
-	<?= Html::activeHiddenInput($model, 'unit_price') ?>
-	<?= Html::activeHiddenInput($model, 'vat') ?>
-	<?= Html::activeHiddenInput($model, 'extra_amount') ?>
 
 	<?= Form::widget([
 		    'model' => $model,

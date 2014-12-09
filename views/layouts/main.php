@@ -58,7 +58,7 @@ ChardinJSAsset::register($this);
 
 
 				$help_menu = [];
-				$help_menu[] = ['label' => 'Chardin',		'url' => "javascript:do_chardinjs();"];
+				// $help_menu[] = ['label' => 'Chardin',		'url' => "javascript:do_chardinjs();"];
 				$help_menu[] = ['label' => 'Intro',			'url' => "javascript:do_introjs();"];
 				$help_menu[] = ['label' => 'Documentation',	'url' => ['/site/help']];
 
@@ -113,7 +113,7 @@ ChardinJSAsset::register($this);
     </footer>
 <script type="text/javascript">
 <?php
-$this->beginBlock('JS_INIT'); ?>
+$this->beginBlock('PRINT_LAYOUT_HELP_JS'); ?>
 function do_introjs() {
 	introJs().setOptions({ 'nextLabel': 'Suivant', 'prevLabel': 'Précédent', 'doneLabel': 'Terminé', 'skipLabel': 'Sortir' }).start();
 }
@@ -123,7 +123,7 @@ function do_chardinjs() {
 <?php $this->endBlock(); ?>
 </script>
 <?php
-$this->registerJs($this->blocks['JS_INIT'], yii\web\View::POS_END);
+$this->registerJs($this->blocks['PRINT_LAYOUT_HELP_JS'], yii\web\View::POS_END);
 
 $this->endBody() ?>
 </body>

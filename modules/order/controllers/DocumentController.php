@@ -43,12 +43,14 @@ class DocumentController extends Controller
 	            'ruleConfig' => [
 	                'class' => 'app\components\AccessRule'
 	            ],
-            	'only' => ['create', 'create-bid', 'create-order', 'create-doc', 'create-bill', 'create-bom', 'create-credit', 'update',
-							'live-update', 'delete', 'paid', 'close', 'sent', 'cancel', 'bom'],
 	            'rules' => [
 	                [
+	                    'allow' => false,
+	                    'roles' => ['?']
+               		],
+					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager'],
+	                    'roles' => ['admin', 'manager', 'compta'],
 	                ],
 	            ],
 	        ],
@@ -327,6 +329,8 @@ class DocumentController extends Controller
 	}
 	
 	public function actionTerminate($id) {
+		return $this->actionUpdateStatus($id, Document::STATUS_DONE);
+		/*
 		$model = $this->findModel($id);
 		if($work = $model->getWorks()->one())
 			$work->terminate(); // should only be one, at most
@@ -334,6 +338,7 @@ class DocumentController extends Controller
         return $this->render('view', [
             'model' => $model,
         ]);
+		*/
 	}
 
 	public function actionConvert($id) {

@@ -19,6 +19,22 @@ class ExtractionController extends Controller
     public function behaviors()
     {
         return [
+	        'access' => [
+	            'class' => 'yii\filters\AccessControl',
+	            'ruleConfig' => [
+	                'class' => 'app\components\AccessRule'
+	            ],
+	            'rules' => [
+	                [
+	                    'allow' => false,
+	                    'roles' => ['?']
+               		],
+					[
+	                    'allow' => true,
+	                    'roles' => ['admin', 'compta'],
+	                ],
+	            ],
+	        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -136,16 +152,13 @@ class ExtractionController extends Controller
 
 
 	public function actionBulkAction() {
-		if(isset($_POST))
-			if(isset($_POST['action'])) {
-				$action = $_POST['action'];
-				if(in_array($action, [Bill::ACTION_EXTRACT])) {
-					if(isset($_POST['keylist'])) {
-				        return $this->render('extract', [
-				            'bills' => Bill::find()->where(['id' => $_POST['keylist']]),
-				        ]);
-					}
-				}
+		if(isset($_POST)) {
+			if(isset($_POST['selection'])) {
+				$bills = Bill::find()->where(['id' => $_POST['selection']]);
+		        return $this->render('extract', [
+		            'bills' => Bill::find()->where(['id' => $_POST['selection']]),
+		        ]);
 			}
+		}
 	}
 }

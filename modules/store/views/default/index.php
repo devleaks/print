@@ -3,6 +3,11 @@ use yii\helpers\Url;
 
 $this->title = Yii::t('store', 'Management');
 $this->params['breadcrumbs'][] = $this->title;
+$role = null;
+if(isset(Yii::$app->user))
+	if(isset(Yii::$app->user->identity))
+		if(isset(Yii::$app->user->identity->role))
+			$role = Yii::$app->user->identity->role;
 ?>
 <div class="store-default-index">
     <h1><?= Yii::t('store', 'Management') ?></h1>
@@ -10,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
     </p>
 
-	<?php if(in_array(Yii::$app->user->identity->role, ['manager', 'admin'])): ?>
+	<?php if(in_array($role, ['manager', 'admin'])): ?>
 	<ul>
 	    <li><a href="<?= Url::to(['/order/document/create-ticket']) ?>"><strong><?= Yii::t('store', 'New ticket')?></strong></a></li>
 	</ul>

@@ -1,6 +1,5 @@
 <?php
 
-use app\models\Bid;
 use app\models\Bill;
 use app\models\Document;
 use kartik\grid\GridView;
@@ -11,24 +10,32 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\DocumentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 if(!isset($document_type))
-	$document_type = 'doc';
+	$document_type = Document::TYPE_BILL;
 
-$this->title = Yii::t('store', Document::getTypeLabel($document_type, true));
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['/order']];
+$this->title = Yii::t('store', 'Extractions');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="order-index">
-
-    <h1><?= Html::encode($this->title) ?>
-        <?= Html::a(Yii::t('store', 'Create '.ucfirst(strtolower($document_type))), ['create-'.strtolower($document_type)],
-			['class' => 'btn btn-success']) ?>
-    </h1>
+<div class="bill-index">
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
+		'toolbar' => [
+			'{export}',
+    	],
+		'panel' => [
+	        'heading'=>'<h3 class="panel-title">'.Yii::t('store', 'Bills for Transfer').'</h3>',
+	        'before'=> '',
+	        'after'=> Html::label(Yii::t('store', 'Selection')).' : '.
+    			Html::button('<i class="glyphicon glyphicon-book"></i> '.Yii::t('store', 'Extract'),
+							['class' => 'btn btn-primary actionButton', 'data-action' => Bill::ACTION_EXTRACT])
+				,
+	        'showFooter'=>false
+	    ],
+		'panelHeadingTemplate' => '{heading}',
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'kartik\grid\SerialColumn'],
 	        [
 				'attribute' => 'name',
 	            'label' => Yii::t('store', 'Référence'),
@@ -42,10 +49,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			[
 	            'label' => Yii::t('store', 'Amount'),
-				'attribute' => 'price_htva',
+				'attribute' => 'price_tvac',
 				'format' => 'currency',
 				'hAlign' => GridView::ALIGN_RIGHT,
 				'noWrap' => true,
+				'pageSummary' => true,
 			],
 			[
 				'attribute' => 'due_date',
@@ -78,7 +86,36 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'format' => 'raw',
 				'noWrap' => true,
 	        ],
+			[
+        		'class' => '\kartik\grid\CheckboxColumn'
+			],
         ],
+		'showPageSummary' => true,
     ]); ?>
 
 </div>
+<script type="text/javascript">
+<?php $this->beginBlock('JS_SUBMIT_STATUS') ?>
+$('.actionButton').click(function () {
+	var action = $(this).data('action');
+	console.log('doing for '+action);
+	var keys = $('#w0').yiiGridView('getSelectedRows');
+	console.log('doing for '+keys);
+	$.ajax({
+		type: "POST",
+		url: "<?= Url::to(['/accnt/extraction/bulk-action']) ?>",
+		dataType: 'json',
+		data: {
+			keylist: keys,
+			action: action
+		},
+		success: function(data) {
+			alert('I did it! Processed checked rows.');
+		},
+	});
+});
+<?php $this->endBlock(); ?>
+</script>
+
+<?php
+$this->registerJs($this->blocks['JS_SUBMIT_STATUS'], yii\web\View::POS_END);

@@ -18,7 +18,13 @@ if(isset($order_line)) {
 } else {
 	$this->params['breadcrumbs'][] = $this->title;
 }
-$can_view = in_array(Yii::$app->user->identity->role, ['manager', 'admin']);
+
+$can_view = false;
+if(isset(Yii::$app->user))
+	if(isset(Yii::$app->user->identity))
+		if(isset(Yii::$app->user->identity->role))
+			$can_view = in_array(Yii::$app->user->identity->role, ['manager', 'admin']);
+
 ?>
 <div class="work-view">
 

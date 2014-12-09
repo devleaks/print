@@ -47,6 +47,29 @@ $("#documentline-quantity, #documentline-unit_price, #documentline-vat").change(
 	$("#documentline-extra_amount").trigger("change");
 });
 
+$("#documentline-quantity_virgule").change( function() {
+	console.log("changing to "+$("#documentline-quantity").val());
+	$("#documentline-quantity").val($("#documentline-quantity_virgule").val().replace(",","."));
+	$("#documentline-quantity").trigger('change');
+});
+
+$("#documentline-unit_price_virgule").change( function() {
+	console.log("changing to "+$("#documentline-unit_price").val());
+	$("#documentline-unit_price").val($("#documentline-unit_price_virgule").val().replace(",","."));
+	$("#documentline-unit_price").trigger('change');
+});
+
+$("#documentline-vat_virgule").change( function() {
+	console.log("changing to "+$("#documentline-vat").val());
+	$("#documentline-vat").val($("#documentline-vat_virgule").val().replace(",","."));
+	$("#documentline-vat").trigger('change');
+});
+
+$("#documentline-extra_amount_virgule").change( function() {
+	console.log("changing to "+$("#documentline-extra_amount").val());
+	$("#documentline-extra_amount").val($("#documentline-extra_amount_virgule").val().replace(",","."));
+	$("#documentline-extra_amount").trigger('change');
+});
 
 /**
  *	Changes in main order line
@@ -452,8 +475,8 @@ $('#documentlinedetail-submit').submit(function(e) {
 });
 
 function free_item_update() {
-	$("#documentline-unit_price").prop('readonly', false);
-	$("#documentline-vat").prop('readonly', false);
+	$("#documentline-unit_price_virgule").prop('readonly', false);
+	$("#documentline-vat_virgule").prop('readonly', false);
 }
 
 /**
