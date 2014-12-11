@@ -129,7 +129,7 @@ $client = $model->getClient()->one();
 				<?= $model->getActions('btn', false) ?>
 				<?= $this->render('_sendmail', ['model' => $model]) /** modal */ ?>
 				<?php
-				 	if($model->document_type == Document::TYPE_TICKET && !$model->isPaid())
+				 	if(in_array($model->document_type, [Document::TYPE_ORDER,Document::TYPE_BILL,Document::TYPE_TICKET,Document::TYPE_CREDIT]) && !$model->isPaid())
 						echo $this->render('_pay', ['model' => $model]); /** modal */
 				?>
 				</div>

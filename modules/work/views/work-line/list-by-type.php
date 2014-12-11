@@ -59,6 +59,13 @@ Icon::map($this);
             	'format' => 'raw',
             ],
             [
+                'label'=>Yii::t('store','Client'),
+	            'value'=> function ($model, $key, $index, $widget) {
+					return $model->getWork()->one()->getDocument()->one()->getClient()->one()->nom ;
+				},
+            	'format' => 'raw',
+            ],
+            [
                 'label'=>Yii::t('store','Due Date'),
 	            'value'=> function ($model, $key, $index, $widget) {
 					return $model->due_date;

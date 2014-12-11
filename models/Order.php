@@ -96,12 +96,13 @@ class Order extends Document
 	public function createWork($defaultWork = false) {
 		if( $existing_work = $this->getWorks()->one() )
 			return $existing_work;
+
 		$work = new Work();
 		$work->document_id = $this->id;
 		$work->due_date = $this->due_date;
+		$work->priority = $this->priority;
 		$work->status = Work::STATUS_TODO;
 		$work->save(); // to generate id
-		Yii::trace('order '.$this->id);
 		
 		foreach($this->getDocumentLines()->each() as $ol)
 			$ol->createTask($work, $defaultWork);

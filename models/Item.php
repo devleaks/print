@@ -127,6 +127,7 @@ class Item extends _Item
 			$wl->item_id = $this->id;
 			$wl->document_line_id = $order_line->id;
 			$wl->due_date = $order_line->due_date;
+			$wl->priority = $order_line->priority;
 			if($itp = ItemTask::findOne(['item_id' => $this->id, 'task_id' => $task->id]))
 				$wl->position = $itp->position;
 			else
@@ -142,6 +143,7 @@ class Item extends _Item
 			$wl->item_id = $this->id;
 			$wl->document_line_id = $order_line->id;
 			$wl->due_date = $order_line->due_date;
+			$wl->priority = $order_line->priority;
 			$wl->position = 100;
 			$wl->status = Work::STATUS_TODO;
 			$wl->save();

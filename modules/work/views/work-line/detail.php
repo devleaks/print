@@ -41,14 +41,18 @@ $this->params['breadcrumbs'][] = Html::encode($this->title);
             [
                 'attribute'=>'status',
                 'label'=>Yii::t('store','Status'),
-                'value'=> Yii::t('store',$model->status),
+                'value'=> $model->getStatusLabel(),
+				'format' => 'raw'
 			],
             [
                 'attribute'=>'status',
                 'label'=>Yii::t('store','Updated'),
                 'value'=> $model->getUpdatedBy()->one()->username . ' ' . Yii::t('store', 'at') . ' ' . Yii::$app->formatter->asDateTime($model->updated_at),
 			],
-            'note',
+            [
+                'attribute'=>'note',
+                'value'=> $model->note ? $model->note : '',
+			],
 //          [
 //              'attribute'=>'status',
 //              'label'=>Yii::t('store','Created'),

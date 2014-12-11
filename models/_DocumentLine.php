@@ -26,11 +26,12 @@ use Yii;
  * @property string $status
  * @property string $created_at
  * @property string $updated_at
+ * @property integer $priority
  *
  * @property Item $item
- * @property Document $order
- * @property DocumentLineDetail[] $orderLineDetails
- * @property DocumentLineOption[] $orderLineOptions
+ * @property Document $document
+ * @property DocumentLineDetail[] $documentLineDetails
+ * @property DocumentLineOption[] $documentLineOptions
  * @property Picture[] $pictures
  * @property WorkLine[] $workLines
  */
@@ -51,7 +52,7 @@ class _DocumentLine extends \yii\db\ActiveRecord
     {
         return [
             [['document_id', 'item_id', 'quantity'], 'required'],
-            [['document_id', 'item_id', 'position'], 'integer'],
+            [['document_id', 'item_id', 'position', 'priority'], 'integer'],
             [['work_width', 'work_height', 'unit_price', 'quantity', 'extra_amount', 'extra_htva', 'price_htva', 'price_tvac', 'vat'], 'number'],
             [['due_date', 'created_at', 'updated_at'], 'safe'],
             [['extra_type', 'status'], 'string', 'max' => 20],
@@ -66,7 +67,7 @@ class _DocumentLine extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('store', 'ID'),
-            'document_id' => Yii::t('store', 'Order ID'),
+            'document_id' => Yii::t('store', 'Document ID'),
             'item_id' => Yii::t('store', 'Item ID'),
             'position' => Yii::t('store', 'Position'),
             'work_width' => Yii::t('store', 'Work Width'),
@@ -84,6 +85,7 @@ class _DocumentLine extends \yii\db\ActiveRecord
             'status' => Yii::t('store', 'Status'),
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
+            'priority' => Yii::t('store', 'Priority'),
         ];
     }
 

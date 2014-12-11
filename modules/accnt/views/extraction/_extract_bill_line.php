@@ -10,12 +10,12 @@ Line:
       Comment:              <?= $model->note ?>
 
       FlagDC:               C
-      AmountCrcy:           <?= number_format($model->price_htva, 2, ',', '') ?>
+      AmountCrcy:           <?= $model->price_htva ?>
 
-      AmountCrcyDoc:        <?= number_format($model->price_htva, 2, ',', '') ?>
+      AmountCrcyDoc:        <?= $model->price_htva ?>
 
-      AmountCrcyBase:       <?= number_format($model->price_htva, 2, ',', '') ?>
+      AmountCrcyBase:       <?= $model->price_htva ?>
 
-      AmountVATCrcyDoc:     <?= number_format($model->price_htva * ($model->vat / 100), 2, ',', '') ?>
+      AmountVATCrcyDoc:     <?= round($model->price_htva * ($model->vat / 100), 2) ?>
 
 }

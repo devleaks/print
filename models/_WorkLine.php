@@ -15,17 +15,18 @@ use Yii;
  * @property integer $updated_by
  * @property string $status
  * @property string $note
- * @property string $due_date
- * @property integer $document_line_id
  * @property integer $task_id
  * @property integer $position
  * @property integer $item_id
+ * @property string $due_date
+ * @property integer $document_line_id
+ * @property integer $priority
  *
  * @property User $updatedBy
  * @property Work $work
  * @property Task $task
  * @property Item $item
- * @property DocumentLine $orderLine
+ * @property DocumentLine $documentLine
  * @property User $createdBy
  */
 class _WorkLine extends \yii\db\ActiveRecord
@@ -44,8 +45,8 @@ class _WorkLine extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['work_id', 'due_date', 'document_line_id', 'task_id', 'item_id'], 'required'],
-            [['work_id', 'created_by', 'updated_by', 'document_line_id', 'task_id', 'position', 'item_id'], 'integer'],
+            [['work_id', 'task_id', 'item_id', 'due_date', 'document_line_id'], 'required'],
+            [['work_id', 'created_by', 'updated_by', 'task_id', 'position', 'item_id', 'document_line_id', 'priority'], 'integer'],
             [['created_at', 'updated_at', 'due_date'], 'safe'],
             [['status'], 'string', 'max' => 20],
             [['note'], 'string', 'max' => 160]
@@ -66,11 +67,12 @@ class _WorkLine extends \yii\db\ActiveRecord
             'updated_by' => Yii::t('store', 'Updated By'),
             'status' => Yii::t('store', 'Status'),
             'note' => Yii::t('store', 'Note'),
-            'due_date' => Yii::t('store', 'Due Date'),
-            'document_line_id' => Yii::t('store', 'Order Line ID'),
             'task_id' => Yii::t('store', 'Task ID'),
             'position' => Yii::t('store', 'Position'),
             'item_id' => Yii::t('store', 'Item ID'),
+            'due_date' => Yii::t('store', 'Due Date'),
+            'document_line_id' => Yii::t('store', 'Document Line ID'),
+            'priority' => Yii::t('store', 'Priority'),
         ];
     }
 

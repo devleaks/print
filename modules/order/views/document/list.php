@@ -9,32 +9,35 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-if(!isset($document_type))
-	$document_type = 'doc';
-
 $role = null;
 if(isset(Yii::$app->user))
 	if(isset(Yii::$app->user->identity))
 		if(isset(Yii::$app->user->identity->role))
 			$role = Yii::$app->user->identity->role;
 
-$this->title = Yii::t('store', Document::getTypeLabel($document_type, true));
+$this->title = Yii::t('store', 'Customer {0}', [ucfirst(strtolower($client->nom))]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/order']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">
 
-    <h1><?= Html::encode($this->title) ?>
-        <?= Html::a(Yii::t('store', 'Create '.ucfirst(strtolower($document_type))), ['create-'.strtolower($document_type)], ['class' => 'btn btn-success']) ?>
-    </h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+	    'showPageSummary' => true,
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
 
             // 'id',
+//	        [
+//				'attribute' => 'client_name',
+//	            'label' => Yii::t('store', 'Client'),
+//	            'value' => function ($model, $key, $index, $widget) {
+//							return $model->client->nom;
+//				}
+//			],
 	        [
 				'attribute' => 'document_type',
 	            'label' => Yii::t('store', 'Type'),
@@ -47,20 +50,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'name',
 	            'label' => Yii::t('store', 'Référence'),
 			],
-	        [
-				'attribute' => 'client_name',
-	            'label' => Yii::t('store', 'Client'),
-	            'value' => function ($model, $key, $index, $widget) {
-							return $model->client->nom;
-				}
-			],
-			[
-	            'label' => Yii::t('store', 'Amount'),
-				'attribute' => 'price_htva',
-				'format' => 'currency',
-				'hAlign' => GridView::ALIGN_RIGHT,
-				'noWrap' => true,
-			],
 			[
 				'attribute' => 'due_date',
 				'format' => 'date',
@@ -72,6 +61,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				'value' => function ($model, $key, $index, $widget) {
 					return new DateTime($model->updated_at);
 				}
+			],
+			[
+	            'label' => Yii::t('store', 'Amount'),
+				'attribute' => 'price_htva',
+				'format' => 'currency',
+				'hAlign' => GridView::ALIGN_RIGHT,
+				'noWrap' => true,
+					'pageSummary' => true
 			],
 	        [
 	            'label' => Yii::t('store', 'Status'),
@@ -93,12 +90,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				'noWrap' => true,
 				'options' => ['class' => 'IntroJS1'],
 	        ],
-            [	// freely let update or delete if accessed throught this screen.
-				'class' => 'kartik\grid\ActionColumn',
-				'controller' => 'document',
-			 	'template' => '{update} {delete}'
-			],
-
         ],
     ]); ?>
 

@@ -19,6 +19,15 @@ use yii\widgets\DetailView;
                 'value'=> $model->document->name,
 			],
             [
+                'label'=>Yii::t('store','Client'),
+                'value'=> $model->document->client->nom,
+			],
+            [
+                'label'=>Yii::t('store','Due Date'),
+                'value'=> $model->due_date,
+				'format' => 'date'
+			],
+            [
                 'label'=>Yii::t('store','Item'),
                 'value'=> $model->item->libelle_long,
 			],
@@ -26,9 +35,12 @@ use yii\widgets\DetailView;
             'work_width',
             'work_height',
             [
-                'attribute'=>'note',
                 'label'=>Yii::t('store','Options'),
                 'value'=> $model->getDocumentLineDetails()->one() != null ? $model->getDocumentLineDetails()->one()->getDescription() : '',
+			],
+            [
+                'label'=>Yii::t('store','Item'),
+                'value'=> $model->item->libelle_long,
 			],
             'note',
         ],

@@ -124,6 +124,10 @@ use kartik\widgets\ActiveForm;
 					'type' => Form::INPUT_TEXTAREA,
 		            'columnOptions' => ['colspan' => 6],
 				],
+		        'comptabilite' => [
+					'type' => Form::INPUT_TEXT,
+		            'columnOptions' => ['colspan' => 2],
+				],
 			]
 		])
 	?>
@@ -165,8 +169,6 @@ use kartik\widgets\ActiveForm;
     <?= $form->field($model, 'outlook')->textInput(['maxlength' => 80]) ?>
 
     <?= $form->field($model, 'categorie_de_client')->textInput(['maxlength' => 80]) ?>
-
-    <?= $form->field($model, 'comptabilite')->textInput(['maxlength' => 80]) ?>
 
     <?= $form->field($model, 'operation')->textInput(['maxlength' => 80]) ?>
 

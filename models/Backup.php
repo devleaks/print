@@ -67,4 +67,17 @@ class Backup extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('store', 'Updated At'),
         ];
     }
+
+	/**
+	 *		mysql:host=localhost;port=3307;dbname=testdb
+	 *		mysql:unix_socket=/tmp/mysql.sock;dbname=testdb
+	 */
+	public static function parseDSN($dsn) {
+		$db = [];
+		foreach(explode(';', str_replace('mysql:', '', $dsn)) as $e) {
+			$a = explode('=', $e);
+			$db[$a[0]] = $a[1];
+		}
+		return $db;
+	}
 }

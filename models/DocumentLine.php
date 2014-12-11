@@ -51,7 +51,7 @@ class DocumentLine extends _DocumentLine
         return array_merge(parent::rules(), [
 			// added for computation.
             [['final_htva', 'final_tvac'], 'number'],
-			[['quantity_virgule', 'unit_price', 'vat_virgule', 'extra_amount_virgule'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
+			[['quantity_virgule', 'unit_price_virgule', 'vat_virgule', 'extra_amount_virgule'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
 
             // added for file upload.
             [['image', 'image_add'], 'safe'],
@@ -66,6 +66,10 @@ class DocumentLine extends _DocumentLine
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
+	        'quantity_virgule' => Yii::t('store', 'Quantity'),
+	        'vat_virgule' => Yii::t('store', 'Vat'),
+	        'extra_amount_virgule' => Yii::t('store', 'Extra Amount'),
+	        'unit_price_virgule' => Yii::t('store', 'Unit Price'),
 	        'final_htva' => Yii::t('store', 'Total Htva'),
 	        'final_tvac' => Yii::t('store', 'Total Tvac'),
 	        'image' => Yii::t('store', 'Image'),

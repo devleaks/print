@@ -54,6 +54,9 @@ if(isset(Yii::$app->user))
 
 	<ul>
 	    <li><a href="<?= Url::to(['/store/client/']) ?>"><?= Yii::t('store', 'Customers')?></a></li>
+	</ul>
+
+	<ul>
 	    <li><?= Yii::t('store', 'Reference tables')?></li>
 			<ul>
 			    <li><a href="<?= Url::to(['/store/item']) ?>"><?= Yii::t('store', 'Items')?></a></li>

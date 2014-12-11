@@ -26,7 +26,7 @@ use app\models\Document;
 			<td><?= Yii::$app->formatter->asDate($model->created_at, 'short') ?></td>
 			<td><?= $model->reference_client ?></td>
 			<td><?= $model->client->numero_tva ?></td>
-			<td><?= $model->reference ?></td>
+			<td><?= '+++ '.$model->reference.' +++' ?></td>
 			<td><?= $model->name ?></td>
 	</tr>
 	</table>

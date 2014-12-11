@@ -50,6 +50,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'fax_bureau',
             'pc',
             'autre',
+            'comptabilite',
+            'commentaires',
             'remise',
             'escompte',
             'delais_de_paiement',
@@ -65,7 +67,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'mailing',
             'outlook',
             'categorie_de_client',
-            'comptabilite',
             'operation',
             'categorie_de_prix_de_vente',
             'reference_1',
@@ -74,7 +75,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'date_limite_2',
             'reference_3',
             'date_limite_3',
-            'commentaires',
         ],
     ]) ?>
 

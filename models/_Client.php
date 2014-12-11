@@ -60,7 +60,9 @@ use Yii;
  * @property string $comm_pref
  * @property string $comm_format
  *
- * @property Order[] $orders
+ * @property Account[] $accounts
+ * @property Document[] $documents
+ * @property Payment[] $payments
  */
 class _Client extends \yii\db\ActiveRecord
 {
@@ -149,8 +151,24 @@ class _Client extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getAccounts()
+    {
+        return $this->hasMany(Account::className(), ['client_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getDocuments()
     {
-        return $this->hasMany(Order::className(), ['client_id' => 'id']);
+        return $this->hasMany(Document::className(), ['client_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPayments()
+    {
+        return $this->hasMany(Payment::className(), ['client_id' => 'id']);
     }
 }

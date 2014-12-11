@@ -12,6 +12,9 @@ use yii\helpers\ArrayHelper;
  */
 class Payment extends _Payment
 {
+	/** Payment Method */
+	const TYPE_ACCOUNT = 'ACCOUNT';	
+
 	/** Document status */
 	const STATUS_PAID = 'PAID';	
 	/** */

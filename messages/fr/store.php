@@ -302,7 +302,8 @@ return [
 	'by' => 'par',
 	'for' => 'pour',
 	'{document} updated' => '{document} mise à jour',
-	
+	'Comptabilite' => 'Référence Comptabilité',
+	'Customer {0}' => 'Client {0}',
 	
 	
 	/** roles */
@@ -313,6 +314,8 @@ return [
 	'worker' => 'Ouvrier',
 	
 	/** "Object" Types and Statuses */
+	'ACREDIT' => 'Crédit',
+	'ADEBIT' => 'Débit',
 	'ACTIVE' => 'Actif',
 	'BID' => 'Devis',
 	'BILL' => 'Facture',

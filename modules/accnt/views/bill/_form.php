@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'prepaid')->textInput() ?>
 
-    <?= $form->field($model, 'paiement_method')->textInput(['maxlength' => 20]) ?>
+    <?= $form->field($model, 'payment_method')->textInput(['maxlength' => 20]) ?>
 
     <?= $form->field($model, 'vat')->textInput() ?>
 

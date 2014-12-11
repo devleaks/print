@@ -3,6 +3,7 @@
 namespace app\modules\order\controllers;
 
 use Yii;
+use app\models\Account;
 use app\models\Bid;
 use app\models\BidSearch;
 use app\models\Bill;
@@ -91,6 +92,26 @@ class DocumentController extends Controller
         ]);
 	}
 
+    /**
+     * Lists all Order models for supplied client.
+     * @return mixed
+     */
+	public function actionClient($id) {
+		$client = Client::findOne($id);
+		if(!$client)
+        	throw new NotFoundHttpException('The requested page does not exist.');
+		
+        $searchModel = new DocumentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere(['client_id' => $id]);
+
+        return $this->render('list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+			'client' => $client
+        ]);
+	}
+
     public function actionBids() {
         return $this->actionIndexByType(new BidSearch(), Document::TYPE_BID);
     }
@@ -145,6 +166,7 @@ class DocumentController extends Controller
 				->orWhere(['like', 'document.name', $search])
 				->orWhere(['like', 'document.reference', $search])
 				->orWhere(['like', 'document.reference_client', $search])
+				->orWhere(['like', 'document.note', $search])
 				->orWhere(['like', 'client.nom', $search])
 				->orWhere(['like', 'client.autre_nom', $search])
 				->orderBy('updated_by desc');
@@ -184,7 +206,8 @@ class DocumentController extends Controller
 				}
 			}
 			// temporaily set reference
-			$model->reference = $model->name;
+			$model->reference = Document::commStruct($model->name);//$model->name;
+			if(!$model->priority) $model->priority = 100;
 			if ($model->save()) {
 				$model->status = Document::STATUS_OPEN;
 				$model->save();
@@ -413,11 +436,22 @@ class DocumentController extends Controller
 			// record paiement
 			$payment = new Payment([
 				'document_id' => $model->id,
+				'client_id' => $model->client_id,
 				'payment_method' => $capturePayment->method,
 				'amount' => $capturePayment->amount,
 				'status' => Payment::STATUS_PAID,
 			]);
 			$payment->save();
+			
+			if($capturePayment->method == Payment::TYPE_ACCOUNT) {
+				$account = new Account([
+					'document_id' => $model->id,
+					'client_id' => $model->client_id,
+					'amount' => - ($capturePayment->amount),
+					'status' => Account::TYPE_DEBIT,
+				]);
+				$account->save();
+			}
 			
 			if($model->prepaid == '') $model->prepaid = 0;
 			$model->prepaid += $capturePayment->amount;
@@ -428,9 +462,13 @@ class DocumentController extends Controller
 
 			$work = null;
 			$status = null;
-			if($capturePayment->submit) {
+			if($capturePayment->submit) { // do we need to create a new work order for this order?
 				$work = $model->createWork();
 				$status = $work ? $work->getOrderStatus() : Document::STATUS_TODO;
+			} else { // is there an existing work order for this order?
+				if ( $work = $model->getWorks()->one() )
+					$status = $work->getOrderStatus();
+				// else: no work, no stats, status is deduced from payment					
 			}
 			return $this->actionUpdateStatus($model->id, $status ? $status : ($solde < 0.01 ? Document::STATUS_CLOSED : Document::STATUS_SOLDE));
 		}
@@ -522,7 +560,7 @@ class DocumentController extends Controller
 				$filename = tempnam('/var/tmp', 'yiipdf-'.$model->name.'-');
 				$pdf = $this->generatePdf($model, $filename);			
 				Yii::$app->mailer->compose()
-				    ->setFrom('labojjmicheli@gmail.com')
+				    ->setFrom(['labojjmicheli@gmail.com' => 'Labo JJ Micheli'])
 				    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $captureEmail->email )  // <======= FORCE DEV EMAIL TO TEST ADDRESS
 				    ->setSubject(Yii::t('store', $model->document_type).' '.$model->name)
 					->setTextBody($captureEmail->body)

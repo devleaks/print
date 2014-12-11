@@ -30,9 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
 			[
+	            'label' => Yii::t('store', 'Order'),
 				'attribute' => 'work.document.name',
 				'noWrap' => true,
 			],
+            [
+	            'label' => Yii::t('store', 'Client'),
+				'attribute' => 'work.document.client.nom',
+            ],
 			[
 				'attribute' => 'work.document.due_date',
 				'format' => 'date'

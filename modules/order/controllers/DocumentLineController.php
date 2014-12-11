@@ -195,6 +195,10 @@ class DocumentLineController extends Controller
 					$model->due_date = $order->due_date;
 					$model->save();
 				}
+				if(! $model->priority) {
+					$model->priority = $order->priority;
+					$model->save();
+				}
 				$this->createDetail($model);
 				$this->loadImages($model);
 				$order->updatePrice();

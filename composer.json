@@ -47,7 +47,8 @@
 		"yurkinx/yii2-image": "dev-master",
         "kartik-v/yii2-widget-datepicker": "*",
 		"devleaks/yii2-chardinjs": "~1.0",
-		"devleaks/yii2-introjs": "~1.0"
+		"devleaks/yii2-introjs": "~1.0",
+        "yiisoft/yii2-apidoc": "*"
   },
     "require-dev": {
 		"yiisoft/yii2-codeception": "*",

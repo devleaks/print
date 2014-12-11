@@ -95,6 +95,11 @@ class Parameter extends \yii\db\ActiveRecord
 	}
 
 
+	public static function getName($domain, $text) {
+		$p = self::find()->where(['domain' => $domain, 'value_text' => $text])->one();
+		return $p ? $p->name : '';
+	}
+
 	public static function getTextValue($domain, $name, $default = '') {
 		$p = self::find()->where(['domain' => $domain, 'name' => $name])->one();
 		return $p ? $p->value_text : $default;

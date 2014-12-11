@@ -83,4 +83,15 @@ class Sequence extends \yii\db\ActiveRecord
 		}
 		return null;
 	}
+	
+	/** Generate belgian structured communication from number (<10^10).
+	 * @param $s number
+	 * @return string Structured communication as " +++ 123/4567/890XX +++"
+	 */
+	public static function  commStruct($s = 0) { 
+        $d = sprintf("%010s",$s);
+        $modulo = (bcmod($s,97)==0?97:bcmod($s,97));
+        return sprintf("+++ %s/%s/%s%02d +++",substr($d,0,3),substr($d,3,4),substr($d,7,3),$modulo);
+	}
+
 }

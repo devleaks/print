@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\BillSearch */
+/* @var $model app\models\AccountSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="bill-search">
+<div class="account-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,35 +17,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'parent_id') ?>
-
     <?= $form->field($model, 'client_id') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'document_id') ?>
 
-    <?= $form->field($model, 'reference') ?>
+    <?= $form->field($model, 'amount') ?>
 
-    <?php // echo $form->field($model, 'reference_client') ?>
-
-    <?php // echo $form->field($model, 'due_date') ?>
-
-    <?php // echo $form->field($model, 'price_htva') ?>
-
-    <?php // echo $form->field($model, 'price_tvac') ?>
-
-    <?php // echo $form->field($model, 'prepaid') ?>
-
-    <?php // echo $form->field($model, 'payment_method') ?>
-
-    <?php // echo $form->field($model, 'vat') ?>
-
-    <?php // echo $form->field($model, 'vat_bool') ?>
-
-    <?php // echo $form->field($model, 'bom_bool') ?>
-
-    <?php // echo $form->field($model, 'note') ?>
-
-    <?php // echo $form->field($model, 'lang') ?>
+    <?= $form->field($model, 'note') ?>
 
     <?php // echo $form->field($model, 'status') ?>
 
@@ -56,8 +34,6 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'updated_at') ?>
 
     <?php // echo $form->field($model, 'updated_by') ?>
-
-    <?php // echo $form->field($model, 'document_type') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('store', 'Search'), ['class' => 'btn btn-primary']) ?>

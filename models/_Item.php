@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "item".
  *
  * @property integer $id
+ * @property string $yii_category
  * @property string $reference
  * @property string $libelle_court
  * @property string $libelle_long
@@ -37,14 +38,14 @@ use Yii;
  * @property string $status
  * @property string $created_at
  * @property string $updated_at
- * @property string $yii_category
+ * @property string $comptabilite
  *
+ * @property DocumentLine[] $documentLines
+ * @property DocumentLineDetail[] $documentLineDetails
+ * @property DocumentLineOption[] $documentLineOptions
  * @property ItemOption[] $itemOptions
  * @property ItemTask[] $itemTasks
  * @property Option[] $options
- * @property DocumentLine[] $orderLines
- * @property DocumentLineDetail[] $orderLineDetails
- * @property DocumentLineOption[] $orderLineOptions
  * @property WorkLine[] $workLines
  */
 class _Item extends \yii\db\ActiveRecord
@@ -66,7 +67,7 @@ class _Item extends \yii\db\ActiveRecord
             [['prix_de_vente', 'taux_de_tva'], 'number'],
             [['quantite'], 'integer'],
             [['date_initiale', 'date_finale', 'creation', 'mise_a_jour', 'created_at', 'updated_at'], 'safe'],
-            [['reference', 'categorie', 'type_travaux_photos', 'type_numerique', 'fournisseur', 'reference_fournisseur', 'conditionnement', 'prix_d_achat_de_reference', 'identification', 'suivi_de_stock', 'reassort_possible', 'seuil_de_commande', 'en_cours', 'stock', 'status', 'yii_category'], 'string', 'max' => 20],
+            [['yii_category', 'reference', 'categorie', 'type_travaux_photos', 'type_numerique', 'fournisseur', 'reference_fournisseur', 'conditionnement', 'prix_d_achat_de_reference', 'identification', 'suivi_de_stock', 'reassort_possible', 'seuil_de_commande', 'en_cours', 'stock', 'status', 'comptabilite'], 'string', 'max' => 20],
             [['libelle_court', 'client'], 'string', 'max' => 40],
             [['libelle_long', 'site_internet', 'commentaires'], 'string', 'max' => 80],
             [['reference'], 'unique']
@@ -80,6 +81,7 @@ class _Item extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('store', 'ID'),
+            'yii_category' => Yii::t('store', 'Yii Category'),
             'reference' => Yii::t('store', 'Reference'),
             'libelle_court' => Yii::t('store', 'Libelle Court'),
             'libelle_long' => Yii::t('store', 'Libelle Long'),
@@ -109,8 +111,32 @@ class _Item extends \yii\db\ActiveRecord
             'status' => Yii::t('store', 'Status'),
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
-            'yii_category' => Yii::t('store', 'Yii Category'),
+            'comptabilite' => Yii::t('store', 'Comptabilite'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDocumentLines()
+    {
+        return $this->hasMany(DocumentLine::className(), ['item_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDocumentLineDetails()
+    {
+        return $this->hasMany(DocumentLineDetail::className(), ['collage_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDocumentLineOptions()
+    {
+        return $this->hasMany(DocumentLineOption::className(), ['item_id' => 'id']);
     }
 
     /**
@@ -135,30 +161,6 @@ class _Item extends \yii\db\ActiveRecord
     public function getOptions()
     {
         return $this->hasMany(Option::className(), ['item_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDocumentLines()
-    {
-        return $this->hasMany(DocumentLine::className(), ['item_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDocumentLineDetails()
-    {
-        return $this->hasMany(DocumentLineDetail::className(), ['frame_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDocumentLineOptions()
-    {
-        return $this->hasMany(DocumentLineOption::className(), ['item_id' => 'id']);
     }
 
     /**

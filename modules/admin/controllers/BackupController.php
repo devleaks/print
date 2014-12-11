@@ -70,11 +70,10 @@ class BackupController extends Controller
     }
 
 	protected function doBackup($model) {
-		
 		$dsn = $model->getDb()->dsn;
-		
-		$dbhost = 'mac-de-pierre.local';
-		$dbname = 'yii2print';
+		$db  = Backup::parseDSN($dsn);
+		$dbhost = $db['host'];
+		$dbname = $db['dbname'];
 		$dbuser = $model->getDb()->username;
 		$dbpass = $model->getDb()->password;
 
@@ -87,7 +86,7 @@ class BackupController extends Controller
 		           "| gzip > ". $backup_dir . $backup_file;
 
 		system($command, $status);
-		Yii::trace($command.': '.$status);
+		Yii::trace($command.': '.$status, 'BackupController::doBackup');
 
 		if($status == 0) { // ok
 			$model->filename = $backup_file;

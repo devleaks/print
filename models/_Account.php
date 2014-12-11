@@ -5,33 +5,32 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "payment".
+ * This is the model class for table "account".
  *
  * @property integer $id
+ * @property integer $client_id
  * @property integer $document_id
  * @property double $amount
+ * @property string $note
  * @property string $status
  * @property string $created_at
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
- * @property integer $client_id
- * @property string $payment_method
- * @property string $note
  *
  * @property User $updatedBy
  * @property Client $client
  * @property Document $document
  * @property User $createdBy
  */
-class _Payment extends \yii\db\ActiveRecord
+class _Account extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'payment';
+        return 'account';
     }
 
     /**
@@ -40,12 +39,12 @@ class _Payment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['document_id', 'client_id'], 'required'],
-            [['document_id', 'created_by', 'updated_by', 'client_id'], 'integer'],
+            [['client_id'], 'required'],
+            [['client_id', 'document_id', 'created_by', 'updated_by'], 'integer'],
             [['amount'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
-            [['status', 'payment_method'], 'string', 'max' => 20],
-            [['note'], 'string', 'max' => 160]
+            [['note'], 'string', 'max' => 160],
+            [['status'], 'string', 'max' => 20]
         ];
     }
 
@@ -56,16 +55,15 @@ class _Payment extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('store', 'ID'),
+            'client_id' => Yii::t('store', 'Client ID'),
             'document_id' => Yii::t('store', 'Document ID'),
             'amount' => Yii::t('store', 'Amount'),
+            'note' => Yii::t('store', 'Note'),
             'status' => Yii::t('store', 'Status'),
             'created_at' => Yii::t('store', 'Created At'),
             'created_by' => Yii::t('store', 'Created By'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
-            'client_id' => Yii::t('store', 'Client ID'),
-            'payment_method' => Yii::t('store', 'Paiement Method'),
-            'note' => Yii::t('store', 'Note'),
         ];
     }
 

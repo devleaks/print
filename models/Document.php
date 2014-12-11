@@ -217,6 +217,10 @@ class Document extends _Document
 		foreach($this->getDocumentLines()->each() as $ol)
 			$ol->deleteCascade();
 
+		/** Delete payments */
+		foreach($this->getPayments()->each() as $p)
+			$p->delete();
+
 		$this->delete();
 	}
 	
@@ -501,4 +505,9 @@ class Document extends _Document
 		return $colored ? $this->getLabel($this->status) : Yii::t('store', $this->status);
 	}
 
+	public static function commStruct($s=0) {
+        $d=sprintf("%010s",preg_replace("/[^0-9]/", "", $s)); 
+        $modulo=(bcmod($s,97)==0?97:bcmod($s,97)); 
+        return sprintf("%s/%s/%s%02d",substr($d,0,3),substr($d,3,4),substr($d,7,3),$modulo); 
+	}
 }

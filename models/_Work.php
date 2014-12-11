@@ -15,10 +15,11 @@ use Yii;
  * @property string $status
  * @property string $due_date
  * @property integer $document_id
+ * @property integer $priority
  *
+ * @property User $updatedBy
  * @property Document $document
  * @property User $createdBy
- * @property User $updatedBy
  * @property WorkLine[] $workLines
  */
 class _Work extends \yii\db\ActiveRecord
@@ -38,7 +39,7 @@ class _Work extends \yii\db\ActiveRecord
     {
         return [
             [['created_at', 'updated_at', 'due_date'], 'safe'],
-            [['created_by', 'updated_by', 'document_id'], 'integer'],
+            [['created_by', 'updated_by', 'document_id', 'priority'], 'integer'],
             [['due_date', 'document_id'], 'required'],
             [['status'], 'string', 'max' => 20]
         ];
@@ -58,7 +59,16 @@ class _Work extends \yii\db\ActiveRecord
             'status' => Yii::t('store', 'Status'),
             'due_date' => Yii::t('store', 'Due Date'),
             'document_id' => Yii::t('store', 'Document ID'),
+            'priority' => Yii::t('store', 'Priority'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
     /**
@@ -75,14 +85,6 @@ class _Work extends \yii\db\ActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUpdatedBy()
-    {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
     /**

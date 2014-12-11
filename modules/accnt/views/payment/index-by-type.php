@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								->andWhere(['<=','created_at',$day_end])
 								->andWhere(['payment_method' => $payment_method])
 				]);
-				echo $this->render('_detail', ['dataProvider' => $dataProvider, 'method' => $payment_label]);
+				echo $this->render($payment_method == Payment::TYPE_ACCOUNT ? '_detail-account' : '_detail', ['dataProvider' => $dataProvider, 'method' => $payment_label]);
 			}
 		} else
 			foreach(Payment::getPaymentMethods() as $payment_method => $payment_label) {
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'query' => Payment::find()
 								->andWhere(['payment_method' => $payment_method])
 				]);
-				echo $this->render('_detail', ['dataProvider' => $dataProvider, 'method' => $payment_label]);
+				echo $this->render($payment_method == Payment::TYPE_ACCOUNT ? '_detail-account' : '_detail', ['dataProvider' => $dataProvider, 'method' => $payment_label]);
 			}
 
 ?>

@@ -15,10 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
 	<ul>
-	    <li><a href="<?= Yii::$app->homeUrl ?>order/order/create-bid"><?= Yii::t('store', 'Enter new bid')?></a></li>
-	    <li><a href="<?= Yii::$app->homeUrl ?>order/order/create"><?= Yii::t('store', 'Enter new order')?></a></li>
-	    <li><a href="<?= Yii::$app->homeUrl ?>order/order/create-bill"><?= Yii::t('store', 'Enter new bill')?></a></li>
-	    <li><a href="<?= Yii::$app->homeUrl ?>order/order/create-credit"><?= Yii::t('store', 'Enter new credit note')?></a></li>
+	    <li><a href="<?= Yii::$app->homeUrl ?>order/document/create-bid"><?= Yii::t('store', 'Enter new bid')?></a></li>
+	    <li><a href="<?= Yii::$app->homeUrl ?>order/document/create"><?= Yii::t('store', 'Enter new order')?></a></li>
+	    <li><a href="<?= Yii::$app->homeUrl ?>order/document/create-bill"><?= Yii::t('store', 'Enter new bill')?></a></li>
+	    <li><a href="<?= Yii::$app->homeUrl ?>order/document/create-credit"><?= Yii::t('store', 'Enter new credit note')?></a></li>
 	</ul>
 
 </div>

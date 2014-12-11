@@ -18,7 +18,6 @@ use Yii;
  * @property double $price_htva
  * @property double $price_tvac
  * @property double $prepaid
- * @property string $paiement_method
  * @property double $vat
  * @property integer $vat_bool
  * @property integer $bom_bool
@@ -29,12 +28,14 @@ use Yii;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
+ * @property integer $priority
  *
+ * @property Account[] $accounts
+ * @property User $updatedBy
  * @property _Document $parent
  * @property _Document[] $documents
  * @property Client $client
  * @property User $createdBy
- * @property User $updatedBy
  * @property DocumentLine[] $documentLines
  * @property Extraction[] $extractions
  * @property Payment[] $payments
@@ -57,10 +58,10 @@ class _Document extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'client_id', 'due_date'], 'required'],
-            [['parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by'], 'integer'],
+            [['parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by', 'priority'], 'integer'],
             [['due_date', 'created_at', 'updated_at'], 'safe'],
             [['price_htva', 'price_tvac', 'prepaid', 'vat'], 'number'],
-            [['document_type', 'name', 'paiement_method', 'lang', 'status'], 'string', 'max' => 20],
+            [['document_type', 'name', 'lang', 'status'], 'string', 'max' => 20],
             [['reference', 'reference_client'], 'string', 'max' => 40],
             [['note'], 'string', 'max' => 160]
         ];
@@ -83,7 +84,6 @@ class _Document extends \yii\db\ActiveRecord
             'price_htva' => Yii::t('store', 'Price Htva'),
             'price_tvac' => Yii::t('store', 'Price Tvac'),
             'prepaid' => Yii::t('store', 'Prepaid'),
-            'paiement_method' => Yii::t('store', 'Paiement Method'),
             'vat' => Yii::t('store', 'Vat'),
             'vat_bool' => Yii::t('store', 'Vat Bool'),
             'bom_bool' => Yii::t('store', 'Bom Bool'),
@@ -94,7 +94,24 @@ class _Document extends \yii\db\ActiveRecord
             'created_by' => Yii::t('store', 'Created By'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
+            'priority' => Yii::t('store', 'Priority'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccounts()
+    {
+        return $this->hasMany(Account::className(), ['document_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
     /**
@@ -127,14 +144,6 @@ class _Document extends \yii\db\ActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUpdatedBy()
-    {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
     /**

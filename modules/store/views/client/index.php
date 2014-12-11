@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -70,7 +71,26 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'date_limite_3',
             // 'commentaires',
 
-            ['class' => 'yii\grid\ActionColumn'],
+	        [
+	            'class' => 'yii\grid\ActionColumn',
+	            'template' => '{view} {update} {delete} {doc} {accnt}',
+	            'buttons' => [
+	                'doc' => function ($url, $model) {
+						$url = Url::to(['/order/document/client', 'id' => $model->id]);
+	                    return Html::a('<i class="glyphicon glyphicon-shopping-cart"></i>', $url, [
+	                        'class' => 'btn btn-xs btn-primary',
+	                        'title' => Yii::t('store', 'View'),
+	                    ]);
+	                },
+	                'accnt' => function ($url, $model) {
+						$url = Url::to(['/accnt/account/client', 'id' => $model->id]);
+	                    return Html::a('<i class="glyphicon glyphicon-book"></i>', $url, [
+	                        'class' => 'btn btn-xs btn-primary',
+	                        'title' => Yii::t('store', 'View'),
+	                    ]);
+	                },
+				],
+			],
         ],
     ]); ?>
 

@@ -35,6 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
 	            },
 	            'format' => 'raw',
 	        ],
+	        [
+				'attribute' => 'client_name',
+				'label' => Yii::t('store', 'Client'),
+	            'value' => function ($model, $key, $index, $widget) {
+                    return $model->document->client->nom;
+	            },
+	            'format' => 'raw',
+	        ],
 			[
 				'attribute' => 'due_date',
 				'format' => 'date',
