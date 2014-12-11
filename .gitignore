@@ -31,3 +31,5 @@ config
 web/pictures
 docs/sample
 docs/_trash
+
+composer.json
