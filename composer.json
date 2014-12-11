@@ -27,7 +27,7 @@
 		"bower-asset/chardin.js": "*",
 		"bower-asset/intro.js": "*",
 		"dektrium/yii2-user": "*",
-		"insolita/yii2-iconpicker": "dev-master",
+		"insolita/yii2-iconpicker": "*",
 		"kartik-v/yii2-builder": "dev-master",
 		"kartik-v/yii2-datecontrol": "dev-master",
 		"kartik-v/yii2-detail-view": "*",
