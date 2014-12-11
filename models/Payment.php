@@ -62,4 +62,12 @@ class Payment extends _Payment
 	public function getStatusLabel() {
 		return '<span class="label label-'.($this->status == 'PAID' ? 'success' : 'warning').'">'.Yii::t('store', $this->status).'</span>';
 	}
+	
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDocument()
+    {
+        return Document::find()->where(['sale' => $this->sale])->orderBy('created_at desc')->limit(1);
+    }
 }

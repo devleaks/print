@@ -105,6 +105,15 @@ class Document extends _Document
 	}
 	
 	
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPayments()
+    {
+        return $this->hasMany(Payment::className(), ['sale' => 'sale']);
+    }
+
+
 	/**
 	 * returns associative array of status, status localized display for all possible status values
 	 *

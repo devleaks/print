@@ -8,20 +8,19 @@ use Yii;
  * This is the model class for table "payment".
  *
  * @property integer $id
- * @property integer $document_id
+ * @property integer $client_id
  * @property double $amount
+ * @property string $payment_method
+ * @property string $note
  * @property string $status
  * @property string $created_at
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
- * @property integer $client_id
- * @property string $payment_method
- * @property string $note
+ * @property integer $sale
  *
  * @property User $updatedBy
  * @property Client $client
- * @property Document $document
  * @property User $createdBy
  */
 class _Payment extends \yii\db\ActiveRecord
@@ -40,11 +39,11 @@ class _Payment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['document_id', 'client_id'], 'required'],
-            [['document_id', 'created_by', 'updated_by', 'client_id'], 'integer'],
+            [['client_id', 'sale'], 'required'],
+            [['client_id', 'created_by', 'updated_by', 'sale'], 'integer'],
             [['amount'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
-            [['status', 'payment_method'], 'string', 'max' => 20],
+            [['payment_method', 'status'], 'string', 'max' => 20],
             [['note'], 'string', 'max' => 160]
         ];
     }
@@ -56,16 +55,16 @@ class _Payment extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('store', 'ID'),
-            'document_id' => Yii::t('store', 'Document ID'),
+            'client_id' => Yii::t('store', 'Client ID'),
             'amount' => Yii::t('store', 'Amount'),
+            'payment_method' => Yii::t('store', 'Payment Method'),
+            'note' => Yii::t('store', 'Note'),
             'status' => Yii::t('store', 'Status'),
             'created_at' => Yii::t('store', 'Created At'),
             'created_by' => Yii::t('store', 'Created By'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
-            'client_id' => Yii::t('store', 'Client ID'),
-            'payment_method' => Yii::t('store', 'Paiement Method'),
-            'note' => Yii::t('store', 'Note'),
+            'sale' => Yii::t('store', 'Sale'),
         ];
     }
 
@@ -83,14 +82,6 @@ class _Payment extends \yii\db\ActiveRecord
     public function getClient()
     {
         return $this->hasOne(Client::className(), ['id' => 'client_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDocument()
-    {
-        return $this->hasOne(Document::className(), ['id' => 'document_id']);
     }
 
     /**

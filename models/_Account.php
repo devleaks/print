@@ -17,6 +17,7 @@ use Yii;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
+ * @property integer $sale
  *
  * @property User $updatedBy
  * @property Client $client
@@ -39,8 +40,8 @@ class _Account extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['client_id'], 'required'],
-            [['client_id', 'document_id', 'created_by', 'updated_by'], 'integer'],
+            [['client_id', 'sale'], 'required'],
+            [['client_id', 'document_id', 'created_by', 'updated_by', 'sale'], 'integer'],
             [['amount'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
             [['note'], 'string', 'max' => 160],
@@ -64,6 +65,7 @@ class _Account extends \yii\db\ActiveRecord
             'created_by' => Yii::t('store', 'Created By'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
+            'sale' => Yii::t('store', 'Sale'),
         ];
     }
 

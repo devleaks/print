@@ -29,6 +29,7 @@ use Yii;
  * @property string $updated_at
  * @property integer $updated_by
  * @property integer $priority
+ * @property integer $sale
  *
  * @property Account[] $accounts
  * @property User $updatedBy
@@ -38,7 +39,6 @@ use Yii;
  * @property User $createdBy
  * @property DocumentLine[] $documentLines
  * @property Extraction[] $extractions
- * @property Payment[] $payments
  * @property Work[] $works
  */
 class _Document extends \yii\db\ActiveRecord
@@ -57,8 +57,8 @@ class _Document extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'client_id', 'due_date'], 'required'],
-            [['parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by', 'priority'], 'integer'],
+            [['name', 'client_id', 'due_date', 'sale'], 'required'],
+            [['parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by', 'priority', 'sale'], 'integer'],
             [['due_date', 'created_at', 'updated_at'], 'safe'],
             [['price_htva', 'price_tvac', 'prepaid', 'vat'], 'number'],
             [['document_type', 'name', 'lang', 'status'], 'string', 'max' => 20],
@@ -95,6 +95,7 @@ class _Document extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
             'priority' => Yii::t('store', 'Priority'),
+            'sale' => Yii::t('store', 'Sale'),
         ];
     }
 
@@ -160,14 +161,6 @@ class _Document extends \yii\db\ActiveRecord
     public function getExtractions()
     {
         return $this->hasMany(Extraction::className(), ['document_from' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPayments()
-    {
-        return $this->hasMany(Payment::className(), ['document_id' => 'id']);
     }
 
     /**

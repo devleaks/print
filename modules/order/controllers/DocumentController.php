@@ -206,8 +206,9 @@ class DocumentController extends Controller
 				}
 			}
 			// temporaily set reference
-			$model->reference = Document::commStruct($model->name);//$model->name;
-			if(!$model->priority) $model->priority = 100;
+			$model->sale = Sequence::nextval('sale'); // Document::commStruct($model->name);//$model->name;
+			$model->reference = Document::commStruct(date('y')*10000000 + $model->sale);//$model->name;
+			if(!$model->priority) $model->priority = 100; // test
 			if ($model->save()) {
 				$model->status = Document::STATUS_OPEN;
 				$model->save();
@@ -435,7 +436,7 @@ class DocumentController extends Controller
 			$model = $this->findModel($capturePayment->id);
 			// record paiement
 			$payment = new Payment([
-				'document_id' => $model->id,
+				'sale' => $model->sale,
 				'client_id' => $model->client_id,
 				'payment_method' => $capturePayment->method,
 				'amount' => $capturePayment->amount,
@@ -446,6 +447,7 @@ class DocumentController extends Controller
 			if($capturePayment->method == Payment::TYPE_ACCOUNT) {
 				$account = new Account([
 					'document_id' => $model->id,
+					'sale' => $model->sale,
 					'client_id' => $model->client_id,
 					'amount' => - ($capturePayment->amount),
 					'status' => Account::TYPE_DEBIT,
@@ -458,7 +460,7 @@ class DocumentController extends Controller
 			$model->save();
 
 			$solde = $model->price_tvac - $model->prepaid;
-			Yii::trace('Solde:'.$solde.'.');
+			//Yii::trace('Solde:'.$solde.'.');
 
 			$work = null;
 			$status = null;
