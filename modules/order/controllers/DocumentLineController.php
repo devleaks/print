@@ -50,7 +50,7 @@ class DocumentLineController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager', 'employee'],
+	                    'roles' => ['admin', 'manager', 'worker', 'employee'],
 	                ],
 	            ],
 	        ],
@@ -101,7 +101,7 @@ class DocumentLineController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			//Yii::trace('DocumentLineController::actionUpdate: '.$model->image_add);
+			//Yii::trace($model->image_add, 'DocumentLineController::actionUpdate');
 			if($model->image_add == DocumentLine::IMAGE_REPLACE)
 				$model->deletePictures();
 			$this->loadImages($model);
@@ -133,7 +133,9 @@ class DocumentLineController extends Controller
 		$doc = $model->getDocument()->one();
 		$model->deleteCascade();
 		$doc->updatePrice();
-        return $this->redirect(Yii::$app->request->referrer);
+		if(! $doc->getDocumentLines()->exists())
+			$doc->setStatus(Document::STATUS_CREATED);
+        return $this->redirect(Url::to(['create', 'id' => $doc->id]));
     }
 
     /**
@@ -179,12 +181,10 @@ class DocumentLineController extends Controller
 			Yii::$app->session->setFlash('info', Yii::t('store', '{document} updated', ['document' => Yii::t('store', $order->document_type)]).'.');
 		}
 		$order_has_rebate_before = $order->hasRebate();
-
 		
         $model = new DocumentLine();
 		if(!isset($model->document_id))
 			$model->document_id = $order->id;
-
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			if($model->item->reference === Item::TYPE_REBATE && $order_has_rebate_before) {
@@ -202,6 +202,7 @@ class DocumentLineController extends Controller
 				$this->createDetail($model);
 				$this->loadImages($model);
 				$order->updatePrice();
+				$order->setStatus(Document::STATUS_OPEN);
 			}
 			$newDocumentLine = new DocumentLine();
 			$newDocumentLine->document_id = $order->id;
@@ -210,7 +211,7 @@ class DocumentLineController extends Controller
                 'orderLine' => $newDocumentLine,
             ]);
         } else {
-			//@todo set flash with error
+			//Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem adding a item.'));
             return $this->render('create', [
                 'model' => $order,
                 'orderLine' => $model,
@@ -265,17 +266,17 @@ class DocumentLineController extends Controller
 	
 	protected static function updateDetail($model, $detail) {
 		if($_POST){
-			//Yii::trace('DocumentLineController::createDetail: '.$model->id);
+			//Yii::trace('1:'.$model->id, 'DocumentLineController::createDetail');
 			$detail->document_line_id = $model->id;
 			if ($detail->load(Yii::$app->request->post())) {
-				//Yii::trace('DocumentLineController::createDetail: 2: '.$detail->document_line_id);
+				//Yii::trace('2:'.$detail->document_line_id, 'DocumentLineController::createDetail');
 				$free_item = Item::findOne(['reference' => '#']);			
 				if($model->item_id == $free_item->id) { // copy temporary label to note, do not save "details"
 						$model->note = $detail->free_item_libelle;
 						$model->save();
 				} else {
 				 	if($detail->save()) {
-						//Yii::trace('DocumentLineController::createDetail: 3: '.$detail->id);
+						//Yii::trace('3:'.$detail->id, 'DocumentLineController::createDetail');
 						return true;
 					}
 				}
@@ -297,7 +298,7 @@ class DocumentLineController extends Controller
 		foreach($items as $item)
 			$special_items[] = $item['id'];
 		if(! in_array($model->item_id, $special_items) ) {
-			//Yii::trace('DocumentLineController::createDetail: 1: '.$model->item_id.' not in '.print_r($special_items, true).'.');
+			//Yii::trace('1: '.$model->item_id.' not in '.print_r($special_items, true).'.', 'DocumentLineController::createDetail');
 			return false;
 		}
 		// we have ChromaLuxe or Fine Arts, loading detail
@@ -311,13 +312,13 @@ class DocumentLineController extends Controller
 		    //var_dump( $uploadedFiles);
 		    //die();
 			$dirname = $model->getPicturePath();
-			if(!is_dir($dirname))
-			    if(!mkdir($dirname, 0777, true)) {
-			        echo 'cannot mkdir';
-			        die();
-			    }
 			$idx_offset = $model->getPictures()->count();
 		    foreach($uploadedFiles as $idx => $image) {
+				if(!is_dir($dirname))
+				    if(!mkdir($dirname, 0777, true)) {
+						Yii::$app->session->setFlash('danger', Yii::t('store', 'Cannot create directory for images.'));
+						return $this->redirect(Yii::$app->request->referrer);
+				    }
 				$nextidx = $idx_offset + $idx;
 		        $picture = new Picture();
 		        $picture->name = $image->name;
@@ -326,13 +327,13 @@ class DocumentLineController extends Controller
 		        $picture->filename = $model->getFileName($nextidx . '.' . $image->extension);
 		        $path = Yii::$app->params['picturePath'] . $picture->filename;
 		        $thumbname = Yii::$app->params['picturePath'] . $model->getFileName($nextidx . '_t.' . $image->extension);
-		        //Yii::trace('Filename:'.$image->tempName.' to '.$path.'.', 'store');
+		        //Yii::trace('Filename:'.$image->tempName.' to '.$path.'.', 'DocumentLineController::loadImages');
 
 		        if($picture->save()){
 		            $image->saveAs($path);
 		            // make thumbnail at $thumbsize x $thumbsize max
 		            $pic=Yii::$app->image->load($path);
-		            //Yii::trace('Image:'.$pic->width.' X '.$pic->height.'.', 'store');
+		            //Yii::trace('Image:'.$pic->width.' X '.$pic->height.'.', 'DocumentLineController::loadImages');
 		            if($pic->width > self::thumbsize || $pic->height > self::thumbsize) {
 		                $ratio = ($pic->width > $pic->height) ? $pic->width / self::thumbsize : $pic->height / self::thumbsize;
 		                $newidth  = round($pic->width  / $ratio);
@@ -353,4 +354,9 @@ class DocumentLineController extends Controller
 		}		
 	}
 
+
+	public function actionLabel($id) {
+		$model = $this->findModel($id);
+		return $model->generateLabel($this);
+	}
 }

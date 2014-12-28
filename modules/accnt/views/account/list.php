@@ -1,7 +1,10 @@
 <?php
 
+use app\models\Parameter;
 use yii\helpers\Html;
+use kartik\widgets\ActiveForm;
 use kartik\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AccountSearch */
@@ -13,13 +16,14 @@ if(isset(Yii::$app->user))
 		if(isset(Yii::$app->user->identity->role))
 			$role = Yii::$app->user->identity->role;
 
-$this->title = Yii::t('store', 'Customer {0}', [ucfirst(strtolower($client->nom))]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/accnt']];
+$this->title = Yii::t('store', 'Customer {0}', [$client->niceName()]);
+$this->params['breadcrumbs'][] = ['label' => in_array($role, ['manager', 'admin']) ? Yii::t('store', 'Management') : Yii::t('store', 'Accounting'),
+								  'url'   => [in_array($role, ['manager', 'admin']) ? '/store' : '/accnt']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="account-index">
 
-    <h1><?= Html::encode($this->title) ?> <?= Html::a(Yii::t('store', 'Add payment'), ['create', 'id' => $client->id], ['class' => 'btn btn-success']) ?></h1>
+    <h1><?= Html::encode($this->title) ?> <?= Html::a(Yii::t('store', 'Add Payment'), ['balance', 'id' => $client->id], ['class' => 'btn btn-success']) ?></h1>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -27,14 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
 	    'showPageSummary' => true,
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
-
-//            'id',
-//            'client_id',
 	        [
-	            'label' => Yii::t('store', 'Order'),
+				'label' => Yii::t('store', 'Order'),
 	            'value' => function ($model, $key, $index, $widget) {
-	                return $model->document ? $model->document->name : '';
+                    return $model->document ? 
+							in_array(Yii::$app->user->identity->role, ['manager', 'admin']) ? 
+							Html::a($model->document->name, Url::to(['/order/document/view', 'id' => $model->document_id]))
+							 : $model->document->name
+						   : '';
 	            },
+	            'format' => 'raw',
 			],
 			[
 	            'label' => Yii::t('store', 'Amount'),
@@ -44,7 +50,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				'noWrap' => true,
 				'pageSummary' => true
 			],
-            'note',
 	        [
 				'attribute' => 'status',
 	            'label' => Yii::t('store', 'Type'),
@@ -63,9 +68,16 @@ $this->params['breadcrumbs'][] = $this->title;
 				}
 			],
             [
-				'class' => 'kartik\grid\ActionColumn',
-			 	'template' => '{update} {delete}'
+				'attribute' => 'payment_method',
+	            'value' => function ($model, $key, $index, $widget) {
+	                return Parameter::getTextValue('paiement', $model->payment_method, '');
+	            },
 			],
+            'note',
+//            [
+//				'class' => 'kartik\grid\ActionColumn',
+//			 	'template' => '{update} {delete}'
+//			],
         ],
     ]); ?>
 

@@ -37,8 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'due_date',
             'price_htva',
             'price_tvac',
-            'prepaid',
-            'payment_method',
             'vat',
             'vat_bool',
             'bom_bool',

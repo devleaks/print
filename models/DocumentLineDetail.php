@@ -85,10 +85,10 @@ class DocumentLineDetail extends _DocumentLineDetail
 	 * @param string $name reference name of item
      */
 	protected function addTasks($work, $order_line, $name) {
-		//Yii::trace('DocumentLineDetail::addTask: '.$order_line->id);
+		//Yii::trace('1:'.$order_line->id, 'DocumentLineDetail::addTask');
 		$item = Item::findOne(['reference' => $name]);
 		if($item) {
-			//Yii::trace('DocumentLineDetail::addTask: 2'.$item->reference);
+			//Yii::trace('2:'.$item->reference, 'DocumentLineDetail::addTask');
 			$item->createTasks($work, $order_line);
 		}
 	}
@@ -102,7 +102,7 @@ class DocumentLineDetail extends _DocumentLineDetail
 	 * @param DocumentLine $order_line DocumentLine model to which this DocumentLineDetail is attached to.
      */
 	public function createTask($work, $order_line) {
-		//Yii::trace('DocumentLineDetail::createTask: '.$order_line->id);
+		//Yii::trace($order_line->id, 'DocumentLineDetail::createTask');
 
 		if(($item = $this->getChroma()->one()) != null)
 			$item->createTasks($work, $order_line);
@@ -134,40 +134,56 @@ class DocumentLineDetail extends _DocumentLineDetail
 	 *
 	 * @return string DocumentLineDetail textual description
 	 */
-	public function getDescription($show_price = false) {
-		$str = '';
+	protected function getDescriptionMode($mode, $show_price = false) {
+		if($mode == 'html') {
+			$prep = '<li>';
+			$post = '</li>';
+			$str = '<ul>';
+		} else {
+			$prep = '';
+			$post = ', ';
+			$str = '';
+		}
 
 		if(($item = $this->getChroma()->one()) != null)
-			$str .= 'ChromaLuxe '.$item->libelle_long . ($show_price ? ' ['.$this->price_chroma.'€], '  : ', ');
+			$str .= $prep.'ChromaLuxe '.$item->libelle_long . ($show_price ? ' ['.$this->price_chroma.'€], '  : $post);
 
 		if(($item = $this->getFrame()->one()) != null)			
-			$str .= 'Cadre '.$item->libelle_long . ($show_price ? ' ['.$this->price_frame.'€], '  : ', ');
+			$str .= $prep.'Cadre '.$item->libelle_long . ($show_price ? ' ['.$this->price_frame.'€], '  : $post);
 
 		if($this->renfort_bool)
-			$str .= 'Renforts' . ($show_price ? ' ['.$this->price_renfort.'€], '  : ', ');
+			$str .= $prep.'Renforts' . ($show_price ? ' ['.$this->price_renfort.'€], '  : $post);
 
 		if($this->corner_bool)
-			$str .= 'Coins arrondis' /*. ($show_price ? ' ['.$this->price_border.'€], '  : ', ')*/. ', ';
+			$str .= $prep.'Coins arrondis' /*. ($show_price ? ' ['.$this->price_border.'€], '  : ', ')*/. $post;
 
 		if($this->montage_bool)
-			$str .= 'Montage' . ($show_price ? ' ['.$this->price_montage.'€], '  : ', ');
+			$str .= $prep.'Montage' . ($show_price ? ' ['.$this->price_montage.'€], '  : $post);
 
 		if(($item = $this->getTirage()->one()) != null)
-			$str .= $item->libelle_long . ($show_price ? ' ['.$this->price_tirage.'€], '  : ', ');
+			$str .= $prep.$item->libelle_long . ($show_price ? ' ['.$this->price_tirage.'€], '  : $post);
 
 		if(($item = $this->getFinish()->one()) != null)
-			$str .= $item->libelle_long /*. ($show_price ? ' ['.$this->price_finish.'€], '  : ', ')*/. ', ';
+			$str .= $prep.$item->libelle_long /*. ($show_price ? ' ['.$this->price_finish.'€], '  : ', ')*/. $post;
 			
 		if(($item = $this->getProtection()->one()) != null)
-			$str .= $item->libelle_long . ($show_price ? ' ['.$this->price_protection.'€], '  : ', ');
+			$str .= $prep.$item->libelle_long . ($show_price ? ' ['.$this->price_protection.'€], '  : $post);
 			
 		if(($item = $this->getCollage()->one()) != null)
-			$str .= $item->libelle_long . ($show_price ? ' ['.$this->price_collage.'€], '  : ', ');
+			$str .= $prep.$item->libelle_long . ($show_price ? ' ['.$this->price_collage.'€], '  : $post);
 
 		if(($item = $this->getSupport()->one()) != null)
-			$str .= $item->libelle_long . ($show_price ? ' ['.$this->price_support.'€], '  : ', ');
+			$str .= $prep.$item->libelle_long . ($show_price ? ' ['.$this->price_support.'€], '  : $post);
 
-		return trim($str, ', ');		
+		return ($mode == 'html' ? $str.'</ul>' : trim($str, ', '));		
 	}
 	
+	public function getDescription($show_price = false) {
+		return $this->getDescriptionMode('text', $show_price);
+	}
+	
+	public function getDescriptionHTML($show_price = false) {
+		return $this->getDescriptionMode('html', $show_price);
+	}
+
 }

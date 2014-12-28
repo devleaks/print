@@ -214,6 +214,7 @@ return [
 	'Works that are Late' => 'Travaux en retard',
 	'Works' => 'Travaux',
 	'Yes' => 'Oui',
+	'Your {document} is ready.' => 'Uw {document} is klaar.', // document is TYPE_ORDER 2015-1NNNNN.
 	
 	/** roles */
 	'admin'	=> 'Superviseur',

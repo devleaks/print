@@ -13,7 +13,7 @@ if(isset(Yii::$app->user))
 		if(isset(Yii::$app->user->identity->role))
 			$role = Yii::$app->user->identity->role;
 
-$this->title = Yii::t('store', 'Customer {0}', [ucfirst(strtolower($model->client->nom))]);
+$this->title = Yii::t('store', 'Customer {0}', [$model->client->niceName()]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/accnt']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

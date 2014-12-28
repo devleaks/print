@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$chroma_item = Item::findOne(['reference'=>'1']);
+$chroma_item  = Item::findOne(['reference'=>Item::TYPE_CHROMALUXE]);
 ?>
 <div class="document-line-options">
 
@@ -35,7 +35,7 @@ $chroma_item = Item::findOne(['reference'=>'1']);
 							'type' => Form::INPUT_RADIO_LIST,
 							'items' => Item::getListForCategory('ChromaType'),
 				            'columnOptions' => ['colspan' => 4],
-							'options' => ['inline'=>true, 'class' => 'compute-price'],
+							'options' => ['inline'=>true],
 						],
 				        'price_chroma' => [
 							'type' => Form::INPUT_TEXT,
@@ -45,7 +45,6 @@ $chroma_item = Item::findOne(['reference'=>'1']);
 				        'corner_bool' => [
 							'type' => Form::INPUT_CHECKBOX,
 				            'columnOptions' => ['colspan' => 5/*4*/],
-							'options' => ['class' => 'compute-price'],
 						],			
 						/*			
 				        'price_corner' => [
@@ -56,7 +55,7 @@ $chroma_item = Item::findOne(['reference'=>'1']);
 							'type' => Form::INPUT_DROPDOWN_LIST,
 							'items' => Item::getListForCategory('Cadre', true),
 				            'columnOptions' => ['colspan' => 4],
-							'options' => ['class' => 'form-control compute-price'],
+							'options' => ['class' => 'form-control'],
 						],
 				        'price_frame' => [
 							'type' => Form::INPUT_TEXT,
@@ -66,7 +65,6 @@ $chroma_item = Item::findOne(['reference'=>'1']);
 				        'montage_bool' => [
 							'type' => Form::INPUT_CHECKBOX,
 				            'columnOptions' => ['colspan' => 4],
-							'options' => ['class' => 'compute-price'],
 						],
 				        'price_montage' => [
 							'type' => Form::INPUT_TEXT,
@@ -76,7 +74,6 @@ $chroma_item = Item::findOne(['reference'=>'1']);
 				        'renfort_bool' => [
 							'type' => Form::INPUT_CHECKBOX,
 				            'columnOptions' => ['colspan' => 4],
-							'options' => ['class' => 'compute-price'],
 						],
 				        'price_renfort' => [
 							'type' => Form::INPUT_TEXT,

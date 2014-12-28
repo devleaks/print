@@ -80,4 +80,31 @@ class Backup extends \yii\db\ActiveRecord
 		}
 		return $db;
 	}
+
+	public function doBackup() {
+		$dsn = $this->getDb()->dsn;
+		$db  = Backup::parseDSN($dsn);
+		$dbhost = $db['host'];
+		$dbname = $db['dbname'];
+		$dbuser = $this->getDb()->username;
+		$dbpass = $this->getDb()->password;
+
+		$backup_file = $dbname . date("Y-m-d-H-i-s") . '.gz';
+		$backup_dir  = Yii::getAlias('@runtime') . '/backup/';
+		if(!is_dir($backup_dir))
+			mkdir($backup_dir);
+			
+		$command = "/Applications/mampstack/mysql/bin/mysqldump --opt -h $dbhost -u $dbuser -p$dbpass ".$dbname.
+		           "| gzip > ". $backup_dir . $backup_file;
+
+		system($command, $status);
+		Yii::trace($command.': '.$status, 'BackupController::doBackup');
+
+		if($status == 0) { // ok
+			$this->filename = $backup_file;
+			$this->status = 'OK';
+		}
+		return ($status == 0);
+	}
+
 }

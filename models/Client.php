@@ -32,6 +32,26 @@ class Client extends _Client
     }
 
     /**
+     * create client name label for display
+	 */
+	public function niceName($show_autre = false) {
+		return ucwords(strtolower(
+			$this->prenom.' '.$this->nom.($show_autre ? ' - '.$this->autre_nom : '')
+		));
+	}
+
+    /**
+     * create client name label for display
+	 */
+	public function niceAltName($show_full = false) {
+		return $this->autre_nom.($show_full ? ' - '.$this->prenom.' '.$this->nom : '');
+	}
+	
+	public function sanitizeName() {
+		return preg_replace('/[^a-z0-9\.]/', '', strtolower($this->nom));
+	}
+
+    /**
      * create client label for on screen display
 	 */
     public function makeAddress($upd_link = false, $type = Document::TYPE_ORDER)

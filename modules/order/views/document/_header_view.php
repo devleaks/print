@@ -66,7 +66,7 @@ $client = $model->getClient()->one();
 			            [
 			                'attribute'=>'created_at',
 							'format' => 'datetime',
-							'value' => new DateTime($model->updated_at),
+							'value' => new DateTime($model->created_at),
 							'options' => ['readonly' => true]
 			            ],
 			            [
@@ -91,7 +91,7 @@ $client = $model->getClient()->one();
 			            [
 			                'attribute'=>'price_tvac',
 			                'label'=> Yii::t('store','Solde'),
-			                'value'=> $model->price_tvac - $model->prepaid,
+			                'value'=> $model->getBalance(),
 							'format' => 'currency',
 							'options' => ['readonly' => true]
 			            ],
@@ -129,7 +129,7 @@ $client = $model->getClient()->one();
 				<?= $model->getActions('btn', false) ?>
 				<?= $this->render('_sendmail', ['model' => $model]) /** modal */ ?>
 				<?php
-				 	if(in_array($model->document_type, [Document::TYPE_ORDER,Document::TYPE_BILL,Document::TYPE_TICKET,Document::TYPE_CREDIT]) && !$model->isPaid())
+				 	if(in_array($model->document_type, [Document::TYPE_ORDER,Document::TYPE_BILL,Document::TYPE_TICKET,Document::TYPE_CREDIT]))
 						echo $this->render('_pay', ['model' => $model]); /** modal */
 				?>
 				</div>

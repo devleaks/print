@@ -18,7 +18,7 @@ class Order extends Document
 	 */
 	public static function defaultScope($query)
     {
-		Yii::trace('defaultScope', 'app');
+		Yii::trace(self::TYPE_ORDER, 'Order::defaultScope');
         $query->andWhere(['document_type' => self::TYPE_ORDER]);
     }
 
@@ -45,10 +45,24 @@ class Order extends Document
 	/**
 	 * @inheritdoc
 	 */
-	public function updateStatus() {
-		Yii::trace('Order::updateStatus');
+	protected function statusUpdated() {
+		Yii::trace('up', 'Order::statusUpdated()');
 		if($this->status == self::STATUS_DONE)
 			$this->completed();
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function updatePaymentStatus() {
+		Yii::trace('up', 'Order::updatePaymentStatus');
+		if($this->bom_bool and $this->parent_id != null) {
+			$bill = Bill::findDocument($this->parent_id); // inverse relation
+		} else {
+			$bill = Bill::findOne(['parent_id' => $this->id]);
+		}
+		if($bill)
+			$bill->updatePaymentStatus();	
 	}
 
     /**
@@ -59,13 +73,13 @@ class Order extends Document
 		// 1. notify client of completion
 		if(Parameter::isTrue('application', 'auto_notify_completion')) {
 			if($this->client->email != '') {
-				Yii::trace('auto_notify_completion '.$this->id);
+				Yii::trace('auto_notify_completion '.$this->id, 'Order::completed');
 				$lang_before = Yii::$app->language;
 
 				Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
 
 				Yii::$app->mailer->compose()
-				    ->setFrom(['labojjmicheli@gmail.com' => 'Labo JJ Micheli'])						// From label could be a param
+				    ->setFrom( Yii::$app->params['fromEmail'] )						// From label could be a param
 				    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )	// <=== FORCE DEV EMAIL TO TEST ADDRESS
 				    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)				// @todo: msg dans la langue du client
 					->setTextBody(Yii::t('store', 'Your {document} is ready.', [
@@ -80,7 +94,7 @@ class Order extends Document
 		}
 		// 2. Create bill from order
 		if(!$this->bom_bool && Parameter::isTrue('application', 'auto_send_bill')) { // create bill since order is completed
-			Yii::trace('auto_send_bill '.$this->id);
+			Yii::trace('auto_send_bill '.$this->id, 'Order::completed');
 			$bill = $this->convert();
 		}
 	}
@@ -97,6 +111,8 @@ class Order extends Document
 		if( $existing_work = $this->getWorks()->one() )
 			return $existing_work;
 
+		$this->numberLines();
+		
 		$work = new Work();
 		$work->document_id = $this->id;
 		$work->due_date = $this->due_date;
@@ -113,7 +129,7 @@ class Order extends Document
 			$work = null;
 		}
 		$this->setStatus(Order::STATUS_TODO);
-		// $this->save(); // saved in updateStatus()
+		// $this->save(); // saved in statusUpdated()
 		return $work;
 	}
 	
@@ -148,6 +164,7 @@ class Order extends Document
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
 					]);
+				return $ret;
 				break;
 			case $this::STATUS_OPEN:
 				$ret .= Html::a($this->getButton($template, 'pencil', 'Update'), ['/order/document-line/create', 'id' => $this->id], [

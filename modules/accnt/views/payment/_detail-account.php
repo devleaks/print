@@ -37,7 +37,8 @@ use yii\helpers\Url;
 				'attribute' => 'order_name',
 	            'label' => Yii::t('store', 'Order'),
 	            'value' => function ($model, $key, $index, $widget) {
-	                    return Html::a($model->getDocument()->one()->name, Url::to(['/order/document/view', 'id' => $model->document_id]));
+						$latest_doc = $model->getDocument()->one();
+	                    return Html::a($latest_doc->name, Url::to(['/order/document/view', 'id' => $latest_doc->id]));
 	            },
 	            'format' => 'raw',
 	        ],
@@ -69,7 +70,7 @@ use yii\helpers\Url;
             // 'updated_at',
             // 'updated_by',
 
-            ['class' => 'kartik\grid\ActionColumn'],
+            //['class' => 'kartik\grid\ActionColumn'],
         ],
 	    'showPageSummary' => true,
     ]); ?>

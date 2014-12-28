@@ -12,9 +12,16 @@ use yii\db\ActiveRecord;
 class Extraction extends _Extraction
 {
 	/** Option "type" */
-	const TYPE_DATE = 'DATE';
+	const TYPE_BILL   = 'BILL';
 	/** Option "type" */
-	const TYPE_REFN = 'REFN';
+	const TYPE_CREDIT = 'CREDIT';
+
+
+	/** Option "type" */
+	const METHOD_DATE = 'DATE';
+	/** Option "type" */
+	const METHOD_REFN = 'REFN';
+
     /**
      * @inheritdoc
      */
@@ -39,8 +46,20 @@ class Extraction extends _Extraction
 	 */
 	public static function getExtractionTypes() {
 		return [
-			self::TYPE_DATE => Yii::t('store', self::TYPE_DATE),
-			self::TYPE_REFN => Yii::t('store', self::TYPE_REFN),
+			self::TYPE_BILL => Yii::t('store', self::TYPE_BILL),
+			self::TYPE_CREDIT => Yii::t('store', self::TYPE_CREDIT),
+		];
+	}
+	
+	/**
+	 * returns associative array of status, status localized display for all possible status values
+	 *
+	 * @return array()
+	 */
+	public static function getExtractionMethods() {
+		return [
+			self::METHOD_DATE => Yii::t('store', self::METHOD_DATE),
+			self::METHOD_REFN => Yii::t('store', self::METHOD_REFN),
 		];
 	}
 	

@@ -2,6 +2,7 @@
 
 use app\models\Work;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
 
@@ -78,6 +79,13 @@ $this->params['breadcrumbs'][] = Html::encode($this->title);
 	    <div class="form-group">
 	        <?= Html::submitButton('<i class="glyphicon glyphicon-edit"></i> '.Yii::t('store', 'Add note'),
 							['class' => 'btn btn-info']) ?>
+
+			<?= Html::a('<i class="glyphicon glyphicon-tag"></i> '.Yii::t('store', 'Print Labels'),
+							Url::to(['/order/document-line/label', 'id' => $model->document_line_id]), [
+	                        'class' => 'btn btn-info',
+	                        'title' => Yii::t('store', 'Labels'),
+							'target' => '_blank',
+	                    ]) ?>
 
 	    	<?= Html::button('<i class="glyphicon glyphicon-inbox"></i> '.Yii::t('store', 'Take'),
 							['class' => 'btn btn-primary set-workline-status', 'data-status' => Work::STATUS_BUSY]) ?>

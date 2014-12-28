@@ -19,9 +19,13 @@ class Item extends _Item
 	/** For rebate and majoration */
 	const STATUS_EXTRA = 'EXTRA';
 
+	/** special item references */
+	const TYPE_CHROMALUXE = '1';
+	const TYPE_FINEARTS   = 'FineArts';
+	const TYPE_FREE       = '#';
+
 	/** item reference for special line "REMISE" */
 	const TYPE_REBATE = '%';
-	const TYPE_FREE   = '#';
 	const TYPE_CREDIT = 'Credit';
 
 	/** */
@@ -105,7 +109,7 @@ class Item extends _Item
 	 * @return array()
 	 */
 	public static function getListForCategory($category, $addnull = false) {
-		$arr = ArrayHelper::map(self::find()->where(['categorie' => $category])->asArray()->all(), 'id', 'libelle_long');
+		$arr = ArrayHelper::map(self::find()->where(['yii_category' => $category, 'status' => 'ACTIVE'])->asArray()->all(), 'id', 'libelle_long');
 		return $addnull ? ['' =>  ''] + $arr : $arr;
 	}
 

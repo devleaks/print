@@ -39,18 +39,17 @@ function (element, callback) {
     }
 }
 SCRIPT;
-
+$do_form = $form;
 ?>
 
 <div class="document-line-form">
 
-    <h4><?= Yii::t('store', 'Add an Item') ?></h4>
-
     <?php
-		if(! $form)
+		if(! $do_form)
 			$form = ActiveForm::begin([
 				'type'    => ActiveForm::TYPE_VERTICAL,
 		        'options' => ['enctype' => 'multipart/form-data'],
+				'id' => 'documentline-form',
 			]);
 	?>
 
@@ -92,10 +91,10 @@ SCRIPT;
 						],
 					],
 				],
-		        'work_width' => [
+		        'work_width_virgule' => [
 					'type' => Form::INPUT_TEXT
 				],
-		        'work_height' => [
+		        'work_height_virgule' => [
 					'type' => Form::INPUT_TEXT
 				],
 		        'due_date' => [
@@ -166,14 +165,17 @@ SCRIPT;
 					'options' => ['readonly' => true]
 				],
 		        'note' => [
-					'type' => Form::INPUT_TEXTAREA,
+					'type' => Form::INPUT_TEXT,
 		            'columnOptions' => ['colspan' => 11],
 				],
 			],
 		])
 	?>
+	<!--added to hold _virgule inputs number values-->
 	<?= Html::activeHiddenInput($model, 'quantity') ?>
 	<?= Html::activeHiddenInput($model, 'extra_amount') ?>
+	<?= Html::activeHiddenInput($model, 'work_width') ?>
+	<?= Html::activeHiddenInput($model, 'work_height') ?>
 
 	<hr>
 	<?= $this->render('../document-line-detail/_options', [
@@ -183,7 +185,6 @@ SCRIPT;
 	?>
 
 	<hr>
-    <h4><?= Yii::t('store', 'Add Pictures') ?></h4>
 
 	<?php
 	    $items = array();
@@ -210,5 +211,12 @@ SCRIPT;
 		}
     ?>
 	<hr>
+
+	<?php if(! $do_form): ?>
+	    <div class="form-group">
+	        <?= Html::submitButton(Yii::t('store', 'Add Item'), ['class' => 'btn btn-primary', 'id' => 'documentlinedetail-submit']) ?>
+	    </div>
+	    <?php ActiveForm::end(); ?>
+	<?php endif; ?>
 
 </div>

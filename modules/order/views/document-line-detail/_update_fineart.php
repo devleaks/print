@@ -30,7 +30,7 @@ $fineart_item = Item::findOne(['reference'=>'FineArts']);
 		        'tirage_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
 					'items' => Item::getListForCategory('Tirage', true),
-					'options' => ['class' => 'form-control compute-price'],
+					'options' => ['class' => 'form-control'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_tirage' => [
@@ -40,8 +40,8 @@ $fineart_item = Item::findOne(['reference'=>'FineArts']);
 		        'finish_id' => [
 					'type' => Form::INPUT_RADIO_LIST,
 					'items' => Item::getListForCategory('Finition'),
-					'options' => ['class' => 'compute-price'],
 		            'columnOptions' => ['colspan' => 5],
+					'options' => ['inline'=>true],
 				],
 		        'note' => [
 					'type' => Form::INPUT_TEXT,
@@ -56,11 +56,28 @@ $fineart_item = Item::findOne(['reference'=>'FineArts']);
 		    'attributes' => [		
 		        'support_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Chassis', true),
-					'options' => ['class' => 'form-control  compute-price'],
+					'items' => Item::getListForCategory('Support', true),
+					'options' => ['class' => 'form-control'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_support' => [
+					'type' => Form::INPUT_TEXT,
+					'options' => ['readonly' => true, 'class' => 'form-control ']
+				],
+			],
+		]).
+		Form::widget([
+		    'model' => $detail,
+		    'form' => $form,
+		    'columns' => 5,
+		    'attributes' => [	
+		        'chassis_id' => [
+					'type' => Form::INPUT_DROPDOWN_LIST,
+					'items' => Item::getListForCategory('Chassis', true),
+					'options' => ['class' => 'form-control'],
+		            'columnOptions' => ['colspan' => 4],
+				],
+		        'price_chassis' => [
 					'type' => Form::INPUT_TEXT,
 					'options' => ['readonly' => true, 'class' => 'form-control ']
 				],
@@ -74,27 +91,10 @@ $fineart_item = Item::findOne(['reference'=>'FineArts']);
 		        'protection_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
 					'items' => Item::getListForCategory('Vernis de protection', true),
-					'options' => ['class' => 'form-control  compute-price'],
+					'options' => ['class' => 'form-control'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_protection' => [
-					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control ']
-				],
-			],
-		]).
-		Form::widget([
-		    'model' => $detail,
-		    'form' => $form,
-		    'columns' => 5,
-		    'attributes' => [	
-		        'collage_id' => [
-					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Collage', true),
-					'options' => ['class' => 'form-control  compute-price'],
-		            'columnOptions' => ['colspan' => 4],
-				],
-		        'price_collage' => [
 					'type' => Form::INPUT_TEXT,
 					'options' => ['readonly' => true, 'class' => 'form-control ']
 				],

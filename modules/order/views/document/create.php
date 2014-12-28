@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		/** If create new doc, form is opened and closed here; there is a single form for the entire page */
 		$form = ActiveForm::begin([
 			'type'    => ActiveForm::TYPE_VERTICAL,
-	        'options' => ['enctype' => 'multipart/form-data'],
+	        'options' => ['enctype' => 'multipart/form-data', 'class' => 'form-compact'],
 		]); ?>
 
 	<?= $this->render('_header_form', [
@@ -28,13 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
 			'form' => $form,
 		])
 	?>
-<?php if($model->document_type != Document::TYPE_CREDIT): ?>
-	<?= $this->render('../document-line/_list_add', [
-			'order' => $model,
-			'form' => $form,
-		])
-	?>
-<?php endif; ?>
+
+	<?php if($model->document_type != Document::TYPE_CREDIT): ?>
+		<?= $this->render('../document-line/_list_add', [
+				'order' => $model,
+				'form' => $form,
+			])
+		?>
+	<?php endif; ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('store', 'Add Item'), ['class' => 'btn btn-primary']) ?>

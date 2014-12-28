@@ -69,32 +69,6 @@ class BackupController extends Controller
         ]);
     }
 
-	protected function doBackup($model) {
-		$dsn = $model->getDb()->dsn;
-		$db  = Backup::parseDSN($dsn);
-		$dbhost = $db['host'];
-		$dbname = $db['dbname'];
-		$dbuser = $model->getDb()->username;
-		$dbpass = $model->getDb()->password;
-
-		$backup_file = $dbname . date("Y-m-d-H-i-s") . '.gz';
-		$backup_dir  = Yii::getAlias('@runtime') . '/backup/';
-		if(!is_dir($backup_dir))
-			mkdir($backup_dir);
-			
-		$command = "/Applications/mampstack/mysql/bin/mysqldump --opt -h $dbhost -u $dbuser -p$dbpass ".$dbname.
-		           "| gzip > ". $backup_dir . $backup_file;
-
-		system($command, $status);
-		Yii::trace($command.': '.$status, 'BackupController::doBackup');
-
-		if($status == 0) { // ok
-			$model->filename = $backup_file;
-			$model->status = 'OK';
-		}
-		return ($status == 0);
-	}
-
     /**
      * Creates a new Backup model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -105,7 +79,7 @@ class BackupController extends Controller
         $model = new Backup();
 
         if (Yii::$app->request->post()) {
-			if($this->doBackup($model)) {
+			if($model->doBackup()) {
 				if($model->save()) {
 					Yii::$app->session->setFlash('success', Yii::t('store', 'Backup completed.'));
  				}

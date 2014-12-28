@@ -4,15 +4,15 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ExtractionLine */
+/* @var $model app\models\SequenceData */
 
 $this->title = Yii::t('store', 'Create {modelClass}', [
-    'modelClass' => 'Extraction Line',
+    'modelClass' => 'Sequence Data',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Extraction Lines'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Sequence Datas'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="extraction-line-create">
+<div class="sequence-data-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

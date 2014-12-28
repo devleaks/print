@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = ActiveForm::begin([
 		'type'    => ActiveForm::TYPE_VERTICAL,
         'options' => ['enctype' => 'multipart/form-data'],
+		'id' => 'documentline-form',
 	]); ?>
 
     <?= $this->render('_update', [

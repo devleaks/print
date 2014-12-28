@@ -65,7 +65,15 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'format' => 'raw',
 	        ],
             [	'class' => 'yii\grid\ActionColumn',
-				'template' => '{view} {delete}'
+				'template' => '{view} {delete}',
+	            'buttons' => [
+	                'view' => function ($url, $model) {
+						$url = Url::to(['work/view', 'id' => $model->id, 'sort' => 'position']);
+	                    return Html::a('<i class="glyphicon glyphicon-eye-open"></i>', $url, [
+	                        'title' => Yii::t('store', 'View'),
+	                    ]);
+	                },
+				],
 			],
         ],
     ]); ?>

@@ -94,13 +94,21 @@ Icon::map($this);
 //	        ],
 	        [
 	            'class' => 'kartik\grid\ActionColumn',
-	            'template' => '{detail} {take} {done} {undo}',
+	            'template' => '{detail} {label} {take} {done} {undo}',
 	            'buttons' => [
 	                'detail' => function ($url, $model) {
 						$url = Url::to(['work-line/detail', 'id' => $model->id]);
 	                    return Html::a('<i class="glyphicon glyphicon-eye-open"></i>', $url, [
 	                        'class' => 'btn btn-xs btn-info',
 	                        'title' => Yii::t('store', 'View'),
+	                    ]);
+	                },
+	                'label' => function ($url, $model) {
+						$url = Url::to(['/order/document-line/label', 'id' => $model->document_line_id]);
+	                    return Html::a('<i class="glyphicon glyphicon-tag"></i>', $url, [
+	                        'class' => 'btn btn-xs btn-info',
+	                        'title' => Yii::t('store', 'Labels'),
+							'target' => '_blank',
 	                    ]);
 	                },
 	                'take' => function ($url, $model) {

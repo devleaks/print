@@ -29,6 +29,12 @@ use app\models\Document;
 			<td><?= '+++ '.$model->reference.' +++' ?></td>
 			<td><?= $model->name ?></td>
 	</tr>
+	<?php if($model->note != ''): ?>
+	<tr>
+			<th style="text-align: center;"><?= Yii::t('store', 'Note') ?></th>
+			<td colspan="4" style="text-align: left;"><?= $model->note ?></td>
+	</tr>
+	<?php endif; ?>
 	</table>
 	<br>
 	

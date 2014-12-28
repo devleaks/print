@@ -8,12 +8,15 @@ use Yii;
  * This is the model class for table "document_line_detail".
  *
  * @property integer $id
+ * @property integer $document_line_id
+ * @property string $note
  * @property integer $chroma_id
  * @property double $price_chroma
  * @property integer $corner_bool
  * @property double $price_corner
  * @property integer $renfort_bool
  * @property double $price_renfort
+ * @property integer $frame_id
  * @property double $price_frame
  * @property integer $montage_bool
  * @property double $price_montage
@@ -26,18 +29,18 @@ use Yii;
  * @property double $price_collage
  * @property integer $protection_id
  * @property double $price_protection
- * @property string $note
- * @property integer $document_line_id
- * @property integer $frame_id
+ * @property integer $chassis_id
+ * @property double $price_chassis
  *
- * @property Item $protection
- * @property DocumentLine $documentLine
+ * @property Item $finish
  * @property Item $chroma
  * @property Item $frame
- * @property Item $finish
+ * @property Item $chassis
  * @property Item $support
  * @property Item $tirage
  * @property Item $collage
+ * @property Item $protection
+ * @property DocumentLine $documentLine
  */
 class _DocumentLineDetail extends \yii\db\ActiveRecord
 {
@@ -55,9 +58,9 @@ class _DocumentLineDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['chroma_id', 'corner_bool', 'renfort_bool', 'montage_bool', 'finish_id', 'support_id', 'tirage_id', 'collage_id', 'protection_id', 'document_line_id', 'frame_id'], 'integer'],
-            [['price_chroma', 'price_corner', 'price_renfort', 'price_frame', 'price_montage', 'price_support', 'price_tirage', 'price_collage', 'price_protection'], 'number'],
             [['document_line_id'], 'required'],
+            [['document_line_id', 'chroma_id', 'corner_bool', 'renfort_bool', 'frame_id', 'montage_bool', 'finish_id', 'support_id', 'tirage_id', 'collage_id', 'protection_id', 'chassis_id'], 'integer'],
+            [['price_chroma', 'price_corner', 'price_renfort', 'price_frame', 'price_montage', 'price_support', 'price_tirage', 'price_collage', 'price_protection', 'price_chassis'], 'number'],
             [['note'], 'string', 'max' => 160]
         ];
     }
@@ -69,44 +72,38 @@ class _DocumentLineDetail extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('store', 'ID'),
-            'chroma_id' => Yii::t('store', 'Chroma ID'),
+            'document_line_id' => Yii::t('store', 'Document Line'),
+            'note' => Yii::t('store', 'Note'),
+            'chroma_id' => Yii::t('store', 'Chroma'),
             'price_chroma' => Yii::t('store', 'Price Chroma'),
             'corner_bool' => Yii::t('store', 'Corner Bool'),
             'price_corner' => Yii::t('store', 'Price Corner'),
             'renfort_bool' => Yii::t('store', 'Renfort Bool'),
             'price_renfort' => Yii::t('store', 'Price Renfort'),
+            'frame_id' => Yii::t('store', 'Frame'),
             'price_frame' => Yii::t('store', 'Price Frame'),
             'montage_bool' => Yii::t('store', 'Montage Bool'),
             'price_montage' => Yii::t('store', 'Price Montage'),
-            'finish_id' => Yii::t('store', 'Finish ID'),
-            'support_id' => Yii::t('store', 'Support ID'),
+            'finish_id' => Yii::t('store', 'Finish'),
+            'support_id' => Yii::t('store', 'Support'),
             'price_support' => Yii::t('store', 'Price Support'),
-            'tirage_id' => Yii::t('store', 'Tirage ID'),
+            'tirage_id' => Yii::t('store', 'Tirage'),
             'price_tirage' => Yii::t('store', 'Price Tirage'),
-            'collage_id' => Yii::t('store', 'Collage ID'),
+            'collage_id' => Yii::t('store', 'Collage'),
             'price_collage' => Yii::t('store', 'Price Collage'),
-            'protection_id' => Yii::t('store', 'Protection ID'),
+            'protection_id' => Yii::t('store', 'Protection'),
             'price_protection' => Yii::t('store', 'Price Protection'),
-            'note' => Yii::t('store', 'Note'),
-            'document_line_id' => Yii::t('store', 'Document Line ID'),
-            'frame_id' => Yii::t('store', 'Frame ID'),
+            'chassis_id' => Yii::t('store', 'Chassis'),
+            'price_chassis' => Yii::t('store', 'Price Chassis'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProtection()
+    public function getFinish()
     {
-        return $this->hasOne(Item::className(), ['id' => 'protection_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDocumentLine()
-    {
-        return $this->hasOne(DocumentLine::className(), ['id' => 'document_line_id']);
+        return $this->hasOne(Item::className(), ['id' => 'finish_id']);
     }
 
     /**
@@ -128,9 +125,9 @@ class _DocumentLineDetail extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFinish()
+    public function getChassis()
     {
-        return $this->hasOne(Item::className(), ['id' => 'finish_id']);
+        return $this->hasOne(Item::className(), ['id' => 'chassis_id']);
     }
 
     /**
@@ -155,5 +152,21 @@ class _DocumentLineDetail extends \yii\db\ActiveRecord
     public function getCollage()
     {
         return $this->hasOne(Item::className(), ['id' => 'collage_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProtection()
+    {
+        return $this->hasOne(Item::className(), ['id' => 'protection_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDocumentLine()
+    {
+        return $this->hasOne(DocumentLine::className(), ['id' => 'document_line_id']);
     }
 }

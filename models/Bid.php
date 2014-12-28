@@ -13,7 +13,7 @@ class Bid extends Document
      */
 	public static function defaultScope($query)
     {
-		Yii::trace('defaultScope', 'app');
+		Yii::trace(self::TYPE_BID, 'Bid::defaultScope');
         $query->andWhere(['document_type' => self::TYPE_BID]);
     }
 

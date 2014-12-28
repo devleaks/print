@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use kartik\mpdf\Pdf;
 
 /**
  * Base class for all things common to bid, order, and bill
@@ -39,7 +40,7 @@ class Document extends _Document
 	/** */
 	const STATUS_DONE = 'DONE';
 	/** */
-	const STATUS_NOTE = 'NOTIFIED';
+	const STATUS_TOPAY = 'TOPAY';
 	/** */
 	const STATUS_PAID = 'PAID';
 	/** */
@@ -50,6 +51,9 @@ class Document extends _Document
 	const STATUS_CLOSED = 'CLOSED';
 	/** */
 	const STATUS_WARN = 'WARN';
+
+	/** */
+	const EMAIL_PREFIX = 'EMAIL-';
 
     /**
      * @inheritdoc
@@ -113,6 +117,19 @@ class Document extends _Document
         return $this->hasMany(Payment::className(), ['sale' => 'sale']);
     }
 
+	public function getPrepaid($today = false) {
+		if($today) {
+			$date_from = date('Y-m-d 00:00:00', strtotime('today'));
+			$date_to = str_replace($date_from, '00:00:00', '23:59:59');
+			$ret = Payment::find()->andWhere(['sale' => $this->sale])
+							->andWhere(['>=','created_at',$date_from])
+							->andWhere(['<=','created_at',$date_to])
+							->sum('amount');	
+		} else
+			$ret = Payment::find()->where(['sale' => $this->sale])->sum('amount');
+		return $ret ? $ret : 0;
+	}
+		
 
 	/**
 	 * returns associative array of status, status localized display for all possible status values
@@ -169,7 +186,7 @@ class Document extends _Document
 			self::STATUS_CREATED => Yii::t('store', self::STATUS_CREATED),
 			self::STATUS_SOLDE => Yii::t('store', self::STATUS_SOLDE),
 			self::STATUS_DONE => Yii::t('store', self::STATUS_DONE),
-			self::STATUS_NOTE => Yii::t('store', self::STATUS_NOTE),
+			self::STATUS_TOPAY => Yii::t('store', self::STATUS_TOPAY),
 			self::STATUS_OPEN => Yii::t('store', self::STATUS_OPEN),
 			self::STATUS_PAID => Yii::t('store', self::STATUS_PAID),
 			self::STATUS_TODO => Yii::t('store', self::STATUS_TODO),
@@ -206,7 +223,7 @@ class Document extends _Document
 			self::STATUS_CREATED => 'success',
 			self::STATUS_SOLDE => 'primary',
 			self::STATUS_DONE => 'success',
-			self::STATUS_NOTE => 'info',
+			self::STATUS_TOPAY => 'info',
 			self::STATUS_OPEN => 'primary',
 			self::STATUS_PAID => 'success',
 			self::STATUS_TODO => 'primary',
@@ -265,11 +282,11 @@ class Document extends _Document
 		// apply global rebate or supplement
 		if($rebate_line != null) {
 			if ($do_global_rebate) {
-				//Yii::trace('Has rebate line '.$rebate_line->id);
+				//Yii::trace('Has rebate line '.$rebate_line->id, 'Document::updatePrice');
 				if(isset($rebate_line->extra_type) && ($rebate_line->extra_type != '')) {
-					//Yii::trace('Has rebate type '.$rebate_line->extra_type);
+					//Yii::trace('Has rebate type '.$rebate_line->extra_type, 'Document::updatePrice');
 					if(isset($rebate_line->extra_amount) && ($rebate_line->extra_amount > 0)) {
-						//Yii::trace('Has rebate amount '.$rebate_line->extra_amount);
+						//Yii::trace('Has rebate amount '.$rebate_line->extra_amount, 'Document::updatePrice');
 						$amount = strpos($rebate_line->extra_type, "PERCENT") > -1 ? $this->price_htva * ($rebate_line->extra_amount/100) : $rebate_line->extra_amount;
 						$asigne = strpos($rebate_line->extra_type, "SUPPLEMENT_") > -1 ? 1 : -1;
 						$rebate_line->price_htva = 0;											// global rebate HTVA is in EXTRA, not in line price
@@ -287,7 +304,7 @@ class Document extends _Document
 			}
 		}
 
-		//Yii::trace('total '.$this->price_htva);
+		//Yii::trace('total '.$this->price_htva, 'Document::updatePrice');
 		$this->price_htva = round($this->price_htva, 2);
 		$this->price_tvac = round($this->price_tvac, 2);
 
@@ -301,30 +318,86 @@ class Document extends _Document
 	public function setStatus($status) {
 		$this->status = $status;
 		$this->save();
-		$this->updateStatus();
+		$this->statusUpdated();
 	}
 
 
 	/**
-	 * update status of document and triggers proper actions.
+	 * Update status of document and triggers proper actions.
 	 */
-	public function updateStatus() {
+	protected function statusUpdated() {
 	}
 
-	/** 
-	 * Update status and reports to parent Work model
+
+	public function addPayment($amount, $method) {
+		$rounded_amount = round($amount, 2);
+		$payment = new Payment([
+			'sale' => $this->sale,
+			'client_id' => $this->client_id,
+			'payment_method' => $method,
+			'amount' => $rounded_amount,
+			'status' => Payment::STATUS_PAID,
+		]);
+		
+		if($method == Payment::TYPE_ACCOUNT) {
+			$account = new Account([
+				'document_id' => $this->id,
+				'sale' => $this->sale,
+				'client_id' => $this->client_id,
+				'amount' => - $rounded_amount,
+				'status' => Account::TYPE_DEBIT,
+				'payment_method' => $method
+			]);
+			if($account->save())
+				$payment->save();
+		} else
+			$payment->save();
+			
+		$this->updatePaymentStatus();
+	}
+	/**
+	 * Returns amount due.
+	 *
+	 * @return number Amount due.
+	 */
+	public function getBalance() {
+		return $this->price_tvac - $this->getPrepaid();
+	}
+	
+	/**
+	 * Returns amount due.
+	 *
+	 * @return number Amount due.
 	 */
 	public function isPaid() {
-		return (($this->price_tvac - $this->prepaid) < 0.01);
+		return $this->getBalance() < 0.01;
+	}
+		
+	/**
+	 * Update payment status of document and triggers proper actions.
+	 */
+	public function updatePaymentStatus() {
 	}
 
+
 	public function latestPayment() {
-		$payments = $this->getPayments();
-		$payments->orderBy('created_at desc');
-		$last = $payments->one();
+		$last = $this->getPayments()->orderBy('created_at desc')->one();
 		return $last ? $last->amount : 0;
 	}
 
+
+	public function getDelay($which, $category = false) {
+		$refdate = ($which == 'created') ? new \DateTime($this->created_at) : new \DateTime($this->updated_at);
+		$cnt = $refdate->diff(new \DateTime())->days;
+		if($category) {
+		     if($cnt <= Parameter::getIntegerValue('delay', 'late', 30)) return 0;
+		else if($cnt <= Parameter::getIntegerValue('delay', 'verylate', 60)) return 1;
+		else if($cnt <= Parameter::getIntegerValue('delay', 'veryverylate', 90)) return 2;
+		else return 3;			
+		}
+		else
+			return $cnt;
+	}
 
 	/**
 	 * creates a copy of a document object with a *copy* of all its dependent objects (documentlines, etc.)
@@ -366,17 +439,21 @@ class Document extends _Document
 		$copy->parent_id = $this->id;
 		
 		if($this->document_type == self::TYPE_BID) { // if coming from bid to order, need to change reference to official order reference
-			$copy->name = substr($copy->due_date,0,4).'-'.Sequence::nextval('order_number');
+			if($this->bom_bool) { // BOM
+				$o = Parameter::getTextValue('application', 'BOM', '-YII-');
+				$copy->name = substr($model->due_date,0,4).$o.Sequence::nextval('doc_number');
+			} else // real order
+				$copy->name = substr($copy->due_date,0,4).'-'.Sequence::nextval('order_number');
 		}
 		
 		$copy->status = self::STATUS_OPEN;
 		$copy->save();
 		
 		if($copy->document_type == self::TYPE_ORDER && Parameter::isTrue('application', 'auto_submit_work')) {
-			Yii::trace('auto_submit_work for '.$copy->id);
+			Yii::trace('auto_submit_work for '.$copy->id, 'Document::convert');
 			$work = $copy->createWork();
 		} if($copy->document_type == self::TYPE_BILL && Parameter::isTrue('application', 'auto_send_bill')) {
-			Yii::trace('auto_send_bill for '.$copy->id);
+			Yii::trace('auto_send_bill for '.$copy->id, 'Document::convert');
 			$copy->send();
 		}
 
@@ -386,6 +463,20 @@ class Document extends _Document
 		return $copy;
 	}
 	
+	
+	public function numberLines() {
+		$pos = 1;
+		foreach($this->getDocumentLines()->each() as $dl) {
+			$dl->position = $pos++;
+			$dl->save();
+		}
+	}
+	
+	
+	public function getLineCount() {
+		$cnt = $this->getDocumentLines()->count();
+		return $this->hasRebate() ? $cnt - 1 : $cnt;
+	}
 	/**
 	 *
 	 * Note: $table introduced when joining several tables with due_date (ex. document and work)
@@ -514,9 +605,140 @@ class Document extends _Document
 		return $colored ? $this->getLabel($this->status) : Yii::t('store', $this->status);
 	}
 
+	/**
+	 * Generates belgian Structurer Communication (XXX/XXXXX/XXYY) from supplied number.
+	 *
+	 * @return string Structurer Communication
+	 */
 	public static function commStruct($s=0) {
         $d=sprintf("%010s",preg_replace("/[^0-9]/", "", $s)); 
         $modulo=(bcmod($s,97)==0?97:bcmod($s,97)); 
         return sprintf("%s/%s/%s%02d",substr($d,0,3),substr($d,3,4),substr($d,7,3),$modulo); 
+	}
+	
+	/**
+	 * Extract sequence number of document name.
+	 *
+	 * @return number Sequence number of document if structured as STRING-00000.
+	 */
+	public function getNumberPart() {
+		$p = strrpos($this->name, '-');
+		return $p > 0 ? substr($this->name, $p + 1, strlen($this->name) - $p + -1) : 0;
+	}
+	
+	
+	public function generatePdf($controller, $filename = null) {
+		$viewBase = '@app/modules/order/views/document/';
+	    $header  = $controller->renderPartial($viewBase.'_print_header', ['model' => $this]);
+	    $content = $controller->renderPartial($viewBase.'_print', ['model' => $this]);
+	    $footer  = $controller->renderPartial($viewBase.'_print_footer', ['model' => $this]);
+
+		$pdfData = [
+	        // set to use core fonts only
+	        'mode' => Pdf::MODE_CORE, 
+	        // A4 paper format
+	        'format' => Pdf::FORMAT_A4, 
+	        // portrait orientation
+	        'orientation' => Pdf::ORIENT_PORTRAIT, 
+	        // stream to browser inline
+	        'destination' => Pdf::DEST_BROWSER, 
+	        // your html content input
+	        'content' => $content,  
+	        // format content from your own css file if needed or use the
+	        // enhanced bootstrap css built by Krajee for mPDF formatting 
+	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+	        // any css to be embedded if required
+			'cssInline' => '.kv-wrap{padding:20px;}' .
+	        	'.kv-heading-1{font-size:18px}'.
+                '.kv-align-center{text-align:center;}' .
+                '.kv-align-left{text-align:left;}' .
+                '.kv-align-right{text-align:right;}' .
+                '.kv-align-top{vertical-align:top!important;}' .
+                '.kv-align-bottom{vertical-align:bottom!important;}' .
+                '.kv-align-middle{vertical-align:middle!important;}' .
+                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
+                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
+                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}' .
+                'table{font-size:0.8em;}'
+				,
+	         // set mPDF properties on the fly
+			'marginHeader' => 10,
+			'marginFooter' => 10,
+			'marginTop' => 35,
+			'options' => [],
+	         // call mPDF methods on the fly
+	        'methods' => [ 
+	        //    'SetHeader'=>['Laboratoire JJ Micheli'], 
+	            'SetHTMLHeader'=> $header,
+	            'SetHTMLFooter'=> $footer,
+	        ]
+		];
+
+		if($filename) {
+			$pdfData['destination'] = Pdf::DEST_FILE;
+			$pdfData['filename'] = $filename;
+		} else {
+			$pdfData['destination'] = Pdf::DEST_BROWSER;
+		}
+
+    	$pdf = new Pdf($pdfData);
+		return $pdf->render();
+	}
+
+
+	public function generateLabel($controller, $filename = null) {
+		$viewBase = '@app/modules/order/views/document/';
+	    $header  = $controller->renderPartial($viewBase.'_print_header', ['model' => $this]);
+	    $content = $controller->renderPartial($viewBase.'_label', ['model' => $this]);
+	    $footer  = $controller->renderPartial($viewBase.'_print_footer', ['model' => $this]);
+
+		$pdfData = [
+	        // set to use core fonts only
+	        'mode' => Pdf::MODE_CORE, 
+	        // A4 paper format
+	        'format' => Pdf::FORMAT_A4, 
+	        // portrait orientation
+	        'orientation' => Pdf::ORIENT_PORTRAIT, 
+	        // stream to browser inline
+	        'destination' => Pdf::DEST_BROWSER, 
+	        // your html content input
+	        'content' => $content,  
+	        // format content from your own css file if needed or use the
+	        // enhanced bootstrap css built by Krajee for mPDF formatting 
+	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+	        // any css to be embedded if required
+			'cssInline' => '.kv-wrap{padding:20px;}' .
+	        	'.kv-heading-1{font-size:18px}'.
+                '.kv-align-center{text-align:center;}' .
+                '.kv-align-left{text-align:left;}' .
+                '.kv-align-right{text-align:right;}' .
+                '.kv-align-top{vertical-align:top!important;}' .
+                '.kv-align-bottom{vertical-align:bottom!important;}' .
+                '.kv-align-middle{vertical-align:middle!important;}' .
+                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
+                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
+                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}',
+	         // set mPDF properties on the fly
+			'marginHeader' => 10,
+			'marginFooter' => 10,
+//			'marginTop' => 35,
+			'options' => [],
+	         // call mPDF methods on the fly
+//	        'methods' => [ 
+	        //    'SetHeader'=>['Laboratoire JJ Micheli'], 
+//	            'SetHTMLHeader'=> $header,
+//	            'SetHTMLFooter'=> $footer,
+//	        ]
+		];
+
+		if($filename) {
+			$pdfData['destination'] = Pdf::DEST_FILE;
+			$pdfData['filename'] = $filename;
+		} else {
+			$pdfData['destination'] = Pdf::DEST_BROWSER;
+		}
+
+    	$pdf = new Pdf($pdfData);
+		return $pdf->render();
 	}
 }

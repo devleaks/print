@@ -67,7 +67,7 @@ use kartik\widgets\ActiveForm;
 					'type' => Form::INPUT_TEXT,
 		            'columnOptions' => ['colspan' => 5],
 				],
-		        'langue' => [
+		        'lang' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
 					'items' => ArrayHelper::map(Parameter::find()->where(['domain'=>'langue'])->orderBy('value_int')->asArray()->all(), 'name', 'value_text'),
 		            'columnOptions' => ['colspan' => 1],

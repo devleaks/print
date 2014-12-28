@@ -4,28 +4,30 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ExtractionLineSearch */
+/* @var $model app\models\SequenceDataSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="extraction-line-search">
+<div class="sequence-data-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'sequence_name') ?>
 
-    <?= $form->field($model, 'extraction_id') ?>
+    <?= $form->field($model, 'sequence_increment') ?>
 
-    <?= $form->field($model, 'extraction_type') ?>
+    <?= $form->field($model, 'sequence_min_value') ?>
 
-    <?= $form->field($model, 'status') ?>
+    <?= $form->field($model, 'sequence_max_value') ?>
 
-    <?= $form->field($model, 'created_at') ?>
+    <?= $form->field($model, 'sequence_cur_value') ?>
 
-    <?php // echo $form->field($model, 'updated_at') ?>
+    <?php // echo $form->field($model, 'sequence_cycle') ?>
+
+    <?php // echo $form->field($model, 'sequence_year') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('store', 'Search'), ['class' => 'btn btn-primary']) ?>

@@ -6,6 +6,8 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Account */
 /* @var $form yii\widgets\ActiveForm */
+$pending_bills = $client->getDocuments()
+						->andWhere(['status' => Document::STATUS_TOPAY]);
 ?>
 
 <div class="account-form">
@@ -17,6 +19,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'amount')->textInput() ?>
 
     <?= $form->field($model, 'note')->textInput(['maxlength' => 160]) ?>
+
+    <?= $form->field($model, 'status')->dropDownList(['item' => array_merge(['Multiple' => 'Multiple'], $pending_bills]) ?>
 
     <?= $form->field($model, 'status')->dropDownList(['item' => $model::getStatuses()]) ?>
 

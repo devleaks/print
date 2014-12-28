@@ -1,0 +1,42 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+use yii\base\Model;
+
+/**
+ * This is the model class to cature email address.
+ */
+class CaptureBalance extends Model
+{
+	public $amount;
+	public $method;
+	public $client_id;
+	
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['amount', 'client_id'], 'required'],
+            [['amount', 'method', 'client_id'], 'safe'],
+			[['amount'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
+			[['client_id'], 'integer'],
+            [['method'], 'string', 'max' => 20],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'amount' => Yii::t('store', 'Amount'),
+            'method' => Yii::t('store', 'Payment Method'),
+            'client_id' => Yii::t('store', 'Client'),
+        ];
+    }
+}

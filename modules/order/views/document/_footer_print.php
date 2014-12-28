@@ -44,9 +44,9 @@
 			<th style="text-align: center;"><?= Yii::t('store', 'Solde') ?></th>
 	</tr>
 	<tr>
-			<td><?= Yii::$app->formatter->asCurrency($model->latestPayment()) ?></td>
-			<td><?= Yii::$app->formatter->asCurrency($model->prepaid - $model->latestPayment()) ?></td>
-			<td><?= Yii::$app->formatter->asCurrency( ($model->vat_bool ? $model->price_htva : $model->price_tvac) - $model->prepaid) ?></td>
+			<td><?= Yii::$app->formatter->asCurrency($model->getPrepaid(true)) ?></td>
+			<td><?= Yii::$app->formatter->asCurrency($model->getPrepaid()) ?></td>
+			<td><?= Yii::$app->formatter->asCurrency( ($model->vat_bool ? $model->price_htva : $model->price_tvac) - $model->getPrepaid()) ?></td>
 	</tr>
 	</table>
 </div>

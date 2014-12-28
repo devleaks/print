@@ -13,20 +13,29 @@ class Ticket extends Order
      */
 	public static function defaultScope($query)
     {
-		Yii::trace('defaultScope', 'app');
+		Yii::trace(self::TYPE_TICKET, 'Ticket::defaultScope');
         $query->andWhere(['document_type' => self::TYPE_TICKET]);
     }
 
 	/**
 	 * @inheritdoc
 	 */
-	public function updateStatus() {
-		Yii::trace('Ticket::updateStatus: status='.$this->status);
+	protected function statusUpdated() {
+		Yii::trace('status='.$this->status, 'Ticket::statusUpdated()');
 		if($this->status == self::STATUS_DONE) {
-			$solde = $this->price_tvac - $this->prepaid;
-			Yii::trace('Ticket::updateStatus: solde='.$solde);
-			$this->setStatus($solde < 0.01 ? self::STATUS_CLOSED : self::STATUS_SOLDE);
+			$this->updatePaymentStatus();
 		}
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function updatePaymentStatus() {
+		if($this->status == self::STATUS_DONE || $this->status == self::STATUS_SOLDE) {
+			$solde = $this->getBalance();
+			Yii::trace('solde='.$solde, 'Ticket::updatePaymentStatus');
+			$this->setStatus($solde < 0.01 ? self::STATUS_CLOSED : self::STATUS_SOLDE);
+		} // otherwise, we leave the status as it is
 	}
 
     /**
@@ -44,6 +53,12 @@ class Ticket extends Order
 					'title' => Yii::t('store', 'Modify'),
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
+					]);
+				$ret .= ' '.Html::a($this->getButton($template, 'tasks', 'Submit Work'), ['/order/document/submit', 'id' => $this->id], [
+					'title' => Yii::t('store', 'Submit Work'),
+					'class' => $baseclass . ' btn-primary',
+					'data-method' => 'post',
+					'data-confirm' => Yii::t('store', 'Submit work?')
 					]);
 				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/document/cancel', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Cancel'),

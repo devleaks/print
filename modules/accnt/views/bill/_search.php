@@ -33,10 +33,6 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'price_tvac') ?>
 
-    <?php // echo $form->field($model, 'prepaid') ?>
-
-    <?php // echo $form->field($model, 'payment_method') ?>
-
     <?php // echo $form->field($model, 'vat') ?>
 
     <?php // echo $form->field($model, 'vat_bool') ?>

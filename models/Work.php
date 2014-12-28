@@ -113,7 +113,7 @@ class Work extends _Work
 		return $order_status;
 	}
 	
-	public function updateStatus() {
+	public function setStatus() {
 		$total = $this->getWorkLines()->count();
 		$busy = $this->getWorkLines()->andWhere(['status' => Work::STATUS_BUSY])->count();
 		$done = $this->getWorkLines()->andWhere(['status' => Work::STATUS_DONE])->count();
@@ -169,7 +169,7 @@ class Work extends _Work
 	public function deleteCascade() {
 		foreach($this->getWorkLines()->each() as $wl)
 			$wl->deleteCascade();
-
+		$this->document->setStatus(Document::STATUS_OPEN);
 		$this->delete();
 	}
 

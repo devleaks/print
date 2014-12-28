@@ -10,10 +10,18 @@ use yii\db\ActiveRecord;
  */
 class Account extends _Account
 {
+	/** Bulk action ID */
+	const ACTION_ADD_PAYMENT = 'PAY';
+	/** Bulk action ID */
+	const ACTION_SEND_REMINDER = 'SEND';
+	/** Bulk action ID */
+	const ACTION_TRANSFER = 'TRANSFER';
 	/** */
 	const TYPE_DEBIT  = 'ADEBIT';
 	/** */
 	const TYPE_CREDIT = 'ACREDIT';
+	/** */
+	const TYPE_BALANCED = 'BALANCED';
 	
     public function behaviors()
     {
@@ -29,6 +37,15 @@ class Account extends _Account
         ];
     }
 
+	protected function getStatusColor() {
+		$color = [
+			self::TYPE_DEBIT => 'danger',
+			self::TYPE_CREDIT => 'success',
+			self::TYPE_BALANCED => 'info',
+		];
+		return $color[$this->status];
+	}
+	
 	public function getStatuses() {
 		return [
 			self::TYPE_DEBIT  => Yii::t('store', self::TYPE_DEBIT),
@@ -37,6 +54,6 @@ class Account extends _Account
 	}
 
 	public function getStatusLabel() {
-		return '<span class="label label-'.($this->status == self::TYPE_DEBIT ? 'success' : 'danger').'">'.Yii::t('store', $this->status).'</span>';
+		return '<span class="label label-'.$this->getStatusColor().'">'.Yii::t('store', $this->status).'</span>';
 	}
 }

@@ -52,6 +52,8 @@ ChardinJSAsset::register($this);
                 	$work_menu[] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store/']];
 				if(Yii::$app->user->identity->role == 'admin')
                 	$work_menu[] = ['label' => Yii::t('store', 'Administration'), 'url' => ['/admin/']];
+				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta')
+                	$work_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt/']];
 
                	$work_menu[] = ['label' => Yii::t('store', 'Calculator'), 'url' => ['/assets/calculator/'], 'linkOptions' => ['target' => '_blank']];
 
@@ -94,7 +96,7 @@ ChardinJSAsset::register($this);
 				]
             ]) ?>
 
-			<?php foreach(array('success', 'error', 'warning', 'info') as $category): ?>
+			<?php foreach(array('success', 'error', 'danger', 'warning', 'info') as $category): ?>
 				<?php if (Yii::$app->session->hasFlash($category)): ?>
 		                <div class="alert alert-<?= $category == 'error' ? 'danger' : $category ?>">
 							<a href="#" class="close" data-dismiss="alert">&times;</a>

@@ -4,6 +4,8 @@ namespace app\modules\accnt\controllers;
 
 use Yii;
 use app\models\Bill;
+use app\models\Credit;
+use app\models\Document;
 use app\models\Extraction;
 use app\models\ExtractionSearch;
 use yii\web\Controller;
@@ -16,6 +18,9 @@ use yii\data\ActiveDataProvider;
  */
 class ExtractionController extends Controller
 {
+	/**
+	 *  Sets global behavior for database line create/update and basic security
+	 */
     public function behaviors()
     {
         return [
@@ -67,20 +72,40 @@ class ExtractionController extends Controller
     public function actionView($id)
     {
 		$model = $this->findModel($id);
-		if($model->extraction_type == Extraction::TYPE_DATE) {
+		if($model->extraction_method == Extraction::METHOD_DATE) {
 			$date_from = $model->date_from;
 			$date_to = str_replace($model->date_to, '00:00:00', '23:59:59');
-			$bills = Bill::find()
+			$docs = ($model->extraction_type == Extraction::TYPE_CREDIT) ?
+						Credit::find()
+							->andWhere(['>=','created_at',$date_from])
+							->andWhere(['<=','created_at',$date_to])	
+					:
+						Bill::find()
 							->andWhere(['>=','created_at',$date_from])
 							->andWhere(['<=','created_at',$date_to]);
 		} else { // Extraction::TYPE_REFN
-			Yii::$app->session->setFlash('warning', Yii::t('store', 'Function is not available yet.'));
-			$bills = Bill::find()
-							->andWhere(['>=','id',$model->document_from])
-							->andWhere(['<=','id',$model->document_to]);
+			$docfrom = Document::findDocument($model->document_from);
+			$docto   = Document::findDocument($model->document_to);
+			$docyear = substr($docfrom->name,0,4);
+			if($docyear != substr($docto->name,0,4)) {
+				Yii::$app->session->setFlash('danger', 'Documents need to be from same year.');
+	            return $this->render('create', [
+                	'model' => $model,
+            	]);
+			}
+			$numfrom = $docfrom->getNumberPart();
+			$numto   = $docto->getNumberPart();
+			$docs= [];
+			Yii::trace('From '.$numfrom.' to '.$numto, 'ExtractionController::actionView');
+			for($i = $numfrom; $i <= $numto; $i++)
+				$docs[] = $docyear.'-'.$i;			
+			$docs = ($model->extraction_type == Extraction::TYPE_CREDIT) ?
+					Credit::find()->andWhere(['name' => $docs])
+					:
+					Bill::find()->andWhere(['name' => $docs]);
 		}
         return $this->render('bills', [
-            'dataProvider' => new ActiveDataProvider(['query'=>$bills]),
+            'dataProvider' => new ActiveDataProvider(['query'=>$docs]),
         ]);
     }
 
@@ -154,11 +179,25 @@ class ExtractionController extends Controller
 	public function actionBulkAction() {
 		if(isset($_POST)) {
 			if(isset($_POST['selection'])) {
-				$bills = Bill::find()->where(['id' => $_POST['selection']]);
-		        return $this->render('extract', [
-		            'bills' => Bill::find()->where(['id' => $_POST['selection']]),
-		        ]);
+				if(count($_POST['selection']) > 0) {
+					$docs = Document::find()->where(['id' => $_POST['selection']]);
+			        $extraction = $this->renderPartial('_extract', [
+			            'models' => $docs,
+			        ]);
+					$dirname = Yii::getAlias('@runtime').'/extraction/';
+					if(!is_dir($dirname))
+					    if(!mkdir($dirname, 0777, true)) {
+							Yii::$app->session->setFlash('danger', Yii::t('store', 'Cannot create directory for extraction.'));
+							return $this->redirect(Yii::$app->request->referrer);
+					    }
+					$filename = 'popsi-'.date('Y-m-d-H-i-s');
+					file_put_contents($dirname.$filename.'.txt', $extraction);
+					Yii::$app->session->setFlash('success', Yii::t('store', 'Extracted in {file}.', ['file' => $filename]));
+			        return $this->renderContent('<pre>'.$extraction.'</pre>');
+				}
 			}
 		}
+		Yii::$app->session->setFlash('warning', 'No document selected.');
+		return $this->redirect(Yii::$app->request->referrer);
 	}
 }

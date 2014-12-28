@@ -37,6 +37,9 @@ use yii\web\NotFoundHttpException;
  */
 class DocumentController extends Controller
 {
+	/**
+	 *  Sets global behavior for database line create/update and basic security
+	 */
     public function behaviors() {
         return [
 	        'access' => [
@@ -193,6 +196,12 @@ class DocumentController extends Controller
 			if(!isset($model->name)) {
 				switch($model->document_type) {
 					case Document::TYPE_ORDER:
+						if($model->bom_bool) {
+							$o = Parameter::getTextValue('application', 'BOM', '-YII-');
+							$model->name = substr($model->due_date,0,4).$o.Sequence::nextval('doc_number');
+						} else
+							$model->name = substr($model->due_date,0,4).'-'.Sequence::nextval('order_number');
+						break;
 					case Document::TYPE_BILL:
 						$model->name = substr($model->due_date,0,4).'-'.Sequence::nextval('order_number');
 						break;
@@ -298,6 +307,12 @@ class DocumentController extends Controller
      */
     public function actionDelete($id) {
 		$model = $this->findModel($id);
+		if($model->document_type == Document::TYPE_BILL && $model->bom_bool) { // remove pointer from BOM to this bill if any.
+			foreach(Document::find()->where(['parent_id' => $model->id])->each() as $bom) {
+				$bom->parent_id = null;
+				$bom->save();
+			}
+		}
 		$cnt = $model->getDocuments()->count();
 		if($cnt > 0)
 			Yii::$app->session->setFlash('error', Yii::t('store', 'This order cannot be deleted because a child document depends on it.'));
@@ -352,10 +367,17 @@ class DocumentController extends Controller
         	throw new NotFoundHttpException('The requested page does not exist.');
 	}
 	
+	public function actionGetItemByRef($ref) {
+        if (($model = Item::findOne(['reference' => $ref])) !== null) {
+	    	echo Json::encode(['item' => $model->attributes]);
+		} else
+        	throw new NotFoundHttpException('The requested page does not exist.');
+	}
+	
 	public function actionTerminate($id) {
 		$model = $this->findModel($id);
 		if($model->document_type == Document::TYPE_TICKET) {			
-			$solde = $model->price_tvac - $model->prepaid;
+			$solde = $model->getBalance();
 			return $this->actionUpdateStatus($model->id, $solde < 0.01 ? Document::STATUS_DONE : Document::STATUS_SOLDE);
 		}
 		else
@@ -417,7 +439,7 @@ class DocumentController extends Controller
 	}
 
 	protected function actionUpdateStatus($id, $status) {
-		Yii::trace('DocumentController::actionUpdateStatus:'.$status.'.');
+		Yii::trace($status, 'DocumentController::actionUpdateStatus');
 		$model = $this->findModel($id);
 		$model->setStatus($status);
         return $this->render('view', [
@@ -433,48 +455,31 @@ class DocumentController extends Controller
 		$capturePayment = new CapturePayment();
 		
 		if($capturePayment->load(Yii::$app->request->post())) {
+			if(isset($_POST)) // ugly but ok for now
+				if(isset($_POST['CapturePayment'])) {
+					if(isset($_POST['CapturePayment']["amount"]))
+						$capturePayment->amount = str_replace(',', '.', $_POST['CapturePayment']["amount"]);
+					if(isset($_POST['CapturePayment']["total"]))
+						$capturePayment->total = str_replace(',', '.', $_POST['CapturePayment']["total"]);
+				}
 			$model = $this->findModel($capturePayment->id);
-			// record paiement
-			$payment = new Payment([
-				'sale' => $model->sale,
-				'client_id' => $model->client_id,
-				'payment_method' => $capturePayment->method,
-				'amount' => $capturePayment->amount,
-				'status' => Payment::STATUS_PAID,
-			]);
-			$payment->save();
-			
-			if($capturePayment->method == Payment::TYPE_ACCOUNT) {
-				$account = new Account([
-					'document_id' => $model->id,
-					'sale' => $model->sale,
-					'client_id' => $model->client_id,
-					'amount' => - ($capturePayment->amount),
-					'status' => Account::TYPE_DEBIT,
-				]);
-				$account->save();
-			}
-			
-			if($model->prepaid == '') $model->prepaid = 0;
-			$model->prepaid += $capturePayment->amount;
-			$model->save();
 
-			$solde = $model->price_tvac - $model->prepaid;
-			//Yii::trace('Solde:'.$solde.'.');
-
-			$work = null;
-			$status = null;
+			$model->addPayment($capturePayment->amount, $capturePayment->method);
+			
+			$feedback = '';
 			if($capturePayment->submit) { // do we need to create a new work order for this order?
 				$work = $model->createWork();
-				$status = $work ? $work->getOrderStatus() : Document::STATUS_TODO;
-			} else { // is there an existing work order for this order?
-				if ( $work = $model->getWorks()->one() )
-					$status = $work->getOrderStatus();
-				// else: no work, no stats, status is deduced from payment					
+				$feedback = $work ? Yii::t('store', 'Work submitted') : Yii::t('store', 'No work to submit');
 			}
-			return $this->actionUpdateStatus($model->id, $status ? $status : ($solde < 0.01 ? Document::STATUS_CLOSED : Document::STATUS_SOLDE));
+			$model->updatePaymentStatus();
+			Yii::$app->session->setFlash('success', ($feedback ? $feedback . '; ': '') . Yii::t('store', 'Payment added').'.');
+	        return $this->render('view', [
+	            'model' => $model,
+	        ]);
+		} else {
+			Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem reading payment capture.'));
+			return $this->redirect(Yii::$app->request->referrer);
 		}
-		Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem reading payment capture.'));
 	}
 
 	public function actionClose($id) {
@@ -482,69 +487,13 @@ class DocumentController extends Controller
 	}
 
 	public function actionSent($id) {
-		return $this->actionUpdateStatus($id, Document::STATUS_NOTE);
+		return $this->actionUpdateStatus($id, Document::STATUS_TOPAY);
 	}
 
 	public function actionCancel($id) {
 		return $this->actionUpdateStatus($id, Document::STATUS_CANCELLED);
 	}
 
-	protected function generatePdf($model, $filename = null) {
-	    $header  = $this->renderPartial('_print_header', ['model' => $model]);
-	    $content = $this->renderPartial('_print', ['model' => $model]);
-	    $footer  = $this->renderPartial('_print_footer', ['model' => $model]);
-
-		$pdfData = [
-	        // set to use core fonts only
-	        'mode' => Pdf::MODE_CORE, 
-	        // A4 paper format
-	        'format' => Pdf::FORMAT_A4, 
-	        // portrait orientation
-	        'orientation' => Pdf::ORIENT_PORTRAIT, 
-	        // stream to browser inline
-	        'destination' => Pdf::DEST_BROWSER, 
-	        // your html content input
-	        'content' => $content,  
-	        // format content from your own css file if needed or use the
-	        // enhanced bootstrap css built by Krajee for mPDF formatting 
-	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-	        // any css to be embedded if required
-			'cssInline' => '.kv-wrap{padding:20px;}' .
-	        	'.kv-heading-1{font-size:18px}'.
-                '.kv-align-center{text-align:center;}' .
-                '.kv-align-left{text-align:left;}' .
-                '.kv-align-right{text-align:right;}' .
-                '.kv-align-top{vertical-align:top!important;}' .
-                '.kv-align-bottom{vertical-align:bottom!important;}' .
-                '.kv-align-middle{vertical-align:middle!important;}' .
-                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}' .
-                'table{font-size:0.8em;}'
-				,
-	         // set mPDF properties on the fly
-			'marginHeader' => 10,
-			'marginFooter' => 10,
-			'marginTop' => 35,
-			'options' => [],
-	         // call mPDF methods on the fly
-	        'methods' => [ 
-	        //    'SetHeader'=>['Laboratoire JJ Micheli'], 
-	            'SetHTMLHeader'=> $header,
-	            'SetHTMLFooter'=> $footer,
-	        ]
-		];
-
-		if($filename) {
-			$pdfData['destination'] = Pdf::DEST_FILE;
-			$pdfData['filename'] = $filename;
-		} else {
-			$pdfData['destination'] = Pdf::DEST_BROWSER;
-		}
-
-    	$pdf = new Pdf($pdfData);
-		return $pdf->render();
-	}
 
 	public function actionSend() {
 		$captureEmail = new CaptureEmail();
@@ -560,9 +509,9 @@ class DocumentController extends Controller
 			
 			if($captureEmail->email != '') {
 				$filename = tempnam('/var/tmp', 'yiipdf-'.$model->name.'-');
-				$pdf = $this->generatePdf($model, $filename);			
+				$pdf = $model->generatePdf($this, $filename);			
 				Yii::$app->mailer->compose()
-				    ->setFrom(['labojjmicheli@gmail.com' => 'Labo JJ Micheli'])
+				    ->setFrom( Yii::$app->params['fromEmail'] )
 				    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $captureEmail->email )  // <======= FORCE DEV EMAIL TO TEST ADDRESS
 				    ->setSubject(Yii::t('store', $model->document_type).' '.$model->name)
 					->setTextBody($captureEmail->body)
@@ -578,9 +527,10 @@ class DocumentController extends Controller
 		return $this->redirect(Yii::$app->request->referrer);
 	}
 
+
 	public function actionPdf($id) {
 		$model = $this->findModel($id);
-		return $this->generatePdf($model);
+		return $model->generatePdf($this);
 	}
 
 	public function actionHtml($id) {
@@ -588,58 +538,15 @@ class DocumentController extends Controller
 		return $this->render('print', ['model' => $model]);
 	}
 
+
 	public function actionPrint($id) {
 		return $this->actionPdf($id);
 	}
 
+
 	public function actionLabels($id) {
 		$model = $this->findModel($id);
-
-	    $header  = $this->renderPartial('_print_header', ['model' => $model]);
-	    $content = $this->renderPartial('_label', ['model' => $model]);
-	    $footer  = $this->renderPartial('_print_footer', ['model' => $model]);
-
-		$pdfData = [
-	        // set to use core fonts only
-	        'mode' => Pdf::MODE_CORE, 
-	        // A4 paper format
-	        'format' => Pdf::FORMAT_A4, 
-	        // portrait orientation
-	        'orientation' => Pdf::ORIENT_PORTRAIT, 
-	        // stream to browser inline
-	        'destination' => Pdf::DEST_BROWSER, 
-	        // your html content input
-	        'content' => $content,  
-	        // format content from your own css file if needed or use the
-	        // enhanced bootstrap css built by Krajee for mPDF formatting 
-	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-	        // any css to be embedded if required
-			'cssInline' => '.kv-wrap{padding:20px;}' .
-	        	'.kv-heading-1{font-size:18px}'.
-                '.kv-align-center{text-align:center;}' .
-                '.kv-align-left{text-align:left;}' .
-                '.kv-align-right{text-align:right;}' .
-                '.kv-align-top{vertical-align:top!important;}' .
-                '.kv-align-bottom{vertical-align:bottom!important;}' .
-                '.kv-align-middle{vertical-align:middle!important;}' .
-                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}',
-	         // set mPDF properties on the fly
-			'marginHeader' => 10,
-			'marginFooter' => 10,
-			'marginTop' => 35,
-			'options' => [],
-	         // call mPDF methods on the fly
-	        'methods' => [ 
-	        //    'SetHeader'=>['Laboratoire JJ Micheli'], 
-	            'SetHTMLHeader'=> $header,
-	            'SetHTMLFooter'=> $footer,
-	        ]
-		];
-
-    	$pdf = new Pdf($pdfData);
-		return $pdf->render();
+		return $model->generateLabel($this);
 	}
 
 }

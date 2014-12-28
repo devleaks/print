@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $document_type
+ * @property integer $sale
  * @property string $reference
  * @property string $reference_client
  * @property string $name
@@ -17,7 +18,6 @@ use Yii;
  * @property string $due_date
  * @property double $price_htva
  * @property double $price_tvac
- * @property double $prepaid
  * @property double $vat
  * @property integer $vat_bool
  * @property integer $bom_bool
@@ -29,7 +29,6 @@ use Yii;
  * @property string $updated_at
  * @property integer $updated_by
  * @property integer $priority
- * @property integer $sale
  *
  * @property Account[] $accounts
  * @property User $updatedBy
@@ -57,10 +56,10 @@ class _Document extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'client_id', 'due_date', 'sale'], 'required'],
-            [['parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by', 'priority', 'sale'], 'integer'],
+            [['sale', 'name', 'client_id', 'due_date'], 'required'],
+            [['sale', 'parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by', 'priority'], 'integer'],
             [['due_date', 'created_at', 'updated_at'], 'safe'],
-            [['price_htva', 'price_tvac', 'prepaid', 'vat'], 'number'],
+            [['price_htva', 'price_tvac', 'vat'], 'number'],
             [['document_type', 'name', 'lang', 'status'], 'string', 'max' => 20],
             [['reference', 'reference_client'], 'string', 'max' => 40],
             [['note'], 'string', 'max' => 160]
@@ -75,15 +74,15 @@ class _Document extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('store', 'ID'),
             'document_type' => Yii::t('store', 'Document Type'),
+            'sale' => Yii::t('store', 'Sale'),
             'reference' => Yii::t('store', 'Reference'),
             'reference_client' => Yii::t('store', 'Reference Client'),
             'name' => Yii::t('store', 'Name'),
-            'parent_id' => Yii::t('store', 'Parent ID'),
-            'client_id' => Yii::t('store', 'Client ID'),
+            'parent_id' => Yii::t('store', 'Parent'),
+            'client_id' => Yii::t('store', 'Client'),
             'due_date' => Yii::t('store', 'Due Date'),
             'price_htva' => Yii::t('store', 'Price Htva'),
             'price_tvac' => Yii::t('store', 'Price Tvac'),
-            'prepaid' => Yii::t('store', 'Prepaid'),
             'vat' => Yii::t('store', 'Vat'),
             'vat_bool' => Yii::t('store', 'Vat Bool'),
             'bom_bool' => Yii::t('store', 'Bom Bool'),
@@ -95,7 +94,6 @@ class _Document extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
             'priority' => Yii::t('store', 'Priority'),
-            'sale' => Yii::t('store', 'Sale'),
         ];
     }
 

@@ -50,15 +50,6 @@ use yii\helpers\Url;
 			    'pageSummary' => true,
 			],
 	        [
-				'attribute' => 'payment_method',
-            	'filter' => Payment::getPaymentMethods(),
-	            'value' => function ($model, $key, $index, $widget) {
-	                    return $model->getPaymentMethod();
-	            },
-	            'format' => 'raw',
-				'hAlign' => GridView::ALIGN_CENTER,
-	        ],
-	        [
 	            'attribute' => 'status',
 	            'value' => function ($model, $key, $index, $widget) {
 	                    return $model->getStatusLabel();
@@ -71,7 +62,7 @@ use yii\helpers\Url;
             // 'updated_at',
             // 'updated_by',
 
-            ['class' => 'kartik\grid\ActionColumn'],
+            //['class' => 'kartik\grid\ActionColumn'],
         ],
 	    'showPageSummary' => true,
     ]); ?>

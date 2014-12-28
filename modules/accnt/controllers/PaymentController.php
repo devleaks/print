@@ -15,6 +15,9 @@ use yii\data\ActiveDataProvider;
  */
 class PaymentController extends Controller
 {
+	/**
+	 *  Sets global behavior for database line create/update and basic security
+	 */
     public function behaviors()
     {
         return [

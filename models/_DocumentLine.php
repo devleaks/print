@@ -27,6 +27,7 @@ use Yii;
  * @property string $created_at
  * @property string $updated_at
  * @property integer $priority
+ * @property string $location
  *
  * @property Item $item
  * @property Document $document
@@ -56,7 +57,8 @@ class _DocumentLine extends \yii\db\ActiveRecord
             [['work_width', 'work_height', 'unit_price', 'quantity', 'extra_amount', 'extra_htva', 'price_htva', 'price_tvac', 'vat'], 'number'],
             [['due_date', 'created_at', 'updated_at'], 'safe'],
             [['extra_type', 'status'], 'string', 'max' => 20],
-            [['note'], 'string', 'max' => 160]
+            [['note'], 'string', 'max' => 160],
+            [['location'], 'string', 'max' => 40]
         ];
     }
 
@@ -67,8 +69,8 @@ class _DocumentLine extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('store', 'ID'),
-            'document_id' => Yii::t('store', 'Document ID'),
-            'item_id' => Yii::t('store', 'Item ID'),
+            'document_id' => Yii::t('store', 'Document'),
+            'item_id' => Yii::t('store', 'Item'),
             'position' => Yii::t('store', 'Position'),
             'work_width' => Yii::t('store', 'Work Width'),
             'work_height' => Yii::t('store', 'Work Height'),
@@ -86,6 +88,7 @@ class _DocumentLine extends \yii\db\ActiveRecord
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'priority' => Yii::t('store', 'Priority'),
+            'location' => Yii::t('store', 'Location'),
         ];
     }
 

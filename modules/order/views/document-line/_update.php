@@ -29,6 +29,8 @@ $model->quantity_virgule = number_format($model->quantity, 2, ',', '');
 $model->unit_price_virgule = number_format($model->unit_price, 2, ',', '');
 $model->vat_virgule = number_format($model->vat, 2, ',', '');
 $model->extra_amount_virgule = number_format($model->extra_amount, 2, ',', '');
+$model->work_width_virgule = number_format($model->work_width, 2, ',', '');
+$model->work_height_virgule = number_format($model->work_height, 2, ',', '');
 
 // Script to initialize the selection based on the value of the select2 element
 $initScript = <<< SCRIPT
@@ -59,10 +61,10 @@ SCRIPT;
 							 . Html::textInput('item', $model->item->libelle_long, ['id' => 'itemDescription', 'class' => 'form-control', 'readonly' => true]),
 		            'columnOptions' => ['colspan' => 3],
 				],
-		        'work_width' => [
+		        'work_width_virgule' => [
 					'type' => Form::INPUT_TEXT
 				],
-		        'work_height' => [
+		        'work_height_virgule' => [
 					'type' => Form::INPUT_TEXT
 				],
 			]
@@ -133,6 +135,8 @@ SCRIPT;
 	<?= Html::activeHiddenInput($model, 'unit_price') ?>
 	<?= Html::activeHiddenInput($model, 'vat') ?>
 	<?= Html::activeHiddenInput($model, 'extra_amount') ?>
+	<?= Html::activeHiddenInput($model, 'work_width') ?>
+	<?= Html::activeHiddenInput($model, 'work_height') ?>
 
 	<?= Form::widget([
 		    'model' => $model,
@@ -155,6 +159,28 @@ SCRIPT;
 		])
 	?>
 	
+	<?php
+	 	$chroma_item  = Item::find()->where(['categorie'=>'ChromaLuxe'])->one();
+		$fineart_item = Item::find()->where(['categorie'=>'Fine Arts'])->one();
+		$free_item = Item::findOne(['reference'=>Item::TYPE_FREE]);
+		$detail = $model->getDetail();
+	 	if($model->item_id == $chroma_item->id)
+			echo $this->render('../document-line-detail/_update_chroma', [
+			    'model' => $model,
+			    'form' => $form,
+				'detail' => $detail
+		    ]);
+		else if($model->item_id == $fineart_item->id)
+			echo $this->render('../document-line-detail/_update_fineart', [
+			    'model' => $model,
+			    'form' => $form,
+				'detail' => $detail
+		    ]);
+		else if($model->item_id == $free_item->id)
+			echo $this->render('../document-line-detail/_update_free');
+	?>
+
+
 	<?= $this->render('_pictures_edit', [
 		    'model' => $model,
 		    'form' => $form,
@@ -202,26 +228,7 @@ SCRIPT;
 		])
 	?>
 	
-	<?php
-	 	$chroma_item  = Item::find()->where(['categorie'=>'ChromaLuxe'])->one();
-		$fineart_item = Item::find()->where(['categorie'=>'Fine Arts'])->one();
-		$free_item = Item::findOne(['reference'=>Item::TYPE_FREE]);
-		$detail = $model->getDetail();
-	 	if($model->item_id == $chroma_item->id)
-			echo $this->render('../document-line-detail/_update_chroma', [
-			    'model' => $model,
-			    'form' => $form,
-				'detail' => $detail
-		    ]);
-		else if($model->item_id == $fineart_item->id)
-			echo $this->render('../document-line-detail/_update_fineart', [
-			    'model' => $model,
-			    'form' => $form,
-				'detail' => $detail
-		    ]);
-		else if($model->item_id == $free_item->id)
-			echo $this->render('../document-line-detail/_update_free');
-	?>
+
 	
     <div class="form-group">
         <?= Html::submitButton(Yii::t('store', 'Update Order Line'), ['class' => 'btn btn-primary']) ?>

@@ -15,7 +15,9 @@ use Yii;
  * @property string $date_to
  * @property integer $document_from
  * @property integer $document_to
+ * @property string $extraction_method
  *
+ * @property Document $documentTo
  * @property Document $documentFrom
  * @property ExtractionLine[] $extractionLines
  */
@@ -36,8 +38,8 @@ class _Extraction extends \yii\db\ActiveRecord
     {
         return [
             [['created_at', 'updated_at', 'date_from', 'date_to'], 'safe'],
-//            [['document_from', 'document_to'], 'integer'],
-            [['extraction_type'], 'string', 'max' => 20]
+            [['document_from', 'document_to'], 'integer'],
+            [['extraction_type', 'extraction_method'], 'string', 'max' => 20]
         ];
     }
 
@@ -55,7 +57,16 @@ class _Extraction extends \yii\db\ActiveRecord
             'date_to' => Yii::t('store', 'Date To'),
             'document_from' => Yii::t('store', 'Document From'),
             'document_to' => Yii::t('store', 'Document To'),
+            'extraction_method' => Yii::t('store', 'Extraction Method'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDocumentTo()
+    {
+        return $this->hasOne(Document::className(), ['id' => 'document_to']);
     }
 
     /**

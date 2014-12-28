@@ -24,7 +24,8 @@ class CapturePayment extends Model
         return [
             [['amount'], 'required'],
             [['total', 'amount', 'method', 'id', 'submit'], 'safe'],
-            [['total', 'amount', 'id'], 'number'],
+            [['id'], 'number'],
+			[['total', 'amount'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
             [['method'], 'string', 'max' => 20],
         ];
     }

@@ -1,7 +1,5 @@
 <?php
 
-//use yii\widgets\ActiveForm;
-use app\assets\DateDiff;
 use app\models\Document;
 use app\models\User;
 use kartik\builder\Form;
@@ -14,16 +12,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Document */
-/* @var $form yii\widgets\ActiveForm */
-
 // url to submit search terms and get result back
 $url = \yii\helpers\Url::to(['client-list']);
 $docty = $model->document_type;
-
-DateDiff::register($this);
-
 if(!isset($model->due_date) || $model->due_date == '') $model->due_date = date('Y-m-d');
 
 // Script to initialize the selection based on the value of the select2 element
@@ -51,9 +42,11 @@ Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter u
 		<?= Form::widget([
 				    'model' => $model,
 				    'form' => $form,
+				    'columns' => 6,
 				    'attributes' => [				
 				        'client_id' => [
 							'type' => Form::INPUT_WIDGET,
+				            'columnOptions' => ['colspan' => 5],
 							'widgetClass'=> Select2::classname(),
 							'options' => [
 								'pluginOptions' => [
@@ -81,14 +74,14 @@ Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter u
 								],
 							],
 						],
+						'actions' => [    // embed raw HTML content
+				            'type' => Form::INPUT_RAW, 
+				            'value'=> Html::label('&nbsp;').Html::a(Yii::t('store', 'Create Client'), Url::to(['/store/client/new', 'ret' => $model->document_type]),
+								['class' => 'btn btn-warning', 'data-intro' => "Pour aller vers l'écran d'ajout d'un nouveau client"]),
+				        ]						
 					],
 				])
 		?>
-	
-		<?= Html::a(Yii::t('store', 'Create Client'), Url::to(['/store/client/new', 'ret' => $model->document_type]),
-		['class' => 'btn btn-warning', 'data-intro' => "Pour aller vers l'écran d'ajout d'un nouveau client"]) ?>
-
-		<p></p>
 		</div>
 			
 		<?= Form::widget([
@@ -146,13 +139,12 @@ Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter u
 				            'columnOptions' => ['colspan' => 1],
 						],
 				        'note' => [
-							'type' => Form::INPUT_TEXTAREA,
+							'type' => Form::INPUT_TEXT,
 				            'columnOptions' => ['colspan' => 6],
 						],
 					],
 				])
 		?>
-		
 		</div>
 		
 		<div class="col-lg-1">
@@ -165,3 +157,37 @@ Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter u
 	</div>
 
 </div>
+<script type="text/javascript">
+<?php
+$this->beginBlock('JS_DATEDIFF'); ?>
+function parseDate(str) { // str like '2014-10-27'
+    var ymd = str.split('-');
+    return new Date(ymd[0], ymd[1]-1, ymd[2]);
+}
+function daydiff(first, second) {
+    return Math.floor( (second-first)/(1000*60*60*24) ) + 1;
+}
+$("#document-due_date").change(function() {
+	then = parseDate($(this).val());
+	days = daydiff(new Date(), then); // values to be loaded from db...
+	     if (days < 3) message = "danger";
+	else if (days < 5) message = "warning";
+	else if (days < 7) message = "info";
+	else               message = "success";
+	console.log('adding '+message);
+	$('#daysComputed').val(days).parent()
+		.removeClass('bg-danger')
+		.removeClass('bg-warning')
+		.removeClass('bg-info')
+		.removeClass('bg-success')
+		.addClass('bg-'+message);
+	
+});
+<?php $this->endBlock(); ?>
+</script>
+<?php
+$this->registerJs($this->blocks['JS_DATEDIFF'], yii\web\View::POS_END);
+
+
+
+

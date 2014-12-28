@@ -161,7 +161,7 @@ class WorkController extends Controller
     public function actionList($id = 0)
     {
 		$where = Document::getDateClause(intval($id), 'work');
-		Yii::trace($where);
+		Yii::trace($where, 'WorkController::actionList');
 	
         $searchModel = new WorkSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

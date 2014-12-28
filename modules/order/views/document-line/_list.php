@@ -55,6 +55,7 @@ $contentAfter = $this->render('../document/_footer_print', ['model' => $order]);
 				    'value' => function ($model, $key, $index, $widget) {
 						return $model->getDescription() ;
 				    },
+					'format' => 'raw',
 				],
 				[
 					'attribute' => 'work_width',

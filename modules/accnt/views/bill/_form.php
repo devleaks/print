@@ -28,8 +28,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'price_tvac')->textInput() ?>
 
-    <?= $form->field($model, 'prepaid')->textInput() ?>
-
     <?= $form->field($model, 'payment_method')->textInput(['maxlength' => 20]) ?>
 
     <?= $form->field($model, 'vat')->textInput() ?>

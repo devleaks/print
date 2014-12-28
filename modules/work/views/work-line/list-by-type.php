@@ -49,6 +49,7 @@ Icon::map($this);
             //['class' => 'kartik\grid\SerialColumn'],
 
             [
+				'attribute' => 'order_name',
                 'label'=>Yii::t('store','Order'),
 	            'value'=> function ($model, $key, $index, $widget) {
 					return in_array(Yii::$app->user->identity->role, ['manager', 'admin']) ?
@@ -59,6 +60,7 @@ Icon::map($this);
             	'format' => 'raw',
             ],
             [
+				'attribute' => 'client_name',
                 'label'=>Yii::t('store','Client'),
 	            'value'=> function ($model, $key, $index, $widget) {
 					return $model->getWork()->one()->getDocument()->one()->getClient()->one()->nom ;
@@ -66,41 +68,42 @@ Icon::map($this);
             	'format' => 'raw',
             ],
             [
+				'attribute' => 'due_date',
                 'label'=>Yii::t('store','Due Date'),
 	            'value'=> function ($model, $key, $index, $widget) {
 					return $model->due_date;
 				},
             	'format' => 'date',
             ],
-            [
-				'attribute' => 'status',
-                'label'=>Yii::t('store','Status'),
-	            'filter' => Work::getStatuses(),
-	            'value'=> function ($model, $key, $index, $widget) {
-					return $model->getStatusLabel();
-				},
-				'hAlign' => GridView::ALIGN_CENTER,
-            	'format' => 'raw',
-            ],
-			[
-	            'label' => Yii::t('store', 'Last Update'),
-				'attribute' => 'updated_at',
-				'format' => 'datetime',
-				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->updated_at);
-				}
-			],
-	        [
-				'attribute' => 'updated_by',
-	            'label' => Yii::t('store', 'Updated By'),
-				'filter' => ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username'),
-	            'value' => function ($model, $key, $index, $widget) {
-					$user = $model->getUpdatedBy()->one();
-	                return $user ? $user->username : '?';
-	            },
-				'hAlign' => GridView::ALIGN_CENTER,
-	            'format' => 'raw',
-	        ],
+//            [
+//				'attribute' => 'status',
+//                'label'=>Yii::t('store','Status'),
+//	            'filter' => Work::getStatuses(),
+//	            'value'=> function ($model, $key, $index, $widget) {
+//					return $model->getStatusLabel();
+//				},
+//				'hAlign' => GridView::ALIGN_CENTER,
+//            	'format' => 'raw',
+//            ],
+//			[
+//	            'label' => Yii::t('store', 'Last Update'),
+//				'attribute' => 'updated_at',
+//				'format' => 'datetime',
+//				'value' => function ($model, $key, $index, $widget) {
+//					return new DateTime($model->updated_at);
+//				}
+//			],
+//	        [
+//				'attribute' => 'updated_by',
+//	            'label' => Yii::t('store', 'Updated By'),
+//				'filter' => ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username'),
+//	            'value' => function ($model, $key, $index, $widget) {
+//					$user = $model->getUpdatedBy()->one();
+//	                return $user ? $user->username : '?';
+//	            },
+//				'hAlign' => GridView::ALIGN_CENTER,
+//	            'format' => 'raw',
+//	        ],
 	        [
 				'attribute' => 'item_name',
 	            'label' => Yii::t('store', 'Item'),
@@ -111,6 +114,7 @@ Icon::map($this);
 	            'format' => 'raw',
 	        ],
 	        [
+				'attribute' => 'quantity',
 	            'label' => Yii::t('store', 'Quantity'),
 	            'value' => function ($model, $key, $index, $widget) {
 	                return $model->getDocumentLine()->one()->quantity;
@@ -127,6 +131,7 @@ Icon::map($this);
 	            'format' => 'raw',
 	        ],
 	        [
+				'attribute' => 'work_width',
 	            'label' => Yii::t('store', 'Width'),
 	            'value' => function ($model, $key, $index, $widget) {
 					return $model->documentLine->work_width;
@@ -135,6 +140,7 @@ Icon::map($this);
 	            'format' => 'raw',
 	        ],
 	        [
+				'attribute' => 'work_height',
 	            'label' => Yii::t('store', 'Height'),
 	            'value' => function ($model, $key, $index, $widget) {
 					return $model->documentLine->work_height;

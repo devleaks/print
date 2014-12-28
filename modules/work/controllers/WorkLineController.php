@@ -7,6 +7,7 @@ use app\models\Document;
 use app\models\Task;
 use app\models\Work;
 use app\models\WorkLine;
+use app\models\WorkLineDetailSearch;
 use app\models\WorkLineSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -176,11 +177,31 @@ class WorkLineController extends Controller
      * Lists all Work models for given date.
      * @return mixed
      */
-    public function actionListTask($id)
+    public function actionListTask1($id)
     {
 		$task = $this->findTask($id);
 		
 		$searchModel = new WorkLineSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere(['work_line.task_id' => $id])
+							->andWhere(['!=', 'work_line.status', Work::STATUS_DONE]);
+
+        return $this->render('list-by-type1', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+			'task' => $task,
+        ]);
+    }
+
+    /**
+     * Lists all Work models for given date.
+     * @return mixed
+     */
+    public function actionListTask($id)
+    {
+		$task = $this->findTask($id);
+		
+		$searchModel = new WorkLineDetailSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$dataProvider->query->andWhere(['work_line.task_id' => $id])
 							->andWhere(['!=', 'work_line.status', Work::STATUS_DONE]);

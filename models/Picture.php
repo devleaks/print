@@ -138,19 +138,19 @@ class Picture extends _Picture
 		$fs = strpos($copy->filename, DIRECTORY_SEPARATOR);
 		$ss = strpos($copy->filename, DIRECTORY_SEPARATOR, $fs + 1);
 		$old = substr($copy->filename, $fs, $ss - $fs + 1); // /123/
- 		//Yii::trace('Fn: '.$copy->filename.', fs='.$fs.', ss='.$ss.', old='.$old);
+ 		//Yii::trace('Fn: '.$copy->filename.', fs='.$fs.', ss='.$ss.', old='.$old, 'Picture::deepCopy');
 		$copy->filename = str_replace($old, DIRECTORY_SEPARATOR.$document_line_id.DIRECTORY_SEPARATOR, $copy->filename);
- 		//Yii::trace('Fw: '.$copy->filename);
+ 		//Yii::trace('Fw: '.$copy->filename, 'Picture::deepCopy');
 		
 		// now copies files	(duplicate dir with images)	
 		$orig = Yii::$app->params['picturePath'] . $this->filename;
 		$ls = strrpos($orig ,DIRECTORY_SEPARATOR);
 		$origdir = substr($orig, 0, $ls);
- 		//Yii::trace('Od: '.$origdir.', ls='.$ls);
+ 		//Yii::trace('Od: '.$origdir.', ls='.$ls, 'Picture::deepCopy');
 		$dest = Yii::$app->params['picturePath'] . $copy->filename;
 		$ls = strrpos($dest ,DIRECTORY_SEPARATOR);
 		$destdir = substr($dest, 0, $ls);
- 		//Yii::trace('Dd: '.$destdir.', ls='.$ls);
+ 		//Yii::trace('Dd: '.$destdir.', ls='.$ls, 'Picture::deepCopy');
 		$this->recurse_copy($origdir, $destdir);
 
 		$copy->save();

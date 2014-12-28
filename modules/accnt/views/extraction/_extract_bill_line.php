@@ -1,21 +1,23 @@
 <?php
+$amount = abs($model->price_htva);
 ?>
 Line:
 {
-      GnrlID:               <?= $model->id ?>
+      GnrlID:               <?= $model->item->comptabilite == '' ? '??????' : $model->item->comptabilite ?>
 
       AnalID:               
       VATCode:              <?= $model->vat ?>
 
       Comment:              <?= $model->note ?>
 
-      FlagDC:               C
-      AmountCrcy:           <?= $model->price_htva ?>
+      FlagDC:               <?= $model->price_htva < 0 ? 'D' : 'C' ?>
 
-      AmountCrcyDoc:        <?= $model->price_htva ?>
+      AmountCrcy:           <?= $amount ?>
 
-      AmountCrcyBase:       <?= $model->price_htva ?>
+      AmountCrcyDoc:        <?= $amount ?>
 
-      AmountVATCrcyDoc:     <?= round($model->price_htva * ($model->vat / 100), 2) ?>
+      AmountCrcyBase:       <?= $amount ?>
+
+      AmountVATCrcyDoc:     <?= round($amount * ($model->vat / 100), 2) ?>
 
 }

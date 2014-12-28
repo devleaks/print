@@ -1,38 +1,22 @@
 <?php
 
-namespace app\modules\accnt\controllers;
+namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\ExtractionLine;
-use app\models\ExtractionLineSearch;
+use app\models\SequenceData;
+use app\models\SequenceDataSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ExtractionLineController implements the CRUD actions for ExtractionLine model.
+ * SequenceDataController implements the CRUD actions for SequenceData model.
  */
-class ExtractionLineController extends Controller
+class SequenceDataController extends Controller
 {
     public function behaviors()
     {
         return [
-	        'access' => [
-	            'class' => 'yii\filters\AccessControl',
-	            'ruleConfig' => [
-	                'class' => 'app\components\AccessRule'
-	            ],
-	            'rules' => [
-	                [
-	                    'allow' => false,
-	                    'roles' => ['?']
-               		],
-					[
-	                    'allow' => true,
-	                    'roles' => ['admin', 'compta'],
-	                ],
-	            ],
-	        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -43,12 +27,12 @@ class ExtractionLineController extends Controller
     }
 
     /**
-     * Lists all ExtractionLine models.
+     * Lists all SequenceData models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ExtractionLineSearch();
+        $searchModel = new SequenceDataSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -58,8 +42,8 @@ class ExtractionLineController extends Controller
     }
 
     /**
-     * Displays a single ExtractionLine model.
-     * @param integer $id
+     * Displays a single SequenceData model.
+     * @param string $id
      * @return mixed
      */
     public function actionView($id)
@@ -70,16 +54,16 @@ class ExtractionLineController extends Controller
     }
 
     /**
-     * Creates a new ExtractionLine model.
+     * Creates a new SequenceData model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new ExtractionLine();
+        $model = new SequenceData();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->sequence_name]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -88,9 +72,9 @@ class ExtractionLineController extends Controller
     }
 
     /**
-     * Updates an existing ExtractionLine model.
+     * Updates an existing SequenceData model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -98,7 +82,7 @@ class ExtractionLineController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->sequence_name]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -107,9 +91,9 @@ class ExtractionLineController extends Controller
     }
 
     /**
-     * Deletes an existing ExtractionLine model.
+     * Deletes an existing SequenceData model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -120,15 +104,15 @@ class ExtractionLineController extends Controller
     }
 
     /**
-     * Finds the ExtractionLine model based on its primary key value.
+     * Finds the SequenceData model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return ExtractionLine the loaded model
+     * @param string $id
+     * @return SequenceData the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ExtractionLine::findOne($id)) !== null) {
+        if (($model = SequenceData::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

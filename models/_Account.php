@@ -18,11 +18,13 @@ use Yii;
  * @property string $updated_at
  * @property integer $updated_by
  * @property integer $sale
+ * @property string $payment_method
  *
  * @property User $updatedBy
  * @property Client $client
  * @property Document $document
  * @property User $createdBy
+ * @property AccountBalance[] $accountBalances
  */
 class _Account extends \yii\db\ActiveRecord
 {
@@ -40,12 +42,12 @@ class _Account extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['client_id', 'sale'], 'required'],
+            [['client_id', 'amount'], 'required'],
             [['client_id', 'document_id', 'created_by', 'updated_by', 'sale'], 'integer'],
             [['amount'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
             [['note'], 'string', 'max' => 160],
-            [['status'], 'string', 'max' => 20]
+            [['status', 'payment_method'], 'string', 'max' => 20]
         ];
     }
 
@@ -66,6 +68,7 @@ class _Account extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
             'sale' => Yii::t('store', 'Sale'),
+            'payment_method' => Yii::t('store', 'Payment Method'),
         ];
     }
 
@@ -99,5 +102,13 @@ class _Account extends \yii\db\ActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccountBalances()
+    {
+        return $this->hasMany(AccountBalance::className(), ['credit_id' => 'id']);
     }
 }

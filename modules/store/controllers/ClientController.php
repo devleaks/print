@@ -128,7 +128,7 @@ class ClientController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionNew($ret)
+    public function actionNew($ret = null)
     {
         $model = new Client();
 
@@ -136,7 +136,9 @@ class ClientController extends Controller
 			/*if($model->reference_interne == '') {
 				$model->reference_interne = 'YII-'.$model->id;
 			}*/
-			if($ret == Document::TYPE_BID)
+			if($ret == null)
+            	return $this->redirect(Url::to(['index']));
+			else if($ret == Document::TYPE_BID)
             	return $this->redirect(Url::to(['/order/document/create-bid', 'id' => $model->id]));
 			else if($ret == Document::TYPE_BID)
             	return $this->redirect(Url::to(['/order/document/create-bill', 'id' => $model->id]));

@@ -24,15 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
-		'toolbar' => [
-			'{export}',
-    	],
 		'panel' => [
 	        'heading'=>'<h3 class="panel-title">'.Yii::t('store', 'Bills for Transfer').'</h3>',
 	        'before'=> '',
 	        'after'=> Html::label(Yii::t('store', 'Selection')).' : '.
     			Html::submitButton('<i class="glyphicon glyphicon-book"></i> '.Yii::t('store', 'Extract'),
-							['class' => 'btn btn-primary actionButton', 'data-action' => Bill::ACTION_EXTRACT])
+							['class' => 'btn btn-primary', 'data-action' => Bill::ACTION_EXTRACT])
 				,
 	        'showFooter'=>false
 	    ],

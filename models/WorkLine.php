@@ -53,8 +53,8 @@ class WorkLine extends _WorkLine
 	/** 
 	 * Update status and reports to parent Work model
 	 */
-	public function updateStatus() {
-		$this->getWork()->one()->updateStatus();
+	protected function statusUpdated() {
+		$this->getWork()->one()->setStatus();
 	}
 	
 	/** 
@@ -65,7 +65,7 @@ class WorkLine extends _WorkLine
 		if($status == Work::STATUS_DONE || $status == Work::STATUS_BUSY)
 			$this->setStatusOfPreceedingTasks(Work::STATUS_DONE);
 		$this->save();
-		$this->updateStatus();
+		$this->statusUpdated();
 	}
 
 	/** 

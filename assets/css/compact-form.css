@@ -1,0 +1,16 @@
+.form-compact {
+  font-size: 0.8em;
+}
+
+.form-compact .form-control {
+  padding: 1px 2px;
+  height: 24px;
+  font-size:1em;
+}
+.form-compact label {
+  margin-bottom: 1px;
+}
+.form-compact .form-group
+{
+  margin-bottom:0px;
+}
