@@ -8,6 +8,8 @@ use yii\helpers\Url;
 
 class Credit extends Order
 {
+	const TYPE = 'CREDIT';
+	
     /**
      * @inheritdoc
      */

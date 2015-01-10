@@ -1,4 +1,5 @@
 <?php
+use app\models\Parameter;
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
 ?>
@@ -35,6 +36,12 @@
 	</tr>
 	</table>
 
+	<?php
+		if(/*$model->document_type == Document::TYPE_BILL &&*/ $model->legal) {
+			echo Parameter::getTextValue('legal', $model->legal);
+		}
+		echo '<br/>';
+	?>
 	<br>
 
 	<table width="100%" class="table table-bordered" style="text-align: center;">

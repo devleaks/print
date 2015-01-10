@@ -16,14 +16,14 @@ $class_prefix = 'item';
 
 /** Error Messages */
 $errors = [];
-$errors["SURFACE_TOO_LARGE"] = Yii::t('store','Surface too large.');
 $errors["CHROMALUXE_TYPE"] = Yii::t('store','You must specify the type of ChromaLuxe.');
-$errors["ITEM_NOT_FOUND"] = Yii::t('store','Item not found.');
-$errors["WORK_TOO_LARGE"] = Yii::t('store','Width or height too large.');
-$errors["NO_WORK_SIZE"] = Yii::t('store','You must enter width and height.');
-$errors["FREEITEM_NO_PRICE"] = Yii::t('store','You must enter a price (or 0) for the item.');
-$errors["FREEITEM_NO_DESCRIPTION"] = Yii::t('store','You must enter a description for the item.');
 $errors["FINEART_NO_TIRAGE"] = Yii::t('store','You must enter a type of print.');
+$errors["FREEITEM_NO_DESCRIPTION"] = Yii::t('store','You must enter a description for the item.');
+$errors["FREEITEM_NO_PRICE"] = Yii::t('store','You must enter a price (or 0) for the item.');
+$errors["ITEM_NOT_FOUND"] = Yii::t('store','Item not found.');
+$errors["NO_WORK_SIZE"] = Yii::t('store','You must enter width and height.');
+$errors["SURFACE_TOO_LARGE"] = Yii::t('store','Surface too large.');
+$errors["WORK_TOO_LARGE"] = Yii::t('store','Width or height too large.');
 $js_errors = json_encode($errors);
 
 

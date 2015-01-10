@@ -164,21 +164,4 @@ class Item extends _Item
 	public function isSpecial() {
 		return $this->yii_category == 'SPECIAL';
 	}
-/*
-	public function isExtra() {
-		return $this->status == self::STATUS_EXTRA;
-	}
-	
-	public function isRebate() {
-		return $this->isExtra() && (substr($this->reference, 1, 1) == '-');
-	}
-	
-	public function isSupplement() {
-		return $this->isExtra() && (substr($this->reference, 1, 1) == '+');
-	}
-	
-	public function isPercentage() {
-		return $this->isExtra() && (strpos($this->reference, '%') > 0);
-	}
-*/	
 }

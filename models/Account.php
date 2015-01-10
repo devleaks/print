@@ -56,4 +56,21 @@ class Account extends _Account
 	public function getStatusLabel() {
 		return '<span class="label label-'.$this->getStatusColor().'">'.Yii::t('store', $this->status).'</span>';
 	}
+	
+	public function getBalance($client_id, $last_date = null) {
+		$q = Account::find()->andWhere(['client_id' => $client_id]);
+		if($last_date)
+			$q->andWhere(['<=','created_at',$last_date]);
+		return round($q->sum('amount'), 2);
+	}
+
+	public function getUnpaid($client_id, $last_date = null) {
+		$q = Account::find()
+			->andWhere(['client_id' => $client_id])
+			->andWhere(['status' => Account::TYPE_DEBIT]);
+		if($last_date)
+			$q->andWhere(['<=','created_at',$last_date]);
+		return round($q->sum('amount'), 2);
+	}
+
 }

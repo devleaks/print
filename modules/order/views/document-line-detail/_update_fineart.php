@@ -20,6 +20,8 @@ $fineart_item = Item::findOne(['reference'=>'FineArts']);
 		Fine Arts
 	</h4>
 
+	<div id="store-missing-data" class="alert alert-danger" role="alert"></div>	
+
     <div>
 
 	<?=	Form::widget([
@@ -53,23 +55,6 @@ $fineart_item = Item::findOne(['reference'=>'FineArts']);
 		    'model' => $detail,
 		    'form' => $form,
 		    'columns' => 5,
-		    'attributes' => [		
-		        'support_id' => [
-					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Support', true),
-					'options' => ['class' => 'form-control'],
-		            'columnOptions' => ['colspan' => 4],
-				],
-		        'price_support' => [
-					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control ']
-				],
-			],
-		]).
-		Form::widget([
-		    'model' => $detail,
-		    'form' => $form,
-		    'columns' => 5,
 		    'attributes' => [	
 		        'chassis_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
@@ -87,6 +72,23 @@ $fineart_item = Item::findOne(['reference'=>'FineArts']);
 		    'model' => $detail,
 		    'form' => $form,
 		    'columns' => 5,
+		    'attributes' => [		
+		        'support_id' => [
+					'type' => Form::INPUT_DROPDOWN_LIST,
+					'items' => Item::getListForCategory('Support', true),
+					'options' => ['class' => 'form-control'],
+		            'columnOptions' => ['colspan' => 4],
+				],
+		        'price_support' => [
+					'type' => Form::INPUT_TEXT,
+					'options' => ['readonly' => true, 'class' => 'form-control ']
+				],
+			],
+		]).
+		Form::widget([
+		    'model' => $detail,
+		    'form' => $form,
+		    'columns' => 5,
 		    'attributes' => [
 		        'protection_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
@@ -95,6 +97,53 @@ $fineart_item = Item::findOne(['reference'=>'FineArts']);
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_protection' => [
+					'type' => Form::INPUT_TEXT,
+					'options' => ['readonly' => true, 'class' => 'form-control ']
+				],
+			],
+		]).
+		Form::widget([
+		    'model' => $detail,
+		    'form' => $form,
+		    'columns' => 5,
+		    'attributes' => [
+		        'corner_bool' => [
+					'type' => Form::INPUT_CHECKBOX,
+		            'columnOptions' => ['colspan' => 5],
+				],			
+		        'frame_id' => [
+					'type' => Form::INPUT_DROPDOWN_LIST,
+					'items' => Item::getListForCategory('Cadre', true),
+					'options' => ['class' => 'form-control'],
+		            'columnOptions' => ['colspan' => 4],
+				],
+		        'price_frame' => [
+					'type' => Form::INPUT_TEXT,
+					'options' => ['readonly' => true, 'class' => 'form-control'],
+				],
+
+		        'montage_bool' => [
+					'type' => Form::INPUT_CHECKBOX,
+		            'columnOptions' => ['colspan' => 4],
+				],
+		        'price_montage' => [
+					'type' => Form::INPUT_TEXT,
+					'options' => ['readonly' => true, 'class' => 'form-control'],
+				],
+
+		        'renfort_bool' => [
+					'type' => Form::INPUT_CHECKBOX,
+		            'columnOptions' => ['colspan' => 4],
+				],
+		        'price_renfort' => [
+					'type' => Form::INPUT_TEXT,
+					'options' => ['readonly' => true, 'class' => 'form-control'],
+				],
+		        'filmuv_bool' => [
+					'type' => Form::INPUT_CHECKBOX,
+		            'columnOptions' => ['colspan' => 4],
+				],			
+		        'price_filmuv' => [
 					'type' => Form::INPUT_TEXT,
 					'options' => ['readonly' => true, 'class' => 'form-control ']
 				],

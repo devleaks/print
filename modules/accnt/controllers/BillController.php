@@ -3,6 +3,7 @@
 namespace app\modules\accnt\controllers;
 
 use Yii;
+use app\components\RuntimeDirectoryManager;
 use app\models\Account;
 use app\models\Bill;
 use app\models\BillSearch;
@@ -10,11 +11,11 @@ use app\models\Client;
 use app\models\Order;
 use app\models\OrderSearch;
 use app\models\Payment;
+use kartik\mpdf\Pdf;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use kartik\mpdf\Pdf;
 
 /**
  * BillController implements the CRUD actions for Bill model.
@@ -69,8 +70,7 @@ class BillController extends Controller
      * Lists all Bill models.
      * @return mixed
      */
-    public function actionClientUnpaid($id)
-    {
+    public function actionClientUnpaid($id) {
         $searchModel = new BillSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$dataProvider->query->andWhere(['!=','document.status',Bill::STATUS_CLOSED])
@@ -192,6 +192,7 @@ class BillController extends Controller
 			'marginHeader' => 10,
 			'marginFooter' => 10,
 			'marginTop' => 35,
+			'marginBottom' => 35,
 			'options' => [],
 	         // call mPDF methods on the fly
 	        'methods' => [ 
@@ -214,7 +215,7 @@ class BillController extends Controller
 
 
 	public function actionBulkAction() {
-		$send = false;
+		$send = true;
 		if(isset($_POST))
 			if(isset($_POST['selection'])) {
 				if(count($_POST['selection']) > 0) {
@@ -238,13 +239,7 @@ class BillController extends Controller
 
 							} else { // ACTION_SEND_REMINDER, loop per client
 								
-								$dirname = Yii::getAlias('@runtime').'/document/late-bills/';
-								if(!is_dir($dirname))
-								    if(!mkdir($dirname, 0777, true)) {
-										Yii::$app->session->setFlash('danger', Yii::t('store', 'Cannot create directory for extraction.'));
-										return $this->redirect(Yii::$app->request->referrer);
-								    }
-
+								$dirname = RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_LATE_BILLS);
 								$q = Bill::find()->where(['document.id' => $_POST['selection']])->select('client_id')->distinct();
 								foreach($q->each() as $b) {
 									$client = Client::findOne($b->client_id);
@@ -274,7 +269,7 @@ class BillController extends Controller
 										    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $client->email )  // <======= FORCE DEV EMAIL TO TEST ADDRESS
 										    ->setSubject(Yii::t('store', 'Late bills'))
 											->setTextBody(Yii::t('store', 'Please find attached your late bills.'))
-											->attach($fullpath, ['fileName' => 'letter.pdf', 'contentType' => 'application/pdf']);
+											->attach($cover_filename, ['fileName' => 'letter.pdf', 'contentType' => 'application/pdf']);
 										foreach($docs as $doc)
 											$mail->attach($doc['path'], ['fileName' => $doc['name'], 'contentType' => 'application/pdf']);
 										$mail->send();

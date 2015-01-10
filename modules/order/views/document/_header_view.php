@@ -89,6 +89,19 @@ $client = $model->getClient()->one();
 							]]
 			            ],
 			            [
+			                'attribute'=>'vat_bool',
+			                'label'=> Yii::t('store','Pas de TVA'),
+							'format' => 'raw',
+							'value' => $model->vat_bool
+											? '<span class="label label-success">'.Yii::t('store','Yes').'</span>'
+											: '<span class="label label-danger">' .Yii::t('store','No') .'</span>',
+							'type' => DetailView::INPUT_SWITCH,
+							'widgetOptions' => ['pluginOptions' => [
+								'onText' => Yii::t('store', 'Yes'),
+								'offText' =>  Yii::t('store', 'No'),
+							]]
+			            ],
+			            [
 			                'attribute'=>'price_tvac',
 			                'label'=> Yii::t('store','Solde'),
 			                'value'=> $model->getBalance(),
@@ -126,10 +139,11 @@ $client = $model->getClient()->one();
         <div class="row">
             <div class="col-lg-12">
 				<div>
-				<?= $model->getActions('btn', false) ?>
-				<?= $this->render('_sendmail', ['model' => $model]) /** modal */ ?>
 				<?php
-				 	if(in_array($model->document_type, [Document::TYPE_ORDER,Document::TYPE_BILL,Document::TYPE_TICKET,Document::TYPE_CREDIT]))
+				 	echo $model->getActions('btn', false);
+					echo $this->render('_sendmail', ['model' => $model]); /** modal */
+				 	if(in_array($model->document_type, [Document::TYPE_ORDER,Document::TYPE_BILL,Document::TYPE_TICKET,Document::TYPE_CREDIT])
+					  && $model->status != Document::STATUS_CANCELLED )
 						echo $this->render('_pay', ['model' => $model]); /** modal */
 				?>
 				</div>

@@ -1,5 +1,5 @@
 <?php
-
+use app\models\Item;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -11,10 +11,22 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Items'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-function price_linreg($w, $h, $a, $b, $surf) {
-	$qty = $surf ? ($w * $h / 10000) : (($w + $h) / 50); // 2 * (w + h) / 100 in meters, 100cmX100cm=10000cm2 in a m2
-	return ceil($a * $qty + $b);
-	//return number_format($a * $qty + $b, 2, ',', '');
+
+function price_chromaluxe($w, $h, $p, $w_max, $h_max) {
+	$s = $w * $h;
+
+	$i = 0;
+	while($i < count($p) && $s < $p[$i]['value_number'])
+		$i++;
+
+	if($i > 0) $i--;
+	
+	if( $item = Item::findOne(['reference' => str_replace('ChromaLuxe', 'Chroma', $p[$i]['name'])]) ) {
+		//Yii::trace($w.'x'.$h.'='.$s.' < '.$p[$i]['value_number'].' i='.$i.', price='.$item->prix_de_vente);
+		return ceil($item->prix_de_vente * $s / ($w_max * $h_max));
+	}
+		
+	return 0; // error
 }
 
 ?>
@@ -27,7 +39,7 @@ function price_linreg($w, $h, $a, $b, $surf) {
 	<tr>
 <?php
 	echo '<th class="text-center">'.Yii::t('store', 'Dimensions').'</th>';
-	for($w = 30; $w < 200; $w = $w + 10) {
+	for($w = 20; $w <= 170; $w = $w + 10) {
 		echo '<th class="text-center">'.$w.'</th>';
 	}
 ?>
@@ -35,11 +47,11 @@ function price_linreg($w, $h, $a, $b, $surf) {
 	</thead>
 	<tbody>
 <?php
-	for($h = 40; $h < 200; $h = $h + 10) {
+	for($h = 20; $h <= 110; $h = $h + 10) {
 		echo '<tr>';
 		echo '<th class="text-center">'.$h.'</th>';
-		for($w = 30; $w < 200; $w = $w + 10) {
-			echo '<td class="text-center">'.price_linreg($w,$h,$reg_a,$reg_b,$use_surface).'</td>';//$h.'&times;'.$w
+		for($w = 20; $w <= 170; $w = $w + 10) {
+			echo '<td class="text-center">'.price_chromaluxe($w,$h,$parameters,$w_max, $h_max).'</td>';//$h.'&times;'.$w
 		}
 		echo '</tr>';
 	}

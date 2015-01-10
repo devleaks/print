@@ -38,7 +38,7 @@ class AccountController extends Controller
      * Lists all Account models.
      * @return mixed
      */
-    public function actionClient($id)
+    public function actionClient2($id)
     {
 		$client = Client::findOne($id);
 		if(!$client)
@@ -51,6 +51,33 @@ class AccountController extends Controller
         return $this->render('list', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+			'client' => $client
+        ]);
+    }
+
+
+    public function actionClient($id)
+    {
+		$client = Client::findOne($id);
+		if(!$client)
+        	throw new NotFoundHttpException('The requested page does not exist.');
+
+		$date_lim = date('Y-m-d', strtotime('60 days ago')); //'7 days ago'
+		
+		$opening_balance = Account::getBalance($client->id, $date_lim);
+		$closing_balance = Account::getBalance($client->id);
+		
+        $dataProvider = new ActiveDataProvider([
+			'query' => Account::find()
+							->andWhere(['client_id' => $client->id])
+							->andWhere(['>=','created_at',$date_lim])
+		]);
+
+        return $this->render('client', [
+            'dataProvider' => $dataProvider,
+			'to_date' => $date_lim,
+			'opening_balance' => $opening_balance,
+			'closing_balance' => $closing_balance,
 			'client' => $client
         ]);
     }
@@ -73,25 +100,32 @@ class AccountController extends Controller
      * Lists all Account models.
      * @return mixed
      */
-    public function actionBalance($id)
-    {
+    public function actionBalance($id) {
 		$capture = new CaptureBalance();
 		$capture->client_id = $id;
 
         if ($capture->load(Yii::$app->request->post())) {
+			if($capture->client_id == '') $capture->client_id = $id;
 			// 1. Do we have bills checked?
 			if(isset($_POST)) {
 				if(isset($_POST['selection'])) {
 					if(count($_POST['selection']) > 0) {
-						$connection = \Yii::$app->db;
-						$transaction = $connection->beginTransaction();
+						// get balance, and lines to pay
+						$unpaids = Account::getUnpaid($capture->client_id);
+						$balance = Account::getBalance($capture->client_id);
+						$available = $unpaids < $balance ? abs($unpaids - $balance) : 0; // money left on account
+						Yii::trace('Client:'.$capture->client_id.', unpaid='.$unpaids.', balance='.$balance.', avail before='.$available, 'AccountController::actionBalance');
 						// record payment
-						$available = str_replace(',','.',$capture->amount);
+						$deposit = str_replace(',','.',$capture->amount);
+						$available += $deposit;
+						Yii::trace('deposit='.$deposit.', avail after='.$available, 'AccountController::actionBalance');
 						$payment_ok = true;
 						$note = '';
 						foreach(Account::find()->where(['id' => $_POST['selection']])->each() as $accnt_line) {
 							Yii::trace('Left='.$available, 'AccountController::actionBalance');
-							if( ($available - abs($accnt_line->amount)) > -0.009 ) { // had enough money to pay; rounding needed to the 0.001
+							
+							$needed = $accnt_line->status == Account::TYPE_DEBIT ? abs(round($accnt_line->amount,2)) : 0;
+							if( ($available - $needed) > -0.009 ) { // had enough money to pay; rounding needed to the 0.001
 								if($accnt_line->document_id) {
 									$bill = Bill::findDocument($accnt_line->document_id);
 									$note .= $bill->name.', ';
@@ -100,36 +134,36 @@ class AccountController extends Controller
 									
 								$accnt_line->status = Account::TYPE_BALANCED;
 								$accnt_line->save();
-								$available -= abs(round($accnt_line->amount,2));
-								Yii::trace('Using='.abs(round($accnt_line->amount,2)), 'AccountController::actionBalance');
+								$available -= $needed;
+								Yii::trace('Using='.$needed.', left='.$available, 'AccountController::actionBalance');
 							} else { // no enough money to pay account
-								Yii::trace('Tryied to use='.abs(round($accnt_line->amount,2)).', only '.
-										$available.' left. ('.($available - abs($accnt_line->amount)).')', 'AccountController::actionBalance');
+								Yii::trace('Needed='.$needed.', only '.
+										$available.' left. ('.($available - $needed).')', 'AccountController::actionBalance');
 								$payment_ok = false;
-								Yii::$app->session->setFlash('warning', 'Amount is not sufficient to pay account line(s).');
 							}
 						}
+						$note = ($note == '') ? null : substr(trim($note, ', '), 0, 158);
+						$payment = new Account([
+							'amount' => str_replace(',','.',$capture->amount),
+							'status' => 'ACREDIT',
+							'client_id' => $capture->client_id,
+							'note' => $note,
+							'payment_method' => $capture->method,
+						]);
+						if(!$payment->save())
+							Yii::$app->session->setFlash('danger', Yii::t('store', 'Error: {0}', [print_r($payment->errors, true)]));
+
 						if($payment_ok) {
-							$note = trim($note, ', ');
-							$payment = new Account([
-								'amount' => str_replace(',','.',$capture->amount),
-								'status' => 'ACREDIT',
-								'client_id' => $capture->client_id,
-								'note' => substr($note, 0, 158),
-								'payment_method' => $capture->method,
-							]);
-							$payment->save();
-							$transaction->commit();
 							$capture = new CaptureBalance();
-							Yii::$app->session->setFlash('success', 'Account line(s) were sucessfully balanced.');
+							Yii::$app->session->setFlash('success', Yii::t('store', 'Account lines sucessfully balanced.'));
 						} else {
-							$transaction->rollback();
+							Yii::$app->session->setFlash('warning', Yii::t('store', 'Amount is not sufficient to balance all account lines.'));
 						}
 					} else {
-						Yii::$app->session->setFlash('danger', 'You did not check any bill.');
+						Yii::$app->session->setFlash('danger', Yii::t('store', 'You did not check any bill.'));
 					}
 				} else {
-					Yii::$app->session->setFlash('danger', 'You did not check any bill.');
+					Yii::$app->session->setFlash('danger', Yii::t('store', 'You did not check any bill.'));
 				}
 			}
 
@@ -264,6 +298,7 @@ class AccountController extends Controller
 			'marginHeader' => 10,
 			'marginFooter' => 10,
 			'marginTop' => 35,
+			'marginBottom' => 35,
 			'options' => [],
 	         // call mPDF methods on the fly
 	        'methods' => [ 

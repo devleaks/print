@@ -20,11 +20,10 @@ use Yii;
  * @property integer $sale
  * @property string $payment_method
  *
- * @property User $updatedBy
  * @property Client $client
  * @property Document $document
  * @property User $createdBy
- * @property AccountBalance[] $accountBalances
+ * @property User $updatedBy
  */
 class _Account extends \yii\db\ActiveRecord
 {
@@ -75,14 +74,6 @@ class _Account extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUpdatedBy()
-    {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getClient()
     {
         return $this->hasOne(Client::className(), ['id' => 'client_id']);
@@ -107,8 +98,8 @@ class _Account extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAccountBalances()
+    public function getUpdatedBy()
     {
-        return $this->hasMany(AccountBalance::className(), ['credit_id' => 'id']);
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 }

@@ -52,7 +52,7 @@ $do_form = $form;
 				'id' => 'documentline-form',
 			]);
 	?>
-
+	<div data-intro="Nouvelle ligne de commande" data-position='top'>
 	<?= Form::widget([
 			'model' => $model,
 			'form' => $form,
@@ -176,6 +176,7 @@ $do_form = $form;
 	<?= Html::activeHiddenInput($model, 'extra_amount') ?>
 	<?= Html::activeHiddenInput($model, 'work_width') ?>
 	<?= Html::activeHiddenInput($model, 'work_height') ?>
+	</div>
 
 	<hr>
 	<?= $this->render('../document-line-detail/_options', [
@@ -185,7 +186,7 @@ $do_form = $form;
 	?>
 
 	<hr>
-
+	<div data-intro="Joindre des images à la ligne de commande" data-position='top'>
 	<?php
 	    $items = array();
 	    foreach($model->getPictures()->all() as $picture)
@@ -210,6 +211,7 @@ $do_form = $form;
 		    ]);
 		}
     ?>
+	</div>
 	<hr>
 
 	<?php if(! $do_form): ?>

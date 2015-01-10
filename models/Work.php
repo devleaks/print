@@ -22,6 +22,8 @@ class Work extends _Work
 	const STATUS_DONE = 'DONE';
 	/** */
 	const STATUS_WARN = 'WARN';
+	/** */
+	const STATUS_CANCELLED = 'Cancelled';
 
     /**
      * @inheritdoc
@@ -80,6 +82,21 @@ class Work extends _Work
 			self::STATUS_BUSY => 'info',
 			self::STATUS_DONE => 'success',
 			self::STATUS_WARN => 'warning',
+			self::STATUS_CANCELLED => 'warning',
+		];
+	}
+	
+	/** 
+	 * Assign an icon for each status
+	 */
+	public static function getStatusIcons() {
+		// default  primary  success  info  warning  danger
+		return [
+			self::STATUS_DONE => 'ok',
+			self::STATUS_BUSY => 'inbox',
+			self::STATUS_TODO => 'play-circle',
+			self::STATUS_WARN => 'warning-sign',
+			self::STATUS_CANCELLED => 'remove',
 		];
 	}
 	
@@ -118,6 +135,7 @@ class Work extends _Work
 		$busy = $this->getWorkLines()->andWhere(['status' => Work::STATUS_BUSY])->count();
 		$done = $this->getWorkLines()->andWhere(['status' => Work::STATUS_DONE])->count();
 		$warn = $this->getWorkLines()->andWhere(['status' => Work::STATUS_WARN])->count();
+		$cancelled = $this->getWorkLines()->andWhere(['status' => Work::STATUS_CANCELLED])->count();
 
 		$order_status = null;
 		if($warn > 0) {
@@ -140,20 +158,10 @@ class Work extends _Work
 	
 	public static function getBadge($id) {
 		$where = Order::getDateClause(intval($id));
-		$color = [
-			self::STATUS_DONE => 'success',
-			self::STATUS_BUSY => 'warning',
-			self::STATUS_TODO => 'primary',
-			self::STATUS_WARN => 'danger',
-		];
-		$icon = [
-			self::STATUS_DONE => 'ok',
-			self::STATUS_BUSY => 'inbox',
-			self::STATUS_TODO => 'play-circle',
-			self::STATUS_WARN => 'warning-sign',
-		];
+		$color = self::getStatusColors();
+		$icon = self::getStatusIcons();
 		$str = '';
-		foreach(array(self::STATUS_DONE, self::STATUS_BUSY, self::STATUS_TODO, self::STATUS_WARN) as $status) {
+		foreach(array_keys($color) as $status) {
 			$cnt = self::find()
 				->andWhere($where)
 				->andWhere(['status' => $status])
@@ -192,14 +200,10 @@ class Work extends _Work
 	 */
 	public function getTaskIcons($colors = false, $link = false, $button = false) {
 		$str = '';
+		$status_colors = self::getStatusColors();
 		foreach($this->getWorkLines()->orderBy('document_line_id, position')->each() as $wl) {
 			$icon = $wl->task->icon;
-			if($colors)
-				$color = $wl->status == Work::STATUS_DONE ? 'success' :
-							($wl->status == Work::STATUS_TODO ? 'primary' :
-								($wl->status == Work::STATUS_WARN ? 'warning' : 'info'));
-			else
-				$color = 'default';
+			$color = $colors ? $status_colors[$wl->status] : 'default';
 			
 			if($link)
 				$str .= Html::a(Icon::show($icon, ['class'=>'fa'. ($button ? '':' text-'.$color)]),

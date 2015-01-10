@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="col-md-6 col-md-offset-3">
 
-	<div class="panel panel-default">
+	<div class="panel panel-default" data-intro='Tâches organisées par type (découpes, impressions...)' data-position='left'>
   		<div class="panel-heading"><?= Yii::t('store', 'Tasks by Type')?></div>
   		<div class="panel-body">
 			<div class="list-group">
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
   		</div>
 	</div>
 
-	<div class="panel panel-default">
+	<div class="panel panel-default" data-intro='Tâches organisées par commandes (1 commande = 1 travail = plusieurs tâches à accomplir)' data-position='left'>
   		<div class="panel-heading"><?= Yii::t('store', 'Works') . ' ('.Yii::t('store', 'Orders').')'?></div>
 
   		<div class="panel-body">
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
   		</div>
 	</div>
 
-	<div class="alert alert-default">
+	<div class="alert alert-default" data-intro="Légende: Les couleurs sont en fonction de la date" data-position='left'>
 		<a href="#" class="close" data-dismiss="alert">&times;</a>
 		<div style="width:23%;display:inline-block">
 			<span class="badge alert-danger"><i class="glyphicon glyphicon-warning-sign"></i> 22</span> En retard
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 
 	
-	<div class="panel panel-default">
+	<div class="panel panel-default" data-intro="Tâches organisées par date de livraison de la commande ou d'une partie de la commande" data-position='left'>
   		<div class="panel-heading"><?= Yii::t('store', 'Tasks by Date')?></div>
   		<div class="panel-body">
 			<div class="list-group">

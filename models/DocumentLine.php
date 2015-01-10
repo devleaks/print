@@ -149,22 +149,11 @@ class DocumentLine extends _DocumentLine
 	 *
      * @return string Partial picture path for DocumentLine. Based on DocumentLine id, and Order date.
      */
-	public function getFileName($filename = '') {
-		$parent = $this->getDocument()->one();
-		$year = $parent ? substr( $parent->due_date, 0, 7 ) : '2000-00';
-		return $year . DIRECTORY_SEPARATOR
-//					 . $this->document_id . DIRECTORY_SEPARATOR
+	public function generateFilename($filename = '') {
+		return substr( $this->document->due_date , 0, 7 ) . DIRECTORY_SEPARATOR
+				//	 . $this->document_id . DIRECTORY_SEPARATOR // not necessary
                      . $this->id . DIRECTORY_SEPARATOR
 					 . $filename;
-	}
-
-    /**
-     * @param string $filename
-	 *
-     * @return string Path to folder where all pictures are stored.
-     */
-	public function getPicturePath($filename = '') {
-		return Yii::$app->params['picturePath'] . $this->getFileName($filename);
 	}
 
     /**
@@ -232,15 +221,24 @@ class DocumentLine extends _DocumentLine
 	 * @return string Description of DocumentLine, together with description of DocumentLineDetail if any.
 	 */
 	public function getDescription($show_price = true) {
-		$str = ($this->item->reference == '#') ? $this->note : $this->item->libelle_long;
+
+		if($this->item->reference == Item::TYPE_REBATE) {
+			$str = strpos($this->extra_type, "SUPPLEMENT_") > -1 ? Yii::t('store', 'Supplement') : Yii::t('store', 'Rebate');
+			$str .= ' ('.$this->getExtraDescription().')';
+			return $str;
+		}
+
+		$str = ($this->item->reference == Item::TYPE_FREE) ? $this->note : $this->item->libelle_long;
+
 		if($this->work_width > 0 && $this->work_height > 0)
 			$str .= ' '.$this->work_width.'×'.$this->work_height;
 		
 		if($detail = $this->getDetail())
-			$str .= ' ('.$detail->getDescription($show_price).')';
+			$str .= $detail->getDescriptionHTML($show_price);
+//			$str .= ' ('.$detail->getDescription($show_price).')';
 
-		if($this->item->reference != '#' && $this->note != '') // for free text item, comment IS the label
-			$str .= ' ('.$this->note.')';
+		if($this->item->reference != Item::TYPE_FREE && $this->note != '') // for free text item, comment IS the label
+			$str .= '<br/><small><span style="text-decoration: underline;">Note</span>: '.$this->note.'</small>';
 		
 		return $str;
 	}

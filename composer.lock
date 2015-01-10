@@ -389,16 +389,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.1.49",
+            "version": "3.1.53",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/jquery.inputmask.git",
-                "reference": "4a0bda47031b9d2074b0c77c3b447df71ed1ca95"
+                "reference": "1a863a0c9b733444f6766e5500eaf79b7b1d1d03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/4a0bda47031b9d2074b0c77c3b447df71ed1ca95",
-                "reference": "4a0bda47031b9d2074b0c77c3b447df71ed1ca95",
+                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/1a863a0c9b733444f6766e5500eaf79b7b1d1d03",
+                "reference": "1a863a0c9b733444f6766e5500eaf79b7b1d1d03",
                 "shasum": ""
             },
             "require": {
@@ -702,16 +702,16 @@
         },
         {
             "name": "dektrium/yii2-user",
-            "version": "v0.8.2",
+            "version": "v0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dektrium/yii2-user.git",
-                "reference": "29f4bea7cba852520b03a27826a1957c4248a1bf"
+                "reference": "2931705fcf5514c35122107e9d6761ea8620b519"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dektrium/yii2-user/zipball/29f4bea7cba852520b03a27826a1957c4248a1bf",
-                "reference": "29f4bea7cba852520b03a27826a1957c4248a1bf",
+                "url": "https://api.github.com/repos/dektrium/yii2-user/zipball/2931705fcf5514c35122107e9d6761ea8620b519",
+                "reference": "2931705fcf5514c35122107e9d6761ea8620b519",
                 "shasum": ""
             },
             "require": {
@@ -728,8 +728,8 @@
             "extra": {
                 "bootstrap": "dektrium\\user\\Bootstrap",
                 "branch-alias": {
-                    "dev-master": "0.8.x-dev",
-                    "dev-develop": "0.9.x-dev"
+                    "dev-master": "0.9.x-dev",
+                    "dev-develop": "1.0.x-dev"
                 },
                 "asset-installer-paths": {
                     "npm-asset-library": "vendor/npm",
@@ -759,7 +759,7 @@
                 "yii2",
                 "yii2-user"
             ],
-            "time": "2014-12-14 14:28:21"
+            "time": "2015-01-01 12:00:31"
         },
         {
             "name": "devleaks/yii2-chardinjs",
@@ -1037,16 +1037,16 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.1.3",
+            "version": "v4.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "53260a53958b7da9cc2d7e898e813867c3746047"
+                "reference": "83221139d13972f7cef598a844534bee2276dc3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/53260a53958b7da9cc2d7e898e813867c3746047",
-                "reference": "53260a53958b7da9cc2d7e898e813867c3746047",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/83221139d13972f7cef598a844534bee2276dc3d",
+                "reference": "83221139d13972f7cef598a844534bee2276dc3d",
                 "shasum": ""
             },
             "type": "library",
@@ -1081,7 +1081,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2014-12-20 18:27:29"
+            "time": "2014-12-27 16:06:27"
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
@@ -1307,12 +1307,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-datecontrol.git",
-                "reference": "84b7163b418a79559b17a046d0e0705e222da78b"
+                "reference": "685e19153557fc809f03ddf87aee5021788df896"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-datecontrol/zipball/84b7163b418a79559b17a046d0e0705e222da78b",
-                "reference": "84b7163b418a79559b17a046d0e0705e222da78b",
+                "url": "https://api.github.com/repos/kartik-v/yii2-datecontrol/zipball/685e19153557fc809f03ddf87aee5021788df896",
+                "reference": "685e19153557fc809f03ddf87aee5021788df896",
                 "shasum": ""
             },
             "require": {
@@ -1346,7 +1346,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2014-12-13 16:58:44"
+            "time": "2015-01-02 10:59:35"
         },
         {
             "name": "kartik-v/yii2-detail-view",
@@ -3406,17 +3406,17 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.6.1",
+            "version": "v2.6.3",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "bf0c9bd625f13b0b0bbe39919225cf145dfb935a"
+                "reference": "319794f611bd8bdefbac72beb3f05e847f8ebc92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/bf0c9bd625f13b0b0bbe39919225cf145dfb935a",
-                "reference": "bf0c9bd625f13b0b0bbe39919225cf145dfb935a",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/319794f611bd8bdefbac72beb3f05e847f8ebc92",
+                "reference": "319794f611bd8bdefbac72beb3f05e847f8ebc92",
                 "shasum": ""
             },
             "require": {
@@ -3449,7 +3449,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-02 20:19:20"
+            "time": "2015-01-06 22:47:52"
         },
         {
             "name": "thomaspark/bootswatch",

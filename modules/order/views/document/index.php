@@ -83,20 +83,20 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'format' => 'raw',
 				'hAlign' => GridView::ALIGN_CENTER,
 	        ],
-	        [
-	            'label' => Yii::t('store', 'Actions'),
-	            'value' => function ($model, $key, $index, $widget) {
-							return $model->getActions('btn btn-xs', false, '{icon}');
-	            		},
-				'hAlign' => GridView::ALIGN_CENTER,
-	            'format' => 'raw',
-				'noWrap' => true,
-				'options' => ['class' => 'IntroJS1'],
-	        ],
+//	        [
+//	            'label' => Yii::t('store', 'Actions'),
+//	            'value' => function ($model, $key, $index, $widget) {
+//							return $model->getActions('btn btn-xs', false, '{icon}');
+//	            		},
+//				'hAlign' => GridView::ALIGN_CENTER,
+//	            'format' => 'raw',
+//				'noWrap' => true,
+//				'options' => ['class' => 'IntroJS1'],
+//	        ],
             [	// freely let update or delete if accessed throught this screen.
 				'class' => 'kartik\grid\ActionColumn',
 				'controller' => 'document',
-			 	'template' => '{update} {delete}'
+//			 	'template' => '{update} {delete}'
 			],
 
         ],

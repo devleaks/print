@@ -37,6 +37,8 @@ use yii\web\NotFoundHttpException;
  */
 class DocumentController extends Controller
 {
+	const TYPE_BOM = 'BOM';
+
 	/**
 	 *  Sets global behavior for database line create/update and basic security
 	 */
@@ -190,27 +192,26 @@ class DocumentController extends Controller
 
 		if($id !== null) $model->client_id = intval($id);
 
+		if($type == self::TYPE_BOM) {
+			$model->document_type = Document::TYPE_ORDER;
+			$model->bom_bool = true;
+		}
+
         if ($model->load(Yii::$app->request->post())) { // we just create the order
 			if(!isset($model->document_type)) $model->document_type = $type;
 
 			if(!isset($model->name)) {
+				$now = date('Y-m-d', strtotime('now'));
 				switch($model->document_type) {
-					case Document::TYPE_ORDER:
-						if($model->bom_bool) {
-							$o = Parameter::getTextValue('application', 'BOM', '-YII-');
-							$model->name = substr($model->due_date,0,4).$o.Sequence::nextval('doc_number');
-						} else
-							$model->name = substr($model->due_date,0,4).'-'.Sequence::nextval('order_number');
-						break;
 					case Document::TYPE_BILL:
-						$model->name = substr($model->due_date,0,4).'-'.Sequence::nextval('order_number');
+						$model->name = substr($now,0,4).'-'.Sequence::nextval('bill_number');
 						break;
 					case Document::TYPE_CREDIT:
-						$model->name = substr($model->due_date,0,4).'-'.Sequence::nextval('credit_number');
+						$model->name = substr($now,0,4).'-'.Sequence::nextval('credit_number');
 						break;
 					default:
-						$o = Parameter::getTextValue('application', $model->document_type, '-YII-');
-						$model->name = substr($model->due_date,0,4).$o.Sequence::nextval('doc_number');
+						$o = Parameter::getTextValue('application', $model->bom_bool ? 'BOM' : $model->document_type, '-');
+						$model->name = substr($now,0,4).$o.Sequence::nextval('doc_number');
 						break;
 				}
 			}
@@ -254,6 +255,10 @@ class DocumentController extends Controller
 
     public function actionCreateOrder($id = null) {
         return $this->actionCreate($id, Document::TYPE_ORDER);
+    }
+
+    public function actionCreateBom($id = null) {
+        return $this->actionCreate($id, self::TYPE_BOM);
     }
 
     public function actionCreateBill($id = null) {

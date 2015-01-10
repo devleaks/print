@@ -122,10 +122,6 @@ class BackupController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-		$backup_dir  = Yii::getAlias('@runtime') . '/backup/';
-		$backup_file = $backup_dir . $model->filename;
-		if(is_file($backup_file))
-			unlink($backup_file);
 		$model->delete();
         return $this->redirect(['index']);
     }

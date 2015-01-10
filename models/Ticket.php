@@ -8,6 +8,8 @@ use yii\helpers\Url;
 
 class Ticket extends Order
 {
+	const TYPE = 'TICKET';
+	
     /**
      * @inheritdoc
      */

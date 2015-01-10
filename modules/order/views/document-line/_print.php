@@ -35,6 +35,7 @@ $dataProvider->sort = false;
 				    'value' => function ($model, $key, $index, $widget) {
 						return $model->getDescription();
 				    },
+					'format' => 'raw'
 				],				
 				[
 					'attribute' => 'quantity',

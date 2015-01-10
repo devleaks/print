@@ -1,11 +1,12 @@
 <?php
 
+use app\models\Account;
 use app\models\Payment;
-use yii\helpers\Html;
-use kartik\widgets\ActiveForm;
-use kartik\grid\GridView;
-use yii\helpers\Url;
 use kartik\builder\Form;
+use kartik\grid\GridView;
+use kartik\widgets\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
@@ -67,7 +68,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	        'showFooter'=>false
 	    ],
 		'panelHeadingTemplate' => '{heading}',
-	    'showPageSummary' => true,
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
 	        [
@@ -85,6 +85,15 @@ $this->params['breadcrumbs'][] = $this->title;
 				'pageSummary' => true
 			],
 			[
+	            'label' => Yii::t('store', 'Balance'),
+				'format' => 'currency',
+				'hAlign' => GridView::ALIGN_RIGHT,
+	            'value' => function ($model, $key, $index, $widget) {
+                    return Account::getBalance($model->client_id, $model->created_at);
+	            },
+				'noWrap' => true,
+			],
+			[
            		'attribute' => 'note',
 	            'value' => function ($model, $key, $index, $widget) {
 	                return $model->note ? $model->note : '';
@@ -95,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'created_at',
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->updated_at);
+					return new DateTime($model->created_at);
 				}
 			],
 	        [

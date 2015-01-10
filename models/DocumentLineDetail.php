@@ -5,23 +5,6 @@ namespace app\models;
 use Yii;
 use yii\db\ActiveRecord;
 
-/**
- * This is the model class for table "order_line_detail".
- *
- * @property integer $id
- * @property integer $document_line_id
- * @property string $detail_type
- * @property string $type_chroma
- * @property integer $renfort
- * @property integer $coin_arrondis
- * @property double $work_length
- * @property integer $frame_id
- * @property integer $filmuv_id
- *
- * @property Item $filmuv
- * @property Item $frame
- * @property DocumentLine $orderLine
- */
 class DocumentLineDetail extends _DocumentLineDetail
 {
 	public $free_item_libelle;
@@ -106,17 +89,19 @@ class DocumentLineDetail extends _DocumentLineDetail
 
 		if(($item = $this->getChroma()->one()) != null)
 			$item->createTasks($work, $order_line);
+		if(($item = $this->getTirage()->one()) != null)
+			$item->createTasks($work, $order_line);
 		if(($item = $this->getFinish()->one()) != null)
 			$item->createTasks($work, $order_line);
 		if(($item = $this->getSupport()->one()) != null)
-			$item->createTasks($work, $order_line);
-		if(($item = $this->getTirage()->one()) != null)
 			$item->createTasks($work, $order_line);
 		if(($item = $this->getCollage()->one()) != null)
 			$item->createTasks($work, $order_line);
 		if(($item = $this->getProtection()->one()) != null)
 			$item->createTasks($work, $order_line);
 		if(($item = $this->getFrame()->one()) != null)			
+			$item->createTasks($work, $order_line);
+		if(($item = $this->getChassis()->one()) != null)			
 			$item->createTasks($work, $order_line);
 
 		if($this->corner_bool)
@@ -138,44 +123,54 @@ class DocumentLineDetail extends _DocumentLineDetail
 		if($mode == 'html') {
 			$prep = '<li>';
 			$post = '</li>';
-			$str = '<ul>';
+			$str = '<small><ul class="list-unstyled">';
+			$obr = ' (';
+			$cbr = ')';
 		} else {
 			$prep = '';
 			$post = ', ';
 			$str = '';
+			$obr = ' [';
+			$cbr = ']';
 		}
 
 		if(($item = $this->getChroma()->one()) != null)
-			$str .= $prep.'ChromaLuxe '.$item->libelle_long . ($show_price ? ' ['.$this->price_chroma.'€], '  : $post);
-
-		if(($item = $this->getFrame()->one()) != null)			
-			$str .= $prep.'Cadre '.$item->libelle_long . ($show_price ? ' ['.$this->price_frame.'€], '  : $post);
-
-		if($this->renfort_bool)
-			$str .= $prep.'Renforts' . ($show_price ? ' ['.$this->price_renfort.'€], '  : $post);
-
-		if($this->corner_bool)
-			$str .= $prep.'Coins arrondis' /*. ($show_price ? ' ['.$this->price_border.'€], '  : ', ')*/. $post;
-
-		if($this->montage_bool)
-			$str .= $prep.'Montage' . ($show_price ? ' ['.$this->price_montage.'€], '  : $post);
+			$str .= $prep.'ChromaLuxe '.$item->libelle_long . ($show_price ? $obr.$this->price_chroma.'€'.$cbr.$post  : $post);
 
 		if(($item = $this->getTirage()->one()) != null)
-			$str .= $prep.$item->libelle_long . ($show_price ? ' ['.$this->price_tirage.'€], '  : $post);
+			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_tirage.'€'.$cbr.$post  : $post);
 
 		if(($item = $this->getFinish()->one()) != null)
-			$str .= $prep.$item->libelle_long /*. ($show_price ? ' ['.$this->price_finish.'€], '  : ', ')*/. $post;
+			$str .= $prep.$item->libelle_long /*. ($show_price ? $obr.$this->price_finish.'€'.$cbr.$post  : ', ')*/. $post;
 			
-		if(($item = $this->getProtection()->one()) != null)
-			$str .= $prep.$item->libelle_long . ($show_price ? ' ['.$this->price_protection.'€], '  : $post);
-			
-		if(($item = $this->getCollage()->one()) != null)
-			$str .= $prep.$item->libelle_long . ($show_price ? ' ['.$this->price_collage.'€], '  : $post);
 
 		if(($item = $this->getSupport()->one()) != null)
-			$str .= $prep.$item->libelle_long . ($show_price ? ' ['.$this->price_support.'€], '  : $post);
+			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_support.'€'.$cbr.$post  : $post);
 
-		return ($mode == 'html' ? $str.'</ul>' : trim($str, ', '));		
+		if(($item = $this->getCollage()->one()) != null)
+			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_collage.'€'.$cbr.$post  : $post);
+
+		if(($item = $this->getProtection()->one()) != null)
+			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_protection.'€'.$cbr.$post  : $post);
+			
+		if(($item = $this->getChassis()->one()) != null)
+			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_chassis.'€'.$cbr.$post  : $post);
+
+
+		if(($item = $this->getFrame()->one()) != null)			
+			$str .= $prep.'Cadre '.$item->libelle_long . ($show_price ? $obr.$this->price_frame.'€'.$cbr.$post  : $post);
+
+		if($this->montage_bool)
+			$str .= $prep.'Montage' . ($show_price ? $obr.$this->price_montage.'€'.$cbr.$post  : $post);
+
+		if($this->renfort_bool)
+			$str .= $prep.'Renforts' . ($show_price ? $obr.$this->price_renfort.'€'.$cbr.$post  : $post);
+
+		if($this->corner_bool)
+			$str .= $prep.'Coins arrondis' /*. ($show_price ? $obr.$this->price_border.'€'.$cbr.$post  : ', ')*/. $post;
+
+			
+		return ($mode == 'html' ? $str.'</ul></small>' : trim($str, ', '));		
 	}
 	
 	public function getDescription($show_price = false) {

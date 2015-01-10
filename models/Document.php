@@ -14,6 +14,8 @@ use kartik\mpdf\Pdf;
  */
 class Document extends _Document
 {
+	const TYPE = 'DOCUMENT';
+
 	/** Order "type" */
 	/** Devis */
 	const TYPE_BID = 'BID';
@@ -23,7 +25,7 @@ class Document extends _Document
 	const TYPE_BILL = 'BILL';
 	/** Note de crédit */
 	const TYPE_CREDIT = 'CREDIT';
-	/** Bon de livraison */
+	/** Bon de livraison, is a virtual type: an order with bom_bool=true */
 	const TYPE_BOM = 'BOM';
 	/** Ticket de caisse */
 	const TYPE_TICKET = 'TICKET';
@@ -74,7 +76,7 @@ class Document extends _Document
                                 ActiveRecord::EVENT_BEFORE_INSERT => ['created_by', 'updated_by'],
                                 ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_by',
                         ],
-                        'value' => function() { return Yii::$app->user->id;},
+                        'value' => function() { return isset(Yii::$app->user) ? Yii::$app->user->id : null; },
                 ],
         ];
     }
@@ -361,7 +363,8 @@ class Document extends _Document
 	 * @return number Amount due.
 	 */
 	public function getBalance() {
-		return $this->price_tvac - $this->getPrepaid();
+		$price = $this->vat_bool ? $this->price_htva : $this->price_tvac;
+		return $price - $this->getPrepaid();
 	}
 	
 	/**
@@ -427,8 +430,8 @@ class Document extends _Document
 		if($this->document_type == self::TYPE_BILL) // no next operation after billing
 			return null;
 
-		$next_type = $this->document_type == Document::TYPE_BID ? Document::TYPE_ORDER :
-						$this->document_type == Document::TYPE_ORDER ? Document::TYPE_BILL : null;
+		$next_type = $this->document_type == self::TYPE_BID ? self::TYPE_ORDER :
+						$this->document_type == self::TYPE_ORDER ? self::TYPE_BILL : null;
 
      	/** if a following document already exists, it returns it rather than create a new one. */
 		if( $existing_next = $this->find()->andWhere(['parent_id' => $this->id])->andWhere(['document_type' => $next_type])->one() )
@@ -438,13 +441,13 @@ class Document extends _Document
 		$copy = $this->deepCopy($new_type);
 		$copy->parent_id = $this->id;
 		
-		if($this->document_type == self::TYPE_BID) { // if coming from bid to order, need to change reference to official order reference
-			if($this->bom_bool) { // BOM
-				$o = Parameter::getTextValue('application', 'BOM', '-YII-');
-				$copy->name = substr($model->due_date,0,4).$o.Sequence::nextval('doc_number');
-			} else // real order
-				$copy->name = substr($copy->due_date,0,4).'-'.Sequence::nextval('order_number');
-		}
+//		if($this->document_type == self::TYPE_BID) { // if coming from bid to order, need to change reference to official order reference
+//			$o = ($this->bom_bool ? Parameter::getTextValue('application', 'BOM', '-YII-') : '-';
+//			$copy->name = substr($model->due_date,0,4).$o.Sequence::nextval('doc_number');
+//		}
+
+		if($copy->document_type == self::TYPE_BILL) // get a new official bill number
+			$copy->name = substr($bom->due_date,0,4).'-'.Sequence::nextval('bill_number');
 		
 		$copy->status = self::STATUS_OPEN;
 		$copy->save();
@@ -665,6 +668,7 @@ class Document extends _Document
 			'marginHeader' => 10,
 			'marginFooter' => 10,
 			'marginTop' => 35,
+			'marginBottom' => 35,
 			'options' => [],
 	         // call mPDF methods on the fly
 	        'methods' => [ 
@@ -722,6 +726,7 @@ class Document extends _Document
 			'marginHeader' => 10,
 			'marginFooter' => 10,
 //			'marginTop' => 35,
+//			'marginBottom' => 35,
 			'options' => [],
 	         // call mPDF methods on the fly
 //	        'methods' => [ 

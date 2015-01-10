@@ -106,5 +106,12 @@ class Backup extends \yii\db\ActiveRecord
 		}
 		return ($status == 0);
 	}
+	
+	public function delete() {
+		$backup_file = Yii::getAlias('@runtime') . '/backup/' . $this->filename;
+		if(is_file($backup_file))
+			unlink($backup_file);
+		parent::delete();
+	}
 
 }

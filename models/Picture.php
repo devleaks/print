@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\RuntimeDirectoryManager;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -22,6 +23,18 @@ class Picture extends _Picture
 {
 	/** sub directory in @web containing pictures */
 	const PATH = 'pictures';
+
+    /**
+     * Maximum size of images associated with ads
+     * @var integer
+     */
+    const maxsize   = 400; // px;
+
+    /**
+     * Maximum size of thumbnail images associated with ads
+     * @var integer
+     */
+    const thumbsize = 150; // px;
 
     /**
      * @inheritdoc
@@ -156,4 +169,48 @@ class Picture extends _Picture
 		$copy->save();
 		return $copy;
 	}
+	
+	/**
+	 * To be done after saving the image for the first time: Generate thumbnail image and resize "full size" image.
+	 */
+	public function generateThumbnail() {
+		$imagePath = $this->getFilepath();
+		$pic = Yii::$app->image->load($imagePath);
+		$thumbPath = $this->getThumbpath();
+		//Yii::trace('Image:'.$pic->width.' X '.$pic->height.'.', 'DocumentLineController::loadImages');
+		if($pic->width > self::thumbsize || $pic->height > self::thumbsize) {
+			$ratio = ($pic->width > $pic->height) ? $pic->width / self::thumbsize : $pic->height / self::thumbsize;
+			$newidth  = round($pic->width  / $ratio);
+			$neheight = round($pic->height / $ratio);
+			$pic->resize($newidth, $neheight);
+			$pic->save($thumbPath);
+		}	
+		if($pic->width > self::maxsize || $pic->height > self::maxsize) {
+		    $ratio = ($pic->width > $pic->height) ? $pic->width / self::maxsize : $pic->height / self::maxsize;
+		    $newidth  = $pic->width  / $ratio;
+		    $neheight = $pic->height / $ratio;
+		    $pic->resize($newidth, $neheight);
+		    $pic->save();
+		}
+	}
+
+	/**
+	 * Get full path to thumbnail image.
+	 *
+	 * @return string Full path to thumbnail image
+	 */
+	public function getThumbpath() {
+		return RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_PICTURES) . $this->getThumbnailName();
+	}
+
+	
+	/**
+	 * Get full path to image file.
+	 *
+	 * @return string Full path to image file
+	 */
+	public function getFilepath() {
+		return RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_PICTURES) . $this->filename;
+	}
+
 }

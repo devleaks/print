@@ -23,18 +23,6 @@ use yii\web\UploadedFile;
  */
 class DocumentLineController extends Controller
 {
-    /**
-     * Maximum size of images associated with ads
-     * @var integer
-     */
-    const maxsize   = 400; // px;
-
-    /**
-     * Maximum size of thumbnail images associated with ads
-     * @var integer
-     */
-    const thumbsize = 150; // px;
-
     public function behaviors()
     {
         return [
@@ -307,51 +295,33 @@ class DocumentLineController extends Controller
 	}
 
 	protected static function loadImages($model) {
-		if($_POST){
+		if($_POST) {
 		    $uploadedFiles = UploadedFile::getInstances($model, 'image');
-		    //var_dump( $uploadedFiles);
-		    //die();
-			$dirname = $model->getPicturePath();
 			$idx_offset = $model->getPictures()->count();
 		    foreach($uploadedFiles as $idx => $image) {
-				if(!is_dir($dirname))
-				    if(!mkdir($dirname, 0777, true)) {
-						Yii::$app->session->setFlash('danger', Yii::t('store', 'Cannot create directory for images.'));
-						return $this->redirect(Yii::$app->request->referrer);
-				    }
 				$nextidx = $idx_offset + $idx;
-		        $picture = new Picture();
-		        $picture->name = $image->name;
-		        $picture->document_line_id = $model->id;
-		        $picture->mimetype = $image->type;
-		        $picture->filename = $model->getFileName($nextidx . '.' . $image->extension);
-		        $path = Yii::$app->params['picturePath'] . $picture->filename;
-		        $thumbname = Yii::$app->params['picturePath'] . $model->getFileName($nextidx . '_t.' . $image->extension);
-		        //Yii::trace('Filename:'.$image->tempName.' to '.$path.'.', 'DocumentLineController::loadImages');
+		        $picture = new Picture([
+			     	'name' => $image->name,
+			        'document_line_id' => $model->id,
+			        'mimetype' => $image->type,
+			        'filename' => $model->generateFilename($nextidx . '.' . $image->extension),
+				]);
 
 		        if($picture->save()){
-		            $image->saveAs($path);
-		            // make thumbnail at $thumbsize x $thumbsize max
-		            $pic=Yii::$app->image->load($path);
-		            //Yii::trace('Image:'.$pic->width.' X '.$pic->height.'.', 'DocumentLineController::loadImages');
-		            if($pic->width > self::thumbsize || $pic->height > self::thumbsize) {
-		                $ratio = ($pic->width > $pic->height) ? $pic->width / self::thumbsize : $pic->height / self::thumbsize;
-		                $newidth  = round($pic->width  / $ratio);
-		                $neheight = round($pic->height / $ratio);
-		                $pic->resize($newidth, $neheight);
-		                $pic->save($thumbname);
-		            }
-		            // resize image to max $maxsize x $maxsize
-		            if($pic->width > self::maxsize || $pic->height > self::maxsize) {
-		                $ratio = ($pic->width > $pic->height) ? $pic->width / self::maxsize : $pic->height / self::maxsize;
-		                $newidth  = $pic->width  / $ratio;
-		                $neheight = $pic->height / $ratio;
-		                $pic->resize($newidth, $neheight);
-		                $pic->save();
-		            }
+		        	$imagePath = $picture->getFilepath();
+					// mkdir for saved images if it does not exist
+					$dirname = dirname($imagePath);
+					if(!is_dir($dirname))
+					    if(!mkdir($dirname, 0777, true)) {
+							Yii::$app->session->setFlash('danger', Yii::t('store', 'Cannot create directory for images {0}.', [$dirname]));
+							return $this->redirect(Yii::$app->request->referrer);
+					    }
+		        	// Yii::trace('Filename:'.$image->tempName.' to '.$imagePath.'.', 'DocumentLineController::loadImages');
+		            $image->saveAs($imagePath);
+					$picture->generateThumbnail(); // also resizes image
 		        } 
 		    }
-		}		
+		}
 	}
 
 

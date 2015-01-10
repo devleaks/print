@@ -14,8 +14,9 @@ use yii\helpers\Url;
 
 $contentBefore = $this->render('../document/_header_print', ['model' => $order]);
 $contentAfter = $this->render('../document/_footer_print', ['model' => $order]);
+$base = 3;
 ?>
-<div class="document-line-list">
+<div class="document-line-list" data-intro="Lignes de la commande." data-position='bottom'>
 <p></p>
 
     <?= GridView::widget([
@@ -55,17 +56,17 @@ $contentAfter = $this->render('../document/_footer_print', ['model' => $order]);
 				    'value' => function ($model, $key, $index, $widget) {
 						return $model->getDescription() ;
 				    },
+					'noWrap' => true,
 					'format' => 'raw',
 				],
-				[
-					'attribute' => 'work_width',
-					'hAlign' => GridView::ALIGN_CENTER,
-				],
-				[
-					'attribute' => 'work_height',
-					'hAlign' => GridView::ALIGN_CENTER,
-				],
-				'note',
+//				[
+//					'attribute' => 'work_width',
+//					'hAlign' => GridView::ALIGN_CENTER,
+//				],
+//				[
+//					'attribute' => 'work_height',
+//					'hAlign' => GridView::ALIGN_CENTER,
+//				],
 				[
 					'attribute' => 'due_date',
 					'format' => 'date',
@@ -99,15 +100,15 @@ $contentAfter = $this->render('../document/_footer_print', ['model' => $order]);
 					'hAlign' => GridView::ALIGN_RIGHT,
 					'noWrap' => true,
 				],
-				[
-					'label' => Yii::t('store', 'Extra'),
-				    'class' => '\kartik\grid\DataColumn',
-					'attribute' => 'extra_amount',
-				    'value' => function ($model, $key, $index, $widget) {
-						return $model->getExtraDescription(false);
-				    },
-					'noWrap' => true,
-				],				
+//				[
+//					'label' => Yii::t('store', 'Extra'),
+//				    'class' => '\kartik\grid\DataColumn',
+//					'attribute' => 'extra_amount',
+//				    'value' => function ($model, $key, $index, $widget) {
+//						return $model->getExtraDescription(false);
+//				    },
+//					'noWrap' => true,
+//				],				
 				[
 					'class' => '\kartik\grid\DataColumn',
 					'label' => Yii::t('store', 'Extra'),
@@ -125,7 +126,7 @@ $contentAfter = $this->render('../document/_footer_print', ['model' => $order]);
 				    'class' => '\kartik\grid\FormulaColumn',
 				    'value' => function ($model, $key, $index, $widget) {
 						$p = compact('model', 'key', 'index');
-				        return round($widget->col(9, $p) + $widget->col(11, $p), 2);		
+				        return round($widget->col(6, $p) + $widget->col(7, $p), 2);		
 				    },
 					'format' => 'currency',
 					'hAlign' => GridView::ALIGN_RIGHT,
@@ -137,7 +138,7 @@ $contentAfter = $this->render('../document/_footer_print', ['model' => $order]);
 				    'class' => '\kartik\grid\FormulaColumn',
 				    'value' => function ($model, $key, $index, $widget) {
 						$p = compact('model', 'key', 'index');
-				        return $model->document->vat_bool ? '0' : round( ($widget->col(12, $p)) * (1 + $widget->col(8, $p)), 2); // already /100 on col. 7.
+				        return $model->document->vat_bool ? '0' : round( ($widget->col(8, $p)) * (1 + $widget->col(5, $p)), 2); // already /100 on col. 7.
 				    },
 					'format' => 'currency',
 					'hAlign' => GridView::ALIGN_RIGHT,

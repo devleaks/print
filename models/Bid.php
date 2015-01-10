@@ -8,6 +8,8 @@ use yii\helpers\Url;
 
 class Bid extends Document
 {
+	const TYPE = 'BID';
+	
     /**
      * @inheritdoc
      */

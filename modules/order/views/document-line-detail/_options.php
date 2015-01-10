@@ -26,7 +26,8 @@ $class_prefix = 'item';
 
 if($detail->free_item_vat == '') $detail->free_item_vat = 21;
 ?>
-<div class="document-line-options">
+<div class="document-line-options" data-intro="Lignes de commande rapides: ChromaLuxe, Fine Arts, et article libre.
+Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour remplir les options" data-position='top'>
 
 	<div id="store-missing-data" class="alert alert-danger" role="alert"></div>	
 
@@ -57,47 +58,6 @@ if($detail->free_item_vat == '') $detail->free_item_vat = 21;
 					'options' => ['inline'=>true, 'class' => $class_prefix . $chroma_item->id ],
 				],
 		        'price_chroma' => [
-					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $chroma_item->id],
-				],
-
-		        'corner_bool' => [
-					'type' => Form::INPUT_CHECKBOX,
-		            'columnOptions' => ['colspan' => 5/*4*/],
-					'options' => ['class' => $class_prefix . $chroma_item->id],
-				],			
-				/*			
-		        'price_corner' => [
-					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => $class_prefix . $chroma_item->id],
-				],*/
-		        'frame_id' => [
-					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Cadre', true),
-					'options' => ['class' => 'form-control '.$class_prefix . $chroma_item->id],
-		            'columnOptions' => ['colspan' => 4],
-				],
-		        'price_frame' => [
-					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $chroma_item->id],
-				],
-
-		        'montage_bool' => [
-					'type' => Form::INPUT_CHECKBOX,
-					'options' => ['class' => $class_prefix . $chroma_item->id],
-		            'columnOptions' => ['colspan' => 4],
-				],
-		        'price_montage' => [
-					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $chroma_item->id],
-				],
-
-		        'renfort_bool' => [
-					'type' => Form::INPUT_CHECKBOX,
-					'options' => ['class' => $class_prefix . $chroma_item->id],
-		            'columnOptions' => ['colspan' => 4],
-				],
-		        'price_renfort' => [
 					'type' => Form::INPUT_TEXT,
 					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $chroma_item->id],
 				],
@@ -172,34 +132,7 @@ if($detail->free_item_vat == '') $detail->free_item_vat = 21;
 				],
 			],
 		]).
-/*		Form::widget([
-		    'model' => $detail,
-		    'form' => $form,
-		    'columns' => 5,
-		    'attributes' => [	
-		        'frame_id' => [
-					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Cadre', true),
-					'options' => ['class' => 'form-control '.$class_prefix . $fineart_item->id],
-		            'columnOptions' => ['colspan' => 4],
-				],
-		        'price_frame' => [
-					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $fineart_item->id],
-				],
-
-		        'montage_bool' => [
-					'type' => Form::INPUT_CHECKBOX,
-					'options' => ['class' => $class_prefix . $fineart_item->id],
-		            'columnOptions' => ['colspan' => 4],
-				],
-		        'price_montage' => [
-					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $fineart_item->id],
-				],
-			],
-		]).
-*/		Form::widget([
+		Form::widget([
 		    'model' => $detail,
 		    'form' => $form,
 		    'columns' => 5,
@@ -216,10 +149,26 @@ if($detail->free_item_vat == '') $detail->free_item_vat = 21;
 				],
 			],
 		]).
+		Form::widget([
+		    'model' => $detail,
+		    'form' => $form,
+		    'columns' => 5,
+		    'attributes' => [
+		        'filmuv_bool' => [
+					'type' => Form::INPUT_CHECKBOX,
+		            'columnOptions' => ['colspan' => 4],
+					'options' => ['class' => $class_prefix . $fineart_item->id],
+				],			
+		        'price_filmuv' => [
+					'type' => Form::INPUT_TEXT,
+					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $fineart_item->id]
+				],
+			],
+		]).
 		'',
 		        ],
 		        [ /** ********************************************* */
-		            'label' => Yii::t('store', 'Free Item'),
+		            'label' => Yii::t('store', 'Miscellaneous Item'),
 					'headerOptions' => ['class' => 'order-option',
 								  'data-item_id' => $free_item->id,
 								  'data-item_name' => $free_item->libelle_long,
@@ -265,6 +214,52 @@ if($detail->free_item_vat == '') $detail->free_item_vat = 21;
 		    ],
 		]);
 	?>
+	
+	<div id="store-form-shared">
+	<?= Form::widget([
+		    'model' => $detail,
+		    'form' => $form,
+		    'columns' => 5,
+		    'attributes' => [
+		        'corner_bool' => [
+					'type' => Form::INPUT_CHECKBOX,
+		            'columnOptions' => ['colspan' => 5/*4*/],
+					'options' => ['class' => $class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+				],			
+		        'frame_id' => [
+					'type' => Form::INPUT_DROPDOWN_LIST,
+					'items' => Item::getListForCategory('Cadre', true),
+					'options' => ['class' => 'form-control '.$class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+		            'columnOptions' => ['colspan' => 4],
+				],
+		        'price_frame' => [
+					'type' => Form::INPUT_TEXT,
+					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+				],
+
+		        'montage_bool' => [
+					'type' => Form::INPUT_CHECKBOX,
+					'options' => ['class' => $class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+		            'columnOptions' => ['colspan' => 4],
+				],
+		        'price_montage' => [
+					'type' => Form::INPUT_TEXT,
+					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+				],
+
+		        'renfort_bool' => [
+					'type' => Form::INPUT_CHECKBOX,
+					'options' => ['class' => $class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+		            'columnOptions' => ['colspan' => 4],
+				],
+		        'price_renfort' => [
+					'type' => Form::INPUT_TEXT,
+					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+				],
+			],
+		])
+	?>
+	</div>
 
 </div>
 <?= $this->render('_js_load_data') ?>

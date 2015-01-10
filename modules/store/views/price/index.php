@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -25,7 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'reference',
             'libelle_court',
             'libelle_long',
-            'categorie',
+	        [
+	            'attribute' => 'categorie',
+	            'filter' => ['Cadre' => 'Cadre', 'Collage' => 'Support', 'ChromaLuxe' => 'ChromaLuxe'],
+	        ],
             // 'type_travaux_photos',
             // 'type_numerique',
              'fournisseur',
@@ -52,7 +56,18 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'created_at',
             // 'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
+            [
+				'class' => 'kartik\grid\ActionColumn',
+				'template' => '{view}',
+				'buttons' => [
+	                'view' => function ($url, $model) {
+						$url = Url::to(['view-'.strtolower($model->yii_category), 'id' => $model->id]);
+	                    return Html::a('<i class="glyphicon glyphicon-eye-open"></i>', $url, [
+	                        'title' => Yii::t('store', 'View'),
+	                    ]);
+	                },
+				]
+			],
         ],
     ]); ?>
 

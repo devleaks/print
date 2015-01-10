@@ -40,7 +40,7 @@ ChardinJSAsset::register($this);
             ]);
 
 			$menu = [];
-			$menu[] = ['label' => Yii::$app->formatter->asDate(date('c')), 'url' => "#"];
+			$menu[] = ['label' => Yii::$app->formatter->asDate(date('c')), 'url' => "javascript:do_introjs();"];
 				
             if(!Yii::$app->user->isGuest) {
 

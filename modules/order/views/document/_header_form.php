@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Document;
+use app\models\Parameter;
 use app\models\User;
 use kartik\builder\Form;
 use kartik\date\DatePicker;
@@ -83,7 +84,7 @@ Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter u
 				])
 		?>
 		</div>
-			
+		<div  data-intro="Informations générales sur la commande" data-position='right'>
 		<?= Form::widget([
 				    'model' => $model,
 				    'form' => $form,
@@ -138,6 +139,11 @@ Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter u
 							],
 				            'columnOptions' => ['colspan' => 1],
 						],
+				        'legal' => [
+							'type' => Form::INPUT_DROPDOWN_LIST,
+							'items' => array_merge([""=>""] , Parameter::getSelectList('legal', 'value_text')),
+				            'columnOptions' => ['colspan' => 6],
+						],
 				        'note' => [
 							'type' => Form::INPUT_TEXT,
 				            'columnOptions' => ['colspan' => 6],
@@ -146,11 +152,12 @@ Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter u
 				])
 		?>
 		</div>
+		</div>
 		
 		<div class="col-lg-1">
 		</div>
 		
-		<div class="col-lg-5">
+		<div class="col-lg-5" data-intro="Client. Si les données ne sont pas affichées, veuillez choisir un client à gauche." data-position='bottom'>
 			<div id="clientDetails"></div>
 		</div>
 

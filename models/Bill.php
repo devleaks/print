@@ -6,8 +6,9 @@ use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-class Bill extends Document
-{
+class Bill extends Document {
+	const TYPE = 'BILL';
+	
 	/** Bulk action ID */
 	const ACTION_PAYMENT_RECEIVED = 'PAY';
 	/** Bulk action ID */
@@ -94,12 +95,12 @@ class Bill extends Document
 					$model->vat_bool = $bom->vat_bool; // we assume all BOMs have same vat_bool.
 					$model->due_date = $bom->due_date;
 					// Note: BOM gets temporary number, bill gets next number available.
-					$model->name = substr($bom->due_date,0,4).'-'.Sequence::nextval('order_number');
+					$model->name = substr($bom->due_date,0,4).'-'.Sequence::nextval('bill_number');
 					$model->note = $bom->name;
 					$model->status = self::STATUS_OPEN;
 					$model->sale = Sequence::nextval('sale');
 					$model->save();
-					Yii::trace('new bill created:'.print_r($model->errors, true), 'Bill::createFromBoms');
+					//Yii::trace('New bill created:'.print_r($model->errors, true), 'Bill::createFromBoms');
 				} else {
 					$model->note = self::append($model->note, $bom->name, ',', 160);
 					$model->save();

@@ -47,6 +47,17 @@ class Order extends Document
 	 */
 	protected function statusUpdated() {
 		Yii::trace('up', 'Order::statusUpdated()');
+		if($this->status == self::STATUS_CANCELLED) {
+			if($work = $this->getWorks()->one()) {
+				foreach($work->getWorkLines()->each() as $wl) {
+					$wl->status = Work::STATUS_CANCELLED;
+					$wl->save();
+				}
+				$work->status = Work::STATUS_CANCELLED;
+				$work->save();
+			}
+		}
+		
 		if($this->status == self::STATUS_DONE)
 			$this->completed();
 	}
@@ -172,11 +183,17 @@ class Order extends Document
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
 					]);
-				$ret .= ' '.Html::a($this->getButton($template, 'tasks', 'Submit Work'), ['/order/document/submit', 'id' => $this->id], [
+				$ret .= ' '.Html::a($this->getButton($template, 'cog', 'Submit Work'), ['/order/document/submit', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Submit Work'),
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
 					'data-confirm' => Yii::t('store', 'Submit work?')
+					]);
+				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/document/cancel', 'id' => $this->id], [
+					'title' => Yii::t('store', 'Cancel'),
+					'class' => $baseclass . ' btn-warning',
+					'data-method' => 'post',
+					'data-confirm' => Yii::t('store', 'Cancel order?')
 					]);
 				break;
 			case $this::STATUS_WARN:
@@ -193,13 +210,19 @@ class Order extends Document
 						]).' ';
 			case $this::STATUS_TODO:
 			case $this::STATUS_BUSY:
+				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/document/cancel', 'id' => $this->id], [
+					'title' => Yii::t('store', 'Cancel'),
+					'class' => $baseclass . ' btn-warning',
+					'data-method' => 'post',
+					'data-confirm' => Yii::t('store', 'Cancel order?')
+					]);
 				if( $work  ) { // there should always be a work if doc status is TODO or BUSY
-					$ret .= Html::a($this->getButton($template, 'tasks', 'Work'), ['/work/work/view', 'id' => $work->id], [
+					$ret .= ' '.Html::a($this->getButton($template, 'tasks', 'Work'), ['/work/work/view', 'id' => $work->id], [
 						'title' => Yii::t('store', 'Work'),
 						'class' => $baseclass . ' btn-primary',
 						'data-method' => 'post',
 						]);
-					$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/work/work/terminate', 'id' => $work->id], [
+					$ret .= ' '.Html::a($this->getButton($template, 'play', 'Terminate'), ['/work/work/terminate', 'id' => $work->id], [
 						'title' => Yii::t('store', 'Terminate'),
 						'class' => $baseclass . ' btn-primary',
 						'data-method' => 'post',
