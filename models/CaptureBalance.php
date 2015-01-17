@@ -12,6 +12,7 @@ class CaptureBalance extends Model
 {
 	public $amount;
 	public $method;
+	public $date;
 	public $client_id;
 	
     /**
@@ -21,7 +22,7 @@ class CaptureBalance extends Model
     {
         return [
             [['amount', 'client_id'], 'required'],
-            [['amount', 'method', 'client_id'], 'safe'],
+            [['amount', 'method', 'date', 'client_id'], 'safe'],
 			[['amount'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
 			[['client_id'], 'integer'],
             [['method'], 'string', 'max' => 20],
@@ -36,6 +37,7 @@ class CaptureBalance extends Model
         return [
             'amount' => Yii::t('store', 'Amount'),
             'method' => Yii::t('store', 'Payment Method'),
+            'date' => Yii::t('store', 'Date'),
             'client_id' => Yii::t('store', 'Client'),
         ];
     }

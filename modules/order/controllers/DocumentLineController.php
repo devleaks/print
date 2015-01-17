@@ -216,7 +216,7 @@ class DocumentLineController extends Controller
 	            ->orWhere(['like', 'libelle_long', $search])
 	            ->orWhere(['like', 'reference', $search])
 	            ->andWhere(['status' => [Item::STATUS_ACTIVE, Item::STATUS_EXTRA]])
-	            ->limit(20);
+	            ->limit(50);
 	        $command = $query->createCommand();
 	        $data = $command->queryAll();
 	        $out['results'] = array_values($data);
@@ -260,9 +260,19 @@ class DocumentLineController extends Controller
 				//Yii::trace('2:'.$detail->document_line_id, 'DocumentLineController::createDetail');
 				$free_item = Item::findOne(['reference' => '#']);			
 				if($model->item_id == $free_item->id) { // copy temporary label to note, do not save "details"
-						$model->note = $detail->free_item_libelle;
-						$model->save();
+					$model->note = $detail->free_item_libelle;
+					$model->save();
 				} else {
+					// tirage_id is disabled in entry form, so it is not sent on POST, so we need to copy it from the document_line
+					$items = Item::find()
+								->select('id')
+								->orWhere(['yii_category' => 'Tirage'])
+								->orWhere(['yii_category' => 'Canvas']);
+					$tirages = [];
+					foreach($items->each() as $item)
+						$tirages[] = $item->id;
+					if(in_array($model->item_id, $tirages)) // if it is a tirage, we copy it...
+						$detail->tirage_id = $model->item_id;
 				 	if($detail->save()) {
 						//Yii::trace('3:'.$detail->id, 'DocumentLineController::createDetail');
 						return true;
@@ -277,14 +287,13 @@ class DocumentLineController extends Controller
 		// only load detail for ChromaLuxe and Fine Arts
 		$items = Item::find()
 			->select('id')
-			->orWhere(['reference' => '1'])
-			->orWhere(['reference' => 'FineArts'])
-			->orWhere(['reference' => '#'])
-			->asArray()
-			->all();
+			->orWhere(['reference' => Item::TYPE_CHROMALUXE])
+			->orWhere(['yii_category' => 'Tirage'])
+			->orWhere(['yii_category' => 'Canvas'])
+			->orWhere(['reference' => Item::TYPE_MISC]);
 		$special_items  =[];
-		foreach($items as $item)
-			$special_items[] = $item['id'];
+		foreach($items->each() as $item)
+			$special_items[] = $item->id;
 		if(! in_array($model->item_id, $special_items) ) {
 			//Yii::trace('1: '.$model->item_id.' not in '.print_r($special_items, true).'.', 'DocumentLineController::createDetail');
 			return false;

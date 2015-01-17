@@ -89,12 +89,12 @@ class Order extends Document
 
 				Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
 
-				Yii::$app->mailer->compose()
+				Yii::$app->mailer->compose('order-completed', ['model'=>$this])
 				    ->setFrom( Yii::$app->params['fromEmail'] )						// From label could be a param
 				    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )	// <=== FORCE DEV EMAIL TO TEST ADDRESS
 				    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)				// @todo: msg dans la langue du client
-					->setTextBody(Yii::t('store', 'Your {document} is ready.', [
-    									'document' => strtolower(Yii::t('store', $this->document_type)).' '.$this->name]))
+//					->setTextBody(Yii::t('store', 'Your {document} is ready.', [
+//    									'document' => strtolower(Yii::t('store', $this->document_type)).' '.$this->name]))
 				    ->send();
 
 				Yii::$app->language = $lang_before;
@@ -191,7 +191,7 @@ class Order extends Document
 					]);
 				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/document/cancel', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Cancel'),
-					'class' => $baseclass . ' btn-warning',
+					'class' => $baseclass . ' btn-danger',
 					'data-method' => 'post',
 					'data-confirm' => Yii::t('store', 'Cancel order?')
 					]);
@@ -212,7 +212,7 @@ class Order extends Document
 			case $this::STATUS_BUSY:
 				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/document/cancel', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Cancel'),
-					'class' => $baseclass . ' btn-warning',
+					'class' => $baseclass . ' btn-danger',
 					'data-method' => 'post',
 					'data-confirm' => Yii::t('store', 'Cancel order?')
 					]);
@@ -245,7 +245,7 @@ class Order extends Document
 					]);
 				break;
 			case $this::STATUS_CANCELLED:
-				$ret .= ' <span class="label label-warning">'.Yii::t('store', 'Cancelled').'</span>';
+				$ret .= ' <span class="label label-danger">'.Yii::t('store', 'Cancelled').'</span>';
 				break;
 			case $this::STATUS_CLOSED:
 				$bill = $this->bom_bool ?

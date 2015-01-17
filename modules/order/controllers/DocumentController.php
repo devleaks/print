@@ -477,7 +477,7 @@ class DocumentController extends Controller
 				$feedback = $work ? Yii::t('store', 'Work submitted') : Yii::t('store', 'No work to submit');
 			}
 			$model->updatePaymentStatus();
-			Yii::$app->session->setFlash('success', ($feedback ? $feedback . '; ': '') . Yii::t('store', 'Payment added').'.');
+			Yii::$app->session->setFlash('success', ($feedback ? $feedback . '; ': '') . ($feedback ? $feedback . Yii::t('store', 'Payment added'): strtolower(Yii::t('store', 'Payment added'))) .'.');
 	        return $this->render('view', [
 	            'model' => $model,
 	        ]);

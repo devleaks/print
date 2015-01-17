@@ -1,15 +1,12 @@
 <?php
 use app\models\Item;
+use app\models\DocumentLine;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Item */
 
 $this->title = Yii::t('store', 'Price List').' '.$model->libelle_long;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Items'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 
 function price_linreg($w, $h, $a, $b, $surf) {
 	$qty = $surf ? ($w * $h / 10000) : (($w + $h) / 50); // 2 * (w + h) / 100 in meters, 100cmX100cm=10000cm2 in a m2
@@ -40,7 +37,7 @@ function price_exhibit($w, $h, $frame) {
 	return ceil($price);
 }
 ?>
-<div class="item-view">
+<div class="print-price">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -52,6 +49,7 @@ function price_exhibit($w, $h, $frame) {
 	for($w = $min_w; $w <= $max_w; $w = $w + $stp_w) {
 		echo '<th class="text-center">'.$w.'</th>';
 	}
+	if ($stats) echo '<th class="text-center">'.Yii::t('store', 'Quantity').'</th>';
 ?>
 	</tr>
 	</thead>
@@ -65,11 +63,23 @@ function price_exhibit($w, $h, $frame) {
 												price_exhibit($w, $h, $model) :
 												price_linreg($w,$h,$reg_a,$reg_b,false) ).'</td>';//$h.'&times;'.$w
 		}
+		if ($stats) echo '<td class="text-center">'.DocumentLine::getDetailHeightCount('frame',$model->id,$h,$h+10).'</td>';//$h.'&times;'.$w
 		echo '</tr>';
 	}
-
+	if ($stats) { // quantity line
+		echo '<tr>';
+		echo '<th class="text-center">'.Yii::t('store', 'Quantity').'</th>';
+		$total = 0;
+		for($w = $min_w; $w <= $max_w; $w = $w + $stp_w) {
+			$cnt = DocumentLine::getDetailWidthCount('frame',$model->id,$w,$w+10);
+			$total += $cnt;
+			echo '<td class="text-center">'.$cnt.'</td>';//$h.'&times;'.$w
+		}
+		echo '<th class="text-center">'.$total.'</th>';//$h.'&times;'.$w
+		echo '</tr>';
+	}
 ?>
 	</tbody>
-<table>
+</table>
 
 </div>

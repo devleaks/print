@@ -12,13 +12,10 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$fineart_item = Item::findOne(['reference'=>'FineArts']);
 ?>
-<div class="document-line-options">
+<div class="document-line-update-options-tirage">
 
-	<h4 class="order-option" data-item_id="<?= $fineart_item->id ?>" data-item_name="<?= $fineart_item->libelle_long ?>">
-		Fine Arts
-	</h4>
+	<h4>Tirage <larger>+</larger></h4>
 
 	<div id="store-missing-data" class="alert alert-danger" role="alert"></div>	
 
@@ -160,7 +157,7 @@ $fineart_item = Item::findOne(['reference'=>'FineArts']);
 <?php
 $this->beginBlock('JS_INIT'); ?>
 console.log('setting fineart_price...');
-$("#documentlinedetail-tirage_id:enabled").trigger('change');
+$("#documentline-item_id").trigger('change');
 <?php $this->endBlock(); ?>
 </script>
 <?php

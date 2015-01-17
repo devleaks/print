@@ -19,33 +19,20 @@ use yii\bootstrap\Tabs;
 $detail = new DocumentLineDetail();
 $detail->document_line_id = $model->id;
 
-$chroma_item  = Item::findOne(['reference'=>Item::TYPE_CHROMALUXE]);
-$fineart_item = Item::findOne(['reference'=>Item::TYPE_FINEARTS]);
-$free_item    = Item::findOne(['reference'=>Item::TYPE_FREE]);
 $class_prefix = 'item';
 
 if($detail->free_item_vat == '') $detail->free_item_vat = 21;
 ?>
-<div class="document-line-options" data-intro="Lignes de commande rapides: ChromaLuxe, Fine Arts, et article libre.
-Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour remplir les options" data-position='top'>
+<div class="document-line-options" data-intro="Lignes de commande rapides: ChromaLuxe, tirage, et article libre.
+Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour remplir les options" data-position='top'
+style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aaa;"
+>
 
-	<div id="store-missing-data" class="alert alert-danger" role="alert"></div>	
 
-	<?= Tabs::widget([
-		    'items' => [
-		        [
-		            'label' => Yii::t('store', 'Special Item'),
-		            'content' => '',
-					'active' => true,
-				],
-		        [ /** ********************************************* */
-		            'label' => 'ChromaLuxe',
-					'headerOptions' => ['class' => 'order-option',
-								  'data-item_id' => $chroma_item->id,
-								  'data-item_name' => $chroma_item->libelle_long,
-								  'data-item_vat' => $chroma_item->taux_de_tva,
-					],
-		            'content' => Form::widget([
+	<div id="store-missing-data" class="alert alert-danger" role="alert"></div>
+	
+	<div class="yiipanel-ChromaLuxe">
+	<?= Form::widget([
 		    'model' => $detail,
 		    'form' => $form,
 		    'columns' => 5,
@@ -55,47 +42,43 @@ Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour
 					'type' => Form::INPUT_RADIO_LIST,
 					'items' => Item::getListForCategory('ChromaType'),
 		            'columnOptions' => ['colspan' => 4],
-					'options' => ['inline'=>true, 'class' => $class_prefix . $chroma_item->id ],
+					'options' => ['inline'=>true, 'class' => 'ItemChromaLuxe' ],
 				],
 		        'price_chroma' => [
 					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $chroma_item->id],
+					'options' => ['readonly' => true, 'class' => 'form-control ItemChromaLuxe'],
 				],
 			],
-		]),
-		        ],
-		        [ /** ********************************************* */
-		            'label' => Yii::t('store', 'Fine Art'),
-					'headerOptions' => ['class' => 'order-option',
-								  'data-item_id' => $fineart_item->id,
-								  'data-item_name' => $fineart_item->libelle_long,
-								  'data-item_vat' => $fineart_item->taux_de_tva,
-					],
-		            'content' => Form::widget([
+		])
+	?>		
+	</div>
+	
+	<div class="yiipanel-Tirage">	
+	<?= Form::widget([
 		    'model' => $detail,
 		    'form' => $form,
 		    'columns' => 5,
 		    'attributes' => [				
 		        'tirage_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Tirage', true),
-					'options' => ['class' => 'form-control '.$class_prefix . $fineart_item->id],
+					'items' => Item::getListForCategory('Tirage', true) + Item::getListForCategory('Canvas'),
+					'options' => ['class' => 'form-control ItemTirage ItemCanvas'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_tirage' => [
 					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $fineart_item->id]
+					'options' => ['readonly' => true, 'class' => 'form-control ItemTirage ItemCanvas']
 				],
 		        'finish_id' => [
 					'type' => Form::INPUT_RADIO_LIST,
 					'items' => Item::getListForCategory('Finition'),
-					'options' => ['inline'=>true, 'class' => $class_prefix . $fineart_item->id],
+					'options' => ['inline'=>true, 'class' => 'ItemTirage'],
 		            'columnOptions' => ['colspan' => 5],
 				],
-		        'note' => [
-					'type' => Form::INPUT_TEXT,
-		            'columnOptions' => ['colspan' => 5],
-				],
+//		        'note' => [
+//					'type' => Form::INPUT_TEXT,
+//		            'columnOptions' => ['colspan' => 5],
+//				],
 			],
 		]).
 		Form::widget([
@@ -106,12 +89,12 @@ Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour
 		        'chassis_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
 					'items' => Item::getListForCategory('Chassis', true),
-					'options' => ['class' => 'form-control '.$class_prefix . $fineart_item->id],
+					'options' => ['class' => 'form-control ItemCanvas'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_chassis' => [
 					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $fineart_item->id]
+					'options' => ['readonly' => true, 'class' => 'form-control ItemCanvas']
 				],
 			],
 		]).
@@ -123,12 +106,12 @@ Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour
 		        'support_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
 					'items' => Item::getListForCategory('Support', true),
-					'options' => ['class' => 'form-control '.$class_prefix . $fineart_item->id],
+					'options' => ['class' => 'form-control ItemTirage'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_support' => [
 					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $fineart_item->id]
+					'options' => ['readonly' => true, 'class' => 'form-control ItemTirage']
 				],
 			],
 		]).
@@ -140,12 +123,12 @@ Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour
 		        'protection_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
 					'items' => Item::getListForCategory('Vernis de protection', true),
-					'options' => ['class' => 'form-control '.$class_prefix . $fineart_item->id],
+					'options' => ['class' => 'form-control ItemTirage'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_protection' => [
 					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $fineart_item->id]
+					'options' => ['readonly' => true, 'class' => 'form-control ItemTirage']
 				],
 			],
 		]).
@@ -157,31 +140,26 @@ Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour
 		        'filmuv_bool' => [
 					'type' => Form::INPUT_CHECKBOX,
 		            'columnOptions' => ['colspan' => 4],
-					'options' => ['class' => $class_prefix . $fineart_item->id],
+					'options' => ['class' => 'ItemTirage'],
 				],			
 		        'price_filmuv' => [
 					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $fineart_item->id]
+					'options' => ['readonly' => true, 'class' => 'form-control ItemTirage']
 				],
 			],
-		]).
-		'',
-		        ],
-		        [ /** ********************************************* */
-		            'label' => Yii::t('store', 'Miscellaneous Item'),
-					'headerOptions' => ['class' => 'order-option',
-								  'data-item_id' => $free_item->id,
-								  'data-item_name' => $free_item->libelle_long,
-								  'data-item_vat' => $free_item->taux_de_tva,
-					],
-		            'content' => Form::widget([
+		])
+	?>	
+	</div>
+	
+	<div class="yiipanel-Divers">		
+	<?= Form::widget([
 		    'model' => $detail,
 		    'form' => $form,
 		    'columns' => 6,
 		    'attributes' => [
 		        'free_item_libelle' => [
 					'type' => Form::INPUT_TEXT,
-					'options' => ['class' => 'form-control '. $class_prefix . $free_item->id],
+					'options' => ['class' => 'form-control '. 'ItemDivers'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'free_item_price_htva' => [
@@ -193,7 +171,7 @@ Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour
 					        'groupSeparator' => '',
 					        'autoGroup' => false
 						],
-						
+						'class' => 'form-control '. 'ItemDivers',
 					],	
 				],
 		        'free_item_vat' => [
@@ -205,17 +183,16 @@ Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour
 					        'groupSeparator' => '',
 					        'autoGroup' => false
 						], 
+						'class' => 'form-control '. 'ItemDivers',
 					],	
 					'fieldConfig' => ['addon' => ['append' => ['content'=>'%']]],
 				],
 			],
-		]),
-		        ],
-		    ],
-		]);
-	?>
+		])
+	?>	
+	</div>
 	
-	<div id="store-form-shared">
+	<div class="yiipanel-Common">	
 	<?= Form::widget([
 		    'model' => $detail,
 		    'form' => $form,
@@ -224,37 +201,37 @@ Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour
 		        'corner_bool' => [
 					'type' => Form::INPUT_CHECKBOX,
 		            'columnOptions' => ['colspan' => 5/*4*/],
-					'options' => ['class' => $class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+					'options' => ['class' => 'ItemChromaLuxe ItemTirage'],
 				],			
 		        'frame_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
 					'items' => Item::getListForCategory('Cadre', true),
-					'options' => ['class' => 'form-control '.$class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+					'options' => ['class' => 'form-control ItemChromaLuxe ItemTirage'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_frame' => [
 					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+					'options' => ['readonly' => true, 'class' => 'form-control ItemChromaLuxe ItemTirage'],
 				],
 
 		        'montage_bool' => [
 					'type' => Form::INPUT_CHECKBOX,
-					'options' => ['class' => $class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+					'options' => ['class' => 'ItemChromaLuxe ItemTirage'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_montage' => [
 					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+					'options' => ['readonly' => true, 'class' => 'form-control ItemChromaLuxe ItemTirage'],
 				],
 
 		        'renfort_bool' => [
 					'type' => Form::INPUT_CHECKBOX,
-					'options' => ['class' => $class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+					'options' => ['class' => 'ItemChromaLuxe ItemTirage'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_renfort' => [
 					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true, 'class' => 'form-control '.$class_prefix . $chroma_item->id. ' '.$class_prefix . $fineart_item->id],
+					'options' => ['readonly' => true, 'class' => 'form-control ItemChromaLuxe ItemTirage'],
 				],
 			],
 		])

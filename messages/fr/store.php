@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-	/** General sentenses */
+	/** General sentenses */	
 	"Items' Associated Tasks" => 'Tâches associées aux articles',
 	'Account lines sucessfully balanced.' => 'Le compte a été approvisionné et les lignes ont été équilibrées.',
 	'Accounting' => 'Comptabilité',
@@ -47,6 +47,7 @@ return [
 	'Bank Transfer. Thank You.' => 'Virement. Merci.',
 	'Bids' => 'Devis',
 	'Bill Bills of Materials' => 'Facturer des bons de livraisons',
+	'Bill Date' => 'Facturation',
 	'Bill Sent' => 'Facturé',
 	'Bill To' => 'Facturer',
 	'Bill all BOMs' => 'Facturer tous les bons de livraisons',
@@ -68,6 +69,7 @@ return [
 	'Chroma Type' => 'Type de ChromaLuxe',
 	'Clear Glossy' => 'Transparent Brillant',
 	'Clear Mat' => 'Transparent Mat',
+	'Client Account' => 'Compte client',
 	'Client Accounts' => 'Comptes clients',
 	'Client has no email address. No notification mail sent.' => "Le client n'a pas d'adresse email; il n'a pas été averti de la réalisation de sa commande.",
 	'Client updated' => 'Fiche client mise à jour',
@@ -163,6 +165,9 @@ return [
 	'Labels' => 'Etiquettes',
 	'Lang' => 'Langue',
 	'Last Update' => 'Dernière MàJ',
+	'Late Unpaid Bills - 2nd Reminder' => 'Factures impayées - Deuxième Rappel',
+	'Late Unpaid Bills - Last Reminder' => 'Factures impayées - Dernier Rappel',
+	'Late Unpaid Bills' => 'Factures impayées',
 	'Libelle Court' => 'Libellé',
 	'Localite' => 'Localité',
 	'Mail sent' => 'Message envoyé',
@@ -189,8 +194,10 @@ return [
 	'No work to submit' => "Il n'y a pas de travail à réaliser",
 	'No' => 'Non',
 	'None' => 'Aucun',
+	'Nothing to report.' => 'Aucun rapport.',
 	'Numero TVA' => 'Numéro TVA',
 	'Numero' => 'Numéro',
+	'Object' => 'Objet',
 	'Opening Balance' => 'Situation',
 	'Operation is not developed yet.' => "L'opération ou l'action n'a pas encore été développée.",
 	'Order Date' => 'Commande',
@@ -218,6 +225,7 @@ return [
 	'Picture' => 'Image',
 	'Prenom' => 'Prénom',
 	'Prepaid' => 'Acompte',
+	'Previous Orders' => 'Commandes précédentes',
 	'Price Chassis' => 'Prix Châssis',
 	'Price Chroma' => 'Prix ChromaLuxe',
 	'Price Collage' => 'Prix Collage',
@@ -250,9 +258,6 @@ return [
 	'Reference tables' => 'Tables de référence',
 	'Reference' => 'Référence',
 	'Related' => 'Lien',
-	'Reminder Type 1' => 'Rappel',
-	'Reminder Type 2' => 'Deuxième rappel',
-	'Reminder Type 3' => 'Dernier rappel',
 	'Renfort Bool' => 'Renforts',
 	'Replace' => 'Remplacer',
 	'Round Corners' => 'Coins arrondis',
@@ -342,53 +347,15 @@ return [
 	'You can only have one rebate line per order.' => "Vous ne pouvez avoir qu'une seule ligne de remise/surcoût par commande.",
 	'You did not check any bill.' => "Vous n'avez pas coché de facture en regard du dépôt d'argent.",
 	'Your Account Summary' => 'Extraits de votre compte',
-	'Your {document} is ready.' => 'Votre {document} est prêt(e).', // document is TYPE_ORDER 2015-1NNNNN.
 	'at' => 'à',
 	'by' => 'par',
 	'for' => 'pour',
 	'{document} updated' => '{document} mise à jour',
-	'Nothing to report.' => 'Aucun rapport.',
+	'Cuts' => 'Découpes',
+	'Your account statement.' => 'Votre extrait de compte.',
+	'Please read attached document(s).' => 'Veuillez lire le(s) document(s) joint(s) à ce message. Merci.',
 	
-	'Export: VAT Exemption according to Art.21 §3rd 7° d) of the VAT Law Code.' => 'Exportation: Exempt de TVA selon Art.21 §3 7° d) du code de la TVA.',
-	'Export: VAT Exemption according to Art.42 §3rd 3° d) of the VAT Law Code.' => 'Exportation: Exempt de TVA selon Art.42 §3 3° d) du code de la TVA.',
-	
-	'Previous Orders' => 'Commandes précédentes',
-	'Unpaid Bills' => 'Factures impayées',
-	'Client Account' => 'Compte client',
-	'Object' => 'Objet',
-	'Unpaid Bills' => 'Factures impayées',
-	'Late Unpaid Bills' => 'Factures impayées',
-	'Late Unpaid Bills - 2nd Reminder' => 'Factures impayées - Deuxième Rappel',
-	'Late Unpaid Bills - Last Reminder' => 'Factures impayées - Dernier Rappel',
-	'Bill Date' => 'Facturation',
-	'Order Date' => 'Commande',
-	'Your Client Account' => 'Votre compte client',
-	
-	'Brussels, {0}' => 'Bruxelles, le {0}',
-	
-	'LATE_BILL_COVER1::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
-	'LATE_BILL_COVER1::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE55 2100 3814 9344</strong>.",
-	'LATE_BILL_COVER1::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER1::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Labo JJ. Micheli,",
-
-	'LATE_BILL_COVER2::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
-	'LATE_BILL_COVER2::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE55 2100 3814 9344</strong>.",
-	'LATE_BILL_COVER2::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER2::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Labo JJ. Micheli,",
-
-	'LATE_BILL_COVER3::BEFORE_LIST' => "Malgré nos derniers rappels, nous n’avons toujours pas été crédité de vos paiements (*).",
-	'LATE_BILL_COVER3::AFTER_LIST'  => "Sans régularisation de votre part dans les 15 jours nous serons obligé de confier votre dossier au tribunal compétent, tous frais à votre charge.",
-	'LATE_BILL_COVER3::CALL_ACTION' => "Si vous estimez qu’un problème quelconque vous empêche de vous acquitter de cette dette,
-veuillez prendre contact avec notre service comptable au plus tôt
-au n°&nbsp;de tel 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85.",
-	'LATE_BILL_COVER3::GREETINGS' => "(*) Voir annexe(s) jointe(s).</p><p>Pour Labo JJ. Micheli,",
-
-	'ACCOUNT_UNBALANCED::BEFORE_LIST' => "Nous nous référons à notre précédent relevé de compte resté sans suite à ce jour. Nous nous permettons de vous rappeler avec insistance les factures ci-dessous arrivées à échéance.",
-	'ACCOUNT_UNBALANCED::AFTER_LIST' => " ",
-	'ACCOUNT_UNBALANCED::CALL_ACTION' => "Nous vous demandons d'avoir l'obligeance de régulariser votre situation immédiatement. Si votre paiement a été exécuté entre-temps, vous voudrez bien ne pas tenir compte du présent rappel.",
-	'ACCOUNT_UNBALANCED::GREETINGS' => "Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de nos sentiments distingués.</p><p>Pour Labo JJ. Micheli,<br />La comptabilité.",
-	
-	/** error messages for item.js, loaded from _js_load_data view */
+	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',
 	'Surface too large.' => "Surface supérieure à 18700 cm2.",
 	'Width or height too large.' => "Largeur ou hauteur trop grande.",
@@ -398,7 +365,48 @@ au n°&nbsp;de tel 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85.",
 	'You must enter width and height.' => "Vous devez entrer les mesures de l'article.",
 	'You must specify the type of ChromaLuxe.' => "Vous devez préciser le type de ChromaLuxe.",
 
+	/** Mails */
+	'Your {document} is ready.' => 'Votre {document} est prêt(e).', // document is TYPE_ORDER 2015-1NNNNN.
 
+	/** Letters: Headings, subjects, date, place & Footers */
+	'Brussels, {0}' => 'Bruxelles, le {0}',
+	'Your Client Account' => 'Votre compte client',
+	'Unbalanced Orders' => 'Extrait de compte',
+
+	/** Letters: General texts & watermarks */
+	'ACCOUNT_UNBALANCED::AFTER_LIST' => " ",
+	'ACCOUNT_UNBALANCED::BEFORE_LIST' => "Nous nous référons à notre précédent relevé de compte resté sans suite à ce jour. Nous nous permettons de vous rappeler avec insistance les factures ci-dessous arrivées à échéance.",
+	'ACCOUNT_UNBALANCED::CALL_ACTION' => "Nous vous demandons d'avoir l'obligeance de régulariser votre situation immédiatement. Si votre paiement a été exécuté entre-temps, vous voudrez bien ne pas tenir compte du présent rappel.",
+	'ACCOUNT_UNBALANCED::GREETINGS' => "Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de nos sentiments distingués.</p><p>Pour Labo JJ. Micheli,<br />La comptabilité.",
+
+	'Reminder Type 0' => 'Duplicatat',
+	'Duplicate' => 'Duplicatat',
+	'LATE_BILL_COVER0::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE55 2100 3814 9344</strong>.",
+	'LATE_BILL_COVER0::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
+	'LATE_BILL_COVER0::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
+	'LATE_BILL_COVER0::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Labo JJ. Micheli,",
+
+	'Reminder Type 1' => 'Rappel',
+	'Reminder' => 'Rappel',
+	'LATE_BILL_COVER1::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE55 2100 3814 9344</strong>.",
+	'LATE_BILL_COVER1::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
+	'LATE_BILL_COVER1::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
+	'LATE_BILL_COVER1::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Labo JJ. Micheli,",
+
+	'Reminder Type 2' => 'Deuxième rappel',
+	'2nd Reminder' => 'Deuxième Rappel',
+	'LATE_BILL_COVER2::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE55 2100 3814 9344</strong>.",
+	'LATE_BILL_COVER2::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
+	'LATE_BILL_COVER2::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
+	'LATE_BILL_COVER2::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Labo JJ. Micheli,",
+
+	'Reminder Type 3' => 'Dernier rappel',
+	'Last Reminder' => 'Dernier Rappel',
+	'LATE_BILL_COVER3::AFTER_LIST'  => "Sans régularisation de votre part dans les 15 jours nous serons obligé de confier votre dossier au tribunal compétent, tous frais à votre charge.",
+	'LATE_BILL_COVER3::BEFORE_LIST' => "Malgré nos derniers rappels, nous n’avons toujours pas été crédité de vos paiements (*).",
+	'LATE_BILL_COVER3::CALL_ACTION' => "Si vous estimez qu’un problème quelconque vous empêche de vous acquitter de cette dette, veuillez prendre contact avec notre service comptable au plus tôt au n°&nbsp;de tel 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85.",
+	'LATE_BILL_COVER3::GREETINGS' => "(*) Voir annexe(s) jointe(s).</p><p>Pour Labo JJ. Micheli,",
+	
 	/** roles */
 	'admin'	=> 'Superviseur',
 	'compta' => 'Comptable',

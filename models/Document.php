@@ -447,7 +447,7 @@ class Document extends _Document
 //		}
 
 		if($copy->document_type == self::TYPE_BILL) // get a new official bill number
-			$copy->name = substr($bom->due_date,0,4).'-'.Sequence::nextval('bill_number');
+			$copy->name = substr($this->due_date,0,4).'-'.Sequence::nextval('bill_number'); // $this->due_date or $copy->due_date?
 		
 		$copy->status = self::STATUS_OPEN;
 		$copy->save();
@@ -631,6 +631,68 @@ class Document extends _Document
 	
 	
 	public function generatePdf($controller, $filename = null) {
+		$viewBase = '@app/modules/order/views/document/';
+	    $header  = $controller->renderPartial($viewBase.'_print_headerA5', ['model' => $this]);
+	    $content = $controller->renderPartial($viewBase.'_printA5', ['model' => $this]);
+	    $footer  = $controller->renderPartial($viewBase.'_print_footerA5', ['model' => $this]);
+
+		$pdfData = [
+	        // set to use core fonts only
+	        'mode' => Pdf::MODE_CORE, 
+	        // A4 paper format
+	        'format' => 'A5', 
+	        // portrait orientation
+	        'orientation' => Pdf::ORIENT_PORTRAIT, 
+	        // stream to browser inline
+	        'destination' => Pdf::DEST_BROWSER, 
+	        // your html content input
+	        'content' => $content,  
+	        // format content from your own css file if needed or use the
+	        // enhanced bootstrap css built by Krajee for mPDF formatting 
+	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+	        // any css to be embedded if required
+			'cssInline' => '.kv-wrap{padding:14px;}' .
+	        	'.kv-heading-1{font-size:13px}'.
+                '.kv-align-center{text-align:center;}' .
+                '.kv-align-left{text-align:left;}' .
+                '.kv-align-right{text-align:right;}' .
+                '.kv-align-top{vertical-align:top!important;}' .
+                '.kv-align-bottom{vertical-align:bottom!important;}' .
+                '.kv-align-middle{vertical-align:middle!important;}' .
+                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
+                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
+                '.kv-table-caption{font-size:1.1em;padding:6px;border:1px solid #ddd;border-bottom:none;}' .
+                'table{font-size:0.8em;}'
+				,
+	         // set mPDF properties on the fly
+			'marginHeader' => 5,
+			'marginFooter' => 5,
+			'marginTop' => 15,
+			'marginBottom' => 25,
+			'marginLeft' => 5,
+			'marginRight' => 5,
+			'options' => [],
+	         // call mPDF methods on the fly
+	        'methods' => [ 
+	        //    'SetHeader'=>['Laboratoire JJ Micheli'], 
+	            'SetHTMLHeader'=> $header,
+	            'SetHTMLFooter'=> $footer,
+	        ]
+		];
+
+		if($filename) {
+			$pdfData['destination'] = Pdf::DEST_FILE;
+			$pdfData['filename'] = $filename;
+		} else {
+			$pdfData['destination'] = Pdf::DEST_BROWSER;
+		}
+
+    	$pdf = new Pdf($pdfData);
+		return $pdf->render();
+	}
+
+
+	public function generatePdfA4($controller, $filename = null) {
 		$viewBase = '@app/modules/order/views/document/';
 	    $header  = $controller->renderPartial($viewBase.'_print_header', ['model' => $this]);
 	    $content = $controller->renderPartial($viewBase.'_print', ['model' => $this]);

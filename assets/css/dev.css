@@ -1,3 +1,19 @@
 .navbar-inverse {
 	background-color: #222;
 }
+
+.item {
+	text-align: center;
+	font-size: 10px;
+	border: 1px dotted black;
+	background-color: #eee;
+	vertical-align: middle;
+}
+
+.item_orange {
+	background-color: #fd8;
+}
+
+.item_green {
+	background-color: #8d8;
+}

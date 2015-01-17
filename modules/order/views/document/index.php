@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			[
 	            'label' => Yii::t('store', 'Amount'),
-				'attribute' => 'price_htva',
+				'attribute' => 'price_tvac',
 				'format' => 'currency',
 				'hAlign' => GridView::ALIGN_RIGHT,
 				'noWrap' => true,

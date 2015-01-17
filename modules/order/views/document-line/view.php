@@ -37,15 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	?>
 
 	<?php
-		if( $old = $model->getDocumentLineDetails()->one() ) {
-		 	$chroma_item  = Item::find()->where(['categorie'=>'ChromaLuxe'])->one();
-			$fineart_item = Item::find()->where(['categorie'=>'Fine Arts'])->one();
-			$detail = $model->getDetail();
-		 	if($model->item_id == $chroma_item->id)
+		if( $detail = $model->getDetail() ) {
+		 	if($model->isChromaLuxe())
 				echo $this->render('../document-line-detail/_view_chroma', [
 				    'model' => $detail
 			    ]);
-			else if($model->item_id == $fineart_item->id)
+			else if($model->isTirage(true)) // tirage OR canvas
 				echo $this->render('../document-line-detail/_view_fineart', [
 				    'model' => $detail
 			    ]);

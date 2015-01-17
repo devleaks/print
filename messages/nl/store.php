@@ -214,7 +214,34 @@ return [
 	'Works that are Late' => 'Travaux en retard',
 	'Works' => 'Travaux',
 	'Yes' => 'Oui',
+	
+	/** Mail */
 	'Your {document} is ready.' => 'Uw {document} is klaar.', // document is TYPE_ORDER 2015-1NNNNN.
+	
+	/** Letters: Headings, subjects, date, place & Footers */
+	'Brussels, {0}' => 'Brussel, {0}',
+	'Your Client Account' => 'Uw Klant ',	
+
+	/** Letters: General texts */
+	'ACCOUNT_UNBALANCED::BEFORE_LIST' => "Nous nous référons à notre précédent relevé de compte resté sans suite à ce jour. Nous nous permettons de vous rappeler avec insistance les factures ci-dessous arrivées à échéance.",
+	'ACCOUNT_UNBALANCED::AFTER_LIST' => " ",
+	'ACCOUNT_UNBALANCED::CALL_ACTION' => "Nous vous demandons d'avoir l'obligeance de régulariser votre situation immédiatement. Si votre paiement a été exécuté entre-temps, vous voudrez bien ne pas tenir compte du présent rappel.",
+	'ACCOUNT_UNBALANCED::GREETINGS' => "Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de nos sentiments distingués.</p><p>Pour Labo JJ. Micheli,<br />La comptabilité.",
+
+	'LATE_BILL_COVER1::BEFORE_LIST' => "Bij controle van uw rekening in onze boeken bemerken wij dat een bedrag nog open staat. Het betreft met de volgende factuur(s):",
+	'LATE_BILL_COVER1::AFTER_LIST'  => "Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE55 2100 3814 9344</strong>.",
+	'LATE_BILL_COVER1::CALL_ACTION' => "Indien u deze betaling intussen reeds zou hebben uitgevoerd, gelieve u deze herinnering als niet geschreven te beschouwen.",
+	'LATE_BILL_COVER1::GREETINGS' => "Met hoogachting,</p><p>Voor Labo JJ. Micheli,",
+
+	'LATE_BILL_COVER2::BEFORE_LIST' => "Uit onze boekhouding blijkt dat, ondanks onze herinneringsbrief van verlede maand, volgende facturen nog niet betaald zijn:",
+	'LATE_BILL_COVER2::AFTER_LIST'  => "Wij verzoeken u dan ook met aandrang het achterstallige bedrag per kerende te betalen op onze rekening nr <strong>BE55 2100 3814 9344</strong>.",
+	'LATE_BILL_COVER2::CALL_ACTION' => "U zal ongetwijfeld begrijpen dat wij genoodzaakt zijn de strikte naleving van onze betalingsvoorwaarden te eisen.  D.w.z. dat intresten verschuldigd zullen zijn.",
+	'LATE_BILL_COVER2::GREETINGS' => "Hoogachtend,</p><p>Voor Labo JJ. Micheli,",
+
+	'LATE_BILL_COVER3::BEFORE_LIST' => "Ondanks herhaalde herinneringen blijkt uit mijn boekhouding dat de volgende factuur nog steeds niet betaald is:",
+	'LATE_BILL_COVER3::AFTER_LIST'  => "Bij deze brief wil ik u een laatste keer verzoeken dit bedrag over te maken op mijn rekeningnummer <strong>BE55 2100 3814 9344</strong>.",
+	'LATE_BILL_COVER3::CALL_ACTION' => "Te uwer informatie verwijs ik hierbij naar art. E. van onze algemene verkoopsvoorwaarden.",
+	'LATE_BILL_COVER2::GREETINGS' => "Hoogachtend,</p><p>Voor Labo JJ. Micheli,",
 	
 	/** roles */
 	'admin'	=> 'Superviseur',
@@ -224,7 +251,10 @@ return [
 	'worker' => 'Employé',
 	
 	/** "Object" Types and Statuses */
+	'ACREDIT' => 'Crédit',
 	'ACTIVE' => 'Actief',
+	'ADEBIT' => 'Débit',
+	'BALANCED' => 'Payé',
 	'BID' => 'Aanbod',
 	'BILL' => 'Faktuur',
 	'BILLED' => 'Facturé',
@@ -244,7 +274,10 @@ return [
 	'PAID' => 'Betald',
 	'PENDING' => 'Wacht',
 	'RETIRED' => 'Niet beschikbaar',
+	'SOLDE' => 'Solde à payer',
+	'TICKET' => 'Ticket de vente',
 	'TODO' => 'Te doen',
+	'TOPAY' => 'A payer',
 	'WORK' => 'Behandeling',
 
 	

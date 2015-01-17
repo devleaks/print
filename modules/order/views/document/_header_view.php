@@ -19,7 +19,6 @@ use kartik\widgets\SwitchInput;
 
 Icon::map($this);
 
-$client = $model->getClient()->one();
 ?>
 
 <div class="order-form">
@@ -128,7 +127,7 @@ $client = $model->getClient()->one();
 
             <div class="col-lg-6">
 				<div>
-				<?= $this->render('_header_client', ['client' => $client]) ?>
+				<?= $this->render('_header_client', ['client' => $model->getClient()->one()]) ?>
 				</div>
 			</div>
 

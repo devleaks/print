@@ -3,6 +3,7 @@
 use app\models\Account;
 use app\models\Payment;
 use kartik\builder\Form;
+use kartik\date\DatePicker;
 use kartik\grid\GridView;
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
@@ -45,6 +46,16 @@ $this->params['breadcrumbs'][] = $this->title;
 					],
 
 				],	
+			],
+	        'date' => [
+				'type' => Form::INPUT_WIDGET,
+				'widgetClass'=> DatePicker::classname(),
+				'options' => ['pluginOptions' => [
+	                'format' => 'yyyy-mm-dd',
+	                'todayHighlight' => true
+	            	],
+					'options' => ['data-intro' => "Vous devez mentionner une date de versement."],
+				],
 			],
 	        'method' => [
 				'type' => Form::INPUT_DROPDOWN_LIST,

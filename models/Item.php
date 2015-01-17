@@ -21,8 +21,7 @@ class Item extends _Item
 
 	/** special item references */
 	const TYPE_CHROMALUXE = '1';
-	const TYPE_FINEARTS   = 'FineArts';
-	const TYPE_FREE       = '#';
+	const TYPE_MISC       = '#';
 
 	/** item reference for special line "REMISE" */
 	const TYPE_REBATE = '%';
@@ -157,8 +156,10 @@ class Item extends _Item
 	/**
 	 * @return boolean whether price needs special calculation
 	 */
+	
 	public function hasPriceComputation() {
-		return in_array($this->categorie, ['ChromaLuxe', 'Cadre', 'Montage', 'ChromaSupport', 'Support']);
+		//return in_array($this->categorie, ['ChromaLuxe', 'Cadre', 'Montage', 'ChromaSupport', 'Support']);
+		return in_array($this->yii_category, ['ChromaLuxe', 'Tirage', 'Cadre', 'Montage', 'Canvas', 'Support', 'Protection']);
 	}
 
 	public function isSpecial() {

@@ -3,6 +3,8 @@
 namespace app\commands;
 
 use app\components\RuntimeDirectoryManager;
+use app\components\PdfDocumentGenerator;
+use app\models\Attachment;
 use app\models\Account;
 use app\models\Bill;
 use app\models\Credit;
@@ -67,111 +69,6 @@ class ComptaController extends Controller {
 	}
 
 
-	protected function generateCover($client_id, $bills) {
-		echo 'generateCover for '.$client_id.'..';
-
-		$subjects = [
-			Yii::t('store', 'Unpaid Bills'),
-			Yii::t('store', 'Late Unpaid Bills'),
-			Yii::t('store', 'Late Unpaid Bills - 2nd Reminder'),
-			Yii::t('store', 'Late Unpaid Bills - Last Reminder'),
-		];
-
-		// number of months late, 0..3(max)
-		$days = floor( (time() - strtotime($bills[0]->created_at)) / (60*60*24) );
-		$type = floor($days / 30);
-		if($type > 3) $type = 3;
-
-		$viewBase = '@app/modules/accnt/views/bill/';
-	    $table = $this->renderPartial($viewBase.'_late-bills', ['bills' => $bills]); // '<table><tr><td>Test Table</td></tr></table>'
-
-		$coverLetter = new CoverLetter([
-			'type' => 'LATE_BILL_COVER'.$type,
-			'client' => Client::findOne($client_id),			
-			'date' => date('d/m/Y', strtotime('now')),			
-			'subject' => $subjects[$type],			
-			'body' => Yii::t('store', 'Please read attached document.'),			
-			'table' => $table, 			
-			'watermark' => false,			
-			'viewBase' => '@app/modules/store/views/print/',			
-			'destBase' => RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_LATE_BILLS),
-			'controller' => $this,
-		]);
-		
-		$coverLetter->render();
-	}
-
-
-	protected function generateBill($bill) {
-		$days = floor( (time() - strtotime($bill->created_at)) / (60*60*24) );
-		$type = floor($days / 30);
-		if($type > 3) $type = 3;
-		
-		$dirname = RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_LATE_BILLS);
-		$name = $bill->client->sanitizeName();
-		$pathroot = $dirname.$name;
-		$billname = $bill->name.'.pdf';
-		$billpath = $pathroot.'-'.$billname;
-		echo $billpath;
-
-		$viewBase = '@app/modules/accnt/views/bill/';
-	    $header  = $this->renderPartial($viewBase.'_print_header', ['model' => $bill]);
-	    $content = $this->renderPartial($viewBase.'_print_bill', ['model' => $bill]);
-	    $footer  = $this->renderPartial($viewBase.'_print_footer', ['model' => $bill]);
-
-		$pdfData = [
-	        // set to use core fonts only
-	        'mode' => Pdf::MODE_CORE, 
-	        // A4 paper format
-	        'format' => Pdf::FORMAT_A4, 
-	        // portrait orientation
-	        'orientation' => Pdf::ORIENT_PORTRAIT, 
-	        // stream to browser inline
-	        'destination' => Pdf::DEST_FILE,
-	 		'filename' => $billpath,
-	        // your html content input
-	        'content' => $content,  
-	        // format content from your own css file if needed or use the
-	        // enhanced bootstrap css built by Krajee for mPDF formatting 
-	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-	        // any css to be embedded if required
-			'cssInline' => '.kv-wrap{padding:20px;}' .
-	        	'.kv-heading-1{font-size:18px}'.
-                '.kv-align-center{text-align:center;}' .
-                '.kv-align-left{text-align:left;}' .
-                '.kv-align-right{text-align:right;}' .
-                '.kv-align-top{vertical-align:top!important;}' .
-                '.kv-align-bottom{vertical-align:bottom!important;}' .
-                '.kv-align-middle{vertical-align:middle!important;}' .
-                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}' .
-                'table{font-size:0.8em;}'
-				,
-	         // set mPDF properties on the fly
-			'marginHeader' => 10,
-			'marginFooter' => 10,
-			'marginTop' => 35,
-			'marginBottom' => 35,
-			'options' => [
-				'showWatermarkText' => true,
-			],
-	         // call mPDF methods on the fly
-	        'methods' => [ 
-	        //    'SetHeader'=>['Laboratoire JJ Micheli'], 
-	            'SetHTMLHeader'=> $header,
-	            'SetHTMLFooter'=> $footer,
-				'SetWatermarkText'=>Yii::t('store', 'Reminder Type '.$type),
-	        ]
-		];
-
-    	$pdf = new Pdf($pdfData);
-		$pdf->render();
-
-		echo 'generateBill for '.$bill->id.'..';
-	}
-
-	
     public function actionLateBills() {
 		echo "Starting ComptaController::actionLateBills ..";
 		// collect late bills:
@@ -181,83 +78,49 @@ class ComptaController extends Controller {
 					->andWhere(['<=','created_at',$late])
 					->orderBy('client_id, created_at asc'); // latest bill first
 		// loop over clients:
+		$clg = new PdfDocumentGenerator($this);
+		$dirName = RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_LATE_BILLS);
+		$viewBase = '@app/modules/accnt/views/bill/';
+
+		$watermarks = [
+			Yii::t('store', 'Duplicate'),
+			Yii::t('store', 'Reminder'),
+			Yii::t('store', '2nd Reminder'),
+			Yii::t('store', 'Last Reminder'),
+		];
+
 		$client_id = -1;
+		$bills = [];
+		$docs  = [];
 		foreach($q->each() as $bill) {
 			if($client_id == -1) $client_id = $bill->client_id;
 
-			$this->generateBill($bill);
+			// $fn = $this->generateBill($bill);
+			$days = floor( (time() - strtotime($bill->created_at)) / (60*60*24) );
+			$type = floor($days / 30);
+			if($type > 3) $type = 3;
+			$fn = $clg->document($bill, $dirName, $viewBase, $watermarks[$type]);
+			$docs[] = new Attachment(['filename' => $fn, 'title' => $bill->name]);
 			$bills[] = $bill;
+			echo 'lateBill '.$fn.'..';
 
 			// generate cover for previous
 			if($bill->client_id != $client_id) {
-				$this->generateCover($bill->client_id, $bills, $type);
+				echo 'generateCover for '.$client_id.'..';
+				$clg->lateBills($bill->client_id, $bills, $docs, true);
 				$bills= [];
+				$docs = [];
 				$client_id = $bill->client_id;
 			}
 		}
 		// generate cover for last
-		if($client_id != -1) $this->generateCover($client_id, $bills);
+		if($client_id != -1) {
+			echo 'generateCover for '.$client_id.'..';
+			$clg->lateBills($client_id, $bills, $docs, true);
+		}
+
  		echo ". done.\r\n";
     }
-
-
-	protected function generateExtract($client_id) {
-		echo 'generateExtract for '.$client_id.'..';
-		$client = Client::findOne($client_id);
-
-		// we show from latest payment or oldest unpaid, which ever is oldest.
-		$latest_unpaid_accnt_line = Account::find()
-			->andWhere(['client_id' => $client->id])
-			->andWhere(['status' => Account::TYPE_DEBIT])
-			->orderBy('created_at asc')
-			->one();
-		if(!$latest_unpaid_accnt_line) {
-			echo 'Impossible: Account '.$client_id.' is negative and no unpaid bill found. Please check account manually.';
-			return;
-		}
-		$latest = $latest_unpaid_accnt_line->created_at;
-
-		$latest_deposit = Account::find()
-			->andWhere(['client_id' => $client->id])
-			->andWhere(['status' => Account::TYPE_CREDIT])
-			->orderBy('created_at desc')
-			->one();
-
-		if($latest_deposit)
-			$latest = $latest_deposit->created_at < $latest_unpaid_accnt_line->created_at ? $latest_deposit->created_at : $latest_unpaid_accnt_line->created_at;
-		
-		$viewBase = '@app/modules/accnt/views/account/';
-	    $table = $this->renderPartial($viewBase.'_print_extract_lines', [
-			'to_date' => $latest,
-			'lines'  => Account::find()
-									->andWhere(['client_id' => $client->id])
-									->andWhere(['>=', 'created_at', $latest])
-									->orderBy('created_at asc'),
-			'opening_balance' => Account::getBalance($client->id, $latest),
-			'closing_balance' => Account::getBalance($client->id),
-			'dataProvider' => new ActiveDataProvider([
-				'query' => Account::find()
-									->andWhere(['client_id' => $client->id])
-									->andWhere(['>=', 'created_at', $latest])
-									->orderBy('created_at asc')
-			])
-		]); // '<table><tr><td>Test Table</td></tr></table>';
-
-		$coverLetter = new CoverLetter([
-			'type' => 'ACCOUNT_UNBALANCED',
-			'client' => $client,			
-			'date' => date('d/m/Y', strtotime('now')),			
-			'subject' => Yii::t('store', 'Your account statement.'),			
-			'body' => Yii::t('store', 'Please read attached document.'),			
-			'table' => $table, 			
-			'watermark' => false,			
-			'viewBase' => '@app/modules/store/views/print/',			
-			'destBase' => RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_ACCOUNT_SLIP),
-			'controller' => $this,
-		]);
-		
-		$coverLetter->render();
-	}
 
 
     public function actionClientAccounts() {
@@ -269,9 +132,9 @@ class ComptaController extends Controller {
 			  ->select(['client_id, sum(amount) as tot_amount'])
 			  ->groupBy('client_id')
 			  ->having(['<', 'sum(amount)', 0]);
-
+		$clg = new PdfDocumentGenerator($this);
 		foreach($query->each() as $negaccount)
-			$this->generateExtract($negaccount['client_id']);
+			$clg->accountExtract($negaccount['client_id']);
 
 		echo ". done.\r\n";
     }

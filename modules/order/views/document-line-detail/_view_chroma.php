@@ -28,7 +28,6 @@ $this->title = Yii::t('store', 'Order Line Details');
                 'attribute'=>'corner_bool',
 				'value' => Yii::t('store', $model->corner_bool ? 'Yes' : 'No'),
             ],
-            'price_corner',
             [
                 'attribute'=>'renfort_bool',
 				'value' => Yii::t('store', $model->renfort_bool ? 'Yes' : 'No'),
@@ -45,11 +44,6 @@ $this->title = Yii::t('store', 'Order Line Details');
 				'value' => Yii::t('store', $model->montage_bool ? 'Yes' : 'No'),
             ],
             'price_montage',
-            [
-                'label'=>Yii::t('store','Support'),
-                'attribute'=>'support_id',
-                'value'=> $model->support ? $model->support->libelle_long : Yii::t('store', 'None'), //'support.libelle_long',
-            ],
         ],
     ]) ?>
 

@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'libelle_long',
 	        [
 	            'attribute' => 'categorie',
-	            'filter' => ['Cadre' => 'Cadre', 'Collage' => 'Support', 'ChromaLuxe' => 'ChromaLuxe'],
+	            'filter' => ['Cadre' => 'Cadre', 'Collage' => 'Support', 'ChromaLuxe' => 'ChromaLuxe', 'UV' => 'UV'],
 	        ],
             // 'type_travaux_photos',
             // 'type_numerique',
@@ -58,12 +58,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
 				'class' => 'kartik\grid\ActionColumn',
-				'template' => '{view}',
+				'template' => '{view} {print}',
 				'buttons' => [
 	                'view' => function ($url, $model) {
 						$url = Url::to(['view-'.strtolower($model->yii_category), 'id' => $model->id]);
 	                    return Html::a('<i class="glyphicon glyphicon-eye-open"></i>', $url, [
 	                        'title' => Yii::t('store', 'View'),
+	                    ]);
+	                },
+	                'print' => function ($url, $model) {
+						$url = Url::to(['print', 'id' => $model->id]);
+	                    return Html::a('<i class="glyphicon glyphicon-print"></i>', $url, [
+	                        'title' => Yii::t('store', 'Print'), 'target' => '_blank',
 	                    ]);
 	                },
 				]

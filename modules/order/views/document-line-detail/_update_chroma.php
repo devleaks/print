@@ -12,13 +12,10 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$chroma_item  = Item::findOne(['reference'=>Item::TYPE_CHROMALUXE]);
 ?>
-<div class="document-line-options">
+<div class="document-line-update-options-chromaluxe">
 
-	<h4 class="order-option" data-item_id="<?= $chroma_item->id ?>" data-item_name="<?= $chroma_item->libelle_long ?>">
-		<span style="color: #eea236;">Chroma</span>Luxe
-	</h4>
+	<h4><span style="color: #eea236;">Chroma</span>Luxe</h4>
 
     <div>
 	

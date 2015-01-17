@@ -17,8 +17,10 @@ function arrondir_sup(i) {
 
 
 /** Items */
-function getItemById(id) {
+function getItemById(id, silence) {
 	console.log('getItemById: fetching '+id);
+	verbose = (typeof silence === "undefined");
+/*
 	item = null;
 	$.ajax({
 		type: "GET",
@@ -37,10 +39,17 @@ function getItemById(id) {
 		},
 	});
 	return item;
+*/
+	if(store_values.item[id] != undefined)
+		return store_values.item[id];
+	console.log('Not found: '+id);
+	if(verbose) add_error("ITEM_NOT_FOUND");
+	return null;
 }
 
 function getItemByReference(ref) {
 	console.log('getItemByReference: fetching '+ref);
+/*
 	item = null;
 	$.ajax({
 		type: "GET",
@@ -59,6 +68,12 @@ function getItemByReference(ref) {
 		},
 	});
 	return item;
+*/
+	if(store_values.item[store_values.item_ref[ref]] != undefined)
+		return store_values.item[store_values.item_ref[ref]];
+	console.log('Not found: '+ref);
+	add_error("ITEM_NOT_FOUND");
+	return null;
 }
 
 function getPrice(ref) {
@@ -117,21 +132,50 @@ function show_errors() {
 			errmsg += ' '+store_values.error_msg[store_values.errors[i]];
 			$("#store-missing-data").html(errmsg);
 		}
+		$('.document-line-options').toggle(true);
 	} else
 		$("#store-missing-data").html('');
 	$("#store-missing-data").toggle(has_error);
 	return has_error;
 }
 
+function needHandling() {
+	item_id = parseInt($("#documentline-item_id").val());
+	item = getItemById(item_id, true);
+	if(item == null) return false;
+	yii_category = item.yii_category;
+	if(yii_category != "ChromaLuxe" && yii_category != "Tirage" &&  yii_category != "Canvas" && yii_category != "Divers")
+		return false;
+	return item;
+}
+
+function isChromaLuxe() {
+	item = needHandling();
+	if(item)
+		return item.id == store_values.chroma;
+	return false;
+}
+
+function setItem(id, vat, name, category) {
+	$("#documentline-item_id").val(id);
+	$("#documentline-vat").val(vat);
+	$("#documentline-item-yii_category").val(category);
+	///ATTENTION SELECT_DISPLAY_ID HARDCODED HERE
+	test = $('#select2-chosen-2');
+	if($('#select2-chosen-2').length != 0)
+		$('#select2-chosen-2').html(name);
+	else
+		$('#select2-chosen-1').html(name);
+}
 
 /** Item dimensions. Raise error if not available */
 function getDimensions() {
-	needToFit = ($("#documentline-item_id").val() == store_values.item_id.chroma);
+	needToFit = isChromaLuxe(); // ($("#documentline-item_id").val() == store_values.chroma);
 	width = parseInt($("#documentline-work_width").val());
-	console.log('w '+width);
+	//console.log('w '+width);
 	if(width > 0) {
 		height = parseInt($("#documentline-work_height").val());
-		console.log('h '+height);
+		//console.log('h '+height);
 		if(height > 0) { // we have both
 			del_error("NO_WORK_SIZE");
 			// convention: width is smallest dimension
@@ -147,18 +191,20 @@ function getDimensions() {
 			}
 
 		} else {
+			//console.log('no height');
 			add_error("NO_WORK_SIZE");
 		}
 	} else {
+		//console.log('no width');
 		add_error("NO_WORK_SIZE");
 	}
 	return false;
 }
 
 /** utility function to selectively clear error message if not necessary */
-function need_dimensions() {
+function needDimensions() {
 	del_error("NO_WORK_SIZE");
-	if( $("#documentline-item_id").val() == store_values.item_id.chroma
+	if( $("#documentline-item_id").val() == store_values.chroma
 	||  $("#documentlinedetail-renfort_bool:enabled").is(':checked')
 	||  !isNaN(parseInt($("#documentlinedetail-frame_id:enabled").val())) 
 	||  !isNaN(parseInt($("#documentlinedetail-support_id:enabled").val())) 
@@ -170,8 +216,9 @@ function need_dimensions() {
  *	Changes in main order line
  *  Compute prices with quantity and VAT, triggers compute rebate/supplement
  */
-$("#documentline-quantity, #documentline-unit_price, #documentline-vat").change( function() {
+$("#documentline-quantity, #documentline-unit_price, #documentline-vat").change( function(event) {
 	// change displays with _virgule
+//	console.log('change from UNIT PRICE='+event.target.id+'=='+$("#documentline-unit_price").val());
 	$("#documentline-quantity_virgule").val($("#documentline-quantity").val().replace(".",","));
 	$("#documentline-unit_price_virgule").val($("#documentline-unit_price").val().replace(".",","));
 	$("#documentline-vat_virgule").val($("#documentline-vat").val().replace(".",","));
@@ -241,24 +288,20 @@ $("#documentline-extra_amount, #documentline-extra_type").change( function() {
 /**
  *	Unit Price Computations
  */
-
-$('#documentlinedetail-price_chroma:enabled').change(
-function (event) {
-	//console.log('change from CL'+event.target.id);
-	$("#documentline-unit_price").val(
-		  getVal('#documentlinedetail-price_chroma:enabled')
-		+ getVal('#documentlinedetail-price_frame:enabled')
-		+ getVal('#documentlinedetail-price_montage:enabled')
-		+ getVal('#documentlinedetail-price_renfort:enabled')
-	);
-	$("#documentline-unit_price").trigger('change');
-});
-
-$('#documentlinedetail-price_tirage:enabled, #documentlinedetail-price_support:enabled, #documentlinedetail-price_chassis:enabled, #documentlinedetail-price_protection:enabled, #documentlinedetail-price_filmuv:enabled').change(
+$('#documentlinedetail-price_chroma:enabled,\
+#documentlinedetail-price_tirage:enabled,\
+#documentlinedetail-price_support:enabled,\
+#documentlinedetail-price_chassis:enabled,\
+#documentlinedetail-price_protection:enabled,\
+#documentlinedetail-price_filmuv:enabled,\
+#documentlinedetail-price_frame:enabled,\
+#documentlinedetail-price_montage:enabled,\
+#documentlinedetail-price_renfort:enabled').change(
 function (event) {
 	//console.log('change from FA:'+event.target.id);
 	$("#documentline-unit_price").val(
-		  getVal('#documentlinedetail-price_tirage:enabled')
+		  getVal('#documentlinedetail-price_chroma:enabled')
+		+ getVal('#documentlinedetail-price_tirage:enabled')
 		+ getVal('#documentlinedetail-price_support:enabled')
 		+ getVal('#documentlinedetail-price_chassis:enabled')
 		+ getVal('#documentlinedetail-price_protection:enabled')
@@ -270,23 +313,30 @@ function (event) {
 	$("#documentline-unit_price").trigger('change');
 });
 
-/** common options trigger recomputation in respective item price */
+/** common options trigger recomputation in respective item price
 $('#documentlinedetail-price_frame:enabled, #documentlinedetail-price_montage:enabled, #documentlinedetail-price_renfort:enabled').change(
 function (event) {
 	item_id = parseInt($("#documentline-item_id").val());
-	switch(item_id) {
-		case store_values.item_id.chroma:
+	item = getItemById(item_id);
+	yii_category = item.yii_category;
+	switch(yii_category) {
+		case "ChromaLuxe":
 			$("#documentlinedetail-price_chroma:enabled").trigger('change');
 			break;
-		case store_values.item_id.fineart:
-			$("#documentlinedetail-tirage_id:enabled").trigger('change');	
+		case "Tirage":
+		case "Canvas":
+			tirage_disabled = $("#documentlinedetail-tirage_id").prop('disabled');
+			if(tirage_disabled)
+				$("#documentlinedetail-tirage_id:disabled").trigger('change');	
+			else
+				$("#documentlinedetail-tirage_id:enabled").trigger('change');	
 			break;
 	} // other items: no nothing
-});
+});*/
 
 
 /**
- *	Options item price calculation
+ *	Options price calculation
  */
 
 /** generic price based on linear regression a x + b with x being either perimeter or surface in centimeters */
@@ -304,20 +354,23 @@ function price_frame_meter(w, h, frame) {
 function price_regression(w, h, item, use_surface) {
 	param_name = item.reference;
 	reg_a = getPrice(param_name+'_A');
-	console.log('price_regression: a='+reg_a);
+//	console.log('price_regression: a='+reg_a);
 	reg_b = getPrice(param_name+'_B');
-	console.log('price_regression: b='+reg_b);
+//	console.log('price_regression: b='+reg_b);
 	return price_linreg(w, h, reg_a, reg_b, use_surface);
 }
 
 /** frame */
 function price_frame() {
 	frame_id = parseInt($("#documentlinedetail-frame_id:enabled").val());
-	console.log('frame: '+frame_id);
+//	console.log('frame: '+frame_id);
 
 	if(frame_id > 0) {
-		if(!(dim = getDimensions()))
+		if(!(dim = getDimensions())) {
+			$("#documentlinedetail-price_frame:enabled").val('');
+			$("#documentlinedetail-price_frame:enabled").trigger('change');
 			return;
+		}
 		w = dim.width;
 		h = dim.height;
 	
@@ -347,7 +400,7 @@ function price_frame() {
 			$("#documentlinedetail-price_frame:enabled").val('');
 		}
 	} else {
-		need_dimensions();
+		needDimensions();
 		$("#documentlinedetail-price_frame:enabled").val('');
 	}
 	price_renfort(); // if no frame, renfort is no longer free
@@ -360,15 +413,19 @@ function price_renfort() {
 	renfort = $("#documentlinedetail-renfort_bool:enabled").is(':checked');
 /*
 	if(!renfort) {
-		need_dimensions();
+		needDimensions();
 		$("#documentlinedetail-price_renfort:enabled").val('');
 		$("#documentlinedetail-price_renfort:enabled").trigger('change');
 		return;
 	}
 */
 	dim = getDimensions();
-	if(renfort && !dim)
+	if(renfort && !dim) {
+		$("#documentlinedetail-price_renfort:enabled").val('');
+		$("#documentlinedetail-price_renfort:enabled").trigger('change');
 		return;
+	}
+
 	w = dim.width;
 	h = dim.height;
 	
@@ -384,7 +441,7 @@ function price_renfort() {
 		renfort = $("#documentlinedetail-renfort_bool:enabled").is(':checked');
 		//console.log('price_renfort: place refort: '+renfort);
 		if(renfort) {
-			minus_inside = ($("#documentline-item_id").val() == store_values.item_id.chroma) ? 40 : 20;
+			minus_inside = ($("#documentline-item_id").val() == store_values.chroma) ? 40 : 20;
 			price = 2 * (w + h - minus_inside) * getPrice('Renfort') / 100; // renfort placed 10cm inside, all perimeter
 			RenfortPrixMin = getPrice('RenfortPrixMin');			
 			if(price < RenfortPrixMin) price = RenfortPrixMin;
@@ -403,14 +460,17 @@ function price_filmuv() {
 	filmuv = $("#documentlinedetail-filmuv_bool:enabled").is(':checked');
 
 	if(!filmuv) {
-		need_dimensions();
+		needDimensions();
 		$("#documentlinedetail-price_filmuv:enabled").val('');
 		$("#documentlinedetail-price_filmuv:enabled").trigger('change');
 		return;
 	}
 
-	if(filmuv && !(dim = getDimensions()))
+	if(filmuv && !(dim = getDimensions())) {
+		$("#documentlinedetail-price_filmuv:enabled").val('');
+		$("#documentlinedetail-price_filmuv:enabled").trigger('change');
 		return;
+	}
 
 	w = dim.width;
 	h = dim.height;
@@ -431,8 +491,11 @@ function price_montage() {
 	price = 0;
 	if(!isNaN(frame_id) && montage) {
 		//console.log('montage:'+montage);
-		if(!(dim = getDimensions()))
+		if(!(dim = getDimensions())) {
+			$("#documentlinedetail-price_montage:enabled").val('');
+			$("#documentlinedetail-price_montage:enabled").trigger('change');
 			return;
+		}
 		w = dim.width;
 		h = dim.height;
 		price = (w + h) > store_values.param['LargeFrame'].value_int ? getPrice('Montage170L') : getPrice('Montage170S');
@@ -446,11 +509,14 @@ function price_montage() {
 
 /** ChromaLuxe */
 function price_chromaluxe() {
-	if ($("#documentline-item_id").val() != store_values.item_id.chroma)
+	if ($("#documentline-item_id").val() != store_values.chroma)
 		return;
 
-	if(!(dim = getDimensions(true)))
+	if(!(dim = getDimensions(true))) {
+		$("#documentlinedetail-price_chroma:enabled").val('');
+		$("#documentlinedetail-price_chroma:enabled").trigger('change');
 		return;
+	}
 
 	which = $('input[name="DocumentLineDetail[chroma_id]"]:checked').val();
 	//console.log('chromaluxe type:'+which);
@@ -529,7 +595,6 @@ $("input[name='DocumentLineDetail[montage_bool]']").change(function() {
 });
 
 $("#documentlinedetail-frame_id:enabled").change(function() {
-	//console.log('updated frame_id');
 	enableMontage();
 	price_frame();
 });
@@ -539,9 +604,10 @@ $("input[name='DocumentLineDetail[filmuv_bool]']").change(function() {
 	price_filmuv();
 });
 
-$("#documentlinedetail-tirage_id:enabled").change(function() {
+$("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled").change(function() {
 	// set tirage
-	item_id = parseInt($(this).val());
+	item_id = parseInt($("#documentlinedetail-tirage_id").val());//:enabled
+	// console.log('tirage_id: '+item_id);
 
 	$('div.field-documentlinedetail-finish_id').toggle(false);
 	$('div.field-documentlinedetail-note').toggle(false);
@@ -572,6 +638,11 @@ $("#documentlinedetail-tirage_id:enabled").change(function() {
 	
 	item = getItemById(item_id);
 	$('#documentlinedetail-price_tirage:enabled').val(item.prix_de_vente);
+//	console.log('tirage_id: prix: '+item.prix_de_vente);
+
+	// if it changed, need to change item_id as well
+	setItem(item.id, item.taux_de_tva, item.libelle_long, item.yii_category);
+
 	// enable or disable options depending on paper type
 	paper_type = item.fournisseur;
 	//console.log('Paper type: '+paper_type);
@@ -640,10 +711,11 @@ $("#documentlinedetail-tirage_id:enabled").change(function() {
 			$('div.field-documentlinedetail-price_frame').toggle(true);
 			$('div.field-documentlinedetail-montage_bool').toggle(true);
 			$('div.field-documentlinedetail-price_montage').toggle(true);
-			$('div.field-documentlinedetail-protection_id').toggle(true);
-			$('div.field-documentlinedetail-price_protection').toggle(true);
+			$('div.field-documentlinedetail-protection_id').toggle(false);
+			$('div.field-documentlinedetail-price_protection').toggle(false);
 
 			$('#documentlinedetail-note:enabled').val('');
+			$('#documentlinedetail-price_protection:enabled').val('');
 			$('#documentlinedetail-price_chassis:enabled').val('');
 			break;
 	}
@@ -652,41 +724,40 @@ $("#documentlinedetail-tirage_id:enabled").change(function() {
 
 $("#documentlinedetail-support_id:enabled").change(function() {
 	//console.log('udated support');
-	item_id = parseInt($("#documentlinedetail-support_id:enabled").val());
+	var item_id = parseInt($("#documentlinedetail-support_id:enabled").val());
 	if(isNaN(item_id)) { // none selected
-		need_dimensions();
+		needDimensions();
 		$('#documentlinedetail-price_support:enabled').val('');
 	} else {
 		if(!(dim = getDimensions()))
 			return;
-		w = dim.width;
-		h = dim.height;
-
-		item = getItemById(item_id);
-		price = arrondir_sup(price_regression(w, h, item, true));
+		var w = dim.width;
+		var h = dim.height;
+		var item = getItemById(item_id);
+		var price = arrondir_sup(price_regression(w, h, item, true));
 		$('#documentlinedetail-price_support:enabled').val(price);
 	}
 	$("#documentlinedetail-price_support:enabled").trigger('change');
 });
 
 $("#documentlinedetail-protection_id:enabled").change(function() {
-	item_id = parseInt($(this).val());
+	var item_id = parseInt($(this).val());
 	if(isNaN(item_id)) { // none selected
 		$('#documentlinedetail-price_protection:enabled').val('');
 	} else {
-		item = getItemById(item_id);
+		var item = getItemById(item_id);
 		$('#documentlinedetail-price_protection:enabled').val(item.prix_de_vente);
 	}
 	$('#documentlinedetail-price_protection:enabled').trigger('change');
 });
 
 $("#documentlinedetail-chassis_id:enabled").change(function() {
-	item_id = parseInt($(this).val());
+	var item_id = parseInt($(this).val());
 	//console.log('chassis='+item_id);
 	if(isNaN(item_id)) { // none selected
 		$('#documentlinedetail-price_chassis:enabled').val('');
 	} else {
-		item = getItemById(item_id);
+		var item = getItemById(item_id);
 		//console.log('got chassis='+item.id);
 		$('#documentlinedetail-price_chassis:enabled').val(item.prix_de_vente);
 	}
@@ -703,18 +774,15 @@ $("input[name='DocumentLineDetail[chroma_id]']").change(function() {
 });
 
 $("#documentline-work_width, #documentline-work_height").change(function(event) {
-	console.log('size changed');
-	item_id = parseInt($("#documentline-item_id").val());
-	if(item_id != store_values.item_id.chroma && item_id != store_values.item_id.fineart && item_id != store_values.item_id.freeitem)
-		return;
+	// console.log('size changed');
+	if(!needHandling()) return;
 
-	//console.log('updated size from '+event.target.id);
 	price_chromaluxe();
 	price_frame();
 	price_montage();
 	price_renfort();
 	price_filmuv();
-	$("#documentlinedetail-support_id:enabled").trigger('change');
+	$("#documentlinedetail-support_id:enabled").trigger('change'); // === price_support()
 });
 
 
@@ -781,47 +849,59 @@ $('#documentline-form').submit(function(e) {
         return;
 });
 
-function showPanel(item_id) {
-	class_prefix = '.'+store_values.class_prefix;
-
-	$(class_prefix+store_values.item_id.chroma).prop('disabled', true);
-	$(class_prefix+store_values.item_id.fineart).prop('disabled', true);
-	$(class_prefix+store_values.item_id.freeitem).prop('disabled', true);
-
-	$(class_prefix+item_id).prop('disabled', false);
-
-	$(class_prefix+store_values.item_id.chroma).find('input').prop('disabled', true);
-	$(class_prefix+store_values.item_id.fineart).find('input').prop('disabled', true);
-	$(class_prefix+store_values.item_id.freeitem).find('input').prop('disabled', true);
-
-	$(class_prefix+item_id).find('input').prop('disabled', false);
-
-	$("#store-form-shared").toggle(false);
-	enableMontage();
-
-	clean_errors();
-	switch(item_id) {
-		case store_values.item_id.chroma:
-			$("#store-form-shared").toggle(true);
-			$('#documentline-work_width').trigger('change');
-			break;
-		case store_values.item_id.fineart:
-			$("#documentlinedetail-tirage_id:enabled").trigger('change');	
-			break;
-		case store_values.item_id.freeitem:
-			$("#documentlinedetail-free_item_price_htva:enabled").trigger('change');	
-			break;
-	} // other items: no nothing
-
-}
-
 /** if user selects item with dpecial id, trigger tab opening */
 $("#documentline-item_id").change(
 function() {
-	item_id = parseInt($(this).val());
-	if(item_id == store_values.item_id.chroma || item_id == store_values.item_id.fineart || item_id == store_values.item_id.freeitem) {
-		$('.nav-tabs li[data-item_id="'+item_id+'"] a').tab('show');
-		showPanel(item_id);
+	$("ItemChromaLuxe").prop('disabled', true);
+	$("ItemTirage").prop('disabled', true);
+	$("ItemCanvas").prop('disabled', true);
+	$("ItemDivers").prop('disabled', true);
+
+	$("ItemChromaLuxe").find('input').prop('disabled', true);
+	$("ItemTirage").find('input').prop('disabled', true);
+	$("ItemCanvas").find('input').prop('disabled', true);
+	$("ItemDivers").find('input').prop('disabled', true);
+
+	$('.yiipanel-ChromaLuxe').toggle(false);
+	$('.yiipanel-Tirage').toggle(false);
+	$('.yiipanel-Divers').toggle(false);
+	$('.yiipanel-Common').toggle(false);
+
+	clean_errors();
+
+	var item = needHandling();
+	if(!item)
+		return;
+
+	var yii_category = item.yii_category;
+
+	// 1. Disable all fields, and re-enable those that are needed
+	$("Item"+yii_category).prop('disabled', false);
+	$("Item"+yii_category).find('input').prop('disabled', false);
+
+	// 2. Hide all fields and show those that are needed
+	$('.document-line-options').toggle(true);
+	$('.yiipanel-ChromaLuxe').toggle(yii_category == 'ChromaLuxe');
+	$('.yiipanel-Tirage').toggle(yii_category == 'Tirage' || yii_category == 'Canvas');
+	$('.yiipanel-Divers').toggle(yii_category == 'Divers');
+	$('.yiipanel-Common').toggle(yii_category == 'ChromaLuxe' || yii_category == 'Tirage' || yii_category == 'Canvas');
+
+	enableMontage();
+	clean_errors();
+
+	switch(yii_category) {
+		case "ChromaLuxe":
+			$('#documentline-work_width').trigger('change');
+			break;
+		case "Divers":
+			$("#documentlinedetail-free_item_price_htva:enabled").trigger('change');	
+			break;
+		case "Tirage":
+		case "Canvas":
+//			$("#documentlinedetail-tirage_id").prop('disabled', true);		
+			$("#documentlinedetail-tirage_id").val(item.id);	
+			$("#documentlinedetail-tirage_id:enabled").trigger('change');	
+			break;
 	}
 });
 
@@ -830,20 +910,27 @@ function () {
 	item_id   = $(this).data('item_id');
 	item_name = $(this).data('item_name');
 	item_vat  = $(this).data('item_vat');
-	$("#documentline-item_id").val(item_id);
-	$("#documentline-vat").val(item_vat);
-	
-	///ATTENTION SELECT_DISPLAY_ID HARDCODED HERE
-	test = $('#select2-chosen-2');
-	if($('#select2-chosen-2').length != 0)
-		$('#select2-chosen-2').html(item_name);
-	else
-		$('#select2-chosen-1').html(item_name);
-
-	showPanel(parseInt(item_id));
+	item_yii_category  = $(this).data('item_category');
+	setItem(item_id, item_vat, item_name, item_yii_category);
+	$("#documentline-item_id").trigger('change');
 });
+
+
 /**
  *	I N I T
  */
-$("#store-form-shared").toggle(false);
+$('.yiipanel-ChromaLuxe').toggle(false);
+$('.yiipanel-Tirage').toggle(false);
+$('.yiipanel-Divers').toggle(false);
+$('.yiipanel-Common').toggle(false);
+$('.document-line-options').toggle(false);
 clean_errors();
+
+$('#documentline-form').on("keyup keypress", function(e) {
+	var code = e.keyCode || e.which; 
+	console.log('keyb='+code);
+	if (code == 13) {               
+		e.preventDefault();
+		return false;
+	}
+});

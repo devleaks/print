@@ -1,10 +1,12 @@
 <?php
+use app\models\Item;
 use app\models\Task;
 use app\models\User;
 use app\models\Work;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 use kartik\grid\GridView;
 use kartik\icons\Icon;
 
@@ -20,35 +22,23 @@ Icon::map($this);
 ?>
 <div class="work-line-index">
 
+	<?php $form = ActiveForm::begin(['action' => Url::to(['prepare-cuts'])]) ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-		'export' => [
-		     'fontAwesome' => true
-		 ],
-		'toolbar' => [
-			'{export}',
-			'{toggleData}'
-    	],
 		'panel' => [
 	        'heading'=>'<h3 class="panel-title">'.Icon::show($task->icon).' '.Yii::t('store', 'Tasks').' <em>« '.$task->name.' »</em>'.'</h3>',
 	        'before'=> ' ',
 	        'after'=> Html::label(Yii::t('store', 'Selection')).' : '.
-    			Html::button('<i class="glyphicon glyphicon-inbox"></i> '.Yii::t('store', 'Take'),
-							['class' => 'btn btn-primary actionButton', 'data-status' => Work::STATUS_BUSY])
-				.' '.
-    			Html::button('<i class="glyphicon glyphicon-ok"></i> '.Yii::t('store', 'Complete'),
-							['class' => 'btn btn-success actionButton', 'data-status' => Work::STATUS_DONE])
-				.' '.
-    			Html::button('<i class="glyphicon glyphicon-remove"></i> '.Yii::t('store', 'Redo'),
-							['class' => 'btn btn-danger  actionButton', 'data-status' => Work::STATUS_TODO])
+    			Html::submitButton('<i class="glyphicon glyphicon-screenshot"></i> '.Yii::t('store', 'Cut'),
+							['class' => 'btn btn-primary actionButton'])
 				,
 	        'showFooter'=>false
 	    ],
         'columns' => [
             //['class' => 'kartik\grid\SerialColumn'],
-
             [
+				'attribute' => 'order_name',
                 'label'=>Yii::t('store','Order'),
 	            'value'=> function ($model, $key, $index, $widget) {
 					return in_array(Yii::$app->user->identity->role, ['manager', 'admin']) ?
@@ -59,6 +49,7 @@ Icon::map($this);
             	'format' => 'raw',
             ],
             [
+				'attribute' => 'client_name',
                 'label'=>Yii::t('store','Client'),
 	            'value'=> function ($model, $key, $index, $widget) {
 					return $model->getWork()->one()->getDocument()->one()->getClient()->one()->nom ;
@@ -66,6 +57,7 @@ Icon::map($this);
             	'format' => 'raw',
             ],
             [
+				'attribute' => 'due_date',
                 'label'=>Yii::t('store','Due Date'),
 	            'value'=> function ($model, $key, $index, $widget) {
 					return $model->due_date;
@@ -101,16 +93,17 @@ Icon::map($this);
 //				'hAlign' => GridView::ALIGN_CENTER,
 //	            'format' => 'raw',
 //	        ],
+//	        [
+//				'attribute' => 'item_name',
+//	            'label' => Yii::t('store', 'Item'),
+//	            'value' => function ($model, $key, $index, $widget) {
+//	                return $model->item->libelle_court;
+//	            },
+//				'hAlign' => GridView::ALIGN_CENTER,
+//	            'format' => 'raw',
+//	        ],
 	        [
-				'attribute' => 'item_name',
-	            'label' => Yii::t('store', 'Item'),
-	            'value' => function ($model, $key, $index, $widget) {
-	                return $model->item->libelle_court;
-	            },
-				'hAlign' => GridView::ALIGN_CENTER,
-	            'format' => 'raw',
-	        ],
-	        [
+				'attribute' => 'quantity',
 	            'label' => Yii::t('store', 'Quantity'),
 	            'value' => function ($model, $key, $index, $widget) {
 	                return $model->getDocumentLine()->one()->quantity;
@@ -119,14 +112,21 @@ Icon::map($this);
 	            'format' => 'raw',
 	        ],
 	        [
-	            'label' => Yii::t('store', 'Options'),
+	            'label' => Yii::t('store', 'Support'),
 	            'value' => function ($model, $key, $index, $widget) {
-					$det = $model->getDocumentLine()->one()->getDocumentLineDetails()->one();
-	                return $det ? $det->getDescription() : Yii::t('store', 'None');
+					$dl = $model->getDocumentLine()->one();
+					if($dl->isChromaLuxe())
+						$ret = Item::findOne(['reference'=>Item::TYPE_CHROMALUXE])->libelle_long;
+					else if($sup = $dl->getSupport())
+						$ret = $sup->libelle_long;
+					else
+						$ret = Yii::t('store', 'None');
+	                return $ret;
 	            },
 	            'format' => 'raw',
 	        ],
 	        [
+				'attribute' => 'work_width',
 	            'label' => Yii::t('store', 'Width'),
 	            'value' => function ($model, $key, $index, $widget) {
 					return $model->documentLine->work_width;
@@ -135,6 +135,7 @@ Icon::map($this);
 	            'format' => 'raw',
 	        ],
 	        [
+				'attribute' => 'work_height',
 	            'label' => Yii::t('store', 'Height'),
 	            'value' => function ($model, $key, $index, $widget) {
 					return $model->documentLine->work_height;
@@ -153,72 +154,12 @@ Icon::map($this);
 				'hAlign' => GridView::ALIGN_CENTER,
             	'format' => 'raw',
 	        ],
-	        [
-	            'class' => 'kartik\grid\ActionColumn',
-				'noWrap' => true,
-	            'template' => '{detail} {take} {done} {undo}',
-	            'buttons' => [
-	                'detail' => function ($url, $model) {
-						$url = Url::to(['work-line/detail', 'id' => $model->id]);
-	                    return Html::a('<i class="glyphicon glyphicon-eye-open"></i>', $url, [
-	                        'class' => 'btn btn-xs btn-info',
-	                        'title' => Yii::t('store', 'View'),
-	                    ]);
-	                },
-	                'take' => function ($url, $model) {
-						$url = Url::to(['work-line/take', 'id' => $model->id]);
-	                    return Html::a('<i class="glyphicon glyphicon-inbox"></i>', $url, [
-	                        'class' => 'btn btn-xs btn-primary',
-	                        'title' => Yii::t('store', 'Take'),
-	                    ]);
-	                },
-	                'done' => function ($url, $model) {
-						$url = Url::to(['work-line/done', 'id' => $model->id]);
-	                    return Html::a('<i class="glyphicon glyphicon-ok-sign"></i>', $url, [
-	                        'class' => 'btn btn-xs btn-success',
-	                        'title' => Yii::t('store', 'Done'),
-	                        'data-confirm' => Yii::t('store', 'Did you terminate this task?'),
-	                    ]);
-	                },
-	                'undo' => function ($url, $model) {
-						$url = Url::to(['work-line/undo', 'id' => $model->id]);
-	                    return Html::a('<i class="glyphicon glyphicon-remove"></i>', $url, [
-	                        'class' => 'btn btn-xs btn-danger',
-	                        'title' => Yii::t('store', 'Redo'),
-	                        'data-confirm' => Yii::t('store', 'Do you want to UNDO/REDO this task?'),
-	                    ]);
-	                },
-	            ]
-	        ],
 			[
         		'class' => '\kartik\grid\CheckboxColumn'
 			],
        	],
      ]); ?>
 
-</div>
-<script type="text/javascript">
-<?php $this->beginBlock('JS_SUBMIT_STATUS') ?>
-$('.actionButton').click(function () {
-	var status = $(this).data('status');
-	console.log('doing for '+status);
-	var keys = $('#w0').yiiGridView('getSelectedRows');
-	console.log('doing for '+keys);
-	$.ajax({
-		type: "POST",
-		url: 'bulk-status',
-		dataType: 'json',
-		data: {
-			keylist: keys,
-			status: status
-		},
-		success: function(data) {
-			alert('I did it! Processed checked rows.')
-		},
-	});
-});
-<?php $this->endBlock(); ?>
-</script>
+    <?php ActiveForm::end(); ?>
 
-<?php
-$this->registerJs($this->blocks['JS_SUBMIT_STATUS'], yii\web\View::POS_END);
+</div>

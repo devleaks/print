@@ -89,8 +89,8 @@ class DocumentLineDetail extends _DocumentLineDetail
 
 		if(($item = $this->getChroma()->one()) != null)
 			$item->createTasks($work, $order_line);
-		if(($item = $this->getTirage()->one()) != null)
-			$item->createTasks($work, $order_line);
+//		if(($item = $this->getTirage()->one()) != null) // tirage operations are created by document_line.item when it IS a tirage
+//			$item->createTasks($work, $order_line);
 		if(($item = $this->getFinish()->one()) != null)
 			$item->createTasks($work, $order_line);
 		if(($item = $this->getSupport()->one()) != null)
@@ -110,6 +110,8 @@ class DocumentLineDetail extends _DocumentLineDetail
 			$this->addTasks($work, $order_line, 'YII-Montage');
 		if($this->renfort_bool)
 			$this->addTasks($work, $order_line, 'Renfort');
+		if($this->filmuv_bool)
+			$this->addTasks($work, $order_line, 'UV');
 	}
 	
 	/**
@@ -137,8 +139,8 @@ class DocumentLineDetail extends _DocumentLineDetail
 		if(($item = $this->getChroma()->one()) != null)
 			$str .= $prep.'ChromaLuxe '.$item->libelle_long . ($show_price ? $obr.$this->price_chroma.'€'.$cbr.$post  : $post);
 
-		if(($item = $this->getTirage()->one()) != null)
-			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_tirage.'€'.$cbr.$post  : $post);
+//		if(($item = $this->getTirage()->one()) != null)
+//			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_tirage.'€'.$cbr.$post  : $post);
 
 		if(($item = $this->getFinish()->one()) != null)
 			$str .= $prep.$item->libelle_long /*. ($show_price ? $obr.$this->price_finish.'€'.$cbr.$post  : ', ')*/. $post;
@@ -166,10 +168,12 @@ class DocumentLineDetail extends _DocumentLineDetail
 		if($this->renfort_bool)
 			$str .= $prep.'Renforts' . ($show_price ? $obr.$this->price_renfort.'€'.$cbr.$post  : $post);
 
+		if($this->filmuv_bool)
+			$str .= $prep.'Film UV' . ($show_price ? $obr.$this->price_filmuv.'€'.$cbr.$post  : $post);
+
 		if($this->corner_bool)
 			$str .= $prep.'Coins arrondis' /*. ($show_price ? $obr.$this->price_border.'€'.$cbr.$post  : ', ')*/. $post;
-
-			
+		
 		return ($mode == 'html' ? $str.'</ul></small>' : trim($str, ', '));		
 	}
 	
@@ -180,5 +184,84 @@ class DocumentLineDetail extends _DocumentLineDetail
 	public function getDescriptionHTML($show_price = false) {
 		return $this->getDescriptionMode('html', $show_price);
 	}
+
+
+	public function prepareRenfort() {
+		if(!$this->renfort_bool) return;
+		$ol = $this->getOrderLine()->one();
+		
+		// These will eventually become Parameter(s)
+		$MAXDIM = 100; // cm
+		$INSIDE_SMALL = 5;
+		$INSIDE_LARGE = 10;
+		$RENFORT_WIDTH = 1.5;
+		$WIDEFRAME_ADD = 2;
+		$WIDE_FRAMES = ['AmBoxAyous52910'];
+
+		$wide_frame = false;
+		if($frame = $ol->getFrame())
+			$wide_frame = in_array($frame->reference, $WIDE_FRAMES);
+
+		$largestdim   = max($ol->work_width, $ol->work_height);
+		$smallesstdim = min($ol->work_width, $ol->work_height);
+		$ratio = ($ol->work_width > $ol->work_height) ? $ol->work_width / $ol->work_height : $ol->work_height / $ol->work_width; // always >= 1.
+		
+		if($ol->isChromaLuxe()) {
+			$inside = ($largestdim > $MAXDIM) ? 10 : 5;
+			if($wide_frame)
+				$inside += $WIDEFRAME_ADD;
+				
+		} else if ($support = $ol->getSupport()) {
+			$inside = 5;
+			if($wide_frame)
+				$inside += $WIDEFRAME_ADD;
+		}
+
+		$cut = new Coupe([
+			'work_length' => $largestdim - $inside,
+			'quantity' => 2 * $ol->quantity,
+			'document_line_id' => $ol->id,
+		]);
+		$cut->save();
+		$cut = new Coupe([
+			'work_length' => $smallesstdim - $inside - 2 * $RENFORT_WIDTH,
+			'quantity' => 2 * $ol->quantity,
+			'document_line_id' => $ol->id,
+		]);
+		$cut->save();
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

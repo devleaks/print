@@ -4,10 +4,13 @@ namespace app\modules\accnt\controllers;
 
 use Yii;
 use app\components\RuntimeDirectoryManager;
+use app\components\PdfDocumentGenerator;
 use app\models\Account;
+use app\models\Attachment;
 use app\models\Bill;
 use app\models\BillSearch;
 use app\models\Client;
+use app\models\CoverLetter;
 use app\models\Order;
 use app\models\OrderSearch;
 use app\models\Payment;
@@ -154,68 +157,8 @@ class BillController extends Controller
 		return $this->redirect(Yii::$app->request->referrer);
 	}
 	
-	
-	protected function generateCover($client, $level, $filename, $docs) {
-	    $header  = $this->renderPartial('_print_header', ['model' => $client]);
-	    $content = $this->renderPartial('_print', ['model' => $client, 'level' => $level, 'documents' => $docs]);
-	    $footer  = $this->renderPartial('_print_footer', ['model' => $client]);
-
-		$pdfData = [
-	        // set to use core fonts only
-	        'mode' => Pdf::MODE_CORE, 
-	        // A4 paper format
-	        'format' => Pdf::FORMAT_A4, 
-	        // portrait orientation
-	        'orientation' => Pdf::ORIENT_PORTRAIT, 
-	        // stream to browser inline
-	        'destination' => Pdf::DEST_BROWSER, 
-	        // your html content input
-	        'content' => $content,  
-	        // format content from your own css file if needed or use the
-	        // enhanced bootstrap css built by Krajee for mPDF formatting 
-	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-	        // any css to be embedded if required
-			'cssInline' => '.kv-wrap{padding:20px;}' .
-	        	'.kv-heading-1{font-size:18px}'.
-                '.kv-align-center{text-align:center;}' .
-                '.kv-align-left{text-align:left;}' .
-                '.kv-align-right{text-align:right;}' .
-                '.kv-align-top{vertical-align:top!important;}' .
-                '.kv-align-bottom{vertical-align:bottom!important;}' .
-                '.kv-align-middle{vertical-align:middle!important;}' .
-                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}' .
-                'table{font-size:0.8em;}'
-				,
-	         // set mPDF properties on the fly
-			'marginHeader' => 10,
-			'marginFooter' => 10,
-			'marginTop' => 35,
-			'marginBottom' => 35,
-			'options' => [],
-	         // call mPDF methods on the fly
-	        'methods' => [ 
-	        //    'SetHeader'=>['Laboratoire JJ Micheli'], 
-	            'SetHTMLHeader'=> $header,
-	            'SetHTMLFooter'=> $footer,
-	        ]
-		];
-
-		if($filename) {
-			$pdfData['destination'] = Pdf::DEST_FILE;
-			$pdfData['filename'] = $filename;
-		} else {
-			$pdfData['destination'] = Pdf::DEST_BROWSER;
-		}
-
-    	$pdf = new Pdf($pdfData);
-		return $pdf->render();
-	}
-
 
 	public function actionBulkAction() {
-		$send = true;
 		if(isset($_POST))
 			if(isset($_POST['selection'])) {
 				if(count($_POST['selection']) > 0) {
@@ -238,43 +181,41 @@ class BillController extends Controller
 								Yii::$app->session->setFlash('success', Yii::t('store', 'Bill(s) transferred to client account(s).'));
 
 							} else { // ACTION_SEND_REMINDER, loop per client
+								$clg = new PdfDocumentGenerator($this);
+								$dirName = RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_LATE_BILLS);
+								$viewBase = '@app/modules/accnt/views/bill/';
 								
-								$dirname = RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_LATE_BILLS);
-								$q = Bill::find()->where(['document.id' => $_POST['selection']])->select('client_id')->distinct();
-								foreach($q->each() as $b) {
-									$client = Client::findOne($b->client_id);
-									$docs = [];
-									$bills = [];
-									$late_degree = 0;
-									$name = $client->sanitizeName();
-									$pathroot = $dirname.($client->email != '' ? Bill::EMAIL_PREFIX : '').$name;
-									foreach(Bill::find()->where(['document.id' => $_POST['selection'], 'client_id' => $client->id])->each() as $bill) {
-										// 1. generate PDFs for each late bill:
-										$billname = $bill->name.'.pdf';
-										$billpath = $pathroot.'-'.$billname;										
-										$this_degree = $bill->getDelay(true);
-										if($this_degree > $late_degree) $late_degree = $this_degree;
-										$bill->generatePdf($this, $billpath);
-										$docs[] = ['path' => $billpath, 'name' => $billname];
-										$bills[] = $bill;
-									}
-									// 2. Generate cover depending on degree
-									$cover_filename = $pathroot.'cover-'.$late_degree.'.pdf';
-									$this->generateCover($client, $late_degree, $cover_filename, $bills);
+								$q =  Bill::find()
+											->andWhere(['document.id' => $_POST['selection']])
+											->andWhere(['!=','document.status',Bill::STATUS_CLOSED])
+//											->andWhere(['<=','created_at',$late])
+											->orderBy('client_id, created_at asc'); // latest bill first
+								// loop over clients:
+								$client_id = -1;
+								$bills = [];
+								$docs  = [];
+								foreach($q->each() as $bill) {
+									if($client_id == -1) $client_id = $bill->client_id;
 
-									// 3. Send bills by email if possible
-									if($send && $client->email != '') {
-										$mail = Yii::$app->mailer->compose()
-										    ->setFrom( Yii::$app->params['fromEmail'] )
-										    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $client->email )  // <======= FORCE DEV EMAIL TO TEST ADDRESS
-										    ->setSubject(Yii::t('store', 'Late bills'))
-											->setTextBody(Yii::t('store', 'Please find attached your late bills.'))
-											->attach($cover_filename, ['fileName' => 'letter.pdf', 'contentType' => 'application/pdf']);
-										foreach($docs as $doc)
-											$mail->attach($doc['path'], ['fileName' => $doc['name'], 'contentType' => 'application/pdf']);
-										$mail->send();
+									// $fn = $this->generateBill($bill);
+									$days = floor( (time() - strtotime($bill->created_at)) / (60*60*24) );
+									$type = floor($days / 30);
+									if($type > 3) $type = 3;
+									$watermark = Yii::t('store', 'Reminder Type '.$type);
+									$fn = $clg->document($bill, $dirName, $viewBase, $watermark);
+									$docs[] = new Attachment(['filename' => $fn, 'title' => $bill->name]);
+									$bills[] = $bill;
+	
+									// generate cover for previous
+									if($bill->client_id != $client_id) {
+										$clg->lateBills($bill->client_id, $bills, $docs, true);
+										$bills= [];
+										$docs = [];
+										$client_id = $bill->client_id;
 									}
 								}
+								// generate cover for last
+								if($client_id != -1) $clg->lateBills($client_id, $bills, $docs, true);
 
 								Yii::$app->session->setFlash('warning', Yii::t('store', 'Reminders sent and/or ready to print.'));
 							}

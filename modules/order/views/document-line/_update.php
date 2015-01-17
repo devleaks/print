@@ -160,9 +160,9 @@ SCRIPT;
 	?>
 	
 	<?php
-	 	$chroma_item  = Item::find()->where(['categorie'=>'ChromaLuxe'])->one();
-		$fineart_item = Item::find()->where(['categorie'=>'Fine Arts'])->one();
-		$free_item = Item::findOne(['reference'=>Item::TYPE_FREE]);
+	 	$chroma_item  = Item::findOne(['reference'=>Item::TYPE_CHROMALUXE]);
+		$free_item = Item::findOne(['reference'=>Item::TYPE_MISC]);
+		$tirages = Item::find()->where(['yii_category'=>['Tirage','Canvas']])->select('id')->column();
 		$detail = $model->getDetail();
 	 	if($model->item_id == $chroma_item->id)
 			echo $this->render('../document-line-detail/_update_chroma', [
@@ -170,7 +170,7 @@ SCRIPT;
 			    'form' => $form,
 				'detail' => $detail
 		    ]);
-		else if($model->item_id == $fineart_item->id)
+		else if(in_array($model->item_id, $tirages))
 			echo $this->render('../document-line-detail/_update_fineart', [
 			    'model' => $model,
 			    'form' => $form,

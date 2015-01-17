@@ -95,4 +95,8 @@ class Client extends _Client
 		return $addr;
 	}
 	
+	public function isBelgian() {
+		return in_array(strtolower($this->pays), ['belgique','belgie','belgium']))
+	}
+	
 }

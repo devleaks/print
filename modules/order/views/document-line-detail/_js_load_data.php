@@ -6,14 +6,6 @@ use yii\helpers\Url;
 
 ItemAsset::register($this);
 
-
-/** Specail Items */
-$chroma_item  = Item::findOne(['reference'=>Item::TYPE_CHROMALUXE]);
-$fineart_item = Item::findOne(['reference'=>Item::TYPE_FINEARTS]);
-$free_item    = Item::findOne(['reference'=>Item::TYPE_FREE]);
-$class_prefix = 'item';
-
-
 /** Error Messages */
 $errors = [];
 $errors["CHROMALUXE_TYPE"] = Yii::t('store','You must specify the type of ChromaLuxe.');
@@ -37,20 +29,34 @@ foreach(Parameter::find()->where(['domain' => 'formule'])->each() as $param)
 	];
 $js_params = json_encode($params);
 
+$items = [];
+$item_refs = [];
+foreach(Item::find()->where(['NOT',['yii_category' => null]])->each() as $item) {
+	$items[$item->id] = [
+		'id'            => $item->id,
+		'reference'     => $item->reference,
+		'yii_category'  => $item->yii_category,
+		'libelle_long'  => $item->libelle_long,
+		'prix_de_vente' => $item->prix_de_vente,
+		'taux_de_tva'   => $item->taux_de_tva,
+		'fournisseur'   => $item->fournisseur,
+	];
+	$item_refs[$item->reference] = $item->id;
+}
+$js_items = json_encode($items);
+$js_itemrefs = json_encode($item_refs);
+
 
 ?>
 <script type="text/javascript">
 <?php
 $this->beginBlock('JS_ITEM') ?>
 var store_values = {
-	item_id: {
-		chroma: <?= $chroma_item->id ?>,
-		fineart: <?= $fineart_item->id ?>,
-		freeitem: <?= $free_item->id ?>
-	},
+	chroma: <?= Item::findOne(['reference'=>Item::TYPE_CHROMALUXE])->id ?>,
 	param: <?= $js_params ?>,
+	item: <?= $js_items ?>,
+	item_ref: <?= $js_itemrefs ?>,
 	error_msg: <?= $js_errors ?>,
-	class_prefix: "<?= $class_prefix ?>",
 	ajaxUrl: "<?= Url::to(['/order/document/get-item'], true) ?>"
 };
 <?php $this->endBlock(); ?>

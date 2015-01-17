@@ -3,19 +3,22 @@
 namespace app\modules\accnt\controllers;
 
 use Yii;
+use app\components\PdfDocumentGenerator;
+use app\components\RuntimeDirectoryManager;
 use app\models\Account;
 use app\models\AccountSearch;
 use app\models\Bill;
 use app\models\CaptureBalance;
 use app\models\Client;
 use app\models\ClientSearch;
+use app\models\CoverLetter;
 use kartik\mpdf\Pdf;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\helpers\Url;
 
 /**
  * AccountController implements the CRUD actions for Account model.
@@ -148,6 +151,7 @@ class AccountController extends Controller
 							'status' => 'ACREDIT',
 							'client_id' => $capture->client_id,
 							'note' => $note,
+							'payment_date' => $capture->date,
 							'payment_method' => $capture->method,
 						]);
 						if(!$payment->save())
@@ -258,92 +262,16 @@ class AccountController extends Controller
     }
 
 	/**
-	 * G E N E R A T E   D O C U M E N T S
+	 *
+	 *
 	 */
-
-	protected function generatePdf($client, $filename) {
-	    $header  = $this->renderPartial('_print_header', ['model' => $client]);
-	    $content = $this->renderPartial('_print', ['model' => $client]);
-	    $footer  = $this->renderPartial('_print_footer', ['model' => $client]);
-
-		$pdfData = [
-	        // set to use core fonts only
-	        'mode' => Pdf::MODE_CORE, 
-	        // A4 paper format
-	        'format' => Pdf::FORMAT_A4, 
-	        // portrait orientation
-	        'orientation' => Pdf::ORIENT_PORTRAIT, 
-	        // stream to browser inline
-	        'destination' => Pdf::DEST_BROWSER, 
-	        // your html content input
-	        'content' => $content,  
-	        // format content from your own css file if needed or use the
-	        // enhanced bootstrap css built by Krajee for mPDF formatting 
-	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-	        // any css to be embedded if required
-			'cssInline' => '.kv-wrap{padding:20px;}' .
-	        	'.kv-heading-1{font-size:18px}'.
-                '.kv-align-center{text-align:center;}' .
-                '.kv-align-left{text-align:left;}' .
-                '.kv-align-right{text-align:right;}' .
-                '.kv-align-top{vertical-align:top!important;}' .
-                '.kv-align-bottom{vertical-align:bottom!important;}' .
-                '.kv-align-middle{vertical-align:middle!important;}' .
-                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}' .
-                'table{font-size:0.8em;}'
-				,
-	         // set mPDF properties on the fly
-			'marginHeader' => 10,
-			'marginFooter' => 10,
-			'marginTop' => 35,
-			'marginBottom' => 35,
-			'options' => [],
-	         // call mPDF methods on the fly
-	        'methods' => [ 
-	        //    'SetHeader'=>['Laboratoire JJ Micheli'], 
-	            'SetHTMLHeader'=> $header,
-	            'SetHTMLFooter'=> $footer,
-	        ]
-		];
-
-		if($filename) {
-			$pdfData['destination'] = Pdf::DEST_FILE;
-			$pdfData['filename'] = $filename;
-		} else {
-			$pdfData['destination'] = Pdf::DEST_BROWSER;
-		}
-
-    	$pdf = new Pdf($pdfData);
-		return $pdf->render();
-	}
-
 	public function actionBulkNotify() {
-		$send = false;
 		if(isset($_POST)) {
 			if(isset($_POST['selection'])) {
 				if(count($_POST['selection']) > 0) {
-					$dirname = Yii::getAlias('@runtime').'/document/account/'.date('Y-m-d').'/';
-					if(!is_dir($dirname))
-					    if(!mkdir($dirname, 0777, true)) {
-							Yii::$app->session->setFlash('danger', Yii::t('store', 'Cannot create directory for account document.'));
-							return $this->redirect(Yii::$app->request->referrer);
-					    }
-					foreach(Client::find()->where(['id' => $_POST['selection']])->each() as $client) {
-						$fn = $client->sanitizeName();
-						$filename = ($client->email != '') ? Bill::EMAIL_PREFIX.$fn : $fn;
-						$fullpath = $dirname.$filename.'.pdf';
-						$this->generatePdf($client, $fullpath);
-						if($send && $client->email != '') {
-							Yii::$app->mailer->compose()
-							    ->setFrom( Yii::$app->params['fromEmail'] )
-							    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $client->email )  // <======= FORCE DEV EMAIL TO TEST ADDRESS
-							    ->setSubject(Yii::t('store', 'Your client account'))
-								->setTextBody(Yii::t('store', 'Please find attached your client account statement.'))
-								->attach($fullpath, ['fileName' => $fn.'.pdf', 'contentType' => 'application/pdf'])
-							    ->send();
-						}
+					$clg = new PdfDocumentGenerator($this);
+					foreach($_POST['selection'] as $client_id) {
+						$clg->accountExtract($client_id, true);
 					}
 					Yii::$app->session->setFlash('success', Yii::t('store', 'Mail(s) sent').'.');
 					return $this->redirect(Url::to(['account/index']));

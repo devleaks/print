@@ -20,7 +20,7 @@ if(in_array($model->client->lang, ['fr', 'nl', 'en'])) Yii::$app->language = $mo
 <br>
 <br>
 <p style="text-align: right;">
-	<?= Yii::t('store', 'Brussels, {0}', $model->date) . ' -> ' . $model->client->lang ?>
+	<?= Yii::t('store', 'Brussels, {0}', $model->date) ?>
 </p>
 <br>
 <br>

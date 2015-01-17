@@ -228,16 +228,19 @@ class DocumentLine extends _DocumentLine
 			return $str;
 		}
 
-		$str = ($this->item->reference == Item::TYPE_FREE) ? $this->note : $this->item->libelle_long;
+		$str = ($this->item->reference == Item::TYPE_MISC) ? $this->note : $this->item->libelle_long;
 
 		if($this->work_width > 0 && $this->work_height > 0)
 			$str .= ' '.$this->work_width.'×'.$this->work_height;
-		
-		if($detail = $this->getDetail())
-			$str .= $detail->getDescriptionHTML($show_price);
-//			$str .= ' ('.$detail->getDescription($show_price).')';
-
-		if($this->item->reference != Item::TYPE_FREE && $this->note != '') // for free text item, comment IS the label
+			
+		if($detail = $this->getDetail()) {
+			if($show_price && $this->isTirage(true))
+				$str .= ' <small>('.$detail->price_tirage.'€)</small>';
+				
+			$str .= $detail->getDescriptionHTML($show_price); // $str .= ' ('.$detail->getDescription($show_price).')';
+		}
+	
+		if($this->item->reference != Item::TYPE_MISC && $this->note != '') // for free text item, comment IS the label
 			$str .= '<br/><small><span style="text-decoration: underline;">Note</span>: '.$this->note.'</small>';
 		
 		return $str;
@@ -325,4 +328,58 @@ class DocumentLine extends _DocumentLine
 		return $pdf->render();
 	}
 	
+	public static function getHeightCount($item_id, $min, $max) {
+		return self::find()->andWhere(['item_id' => $item_id])
+						->andWhere(['>=',  'work_height', $min])
+						->andWhere(['<', 'work_height', $max])
+						->sum('quantity');
+	}
+	
+	public static function getWidthCount($item_id, $min,$max) {
+		return self::find()->andWhere(['item_id' => $item_id])
+						->andWhere(['>=',  'work_width', $min])
+						->andWhere(['<', 'work_width', $max])
+						->sum('quantity');
+	}
+	
+	public static function getDetailHeightCount($what, $item_id, $min, $max) {
+		return self::find()->joinWith('documentLineDetails')
+						->andWhere(['document_line_detail.'.$what.'_id' => $item_id])
+						->andWhere(['>=',  'work_height', $min])
+						->andWhere(['<', 'work_height', $max])
+						->sum('quantity');
+	}
+	
+	public static function getDetailWidthCount($what, $item_id, $min,$max) {
+		return self::find()->joinWith('documentLineDetails')
+						->andWhere(['document_line_detail.'.$what.'_id' => $item_id])
+						->andWhere(['>=',  'work_width', $min])
+						->andWhere(['<', 'work_width', $max])
+						->sum('quantity');
+	}
+	
+	public function isChromaLuxe() {
+		$item = Item::findOne($this->item_id);
+		return $item->yii_category == 'ChromaLuxe';
+	}
+
+	public function isTirage($canvasToo = false) {
+		$item = Item::findOne($this->item_id);
+		if($canvasToo)
+			return $item->yii_category == 'Tirage' || $item->yii_category == 'Canvas';
+		else
+			return $item->yii_category == 'Tirage';
+	}
+
+	public function getSupport() {
+		if( $old = $this->getDetail() )
+			return $old->support_id ? Item::findOne($old->support_id) : null;
+		return null;
+	}
+
+	public function getFrame() {
+		if( $old = $this->getDetail() )
+			return $old->frame_id ? Item::findOne($old->frame_id) : null;
+		return null;
+	}
 }

@@ -75,16 +75,16 @@ Icon::map($this);
 				},
             	'format' => 'date',
             ],
-//            [
-//				'attribute' => 'status',
-//                'label'=>Yii::t('store','Status'),
-//	            'filter' => Work::getStatuses(),
-//	            'value'=> function ($model, $key, $index, $widget) {
-//					return $model->getStatusLabel();
-//				},
-//				'hAlign' => GridView::ALIGN_CENTER,
-//            	'format' => 'raw',
-//            ],
+            [
+				'attribute' => 'status',
+                'label'=>Yii::t('store','Status'),
+	            'filter' => Work::getStatuses(),
+	            'value'=> function ($model, $key, $index, $widget) {
+					return $model->getStatusLabel();
+				},
+				'hAlign' => GridView::ALIGN_CENTER,
+            	'format' => 'raw',
+            ],
 //			[
 //	            'label' => Yii::t('store', 'Last Update'),
 //				'attribute' => 'updated_at',

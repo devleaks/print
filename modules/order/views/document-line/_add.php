@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Item;
 use app\assets\ItemAsset;
 use app\models\DocumentLine;
 use app\models\Parameter;
@@ -19,6 +20,9 @@ use yii\web\JsExpression;
 /* @var $form yii\widgets\ActiveForm */
 
 ItemAsset::register($this);
+
+$chroma_item  = Item::findOne(['reference'=>Item::TYPE_CHROMALUXE]);
+$misc_item  = Item::findOne(['reference'=>Item::TYPE_MISC]);
 
 // url to submit search terms and get result back
 $url = Url::to(['document-line/item-list']);
@@ -59,6 +63,8 @@ $do_form = $form;
 			'columns' => 12,
 			'attributes' => [       // 2 column layout
 				'item_id' => [
+					'label' => Yii::t('store', 'Item').' <span class="label label-warning order-option" data-item_id="'.$chroma_item->id.'" data-item_name="'.$chroma_item->libelle_long.'" data-item-category="ChromaLuxe">ChromaLuxe</span>'
+													  .' <span class="label label-success order-option" data-item_id="'.$misc_item->id.'" data-item_name="'.$misc_item->libelle_long.'" data-item-category="Divers">Divers</span>',
 					'type' => Form::INPUT_WIDGET,
 					'widgetClass' => Select2::className(),
 		            'columnOptions' => ['colspan' => 6],
@@ -82,9 +88,11 @@ $do_form = $form;
 							        $.ajax("'.$url.'?id=" + id, {
 							            dataType: "json"
 							        }).done(function(data) {
-												$("#documentline-unit_price").val(data.results.item.prix_de_vente);
-												$("#documentline-vat").val(data.results.item.taux_de_tva);
-												$("#documentline-unit_price").trigger("change");
+										$("#documentline-unit_price").val(data.results.item.prix_de_vente);
+										$("#documentline-vat").val(data.results.item.taux_de_tva);
+										$("#documentline-item-yii_category").val(data.results.item.yii_category);
+										//console.log(data.results.item);
+										$("#documentline-unit_price").trigger("change");
 									});
 						    	}
 						     }',
@@ -176,16 +184,15 @@ $do_form = $form;
 	<?= Html::activeHiddenInput($model, 'extra_amount') ?>
 	<?= Html::activeHiddenInput($model, 'work_width') ?>
 	<?= Html::activeHiddenInput($model, 'work_height') ?>
+	<?= Html::hiddenInput('yii_category', ($model->item ? $model->item->yii_category : ''), ['id'=>'documentline-item-yii_category']) ?>
 	</div>
 
-	<hr>
 	<?= $this->render('../document-line-detail/_options', [
 		    'model' => $model,
 		    'form' => $form,
 		])
 	?>
-
-	<hr>
+	
 	<div data-intro="Joindre des images à la ligne de commande" data-position='top'>
 	<?php
 	    $items = array();
@@ -212,7 +219,6 @@ $do_form = $form;
 		}
     ?>
 	</div>
-	<hr>
 
 	<?php if(! $do_form): ?>
 	    <div class="form-group">
