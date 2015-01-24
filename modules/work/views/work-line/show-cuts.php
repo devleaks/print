@@ -30,6 +30,13 @@ Icon::map($this);
 
 //			'id',
             'length',
+	        [
+				'attribute' => 'length',
+				'format' => 'raw',
+	            'value' => function ($model, $key, $index, $widget) {
+	                return '<meter min="0" max="200" value="'.$model->length.'">'.$model->length.'</meter>';
+	            },
+	        ],
             'work_line_id',
         ],
     ]); ?>

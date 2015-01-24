@@ -11,10 +11,11 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentLineSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+/*
 $contentBefore = $this->render('../document/_header_print', ['model' => $order]);
 $contentAfter = $this->render('../document/_footer_print', ['model' => $order]);
 $base = 3;
+*/
 ?>
 <div class="document-line-list" data-intro="Lignes de la commande." data-position='bottom'>
 <p></p>
@@ -52,7 +53,19 @@ $base = 3;
 			'columns' => [
 				['class' => 'kartik\grid\SerialColumn'],
 				//'item.reference',
-				[
+/*				[
+				    'class' => 'kartik\grid\ExpandRowColumn',
+				    'value' => function ($model, $key, $index, $column) {
+			        	return GridView::ROW_COLLAPSED;
+				    },
+				    'detail' => function ($model, $key, $index, $column) {
+			        	return Yii::$app->controller->renderPartial('../document-line/_inplace-update', ['model'=>$model]);
+				    },
+				    'headerOptions'=>['class'=>'kartik-sheet-style'] 
+				    //'disabled'=>true,
+				    //'detailUrl' => Url::to(['/site/test-expand'])
+				],
+*/				[
 				    'value' => function ($model, $key, $index, $widget) {
 						return $model->getDescription() ;
 				    },

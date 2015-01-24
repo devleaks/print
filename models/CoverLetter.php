@@ -1,18 +1,25 @@
 <?php
 /**
  * This is the model class to generate standard "cover letter" for "complains" (late bills, negative account extracts...).
- * Format is A4, always.
+ * Format is A4, always. File is always saved, because most of the time, it is attached to an email, or ready to print.
  *
  */
 
 namespace app\models;
 
 use Yii;
-use app\components\PdfDocumentGenerator;
-use kartik\mpdf\Pdf;
+use app\components\RuntimeDirectoryManager;
+use app\models\Pdf;
 
-class CoverLetter extends PDFDocument {
+class CoverLetter extends PDFLetter {
 	const SEP = '-';
+	
+	/** Types of cover letter */
+	const ACCOUNT_UNBALANCED = 'ACCOUNT_UNBALANCED';
+	const LATE_BILL_COVER0 = 'LATE_BILL_COVER0';
+	const LATE_BILL_COVER1 = 'LATE_BILL_COVER1';
+	const LATE_BILL_COVER2 = 'LATE_BILL_COVER2';
+	const LATE_BILL_COVER3 = 'LATE_BILL_COVER3';
 	
 	public $client;
 
@@ -21,103 +28,73 @@ class CoverLetter extends PDFDocument {
 	public $subject;
 	public $body;
 	public $table;
-
-	public $watermark;
-	
-	public $filename;
-	public $pdf;
 	
 	public $viewBase;
-	public $destBase;
+
+	/** Example:
+			$pdfDocument = new PDFDocument([
+				'controller'=> $controller,
+				'format'	=> PDFDocument::FORMAT_A4,
+				'orientation'=> PDFDocument::ORIENT_PORTRAIT,
+				'filename'	=> $filename,
+				'header'	=> $header,
+				'footer'	=> $footer,
+				'content'	=> $content,
+				'watermark'	=> $watermark,
+			]);
+			$result = $pdfDocument->render();
+	*/
 
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        return [
-            [['controller', 'client', 'type', 'date', 'subject', 'body', 'table', 'watermark', 'filename', 'pdf', 'viewBase', 'destBase'], 'safe'],
-        ];
+        return array_merge(parent::rules(), [
+            [['client', 'type', 'date', 'subject', 'body', 'table', 'viewBase', 'destBase'], 'safe'],
+        ]);
     }
 
-	/* Generate unique cover letter name
-	 *
-	 */
-	protected function generateFilename() {
-		return $this->filename = $this->destBase.$this->type.self::SEP.$this->client->sanitizeName().self::PDF_EXT;
+    /**
+     * @inheritdoc
+     */
+	public function generateFilename($name = null) {
+		if($this->save)
+			$this->filename = RuntimeDirectoryManager::getFilename($this->destination, $this->type, null, $this->client);
 	}
 
-
-	/* Renders cover letter
-	 *
-	 */
+    /**
+     * @inheritdoc
+     */
 	public function render() {
-	    $header  = $this->controller->renderPartial(self::COMMON_BASE.'header', ['format' => PdfDocumentGenerator::FORMAT_A4, 'language' => $this->client->lang]);
-	    $footer  = $this->controller->renderPartial(self::COMMON_BASE.'footer', ['format' => PdfDocumentGenerator::FORMAT_A4, 'language' => $this->client->lang]);
-	
-		$viewBase = $this->viewBase ? $this->viewBase : self::COMMON_BASE;
-		
-		$content = $this->controller->renderPartial($this->viewBase.'cover-letter',  ['model' => $this]);
-		
-		$this->generateFilename();
-		
-		$pdfData = [
-	        'mode' => Pdf::MODE_CORE, 
-	        'format' => Pdf::FORMAT_A4, 
-	        'orientation' => Pdf::ORIENT_PORTRAIT, 
-	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-			'cssInline' => '.kv-wrap{padding:20px;}' .
-	        	'.kv-heading-1{font-size:18px}'.
-                '.kv-align-center{text-align:center;}' .
-                '.kv-align-left{text-align:left;}' .
-                '.kv-align-right{text-align:right;}' .
-                '.kv-align-top{vertical-align:top!important;}' .
-                '.kv-align-bottom{vertical-align:bottom!important;}' .
-                '.kv-align-middle{vertical-align:middle!important;}' .
-                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}',
-			'marginHeader' => 10,
-			'marginFooter' => 10,
-			'marginTop' => 35,
-			'marginBottom' => 35,
-			'options' => [],
-	        'methods' => [ 
-	            'SetHTMLHeader'=> $header,
-	            'SetHTMLFooter'=> $footer,
-	        ],
-	        'content' => $content,  
-		];
-
-		if($this->watermark) {
-			$pdfData['options']['showWatermarkText'] = true;
-			$pdfData['methods']['SetWatermarkText'] = $this->watermark;
-		}
-
-		if($this->filename) {
-			$pdfData['destination'] = Pdf::DEST_FILE;
-			$pdfData['filename'] = $this->filename;
-		} else {
-			$pdfData['destination'] = Pdf::DEST_BROWSER;
-		}
-
-    	$this->pdf = new Pdf($pdfData);
-		echo 'CoverLetter:'.$this->filename;
-		return $this->pdf->render();
+		$viewBase = $this->viewBase ? $this->viewBase : self::COMMON_BASE;		
+		$this->content = Yii::$app->controller->renderPartial($viewBase.'cover-letter',  ['model' => $this]);
+		return parent::render();
 	}
+
+
+    /**
+     * @inheritdoc
+     */
+	public function save() {
+		if($this->filename) {
+			$this->deletePrevious();
+			$pdf = new Pdf([
+				'document_type' => $this->type,
+				'client_id' => $this->client->id,
+				'filename' => $this->filename,
+			]);
+			return $pdf->save();
+		}
+	}
+
 
 	/* Send cover letter to client if email address is available. Do nothing otherwise.
 	 *
 	 */
 	public function send() {
-		if($this->client->email != '') {
-			$mail = Yii::$app->mailer->compose()
-				->setFrom( Yii::$app->params['fromEmail'] )
-				->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )
-				->setSubject($this->subject)
-				->setTextBody($this->body)
-				->attach($this->filename, ['fileName' => basename($this->filename), 'contentType' => 'application/pdf'])
-				->send();
+		if($file = $this->getFile()) {
+			$file->send($this->subject, $this->body, $this->client->email);
 		}
 	}
 
@@ -128,15 +105,29 @@ class CoverLetter extends PDFDocument {
 	 */
 	public function sendWithAttachments($docs) {
 		if($this->client->email != '') {
-			$mail = Yii::$app->mailer->compose()
-				->setFrom( Yii::$app->params['fromEmail'] )
-				->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )
-				->setSubject($this->subject)
-				->setTextBody($this->body)
-				->attach($this->filename, ['fileName' => basename($this->filename), 'contentType' => 'application/pdf']);
-			foreach($docs as $doc)
-				$mail->attach($doc->filename, ['fileName' => $doc->title, 'contentType' => $doc->mimetype ? $doc->mimetype : 'application/pdf']);
-			$mail->send();
+			try {
+				$mail = Yii::$app->mailer->compose()
+					->setFrom( Yii::$app->params['fromEmail'] )
+					->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )
+					->setSubject($this->subject)
+					->setTextBody($this->body)
+					->attach($this->filename, ['fileName' => basename($this->filename), 'contentType' => 'application/pdf']);
+				foreach($docs as $doc)
+					$mail->attach($doc->filename, ['fileName' => $doc->title, 'contentType' => $doc->mimetype ? $doc->mimetype : 'application/pdf']);
+				$mail->send();
+				// timestamp mailed docs
+				if($file = $this->getFile()) $file->sent();
+				foreach($docs as $doc)
+					if( $file = Pdf::findOne(['filename' => $doc->filename]) )
+						$file->sent();
+				Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
+			} catch (Swift_TransportException $STe) {
+				Yii::error($STe->getMessage(), 'Pdf::send::ste');
+				Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
+			} catch (Exception $e) {
+				Yii::error($e->getMessage(), 'Pdf::send::e');				
+				Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
+			}
 		}
 	}
 }

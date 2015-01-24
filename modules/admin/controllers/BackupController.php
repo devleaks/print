@@ -78,20 +78,15 @@ class BackupController extends Controller
     {
         $model = new Backup();
 
-        if (Yii::$app->request->post()) {
-			if($model->doBackup()) {
-				if($model->save()) {
-					Yii::$app->session->setFlash('success', Yii::t('store', 'Backup completed.'));
- 				}
-			} else {
-				Yii::$app->session->setFlash('error', Yii::t('store', 'There was an error producing the backup.'));
-			}
-  			
-			return $this->redirect(['index']);
+		if($model->doBackup()) {
+			if($model->save()) {
+				Yii::$app->session->setFlash('success', Yii::t('store', 'Backup completed.'));
+				}
+		} else {
+			Yii::$app->session->setFlash('error', Yii::t('store', 'There was an error producing the backup.'));
 		}
-		return $this->render('create', [
-            'model' => $model,
-        ]);
+ 			
+		return $this->redirect(['index']);
     }
 
     /**

@@ -6,33 +6,78 @@ Les logiciels suivants ont été installé:
 
 * /Applications/mamstack: Serveur "MAMP" + logiciel pour labo JJ Micheli
 * Sequel Pro: Gestionnaire de base de données mysql
-* Fraise: Editeur de texte
+* Fraise et TextMate: Editeur de texte
 * Mou: Editeur de texte "markdown"
 
 ## Environnements
 
-Deux environnements séparés ont été installés:
+Il y a deux machines distinctes préinstallées avec les logiciels de base.
 
-* DEVL: Tests et développements
-* PROD: Production
+1. imac comptoir: Machine de production.
+2. imac "salle de réunion": Machine de tests.
 
-Ils ont chacun une base de données séparée, et s'accèdent par deux URL distincts:
+### Machine de production (imac comptoir)
 
-* DEVL: http:://imac-de-reunion.local:8080/print
-* PROD: http:://imac-de-reunion.local:8080/prod
+Sur la machine "de production" (imac comptoir), il n'y a qu'un seul environnement installé:
+L'environnement de production utilisé pour les opérations quotidiennes.
 
+* Production: http:://imac-de-imac/
+* Production: http:://192.168.9.123/
+
+### Machine de tests
+
+Sur la machine de tests, il y a deux environnements installés:
+
+#### Environnement de test
+
+L'environnement de test proprement dit, remarqué par la bande supérieure de couleur rouge foncé.
+Lorsque une nouvelle version est disponible, elle est d'abord installée là pour être mise à l'épreuve.
+
+Cet environnement peut aussi être utilisé pour se familiariser avec l'application.
+
+* Tests et développements: http:://imac-de-reunion.local/print
+* Tests et développements: http:://192.168.9.105/print
+
+
+#### Environnement de secours
+
+L'environnement de secours est une copie exacte de l'environnement de production.
+
+L'environnement de secours a une bande supérieure de couleur verte foncée.
+
+L'environnement de secours utilise la même version du logiciel que celle utilisée sur l'environnement de production.
+C'est une copie exacte.
+
+Cet environnement ne devrait jamais être utilisé.
+Il est installé, en secours, si une panne devait survenir à l'ordinateur du comptoir.
+Il est vide de toute donnée, pour éviter une mauvaise manipulation.
+
+* Secours: http:://192.168.9.105/prod
+
+En cas de panne de l'ordinateur au comptoir, il faut récupérer les données d'un backup,
+simplement installer les données sur l'ordinateur de secours,
+et redémarrer les opérations sur l'ordinateur de secours.
+
+Les données de backup sont de deux ordres:
+
+1. Les données proprement-dites, dans la base de donnée.
+2. Les images.
+
+Le backup de la base de donnée est dans @app/runtime/backup.
+
+Les images sont dans le dossier @app/web/pictures.
+
+Il existe aussi
+
+3. Les documents.
+
+Mais il n'est pas indispensable de les recopier, puisque tous les documents peuvent être recréés à tout moment.
+
+La procédure est simple, mais non automatisée.
+
+Elle sera décrite dans un autre document.
 
 ## Application en Test
-
-L'application installée contient un petit environnement de test. Les utilisateurs suivants ont été créés:
-
-* Admin, mot de passe "manager", role d'Administrateur de l'application.
-* jjm, mot de passe "manager", role de gestionnaire du magasin.
-* scott, mot de passe "tigerr", role d'employé réalisant les tâches issues des commandes.
-* zahara, mot de passe "manager", futur role de la comptabilité avec les extractions et les tâches de clôture de fin d'année.
-
-Le rôle d'administration de l'application permet de modifier des paramètres de l'application et de créer de nouveaux utilisateurs de l'application.
-
 
 ### Comptes Utilisateurs
 
@@ -40,10 +85,13 @@ L'application installée contient un petit environnement de test. Les utilisateu
 
 * Admin, mot de passe "manager", role d'Administrateur de l'application.
 * jjm, mot de passe "manager", role de gestionnaire du magasin.
-* scott, mot de passe "tigerr", role d'employé réalisant les tâches issues des commandes.
-* zahara, mot de passe "manager", futur role de la comptabilité avec les extractions et les tâches de clôture de fin d'année.
+* erwan, mot de passe "manager", role d'employé réalisant les tâches issues des commandes.
+* zahara, mot de passe "manager", futur role de la comptabilité.
 
 Soit un utilisateur par rôle.
+
+Le rôle d'administration de l'application permet de modifier des paramètres de l'application et de créer de nouveaux utilisateurs de l'application.
+
 
 ### Roles
 
@@ -57,22 +105,18 @@ Le rôle d'employé permet de voir la liste des tâches à accomplir, et les dé
 
 (Dans la version de test, les privilèges ne sont pas définis. Tout le monde peut tout faire.)
 
-## Redémarrage du System
 
-Lors de la prochaine visite, j'installerai et testerai le redémarrage automatique du système.
+## Paramètres divers
 
-En attendant, si il faut redémarrer (ou arrêter) le système "à la main", allez dans le répertoire
+### Dossiers
 
-/Application/mampstack
+@app réfère au dossier d'installation de tout le code utilisé par l'application.
 
-et démarrer le programme
+Les dossiers suivants sont importants:
 
-manager-osx
+@app/runtime: Dossier où sont stockés tous les documents non publics de l'application: Examples: Backup, extractions comptables, rapport quotidien des entrées, etc.
 
-Dans ce programme, sélectionner l'onglet "Manage Server".
-
-On peut voir l'état des services dans le petit cadre. Si ils sont arrêtés, appuyer sur "Start All".
-
-Si il y a un problème au redémarrage, il sera écrit dans l'onglet "Application log".
-
-Il serait prudent de mettre en route Time Machine sur le serveur.
+@app/web: Dossier accédé par l'application via le navigateur. Sont stockés sous ce dossier pour un accès facile via le web:
+Les images associées aux commandes (dossier @app/web/pictures),
+et tous les documents produits par l'application (dossier @app/web/documents):
+Factures, notse de crédit, lettres de rappel.

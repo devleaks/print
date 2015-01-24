@@ -115,6 +115,7 @@ class ItemController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			if($model->status == true) { $model->status = 'ACTIVE'; $model->save(); }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

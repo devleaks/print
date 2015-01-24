@@ -121,58 +121,66 @@ class DocumentLineDetail extends _DocumentLineDetail
 	 *
 	 * @return string DocumentLineDetail textual description
 	 */
-	protected function getDescriptionMode($mode, $show_price = false) {
-		if($mode == 'html') {
-			$prep = '<li>';
+	private function price2($label, $price, $m, $p) {
+		if($m == 'html') {
+			$prep = '<li class="double-arrow">';
 			$post = '</li>';
 			$str = '<small><ul class="list-unstyled">';
-			$obr = ' (';
-			$cbr = ')';
+			$obr = '<span style="font-size: 0.8em;"> (';
+			$cbr = ')</span>';
+			$eur = '€';
 		} else {
 			$prep = '';
 			$post = ', ';
 			$str = '';
 			$obr = ' [';
 			$cbr = ']';
+			$eur = '€';
 		}
+		return $prep.$label.' '.($p && $price ? $obr.$price.$eur.$cbr.$post  : $post);
+	}
+
+	protected function getDescriptionMode($mode, $show_price = false) {
+
+		$str = '';
 
 		if(($item = $this->getChroma()->one()) != null)
-			$str .= $prep.'ChromaLuxe '.$item->libelle_long . ($show_price ? $obr.$this->price_chroma.'€'.$cbr.$post  : $post);
+			$str .= $this->price2('ChromaLuxe '.$item->libelle_long, $this->price_chroma, $mode, $show_price);
 
 //		if(($item = $this->getTirage()->one()) != null)
-//			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_tirage.'€'.$cbr.$post  : $post);
+//			$str .= $this->price2($item->libelle_long, $this->price_tirage);
 
 		if(($item = $this->getFinish()->one()) != null)
-			$str .= $prep.$item->libelle_long /*. ($show_price ? $obr.$this->price_finish.'€'.$cbr.$post  : ', ')*/. $post;
+			$str .= $this->price2($item->libelle_long, null, $mode, $show_price);
 			
 
 		if(($item = $this->getSupport()->one()) != null)
-			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_support.'€'.$cbr.$post  : $post);
+			$str .= $this->price2($item->libelle_long, $this->price_support, $mode, $show_price);
 
 		if(($item = $this->getCollage()->one()) != null)
-			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_collage.'€'.$cbr.$post  : $post);
+			$str .= $this->price2($item->libelle_long, $this->price_collage, $mode, $show_price);
 
 		if(($item = $this->getProtection()->one()) != null)
-			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_protection.'€'.$cbr.$post  : $post);
+			$str .= $this->price2($item->libelle_long, $this->price_protection, $mode, $show_price);
 			
 		if(($item = $this->getChassis()->one()) != null)
-			$str .= $prep.$item->libelle_long . ($show_price ? $obr.$this->price_chassis.'€'.$cbr.$post  : $post);
+			$str .= $this->price2($item->libelle_long, $this->price_chassis, $mode, $show_price);
 
 
 		if(($item = $this->getFrame()->one()) != null)			
-			$str .= $prep.'Cadre '.$item->libelle_long . ($show_price ? $obr.$this->price_frame.'€'.$cbr.$post  : $post);
+			$str .= $this->price2('Cadre '.$item->libelle_long, $this->price_frame, $mode, $show_price);
 
 		if($this->montage_bool)
-			$str .= $prep.'Montage' . ($show_price ? $obr.$this->price_montage.'€'.$cbr.$post  : $post);
+			$str .= $this->price2('Montage', $this->price_montage, $mode, $show_price);
 
 		if($this->renfort_bool)
-			$str .= $prep.'Renforts' . ($show_price ? $obr.$this->price_renfort.'€'.$cbr.$post  : $post);
+			$str .= $this->price2('Renforts', $this->price_renfort, $mode, $show_price);
 
 		if($this->filmuv_bool)
-			$str .= $prep.'Film UV' . ($show_price ? $obr.$this->price_filmuv.'€'.$cbr.$post  : $post);
+			$str .= $this->price2('Film UV', $this->price_filmuv, $mode, $show_price);
 
 		if($this->corner_bool)
-			$str .= $prep.'Coins arrondis' /*. ($show_price ? $obr.$this->price_border.'€'.$cbr.$post  : ', ')*/. $post;
+			$str .= $this->price2('Coins arrondis', null, $mode, $show_price);
 		
 		return ($mode == 'html' ? $str.'</ul></small>' : trim($str, ', '));		
 	}

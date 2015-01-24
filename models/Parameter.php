@@ -105,6 +105,12 @@ class Parameter extends \yii\db\ActiveRecord
 		return $p ? $p->value_text : $default;
 	}
 
+	public static function getMLText($domain, $name, $lang = 'fr') {
+		$p = self::find()->where(['domain' => $domain, 'name' => $name, 'lang' => $lang])->one();
+		
+		return $p ? $p->value_text : $domain.'::'.$name.'('.$lang.')';
+	}
+
 	public static function getIntegerValue($domain, $name, $default = null) {
 		$p = self::find()->where(['domain' => $domain, 'name' => $name])->one();
 		return $p ? $p->value_int : $default;

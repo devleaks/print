@@ -610,17 +610,21 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 	// console.log('tirage_id: '+item_id);
 
 	$('div.field-documentlinedetail-finish_id').toggle(false);
-	$('div.field-documentlinedetail-note').toggle(false);
+	$('div.field-documentlinedetail-corner_bool').toggle(false);
 	$('div.field-documentlinedetail-support_id').toggle(false);
 	$('div.field-documentlinedetail-price_support').toggle(false);
 	$('div.field-documentlinedetail-frame_id').toggle(false);
 	$('div.field-documentlinedetail-price_frame').toggle(false);
 	$('div.field-documentlinedetail-montage_bool').toggle(false);
 	$('div.field-documentlinedetail-price_montage').toggle(false);
+	$('div.field-documentlinedetail-renfort_bool').toggle(false);
+	$('div.field-documentlinedetail-price_renfort').toggle(false);
 	$('div.field-documentlinedetail-chassis_id').toggle(false);
 	$('div.field-documentlinedetail-price_chassis').toggle(false);
 	$('div.field-documentlinedetail-protection_id').toggle(false);
 	$('div.field-documentlinedetail-price_protection').toggle(false);
+	$('div.field-documentlinedetail-filmuv_bool').toggle(false);
+	$('div.field-documentlinedetail-price_filmuv').toggle(false);
 
 	if(isNaN(item_id)) { // none selected
 		add_error("FINEART_NO_TIRAGE");
@@ -660,14 +664,16 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$('div.field-documentlinedetail-price_montage').toggle(true);
 			$('div.field-documentlinedetail-renfort_bool').toggle(true);
 			$('div.field-documentlinedetail-price_renfort').toggle(true);
+			$('div.field-documentlinedetail-filmuv_bool').toggle(true);
+			$('div.field-documentlinedetail-price_filmuv').toggle(true);
 
-			$('#documentlinedetail-note:enabled').val('');
+			$('#documentlinedetail-chassis_id').val('');
 			$('#documentlinedetail-price_chassis:enabled').val('');
+			$('#documentlinedetail-protection_id').val('');
 			$('#documentlinedetail-price_protection:enabled').val('');
 			break;
 		case 'Papier Fine Art':
 			$("#store-form-shared").toggle(true);
-			$('div.field-documentlinedetail-note').toggle(true);
 			$('div.field-documentlinedetail-support_id').toggle(true);
 			$('div.field-documentlinedetail-price_support').toggle(true);
 			$('div.field-documentlinedetail-frame_id').toggle(true);
@@ -680,17 +686,16 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$('div.field-documentlinedetail-price_protection').toggle(true);
 
 			$('div.field-documentlinedetail-finish_id input[type="radio"]').prop('checked',false);
+			$('#documentlinedetail-chassis_id').val('');
 			$('#documentlinedetail-price_chassis:enabled').val('');
+			$("#documentlinedetail-filmuv_bool:enabled").prop('checked',false);
+			$("#documentlinedetail-price_filmuv:enabled").val('');
 			break;
 		case 'Canvas':
 			$("#store-form-shared").toggle(false);
 			$('div.field-documentlinedetail-chassis_id').toggle(true);
 			$('div.field-documentlinedetail-price_chassis').toggle(true);
-			$('div.field-documentlinedetail-corner_bool').toggle(false);
-			$('div.field-documentlinedetail-renfort_bool').toggle(false);
-			$('div.field-documentlinedetail-price_renfort').toggle(false);
 
-			$('#documentlinedetail-note:enabled').val('');
 			$('div.field-documentlinedetail-finish_id input[type="radio"]').prop('checked',false);
 			$('#documentlinedetail-corner_bool').prop('checked',false);
 			$('#documentlinedetail-support_id:enabled').val('');
@@ -703,6 +708,8 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$('#documentlinedetail-price_renfort:enabled').val('');
 			$('#documentlinedetail-protection_id:enabled').val('');
 			$('#documentlinedetail-price_protection:enabled').val('');
+			$("#documentlinedetail-filmuv_bool:enabled").prop('checked',false);
+			$("#documentlinedetail-price_filmuv:enabled").val('');
 			break;
 		default: /** sans tirage */
 			$('div.field-documentlinedetail-support_id').toggle(true);
@@ -711,11 +718,14 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$('div.field-documentlinedetail-price_frame').toggle(true);
 			$('div.field-documentlinedetail-montage_bool').toggle(true);
 			$('div.field-documentlinedetail-price_montage').toggle(true);
-			$('div.field-documentlinedetail-protection_id').toggle(false);
-			$('div.field-documentlinedetail-price_protection').toggle(false);
+			$('div.field-documentlinedetail-renfort_bool').toggle(true);
+			$('div.field-documentlinedetail-price_renfort').toggle(true);
+			$('div.field-documentlinedetail-protection_id').toggle(true);
+			$('div.field-documentlinedetail-price_protection').toggle(true);
+			$('div.field-documentlinedetail-filmuv_bool').toggle(true);
+			$('div.field-documentlinedetail-price_filmuv').toggle(true);
 
-			$('#documentlinedetail-note:enabled').val('');
-			$('#documentlinedetail-price_protection:enabled').val('');
+			$('#documentlinedetail-chassis_id').val('');
 			$('#documentlinedetail-price_chassis:enabled').val('');
 			break;
 	}
@@ -870,8 +880,10 @@ function() {
 	clean_errors();
 
 	var item = needHandling();
-	if(!item)
+	if(!item) {
+		$('.document-line-options').toggle(false);
 		return;
+	}
 
 	var yii_category = item.yii_category;
 

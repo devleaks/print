@@ -56,7 +56,8 @@
         "bower-asset/packery": "*",
         "bower-asset/draggabilly": "*",
         "bower-asset/masonry": "*",
-        "bower-asset/isotope": "*"
+        "bower-asset/isotope": "*",
+        "kartik-v/yii2-date-range": "*"
   },
     "require-dev": {
 		"yiisoft/yii2-codeception": "*",

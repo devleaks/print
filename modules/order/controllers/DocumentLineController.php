@@ -9,6 +9,7 @@ use app\models\DocumentLine;
 use app\models\DocumentLineDetail;
 use app\models\DocumentLineSearch;
 use app\models\Picture;
+use app\models\PDFLabel;
 use yii\db\Query;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
@@ -336,6 +337,6 @@ class DocumentLineController extends Controller
 
 	public function actionLabel($id) {
 		$model = $this->findModel($id);
-		return $model->generateLabel($this);
+		return $model->generateLabels($this);
 	}
 }

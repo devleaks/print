@@ -13,8 +13,6 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\DocumentLineSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$contentBefore = $this->render('../document/_header_print', ['model' => $order]);
-$contentAfter = $this->render('../document/_footer_print', ['model' => $order]);
 ?>
 <div class="document-line-list">
 <p></p>

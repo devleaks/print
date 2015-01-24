@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		])
 	?>
 
-	<?php if($model->document_type != Document::TYPE_CREDIT): ?>
+	<?php if(!in_array($model->document_type, [Document::TYPE_CREDIT,Document::TYPE_REFUND])): ?>
 		<?= $this->render('../document-line/_list_add', [
 				'order' => $model,
 				'form' => $form,

@@ -9,6 +9,7 @@ $this->title = Yii::t('store', $model->document_type) . ' ' . $model->name;
 
 $lang = ($model->client->lang ? $model->client->lang : 'fr');
 Yii::$app->language = $lang;
+$use_gridview = false;
 ?>
 <div class="document-print-body">
 
@@ -17,8 +18,11 @@ Yii::$app->language = $lang;
 	    ])
 	?>
 
-	<?= $this->render('table', [
-	        'query' => $model->getDocumentLines(),
+	<?= $this->render('table', [ // 'table-gv'
+	        'dataProvider' => new ActiveDataProvider([
+					'query' => $model->getDocumentLines(),
+					'pagination' => false,
+			]),
 			'order' => $model
 	    ])
 	?>

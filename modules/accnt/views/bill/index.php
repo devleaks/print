@@ -28,10 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	        'heading'=>'<h3 class="panel-title">'.Yii::t('store', 'Unpaid Bills').'</h3>',
 	        'before'=> '',
 	        'after'=> Html::label(Yii::t('store', 'Selection')).' : '.
-    			Html::submitButton('<i class="glyphicon glyphicon-ok"></i> '.Yii::t('store', 'Payment Received'),
-							['class' => 'btn btn-success actionButton', 'data-action' => Bill::ACTION_PAYMENT_RECEIVED]).' '.
-    			Html::submitButton('<i class="glyphicon glyphicon-credit-card"></i> '.Yii::t('store', 'Transfer to Client Account'),
-							['class' => 'btn btn-primary actionButton', 'data-action' => Bill::ACTION_CLIENT_ACCOUNT]).' '.
+    			Html::submitButton('<i class="glyphicon glyphicon-ok"></i> '.Yii::t('store', 'Add Payment'),
+							['class' => 'btn btn-primary actionButton', 'data-action' => Bill::ACTION_PAYMENT_RECEIVED]).' '.
     			Html::submitButton('<i class="glyphicon glyphicon-envelope"></i> '.Yii::t('store', 'Send Reminder'),
 							['class' => 'btn btn-warning actionButton', 'data-action' => Bill::ACTION_SEND_REMINDER])
 				,
@@ -47,7 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'label' => Yii::t('store', 'Client'),
 	            'value' => function ($model, $key, $index, $widget) {
 							return $model->client->nom;
-				}
+				},
+				'noWrap' => true,
 			],
 	        [
 	            'label' => Yii::t('store', 'Client Email'),

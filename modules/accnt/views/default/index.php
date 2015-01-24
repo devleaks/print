@@ -17,8 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	    <li><a href="<?= Url::to(['/order/document/credits']) ?>"><?= Yii::t('store', 'Credit Notes')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/bill']) ?>"><?= Yii::t('store', 'Unpaid Bills')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/bill/boms']) ?>"><?= Yii::t('store', 'Bill all BOMs')?></a></li>
-	    <li><a href="<?= Url::to(['/accnt/account']) ?>"><?= Yii::t('store', 'Client Accounts')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/extraction']) ?>"><?= Yii::t('store', 'Monthly Extraction')?></a></li>
+	    <li><a href="<?= Url::to(['/accnt/pdf']) ?>"><?= Yii::t('store', 'Documents')?></a></li>
+	    <li><a href="<?= Url::to(['/store/client']) ?>"><?= Yii::t('store', 'Clients')?></a></li>
+	    <li><a href="<?= Url::to(['/accnt/cash']) ?>"><?= Yii::t('store', 'Cash')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/default/control']) ?>"><?= Yii::t('store', 'Checks')?></a></li>
 	</ul>
 

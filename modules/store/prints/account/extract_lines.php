@@ -10,11 +10,12 @@ use app\models\Parameter;
 		<th style="text-align: center;"><?= Yii::t('store', 'Order Date')?></th>
 		<th style="text-align: center;"><?= Yii::t('store', 'Due Date')?></th>
 		<th style="text-align: center;"><?= Yii::t('store', 'Amount')?></th>
+		<th style="text-align: center;"><?= Yii::t('store', 'Account')?></th>
 		<th style="text-align: center;"><?= Yii::t('store', 'Bill Date')?></th>
 		<th style="text-align: center;"><?= Yii::t('store', 'Note')?></th>
 	</tr>
 	<tr>
-		<th colspan="3" style="text-align: right;"><?=  Yii::t('store', 'Opening Balance') . ' ' . Yii::t('store', 'on') . ' ' . Yii::$app->formatter->asDate($to_date) ?></th>
+		<th colspan="4" style="text-align: right;"><?=  Yii::t('store', 'Opening Balance') . ' ' . Yii::t('store', 'on') . ' ' . Yii::$app->formatter->asDate($to_date) ?></th>
 		<th style="text-align: right;"><?= Yii::$app->formatter->asCurrency($opening_balance) ?></th>
 		<th colspan="2"></th>
 	</tr>
@@ -32,6 +33,7 @@ use app\models\Parameter;
 		<td><?= $model->document ? Yii::$app->formatter->asDate($model->document->created_at) : '' ?></td>
 		<td><?= $model->document ? Yii::$app->formatter->asDate($model->document->due_date) : '' ?></td>
 		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($model->amount) ?></td>
+		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($model->getBalance($model->client_id, $model->created_at)) ?></td>
 		<td><?= Yii::$app->formatter->asDate($model->created_at) ?></td>
 		<td style="text-align: left;"><?= $model->note ?></td>
 		<?php $tot_amount += $model->amount; ?>
@@ -41,7 +43,7 @@ use app\models\Parameter;
 	</tbody>
 	<tfoot>
 	<tr>
-		<th colspan="3" style="text-align: right;">
+		<th colspan="4" style="text-align: right;">
 <?= Yii::t('store', 'Closing Balance') . ' ' . Yii::t('store', 'on') . ' ' . Yii::$app->formatter->asDate(date('Y-m-d', strtotime('now'))) ?></th>
 		<th style="text-align: right;"><?= Yii::$app->formatter->asCurrency($closing_balance) ?></th>
 		<th colspan="2"></th>

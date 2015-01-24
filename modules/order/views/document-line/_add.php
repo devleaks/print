@@ -201,6 +201,7 @@ $do_form = $form;
 	?>
 
     <?php
+/*
 		$browser = Enum::getBrowser();
 		$version = floatval($browser['version']);
 		//echo Enum::array2table($browser, true);
@@ -208,7 +209,7 @@ $do_form = $form;
 		if($browser['code'] == 'safari' && $version <= 535) {
 			echo $form->field($model, 'image[]')->fileInput();
 		} else {
-			echo $form->field($model, 'image[]')->widget(FileInput::classname(), [
+*/			echo $form->field($model, 'image[]')->widget(FileInput::classname(), [
 		        'options' => ['accept' => 'image/jpeg, image/png, image/gif', 'multiple' => true],
 		        'pluginOptions' => [
 		            'initialPreview'    => $items,
@@ -216,8 +217,8 @@ $do_form = $form;
 		            'overwriteInitial'  => false
 		        ]
 		    ]);
-		}
-    ?>
+/*		}
+*/    ?>
 	</div>
 
 	<?php if(! $do_form): ?>

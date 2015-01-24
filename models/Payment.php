@@ -13,7 +13,9 @@ use yii\helpers\ArrayHelper;
 class Payment extends _Payment
 {
 	/** Payment Method */
-	const TYPE_ACCOUNT = 'ACCOUNT';	
+	const TYPE_ACCOUNT = 'ACCOUNT';
+	
+	const CLEAR = 'CLEAR';
 
 	/** Document status */
 	const STATUS_PAID = 'PAID';	
@@ -55,6 +57,8 @@ class Payment extends _Payment
 	}
 	
 	public function getPaymentMethod() {
+		if($this->payment_method == Payment::CLEAR)
+			return Yii::t('store', 'Bill Debit');
 		$p = Parameter::findOne(['domain'=>'paiement', 'name' => $this->payment_method]);
 		return $p ? $p->value_text : null;
 	}

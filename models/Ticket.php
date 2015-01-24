@@ -33,10 +33,9 @@ class Ticket extends Order
 	 * @inheritdoc
 	 */
 	public function updatePaymentStatus() {
+		Yii::trace('isPaid='.$this->isPaid(), 'Ticket::updatePaymentStatus');
 		if($this->status == self::STATUS_DONE || $this->status == self::STATUS_SOLDE) {
-			$solde = $this->getBalance();
-			Yii::trace('solde='.$solde, 'Ticket::updatePaymentStatus');
-			$this->setStatus($solde < 0.01 ? self::STATUS_CLOSED : self::STATUS_SOLDE);
+			$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_SOLDE);
 		} // otherwise, we leave the status as it is
 	}
 
@@ -72,7 +71,7 @@ class Ticket extends Order
 			case $this::STATUS_TODO:
 			case $this::STATUS_BUSY:
 				if( $work  ) {
-					$ret .= Html::a($this->getButton($template, 'tasks', 'Work'), ['/work/work/view', 'id' => $work->id], [
+					$ret .= Html::a($this->getButton($template, 'tasks', 'Work'), ['/work/work/view', 'id' => $work->id, 'sort' => 'position'], [
 						'title' => Yii::t('store', 'Work'),
 						'class' => $baseclass . ' btn-primary',
 						'data-method' => 'post',
@@ -100,7 +99,13 @@ class Ticket extends Order
 				$ret .= ' <span class="label label-success">'.Yii::t('store', $this->status).'</span>';
 				break;
 		}
-		$ret .= ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')]);
+		$ret .= false ? ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')])
+		:
+		' <div class="btn-group"><button type="button" class="'.$baseclass.' btn-info dropdown-toggle" data-toggle="dropdown">'.
+		        	$this->getButton($template, 'print', 'Print'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
+					'<li>'.Html::a('Page (A4)', ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'title' => Yii::t('store', 'Print on full A4 page')]).'</li>'.
+					'<li>'.Html::a('Ticket (A5)', ['/order/document/print', 'id' => $this->id, 'format' => 'A5'], ['target' => '_blank', 'title' => Yii::t('store', 'Print on reduced A5 ticket')]).'</li>'.
+     					'</ul></div>';
 		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/document/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
 		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'View')]);
 		return $ret;

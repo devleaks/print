@@ -42,7 +42,7 @@ $this->title = 'Labo JJ Micheli';
 
                 <p><a class="btn btn-primary" href="<?= Url::to(['/work/']) ?>">Travaux &raquo;</a></p>
 				<p>
-					&raquo; <a href="<?= Url::to(['/work/work/']) ?>"><?= Yii::t('store', 'Manage all works')?></a>
+					&raquo; <a href="<?= Url::to(['/work/work/', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Manage all works')?></a>
 				</p>
             </div>
         </div>
@@ -54,7 +54,7 @@ $this->title = 'Labo JJ Micheli';
                 <p>Gestion des clients, gestion des articles, gestion des tâches à accomplir.</p>
 
                 <p><a class="btn btn-primary" href="<?= Url::to(['/store/']) ?>">Magasin &raquo;</a></p>
-				<p>
+				<p data-intro='Menu rapide vers actions les plus courantes'>
 					&raquo; <a href="<?= Url::to(['/store/client/']) ?>"><?= Yii::t('store', 'Customers')?></a>
 					&raquo; <a href="<?= Url::to(['/store/item']) ?>"><?= Yii::t('store', 'Items')?></a>
 					&raquo; <a href="<?= Url::to(['/store/price']) ?>"><?= Yii::t('store', "Price Lists")?></a>

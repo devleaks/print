@@ -80,6 +80,11 @@ function price_exhibit($w, $h, $frame) {
 	}
 ?>
 	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="<?= ceil($max_w/$stp_w) + 1 ?>" style="text-align: right; font-size: 9px;"><?= date('d-m-Y') ?></td>
+		</tr>
+	</tfoot>
 </table>
 
 </div>

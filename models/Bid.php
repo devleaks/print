@@ -19,6 +19,30 @@ class Bid extends Document
         $query->andWhere(['document_type' => self::TYPE_BID]);
     }
 
+
+    /**
+     * @inheritdoc
+	 */
+	public function convert($ticket = false) { // convert BID to ORDER
+		if( $existing_next = $this->find()->andWhere(['parent_id' => $this->id])->andWhere(['document_type' => self::TYPE_ORDER])->one() )
+			return $existing_next;
+		$copy = $this->deepCopy( $ticket ? self::TYPE_TICKET : self::TYPE_ORDER);
+		$copy->parent_id = $this->id;
+		$copy->status = self::STATUS_OPEN;
+		$copy->save();
+
+		if(Parameter::isTrue('application', 'auto_submit_work')) {
+			Yii::trace('auto_submit_work for '.$copy->id, 'Document::convert');
+			$work = $copy->createWork();
+		}
+
+		$this->status = self::STATUS_CLOSED;
+		$this->save();	
+
+		return $copy;
+	}
+
+
     /**
      * @inheritdoc
 	 */
@@ -31,12 +55,27 @@ class Bid extends Document
 					'class' => $baseclass . ' btn-primary',
 					'data-method' => 'post',
 					]);
-				$ret .= ' '.Html::a($this->getButton($template, 'ok', 'Convert to Order'), ['/order/document/convert', 'id' => $this->id], [
+				$ret .= ' <div class="btn-group"><button type="button" class="'.$baseclass.' btn-success dropdown-toggle" data-toggle="dropdown">'.
+		        	$this->getButton($template, 'ok', 'Convert to Order'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
+						'<li>'.Html::a(Yii::t('store', 'Convert to order'),
+										['/order/document/convert', 'id' => $this->id],
+										['title' => Yii::t('store', 'Convert to order'),
+											'data-method' => 'post',
+											'data-confirm' => Yii::t('store', 'Convert to order?')]
+						).'</li>'.
+						'<li>'.Html::a(Yii::t('store', 'Convert to sale'),
+										['/order/document/convert', 'id' => $this->id, 'ticket' => true],
+										['title' => Yii::t('store', 'Convert to sale'),
+											'data-method' => 'post',
+											'data-confirm' => Yii::t('store', 'Convert to sale?')]
+						).'</li>'.
+     				'</ul></div>';
+				/*$ret .= ' '.Html::a($this->getButton($template, 'ok', 'Convert to Order'), ['/order/document/convert', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Convert to Order'),
 					'class' => $baseclass . ' btn-success',
 					'data-method' => 'post',
 					'data-confirm' => Yii::t('store', 'Convert to order?')
-					]);
+					]);*/
 				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/document/cancel', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Cancel'),
 					'class' => $baseclass . ' btn-warning',
@@ -55,10 +94,7 @@ class Bid extends Document
 				$ret .= ' <span class="label label-primary">'.Yii::t('store', 'Cancelled').'</span>';
 				break;
 		}
-		$ret .= ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')]);
-		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/document/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
-		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'View')]);
-		return $ret;
+		return $ret . parent::getActions($baseclass, $show_work, $template);
 	}
 
 }

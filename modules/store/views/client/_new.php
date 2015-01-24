@@ -36,7 +36,11 @@ use kartik\widgets\ActiveForm;
 				],
 		        'autre_nom' => [
 					'type' => Form::INPUT_TEXT,
-		            'columnOptions' => ['colspan' => 6],
+		            'columnOptions' => ['colspan' => 4],
+				],
+		        'comptabilite' => [
+					'type' => Form::INPUT_TEXT,
+		            'columnOptions' => ['colspan' => 2],
 				],
 		        'adresse' => [
 					'type' => Form::INPUT_TEXT,

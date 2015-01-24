@@ -1,11 +1,13 @@
 # L'Application
 
-L'application est découpée en cinq modules:
+Vue générale de l'application.
+
+L'application est découpée en modules:
 
 1. Gestion du magasin, articles, tâches, etc.
 2. Gestion des commandes: Devis, commandes, factures, notes de crédit.
 3. Gestion des travaux: Travaux, tâches à accomplir, etc.
-4. Comptabilité: Extraction des factures et clôture de fin d'année.
+4. Comptabilité: Extraction des factures, caisse.
 5. Gestion de l'application: Paramètres, utilisateurs, etc.
 
 
@@ -45,7 +47,9 @@ La gestion du magasin regroupe les actions quotidiennes, et les actions opérée
 ## Comptabilité
 
 * Extraction des nouvelles factures
-* Clôture de fin d'année.
+* Caisse.
+* Envoi des lettres de rappel.
+* Gestion des documents générés par l'application.
 
 
 ## Gestion de l'application

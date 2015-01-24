@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
@@ -16,6 +17,10 @@ use kartik\date\DatePicker;
     <?= $form->field($model, 'domain')->textInput(['maxlength' => 20]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 40]) ?>
+
+    <?= $form->field($model, 'lang')->dropDownList(['item' => ArrayHelper::map($model::find()->where(['domain'=>'langue'])->orderBy('value_int')->asArray()->all(), 'name', 'value_text')]) ?>
+
+    <?= $form->field($model, 'lang')->textInput(['maxlength' => 40]) ?>
 
     <?= $form->field($model, 'value_text')->textInput(['maxlength' => 80]) ?>
 

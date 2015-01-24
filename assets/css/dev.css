@@ -17,3 +17,21 @@
 .item_green {
 	background-color: #8d8;
 }
+li.double-arrow {
+	list-style:none;
+}
+li.double-arrow:before {
+	content:"▹ ";
+}
+
+.panel-heading span {
+    margin-top: -20px;
+    font-size: 15px;
+}
+.row {
+    margin-top: 40px;
+    padding: 0 10px;
+}
+.clickable {
+    cursor: pointer;
+}    

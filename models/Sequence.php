@@ -71,7 +71,7 @@ class Sequence extends \yii\db\ActiveRecord
 		return $seq ? $seq->sequence_cur_value : null;
 	}
 
-	/** we don't even test for cycles, etc. @todo
+	/** we don't even test for cycles, etc.
 	 */
 	public static function nextval($name) {
 		$seq = self::find()->where(['sequence_name' => $name])->one();

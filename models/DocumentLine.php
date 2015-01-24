@@ -4,7 +4,6 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use kartik\mpdf\Pdf;
 
 /**
  * This is the model class for table "order_line".
@@ -235,7 +234,7 @@ class DocumentLine extends _DocumentLine
 			
 		if($detail = $this->getDetail()) {
 			if($show_price && $this->isTirage(true))
-				$str .= ' <small>('.$detail->price_tirage.'€)</small>';
+				$str .= ' <small>('.$detail->price_tirage.'<span style="font-size: 0.8em;">€</span>)</small>';
 				
 			$str .= $detail->getDescriptionHTML($show_price); // $str .= ' ('.$detail->getDescription($show_price).')';
 		}
@@ -265,66 +264,29 @@ class DocumentLine extends _DocumentLine
 	}
 	
 
-	public function generateLabel($controller, $filename = null) {
-		$viewBase = '@app/modules/order/views/document-line/';
+	public function generateLabels($controller, $filename = null) {
+		$viewBase = '@app/modules/store/prints/label/';
 		
-		$content = '';
 		if($pics_array = $this->getPictures()->all())
 			$pics_count = count($pics_array);
 		else
 			$pics_count = 0;
 
+		$content = '';
 		for($i=0; $i<$this->quantity; $i++) {
 			if($i > 0)
 				$content .= '<pagebreak />';
 
-		    $content .= $controller->renderPartial($viewBase.'_label_print', [
+		    $content .= $controller->renderPartial($viewBase.'item-label', [
 				'model' => $this,
 				'sequence' => $i + 1,
 				'picture' => $i < $pics_count ? $pics_array[$i] : null,
 			]);
 		}
 		
-		$pdfData = [
-	        // set to use core fonts only
-	        'mode' => Pdf::MODE_CORE, 
-	        // A4 paper format
-	        'format' => Pdf::FORMAT_A4, 
-	        // portrait orientation
-	        'orientation' => Pdf::ORIENT_PORTRAIT, 
-	        // stream to browser inline
-	        'destination' => Pdf::DEST_BROWSER, 
-	        // your html content input
-	        'content' => $content,  
-	        // format content from your own css file if needed or use the
-	        // enhanced bootstrap css built by Krajee for mPDF formatting 
-	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-	        // any css to be embedded if required
-			'cssInline' => '.kv-wrap{padding:20px;}' .
-	        	'.kv-heading-1{font-size:18px}'.
-                '.kv-align-center{text-align:center;}' .
-                '.kv-align-left{text-align:left;}' .
-                '.kv-align-right{text-align:right;}' .
-                '.kv-align-top{vertical-align:top!important;}' .
-                '.kv-align-bottom{vertical-align:bottom!important;}' .
-                '.kv-align-middle{vertical-align:middle!important;}' .
-                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}',
-	         // set mPDF properties on the fly
-			'marginHeader' => 10,
-			'marginFooter' => 10,
-			'options' => [],
-		];
-
-		if($filename) {
-			$pdfData['destination'] = Pdf::DEST_FILE;
-			$pdfData['filename'] = $filename;
-		} else {
-			$pdfData['destination'] = Pdf::DEST_BROWSER;
-		}
-
-    	$pdf = new Pdf($pdfData);
+		$pdf = new PDFLabel([
+			'content' => $content
+		]);		
 		return $pdf->render();
 	}
 	

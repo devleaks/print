@@ -8,16 +8,16 @@
  */
 
 use yii\helpers\Html;
-use app\components\PdfDocumentGenerator;
+use app\models\PdfDocument;
 
 
 if(!isset($format))
-	$format = PdfDocumentGenerator::FORMAT_A4;
+	$format = PdfDocument::FORMAT_A4;
 
-$w = ($format == PdfDocumentGenerator::FORMAT_A4) : 200 : floor(200/sqrt(2)) ;
-$h = ($format == PdfDocumentGenerator::FORMAT_A4) :  64 : floor( 64/sqrt(2)) ;
+$w = ($format == PdfDocument::FORMAT_A4) ? 200 : floor(200/sqrt(2)) ;
+$h = ($format == PdfDocument::FORMAT_A4) ?  64 : floor( 64/sqrt(2)) ;
 
 ?>
 <div class="print-header">	
-	<?= Html::img('@app/assets/i/logo-bw.png', ['width' => <?= $w ?>, 'height' => <?= $h ?>]) ?>
+	<?= Html::img('@app/assets/i/logo-bw.png', ['width' => $w, 'height' => $h]) ?>
 </div>

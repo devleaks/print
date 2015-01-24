@@ -92,7 +92,7 @@ Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter u
 				    'attributes' => [				
 				        'due_date' => [
 							'type' => Form::INPUT_WIDGET,
-							'widgetClass'=> DatePicker::classname(),
+							'widgetClass'=> DatePicker::className(),
 							'options' => ['pluginOptions' => [
 				                'format' => 'yyyy-mm-dd',
 				                'todayHighlight' => true

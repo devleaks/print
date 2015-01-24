@@ -63,6 +63,8 @@ use kartik\widgets\SwitchInput;
 					'options' => ['pluginOptions' => [
 								'onText' => Yii::t('store', 'Active'),
 								'offText' =>  Yii::t('store', 'Inactive'),
+						        'onColor' => 'success',
+						        'offColor' => 'danger',
 								'state' => $model->status == 'ACTIVE'
 					]],
 		            'columnOptions' => ['colspan' => 2],

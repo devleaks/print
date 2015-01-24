@@ -2,6 +2,7 @@
 
 use app\models\Account;
 use app\models\Bill;
+use app\models\Client;
 use app\models\Parameter;
 use kartik\detail\DetailView;
 use yii\helpers\Html;
@@ -11,20 +12,13 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
 /* @var $form yii\widgets\ActiveForm */
-$unpaid = Account::getBalance($client->id);
-$account_color = $unpaid < 0 ? 'warning' : 'success';
 $unpaid = Bill::find()->andWhere(['!=','document.status',Bill::STATUS_CLOSED])
 					  ->andWhere(['client_id' => $client->id])->exists();
 $unpaid_color = $unpaid < 0 ? 'warning' : 'success';
 
-$buttons1 = '<span class="kv-buttons-1">'.
-Html::a('<span class="glyphicon glyphicon-book"></span>',
-  ['/accnt/account/client', 'id' => $client->id], [
-	'title' => Yii::t('store', 'Client Account'),
-	'class' => "btn btn-xs btn-$account_color kv-btn-book",
-	'target' => 'blank',
- ])
-.' '.
+$comptoir = Client::findOne(['nom' => 'Client au comptoir']);
+
+$buttons1 = ($comptoir->id == $client->id) ? '' : '{update} <span class="kv-buttons-1">'.
 Html::a('<span class="glyphicon glyphicon-euro"></span>',
   ['/accnt/bill/client-unpaid', 'id' => $client->id], [
 	'title' => Yii::t('store', 'Unpaid Bills'),
@@ -38,6 +32,13 @@ Html::a('<span class="glyphicon glyphicon-shopping-cart"></span>',
 	'class' => "btn btn-xs btn-primary kv-btn-book",
 	'target' => 'blank',
 ])
+.' '.
+Html::a('<span class="glyphicon glyphicon-book"></span>',
+  ['/accnt/account/client', 'id' => $client->id], [
+	'title' => Yii::t('store', 'Previous Orders'),
+	'class' => "btn btn-xs btn-primary kv-btn-book",
+	'target' => 'blank',
+])
 .'</span>';
 
 //$morebuttons = '<span class="kv-buttons-1"><button type="button" class="btn btn-xs btn-default kv-btn-update" title="Compte client"><span class="glyphicon glyphicon-book"></span></button></span>';
@@ -45,7 +46,7 @@ Html::a('<span class="glyphicon glyphicon-shopping-cart"></span>',
 <div>
     <?= DetailView::widget([
         'model' => $client,
-		'buttons1' => '{update}'.' '.$buttons1,
+		'buttons1' => $buttons1,
 		'panel'=>[
 	        'heading' => '<h4>'.$client->prenom . ' '.$client->nom . ($client->autre_nom ? ' - '.$client->autre_nom : '') .'</h4>',
 	    ],

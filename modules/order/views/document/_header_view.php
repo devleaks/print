@@ -25,6 +25,16 @@ Icon::map($this);
 	
         <div class="row">
 
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><?= Yii::t('store',
+												   ($model->document_type == Document::TYPE_ORDER && $model->bom_bool) ? Document::TYPE_BOM : $model->document_type
+												  ) . ' # ' . $model->name	?></h3>
+					<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+				</div>
+				<div class="panel-body">
+			
+			
             <div class="col-lg-6">
 				<div>
 			    <?= DetailView::widget([
@@ -46,7 +56,7 @@ Icon::map($this);
 			            [
 			                'attribute'=>'parent_id',
 			                'label'=>Yii::t('store','Related'),
- 			                'value'=> $model->parent_id ? Html::a($model->parent->name, Url::to(['view', 'id' => $model->parent_id])) : ''
+ 			                'value'=> $model->parent_id ? Html::a($model->parent->name, Url::to(['/order/document/view', 'id' => $model->parent_id])) : ''
 							//.Html::activeHiddenInput($model, 'id')
 							,
 							'format' => 'raw',
@@ -131,7 +141,10 @@ Icon::map($this);
 				</div>
 			</div>
 
-		</div>
+				</div><!--panel-body-->
+		</div><!--panel-->
+
+		</div><!--row-->
 
 		<p></p>
 
@@ -141,7 +154,7 @@ Icon::map($this);
 				<?php
 				 	echo $model->getActions('btn', false);
 					echo $this->render('_sendmail', ['model' => $model]); /** modal */
-				 	if(in_array($model->document_type, [Document::TYPE_ORDER,Document::TYPE_BILL,Document::TYPE_TICKET,Document::TYPE_CREDIT])
+				 	if(in_array($model->document_type, [Document::TYPE_ORDER,Document::TYPE_BILL,Document::TYPE_TICKET,Document::TYPE_REFUND,Document::TYPE_CREDIT])
 					  && $model->status != Document::STATUS_CANCELLED )
 						echo $this->render('_pay', ['model' => $model]); /** modal */
 				?>
@@ -150,3 +163,26 @@ Icon::map($this);
 		</div>
 
 </div>
+<script type="text/javascript">
+<?php
+$this->beginBlock('JS_PANEL'); ?>
+jQuery(function ($) {
+    $('.panel-heading span.clickable').on("click", function (e) {
+        if ($(this).hasClass('panel-collapsed')) {
+            // expand the panel
+            $(this).parents('.panel').find('.panel-body').slideDown();
+            $(this).removeClass('panel-collapsed');
+            $(this).find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+        }
+        else {
+            // collapse the panel
+            $(this).parents('.panel').find('.panel-body').slideUp();
+            $(this).addClass('panel-collapsed');
+            $(this).find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+        }
+    });
+});
+<?php $this->endBlock(); ?>
+</script>
+<?php
+$this->registerJs($this->blocks['JS_PANEL'], yii\web\View::POS_END);

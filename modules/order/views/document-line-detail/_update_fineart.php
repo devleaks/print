@@ -42,10 +42,6 @@ use yii\helpers\Url;
 		            'columnOptions' => ['colspan' => 5],
 					'options' => ['inline'=>true],
 				],
-		        'note' => [
-					'type' => Form::INPUT_TEXT,
-		            'columnOptions' => ['colspan' => 5],
-				],
 			],
 		]).
 		Form::widget([

@@ -19,6 +19,9 @@ if(isset(Yii::$app->user))
 	<div data-intro='Menu secondaire vers options de recherches et actions'>
 	<ul>
 	    <li><a href="<?= Url::to(['/order/document/create-ticket']) ?>"><strong><?= Yii::t('store', 'New ticket')?></strong></a></li>
+	    <li><a href="<?= Url::to(['/order/document/tickets', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Tickets')?></a></li>
+	    <li><a href="<?= Url::to(['/order/document/create-refund']) ?>"><?= Yii::t('store', 'New refund')?></a></li>
+	    <li><a href="<?= Url::to(['/order/document/refunds', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Refunds')?></a></li>
 	</ul>
 
 	<ul>

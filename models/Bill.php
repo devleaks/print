@@ -71,7 +71,7 @@ class Bill extends Document {
 		} else
 			$ret = Payment::find()->where(['sale' => $sales])->sum('amount');
 
-		Yii::trace($this->id.'='.print_r($sales, true), 'Document::getPrepaid');
+		//Yii::trace($this->id.'='.print_r($sales, true), 'Bill::getPrepaid');
 		return $ret ? $ret : 0;
 	}
 
@@ -170,7 +170,7 @@ class Bill extends Document {
 					'data-confirm' => Yii::t('store', 'Send bill?')
 					]);
 				break;
-			case $this::STATUS_TOPAY:
+/*			case $this::STATUS_TOPAY:
 				$ret .= Html::a($this->getButton($template, 'euro', 'Paiement Received'), ['/order/document/paid', 'id' => $this->id], [
 					'title' => Yii::t('store', 'Paiement Received'),
 					'class' => $baseclass . ' btn-primary',
@@ -178,14 +178,11 @@ class Bill extends Document {
 					'data-confirm' => Yii::t('store', 'Paiement received?')
 					]);
 				break;
-			case $this::STATUS_CLOSED:
+*/			case $this::STATUS_CLOSED:
 				$ret .= '<span class="label label-success">'.Yii::t('store', 'Paiement Received').'</span>';
 				break;
 		}
-		$ret .= ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')]);
-		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/document/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
-		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'View')]);
-		return $ret;
+		return $ret . parent::getActions($baseclass, $show_work, $template);
 	}
 
 }

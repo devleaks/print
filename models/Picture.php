@@ -200,7 +200,7 @@ class Picture extends _Picture
 	 * @return string Full path to thumbnail image
 	 */
 	public function getThumbpath() {
-		return RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_PICTURES) . $this->getThumbnailName();
+		return RuntimeDirectoryManager::getPictureRoot() . $this->getThumbnailName();
 	}
 
 	
@@ -210,7 +210,7 @@ class Picture extends _Picture
 	 * @return string Full path to image file
 	 */
 	public function getFilepath() {
-		return RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_PICTURES) . $this->filename;
+		return RuntimeDirectoryManager::getPictureRoot() . $this->filename;
 	}
 
 }

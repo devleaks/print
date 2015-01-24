@@ -13,12 +13,13 @@ if(isset(Yii::$app->user))
 <div class="order-default-index">
     <h1><?= Yii::t('store', 'Orders') ?></h1>
 
-    <p>
-    </p>
 	<div data-intro='Menu secondaire vers options de recherches et actions'>
 	<?php if(in_array($role, ['manager', 'admin'])): ?>
 	<ul>
 	    <li><a href="<?= Url::to(['/order/document/create-ticket']) ?>"><strong><?= Yii::t('store', 'New ticket')?></strong></a></li>
+	    <li><a href="<?= Url::to(['/order/document/tickets', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Tickets')?></a></li>
+	    <li><a href="<?= Url::to(['/order/document/create-refund']) ?>"><?= Yii::t('store', 'New refund')?></a></li>
+	    <li><a href="<?= Url::to(['/order/document/refunds', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Refunds')?></a></li>
 	</ul>
 
 	<ul>

@@ -36,7 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'pays',
             // 'langue',
             'numero_tva',
-            // 'email:email',
+            'comptabilite',
+            'email:email',
             // 'site_web',
             // 'domicile',
             // 'bureau',
@@ -60,7 +61,6 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'mailing',
             // 'outlook',
             // 'categorie_de_client',
-            // 'comptabilite',
             // 'operation',
             // 'categorie_de_prix_de_vente',
             // 'reference_1',
@@ -70,6 +70,14 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'reference_3',
             // 'date_limite_3',
             // 'commentaires',
+			[
+	            'label' => Yii::t('store', 'Last Update'),
+				'attribute' => 'updated_at',
+				'format' => 'datetime',
+				'value' => function ($model, $key, $index, $widget) {
+					return new DateTime($model->updated_at);
+				}
+			],
 
 	        [
 	            'class' => 'yii\grid\ActionColumn',
@@ -78,14 +86,14 @@ $this->params['breadcrumbs'][] = $this->title;
 	                'doc' => function ($url, $model) {
 						$url = Url::to(['/order/document/client', 'id' => $model->id]);
 	                    return Html::a('<i class="glyphicon glyphicon-shopping-cart"></i>', $url, [
-	                        'class' => 'btn btn-xs btn-primary',
+//	                        'class' => 'btn btn-xs btn-primary',
 	                        'title' => Yii::t('store', 'View'),
 	                    ]);
 	                },
 	                'accnt' => function ($url, $model) {
 						$url = Url::to(['/accnt/account/client', 'id' => $model->id]);
 	                    return Html::a('<i class="glyphicon glyphicon-book"></i>', $url, [
-	                        'class' => 'btn btn-xs btn-primary',
+//	                        'class' => 'btn btn-xs btn-primary',
 	                        'title' => Yii::t('store', 'View'),
 	                    ]);
 	                },

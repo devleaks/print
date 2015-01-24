@@ -6,7 +6,6 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use kartik\mpdf\Pdf;
 
 /**
  * Base class for all things common to bid, order, and bill
@@ -29,6 +28,8 @@ class Document extends _Document
 	const TYPE_BOM = 'BOM';
 	/** Ticket de caisse */
 	const TYPE_TICKET = 'TICKET';
+	/** Ticket de caisse */
+	const TYPE_REFUND = 'REFUND';
 	
 	
 	/** Document status */
@@ -57,6 +58,8 @@ class Document extends _Document
 	/** */
 	const EMAIL_PREFIX = 'EMAIL-';
 
+	/** */
+	const PAYMENT_LIMIT = 0.01;
     /**
      * @inheritdoc
      */
@@ -95,6 +98,7 @@ class Document extends _Document
 				case Document::TYPE_BILL:	return Bill::findOne($id);	break;
 				case Document::TYPE_CREDIT:	return Credit::findOne($id);break;
 				case Document::TYPE_TICKET:	return Ticket::findOne($id);break;
+				case Document::TYPE_REFUND:	return Refund::findOne($id);break;
 			}
 		return null;
 	}
@@ -106,6 +110,7 @@ class Document extends _Document
 			case Document::TYPE_BILL:	return new Bill($this->attributes);	break;
 			case Document::TYPE_CREDIT:	return new Credit($this->attributes);break;
 			case Document::TYPE_TICKET:	return new Ticket($this->attributes);break;
+			case Document::TYPE_REFUND:	return new Refund($this->attributes);break;
 		}
 		return null;
 	}
@@ -166,6 +171,10 @@ class Document extends _Document
 			case Document::TYPE_TICKET:
 				$doc_singular = Yii::t('store', 'Sales Ticket');
 				$doc_plural = Yii::t('store', 'Sales Tickets');
+				break;
+			case Document::TYPE_REFUND:
+				$doc_singular = Yii::t('store', 'Refund');
+				$doc_plural = Yii::t('store', 'Refunds');
 				break;
 			default:
 				$doc_singular = Yii::t('store', 'Document');
@@ -307,8 +316,9 @@ class Document extends _Document
 		}
 
 		//Yii::trace('total '.$this->price_htva, 'Document::updatePrice');
-		$this->price_htva = round($this->price_htva, 2);
-		$this->price_tvac = round($this->price_tvac, 2);
+		$this->price_htva = round( $this->price_htva , 2);
+		// price TVAC is rounded to nearest 0.05€ (5 c)
+		$this->price_tvac = round( round($this->price_tvac * 2, 1) / 2, 2);
 
 		$this->save();
 	}
@@ -331,32 +341,116 @@ class Document extends _Document
 	}
 
 
-	public function addPayment($amount, $method) {
-		$rounded_amount = round($amount, 2);
-		$payment = new Payment([
-			'sale' => $this->sale,
-			'client_id' => $this->client_id,
-			'payment_method' => $method,
-			'amount' => $rounded_amount,
-			'status' => Payment::STATUS_PAID,
-		]);
+	public function addPayment($amount_gross, $method) {
+		$payment = null;
+		$extra = null;
 		
-		if($method == Payment::TYPE_ACCOUNT) {
-			$account = new Account([
-				'document_id' => $this->id,
+		$amount = round($amount_gross, 2);
+		if($amount == 0) return;		
+
+		$ok = true;
+		$due = round($this->getBalance(), 2);
+		
+		if($method == 'CASH') {
+			$payment = new Payment([
 				'sale' => $this->sale,
 				'client_id' => $this->client_id,
-				'amount' => - $rounded_amount,
-				'status' => Account::TYPE_DEBIT,
-				'payment_method' => $method
+				'payment_method' => $method,
+				'amount' => $due,
+				'status' => Payment::STATUS_PAID,
 			]);
-			if($account->save())
-				$payment->save();
-		} else
-			$payment->save();
+			$cash = new Cash([
+				'document_id' => $this->id,
+				'sale' => $this->sale,
+				'amount' => $due,
+				'payment_date' => date('Y-m-d H:i:s'),
+			]);
+			$cash->save();
+			if($amount > $due)
+				Yii::$app->session->setFlash('warning', Yii::t('store', 'You must reimburse {0}€.', $amount - $due));
+		} else if ($method != 'CREDIT') {
+			if($amount <= $due) { // paid enough or less(prepayment)
+				$payment = new Payment([
+					'sale' => $this->sale,
+					'client_id' => $this->client_id,
+					'payment_method' => $method,
+					'amount' => $amount,		// Amount may be adjusted below if paid with CREDIT
+					'status' => Payment::STATUS_PAID,
+				]);
+			} else { // paid too much
+				$payment = new Payment([
+					'sale' => $this->sale,
+					'client_id' => $this->client_id,
+					'payment_method' => $method,
+					'amount' => $due,
+					'status' => Payment::STATUS_PAID,
+				]);
+				$extra = new Payment([
+					'sale' => Sequence::nextval('sale'),
+					'client_id' => $this->client_id,
+					'payment_method' => $method,
+					'amount' => $amount - $due,
+					'status' => Payment::STATUS_OPEN,
+				]);
+			}
+		} else { // if($method == 'CREDIT')
+			if($amount >= 0) {
+				// did not actually pay, but used a credit note,
+				// so we need to add the payment to the credit note as well.
+				$creditNotes = Credit::find()
+					->andWhere(['client_id' => $this->client_id])
+					->andWhere(['status' => [Credit::STATUS_TOPAY,Credit::STATUS_SOLDE]])
+					->orderBy('created_at');
+
+				$needed = $amount;
+				Yii::trace('Needed='.$needed, 'AccountController::addPayment');
+				foreach($creditNotes->each() as $cn) {
+					if($needed > 0) {
+						$available = abs($cn->getBalance());
+						Yii::trace('Available='.$available.' with '.$cn->id, 'Document::addPayment');
+						if($needed <= $available) { // no problem, we widthdraw from credit note
+							Yii::trace('Found='.$needed, 'Document::addPayment');
+							$cn->addPayment(-$needed, Payment::CLEAR);
+							$needed = 0;
+						} else {
+							Yii::trace('Clear='.$available, 'Document::addPayment');
+							$cn->addPayment(-$available, Payment::CLEAR); // this credit note is exhausted
+							$needed -= $available;
+						}
+						Yii::trace('Still need='.$needed, 'Document::addPayment');
+					}
+				}
+				$amount = round($amount - $needed, 2);
+				$payment->amount = $amount;
 			
-		$this->updatePaymentStatus();
+				Yii::trace('Final need='.$needed, 'Document::addPayment');
+				if($needed > 0) { // we are left with a debt
+					Yii::$app->session->setFlash('warning', Yii::t('store', 'Amount is too large to balance all credit notes. Customer left with {0} to pay.', round($needed, 2)));
+				}
+			} else { // $capture->amount is negative, and we use CREDIT, it means we reimburse a positive balance
+				$clear = new Payment([
+					'sale' => $this->sale,
+					'client_id' => $this->client_id,
+					'payment_method' => Payment::CLEAR,
+					'amount' => $amount,		// Amount may be adjusted below if paid with CREDIT
+					'status' => Payment::STATUS_PAID,
+				]);
+				$clear->save();
+				Yii::$app->session->setFlash('info', Yii::t('store', 'Credit note paid.'));
+			}
+		}
+		
+		if($ok)
+			$ok = $payment->save();
+		if($ok && $extra)
+			$ok = $extra->save();
+		if($ok)
+			$this->updatePaymentStatus();
+
+		return $ok;
 	}
+
+
 	/**
 	 * Returns amount due.
 	 *
@@ -364,7 +458,17 @@ class Document extends _Document
 	 */
 	public function getBalance() {
 		$price = $this->vat_bool ? $this->price_htva : $this->price_tvac;
-		return $price - $this->getPrepaid();
+		return round($price - $this->getPrepaid(), 2);
+	}
+	
+
+	/**
+	 * Returns total.
+	 *
+	 * @return number Total amount of this document.
+	 */
+	public function getAmount() {
+		return $this->vat_bool ? $this->price_htva : $this->price_tvac;
 	}
 	
 	/**
@@ -373,15 +477,16 @@ class Document extends _Document
 	 * @return number Amount due.
 	 */
 	public function isPaid() {
-		return $this->getBalance() < 0.01;
+		return $this->getBalance() < Document::PAYMENT_LIMIT;
 	}
 		
 	/**
 	 * Update payment status of document and triggers proper actions.
 	 */
 	public function updatePaymentStatus() {
+		Yii::trace('isPaid='.($this->isPaid()?'T':'F'), 'Document::updatePaymentStatus');
+		$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY);
 	}
-
 
 	public function latestPayment() {
 		$last = $this->getPayments()->orderBy('created_at desc')->one();
@@ -426,7 +531,11 @@ class Document extends _Document
      *
      * @return app\models\Document the copy
      */
-	public function convert() {
+	public function convert($ticket = false) {
+		return null;
+	}
+	
+	public function convert_old() {
 		if($this->document_type == self::TYPE_BILL) // no next operation after billing
 			return null;
 
@@ -441,11 +550,6 @@ class Document extends _Document
 		$copy = $this->deepCopy($new_type);
 		$copy->parent_id = $this->id;
 		
-//		if($this->document_type == self::TYPE_BID) { // if coming from bid to order, need to change reference to official order reference
-//			$o = ($this->bom_bool ? Parameter::getTextValue('application', 'BOM', '-YII-') : '-';
-//			$copy->name = substr($model->due_date,0,4).$o.Sequence::nextval('doc_number');
-//		}
-
 		if($copy->document_type == self::TYPE_BILL) // get a new official bill number
 			$copy->name = substr($this->due_date,0,4).'-'.Sequence::nextval('bill_number'); // $this->due_date or $copy->due_date?
 		
@@ -576,7 +680,15 @@ class Document extends _Document
 	 * @return string HTML fragment
 	 */
 	public function getActions($baseclass = 'btn btn-xs btn-block', $show_work = false, $template = '{icon} {text}') {
-		$ret = Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
+		$ret = '';
+		$ret .= false ? ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')])
+		:
+		' <div class="btn-group"><button type="button" class="'.$baseclass.' btn-info dropdown-toggle" data-toggle="dropdown">'.
+		        	$this->getButton($template, 'print', 'Print'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
+					'<li>'.Html::a('Page (A4)', ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'title' => Yii::t('store', 'Print on full A4 page')]).'</li>'.
+					'<li>'.Html::a('Ticket (A5)', ['/order/document/print', 'id' => $this->id, 'format' => 'A5'], ['target' => '_blank', 'title' => Yii::t('store', 'Print on reduced A5 ticket')]).'</li>'.
+     					'</ul></div>';
+		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
 		return $ret;
 	}
 
@@ -628,184 +740,5 @@ class Document extends _Document
 		$p = strrpos($this->name, '-');
 		return $p > 0 ? substr($this->name, $p + 1, strlen($this->name) - $p + -1) : 0;
 	}
-	
-	
-	public function generatePdf($controller, $filename = null) {
-		$viewBase = '@app/modules/order/views/document/';
-	    $header  = $controller->renderPartial($viewBase.'_print_headerA5', ['model' => $this]);
-	    $content = $controller->renderPartial($viewBase.'_printA5', ['model' => $this]);
-	    $footer  = $controller->renderPartial($viewBase.'_print_footerA5', ['model' => $this]);
 
-		$pdfData = [
-	        // set to use core fonts only
-	        'mode' => Pdf::MODE_CORE, 
-	        // A4 paper format
-	        'format' => 'A5', 
-	        // portrait orientation
-	        'orientation' => Pdf::ORIENT_PORTRAIT, 
-	        // stream to browser inline
-	        'destination' => Pdf::DEST_BROWSER, 
-	        // your html content input
-	        'content' => $content,  
-	        // format content from your own css file if needed or use the
-	        // enhanced bootstrap css built by Krajee for mPDF formatting 
-	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-	        // any css to be embedded if required
-			'cssInline' => '.kv-wrap{padding:14px;}' .
-	        	'.kv-heading-1{font-size:13px}'.
-                '.kv-align-center{text-align:center;}' .
-                '.kv-align-left{text-align:left;}' .
-                '.kv-align-right{text-align:right;}' .
-                '.kv-align-top{vertical-align:top!important;}' .
-                '.kv-align-bottom{vertical-align:bottom!important;}' .
-                '.kv-align-middle{vertical-align:middle!important;}' .
-                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-caption{font-size:1.1em;padding:6px;border:1px solid #ddd;border-bottom:none;}' .
-                'table{font-size:0.8em;}'
-				,
-	         // set mPDF properties on the fly
-			'marginHeader' => 5,
-			'marginFooter' => 5,
-			'marginTop' => 15,
-			'marginBottom' => 25,
-			'marginLeft' => 5,
-			'marginRight' => 5,
-			'options' => [],
-	         // call mPDF methods on the fly
-	        'methods' => [ 
-	        //    'SetHeader'=>['Laboratoire JJ Micheli'], 
-	            'SetHTMLHeader'=> $header,
-	            'SetHTMLFooter'=> $footer,
-	        ]
-		];
-
-		if($filename) {
-			$pdfData['destination'] = Pdf::DEST_FILE;
-			$pdfData['filename'] = $filename;
-		} else {
-			$pdfData['destination'] = Pdf::DEST_BROWSER;
-		}
-
-    	$pdf = new Pdf($pdfData);
-		return $pdf->render();
-	}
-
-
-	public function generatePdfA4($controller, $filename = null) {
-		$viewBase = '@app/modules/order/views/document/';
-	    $header  = $controller->renderPartial($viewBase.'_print_header', ['model' => $this]);
-	    $content = $controller->renderPartial($viewBase.'_print', ['model' => $this]);
-	    $footer  = $controller->renderPartial($viewBase.'_print_footer', ['model' => $this]);
-
-		$pdfData = [
-	        // set to use core fonts only
-	        'mode' => Pdf::MODE_CORE, 
-	        // A4 paper format
-	        'format' => Pdf::FORMAT_A4, 
-	        // portrait orientation
-	        'orientation' => Pdf::ORIENT_PORTRAIT, 
-	        // stream to browser inline
-	        'destination' => Pdf::DEST_BROWSER, 
-	        // your html content input
-	        'content' => $content,  
-	        // format content from your own css file if needed or use the
-	        // enhanced bootstrap css built by Krajee for mPDF formatting 
-	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-	        // any css to be embedded if required
-			'cssInline' => '.kv-wrap{padding:20px;}' .
-	        	'.kv-heading-1{font-size:18px}'.
-                '.kv-align-center{text-align:center;}' .
-                '.kv-align-left{text-align:left;}' .
-                '.kv-align-right{text-align:right;}' .
-                '.kv-align-top{vertical-align:top!important;}' .
-                '.kv-align-bottom{vertical-align:bottom!important;}' .
-                '.kv-align-middle{vertical-align:middle!important;}' .
-                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}' .
-                'table{font-size:0.8em;}'
-				,
-	         // set mPDF properties on the fly
-			'marginHeader' => 10,
-			'marginFooter' => 10,
-			'marginTop' => 35,
-			'marginBottom' => 35,
-			'options' => [],
-	         // call mPDF methods on the fly
-	        'methods' => [ 
-	        //    'SetHeader'=>['Laboratoire JJ Micheli'], 
-	            'SetHTMLHeader'=> $header,
-	            'SetHTMLFooter'=> $footer,
-	        ]
-		];
-
-		if($filename) {
-			$pdfData['destination'] = Pdf::DEST_FILE;
-			$pdfData['filename'] = $filename;
-		} else {
-			$pdfData['destination'] = Pdf::DEST_BROWSER;
-		}
-
-    	$pdf = new Pdf($pdfData);
-		return $pdf->render();
-	}
-
-
-	public function generateLabel($controller, $filename = null) {
-		$viewBase = '@app/modules/order/views/document/';
-	    $header  = $controller->renderPartial($viewBase.'_print_header', ['model' => $this]);
-	    $content = $controller->renderPartial($viewBase.'_label', ['model' => $this]);
-	    $footer  = $controller->renderPartial($viewBase.'_print_footer', ['model' => $this]);
-
-		$pdfData = [
-	        // set to use core fonts only
-	        'mode' => Pdf::MODE_CORE, 
-	        // A4 paper format
-	        'format' => Pdf::FORMAT_A4, 
-	        // portrait orientation
-	        'orientation' => Pdf::ORIENT_PORTRAIT, 
-	        // stream to browser inline
-	        'destination' => Pdf::DEST_BROWSER, 
-	        // your html content input
-	        'content' => $content,  
-	        // format content from your own css file if needed or use the
-	        // enhanced bootstrap css built by Krajee for mPDF formatting 
-	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-	        // any css to be embedded if required
-			'cssInline' => '.kv-wrap{padding:20px;}' .
-	        	'.kv-heading-1{font-size:18px}'.
-                '.kv-align-center{text-align:center;}' .
-                '.kv-align-left{text-align:left;}' .
-                '.kv-align-right{text-align:right;}' .
-                '.kv-align-top{vertical-align:top!important;}' .
-                '.kv-align-bottom{vertical-align:bottom!important;}' .
-                '.kv-align-middle{vertical-align:middle!important;}' .
-                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
-                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}',
-	         // set mPDF properties on the fly
-			'marginHeader' => 10,
-			'marginFooter' => 10,
-//			'marginTop' => 35,
-//			'marginBottom' => 35,
-			'options' => [],
-	         // call mPDF methods on the fly
-//	        'methods' => [ 
-	        //    'SetHeader'=>['Laboratoire JJ Micheli'], 
-//	            'SetHTMLHeader'=> $header,
-//	            'SetHTMLFooter'=> $footer,
-//	        ]
-		];
-
-		if($filename) {
-			$pdfData['destination'] = Pdf::DEST_FILE;
-			$pdfData['filename'] = $filename;
-		} else {
-			$pdfData['destination'] = Pdf::DEST_BROWSER;
-		}
-
-    	$pdf = new Pdf($pdfData);
-		return $pdf->render();
-	}
 }

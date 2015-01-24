@@ -9,13 +9,15 @@ use Yii;
  *
  * @property integer $id
  * @property string $document_type
- * @property string $name
- * @property integer $sale
- * @property string $reference
- * @property string $reference_client
  * @property integer $parent_id
  * @property integer $client_id
+ * @property integer $sale
+ * @property string $name
+ * @property string $reference
+ * @property string $reference_client
  * @property string $due_date
+ * @property integer $priority
+ * @property string $legal
  * @property double $price_htva
  * @property double $price_tvac
  * @property double $vat
@@ -28,17 +30,16 @@ use Yii;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
- * @property integer $priority
- * @property string $legal
  *
- * @property Account[] $accounts
- * @property User $updatedBy
+ * @property Cash[] $cashes
  * @property _Document $parent
  * @property _Document[] $documents
  * @property Client $client
  * @property User $createdBy
+ * @property User $updatedBy
  * @property DocumentLine[] $documentLines
  * @property Extraction[] $extractions
+ * @property Pdf[] $pdfs
  * @property Work[] $works
  */
 class _Document extends \yii\db\ActiveRecord
@@ -57,13 +58,13 @@ class _Document extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'sale', 'client_id', 'due_date'], 'required'],
-            [['sale', 'parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by', 'priority'], 'integer'],
+            [['parent_id', 'client_id', 'sale', 'priority', 'vat_bool', 'bom_bool', 'created_by', 'updated_by'], 'integer'],
+            [['client_id', 'sale', 'name', 'due_date'], 'required'],
             [['due_date', 'created_at', 'updated_at'], 'safe'],
             [['price_htva', 'price_tvac', 'vat'], 'number'],
             [['document_type', 'name', 'lang', 'status'], 'string', 'max' => 20],
             [['reference', 'reference_client'], 'string', 'max' => 40],
-            [['note', 'legal'], 'string', 'max' => 160]
+            [['legal', 'note'], 'string', 'max' => 160]
         ];
     }
 
@@ -75,13 +76,15 @@ class _Document extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('store', 'ID'),
             'document_type' => Yii::t('store', 'Document Type'),
-            'name' => Yii::t('store', 'Name'),
+            'parent_id' => Yii::t('store', 'Parent ID'),
+            'client_id' => Yii::t('store', 'Client ID'),
             'sale' => Yii::t('store', 'Sale'),
+            'name' => Yii::t('store', 'Name'),
             'reference' => Yii::t('store', 'Reference'),
             'reference_client' => Yii::t('store', 'Reference Client'),
-            'parent_id' => Yii::t('store', 'Parent'),
-            'client_id' => Yii::t('store', 'Client'),
             'due_date' => Yii::t('store', 'Due Date'),
+            'priority' => Yii::t('store', 'Priority'),
+            'legal' => Yii::t('store', 'Legal'),
             'price_htva' => Yii::t('store', 'Price Htva'),
             'price_tvac' => Yii::t('store', 'Price Tvac'),
             'vat' => Yii::t('store', 'Vat'),
@@ -94,25 +97,15 @@ class _Document extends \yii\db\ActiveRecord
             'created_by' => Yii::t('store', 'Created By'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
-            'priority' => Yii::t('store', 'Priority'),
-            'legal' => Yii::t('store', 'Legal'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAccounts()
+    public function getCashes()
     {
-        return $this->hasMany(Account::className(), ['document_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUpdatedBy()
-    {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+        return $this->hasMany(Cash::className(), ['document_id' => 'id']);
     }
 
     /**
@@ -150,6 +143,14 @@ class _Document extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getDocumentLines()
     {
         return $this->hasMany(DocumentLine::className(), ['document_id' => 'id']);
@@ -160,7 +161,15 @@ class _Document extends \yii\db\ActiveRecord
      */
     public function getExtractions()
     {
-        return $this->hasMany(Extraction::className(), ['document_from' => 'id']);
+        return $this->hasMany(Extraction::className(), ['document_to' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPdfs()
+    {
+        return $this->hasMany(Pdf::className(), ['document_id' => 'id']);
     }
 
     /**

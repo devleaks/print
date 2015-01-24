@@ -81,6 +81,9 @@ Ces données doivent être données en centimètres.
 		Prix = Article(ChromaXL) x rapport_surface
 	SINON
 		ERREUR = Surface supérieure à surface maximum.
+		
+	SI PRIX < Parametre(ChromaMin)
+	ALORS Prix = Parametre(ChromaMin)
 
 #### Paramètres
 
@@ -123,7 +126,7 @@ Ces cinq articles sont dans la catégorie 'ChromaSupport'.
 	Prix = 2 x (largeur - 20 +  hauteur - 20) x Prix(Renfort) / 100
 	
 	SI Prix < Prix(RenfortPrixMin)
-	ALORS prix = Prix(RenfortPrixMin)
+	ALORS Prix = Prix(RenfortPrixMin)
 
 La valeur 20 soustraite aux dimensions n'est pas un paramètre pour l'instant.
 
@@ -196,6 +199,37 @@ Le prix est le prix au mètre de cadre.
 		Prix = Article(Montage170L)
 	SINON
 		Prix = Article(Montage170M)
+
+## Coût des articles vendu "au périmètre" (à la longeur)
+
+Tous les articles dont le prix est calculé proportionnellement au prérimètre (2 x L + 2 x H), la formule unique utilise une régression linéaire.
+
+Pour un article dont la REFERENCE est X, le prix est calculé avec les deux articles dont les références sont X_A et X_B.
+La formule de calcul, générique, est:
+
+	Périmètre = 2 x Largeur + 2 x Hauteur
+	Prix = Article(X_A) * Périmètre + Article(X_B)
+
+Intuitivement, les paramètres correspondent à
+
+* X_A: Le coût de mise en route, et aussi coût minimal.
+* X_B: Le coût "au mètre" de l'article.
+
+## Coût des articles vendu "à la surface"
+
+Tous les articles dont le prix est calculé proportionnellement à la surface (L x H), la formule unique utilise une régression linéaire.
+
+Pour un article dont la REFERENCE est X, le prix est calculé avec les deux articles dont les références sont X_A et X_B.
+La formule de calcul, générique, est:
+
+	Surface = Largeur x Hauteur
+	Prix = Article(X_A) * Surface + Article(X_B)
+
+Intuitivement, les paramètres correspondent à
+
+* X_A: Le coût de mise en route, et aussi coût minimal.
+* X_B: Le coût "au mètre carré" de l'article.
+
 
 
 

@@ -17,4 +17,18 @@ $this->params['breadcrumbs'][] = $this->title;
 	    <li><a href="<?= Yii::$app->homeUrl ?>admin/sequence-data/"><?= Yii::t('store', 'Manage Sequence Numbers')?></a></li>
 	</ul>
 
+<h3><span style="color: red;">Opérations dangereuses</span></h3>
+
+<div class="alert alert-danger">
+	<a href="#" class="close" data-dismiss="alert">&times;</a>
+	Attention: Ces écrans manipulent directement les données brutes.
+	Ils sont destinés à rectifier des erreurs de frappes et autres en modifiant directement les données.
+	Une mauvaise manipulation dans ces écrans peut compromettre le fonctionnement général de l'application ou introduire des erreurs dans la comptabilité.
+</div>
+
+	<ul>
+	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/payment/"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
+	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/cash/"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
+	</ul>
+
 </div>

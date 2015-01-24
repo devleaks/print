@@ -8,7 +8,8 @@
 
 // change app language to generate view in user's language. Defaults to app language.
 if(in_array($model->client->lang, ['fr', 'nl', 'en'])) Yii::$app->language = $model->client->lang;
-
+// set forceTranslation for English on this page only
+Yii::$app->i18n->translations['store']->forceTranslation = true
 ?>
 <table width="100%">
 	<tr>
@@ -39,7 +40,7 @@ if(in_array($model->client->lang, ['fr', 'nl', 'en'])) Yii::$app->language = $mo
 </p>
 <br>
 
-<?= $model->table ?> // ::LIST !
+<?= $model->table ?>
 
 <p>
 	<?= Yii::t('store', $model->type.'::AFTER_LIST') ?>

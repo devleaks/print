@@ -6,15 +6,15 @@
  */
 namespace app\widgets;
 
-use Yii;
 use Closure;
-use yii\i18n\Formatter;
+use Yii;
 use yii\base\InvalidConfigException;
-use yii\helpers\Url;
+use yii\base\Model;
 use yii\helpers\Html;
 use yii\helpers\Json;
+use yii\helpers\Url;
+use yii\i18n\Formatter;
 use yii\widgets\BaseListView;
-use yii\base\Model;
 
 use yii\grid\DataColumn;
 

@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'template' => '{view} {print}',
 				'buttons' => [
 	                'view' => function ($url, $model) {
-						$url = Url::to(['view-'.strtolower($model->yii_category), 'id' => $model->id]);
+						$url = Url::to(['view', 'id' => $model->id]);
 	                    return Html::a('<i class="glyphicon glyphicon-eye-open"></i>', $url, [
 	                        'title' => Yii::t('store', 'View'),
 	                    ]);

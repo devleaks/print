@@ -1,0 +1,92 @@
+<?php
+/**
+ * This is the model class to generate standard printed document for bid, bills, order, vouchers
+ * File is saved if destBase is supplied.
+ *
+ */
+
+namespace app\models;
+
+use Yii;
+use app\components\RuntimeDirectoryManager;
+use app\models\Pdf;
+
+class PrintedDocument extends PDFLetter {
+	const SEP = '-';
+	
+	public $document;
+	
+	public $viewBase;
+	
+	/** Example:
+			$printedDocument = new PrintedDocument([
+				'controller'=> $controller,
+				'format'	=> PDFDocument::FORMAT_A4,
+				'document'	=> $document,
+				'watermark'	=> $watermark,
+				'save' => true|false, // default false
+			]);
+			$result = $printedDocument->render();
+	*/
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            [['document', 'viewBase'], 'safe'],
+        ]);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+	public function generateFilename($name = null) {
+		if($this->save)
+			$this->filename = RuntimeDirectoryManager::getFilename(RuntimeDirectoryManager::DOCUMENT, $name, $this->document);
+	}
+
+
+    /**
+     * @inheritdoc
+     */
+	public function save() {
+		if($this->filename) {
+			$this->deletePrevious();
+			$pdf = new Pdf([
+				'document_type' => RuntimeDirectoryManager::DOCUMENT,
+				'document_id' => $this->document->id,
+				'filename' => $this->filename,
+			]);
+			return $pdf->save();
+		}
+	}
+
+
+    /**
+     * @inheritdoc
+     */
+	public function render() {
+	 	$vb = $this->viewBase ? $this->viewBase : '@app/modules/store/prints/document/';
+	    $this->content = Yii::$app->controller->renderPartial($vb.'body', ['model' => $this->document]);
+
+		return parent::render();
+	}
+
+
+	/**
+	 *	Send this document to client if email address is available. Do nothing otherwise.
+	 */
+	public function send($subject, $body, $email = null) {
+		if(!$this->rendered)
+			$this->render();
+		if(!$this->filename)
+			return;
+			
+		if($file = $this->getFile())
+			$file->send($subject, $body, $email);
+	}
+
+}

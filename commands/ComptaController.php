@@ -5,13 +5,11 @@ namespace app\commands;
 use app\components\RuntimeDirectoryManager;
 use app\components\PdfDocumentGenerator;
 use app\models\Attachment;
-use app\models\Account;
 use app\models\Bill;
 use app\models\Credit;
 use app\models\Client;
 use app\models\Order;
 use app\models\Payment;
-use app\models\CoverLetter;
 use kartik\mpdf\Pdf;
 use yii\console\Controller;
 use yii\db\Query;
@@ -79,7 +77,7 @@ class ComptaController extends Controller {
 					->orderBy('client_id, created_at asc'); // latest bill first
 		// loop over clients:
 		$clg = new PdfDocumentGenerator($this);
-		$dirName = RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_LATE_BILLS);
+		$dirName = RuntimeDirectoryManager::getDirectory(RuntimeDirectoryManager::LATE_BILLS);
 		$viewBase = '@app/modules/accnt/views/bill/';
 
 		$watermarks = [
@@ -123,29 +121,12 @@ class ComptaController extends Controller {
     }
 
 
-    public function actionClientAccounts() {
-		echo "Starting ComptaController::actionClientAccounts ..";
-		Yii::trace('Starting', 'ComptaController::actionClientAccounts');
-		// clients with negative account
-		$query = new Query();
-		$query->from('account')
-			  ->select(['client_id, sum(amount) as tot_amount'])
-			  ->groupBy('client_id')
-			  ->having(['<', 'sum(amount)', 0]);
-		$clg = new PdfDocumentGenerator($this);
-		foreach($query->each() as $negaccount)
-			$clg->accountExtract($negaccount['client_id']);
-
-		echo ". done.\r\n";
-    }
-
-
     public function actionDailyBalance() {
 		echo "Starting ComptaController::actionDailyBalance ..";
 		$viewBase = '@app/modules/accnt/views/payment/';
 		$yesterday = date('Y-m-d', strtotime('yesterday'));
 
-		$dirname = RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_DAILY_REPORT);
+		$dirname = RuntimeDirectoryManager::getDirectory(RuntimeDirectoryManager::DAILY_REPORT);
 		$filename = $dirname.'daily-'.$yesterday.'.pdf';
 		$day_start = $yesterday. ' 00:00:00';
 		$day_end   = $yesterday. ' 23:59:59';
@@ -217,18 +198,19 @@ class ComptaController extends Controller {
 	 */
     public function actionPopsyTransfer() {
 		echo "Starting ComptaController::actionPopsyTransfer ..";
-		$viewBase = '@app/modules/accnt/views/extraction/';
 		$month_ini = new \DateTime("first day of this month");
 		$month_end = new \DateTime("last day of this month");
 		$date_from = $month_ini->format('Y-m-d');
 		$date_to   = $month_end->format('Y-m-d');
 		
-		$dirname = RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_EXTRACTION);
+		$dirname = RuntimeDirectoryManager::getDirectory(RuntimeDirectoryManager::EXTRACTION);
 
 		// CREDITS
 		$docs = Credit::find()
 						->andWhere(['>=','created_at',$date_from])
 						->andWhere(['<=','created_at',$date_to]);
+
+		$viewBase = '@app/modules/accnt/views/extraction/';
         $extraction = $this->renderPartial($viewBase.'_extract', [
             'models' => $docs,
         ]);
@@ -247,7 +229,7 @@ class ComptaController extends Controller {
 		$filename = 'popsi-bills-'.date('Y-m-d');
 		file_put_contents($dirname.$filename.'.txt', $extraction);
 							
-		echo ". done.\r\n";
+		echo $dirname.$filename.".txt . done.\r\n";
     }
 
 

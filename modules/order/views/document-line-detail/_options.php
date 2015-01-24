@@ -71,14 +71,10 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 				],
 		        'finish_id' => [
 					'type' => Form::INPUT_RADIO_LIST,
-					'items' => Item::getListForCategory('Finition'),
+					'items' => Item::getListForCategory('TirageParam'),
 					'options' => ['inline'=>true, 'class' => 'ItemTirage'],
 		            'columnOptions' => ['colspan' => 5],
 				],
-//		        'note' => [
-//					'type' => Form::INPUT_TEXT,
-//		            'columnOptions' => ['colspan' => 5],
-//				],
 			],
 		]).
 		Form::widget([

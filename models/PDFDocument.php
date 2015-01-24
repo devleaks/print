@@ -6,6 +6,9 @@
 namespace app\models;
 
 use Yii;
+use app\components\RuntimeDirectoryManager;
+use app\models\Pdf as PMAPdf;
+use kartik\mpdf\Pdf;
 use yii\base\Model;
 
 class PDFDocument extends Model {
@@ -15,13 +18,172 @@ class PDFDocument extends Model {
 	/** Paper Size A5 */
 	const FORMAT_A5 = 'A5';
 
+    // orientation
+    const ORIENT_PORTRAIT = 'P';
+    const ORIENT_LANDSCAPE = 'L';
+
 	/** Location of common views */
 	const COMMON_BASE = '@app/modules/store/prints/common/';
 	/** Extension of PDF files */
 	const PDF_EXT = '.pdf';
 
-
 	/** Controller used to render views/PDF. */
-	protected $controller;
+	public $format = PDFDocument::FORMAT_A4;
+	public $orientation = PDFDocument::ORIENT_PORTRAIT;
+
+	protected $rendered = false;
+
+	public $save = false;
+	public $filename = null;
 	
+	public $PDF;
+
+	public $header;
+	public $footer;
+
+	public $content;
+	public $watermark;
+
+	public $title;
+	public $subject;
+	public $author  = 'Labo JJ Micheli';
+	public $creator = 'Labo JJ Micheli';
+	public $keywords;
+
+	
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['format', 'orientation', 'filename', 'header', 'footer', 'content', 'watermark', 'pdf'], 'safe'],
+        ];
+    }
+
+
+	/**
+	 *	Generates mPDF data structure from model attributes
+	 */
+	protected function getPdfData() {
+		$pdfData = [
+	        // set to use core fonts only
+	        'mode' => Pdf::MODE_CORE, 
+	        // A4 paper format
+	        'format' => $this->format, 
+	        // portrait orientation
+	        'orientation' => $this->orientation, 
+	        // your html content input
+	        'content' => $this->content,  
+	        // format content from your own css file if needed or use the
+	        // enhanced bootstrap css built by Krajee for mPDF formatting 
+	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+	        // any css to be embedded if required
+			'cssInline' => $this->format == PDFDocument::FORMAT_A5 ? '.kv-wrap{padding:14px;}' .
+	        	'.kv-heading-1{font-size:13px}'.
+                '.kv-align-center{text-align:center;}' .
+                '.kv-align-left{text-align:left;}' .
+                '.kv-align-right{text-align:right;}' .
+                '.kv-align-top{vertical-align:top!important;}' .
+                '.kv-align-bottom{vertical-align:bottom!important;}' .
+                '.kv-align-middle{vertical-align:middle!important;}' .
+                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
+                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
+                '.kv-table-caption{font-size:1.1em;padding:6px;border:1px solid #ddd;border-bottom:none;}' .
+                'table{font-size:0.8em;}'					: '.kv-wrap{padding:20px;}' .
+	        	'.kv-heading-1{font-size:18px}'.
+                '.kv-align-center{text-align:center;}' .
+                '.kv-align-left{text-align:left;}' .
+                '.kv-align-right{text-align:right;}' .
+                '.kv-align-top{vertical-align:top!important;}' .
+                '.kv-align-bottom{vertical-align:bottom!important;}' .
+                '.kv-align-middle{vertical-align:middle!important;}' .
+                '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
+                '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
+                '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}' .
+                'table{font-size:0.8em;}'
+				,
+	         // set mPDF properties on the fly
+			'marginHeader'	=> $this->format == PDFDocument::FORMAT_A5 ?  5 : 10,
+			'marginFooter'	=> $this->format == PDFDocument::FORMAT_A5 ?  5 : 10,
+			'marginTop'		=> $this->format == PDFDocument::FORMAT_A5 ? 20 : 35,
+			'marginBottom'	=> $this->format == PDFDocument::FORMAT_A5 ? 25 : 35,
+			'marginLeft'	=> $this->format == PDFDocument::FORMAT_A5 ?  5 : 15,
+			'marginRight'	=> $this->format == PDFDocument::FORMAT_A5 ?  5 : 15,
+			'methods'		=> [],
+			'options'		=> [],
+		];
+				
+		if($this->header)	$pdfData['methods']['SetHTMLHeader'] = $this->header;
+		if($this->footer) 	$pdfData['methods']['SetHTMLFooter'] = $this->footer;
+		if($this->title)	$pdfData['methods']['SetTitle'] = $this->title;
+		if($this->author)	$pdfData['methods']['SetAuthor'] = $this->author;
+		if($this->creator)	$pdfData['methods']['SetCreator'] = $this->creator;
+		if($this->subject)	$pdfData['methods']['SetSubject'] = $this->subject;
+		if($this->keywords)	$pdfData['methods']['SetKeywords'] = $this->keywords;
+
+		if($this->watermark) {
+			$pdfData['options']['showWatermarkText'] = true;
+			$pdfData['methods']['SetWatermarkText'] = $this->watermark;
+		}
+
+		Yii::trace('save?='.$this->save, 'PDFDocument::getPdfData');		
+		if($this->save) {
+			$this->generateFilename();
+			Yii::trace('filename='.$this->filename, 'PDFDocument::getPdfData');		
+			$pdfData['destination'] = Pdf::DEST_FILE;
+			$pdfData['filename'] = $this->filename;
+		} else {
+			$pdfData['destination'] = Pdf::DEST_BROWSER;
+		}
+		return $pdfData;
+	}
+	
+	
+    /**
+     * Generates filename for saving from document type.
+     */
+	public function generateFilename($name = null) {
+		if($this->save)
+			$this->filename = RuntimeDirectoryManager::getFilename(RuntimeDirectoryManager::DOCUMENT, $name);
+	}
+
+
+    /**
+     * Saves PDF.
+     */
+	public function save() {
+		Yii::trace('fn='.$this->filename, 'PDFDocument::save');
+		if($this->filename) {
+			$this->deletePrevious();
+			$pdf = new PMAPdf([
+				'document_type' => RuntimeDirectoryManager::DOCUMENT,
+				'filename' => $this->filename,
+			]);
+			return $pdf->save();
+		}
+	}
+
+	public function getFile() {
+		return PMAPdf::findOne(['filename' => $this->filename]);
+	}
+
+	public function deletePrevious() {
+		if( $existing = PMAPdf::findOne(['filename' => $this->filename]) )
+			$existing->delete();	
+	}
+
+	/*
+	 *	Renders document
+	 */	
+	public function render() {
+    	$this->PDF = new Pdf($this->getPdfData());
+		Yii::trace('rendering'.$this->PDF->filename, 'PDFDocument::render');
+		$pdf = $this->PDF->render();
+		$this->rendered = true;
+		Yii::trace('saved'.$this->PDF->filename, 'PDFDocument::render');
+		$this->save();
+		return $this->filename ? $this->filename : $pdf;
+	}
+
 }

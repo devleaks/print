@@ -1,13 +1,30 @@
-# Gestion des Commandes
+# Prise des Commandes
 
 L'application permet de gérer des "commandes", depuis leur estimation, jusqu'à la facturation.
 
 Cette gestion se fait via trois types de documents: Les devis, les commandes, et les factures.
 
-Deux autres types de document existent à côté de ces types de document principaux: Les bons de livraison et les notes de crédit.
+D'autres types de document existent à côté de ces types de document principaux:
 
-A partir de l'application, il est possible de créer un devis, une commande, une facture, ou une note de crédit.
-Les bons de livraisons sont créés à partir de commandes ou factures.
+* La vente au comptoir
+* Le bon de livraison
+* Le remboursement
+* La note de crédit.
+
+A partir de l'application, il est possible de créer chacun de ces documents.
+
+La création d'une note de crédit, d'un remboursement, ou d'une facture seule n'engendre pas la création des travaux nécessaires
+pour la réalisation.
+
+Les "bons de livraisons" sont en fait des commandes dont on a basculé l'indicateur "bon de livraison".
+La différence réside dans le fait que chaque commande donne lieu à une facture,
+tandis que les bons de livraisons sont regroupés en une seule facture.
+
+Pour une commande, lorsqu'on presse le bouton 'Facturer', on crée immédiatement une facture.
+
+Pour un bon de livraison, lorsqu'on presse le bouton 'Facturer', le système propose de regrouper
+tous les autres bons de livraison du même client sur une seule facture.
+
 
 # Devis, commandes et factures
 
@@ -73,7 +90,7 @@ Tous les documents peuvent toujours être
 
 Les devis diffèrent des autres documents par les éléments suivants:
 
-* Ils ont un numéro de référence contenant le mot DEVIS (par exemple YYYY-DEVIS-1XXXX).
+* Ils ont un numéro de référence spécial.
 
 Lorsqu'ils sont en cours de réalisation, les devis peuvent:
 
@@ -92,19 +109,14 @@ Le devis passe par les états suivants:
 * Clôturé: Le devis a été converti en commande. Dans l'interface de l'applcation, il suffit de cliquer sur la pastille présentant l'état du devis (Commandé) pour afficher la commande.
 * Annulé: Le devis a été annulé.
 
-Note: Lorsqu'un devis est converti en commande, la commande reçoit un numéro de référence qui est différent du numéro du devis.
+Note: Lorsqu'un devis est converti en commande, la commande reprend du numéro du devis.
 
 
 
 
 ## Commande
 
-Les commandes ont un numéro de commande séquentiel sous la forme:
-
-YYYY-1XXXX
-
-où YYYY est l'année de création de la commande,
-et 1XXXX est un numéro séquentiel commançant à 10000 lorsque l'année en cours a été clôturée.
+Les commandes ont un numéro de référence simulaire aux devis.
 
 Les opérations suivantes peuvent être reéalisées sur les Commandes:
 
@@ -116,8 +128,9 @@ Lorsqu'une commande a été soumise pour réalisation du travail, elle ne peut p
 
 Lorsqu'une commande a été convertie en Facture, elle ne peut plus être modifiée.
 
-Lorsqu'une commande est transformé en facture, la facture peut être immédiatement envoyée.
-Cela depénd du paramètre `auto_send_bill`. Si la valeur de ce paramètre est vraie, la facture est automatiquement envoyée lorsque la commande est convertie en facture. Sinon, il faudra manuellement envoyer la facture à partir de son affichage (voir ci-dessous).
+Lorsqu'une commande est terminée elle peut être transformée en facture automatiquement.
+Cela depénd du paramètre `auto_create_bill`. Si la valeur de ce paramètre est vraie, la facture est automatiquement créée lorsque la commande est terminée.
+Sinon, il faudra créer la facture manuellement.
 
 
 Les commandes passent par les états suivants:
@@ -127,15 +140,23 @@ Les commandes passent par les états suivants:
 * Réalisation: Le travail pour la réalisation est en cours de réalisation, c'est à dire que une tâche au moins a été commencée.
 * Terminée: Le travail pour la réalisation de la commande est terminé; toutes les tâches sont terminées.
 * Avertissement: Le travail pour la réalisation de la commande est dans l'état d'Avertissement; une des tâches nécessaire pour la réalisation de la commande est en état d'Avertissement.
+* A payer: Aucun paiement n'a encore été fait pour la commande.
+* A solder: Un ou plusieurs paiements ont déjà été faits pour la commande, mais le solde n'est pas encore payé.
+* Payée: La commande est totalement payée, mais la facture n'a pas encore été créée.
 * Clôturée: La commande a été traitée, et la facture a été créée.
 
+Lorsqu'une commande est transformée en facture, tous les paiements de la commande sont reportés sur la facture.
 
 
 ## Facture
 
-Les factures portent un numéro séquentiel identique aux commandes.
+Les factures portent un numéro séquentiel  sous la forme:
 
-La facture issue d'une commande porte le même numéro que la commande.
+YYYY-1XXXX
+
+où YYYY est l'année de création de la commande,
+et 1XXXX est un numéro séquentiel commançant à 10000 lorsque l'année en cours a été clôturée.
+
 
 Les opérations suivantes peuvent être réalisées sur les factures:
 
@@ -145,8 +166,9 @@ Les opérations suivantes peuvent être réalisées sur les factures:
 Les factures passent par les états suivants:
 
 * Ouverte: La facture été créée. On peut la modifier en ajoutant ou supprimant des lignes de commande.
-* Envoyée: La facture a été envoyée au client.
-* Clôturée: La facture est clôturée, et le paiement a été reçu.
+* A payer: Aucun paiement n'a encore été fait pour la commande.
+* A solder: Un ou plusieurs paiements ont déjà été faits pour la commande, mais le solde n'est pas encore payé.
+* Clôturée: La facture est clôturée, et le paiement complet a été reçu.
 
 
 ## A propos des documents
@@ -154,7 +176,7 @@ Les factures passent par les états suivants:
 ### Notes de crédit
 
 Les notes de crédit sont des documents un petit peu particulier.
-Ils ne devraient être composé que de lignes de commande "Note de crédit".
+Ils ne sont composés que de lignes de commande "Note de crédit".
 
 #### Ligne de commande " note de crédit "
 
@@ -175,5 +197,5 @@ Pour les documents qui sont dans cet état, il n'est possible que
 * de rajouter au moins une ligne de commande, dans ce cas, le document passera dans l'état "Ouverte",
 * de l'annuler, dans ce cas, le document passera dans l'état Annulé.
 
-
+Il n'est pas possible de faire progresser (soumettre les travaux, ou convertir en facture) les documents qui ne contiennent pas de lignes de commande.
 

@@ -7,7 +7,7 @@ use app\models\Document;
 	<table width="100%">
 	<tr>
 			<td style="text-align: center;"></td>
-			<td width="40%" style='font-size: 14px;'><?= $this->render('../common/client', ['model' => $model->client]) ?></td>
+			<td width="40%" style='font-size: 1.1em;'><?= $this->render('../common/client', ['model' => $model->client]) ?></td>
 	</tr>
 	</table>
 	<br>

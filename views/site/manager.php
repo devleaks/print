@@ -29,6 +29,11 @@ $this->title = 'Labo JJ Micheli @Work';
                 <p>Inscrire de nouveaux devis, de nouvelles commandes, gérer leur suivi...</p>
 
                 <p><a class="btn btn-default" href="<?=Yii::$app->homeUrl?>order/">Commandes &raquo;</a></p>
+				<p>
+					&raquo; <a href="<?= Url::to(['/order/document/bids', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bids')?></a>
+					&raquo; <a href="<?= Url::to(['/order/document/orders', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Orders')?></a>
+					&raquo; <a href="<?= Url::to(['/order/document/bills', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bills')?></a>
+				</p>
             </div>
             <div class="col-lg-4">
                 <h2>Gestion des Travaux</h2>
@@ -36,6 +41,9 @@ $this->title = 'Labo JJ Micheli @Work';
                 <p>Travaux à faire, travaux en cours, état d'avancement des travaux d'une commande.</p>
 
                 <p><a class="btn btn-default" href="<?=Yii::$app->homeUrl?>work/">Travaux &raquo;</a></p>
+				<p>
+					&raquo; <a href="<?= Url::to(['/work/work/']) ?>"><?= Yii::t('store', 'Manage all works')?></a>
+				</p>
             </div>
             <div class="col-lg-4">
                 <h2>Gestion du Magasin</h2>
@@ -43,6 +51,11 @@ $this->title = 'Labo JJ Micheli @Work';
                 <p>Gestion des clients, gestion des articles, gestion des tâches à accomplir.</p>
 
                 <p><a class="btn btn-default" href="<?=Yii::$app->homeUrl?>store/">Magasin &raquo;</a></p>
+				<p>
+					&raquo; <a href="<?= Url::to(['/store/client/']) ?>"><?= Yii::t('store', 'Customers')?></a>
+					&raquo; <a href="<?= Url::to(['/store/item']) ?>"><?= Yii::t('store', 'Items')?></a>
+					&raquo; <a href="<?= Url::to(['/store/price']) ?>"><?= Yii::t('store', "Price Lists")?></a>
+				</p>
             </div>
         </div>
 

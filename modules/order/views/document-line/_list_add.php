@@ -25,16 +25,18 @@ use yii\grid\GridView;
 
 <?php endif; ?>
 
-<?php
-	if(!isset($orderLine)) {
-	 	$orderLine = new DocumentLine();
-		$orderLine->document_id = $order->id;
+<?php if(!in_array($order->document_type, [$order::TYPE_CREDIT,$order::TYPE_REFUND])) {
+		if(!isset($orderLine)) {
+		 	$orderLine = new DocumentLine();
+			$orderLine->document_id = $order->id;
+		}
+
+		echo $this->render('_add', [
+			'model' => $orderLine,
+			'order' => $order,
+			'form'	=> $form,
+		]);
 	}
-	echo $this->render('_add', [
-		'model' => $orderLine,
-		'order' => $order,
-		'form'	=> $form,
-	])
 ?>
 
 </div>

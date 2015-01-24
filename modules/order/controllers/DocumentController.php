@@ -3,6 +3,9 @@
 namespace app\modules\order\controllers;
 
 use Yii;
+use app\components\RuntimeDirectoryManager;
+use app\models\PrintedDocument;
+use app\models\PDFLabel;
 use app\models\Account;
 use app\models\Bid;
 use app\models\BidSearch;
@@ -24,7 +27,8 @@ use app\models\Payment;
 use app\models\Sequence;
 use app\models\Ticket;
 use app\models\TicketSearch;
-use kartik\mpdf\Pdf;
+use app\models\Refund;
+use app\models\RefundSearch;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\filters\VerbFilter;
@@ -137,6 +141,10 @@ class DocumentController extends Controller
         return $this->actionIndexByType(new TicketSearch(), Document::TYPE_TICKET);
     }
 
+    public function actionRefunds() {
+        return $this->actionIndexByType(new RefundSearch(), Document::TYPE_REFUND);
+    }
+
     /**
      * Displays a single Order model.
      * @param integer $id
@@ -176,7 +184,7 @@ class DocumentController extends Controller
 				->orWhere(['like', 'client.autre_nom', $search])
 				->orderBy('updated_by desc');
 
-        return $this->render('index', [
+        return $this->render('doc', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -234,8 +242,20 @@ class DocumentController extends Controller
 					]);
 					$model_line->save();
 					return $this->redirect(['document-line/update', 'id' => $model_line->id]);
-				} else
-					$addDocumentLine = DocumentLineController::addFirstLine($model);
+				} else if($model->document_type == Document::TYPE_REFUND) {
+					$credit_item = Item::findOne(['reference' => Item::TYPE_REFUND]);
+					$model_line = new DocumentLine([
+						'document_id' => $model->id,
+						'item_id' => $credit_item->id,
+						'quantity' => 1,
+						'unit_price' => 0,
+						'vat' => $credit_item->taux_de_tva,
+						'due_date' => $model->due_date,
+					]);
+					$model_line->save();
+					return $this->redirect(['document-line/update', 'id' => $model_line->id]);
+				}
+				$addDocumentLine = DocumentLineController::addFirstLine($model);
 				$model->updatePrice();
 				return $this->redirect(['document-line/create', 'id' => $model->id]);
 			}
@@ -267,6 +287,12 @@ class DocumentController extends Controller
 
     public function actionCreateCredit($id = null) {
         return $this->actionCreate($id, Document::TYPE_CREDIT);
+    }
+
+    public function actionCreateRefund($id = null) {
+		$cli = Client::findOne(['nom' => 'Client au comptoir']);
+		if($cli) $id = $cli->id;
+        return $this->actionCreate($id, Document::TYPE_REFUND);
     }
 
     public function actionCreateTicket($id = null) {
@@ -312,17 +338,22 @@ class DocumentController extends Controller
      */
     public function actionDelete($id) {
 		$model = $this->findModel($id);
-		if($model->document_type == Document::TYPE_BILL && $model->bom_bool) { // remove pointer from BOM to this bill if any.
-			foreach(Document::find()->where(['parent_id' => $model->id])->each() as $bom) {
-				$bom->parent_id = null;
-				$bom->save();
-			}
-		}
 		$cnt = $model->getDocuments()->count();
+		$paycnt = $model->getCashes()->count();
 		if($cnt > 0)
-			Yii::$app->session->setFlash('error', Yii::t('store', 'This order cannot be deleted because a child document depends on it.'));
-		else
+			Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because a child document depends on it.'));
+		else if ($paycnt > 0) {
+				Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because there are payment attached to it.'));
+		} else {  // ok to remove
+			if($model->document_type == Document::TYPE_BILL && $model->bom_bool) { // remove pointer from BOM to this bill if any.
+				foreach(Document::find()->where(['parent_id' => $model->id])->each() as $bom) {
+					$bom->parent_id = null;
+					$bom->save();
+				}
+			}			
         	$this->findModel($id)->deleteCascade();
+			Yii::$app->session->setFlash('success', Yii::t('store', 'Document deleted.'));
+		}
 
 		return $this->redirect(Yii::$app->request->referrer);
     }
@@ -383,7 +414,7 @@ class DocumentController extends Controller
 		$model = $this->findModel($id);
 		if($model->document_type == Document::TYPE_TICKET) {			
 			$solde = $model->getBalance();
-			return $this->actionUpdateStatus($model->id, $solde < 0.01 ? Document::STATUS_DONE : Document::STATUS_SOLDE);
+			return $this->actionUpdateStatus($model->id, $model->isPaid() ? Document::STATUS_DONE : Document::STATUS_SOLDE);
 		}
 		else
 			return $this->actionUpdateStatus($id, Document::STATUS_DONE);
@@ -398,7 +429,7 @@ class DocumentController extends Controller
 		*/
 	}
 
-	public function actionConvert($id) {
+	public function actionConvert($id, $ticket = false) {
 		$model = $this->findModel($id);
 		if($model->document_type == Document::TYPE_ORDER && $model->bom_bool) {
 			// all termnated and unbilled orders for same client
@@ -410,7 +441,7 @@ class DocumentController extends Controller
 	            'dataProvider' => $dataProvider,
 	        ]);
 		} else {
-			$order = $model->convert();
+			$order = $model->convert($ticket);
 	        return $this->render('view', [
 	            'model' => $order,
 	        ]);
@@ -444,16 +475,11 @@ class DocumentController extends Controller
 	}
 
 	protected function actionUpdateStatus($id, $status) {
-		Yii::trace($status, 'DocumentController::actionUpdateStatus');
 		$model = $this->findModel($id);
 		$model->setStatus($status);
         return $this->render('view', [
             'model' => $model,
         ]);
-	}
-
-	public function actionPaid($id) {
-		return $this->actionUpdateStatus($id, Document::STATUS_CLOSED);
 	}
 
 	public function actionPay() {
@@ -469,15 +495,17 @@ class DocumentController extends Controller
 				}
 			$model = $this->findModel($capturePayment->id);
 
-			$model->addPayment($capturePayment->amount, $capturePayment->method);
+			$ok = $model->addPayment($capturePayment->amount, $capturePayment->method);
 			
 			$feedback = '';
 			if($capturePayment->submit) { // do we need to create a new work order for this order?
 				$work = $model->createWork();
 				$feedback = $work ? Yii::t('store', 'Work submitted') : Yii::t('store', 'No work to submit');
 			}
+			Yii::trace('doc='.$model->document_type, 'DocumentController::actionUpdateStatus');
 			$model->updatePaymentStatus();
-			Yii::$app->session->setFlash('success', ($feedback ? $feedback . '; ': '') . ($feedback ? $feedback . Yii::t('store', 'Payment added'): strtolower(Yii::t('store', 'Payment added'))) .'.');
+			Yii::trace('doc='.$model->document_type, 'DocumentController::actionUpdateStatus');
+			if($ok) Yii::$app->session->setFlash('success', ($feedback ? $feedback . '; '.strtolower(Yii::t('store', 'Payment added')): Yii::t('store', 'Payment added')).'.');
 	        return $this->render('view', [
 	            'model' => $model,
 	        ]);
@@ -513,15 +541,12 @@ class DocumentController extends Controller
 			}
 			
 			if($captureEmail->email != '') {
-				$filename = tempnam('/var/tmp', 'yiipdf-'.$model->name.'-');
-				$pdf = $model->generatePdf($this, $filename);			
-				Yii::$app->mailer->compose()
-				    ->setFrom( Yii::$app->params['fromEmail'] )
-				    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $captureEmail->email )  // <======= FORCE DEV EMAIL TO TEST ADDRESS
-				    ->setSubject(Yii::t('store', $model->document_type).' '.$model->name)
-					->setTextBody($captureEmail->body)
-					->attach($filename, ['fileName' => $subject.'.pdf', 'contentType' => 'application/pdf'])
-				    ->send();
+				$pdf = new PrintedDocument([
+					'controller' => $this,
+					'document' => $model,
+					'save' => true,
+				]);
+				$pdf->send(Yii::t('store', $model->document_type).' '.$model->name, $captureEmail->body, $captureEmail->email);
 				Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
 			} else {
 				Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has no email address.'));
@@ -533,9 +558,14 @@ class DocumentController extends Controller
 	}
 
 
-	public function actionPdf($id) {
+	public function actionPdf($id, $format = PrintedDocument::FORMAT_A4) {
 		$model = $this->findModel($id);
-		return $model->generatePdf($this);
+		$pdf = new PrintedDocument([
+			'controller' => $this,
+			'document' => $model,
+			'format'	=> $format,
+		]);
+		return $pdf->render();
 	}
 
 	public function actionHtml($id) {
@@ -544,14 +574,19 @@ class DocumentController extends Controller
 	}
 
 
-	public function actionPrint($id) {
-		return $this->actionPdf($id);
+	public function actionPrint($id, $format = PrintedDocument::FORMAT_A4) {
+		if($format == 'html')
+			return $this->actionHtml($id);
+		return $this->actionPdf($id, $format);
 	}
 
 
 	public function actionLabels($id) {
 		$model = $this->findModel($id);
-		return $model->generateLabel($this);
+		$pdf = new PDFLabel([
+			'content' => $this->renderPartial('@app/modules/store/prints/label/order', ['model' => $model])
+		]);		
+		return $pdf->render();
 	}
 
 }

@@ -8,7 +8,7 @@ use yii\helpers\Url;
 
 class Credit extends Order
 {
-	const TYPE = 'CREDIT';
+	const TYPE = 'REFUND';
 	
     /**
      * @inheritdoc
@@ -20,6 +20,16 @@ class Credit extends Order
     }
 
 
+	/**
+	 * Returns amount due.
+	 *
+	 * @return number Amount due.
+	 */
+	public function isPaid() {
+		return $this->getBalance() > -Document::PAYMENT_LIMIT;
+	}
+
+
     /**
      * @inheritdoc
      */
@@ -27,17 +37,10 @@ class Credit extends Order
 		$ret = '';
 		switch($this->status) {
 			case $this::STATUS_OPEN:
-				$ret .= Html::a($this->getButton($template, 'send', 'Send Credit Note'), ['/order/document/sent', 'id' => $this->id],[
+				$ret .= Html::a($this->getButton($template, 'euro', 'Submit Credit Note'), ['/order/document/sent', 'id' => $this->id],[
 					'title' => Yii::t('store', 'Send Credit Note'),
 					'class' => $baseclass . ' btn-primary',
 					'data-confirm' => Yii::t('store', 'Send credit note?')
-				]);
-				break;
-			case $this::STATUS_TOPAY:
-				$ret .= Html::a($this->getButton($template, 'envelope', 'Paid'), ['/order/document/paid', 'id' => $this->id],[
-					'title' => Yii::t('store', 'Paid'),
-					'class' => $baseclass . ' btn-primary',
-					'data-confirm' => Yii::t('store', 'Paiement sent?')
 				]);
 				break;
 			case $this::STATUS_CLOSED:

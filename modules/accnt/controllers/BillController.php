@@ -3,18 +3,19 @@
 namespace app\modules\accnt\controllers;
 
 use Yii;
-use app\components\RuntimeDirectoryManager;
 use app\components\PdfDocumentGenerator;
-use app\models\Account;
+use app\components\RuntimeDirectoryManager;
 use app\models\Attachment;
 use app\models\Bill;
 use app\models\BillSearch;
+use app\models\CaptureBalance;
 use app\models\Client;
-use app\models\CoverLetter;
 use app\models\Order;
 use app\models\OrderSearch;
 use app\models\Payment;
-use kartik\mpdf\Pdf;
+use app\models\PrintedDocument;
+use app\models\Sequence;
+use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -101,19 +102,7 @@ class BillController extends Controller
         }
     }
 
-	protected function actionClientAccount($id) {
-		Yii::trace($id, 'BillController::actionClientAccount');
-		if( $model = Bill::findOne($id) ) {
-			$model->addPayment($model->getBalance(), Payment::TYPE_ACCOUNT);
-		}
-	}
-
-	protected function actionSendRemider($id) {
-		Yii::trace($id, 'BillController::actionSendRemider');
-	}
-
 	protected function actionUpdateStatus($id, $status) {
-		Yii::trace($status, 'BillController::actionUpdateStatus');
 		$model = $this->findModel($id);
 		$model->setStatus($status);
 	}
@@ -129,6 +118,7 @@ class BillController extends Controller
             'dataProvider' => $dataProvider,
         ]);
 	}
+
 	
 	public function actionBillBoms() {
 		if(isset($_POST))
@@ -153,8 +143,58 @@ class BillController extends Controller
 				}
 			}
 
-		Yii::$app->session->setFlash('warning', 'No document selected.');
+		Yii::$app->session->setFlash('warning', Yii::t('store', 'No document selected.'));
 		return $this->redirect(Yii::$app->request->referrer);
+	}
+	
+	
+	public function actionAddPayment() {
+		$capture = new CaptureBalance();
+        if ($capture->load(Yii::$app->request->post())) {
+			if(isset($_POST))
+				if(isset($_POST['selection']))
+					if(count($_POST['selection']) > 0) {
+						$available = str_replace(',','.',$capture->amount);
+						$more_needed = 0;
+						Yii::trace('available='.$available, 'BillController::actionAddPayment');
+						$q = Bill::find()->andWhere(['id'=>$_POST['selection']]);
+						foreach($q->each() as $b) {
+							if($available > 0) {
+								$needed = $b->getBalance();
+								Yii::trace('needed='.$needed.' for '.$b->id, 'BillController::actionAddPayment');
+								if($needed <= $available) {
+									$b->addPayment($needed, $capture->method);
+									$available -= $needed;
+									Yii::trace('found, available='.$available, 'BillController::actionAddPayment');
+								} else {
+									$b->addPayment($available, $capture->method);
+									$more_needed = $needed - $available;
+									$available = 0;
+									Yii::trace('NOT found, missing='.$more_needed, 'BillController::actionAddPayment');
+								}
+							} else {
+								$more_needed += $b->getBalance();
+							}
+						}
+						Yii::trace('Bottomline: missing='.$more_needed.', available='.$available, 'BillController::actionAddPayment');
+						if($available > 0) {
+							$remaining = new Payment([
+								'sale' => Sequence::nextval('sale'), // its a new sale transaction...
+								'client_id' => $capture->client_id,
+								'payment_method' => $capture->method,
+								'amount' => $available,
+								'status' => Payment::STATUS_OPEN,
+							]);
+							$remaining->save();
+							Yii::$app->session->setFlash('info', Yii::t('store', 'Transfered amount was too large to pay all bills: {0}€ remaining.', $available));
+						} else if($more_needed > 0) {
+							Yii::$app->session->setFlash('warning', Yii::t('store', 'Transfered amount was not sufficiant to pay all bills: {0}€ missing.', $more_needed));
+						} else {
+							Yii::$app->session->setFlash('success', Yii::t('store', 'Transfered amount split in all bills.'));
+						}
+					}
+		}
+		return $this->redirect(['index']);
 	}
 	
 
@@ -167,23 +207,20 @@ class BillController extends Controller
 						$action = $_POST['action'];
 						if(in_array($action, [Bill::ACTION_PAYMENT_RECEIVED, Bill::ACTION_SEND_REMINDER, Bill::ACTION_CLIENT_ACCOUNT])) {
 							if($action == Bill::ACTION_PAYMENT_RECEIVED) {
-								
-								foreach($_POST['selection'] as $id) {
-									$this->actionUpdateStatus($id, Bill::STATUS_CLOSED);
-								}
-								Yii::$app->session->setFlash('success', Yii::t('store', 'Document(s) status updated.'));
-
-							} else if ($action == Bill::ACTION_CLIENT_ACCOUNT) {
-
-								foreach($_POST['selection'] as $id) {
-									$this->actionClientAccount($id);
-								}
-								Yii::$app->session->setFlash('success', Yii::t('store', 'Bill(s) transferred to client account(s).'));
-
+								$bills = Bill::find()->andWhere(['id'=>$_POST['selection']]);
+								$q = clone $bills;
+								$clients = [];
+								foreach($q->each() as $b)
+									$clients[$b->client_id] = Client::findOne($b->client_id)->niceName();
+						        return $this->render('add-payment', [
+						            'dataProvider' => new ActiveDataProvider([
+											'query' => $q,	
+									]),
+									'clients' => $clients,
+									'capture' => new CaptureBalance(),
+						        ]);
 							} else { // ACTION_SEND_REMINDER, loop per client
 								$clg = new PdfDocumentGenerator($this);
-								$dirName = RuntimeDirectoryManager::getPath(RuntimeDirectoryManager::PATH_LATE_BILLS);
-								$viewBase = '@app/modules/accnt/views/bill/';
 								
 								$q =  Bill::find()
 											->andWhere(['document.id' => $_POST['selection']])
@@ -196,26 +233,31 @@ class BillController extends Controller
 								$docs  = [];
 								foreach($q->each() as $bill) {
 									if($client_id == -1) $client_id = $bill->client_id;
-
-									// $fn = $this->generateBill($bill);
-									$days = floor( (time() - strtotime($bill->created_at)) / (60*60*24) );
-									$type = floor($days / 30);
-									if($type > 3) $type = 3;
-									$watermark = Yii::t('store', 'Reminder Type '.$type);
-									$fn = $clg->document($bill, $dirName, $viewBase, $watermark);
-									$docs[] = new Attachment(['filename' => $fn, 'title' => $bill->name]);
-									$bills[] = $bill;
-	
-									// generate cover for previous
+									// generate cover for previous client if we just changed
 									if($bill->client_id != $client_id) {
-										$clg->lateBills($bill->client_id, $bills, $docs, true);
+										$clg->lateBills($client_id, $bills, $docs, true);
 										$bills= [];
 										$docs = [];
 										$client_id = $bill->client_id;
 									}
+
+									$days = floor( (time() - strtotime($bill->created_at)) / (60*60*24) );
+									$type = floor($days / 30);
+									if($type > 3) $type = 3;
+									$pdf = new PrintedDocument([
+										'controller'	=> $this,
+										'document'		=> $bill,
+										'watermark'		=> Yii::t('store', 'Reminder Type '.$type),
+										'save'			=> true,
+									]);
+									$fn = $pdf->render();
+									$docs[] = new Attachment(['filename' => $fn, 'title' => $bill->name]);
+									$bills[] = $bill;	
 								}
 								// generate cover for last
-								if($client_id != -1) $clg->lateBills($client_id, $bills, $docs, true);
+								if($client_id != -1) {
+									$clg->lateBills($client_id, $bills, $docs, true);
+								}
 
 								Yii::$app->session->setFlash('warning', Yii::t('store', 'Reminders sent and/or ready to print.'));
 							}
@@ -225,7 +267,7 @@ class BillController extends Controller
 				}
 			}
 
-		Yii::$app->session->setFlash('warning', 'No document selected.');
+		Yii::$app->session->setFlash('warning', Yii::t('store', 'No document selected.'));
 		return $this->redirect(Yii::$app->request->referrer);
 	}
 	
