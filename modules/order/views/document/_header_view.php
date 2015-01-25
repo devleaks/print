@@ -2,6 +2,7 @@
 
 use app\models\Document;
 use app\models\Parameter;
+use app\models\DocumentActionColumn;
 use kartik\detail\DetailView;
 use kartik\icons\Icon;
 use yii\helpers\Html;
@@ -152,7 +153,13 @@ Icon::map($this);
             <div class="col-lg-12">
 				<div>
 				<?php
-				 	echo $model->getActions('btn', false);
+					$ab = new DocumentActionColumn([
+						'template' => $model->getActions(),
+						'baseClass' => 'btn',
+						'buttonTemplate' => '{icon} {text}',
+					]);
+					echo $ab->getButtons($model);
+				 	//echo $model->getActions('btn', false);
 					echo $this->render('_sendmail', ['model' => $model]); /** modal */
 				 	if(in_array($model->document_type, [Document::TYPE_ORDER,Document::TYPE_BILL,Document::TYPE_TICKET,Document::TYPE_REFUND,Document::TYPE_CREDIT])
 					  && $model->status != Document::STATUS_CANCELLED )

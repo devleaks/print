@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 class Ticket extends Order
 {
@@ -42,73 +40,47 @@ class Ticket extends Order
     /**
      * @inheritdoc
 	 */
-	public function getActions($baseclass = 'btn btn-xs btn-block', $show_work = false, $template = '{icon} {text}') {
-		$ret = '';
+	public function getActions($show_work = false) {
+		$actions = [];
 
+		$ret = '';
 		$work = $this->getWorks()->one();
 		if( $show_work && $work ) $ret .= '<p>'.$work->getTaskIcons(true, true, true).'</p>';
 
 		switch($this->status) {
-			case $this::STATUS_OPEN:
-				$ret .= Html::a($this->getButton($template, 'pencil', 'Modify'), ['/order/document-line/create', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Modify'),
-					'class' => $baseclass . ' btn-primary',
-					'data-method' => 'post',
-					]);
-				$ret .= ' '.Html::a($this->getButton($template, 'tasks', 'Submit Work'), ['/order/document/submit', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Submit Work'),
-					'class' => $baseclass . ' btn-primary',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Submit work?')
-					]);
-				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/document/cancel', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Cancel'),
-					'class' => $baseclass . ' btn-warning',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Cancel order?')
-					]);
+			case $this::STATUS_CREATED:
+				$actions[] = '{edit}';
+				$actions[] = '{cancel}';
 				break;
+			case $this::STATUS_OPEN:
+				$actions[] = '{edit}';
+				$actions[] = '{submit}';
+				$actions[] = '{cancel}';
+				break;
+			case $this::STATUS_WARN:
+				$actions[] = '{warn}';
 			case $this::STATUS_TODO:
 			case $this::STATUS_BUSY:
-				if( $work  ) {
-					$ret .= Html::a($this->getButton($template, 'tasks', 'Work'), ['/work/work/view', 'id' => $work->id, 'sort' => 'position'], [
-						'title' => Yii::t('store', 'Work'),
-						'class' => $baseclass . ' btn-primary',
-						'data-method' => 'post',
-						]);
-					$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/work/work/terminate', 'id' => $work->id], [
-						'title' => Yii::t('store', 'Terminate'),
-						'class' => $baseclass . ' btn-primary',
-						'data-method' => 'post',
-						'data-confirm' => Yii::t('store', 'Terminate all tasks?')
-						]);
+				$actions[] = '{cancel}';
+				if( $work  ) { // there should always be a work if doc status is TODO or BUSY or WARN
+					$actions[] = '{work}';
+					$actions[] = '{workterminate}';
 				} else
-					$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/order/document/terminate', 'id' => $this->id], [
-						'title' => Yii::t('store', 'Terminate'),
-						'class' => $baseclass . ' btn-primary',
-						'data-method' => 'post',
-						'data-confirm' => Yii::t('store', 'Order is ready?')
-						]);
+					$actions[] = '{terminate}';
 				break;
 			case $this::STATUS_DONE:
+			case $this::STATUS_TOPAY:
 			case $this::STATUS_SOLDE:
-				$ret .= ' '.Html::a($this->getButton($template, 'ok-sign', 'Receive'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-primary', 'title' => Yii::t('store', 'Receive')]);
+				$actions[] = '{receive}';
+				break;
+			case $this::STATUS_CANCELLED:
+				$actions[] = '{label:cancelled}';
 				break;
 			case $this::STATUS_CLOSED:
-			case $this::STATUS_CANCELLED:
-				$ret .= ' <span class="label label-success">'.Yii::t('store', $this->status).'</span>';
+				$actions[] = '{label:closed}';
 				break;
 		}
-		$ret .= false ? ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')])
-		:
-		' <div class="btn-group"><button type="button" class="'.$baseclass.' btn-info dropdown-toggle" data-toggle="dropdown">'.
-		        	$this->getButton($template, 'print', 'Print'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
-					'<li>'.Html::a('Page (A4)', ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'title' => Yii::t('store', 'Print on full A4 page')]).'</li>'.
-					'<li>'.Html::a('Ticket (A5)', ['/order/document/print', 'id' => $this->id, 'format' => 'A5'], ['target' => '_blank', 'title' => Yii::t('store', 'Print on reduced A5 ticket')]).'</li>'.
-     					'</ul></div>';
-		//$ret .= ' '.Html::a($this->getButton($template, 'envelope', 'Send'), ['/order/document/send', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
-		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'View')]);
-		return $ret;
+		return $ret . implode(' ', $actions) . ' {view} {print}';//cannot get parent:: which is Order
 	}
 
 }

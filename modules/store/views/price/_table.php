@@ -1,34 +1,39 @@
 <?php
 use app\models\Item;
+use app\models\Parameter;
 use app\models\DocumentLine;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Item */
+$stats = false;
+
+$model = $priceCalculator->item;
 
 $this->title = Yii::t('store', 'Price List').' '.$model->libelle_long;
-
-function price_chromaluxe($w, $h, $p, $w_max, $h_max) {
-	$maxlen = min($w_max, $h_max);
-	if($w > $maxlen && $h > $maxlen) return;
-
-	$s = $w * $h;
-
-	$i = 0;
-	while($i < count($p) && $s < $p[$i]['value_number'])
-		$i++;
-
-	if($i > 0) $i--;
+if($model->reference == Item::TYPE_CHROMALUXE) {
+	$w_max = Parameter::getIntegerValue('chroma_device', 'width');
+	$h_max = Parameter::getIntegerValue('chroma_device', 'height');
+	$max = max($w_max, $h_max);
+	$min_w = 10;
+	$max_w = $max;
+	$stp_w = 10;
+	$min_h = 10;
+	$max_h = $max;
+	$stp_h = 10;
+	$w_max = $w_max;
+	$h_max = $h_max;
 	
-	if( $item = Item::findOne(['reference' => str_replace('ChromaLuxe', 'Chroma', $p[$i]['name'])]) ) {
-		//Yii::trace($w.'x'.$h.'='.$s.' < '.$p[$i]['value_number'].' i='.$i.', price='.$item->prix_de_vente);
-		return ceil($item->prix_de_vente * $s / ($w_max * $h_max));
-	}
-		
-	return 0; // error
+} else {
+	$wval = explode(',', Parameter::getTextValue('price_list', 'width'));
+	$hval = explode(',', Parameter::getTextValue('price_list', 'height'));
+	$min_w = $wval[0];
+	$max_w = $wval[1];
+	$stp_w = $wval[2];
+	$min_h = $hval[0];
+	$max_h = $hval[1];
+	$stp_h = $hval[2];
 }
-
-$item_id = Item::findOne(['reference' => Item::TYPE_CHROMALUXE])->id;
 
 ?>
 <div class="print-price">
@@ -53,9 +58,9 @@ $item_id = Item::findOne(['reference' => Item::TYPE_CHROMALUXE])->id;
 		echo '<tr>';
 		echo '<th class="text-center">'.$h.'</th>';
 		for($w = $min_w; $w <= $max_w; $w = $w + $stp_w) {
-			echo '<td class="text-center">'.price_chromaluxe($w,$h,$parameters,$w_max, $h_max).'</td>';//$h.'&times;'.$w
+			echo '<td class="text-center">'.$priceCalculator->price($w,$h).'</td>';//$h.'&times;'.$w
 		}
-		if ($stats) echo '<td class="text-center">'.DocumentLine::getHeightCount($item_id, $h,$h+10).'</td>';//$h.'&times;'.$w
+		if ($stats) echo '<td class="text-center">'.DocumentLine::getDetailHeightCount('frame',$model->id,$h,$h+10).'</td>';//$h.'&times;'.$w
 		echo '</tr>';
 	}
 	if ($stats) { // quantity line
@@ -63,7 +68,7 @@ $item_id = Item::findOne(['reference' => Item::TYPE_CHROMALUXE])->id;
 		echo '<th class="text-center">'.Yii::t('store', 'Quantity').'</th>';
 		$total = 0;
 		for($w = $min_w; $w <= $max_w; $w = $w + $stp_w) {
-			$cnt = DocumentLine::getWidthCount($item_id, $w,$w+10);
+			$cnt = DocumentLine::getDetailWidthCount('frame',$model->id,$w,$w+10);
 			$total += $cnt;
 			echo '<td class="text-center">'.$cnt.'</td>';//$h.'&times;'.$w
 		}

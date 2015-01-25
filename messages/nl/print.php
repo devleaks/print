@@ -37,6 +37,7 @@ return [
 	'Subject' => 'Betreft',
 	'VAT Client' => 'BTW Klant',
 	'VAT Number' => 'BTW Nummer',
+	'Number' => 'Nummer',
 	
 	/** Body */
 	
@@ -66,9 +67,10 @@ return [
 	'Price' => 'Prijs',
 	'Total HTVA' => 'Totaal excl.BTW',
 	'Total TVAC' => 'Totaal incl.BTW',
-	'HTVA' => 'excl.BTW',
-	'TVAC' => 'incl.BTW',
+	'VAT excl.' => 'excl.BTW',
+	'VAT incl.' => 'incl.BTW',
 	'Total' => 'Totaal',
+	'VAT' => 'BTW',
 	
 	'Account' => 'Rekening',
 	'Bill Date' => 'Facturatie',

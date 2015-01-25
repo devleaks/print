@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	        [
 				'attribute' => 'document_type',
 				'value' => function ($model, $key, $index, $widget) {
-					return Yii::t('store', $model->document_type);
+					return Yii::t('store', $model->getDocumentType());
 				}
 			],
 	        [

@@ -11,7 +11,7 @@ Yii::$app->language = ($client->lang ? $client->lang : 'fr');
 ?>
 <div class="account-index">
 
-	<h4><?= Yii::t('store', 'Your Account Summary') ?></h4>
+	<h4><?= Yii::t('print', 'Your Account Summary') ?></h4>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -23,21 +23,21 @@ Yii::$app->language = ($client->lang ? $client->lang : 'fr');
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
 	        [
-				'label' => Yii::t('store', 'Order'),
+				'label' => Yii::t('print', 'Order'),
 	            'value' => function ($model, $key, $index, $widget) {
 					if($model->document)
 						return $model->document->name;
 					else {
 						if(    $model->status == Account::TYPE_CREDIT
 							&& $model->payment_method == Account::ACTION_TRANSFER
-							&& $model->amount > 0) return Yii::t('store', 'Bank Transfer. Thank You.');
+							&& $model->amount > 0) return Yii::t('print', 'Bank Transfer. Thank You.');
 						else
 							return '';
 					} 
 	            },
 			],
 	        [
-				'label' => Yii::t('store', 'Order Date'),
+				'label' => Yii::t('print', 'Order Date'),
 				'noWrap' => true,
 				'format' => 'date',
 	            'value' => function ($model, $key, $index, $widget) {
@@ -45,7 +45,7 @@ Yii::$app->language = ($client->lang ? $client->lang : 'fr');
 	            },
 			],
 	        [
-				'label' => Yii::t('store', 'Order Due Date'),
+				'label' => Yii::t('print', 'Order Due Date'),
 				'noWrap' => true,
 				'format' => 'date',
 	            'value' => function ($model, $key, $index, $widget) {
@@ -53,7 +53,7 @@ Yii::$app->language = ($client->lang ? $client->lang : 'fr');
 	            },
 			],
 			[
-	            'label' => Yii::t('store', 'Amount'),
+	            'label' => Yii::t('print', 'Amount'),
 				'attribute' => 'amount',
 				'format' => 'currency',
 				'hAlign' => GridView::ALIGN_RIGHT,
@@ -62,7 +62,7 @@ Yii::$app->language = ($client->lang ? $client->lang : 'fr');
 			],
 	        [
 				'attribute' => 'status',
-	            'label' => Yii::t('store', 'Account'),
+	            'label' => Yii::t('print', 'Account'),
 	            'value' => function ($model, $key, $index, $widget) {
 	                return $model->getStatusLabel();
 	            },
@@ -70,7 +70,7 @@ Yii::$app->language = ($client->lang ? $client->lang : 'fr');
 				'hAlign' => GridView::ALIGN_CENTER,
 	        ],
 			[
-	            'label' => Yii::t('store', 'Payment Date'),
+	            'label' => Yii::t('print', 'Payment Date'),
 				'noWrap' => true,
 				'attribute' => 'created_at',
 				'format' => 'date',
@@ -79,7 +79,7 @@ Yii::$app->language = ($client->lang ? $client->lang : 'fr');
 				}
 			],
 			[
-	            'label' => Yii::t('store', 'Notes & Comments'),
+	            'label' => Yii::t('print', 'Notes & Comments'),
            		'attribute' => 'note',
 	            'value' => function ($model, $key, $index, $widget) {
 	                return $model->note ? $model->note : '';

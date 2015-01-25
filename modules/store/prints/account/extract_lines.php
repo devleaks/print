@@ -6,16 +6,16 @@ use app\models\Parameter;
 <table width="100%" class="table table-bordered" style="text-align: center;">
 	<thead>
 	<tr>
-		<th style="text-align: center;"><?= Yii::t('store', 'Reference') ?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Order Date')?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Due Date')?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Amount')?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Account')?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Bill Date')?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Note')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Reference') ?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Order Date')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Due Date')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Amount')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Account')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Bill Date')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Note')?></th>
 	</tr>
 	<tr>
-		<th colspan="4" style="text-align: right;"><?=  Yii::t('store', 'Opening Balance') . ' ' . Yii::t('store', 'on') . ' ' . Yii::$app->formatter->asDate($to_date) ?></th>
+		<th colspan="4" style="text-align: right;"><?=  Yii::t('print', 'Opening Balance') . ' ' . Yii::t('print', 'on') . ' ' . Yii::$app->formatter->asDate($to_date) ?></th>
 		<th style="text-align: right;"><?= Yii::$app->formatter->asCurrency($opening_balance) ?></th>
 		<th colspan="2"></th>
 	</tr>
@@ -27,7 +27,7 @@ use app\models\Parameter;
 	<tr>
 		<td><?= $model->document ? $model->document->name : (
 					  ($model->status == Account::TYPE_CREDIT && $model->amount > 0) ?
-							Parameter::getTextValue('paiement', $model->payment_method, '').'. '.Yii::t('store', 'Thank You').'.'
+							Parameter::getTextValue('paiement', $model->payment_method, '').'. '.Yii::t('print', 'Thank You').'.'
 							: ''
 					) ?></td>
 		<td><?= $model->document ? Yii::$app->formatter->asDate($model->document->created_at) : '' ?></td>
@@ -44,7 +44,7 @@ use app\models\Parameter;
 	<tfoot>
 	<tr>
 		<th colspan="4" style="text-align: right;">
-<?= Yii::t('store', 'Closing Balance') . ' ' . Yii::t('store', 'on') . ' ' . Yii::$app->formatter->asDate(date('Y-m-d', strtotime('now'))) ?></th>
+<?= Yii::t('print', 'Closing Balance') . ' ' . Yii::t('print', 'on') . ' ' . Yii::$app->formatter->asDate(date('Y-m-d', strtotime('now'))) ?></th>
 		<th style="text-align: right;"><?= Yii::$app->formatter->asCurrency($closing_balance) ?></th>
 		<th colspan="2"></th>
 	</tr>

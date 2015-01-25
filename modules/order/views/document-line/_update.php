@@ -188,14 +188,14 @@ SCRIPT;
 	?>
 	
     <?php
-		$browser = Enum::getBrowser();
+/*		$browser = Enum::getBrowser();
 		$version = floatval($browser['version']);
 		//echo Enum::array2table($browser, true);
 
 		if($browser['code'] == 'safari' && $version <= 535) {
 			echo $form->field($model, 'image[]')->fileInput();
 		} else {
-			$items = [];
+*/			$items = [];
 		    foreach($model->getPictures()->all() as $picture)
 				$items[] = Html::img($picture->getThumbnailUrl());
 
@@ -207,8 +207,8 @@ SCRIPT;
 		            'overwriteInitial'  => false
 		        ]
 		    ]);
-		}
-    ?>
+/*		}
+*/    ?>
 
 	<?= Form::widget([
 		    'model' => $model,

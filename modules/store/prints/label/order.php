@@ -13,8 +13,8 @@
 	<br>
 	<table width="100%" class="table table-bordered" style="text-align: center;">
 	<tr>
-			<th style="text-align: center;"><?= Yii::t('store', 'Order') ?></td>
-			<th style="text-align: center;"><?= Yii::t('store', 'Due Date') ?></td>
+			<th style="text-align: center;"><?= Yii::t('print', 'Order') ?></td>
+			<th style="text-align: center;"><?= Yii::t('print', 'Due Date') ?></td>
 	</tr>
 	<tr>
 			<td style="font-size: 2em;"><?= Yii::$app->formatter->asDate($model->created_at, 'medium') ?></td>

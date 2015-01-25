@@ -5,13 +5,13 @@
 <table class="table">
 	<thead>
 	<tr>
-		<th><?= Yii::t('store', 'Bill') ?></th>
-		<th><?= Yii::t('store', 'Order Due Date')?></th>
-		<th><?= Yii::t('store', 'Bill Issue Date')?></th>
-		<th><?= Yii::t('store', 'Bill Due Date')?></th>
-		<th><?= Yii::t('store', 'Amount')?></th>
-		<th><?= Yii::t('store', 'Prepaid')?></th>
-		<th><?= Yii::t('store', 'Due')?></th>
+		<th><?= Yii::t('print', 'Bill') ?></th>
+		<th><?= Yii::t('print', 'Order Due Date')?></th>
+		<th><?= Yii::t('print', 'Bill Issue Date')?></th>
+		<th><?= Yii::t('print', 'Bill Due Date')?></th>
+		<th><?= Yii::t('print', 'Amount')?></th>
+		<th><?= Yii::t('print', 'Prepaid')?></th>
+		<th><?= Yii::t('print', 'Due')?></th>
 	</tr>
 	</thead>
 	<tbody>
@@ -33,7 +33,7 @@
 	</tbody>
 	<tfoot>
 	<tr>
-		<th colspan="6" style="text-align: right;"><?= Yii::t('store', 'Total') ?></th>
+		<th colspan="6" style="text-align: right;"><?= Yii::t('print', 'Total') ?></th>
 		<th><?= Yii::$app->formatter->asCurrency($tot_amount) ?></th>
 	</tr>
 	</tfoot>

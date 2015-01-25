@@ -16,11 +16,11 @@ use app\models\Document;
 	<br>
 	<table width="100%" class="table table-bordered" style="text-align: center;">
 	<tr>
-			<th style="text-align: center;"><?= Yii::t('store', 'Date') ?></td>
-			<th style="text-align: center;"><?= Yii::t('store', 'Reference Client') ?></td>
-			<th style="text-align: center;"><?= Yii::t('store', 'VAT Client') ?></td>
-			<th style="text-align: center;"><?= Yii::t('store', 'Reference Operation') ?></td>
-			<th style="text-align: center;"><?= Yii::t('store', 'Numero') ?></td>
+			<th style="text-align: center;"><?= Yii::t('print', 'Date') ?></td>
+			<th style="text-align: center;"><?= Yii::t('print', 'Reference Client') ?></td>
+			<th style="text-align: center;"><?= Yii::t('print', 'VAT Client') ?></td>
+			<th style="text-align: center;"><?= Yii::t('print', 'Reference Operation') ?></td>
+			<th style="text-align: center;"><?= Yii::t('print', 'Number') ?></td>
 	</tr>
 	<tr>
 			<td><?= Yii::$app->formatter->asDate($model->created_at, 'short') ?></td>
@@ -31,13 +31,13 @@ use app\models\Document;
 	</tr>
 	<?php if($model->note != ''): ?>
 	<tr>
-			<th style="text-align: center;"><?= Yii::t('store', 'Note') ?></th>
+			<th style="text-align: center;"><?= Yii::t('print', 'Note') ?></th>
 			<td colspan="4" style="text-align: left;"><?= $model->note ?></td>
 	</tr>
 	<?php endif; ?>
 	</table>
 	<br>
 	
-	<h4><?= Yii::t('store', ($model->document_type == Document::TYPE_ORDER && $model->bom_bool) ? Document::TYPE_BOM : $model->document_type).' '.$model->name ?></h4>
+	<h4><?= Yii::t('print', ($model->document_type == Document::TYPE_ORDER && $model->bom_bool) ? Document::TYPE_BOM : $model->document_type).' '.$model->name ?></h4>
 
 </div>

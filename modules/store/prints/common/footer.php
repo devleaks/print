@@ -19,5 +19,5 @@ if(!isset($language))
 
 ?>
 <div class="print-footer" style="text-align: center; font-size: <?= $fontSize ?>px; border-top: 1px solid #888; padding: 2px;">
-<?= Yii::t('store', 'Labo JJ Micheli SPRL • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85 • Fax. +32 (0)2 733 38 72<br>e-Mail: info@labojjmicheli.be • Web Site: www.labojjmicheli.be • VAT: BE 428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank 210-0381493-44 • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB') ?>
+<?= Yii::t('print', 'Labo JJ Micheli SPRL • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85 • Fax. +32 (0)2 733 38 72<br>e-Mail: info@labojjmicheli.be • Web Site: www.labojjmicheli.be • VAT: BE 428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank 210-0381493-44 • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB') ?>
 </div>

@@ -29,5 +29,7 @@ phpunit.phar
 # Yii special
 config
 web/pictures
+web/documents
 docs/sample
 docs/_trash
+runtime

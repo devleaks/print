@@ -4,9 +4,6 @@ namespace app\models;
 
 use Yii;
 use app\models\Sequence;
-use yii\db\ActiveRecord;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 /**
  * This is the model class for table "order".
@@ -200,109 +197,46 @@ class Order extends Document
 	 * send:		envelope
 	 * work:		tasks
 	 */
-	public function getActions($baseclass = 'btn btn-xs btn-block', $show_work = false, $template = '{icon} {text}') {
-		$ret = '';
+	public function getActions($show_work = false) {
+		$actions = [];
 
+		$ret = '';
 		$work = $this->getWorks()->one();
 		if( $show_work && $work ) $ret .= '<p>'.$work->getTaskIcons(true, true, true).'</p>';
 
 		switch($this->status) {
 			case $this::STATUS_CREATED:
-				$ret .= Html::a($this->getButton($template, 'plus', 'Add Items'), ['/order/document-line/create', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Add Items'),
-					'class' => $baseclass . ' btn-primary',
-					'data-method' => 'post',
-					]);
-				return $ret;
+				$actions[] = '{edit}';
 				break;
 			case $this::STATUS_OPEN:
-				$ret .= Html::a($this->getButton($template, 'pencil', 'Update'), ['/order/document-line/create', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Update'),
-					'class' => $baseclass . ' btn-primary',
-					'data-method' => 'post',
-					]);
-				$ret .= ' '.Html::a($this->getButton($template, 'cog', 'Submit Work'), ['/order/document/submit', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Submit Work'),
-					'class' => $baseclass . ' btn-primary',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Submit work?')
-					]);
-				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/document/cancel', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Cancel'),
-					'class' => $baseclass . ' btn-danger',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Cancel order?')
-					]);
+				$actions[] = '{edit}';
+				$actions[] = '{submit}';
+				$actions[] = '{cancel}';
 				break;
 			case $this::STATUS_WARN:
-				$task = null;
-				foreach($this->getWorks()->each() as $work) {
-					foreach($work->getWorkLines()->where(['status' => Work::STATUS_WARN])->each() as $wl)
-						if(!$task) $task = $wl;
-				}
-				if( $task  )
-					$ret .= Html::a($this->getButton($template, 'warning-sign', 'Warning'), ['/work/work-line/detail', 'id' => $task->id], [
-						'title' => Yii::t('store', 'Warning'),
-						'class' => $baseclass . ' btn-warning',
-						'data-method' => 'post',
-						]).' ';
+				$actions[] = '{warn}';
 			case $this::STATUS_TODO:
 			case $this::STATUS_BUSY:
-				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/document/cancel', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Cancel'),
-					'class' => $baseclass . ' btn-danger',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Cancel order?')
-					]);
-				if( $work  ) { // there should always be a work if doc status is TODO or BUSY
-					$ret .= ' '.Html::a($this->getButton($template, 'tasks', 'Work'), ['/work/work/view', 'id' => $work->id, 'sort' => 'position'], [
-						'title' => Yii::t('store', 'Work'),
-						'class' => $baseclass . ' btn-primary',
-						'data-method' => 'post',
-						]);
-					$ret .= ' '.Html::a($this->getButton($template, 'play', 'Terminate'), ['/work/work/terminate', 'id' => $work->id], [
-						'title' => Yii::t('store', 'Terminate'),
-						'class' => $baseclass . ' btn-primary',
-						'data-method' => 'post',
-						'data-confirm' => Yii::t('store', 'Terminate all tasks?')
-						]);
+				$actions[] = '{cancel}';
+				if( $work  ) { // there should always be a work if doc status is TODO or BUSY or WARN
+					$actions[] = '{work}';
+					$actions[] = '{workterminate}';
 				} else
-					$ret .= ' '.Html::a($this->getButton($template, 'ok-circle', 'Terminate'), ['/order/document/terminate', 'id' => $this->id], [
-						'title' => Yii::t('store', 'Terminate'),
-						'class' => $baseclass . ' btn-primary',
-						'data-method' => 'post',
-						'data-confirm' => Yii::t('store', 'Order is ready?')
-						]);
+					$actions[] = '{terminate}';
 				break;
 			case $this::STATUS_SOLDE:
 			case $this::STATUS_TOPAY:
 			case $this::STATUS_DONE:
-				$ret .= Html::a($this->getButton($template, 'credit-card', 'Bill To'), ['/order/document/convert', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Bill To'),
-					'class' => $baseclass . ' btn-primary',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Send bill?')
-					]);
+				$actions[] = '{bill}';
 				break;
 			case $this::STATUS_CANCELLED:
-				$ret .= ' <span class="label label-danger">'.Yii::t('store', 'Cancelled').'</span>';
+				$actions[] = '{label:cancelled}';
 				break;
 			case $this::STATUS_CLOSED:
-				$bill = $this->bom_bool ?
-					Bill::findOne($this->parent_id) // for BOM we set inverse relation, parent_id points to collective bill
-					:
-					$this->getDocuments()->where(['document_type' => Order::TYPE_BILL])->one(); // or Bill::findOne(['parent_id'=>$this->id]) ?
-					
-				if( $bill )
-					$ret .= ' '.Html::a('<span class="label label-success">'.Yii::t('store', 'Billed').'</span>',
-										['/order/document/view', 'id' => $bill->id], ['title' => Yii::t('store', 'View Bill'), 'data-method' => 'post']);
-				else
-					$ret .= ' <span class="label label-success">'.Yii::t('store', 'Billed').'</span>';
-
+				$actions[] = '{link:billed}';
 				break;
 		}
-		return $ret . parent::getActions($baseclass, $show_work, $template);
+		return $ret . implode(' ', $actions) . ' ' . parent::getActions();
 	}
-	
 }
 

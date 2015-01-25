@@ -58,6 +58,7 @@ return [
 	'Boms' => 'Bons de livraisons',
 	'Bureau' => 'Tel. Bureau',
 	'Cancel' => 'Annuler',
+	'Cancel order?' => 'Annuler la commande?',
 	'Cancelled' => 'Annulé',
 	'Categorie' => 'Catégorie',
 	'Checks' => 'Contrôles',
@@ -68,6 +69,7 @@ return [
 	'Client without Popsy Account Identifier' => 'Clients sans identifiant Popsy',
 	'Clients with bills and without Popsy Identifier' => 'Clients ayant des factures et sans identifiant Popsy',
 	'Close' => 'Clôturer',
+	'Closed' => 'Clôturé',
 	'Closing Balance' => 'Situation',
 	'Company' => 'Société',
 	'Comptabilite' => 'Référence Comptabilité',
@@ -182,6 +184,7 @@ return [
 	'No work to submit' => "Il n'y a pas de travail à réaliser",
 	'No' => 'Non',
 	'None' => 'Aucun',
+	'Numero' => 'Numéro',
 	'Nothing to report.' => 'Aucun rapport.',
 	'Opening Balance' => 'Situation',
 	'Operation is not developed yet.' => "L'opération ou l'action n'a pas encore été développée.",
@@ -316,7 +319,9 @@ return [
 	'Add a payment' => 'Ajouter un paiement',
 	'You must reimburse {0}€.' => 'REMBOURSEMENT: {0} €.',
 	'Transfered amount split in all bills.' => 'Montant réparti entre toutes les factures sélectionnées.',
-
+	'Sent At' => 'Envoyé le',
+	'Document Type' => 'Type de lettre',
+ 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',
 	'Surface too large.' => "Surface supérieure à 18700 cm2.",
@@ -449,6 +454,11 @@ return [
 	'Late Unpaid Bills - Last Reminder' => 'Factures impayées - Dernier Rappel',
 	'Late Unpaid Bills' => 'Factures impayées',
 
+
+	'LATE_BILL_COVER0' => 'Duplicatat',
+	'LATE_BILL_COVER1' => 'Rappel',
+	'LATE_BILL_COVER2' => 'Deuxième Rappel',
+	'LATE_BILL_COVER3' => 'Dernier rappel',
 
 	/** Letters: General texts & watermarks */
 	'ACCOUNT_UNBALANCED::AFTER_LIST' => " ",

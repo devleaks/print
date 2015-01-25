@@ -5,13 +5,13 @@
 <table width="100%" class="table table-bordered">
 	<thead>
 	<tr>
-		<th style="text-align: center;"><?= Yii::t('store', 'Ref.') ?></th>
-		<th style="text-align: left;"><?= Yii::t('store', 'Item')?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Qty')?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Price')?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Extra')?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Total')?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Vat')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Ref.') ?></th>
+		<th style="text-align: left;"><?= Yii::t('print', 'Item')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Qty')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Price')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Extra')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Total')?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'VAT')?></th>
 	</tr>
 	</thead>
 	<tbody>

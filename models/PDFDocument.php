@@ -116,11 +116,11 @@ class PDFDocument extends Model {
 				
 		if($this->header)	$pdfData['methods']['SetHTMLHeader'] = $this->header;
 		if($this->footer) 	$pdfData['methods']['SetHTMLFooter'] = $this->footer;
-		if($this->title)	$pdfData['methods']['SetTitle'] = $this->title;
-		if($this->author)	$pdfData['methods']['SetAuthor'] = $this->author;
-		if($this->creator)	$pdfData['methods']['SetCreator'] = $this->creator;
-		if($this->subject)	$pdfData['methods']['SetSubject'] = $this->subject;
-		if($this->keywords)	$pdfData['methods']['SetKeywords'] = $this->keywords;
+		if($this->title)	$pdfData['methods']['SetTitle']      = ( $this->title ? $this->title : $this->subject );
+		if($this->author)	$pdfData['methods']['SetAuthor']     = $this->author;
+		if($this->creator)	$pdfData['methods']['SetCreator']    = $this->creator;
+		if($this->subject)	$pdfData['methods']['SetSubject']    = ( $this->subject ? $this->subject : $this->title );
+		if($this->keywords)	$pdfData['methods']['SetKeywords']   = $this->keywords.' labo jjmicheli micheli labojjmicheli.be photo chromaluxe fine arts frame';
 
 		if($this->watermark) {
 			$pdfData['options']['showWatermarkText'] = true;

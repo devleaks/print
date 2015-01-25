@@ -4,8 +4,6 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 /**
  * Base class for all things common to bid, order, and bill
@@ -675,21 +673,13 @@ class Document extends _Document
 	}
 	
 	/**
-	 * Generates either action buttons or labels for Document depending on its status
+	 * Generates document action button template '{action}...' to be used by DocumentActionColumn generator.
+	 * Generation takes into account document type and status to generate a list of valid actions.
 	 *
-	 * @return string HTML fragment
+	 * @return string Action column button template.
 	 */
-	public function getActions($baseclass = 'btn btn-xs btn-block', $show_work = false, $template = '{icon} {text}') {
-		$ret = '';
-		$ret .= false ? ' '.Html::a($this->getButton($template, 'print', 'Print'), ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'class' => $baseclass . ' btn-info', 'title' => Yii::t('store', 'Print')])
-		:
-		' <div class="btn-group"><button type="button" class="'.$baseclass.' btn-info dropdown-toggle" data-toggle="dropdown">'.
-		        	$this->getButton($template, 'print', 'Print'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
-					'<li>'.Html::a('Page (A4)', ['/order/document/print', 'id' => $this->id], ['target' => '_blank', 'title' => Yii::t('store', 'Print on full A4 page')]).'</li>'.
-					'<li>'.Html::a('Ticket (A5)', ['/order/document/print', 'id' => $this->id, 'format' => 'A5'], ['target' => '_blank', 'title' => Yii::t('store', 'Print on reduced A5 ticket')]).'</li>'.
-     					'</ul></div>';
-		$ret .= ' '.Html::a($this->getButton($template, 'eye-open', 'View'), ['/order/document/view', 'id' => $this->id], ['class' => $baseclass . ' btn-info']);
-		return $ret;
+	public function getActions() {
+		return '{view} {print}';
 	}
 
 	/**

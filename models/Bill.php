@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 class Bill extends Document {
 	const TYPE = 'BILL';
@@ -159,30 +157,14 @@ class Bill extends Document {
     /**
      * @inheritdoc
 	 */
-	public function getActions($baseclass = 'btn btn-xs btn-block', $show_work = false, $template = '{icon} {text}') {
-		$ret = '';
+	public function getActions($show_work = false) {
+		$actions = [];
 		switch($this->status) {
-			case $this::STATUS_OPEN:
-				$ret .= Html::a($this->getButton($template, 'credit-card', 'Send Bill'), ['/order/document/sent', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Send Bill'),
-					'class' => $baseclass . ' btn-primary',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Send bill?')
-					]);
-				break;
-/*			case $this::STATUS_TOPAY:
-				$ret .= Html::a($this->getButton($template, 'euro', 'Paiement Received'), ['/order/document/paid', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Paiement Received'),
-					'class' => $baseclass . ' btn-primary',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Paiement received?')
-					]);
-				break;
-*/			case $this::STATUS_CLOSED:
-				$ret .= '<span class="label label-success">'.Yii::t('store', 'Paiement Received').'</span>';
+			case $this::STATUS_CLOSED:
+				$actions[] = '{label:closed}';
 				break;
 		}
-		return $ret . parent::getActions($baseclass, $show_work, $template);
+		return implode(' ', $actions) . ' ' . parent::getActions();
 	}
 
 }

@@ -16,11 +16,11 @@ $dataProvider->sort = false;
 			'summary' => false,
 			'columns' => [
 				[
-					'label' => Yii::t('store', 'Ref.'),
+					'label' => Yii::t('print', 'Ref.'),
 					'attribute' => 'item.reference',
 				],
 				[
-					'label' => Yii::t('store', 'Item'),
+					'label' => Yii::t('print', 'Item'),
 					'attribute' => 'item',
 				    'value' => function ($model, $key, $index, $widget) {
 						return $model->getDescription();
@@ -28,19 +28,19 @@ $dataProvider->sort = false;
 					'format' => 'raw'
 				],				
 				[
-					'label' => Yii::t('store', 'Qty'),
+					'label' => Yii::t('print', 'Qty'),
 					'attribute' => 'quantity',
 					'hAlign' => GridView::ALIGN_CENTER,
 				],
 				[
-					'label' => Yii::t('store', 'Pc.'),
+					'label' => Yii::t('print', 'Pc.'),
 					'attribute' => 'unit_price',
 					'format' => 'currency',
 					'hAlign' => GridView::ALIGN_RIGHT,
 					'noWrap' => true,
 				],
 				[
-					'label' => Yii::t('store', 'Extra'),
+					'label' => Yii::t('print', 'Extra'),
 					'attribute' => 'extra_amount',
 				    'value' => function ($model, $key, $index, $widget) {
 						return $model->getExtraDescription(false);
@@ -48,7 +48,7 @@ $dataProvider->sort = false;
 					'hAlign' => GridView::ALIGN_CENTER,
 				],
 				[
-					'label' => Yii::t('store', 'Price Htva'),
+					'label' => Yii::t('print', 'Price Htva'),
 				    'value' => function ($model, $key, $index, $widget) {
 						$p = compact('model', 'key', 'index');
 				        return round($model->price_htva + $model->extra_htva, 2);		
@@ -68,7 +68,7 @@ $dataProvider->sort = false;
 					'noWrap' => true,
 				],
 //		        [
-//					'label' => Yii::t('store', 'Picture'),
+//					'label' => Yii::t('print', 'Picture'),
 //					'attribute' => 'id',
 //		            'value' => function ($model, $key, $index, $widget) {
 //						$pic = $model->getPictures()->one();

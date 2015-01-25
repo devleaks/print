@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 class Bid extends Document
 {
@@ -46,55 +44,24 @@ class Bid extends Document
     /**
      * @inheritdoc
 	 */
-	public function getActions($baseclass = 'btn btn-xs btn-block', $show_work = false, $template = '{icon} {text}') {
-		$ret = '';
+	public function getActions($show_work = false) {
+		$actions = [];
 		switch($this->status) {
 			case $this::STATUS_OPEN:
-				$ret .= Html::a($this->getButton($template, 'pencil', 'Modify'), ['/order/document-line/create', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Modify'),
-					'class' => $baseclass . ' btn-primary',
-					'data-method' => 'post',
-					]);
-				$ret .= ' <div class="btn-group"><button type="button" class="'.$baseclass.' btn-success dropdown-toggle" data-toggle="dropdown">'.
-		        	$this->getButton($template, 'ok', 'Convert to Order'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
-						'<li>'.Html::a(Yii::t('store', 'Convert to order'),
-										['/order/document/convert', 'id' => $this->id],
-										['title' => Yii::t('store', 'Convert to order'),
-											'data-method' => 'post',
-											'data-confirm' => Yii::t('store', 'Convert to order?')]
-						).'</li>'.
-						'<li>'.Html::a(Yii::t('store', 'Convert to sale'),
-										['/order/document/convert', 'id' => $this->id, 'ticket' => true],
-										['title' => Yii::t('store', 'Convert to sale'),
-											'data-method' => 'post',
-											'data-confirm' => Yii::t('store', 'Convert to sale?')]
-						).'</li>'.
-     				'</ul></div>';
-				/*$ret .= ' '.Html::a($this->getButton($template, 'ok', 'Convert to Order'), ['/order/document/convert', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Convert to Order'),
-					'class' => $baseclass . ' btn-success',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Convert to order?')
-					]);*/
-				$ret .= ' '.Html::a($this->getButton($template, 'remove', 'Cancel'), ['/order/document/cancel', 'id' => $this->id], [
-					'title' => Yii::t('store', 'Cancel'),
-					'class' => $baseclass . ' btn-warning',
-					'data-method' => 'post',
-					'data-confirm' => Yii::t('store', 'Cancel order?')
-					]);
+				$actions[] = '{edit}';
+				$actions[] = '{convert}';
+				$actions[] = '{cancel}';
 				break;
 			case $this::STATUS_CLOSED:
 				if( $order = $this->getDocuments()->where(['document_type' => Order::TYPE_ORDER])->one() )
-					$ret .= ' '.Html::a('<span class="label label-success">'.Yii::t('store', 'Order Placed').'</span>',
-										['/order/document/view', 'id' => $order->id], ['data-method' => 'post', 'title' => Yii::t('store', 'View Order')]);
+					$actions[] = '{link:ordered}';
 				else
-					$ret .= ' <span class="label label-success">'.Yii::t('store', 'Order Placed').'</span>';
+					$actions[] = '{label:closed}';
 				break;
 			case $this::STATUS_CANCELLED:
-				$ret .= ' <span class="label label-primary">'.Yii::t('store', 'Cancelled').'</span>';
+				$actions[] = '{label:cancelled}';
 				break;
 		}
-		return $ret . parent::getActions($baseclass, $show_work, $template);
+		return implode(' ', $actions) . ' ' . parent::getActions();
 	}
-
 }

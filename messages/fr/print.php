@@ -109,6 +109,9 @@ return [
 	'Updated At' => 'Mise à jour',
 	'VAT Rate' => 'Taux',
 	'VAT' => 'TVA',
+	'VAT excl.' => 'HTVA',
+	'VAT incl.' => 'TVAC',
+	'Number' => 'Numéro',
 	
 	
 	

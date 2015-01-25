@@ -163,13 +163,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				'hAlign' => GridView::ALIGN_CENTER,
 	        ],
 	        [
-	            'label' => Yii::t('store', 'Actions'),
-	            'value' => function ($model, $key, $index, $widget) {
-							return $model->getActions('btn btn-xs', false, '{icon}');
-	            		},
-				'hAlign' => GridView::ALIGN_CENTER,
-	            'format' => 'raw',
+				'class'	=> 'app\models\DocumentActionColumn',
 				'noWrap' => true,
+				'hAlign' => GridView::ALIGN_CENTER,
 	        ],
         ],
     ]); ?>

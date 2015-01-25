@@ -22,12 +22,12 @@ Yii::$app->i18n->translations['store']->forceTranslation = true
 <br>
 <br>
 <p style="text-align: right;">
-	<?= Yii::t('store', 'Brussels, {0}', $model->date) ?>
+	<?= Yii::t('print', 'Brussels, {0}', $model->date) ?>
 </p>
 <br>
 <br>
 <p>
-	<strong><?= Yii::t('store', 'Object') ?></strong>: <?= $model->subject ?>
+	<strong><?= Yii::t('print', 'Object') ?></strong>: <?= $model->subject ?>
 </p>
 <p>
 	<?= $model->client->titre.' '.$model->client->nom ?>,
@@ -36,18 +36,18 @@ Yii::$app->i18n->translations['store']->forceTranslation = true
 <br>
 <br>
 <p>
-	<?= Yii::t('store', $model->type.'::BEFORE_LIST') ?>
+	<?= Yii::t('print', $model->type.'::BEFORE_LIST') ?>
 </p>
 <br>
 
 <?= $model->table ?>
 
 <p>
-	<?= Yii::t('store', $model->type.'::AFTER_LIST') ?>
+	<?= Yii::t('print', $model->type.'::AFTER_LIST') ?>
 </p>
 <p>
-	<?= Yii::t('store', $model->type.'::CALL_ACTION') ?>
+	<?= Yii::t('print', $model->type.'::CALL_ACTION') ?>
 </p>
 <p>
-	<?= Yii::t('store', $model->type.'::GREETINGS') ?>
+	<?= Yii::t('print', $model->type.'::GREETINGS') ?>
 </p>

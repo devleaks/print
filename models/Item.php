@@ -156,14 +156,36 @@ class Item extends _Item
 
 	/**
 	 * @return boolean whether price needs special calculation
-	 */
-	
+	 */	
 	public function hasPriceComputation() {
 		//return in_array($this->categorie, ['ChromaLuxe', 'Cadre', 'Montage', 'ChromaSupport', 'Support']);
 		return in_array($this->yii_category, ['ChromaLuxe', 'Tirage', 'Cadre', 'Montage', 'Canvas', 'Support', 'Protection']);
 	}
 
+
 	public function isSpecial() {
 		return $this->yii_category == 'SPECIAL';
+	}
+	
+
+	public function getPriceCalculator() {
+		switch(strtolower($this->yii_category)) {
+			case 'chromaluxe':
+				return new ChromaLuxePriceCalculator();
+				break;
+			case 'cadre':
+				if($this->fournisseur == 'Nielsen')
+					return new NielsenPriceCalculator(['item' => $this]);
+				else if ($this->fournisseur == 'Exhibit')
+					return new ExhibitPriceCalculator(['item' => $this]);
+				else
+					return new PriceCalculator(['item' => $this, 'type' => PriceCalculator::PERIMETER]);
+				break;
+			case 'support':
+			case 'uv':
+				return new PriceCalculator(['item' => $this, 'type' => PriceCalculator::SURFACE]);
+				break;
+		}
+		return null;
 	}
 }

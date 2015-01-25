@@ -6,6 +6,7 @@ use app\models\Document;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use app\widgets\GridViewPDF;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentSearch */
@@ -84,14 +85,19 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'format' => 'raw',
 				'hAlign' => GridView::ALIGN_CENTER,
 	        ],
+//	        [
+//	            'label' => Yii::t('store', 'Actions'),
+//	            'value' => function ($model, $key, $index, $widget) {
+//							return $model->getActions('btn btn-xs', false, '{icon}');
+//	            		},
+//				'hAlign' => GridView::ALIGN_CENTER,
+//	            'format' => 'raw',
+//				'noWrap' => true,
+//	        ],
 	        [
-	            'label' => Yii::t('store', 'Actions'),
-	            'value' => function ($model, $key, $index, $widget) {
-							return $model->getActions('btn btn-xs', false, '{icon}');
-	            		},
-				'hAlign' => GridView::ALIGN_CENTER,
-	            'format' => 'raw',
+				'class'	=> 'app\models\DocumentActionColumn',
 				'noWrap' => true,
+				'hAlign' => GridViewPDF::ALIGN_CENTER,
 	        ],
         ],
     ]); ?>

@@ -28,10 +28,6 @@ li.double-arrow:before {
     margin-top: -20px;
     font-size: 15px;
 }
-.row {
-    margin-top: 40px;
-    padding: 0 10px;
-}
 .clickable {
     cursor: pointer;
 }    
