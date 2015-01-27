@@ -266,7 +266,7 @@ class DocumentLine extends _DocumentLine
 	}
 	
 
-	public function generateLabels($controller, $filename = null) {
+	public function generateLabels() {
 		$viewBase = '@app/modules/store/prints/label/';
 		
 		if($pics_array = $this->getPictures()->all())
@@ -279,7 +279,7 @@ class DocumentLine extends _DocumentLine
 			if($i > 0)
 				$content .= '<pagebreak />';
 
-		    $content .= $controller->renderPartial($viewBase.'item-label', [
+		    $content .= Yii::$app->controller->renderPartial($viewBase.'item-label', [
 				'model' => $this,
 				'sequence' => $i + 1,
 				'picture' => $i < $pics_count ? $pics_array[$i] : null,

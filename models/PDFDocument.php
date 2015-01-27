@@ -127,10 +127,10 @@ class PDFDocument extends Model {
 			$pdfData['methods']['SetWatermarkText'] = $this->watermark;
 		}
 
-		Yii::trace('save?='.$this->save, 'PDFDocument::getPdfData');		
+		//Yii::trace('save?='.$this->save, 'PDFDocument::getPdfData');		
 		if($this->save) {
 			$this->generateFilename();
-			Yii::trace('filename='.$this->filename, 'PDFDocument::getPdfData');		
+			//Yii::trace('filename='.$this->filename, 'PDFDocument::getPdfData');		
 			$pdfData['destination'] = Pdf::DEST_FILE;
 			$pdfData['filename'] = $this->filename;
 		} else {
@@ -153,7 +153,7 @@ class PDFDocument extends Model {
      * Saves PDF.
      */
 	public function save() {
-		Yii::trace('fn='.$this->filename, 'PDFDocument::save');
+		//Yii::trace('fn='.$this->filename, 'PDFDocument::save');
 		if($this->filename) {
 			$this->deletePrevious();
 			$pdf = new PMAPdf([
@@ -178,10 +178,10 @@ class PDFDocument extends Model {
 	 */	
 	public function render() {
     	$this->PDF = new Pdf($this->getPdfData());
-		Yii::trace('rendering'.$this->PDF->filename, 'PDFDocument::render');
+		//Yii::trace('rendering'.$this->PDF->filename, 'PDFDocument::render');
 		$pdf = $this->PDF->render();
 		$this->rendered = true;
-		Yii::trace('saved'.$this->PDF->filename, 'PDFDocument::render');
+		//Yii::trace('saved'.$this->PDF->filename, 'PDFDocument::render');
 		$this->save();
 		return $this->filename ? $this->filename : $pdf;
 	}

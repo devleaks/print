@@ -337,6 +337,6 @@ class DocumentLineController extends Controller
 
 	public function actionLabel($id) {
 		$model = $this->findModel($id);
-		return $model->generateLabels($this);
+		return $model->generateLabels();
 	}
 }
