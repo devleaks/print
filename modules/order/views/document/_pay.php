@@ -37,6 +37,12 @@ $capture->submit = 1;
 
 <?php if(!$isPaid): ?>
 
+	<?php if(!in_array($model->document_type, [$model::TYPE_CREDIT,$model::TYPE_REFUND]))
+			echo $this->render('_available_credit', [
+				'client' => $model->client,
+			]);
+	?>
+
 	<?php $form = ActiveForm::begin(['action' => Url::to(['/order/document/pay'])]); ?>
 		<?= Html::activeHiddenInput($capture, 'id') ?>
 		<?= $form->field($capture, 'amount')->textInput() ?>

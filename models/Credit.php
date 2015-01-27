@@ -4,7 +4,7 @@ namespace app\models;
 
 use Yii;
 
-class Credit extends Order
+class Credit extends Document
 {
 	const TYPE = 'REFUND';
 	

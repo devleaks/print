@@ -125,8 +125,16 @@ class DocumentActionColumn extends Column {
 				'color' => 'primary',
 				'action' => '/order/document/view',
 			],
+			// bill
+			'send'	=> [
+				'icon' => 'play',
+				'label' => 'Send',
+				'title' => 'Send',
+				'color' => 'primary',
+				'action' => '/order/document/sent',
+			],
 			// ticket
-			'refund'	=> [ // no op placeholder, no billing.
+			'refund'	=> [
 				'icon' => 'euro',
 				'label' => 'To Refund',
 				'title' => 'To Refund',
@@ -289,12 +297,12 @@ class DocumentActionColumn extends Column {
     {
 		foreach(array_keys($this->documentButtons) as $action) {
 	        if (!isset($this->buttons[$action])) {
-				Yii::trace($action, 'DocumentActionColumn::ACTION');
+				//Yii::trace($action, 'DocumentActionColumn::ACTION');
 				switch($action) {
 					case 'convert';
 					case 'print':
 			            $this->buttons[$action] = function ($url, $model, $key, $name) {
-							Yii::trace($url, 'DocumentActionColumn::ACTION');
+							//Yii::trace($url, 'DocumentActionColumn::ACTION');
 							return $this->getDropdown($url, $name);
 			            };
 						break;
@@ -369,11 +377,11 @@ class DocumentActionColumn extends Column {
 			return $this->getLinkLabel($name, $model);
         }, $step2);
 
-		Yii::trace($step1, 'DocumentActionColumn::renderDataCellContent');
+		//Yii::trace($step1, 'DocumentActionColumn::renderDataCellContent');
         return preg_replace_callback('/\\{([\w\-\/]+)\\}/', function ($matches) use ($model, $key, $index) {
             $name = $matches[1];
             if (isset($this->buttons[$name])) {
-				Yii::trace($name, 'DocumentActionColumn::renderDataCellContent');
+				//Yii::trace($name, 'DocumentActionColumn::renderDataCellContent');
                 $url = $this->createUrl($name, $model, $key, $index);
 
                 return call_user_func($this->buttons[$name], $url, $model, $key, $name);

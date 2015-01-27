@@ -32,7 +32,7 @@ ChardinJSAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'Labo JJ Micheli',
+                'brandLabel' => Yii::$app->name,
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top'
@@ -54,6 +54,8 @@ ChardinJSAsset::register($this);
                 	$work_menu[] = ['label' => Yii::t('store', 'Administration'), 'url' => ['/admin/']];
 				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta')
                 	$work_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt/']];
+				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta' || Yii::$app->user->identity->role == 'employee')
+                	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash']];
 
                	$work_menu[] = ['label' => Yii::t('store', 'Calculator'), 'url' => ['/assets/calculator/'], 'linkOptions' => ['target' => '_blank']];
 

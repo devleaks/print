@@ -5,7 +5,7 @@
 <div class="order-print-header">
 	<table width="100%">
 	<tr>
-			<td style="text-align: center;"><barcode code="<?= $this->render('order_qrcode', ['model'=>$model]) ?>" size="1" type="QR" error="M" class="barcode" /></td>
+			<td style="text-align: center;"><barcode code="<?= $this->render('qrcode_url', ['model'=>$model]) ?>" size="1" type="QR" error="M" class="barcode" /></td>
 			<td width="80%" style="font-size: 3em; text-align: right;"><?= $model->name ?></td>
 	</tr>
 	</table>

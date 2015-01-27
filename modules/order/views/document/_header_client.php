@@ -14,30 +14,34 @@ use yii\helpers\ArrayHelper;
 /* @var $form yii\widgets\ActiveForm */
 $unpaid = Bill::find()->andWhere(['!=','document.status',Bill::STATUS_CLOSED])
 					  ->andWhere(['client_id' => $client->id])->exists();
-$unpaid_color = $unpaid < 0 ? 'warning' : 'success';
+$unpaid_color = $unpaid ? 'warning' : 'primary';
+
+$bottomLine = $client->getBottomLine();
+
+$client_color = $bottomLine < 0 ? 'warning' : 'primary';
 
 $comptoir = Client::findOne(['nom' => 'Client au comptoir']);
 
 $buttons1 = ($comptoir->id == $client->id) ? '' : '{update} <span class="kv-buttons-1">'.
-Html::a('<span class="glyphicon glyphicon-euro"></span>',
-  ['/accnt/bill/client-unpaid', 'id' => $client->id], [
-	'title' => Yii::t('store', 'Unpaid Bills'),
-	'class' => "btn btn-xs btn-$unpaid_color kv-btn-book",
-	'target' => 'blank',
-])
-.' '.
 Html::a('<span class="glyphicon glyphicon-shopping-cart"></span>',
   ['/order/document/client', 'id' => $client->id], [
 	'title' => Yii::t('store', 'Previous Orders'),
 	'class' => "btn btn-xs btn-primary kv-btn-book",
-	'target' => 'blank',
+	'target' => '_blank',
+])
+.' '.
+Html::a('<span class="glyphicon glyphicon-euro"></span>',
+  ['/accnt/bill/client-unpaid', 'id' => $client->id], [
+	'title' => Yii::t('store', 'Unpaid Bills'),
+	'class' => "btn btn-xs btn-$unpaid_color kv-btn-book",
+	'target' => '_blank',
 ])
 .' '.
 Html::a('<span class="glyphicon glyphicon-book"></span>',
   ['/accnt/account/client', 'id' => $client->id], [
-	'title' => Yii::t('store', 'Previous Orders'),
-	'class' => "btn btn-xs btn-primary kv-btn-book",
-	'target' => 'blank',
+	'title' => Yii::t('store', 'Client Account'.' - '.$bottomLine),
+	'class' => "btn btn-xs btn-$client_color kv-btn-book",
+	'target' => '_blank',
 ])
 .'</span>';
 

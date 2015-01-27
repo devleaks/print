@@ -16,10 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-	<div  class="alert alert-info" >
-		Cette page est en cours de développement. Tous les éléments ne sont pas encore terminés. Pierre le 20-JAN-2015.
-	</div>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,

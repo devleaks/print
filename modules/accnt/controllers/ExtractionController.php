@@ -6,12 +6,13 @@ use Yii;
 use app\models\Bill;
 use app\models\Credit;
 use app\models\Document;
-use app\models\Extraction;
-use app\models\ExtractionSearch;
+use app\models\CaptureExtraction;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * ExtractionController implements the CRUD actions for Extraction model.
@@ -49,33 +50,36 @@ class ExtractionController extends Controller
         ];
     }
 
+
     /**
      * Lists all Extraction models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ExtractionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = new CaptureExtraction();
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        if ($model->load(Yii::$app->request->post())) {
+            return $this->extract($model);
+        } else {
+            return $this->render('index', [
+                'model' => $model,
+            ]);
+        }
     }
+
 
     /**
      * Displays a single Extraction model.
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function extract($model)
     {
-		$model = $this->findModel($id);
-		if($model->extraction_method == Extraction::METHOD_DATE) {
+		if($model->extraction_method == CaptureExtraction::METHOD_DATE) {
 			$date_from = $model->date_from;
 			$date_to = str_replace($model->date_to, '00:00:00', '23:59:59');
-			$docs = ($model->extraction_type == Extraction::TYPE_CREDIT) ?
+			$docs = ($model->extraction_type == CaptureExtraction::TYPE_CREDIT) ?
 						Credit::find()
 							->andWhere(['>=','created_at',$date_from])
 							->andWhere(['<=','created_at',$date_to])	
@@ -99,7 +103,7 @@ class ExtractionController extends Controller
 			Yii::trace('From '.$numfrom.' to '.$numto, 'ExtractionController::actionView');
 			for($i = $numfrom; $i <= $numto; $i++)
 				$docs[] = $docyear.'-'.$i;			
-			$docs = ($model->extraction_type == Extraction::TYPE_CREDIT) ?
+			$docs = ($model->extraction_type == CaptureExtraction::TYPE_CREDIT) ?
 					Credit::find()->andWhere(['name' => $docs])
 					:
 					Bill::find()->andWhere(['name' => $docs]);
@@ -107,72 +111,6 @@ class ExtractionController extends Controller
         return $this->render('bills', [
             'dataProvider' => new ActiveDataProvider(['query'=>$docs]),
         ]);
-    }
-
-    /**
-     * Creates a new Extraction model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Extraction();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Updates an existing Extraction model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Deletes an existing Extraction model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Extraction model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Extraction the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Extraction::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 
 
@@ -184,6 +122,9 @@ class ExtractionController extends Controller
 			        $extraction = $this->renderPartial('_extract', [
 			            'models' => $docs,
 			        ]);
+					$badids = $this->renderPartial('_badids', [
+			            'models' => $docs,
+			        ]);
 					$dirname = Yii::getAlias('@runtime').'/extraction/';
 					if(!is_dir($dirname))
 					    if(!mkdir($dirname, 0777, true)) {
@@ -192,12 +133,31 @@ class ExtractionController extends Controller
 					    }
 					$filename = 'popsi-'.date('Y-m-d-H-i-s');
 					file_put_contents($dirname.$filename.'.txt', $extraction);
-					Yii::$app->session->setFlash('success', Yii::t('store', 'Extracted in {file}.', ['file' => $filename]));
-			        return $this->renderContent('<pre>'.$extraction.'</pre>');
+					$link = Html::a($filename, Url::to(['download', 'file' => $filename]));
+					Yii::$app->session->setFlash('success', Yii::t('store', 'Extracted in {file}.', ['file' => $link]));
+			        return $this->renderContent($badids . '<pre>'.$extraction.'</pre>');
 				}
 			}
 		}
 		Yii::$app->session->setFlash('warning', 'No document selected.');
 		return $this->redirect(Yii::$app->request->referrer);
 	}
+	
+	
+	public function actionDownload($file) {
+		$filename = Yii::getAlias('@runtime').'/extraction/'.$file.'.txt';
+		if(file_exists($filename)) {
+		    header('Content-Description: File Transfer');
+		    header('Content-Type: application/octet-stream');
+		    header('Content-Disposition: attachment; filename='.basename($file));
+		    header('Expires: 0');
+		    header('Cache-Control: must-revalidate');
+		    header('Pragma: public');
+		    header('Content-Length: ' . filesize($filename));
+		    readfile($filename);
+		    exit;
+		}
+	}
+
+
 }

@@ -57,7 +57,7 @@ La base de données des articles contient tous les articles commercialisés par 
 Les articles suivants ont des dispositions particulières qui seront détaillées ci-dessous:
 
 * ChromaLuxe
-* Impression Fine Art
+* Tirages
 * Article divers
 * Remise
 * Note de crédit
@@ -85,6 +85,22 @@ Tous les documents peuvent toujours être
 * Imprimés,
 * Envoyés par email.
 
+### Soumission du document pour traitement
+
+D'une façon ou d'un autre, il faut préciser au système que l'on a terminé d'ajouter des lignes à la commande ou au document en cours et qu'il faut
+l'envoyer ou le soumettre pour faire le traitement.
+
+Pour le *Devis*, cette opération n'existe pas. Pour un devis, il est possible, à tout moment,
+d'ajouter, retirer ou modifier des articles dans le devis.
+
+Le devis se termine soit en le convertissant en commande ou vente au comptoir, soit en l'annulant.
+
+
+Pour la commande et pour le ticket de caisse, l'enregistrement de la commande se termine en "soumettant le travail".
+
+Pour la facture, l'enregistrement se termine en "l'envoyant". (Pour rappel, une facture n'engendre pas de travail à effectuer.)
+
+Pour les remboursements et les notes de crédits, l'enregistrement se termine par "rembourser".
 
 ## Devis
 

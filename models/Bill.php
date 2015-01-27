@@ -29,7 +29,7 @@ class Bill extends Document {
 	 *
 	 */
 	public function send() {
-		$this->status = Document::STATUS_TOPAY;
+		$this->status = ($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_SOLDE);
 		$this->save();
 	}
 	
@@ -160,6 +160,9 @@ class Bill extends Document {
 	public function getActions($show_work = false) {
 		$actions = [];
 		switch($this->status) {
+			case $this::STATUS_OPEN:
+				$actions[] = '{send}';
+				break;
 			case $this::STATUS_CLOSED:
 				$actions[] = '{label:closed}';
 				break;

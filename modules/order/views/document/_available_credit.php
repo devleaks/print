@@ -2,19 +2,19 @@
 
 use app\models\Payment;
 use kartik\grid\GridView;
-use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PaymentSearch */
-$dataProvider = new ActiveDataProvider([
-	'query' => $model->getPayments(),
+$dataProvider = new ArrayDataProvider([
+	'allModels' => $client->getCreditLines(),
 	'pagination' => false,
 ]);
 ?>
-<div class="payment-index">
-	<h4><?= Yii::t('store', 'Previous Payments') ?></h4>
+<div class="credit-index">
+	<h4><?= Yii::t('store', 'Available credits') ?></h4>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
 		'showPageSummary' => true,
@@ -22,10 +22,10 @@ $dataProvider = new ActiveDataProvider([
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
 			[
-				'attribute' => 'created_at',
+				'attribute' => 'date',
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->created_at);
+					return new DateTime($model->date);
 				},
 				'noWrap' => true,
 			],
@@ -37,12 +37,7 @@ $dataProvider = new ActiveDataProvider([
 			    'pageSummary' => true,
 			],
 	        [
-				'attribute' => 'payment_method',
-            	'filter' => Payment::getPaymentMethods(),
-	            'value' => function ($model, $key, $index, $widget) {
-	                    return $model->getPaymentMethod();
-	            },
-	            'format' => 'raw',
+				'attribute' => 'note',
 				'hAlign' => GridView::ALIGN_CENTER,
 	        ],
         ],

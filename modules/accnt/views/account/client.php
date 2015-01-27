@@ -20,8 +20,14 @@ $this->title = Yii::t('store', 'Customer {0}', [$client->niceName()]);
 $this->params['breadcrumbs'][] = ['label' => in_array($role, ['manager', 'admin']) ? Yii::t('store', 'Management') : Yii::t('store', 'Accounting'),
 								  'url'   => [in_array($role, ['manager', 'admin']) ? '/store' : '/accnt']];
 $this->params['breadcrumbs'][] = $this->title;
+$dataProvider->pagination = false;
 ?>
 <div class="account-index">
+
+	<div  class="alert alert-info" >
+		Cette page ne montre que les factures et les notes de crédits pour un client.
+		Les "bons de livraisons" non facturés, les tickets de ventes de comptoir, et les remboursements ne sont pas visibles ici.
+	</div>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

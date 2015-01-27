@@ -240,6 +240,7 @@ class DocumentController extends Controller
 						'vat' => $credit_item->taux_de_tva,
 						'due_date' => $model->due_date,
 					]);
+					$model_line->extra_type = 'REBATE_AMOUNT';
 					$model_line->save();
 					return $this->redirect(['document-line/update', 'id' => $model_line->id]);
 				} else if($model->document_type == Document::TYPE_REFUND) {
@@ -252,6 +253,7 @@ class DocumentController extends Controller
 						'vat' => $credit_item->taux_de_tva,
 						'due_date' => $model->due_date,
 					]);
+					$model_line->extra_type = 'REBATE_AMOUNT';
 					$model_line->save();
 					return $this->redirect(['document-line/update', 'id' => $model_line->id]);
 				}
@@ -342,7 +344,7 @@ class DocumentController extends Controller
 		$paycnt = $model->getCashes()->count();
 		if($cnt > 0)
 			Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because a child document depends on it.'));
-		else if ($paycnt > 0) {
+		else if ($paycnt > 0 || $model->soloOwnsPayments()) {
 				Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because there are payment attached to it.'));
 		} else {  // ok to remove
 			if($model->document_type == Document::TYPE_BILL && $model->bom_bool) { // remove pointer from BOM to this bill if any.
@@ -504,7 +506,6 @@ class DocumentController extends Controller
 			}
 			Yii::trace('doc='.$model->document_type, 'DocumentController::actionUpdateStatus');
 			$model->updatePaymentStatus();
-			Yii::trace('doc='.$model->document_type, 'DocumentController::actionUpdateStatus');
 			if($ok) Yii::$app->session->setFlash('success', ($feedback ? $feedback . '; '.strtolower(Yii::t('store', 'Payment added')): Yii::t('store', 'Payment added')).'.');
 	        return $this->render('view', [
 	            'model' => $model,

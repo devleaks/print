@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use app\models\Document;
 use kartik\helpers\Html as KHtml;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
@@ -95,8 +94,134 @@ class Client extends _Client
 		return $addr;
 	}
 	
+
 	public function isBelgian() {
 		return in_array(strtolower($this->pays), ['belgique','belgie','belgium']);
 	}
 	
+
+	public function getAccountLines() {
+		$accountLines = [];
+		$sales = [];
+		
+		/** All bills */
+		foreach(Bill::find()->andWhere(['client_id'=>$this->id])->andWhere(['!=', 'status', Bill::STATUS_OPEN])->each() as $document) {
+			$color = ($document->getBalance() <= 0) ? 'success' : 'warning';
+			$accountLines[] = new AccountLine([
+				'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
+				'amount' => - $document->getAmount(),
+				'date' => $document->created_at,
+				'ref' => $document->id,
+			]);
+			$sales[] = $document->sale;
+		}
+		
+		/** All orders not currently billed
+		$q = Order::find()->andWhere(['client_id'=>$client->id])->andWhere(['!=', 'status', Order::STATUS_OPEN]);
+		if($sales)
+			$q->andWhere(['not', ['sale' => $sales]]);			
+		foreach($q->each() as $document) {
+			$color = ($document->getBalance() <= 0) ? 'success' : 'warning';
+			$accountLines[] = new AccountLine([
+				'note' => /*'B '.* /<<<<<Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
+				'amount' => - $document->getAmount(),
+				'date' => $document->created_at,
+				'ref' => $document->id,
+			]);
+			$sales[] = $document->sale;
+		}
+		 */
+
+		foreach(Credit::find()->andWhere(['client_id'=>$this->id])->andWhere(['!=', 'status', Credit::STATUS_OPEN])->each() as $document) {
+			$color = ($document->getBalance() >= 0) ? 'success' : 'info';
+			$accountLines[] = new AccountLine([
+				'note' => /*'C '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
+				'amount' => - $document->getAmount(),
+				'date' => $document->created_at,
+				'ref' => $document->id,
+			]);
+			$sales[] = $document->sale;
+		}
+
+		foreach($this->getPayments()->andWhere(['sale' => $sales])->each() as $payment) {
+			$doc = $payment->getDocument()->one();
+			if($doc) {
+				if($doc->document_type == $doc::TYPE_CREDIT)
+					$color = ($doc->getBalance() >= 0) ? 'success' : 'info';
+				else
+					$color = ($doc->getBalance() <= 0) ? 'success' : 'warning';
+			} else
+				$color = 'info';
+				
+			$note = $doc ? Html::a('<span class="label label-'.$color.'">'.$doc->name.'</span>', Url::to(['/order/document/view', 'id' => $doc->id])).' - '.$payment->getPaymentMethod()
+			             : ($payment->note ? $payment->note : '<span class="label label-'.$color.'">'.$payment->payment_method.'</span>'.' - '.$payment->sale);
+			$accountLines[] = new AccountLine([
+				'note' => /*'P '.*/$note,
+				'amount' => $payment->amount,
+				'date' => $payment->created_at,
+				'ref' => $payment->id,
+			]);
+		}
+
+		/* These are the outstanding "excess" payments */
+		foreach($this->getPayments()->andWhere(['status' => Payment::STATUS_OPEN])->each() as $payment) {
+			$reimburse = Html::a('<span class="label label-primary">'.Yii::t('store', 'Make credit note').'</span>', Url::to(['refund', 'id' => $payment->id]), ['title' => Yii::t('store', 'Make credit note').'-'.$payment->sale]);
+			$note = ($payment->note ? $payment->note : '<span class="label label-'.$color.'">'.$payment->payment_method.'</span>').' - '.$reimburse;
+			$accountLines[] = new AccountLine([
+				'note' => /*'P '.*/$note,
+				'amount' => $payment->amount,
+				'date' => $payment->created_at,
+				'ref' => $payment->id,
+			]);
+		}	
+		
+		uasort($accountLines, function($a, $b) { return $a->date > $b->date; }); //wow
+		
+		// build summary column. No other method.
+		$tot = 0;
+		foreach($accountLines as $l) {
+			$l->account = ($tot += $l->amount);
+		}
+		
+		return $accountLines;
+	}
+	
+	public function getBottomLine() {
+		$al = $this->getAccountLines();
+		if ( ($cnt = count($al)) > 0) {		
+			$last = $al[$cnt-1];
+			Yii::trace(print_r($last, true), 'Client::getBottomLine');
+			return $last->account;
+		}
+		return 0;
+	}
+	
+	/**
+	 *	Client has credit under two forms: 1. Credit notes with money left on them, and 2. Unprocessed reimbursements.
+	 *
+	 * @return CreditLine[] Credit available.
+	 */
+	public function getCreditLines() {
+		$creditLines = [];
+		// Credit notes still open
+		foreach(Credit::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => [Credit::STATUS_TOPAY, Credit::STATUS_SOLDE]])->each() as $document) {
+			$creditLines[] = new CreditLine([
+				'note' => $document->name,
+				'date' => $document->created_at,
+				'amount' => - $document->getBalance(),
+				'ref' => $document->id,
+			]);
+		}
+		// Unprocessed reimbursements
+		/* These are the outstanding "excess" payments */
+		foreach($this->getPayments()->andWhere(['status' => Payment::STATUS_OPEN])->each() as $payment) {
+			$creditLines[] = new CreditLine([
+				'note' => $payment->note,
+				'date' => $payment->created_at,
+				'amount' => - $payment->amount,
+				'ref' => $payment->id,
+			]);
+		}
+		return $creditLines;
+	}
 }

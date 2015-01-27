@@ -1,5 +1,6 @@
 <?php
 
+use app\models\AccountingJournal;
 use app\models\Parameter;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
@@ -44,12 +45,22 @@ use kartik\widgets\SwitchInput;
 		        'prix_de_vente' => [
 					'label' => Html::label(Yii::t('store', 'Prix')),
 					'type' => Form::INPUT_TEXT,
-		            'columnOptions' => ['colspan' => 1],
+		            'columnOptions' => ['colspan' => 2],
 				],
 		        'taux_de_tva' => [
 					'label' => Html::label(Yii::t('store', 'VAT')),
 					'type' => Form::INPUT_TEXT,
 		            'columnOptions' => ['colspan' => 1],
+				],
+		        'commentaires' => [
+					'label' => Html::label(Yii::t('store', 'Notes')),
+					'type' => Form::INPUT_TEXTAREA,
+		            'columnOptions' => ['colspan' => 12],
+				],
+		        'comptabilite' => [
+					'type' => Form::INPUT_DROPDOWN_LIST,
+					'items' => ArrayHelper::map(AccountingJournal::find()->asArray()->all(), 'code', 'name'),
+		            'columnOptions' => ['colspan' => 2],
 				],
 		        'yii_category' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
@@ -68,11 +79,6 @@ use kartik\widgets\SwitchInput;
 								'state' => $model->status == 'ACTIVE'
 					]],
 		            'columnOptions' => ['colspan' => 2],
-				],
-		        'commentaires' => [
-					'label' => Html::label(Yii::t('store', 'Notes')),
-					'type' => Form::INPUT_TEXTAREA,
-		            'columnOptions' => ['colspan' => 12],
 				],
 			]
 		])

@@ -178,18 +178,20 @@ class DocumentLine extends _DocumentLine
 		$item = $this->getItem()->one();
 		if($item->reference != Item::TYPE_REBATE) { // global rebate line, work is not done here...
 			if(! $item->hasPriceComputation()) // otherwise, price is computed and set before calling this proc.
-				$this->unit_price = $item->unit_price;
+				$this->unit_price = $item->prix_de_vente;
 
-			$this->vat = $item->vat;
+			$this->vat = $item->taux_de_tva;
 			// this line regular cost
 			$this->price_htva = $this->quantity * $this->unit_price;
 			$this->price_tvac = $this->price_htva * (1 + ($this->vat / 100));
 			// extra cost
-			if(isset($this->extra_type) && ($this->extra_type > 0)) {
+			if(isset($this->extra_type) && ($this->extra_type != '')) {
 				if(isset($this->extra_amount) && ($this->extra_amount > 0)) {
 					$amount = strpos($this->extra_type, "PERCENT") > -1 ? $this->price_htva * ($this->extra_amount/100) : $this->extra_amount;
+					Yii::trace('amount='.$amount, 'DocumentLine::updatePrice');
 					$asigne = strpos($this->extra_type, "SUPPLEMENT_") > -1 ? 1 : -1;
 					$this->extra_htva = round( $asigne * $amount, 2 );
+					Yii::trace('htva='.$this->extra_htva, 'DocumentLine::updatePrice');
 				}
 			}
 		} // else, ignore global rebate line

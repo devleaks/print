@@ -50,7 +50,8 @@ class Order extends Document
 		$copy = $this->deepCopy(self::TYPE_BILL);
 		$copy->parent_id = $this->id;	
 		$copy->name = substr($this->due_date,0,4).'-'.Sequence::nextval('bill_number'); // get a new official bill number; $this->due_date or $copy->due_date?
-		$copy->status = self::STATUS_OPEN;
+		Yii::trace($this->isPaid()?'Oui':'Non', 'Order::convert');
+		$copy->status = ($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_SOLDE);
 		$copy->save();
 		
 		if(Parameter::isTrue('application', 'auto_send_bill')) {
@@ -85,26 +86,23 @@ class Order extends Document
 			$this->completed();
 	}
 
+
+	public function getBill() {
+		return ($this->bom_bool and $this->parent_id != null) ?
+			Bill::findDocument($this->parent_id)
+			:
+			Bill::findOne(['parent_id' => $this->id]);
+	}
 	/**
 	 * @inheritdoc
 	 */
 	public function updatePaymentStatus() {
 		Yii::trace('up', 'Order::updatePaymentStatus');
-		if($this->bom_bool and $this->parent_id != null) {
-			$bill = Bill::findDocument($this->parent_id); // inverse relation
-		} else {
-			$bill = Bill::findOne(['parent_id' => $this->id]);
-		}
-		if($bill)
+		if($bill = $this->getBill())
 			$bill->updatePaymentStatus();
-		else { // regular order
-			if($bill = $this->convert()) {
-				$this->setStatus(self::STATUS_CLOSED);
-				$bill->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_SOLDE);
-			} else {
-				Yii::trace('no bill for order='.$this->id, 'Order::updatePaymentStatus');
+		else {// regular order
+			if(!$this->isBusy())
 				$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_SOLDE);
-			}
 		}
 	}
 
@@ -233,7 +231,7 @@ class Order extends Document
 				$actions[] = '{label:cancelled}';
 				break;
 			case $this::STATUS_CLOSED:
-				$actions[] = '{link:billed}';
+				$actions[] = ($this->getBill() ? '{link:billed}' : '{bill}');
 				break;
 		}
 		return $ret . implode(' ', $actions) . ' ' . parent::getActions();

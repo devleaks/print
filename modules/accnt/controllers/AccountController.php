@@ -4,10 +4,14 @@ namespace app\modules\accnt\controllers;
 
 use Yii;
 use app\models\AccountLine;
-use app\models\Client;
 use app\models\Bill;
+use app\models\Order;
+use app\models\Client;
 use app\models\Credit;
+use app\models\DocumentLine;
+use app\models\Item;
 use app\models\Payment;
+use app\models\Sequence;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -32,70 +36,7 @@ order by 5 desc
 		if(!$client)
         	throw new NotFoundHttpException('The requested page does not exist.');
 
-		$accountLines = [];
-		$sales = [];
-
-		foreach(Bill::find()->andWhere(['client_id'=>$client->id])->andWhere(['!=', 'status', Credit::STATUS_OPEN])->each() as $document) {
-			$color = ($document->getBalance() <= 0) ? 'success' : 'warning';
-			$accountLines[] = new AccountLine([
-				'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
-				'amount' => - $document->getAmount(),
-				'date' => $document->created_at,
-				'ref' => $document->id,
-			]);
-			$sales[] = $document->sale;
-		}
-
-		foreach(Credit::find()->andWhere(['client_id'=>$client->id])->andWhere(['!=', 'status', Credit::STATUS_OPEN])->each() as $document) {
-			$color = ($document->getBalance() >= 0) ? 'success' : 'info';
-			$accountLines[] = new AccountLine([
-				'note' => /*'C '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
-				'amount' => - $document->getAmount(),
-				'date' => $document->created_at,
-				'ref' => $document->id,
-			]);
-			$sales[] = $document->sale;
-		}
-
-		foreach($client->getPayments()->andWhere(['sale' => $sales])->each() as $payment) {
-			$doc = $payment->getDocument()->one();
-			if($doc) {
-				if($doc->document_type == $doc::TYPE_CREDIT)
-					$color = ($doc->getBalance() >= 0) ? 'success' : 'info';
-				else
-					$color = ($doc->getBalance() <= 0) ? 'success' : 'warning';
-			} else
-				$color = 'info';
-				
-			$note = $doc ? Html::a('<span class="label label-'.$color.'">'.$doc->name.'</span>', Url::to(['/order/document/view', 'id' => $doc->id])).' - '.$payment->getPaymentMethod()
-			             : ($payment->note ? $payment->note : '<span class="label label-'.$color.'">'.$payment->payment_method.'</span>'.' - '.$payment->sale);
-			$accountLines[] = new AccountLine([
-				'note' => /*'P '.*/$note,
-				'amount' => $payment->amount,
-				'date' => $payment->created_at,
-				'ref' => $payment->id,
-			]);
-		}
-
-		/* These are the outstanding "excess" payments */
-		foreach($client->getPayments()->andWhere(['status' => Payment::STATUS_OPEN])->each() as $payment) {
-			$reimburse = Html::a('<span class="label label-primary">'.Yii::t('store', 'Reimburse').'</span>', Url::to(['reimburse', 'id' => $payment->id]), ['title' => Yii::t('store', 'Reimburse').'-'.$payment->sale]);
-			$note = $payment->note ? $payment->note : '<span class="label label-'.$color.'">'.$payment->payment_method.'</span>'.' - '.$reimburse;
-			$accountLines[] = new AccountLine([
-				'note' => /*'P '.*/$note,
-				'amount' => $payment->amount,
-				'date' => $payment->created_at,
-				'ref' => $payment->id,
-			]);
-		}	
-		
-		uasort($accountLines, function($a, $b) { return $a->date > $b->date; }); //wow
-		
-		// build summary column. No other method.
-		$tot = 0;
-		foreach($accountLines as $l) {
-			$l->account = ($tot += $l->amount);
-		}
+		$accountLines = $client->getAccountLines();
 
         return $this->render('client', [
             'dataProvider' => new ArrayDataProvider(['allModels' => $accountLines]),
@@ -103,8 +44,40 @@ order by 5 desc
         ]);
 	}
 	
-	public function actionReimburse($id) {
-		Yii::$app->session->setFlash('error', Yii::t('store', 'Procédure encore à développer. Pierre 23-JAN-2015.'));
+	public function actionRefund($id) {
+		if($payment = Payment::findOne($id)) {
+			$newSale = Sequence::nextval('sale');
+			$credit = new Credit([
+				'document_type' => Credit::TYPE_CREDIT,
+				'client_id' => $payment->client_id,
+				'name' => substr($payment->created_at,0,4).'-'.Sequence::nextval('credit_number'),
+				'due_date' => date('Y-m-d H:i:s'),
+				'note' => $payment->payment_method.'-'.$payment->sale.'. '.$payment->note,
+				'sale' => $newSale,
+				'status' => Credit::STATUS_TOPAY,
+			]);
+			$credit->save();
+			$credit->refresh();
+			$credit_item = Item::findOne(['reference' => Item::TYPE_CREDIT]);
+			$creditLine = new DocumentLine([
+				'document_id' => $credit->id,
+				'item_id' => $credit_item->id,
+				'quantity' => 1,
+				'unit_price' => 0,
+				'vat' => $credit_item->taux_de_tva,
+				'extra_type' => 'REBATE_AMOUNT',
+				'extra_amount' => $payment->amount,
+				'due_date' => $credit->due_date,
+			]);
+			$creditLine->updatePrice(); // adjust htva/tvac from extra's
+			$creditLine->save();
+			$credit->updatePrice();
+			$credit->save();
+			$payment->delete();
+			Yii::$app->session->setFlash('success', Yii::t('store', 'Credit note created.'));
+			return $this->redirect(Url::to(['/order/document/view', 'id' => $credit->id]));
+		}
+		Yii::$app->session->setFlash('error', Yii::t('store', 'Credit note not created.'));
 		return $this->redirect(Yii::$app->request->referrer);
 	}
 

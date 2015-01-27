@@ -240,6 +240,19 @@ class Document extends _Document
 		];
 	}
 	
+	
+	/**
+	 * Checks whether a document owns payments and no other document with same sale id owns it.
+	 *
+	 *	@return boolean
+	 */
+	public function soloOwnsPayments() {
+		if ($this->getPayments()->exists())
+			return Document::find()
+				->andWhere(['sale'=>$this->sale])
+				->andWhere(['!=', 'id', $this->id])->exists();
+		return false;
+	}
 	/**
 	 * deleteCascade all its dependent child elements and delete the document
 	 */
@@ -253,8 +266,11 @@ class Document extends _Document
 			$ol->deleteCascade();
 
 		/** Delete payments */
-		foreach($this->getPayments()->each() as $p)
-			$p->delete();
+
+		// if yes, we cannot delete the payment, they belong to the other doc with same sale id
+		if(!$this->soloOwnsPayments)
+			foreach($this->getPayments()->each() as $p)
+				$p->delete();
 
 		$this->delete();
 	}
@@ -339,9 +355,11 @@ class Document extends _Document
 	}
 
 
-	public function addPayment($amount_gross, $method) {
+	public function addPayment($amount_gross, $method, $note = null) {
 		$payment = null;
 		$extra = null;
+
+		Yii::trace('ENTERING='.$this->document_type.' '.$this->name, 'AccountController::addPayment');
 		
 		$amount = round($amount_gross, 2);
 		if($amount == 0) return;		
@@ -354,28 +372,30 @@ class Document extends _Document
 				'sale' => $this->sale,
 				'client_id' => $this->client_id,
 				'payment_method' => $method,
-				'amount' => $due,
+				'amount' => $amount,
 				'status' => Payment::STATUS_PAID,
 			]);
 			$cash = new Cash([
 				'document_id' => $this->id,
 				'sale' => $this->sale,
-				'amount' => $due,
+				'amount' => $amount,
 				'payment_date' => date('Y-m-d H:i:s'),
 			]);
 			$cash->save();
 			if($amount > $due)
 				Yii::$app->session->setFlash('warning', Yii::t('store', 'You must reimburse {0}€.', $amount - $due));
-		} else if ($method != 'CREDIT') {
+		} else if ($method != 'CREDIT' && $method != Payment::CLEAR) {
 			if($amount <= $due) { // paid enough or less(prepayment)
 				$payment = new Payment([
 					'sale' => $this->sale,
 					'client_id' => $this->client_id,
 					'payment_method' => $method,
-					'amount' => $amount,		// Amount may be adjusted below if paid with CREDIT
+					'amount' => $amount,
 					'status' => Payment::STATUS_PAID,
 				]);
-			} else { // paid too much
+				Yii::$app->session->setFlash('success', Yii::t('store', 'Payment recorded.'));
+			} else { // paid too much, split payment in amount due and surplus
+				// 1. record the payment
 				$payment = new Payment([
 					'sale' => $this->sale,
 					'client_id' => $this->client_id,
@@ -383,49 +403,80 @@ class Document extends _Document
 					'amount' => $due,
 					'status' => Payment::STATUS_PAID,
 				]);
+				// 2. record an extra payment in status OPEN
+				$surplus = $amount - $due;
 				$extra = new Payment([
 					'sale' => Sequence::nextval('sale'),
 					'client_id' => $this->client_id,
 					'payment_method' => $method,
-					'amount' => $amount - $due,
+					'amount' => $surplus,
+					'note' => 'Extra payment for '.$this->name,
 					'status' => Payment::STATUS_OPEN,
 				]);
+				Yii::$app->session->setFlash('success', Yii::t('store', 'Payment recorded.'));
+				Yii::$app->session->setFlash('info', Yii::t('store', 'Bill paid. Customer left with {0}€ credit.', $surplus));
 			}
+		} else if ($method == Payment::CLEAR) { // we just record a payment because it clears an existing credit note
+				$payment = new Payment([
+					'sale' => $this->sale,
+					'client_id' => $this->client_id,
+					'payment_method' => $method,
+					'amount' => $amount,
+					'status' => Payment::STATUS_PAID,
+				]);
+				Yii::trace('Clearing='.$amount, 'AccountController::addPayment');
 		} else { // if($method == 'CREDIT')
-			if($amount >= 0) {
-				// did not actually pay, but used a credit note,
-				// so we need to add the payment to the credit note as well.
+			if($amount >= 0) { // client pays with credit he has
+
+				$payment = new Payment([
+					'sale' => $this->sale,
+					'client_id' => $this->client_id,
+					'payment_method' => $method,
+					'amount' => $amount,		// Amount may be adjusted below if paid with CREDIT
+					'status' => Payment::STATUS_PAID,
+				]);
+
 				$creditNotes = Credit::find()
 					->andWhere(['client_id' => $this->client_id])
 					->andWhere(['status' => [Credit::STATUS_TOPAY,Credit::STATUS_SOLDE]])
 					->orderBy('created_at');
 
 				$needed = $amount;
+				$total_available = 0;
 				Yii::trace('Needed='.$needed, 'AccountController::addPayment');
 				foreach($creditNotes->each() as $cn) {
 					if($needed > 0) {
 						$available = abs($cn->getBalance());
+						$total_available += $available;
+						$comment = Yii::t('store', 'Payment of {0} {1}.', [Yii::t('store', $this->document_type),$this->name]);
 						Yii::trace('Available='.$available.' with '.$cn->id, 'Document::addPayment');
 						if($needed <= $available) { // no problem, we widthdraw from credit note
 							Yii::trace('Found='.$needed, 'Document::addPayment');
-							$cn->addPayment(-$needed, Payment::CLEAR);
+							$cn->addPayment(-$needed, Payment::CLEAR,$comment);
 							$needed = 0;
 						} else {
 							Yii::trace('Clear='.$available, 'Document::addPayment');
-							$cn->addPayment(-$available, Payment::CLEAR); // this credit note is exhausted
+							$cn->addPayment(-$available, Payment::CLEAR,$comment); // this credit note is exhausted
 							$needed -= $available;
 						}
 						Yii::trace('Still need='.$needed, 'Document::addPayment');
-					}
+					} else
+						$total_available += $available;
 				}
-				$amount = round($amount - $needed, 2);
-				$payment->amount = $amount;
-			
+				Yii::trace('Total credit available before='.$total_available, 'Document::addPayment');
+				$total_available -= $amount;
+				Yii::trace('Total credit available after='.$total_available, 'Document::addPayment');
 				Yii::trace('Final need='.$needed, 'Document::addPayment');
-				if($needed > 0) { // we are left with a debt
-					Yii::$app->session->setFlash('warning', Yii::t('store', 'Amount is too large to balance all credit notes. Customer left with {0} to pay.', round($needed, 2)));
+
+				if($needed > 0) { // still some amount to pay and credit notes exhausted, this bill is not completed paid.
+					$payment->amount = $amount - $needed;
+					Yii::$app->session->setFlash('warning', Yii::t('store', 'Amount is too large to balance all credit notes. Customer left with {0}€ to pay.', round($needed, 2)));
+				} else if ($total_available > 0) {
+					Yii::$app->session->setFlash('info', Yii::t('store', 'Bill paid with credits. Customer left with {0}€ credit.', round($total_available, 2)));
 				}
-			} else { // $capture->amount is negative, and we use CREDIT, it means we reimburse a positive balance
+
+			} else { // $capture->amount is negative, and we use CREDIT
+				/*
 				$clear = new Payment([
 					'sale' => $this->sale,
 					'client_id' => $this->client_id,
@@ -434,16 +485,23 @@ class Document extends _Document
 					'status' => Payment::STATUS_PAID,
 				]);
 				$clear->save();
-				Yii::$app->session->setFlash('info', Yii::t('store', 'Credit note paid.'));
+				*/
+				$ok = false;
+				Yii::$app->session->setFlash('error', Yii::t('store', 'Negative credit charge not handled yet. Pierre 25/01/2015.'));
 			}
 		}
 		
-		if($ok)
+		if($note && $payment)
+			$payment->note = $note;
+			
+		if($ok && $payment)
 			$ok = $payment->save();
 		if($ok && $extra)
 			$ok = $extra->save();
 		if($ok)
 			$this->updatePaymentStatus();
+
+		Yii::trace('EXITING='.$this->document_type.' '.$this->name, 'AccountController::addPayment');
 
 		return $ok;
 	}
@@ -483,9 +541,13 @@ class Document extends _Document
 	 */
 	public function updatePaymentStatus() {
 		Yii::trace('isPaid='.($this->isPaid()?'T':'F'), 'Document::updatePaymentStatus');
-		$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY);
+		if(!$this->isBusy())
+			$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY);
 	}
 
+	public function isBusy() {
+		return $this->status == self::STATUS_TODO || $this->status == self::STATUS_BUSY;
+	}
 	public function latestPayment() {
 		$last = $this->getPayments()->orderBy('created_at desc')->one();
 		return $last ? $last->amount : 0;
