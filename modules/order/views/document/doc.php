@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //				'noWrap' => true,
 //	        ],
 	        [
-				'class'	=> 'app\models\DocumentActionColumn',
+				'class'	=> 'app\widgets\DocumentActionColumn',
 				'noWrap' => true,
 				'hAlign' => GridViewPDF::ALIGN_CENTER,
 	        ],

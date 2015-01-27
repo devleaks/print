@@ -2,7 +2,7 @@
 
 use app\models\Document;
 use app\models\Parameter;
-use app\models\DocumentActionColumn;
+use app\widgets\DocumentActionColumn;
 use kartik\detail\DetailView;
 use kartik\icons\Icon;
 use yii\helpers\Html;

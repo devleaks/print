@@ -330,6 +330,9 @@ return [
 	'Bill paid. Customer left with {0}€ credit.' => 'Facture payée. Le client dispose de {0}€ de crédit.',
 	'Payment of {0} {1}.' => 'Paiement de {0} {1}.',
 	'Bill paid with credits. Customer left with {0}€ credit.' => 'Facture payée avec les crédits. Le client dispose de {0}€ de crédit.',
+	'Refund' => 'Remboursement',
+	'Previous Payments' => 'Paiements précédents',
+	'Available credits' => 'Crédits disponibles',
   
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',

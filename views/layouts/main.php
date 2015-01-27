@@ -45,6 +45,8 @@ ChardinJSAsset::register($this);
             if(!Yii::$app->user->isGuest) {
 
 				$work_menu = [];
+				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta' || Yii::$app->user->identity->role == 'employee')
+                	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash']];
 				if(Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'admin')
                 	$work_menu[] = ['label' => Yii::t('store', 'Orders'), 'url' => ['/order/']];
                 $work_menu[] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work/']];
@@ -54,8 +56,6 @@ ChardinJSAsset::register($this);
                 	$work_menu[] = ['label' => Yii::t('store', 'Administration'), 'url' => ['/admin/']];
 				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta')
                 	$work_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt/']];
-				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta' || Yii::$app->user->identity->role == 'employee')
-                	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash']];
 
                	$work_menu[] = ['label' => Yii::t('store', 'Calculator'), 'url' => ['/assets/calculator/'], 'linkOptions' => ['target' => '_blank']];
 

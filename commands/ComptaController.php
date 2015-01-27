@@ -257,4 +257,8 @@ class ComptaController extends Controller {
 		echo ". done.\r\n";
     }
 
+
+	public function actionTestId($test) {
+		echo Client::getUniqueIdentifier($test);
+	}
 }

@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ClientSearch */
@@ -35,7 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'localite',
             // 'pays',
             // 'langue',
-            'numero_tva',
+			[
+				'attribute' => 'numero_tva',
+				'noWrap' => true,
+			],
             'comptabilite',
             'email:email',
             // 'site_web',
@@ -80,8 +83,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 
 	        [
-	            'class' => 'yii\grid\ActionColumn',
+	            'class' => 'kartik\grid\ActionColumn',
 	            'template' => '{view} {update} {delete} {doc} {accnt}',
+				'noWrap' => true,
 	            'buttons' => [
 	                'doc' => function ($url, $model) {
 						$url = Url::to(['/order/document/client', 'id' => $model->id]);

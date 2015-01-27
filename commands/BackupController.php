@@ -11,10 +11,10 @@ class BackupController extends Controller {
 	 *  Create performs a mysql database backup.
 	 *
 	 */
-    public function actionCreate() {
+    public function actionCreate($uniq = true) {
         $model = new Backup();
 
-		if($model->doBackup()) {
+		if($model->doBackup($uniq != 'false')) {
 			if($model->save()) {
 				echo Yii::t('store', 'Backup completed.');
 				}

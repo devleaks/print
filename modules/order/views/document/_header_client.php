@@ -18,7 +18,7 @@ $unpaid_color = $unpaid ? 'warning' : 'primary';
 
 $bottomLine = $client->getBottomLine();
 
-$client_color = $bottomLine < 0 ? 'warning' : 'primary';
+$client_color = $bottomLine < -0.04 ? 'warning' : 'primary';
 
 $comptoir = Client::findOne(['nom' => 'Client au comptoir']);
 

@@ -22,6 +22,7 @@ $dataProvider = new ArrayDataProvider([
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
 			[
+	            'label' => Yii::t('store', 'Created At'),
 				'attribute' => 'date',
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
@@ -30,6 +31,7 @@ $dataProvider = new ArrayDataProvider([
 				'noWrap' => true,
 			],
 			[
+	            'label' => Yii::t('store', 'Amount'),
 				'attribute' => 'amount',
 				'format' => 'currency',
 				'hAlign' => GridView::ALIGN_RIGHT,

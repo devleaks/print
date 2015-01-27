@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
+use yii\helpers\Json;
 
 /**
  * ClientController implements the CRUD actions for Client model.
@@ -198,4 +199,9 @@ class ClientController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+
+	public function actionGetUniqueIdentifier($s) {
+		echo Json::encode(['result' => Client::getUniqueIdentifier($s)]);
+	}
 }

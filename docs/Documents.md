@@ -168,10 +168,10 @@ Lorsqu'une commande est transformée en facture, tous les paiements de la comman
 
 Les factures portent un numéro séquentiel  sous la forme:
 
-YYYY-1XXXX
+	YYYY-1XXX
 
-où YYYY est l'année de création de la commande,
-et 1XXXX est un numéro séquentiel commançant à 10000 lorsque l'année en cours a été clôturée.
+* où YYYY est l'année de création de la commande,
+* et 1XXX est un numéro séquentiel commançant à 10000 lorsque l'année en cours a été clôturée.
 
 
 Les opérations suivantes peuvent être réalisées sur les factures:
@@ -214,4 +214,48 @@ Pour les documents qui sont dans cet état, il n'est possible que
 * de l'annuler, dans ce cas, le document passera dans l'état Annulé.
 
 Il n'est pas possible de faire progresser (soumettre les travaux, ou convertir en facture) les documents qui ne contiennent pas de lignes de commande.
+
+### Nom des documents
+
+Les factures portent un numéro séquentiel  sous la forme:
+
+	YYYY-1XXX
+
+* où `YYYY` est l'année de création de la commande,
+* et `1XXX` est un numéro séquentiel commançant à 10000 lorsque l'année en cours a été clôturée.
+
+Les notes de crédits portent un numéro séquentiel  sous la forme:
+
+	YYYY-9XXX
+
+* où `YYYY` est l'année de création de la commande,
+* et `9XXX` est un numéro séquentiel commançant à 90000 lorsque l'année en cours a été clôturée.
+
+
+Les autres documents ont un nom ayant la structure suivante:
+
+	YYYY Parameter(DOCTYPE) 2XXX
+
+* où `YYYY` est l'année de création de la commande,
+* `2XXX` est un numéro séquentiel commançant à 20000 lorsque l'année en cours a été clôturée,
+* et `Parameter(DOCTYPE)` est une chaîne de caractère optionnelle extraite des paramètres de l'application.
+
+Le paramètre gouvernant la chaîne doit être dans le domaine `application`.
+Le nom du paramètre doit être le nom interne du type de document:
+
+Nom Interne | Type de document | Exemple de valeur
+----------- | ---------------- | -----------------
+BID | Devis | -D-
+BOM | Bon de livraison | -B-
+ORDER | Commande | -C-
+REFUND | Remboursement | -R-
+TICKET | Ticket de vente au comptoir | -A-
+
+La chaîne qui sera insérée est la valeur du champ `value_text`.
+En son absence, aucune chaîne n'est insérée et le nom du document sera donc simplement
+
+	YYYY2XXX
+
+
+
 

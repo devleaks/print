@@ -81,7 +81,7 @@ class Backup extends \yii\db\ActiveRecord
 		return $db;
 	}
 
-	public function doBackup() {
+	public function doBackup($uniq = true) {
 		$dsn = $this->getDb()->dsn;
 		$db  = Backup::parseDSN($dsn);
 		$dbhost = $db['host'];
@@ -89,7 +89,7 @@ class Backup extends \yii\db\ActiveRecord
 		$dbuser = $this->getDb()->username;
 		$dbpass = $this->getDb()->password;
 
-		$backup_file = $dbname . date("Y-m-d-H-i-s") . '.gz';
+		$backup_file = $uniq ? $dbname . date("Y-m-d-H-i-s") . '.gz' : $dbname . '.gz';
 		$backup_dir  = Yii::getAlias('@runtime') . '/backup/';
 		if(!is_dir($backup_dir))
 			mkdir($backup_dir);

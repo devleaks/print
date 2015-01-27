@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'hAlign' => GridView::ALIGN_CENTER,
 	        ],
 	        [
-				'class'	=> 'app\models\DocumentActionColumn',
+				'class'	=> 'app\widgets\DocumentActionColumn',
 				'noWrap' => true,
 				'hAlign' => GridView::ALIGN_CENTER,
 	        ],

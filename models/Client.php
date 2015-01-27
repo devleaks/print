@@ -49,6 +49,24 @@ class Client extends _Client
 	public function sanitizeName() {
 		return preg_replace('/[^a-z0-9\.]/', '', strtolower($this->nom));
 	}
+	
+	
+	public static function getUniqueIdentifier( $name ) {
+		$maxlen = 9;
+		$change = 0;
+		$cnt = 0;
+		$codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		$max = strlen($codeAlphabet);
+
+		$try = substr(preg_replace('/[^A-Z0-9\.]/', '', strtoupper($name)), 0, $maxlen);
+		while(Client::find()->where(['comptabilite' => $try])->exists()) {
+			$idx = $cnt % $max;
+			if($idx == 0)
+				$change++;
+			$try = substr($try, 0, $maxlen - $change) . substr($codeAlphabet, $idx, $change);
+		}
+		return $try;
+	}
 
     /**
      * create client label for on screen display
@@ -97,6 +115,14 @@ class Client extends _Client
 
 	public function isBelgian() {
 		return in_array(strtolower($this->pays), ['belgique','belgie','belgium']);
+	}
+	
+	protected function refundPullDown($id) {
+		return '<div class="btn-group"><button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown">'.
+			        	Yii::t('store', 'Refund'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
+						'<li>'.Html::a(Yii::t('store', 'Credit Note'), ['refund', 'id' => $id, 'ticket' => 0], ['title' => Yii::t('store', 'Refund with a credit note')]).'</li>'.
+						'<li>'.Html::a(Yii::t('store', 'Refund'),      ['refund', 'id' => $id, 'ticket' => 1],  ['title' => Yii::t('store', 'Refund')]).'</li>'.
+					'</ul></div>';
 	}
 	
 
@@ -165,7 +191,8 @@ class Client extends _Client
 
 		/* These are the outstanding "excess" payments */
 		foreach($this->getPayments()->andWhere(['status' => Payment::STATUS_OPEN])->each() as $payment) {
-			$reimburse = Html::a('<span class="label label-primary">'.Yii::t('store', 'Make credit note').'</span>', Url::to(['refund', 'id' => $payment->id]), ['title' => Yii::t('store', 'Make credit note').'-'.$payment->sale]);
+			//$reimburse = Html::a('<span class="label label-primary">'.Yii::t('store', 'Make credit note').'</span>', Url::to(['refund', 'id' => $payment->id]), ['title' => Yii::t('store', 'Make credit note').'-'.$payment->sale]);
+			$reimburse = $this->refundPullDown($payment->id);
 			$note = ($payment->note ? $payment->note : '<span class="label label-'.$color.'">'.$payment->payment_method.'</span>').' - '.$reimburse;
 			$accountLines[] = new AccountLine([
 				'note' => /*'P '.*/$note,

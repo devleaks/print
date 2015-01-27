@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\widgets;
 
 use Yii;
 use app\widgets\GridViewPDF;
@@ -20,6 +20,9 @@ class DocumentActionColumn extends Column {
     public $template = '{view} {print}';
 	public $baseClass = 'btn btn-xs';	// 'btn btn-xs btn-block';
 	public $buttonTemplate = '{icon}';	// '{icon} {text}';
+
+	/** when included in kartik-v's gridview */
+	public $pageSummaryOptions;
 
     protected $buttons = [];
 	protected $documentButtons;
