@@ -75,6 +75,13 @@ $this->params['breadcrumbs'][] = $this->title;
 	ne sont pas affichées dans les listes des tâches à accomplir.</p>
 	<p>Pour voir les tâches terminées, sélectionner les travaux.</p>
 	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">
+				<a href="<?= Yii::$app->homeUrl ?>work/work-line/to-cut">Découpe (expériemental)</a>
+				<a href="<?= Yii::$app->homeUrl ?>work/master">Renforts en stock</a>
+		</div>
+	</div>
 
 </div>
 

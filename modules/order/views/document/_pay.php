@@ -19,9 +19,9 @@ $label  = $isPaid ? Yii::t('store', 'Payments') : Yii::t('store', 'Pay');
 Icon::map($this);
 $capture = new CapturePayment();
 $capture->id = $model->id;
-$capture->total  = number_format($model->price_tvac, 2, ',', '');
+$capture->total  = number_format($model->getTotal()  , 2, ',', '');
 $capture->amount = number_format($model->getBalance(), 2, ',', '');
-$capture->method = 'BANKSYS';
+$capture->method = 'CASH';
 $capture->submit = 1;
 ?>
 

@@ -22,7 +22,7 @@ Icon::map($this);
 ?>
 <div class="work-line-index">
 
-	<?php $form = ActiveForm::begin(['action' => Url::to(['prepare-cuts'])]) ?>
+	<?php $form = ActiveForm::begin(['action' => Url::to(['adjust-cuts'])]) ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

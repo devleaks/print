@@ -31,3 +31,17 @@ li.double-arrow:before {
 .clickable {
     cursor: pointer;
 }    
+.renfort-cut {
+	display: inline-block;
+	border: 1px dotted black;
+	text-align: center;
+	background-color: #EEEEEE;
+	min-height: 20px;
+}
+.renfort-master {
+	padding: 4px;
+	border: 1px solid grey;
+}
+.renfort-highlight {
+	background-color: #cfc;
+}

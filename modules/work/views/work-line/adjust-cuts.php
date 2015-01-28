@@ -23,7 +23,7 @@ Icon::map($this);
 ?>
 <div class="work-line-index">
 
-	<?php $form = ActiveForm::begin(['action' => Url::to(['show-cuts'])]); ?>
+	<?php $form = ActiveForm::begin(['action' => Url::to(['prepare-cuts'])]); ?>
 
     <?= TabularForm::widget([
 		'form' => $form,
@@ -43,26 +43,26 @@ Icon::map($this);
 						$ret = $sup->libelle_long;
 					else
 						$ret = Yii::t('store', 'None');
-	                return $ret;
+	                return Html::hiddenInput('WorkLineDetail['.$index.'][document_line_id]', $model->document_line_id). $ret;
 	            },
 	        ],
 	        'quantity' => [
 				'type' => TabularForm::INPUT_RAW,
-	            'label' => Yii::t('store', 'Quantity'),
+	            'label' => Yii::t('store', 'Qty'),
 	            'value' => function ($model, $key, $index, $widget) {
 	                return $model->getDocumentLine()->one()->quantity;
 	            },
 	        ],
 	        'work_width' => [
 				'type' => TabularForm::INPUT_RAW,
-	            'label' => Yii::t('store', 'Width'),
+	            'label' => Yii::t('store', 'W-'),
 	            'value' => function ($model, $key, $index, $widget) {
 					return $model->documentLine->work_width;
 	            },
 	        ],
 	        'work_height' => [
 				'type' => TabularForm::INPUT_RAW,
-	            'label' => Yii::t('store', 'Height'),
+	            'label' => Yii::t('store', 'H-'),
 	            'value' => function ($model, $key, $index, $widget) {
 					return $model->documentLine->work_height;
 	            },

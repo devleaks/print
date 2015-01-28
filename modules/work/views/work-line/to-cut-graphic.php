@@ -1,10 +1,12 @@
 <?php
 
 use devleaks\metafizzy\PackeryAsset;
+use devleaks\metafizzy\DraggabillyAsset;
 use yii\widgets\ListView;
 use yii\helpers\Url;
 
 PackeryAsset::register($this);
+DraggabillyAsset::register($this);
 
 $this->title = Yii::t('store', 'Cuts');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work']];

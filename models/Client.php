@@ -135,7 +135,7 @@ class Client extends _Client
 			$color = ($document->getBalance() <= 0) ? 'success' : 'warning';
 			$accountLines[] = new AccountLine([
 				'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
-				'amount' => - $document->getAmount(),
+				'amount' => - $document->getTotal(),
 				'date' => $document->created_at,
 				'ref' => $document->id,
 			]);
@@ -150,7 +150,7 @@ class Client extends _Client
 			$color = ($document->getBalance() <= 0) ? 'success' : 'warning';
 			$accountLines[] = new AccountLine([
 				'note' => /*'B '.* /<<<<<Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
-				'amount' => - $document->getAmount(),
+				'amount' => - $document->getTotal(),
 				'date' => $document->created_at,
 				'ref' => $document->id,
 			]);
@@ -162,7 +162,7 @@ class Client extends _Client
 			$color = ($document->getBalance() >= 0) ? 'success' : 'info';
 			$accountLines[] = new AccountLine([
 				'note' => /*'C '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
-				'amount' => - $document->getAmount(),
+				'amount' => - $document->getTotal(),
 				'date' => $document->created_at,
 				'ref' => $document->id,
 			]);

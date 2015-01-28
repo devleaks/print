@@ -513,8 +513,7 @@ class Document extends _Document
 	 * @return number Amount due.
 	 */
 	public function getBalance() {
-		$price = $this->vat_bool ? $this->price_htva : $this->price_tvac;
-		return round($price - $this->getPrepaid(), 2);
+		return round($this->getTotal() - $this->getPrepaid(), 2);
 	}
 	
 
@@ -523,10 +522,11 @@ class Document extends _Document
 	 *
 	 * @return number Total amount of this document.
 	 */
-	public function getAmount() {
+	public function getTotal() {
 		return $this->vat_bool ? $this->price_htva : $this->price_tvac;
 	}
-	
+
+
 	/**
 	 * Returns amount due.
 	 *
@@ -545,9 +545,12 @@ class Document extends _Document
 			$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY);
 	}
 
+
 	public function isBusy() {
 		return $this->status == self::STATUS_TODO || $this->status == self::STATUS_BUSY;
 	}
+	
+	
 	public function latestPayment() {
 		$last = $this->getPayments()->orderBy('created_at desc')->one();
 		return $last ? $last->amount : 0;

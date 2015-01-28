@@ -5,26 +5,25 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "coupe".
+ * This is the model class for table "master".
  *
  * @property integer $id
- * @property integer $document_line_id
  * @property double $work_length
- * @property double $quantity
- * @property string $status
+ * @property string $note
  * @property string $created_at
  * @property string $updated_at
+ * @property integer $keep
  *
- * @property DocumentLine $documentLine
+ * @property Segment[] $segments
  */
-class _Coupe extends \yii\db\ActiveRecord
+class _Master extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'coupe';
+        return 'master';
     }
 
     /**
@@ -33,11 +32,11 @@ class _Coupe extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['document_line_id', 'work_length', 'quantity', 'created_at'], 'required'],
-            [['document_line_id'], 'integer'],
-            [['work_length', 'quantity'], 'number'],
+            [['work_length'], 'required'],
+            [['work_length'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
-            [['status'], 'string', 'max' => 20]
+            [['keep'], 'integer'],
+            [['note'], 'string', 'max' => 20]
         ];
     }
 
@@ -48,20 +47,19 @@ class _Coupe extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('store', 'ID'),
-            'document_line_id' => Yii::t('store', 'Document Line ID'),
             'work_length' => Yii::t('store', 'Work Length'),
-            'quantity' => Yii::t('store', 'Quantity'),
-            'status' => Yii::t('store', 'Status'),
+            'note' => Yii::t('store', 'Note'),
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
+            'keep' => Yii::t('store', 'Keep'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDocumentLine()
+    public function getSegments()
     {
-        return $this->hasOne(DocumentLine::className(), ['id' => 'document_line_id']);
+        return $this->hasMany(Segment::className(), ['master_id' => 'id']);
     }
 }

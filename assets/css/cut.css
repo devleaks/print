@@ -1,0 +1,56 @@
+ul { list-style: none; }
+li { cursor: pointer; }
+
+
+ul#master-case > li {
+    border: 1px solid;
+	margin: 4px;
+	padding: 4px;
+	width: 210px;
+	display: inline-block;
+}
+
+.handle {
+	margin-right: 10px;
+}
+
+.master.new {
+	border: 1px dashed #0f0;
+}
+
+.cut {
+	margin-top: 10px;
+	border: 1px dashed #f00;
+}
+
+.split {
+	color: #fa2;
+}
+
+.master {
+    padding: 10px;
+}
+
+.placeholder {
+	border: 1px solid green;
+	height: 5px;
+}
+
+.dragged {
+	border: 1px solid #0f0;
+	background-color: rgba(230, 255, 230, 0.5);
+}
+
+.master-info {
+	background-color: #eee;
+	font-size: smaller;
+}
+
+.master-full {
+	border: 1px solid #0d0;
+}
+
+.master-error {
+	border: 2px solid #f00;
+}
+
