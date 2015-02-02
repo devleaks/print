@@ -43,7 +43,7 @@ Icon::map($this);
 						$ret = $sup->libelle_long;
 					else
 						$ret = Yii::t('store', 'None');
-	                return Html::hiddenInput('WorkLineDetail['.$index.'][document_line_id]', $model->document_line_id). $ret;
+	                return Html::hiddenInput('WorkLineDetail['.$key.'][document_line_id]', $model->document_line_id). $ret;
 	            },
 	        ],
 	        'quantity' => [

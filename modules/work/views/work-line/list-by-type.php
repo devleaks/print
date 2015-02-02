@@ -17,6 +17,15 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Works'), 'url' => 
 $this->params['breadcrumbs'][] = $this->title;
 
 Icon::map($this);
+$extra_cmds = ' ';
+if($task->name == 'Commande Encadrement') {
+	$extra_cmds .= Html::button('<i class="glyphicon glyphicon-shopping-cart"></i> '.Yii::t('store', 'Order Frames'),
+							['class' => 'btn btn-primary  actionButton', 'data-status' => 'FRAMES']);
+} else if($task->name == 'RenfortsXX') {
+	$extra_cmds .= Html::a('<i class="glyphicon glyphicon-th"></i> '.Yii::t('store', 'Compute Cuts'),
+							Url::to(['to-cut']),
+							['class' => 'btn btn-primary  actionButton', 'data-status' => 'CUTS']);
+}
 ?>
 <div class="work-line-index">
 
@@ -42,7 +51,7 @@ Icon::map($this);
 				.' '.
     			Html::button('<i class="glyphicon glyphicon-remove"></i> '.Yii::t('store', 'Redo'),
 							['class' => 'btn btn-danger  actionButton', 'data-status' => Work::STATUS_TODO])
-				,
+				.$extra_cmds,
 	        'showFooter'=>false
 	    ],
         'columns' => [

@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 
     <?= Html::textInput('search', null, ['maxlength' => 40, 'class' => 'input-lg']) ?>
 
-    <?= Html::submitButton(Yii::t('store', 'Search'), ['class' => 'btn btn-info']) ?>
+    <?= Html::submitButton('<i class="glyphicon glyphicon-search"></i>', ['class' => 'btn btn-lg btn-default']) ?>
 
     <?php ActiveForm::end(); ?>
 

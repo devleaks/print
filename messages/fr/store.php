@@ -339,7 +339,11 @@ return [
   	'Compute Cuts' => 'Calculer les découpes',
   	'Save cuts' => 'Converver les découpes',
   	'Print cuts' => 'Imprimer les découpes',
-
+	'Our Reference' => 'Notre référence',
+	'Send Orders' => 'Envoyer les commandes',
+	'Order Frames' => 'Commander les cadres',
+	'Orders sent.' => 'Commandes envoyées.',
+	'Frame order for Labo JJ Micheli' => 'Commande de cadres pour le Labo JJ Micheli',
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',
@@ -361,7 +365,7 @@ return [
 	
 /**
  *
- *	C  O M M   W I T H   C L I E N T S
+ *	C O M M   W I T H   C L I E N T S
  *
  */
  	/** Documents */

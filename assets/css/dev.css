@@ -45,3 +45,32 @@ li.double-arrow:before {
 .renfort-highlight {
 	background-color: #cfc;
 }
+.site-help table {
+	border: 1px solid black;
+	border-spacing: 0px;
+	border-collapse: separate;
+}
+.site-help table td {
+	border-bottom: 1px solid lightgrey;
+	padding: 6px;
+}
+
+.site-help table th {
+	border-bottom: 1px solid black;
+	padding: 6px;
+}
+.chromaXS {
+	background-color: #fee;
+}
+.chromaS {
+	background-color: #dfd;
+}
+.chromaM {
+	background-color: #ccf;
+}
+.chromaL {
+	background-color: #bfb;
+}
+.chromaXL {
+	background-color: #faa;
+}

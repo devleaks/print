@@ -3,8 +3,14 @@
 namespace app\modules\work\controllers;
 
 use Yii;
+use app\components\RuntimeDirectoryManager;
+use app\models\Client;
+use app\models\CoverLetter;
 use app\models\Document;
+use app\models\FrameOrder;
+use app\models\Item;
 use app\models\Master;
+use app\models\Provider;
 use app\models\Segment;
 use app\models\Task;
 use app\models\Work;
@@ -14,13 +20,13 @@ use app\models\WorkLineDetailSearch;
 use app\models\WorkLineSearch;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
-use yii\helpers\VarDumper;
 use yii\db\Query;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\helpers\Json;
 use yii\helpers\Url;
+use yii\helpers\VarDumper;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * WorkLineController implements the CRUD actions for WorkLine model.
@@ -273,10 +279,118 @@ class WorkLineController extends Controller
 							$ignore = $this->changeStatus($id, $status);
 						}
 					}
-				}
+				} else if($status == 'FRAMES')
+					return $this->redirect(Url::to(['order-frames', 'ids' => implode(',',$_POST['keylist'])]));
 			}
 	}
 	
+	
+	protected function generateFrameOrders($ids) {
+		$providers = [];
+		foreach(Provider::find()->each() as $p)
+			$providers[$p->name] = $p->email;
+
+		$frames = [];
+		foreach(WorkLine::find()->where(['id' => $ids])->each() as $wl) {
+			if ( $dl = $wl->getDocumentLine()->one() )
+				if ( $dld = $dl->getDetail() )	
+					if($dld->frame_id > 0) {
+						$frame = Item::findOne($dld->frame_id);
+						if(in_array($frame->fournisseur, array_keys($providers))) {
+							$frames[] = new FrameOrder([
+								'work_line_id' => $wl->id,
+								'reference' => $dl->document->name,
+								'due_date' => $dl->due_date,
+								'provider' => $frame->fournisseur,
+								'provider_email' => $providers[$frame->fournisseur],
+								'item' => $frame->libelle_long.( $frame->reference_fournisseur ? ' ('.$frame->reference_fournisseur.')' : '' ),
+								'width' => $dl->work_width,
+								'height' => $dl->work_height,
+								'quantity' => $dl->quantity,
+								'note' => $wl->note,
+							]);
+						}
+					}
+			// $wl->setStatus(Work::STATUS_BUSY); // ?
+		}
+		return count($frames) > 0 ? $frames : null;
+	}
+
+
+	public function actionOrderFrames($ids) {
+		$ids2 = explode(',',$ids);
+		
+		if($frames = $this->generateFrameOrders($ids2)) {
+	        return $this->render('frame-orders', [
+	            'dataProvider' => new ArrayDataProvider(['allModels' => $frames]),
+	            'ids' => $ids,
+	        ]);
+		} else {
+			Yii::$app->session->setFlash('warning', Yii::t('store', 'There are no frame ready to order.'));
+			return $this->redirect(Url::to(['index']));
+		}
+	}
+
+
+	public function actionSendOrders($ids) {
+		$ids2 = explode(',',$ids);
+		
+		if($frames = $this->generateFrameOrders($ids2)) {
+			$providers = [];
+			$frames_by_provider = [];
+			foreach(Provider::find()->each() as $p) {
+				$providers[$p->name] = $p->email;
+				$frames_by_provider[$p->name] = [];
+			}
+
+			foreach($frames as $frame) // group frames by provider
+				$frames_by_provider[$frame->provider][] = $frame;
+			
+			foreach($frames_by_provider as $provider => $frameset) {
+				if(count($frameset) > 0) {		
+					$viewBase = '@app/modules/store/prints/frame-order/';
+				    $table = $this->renderPartial($viewBase.'frame-orders', ['frames' => $frameset]);
+
+					$coverLetter = new CoverLetter([
+						'type'		=> 'FRAME_ORDERS',
+						'client'	=> new Client([ // should be enought...
+										'autre_nom' => $provider,
+										'email' => $providers[$p->name],
+										'prenom' => '',
+										'nom' => '',
+										'adresse' => '',
+										'code_postal' => '',
+										'localite' => '',
+										'pays' => 'Belgique'
+									   ]),			
+						'date'		=> date('d/m/Y', strtotime('now')),			
+						'subject'	=> Yii::t('store', 'Frame order for Labo JJ Micheli'),			
+						'body'		=> Yii::t('store', 'Please read attached document(s).'),
+						'table'		=> $table, 			
+						'watermark' => false,			
+						'viewBase' 	=> null,			
+						'save'		=> true,
+						'destination' => RuntimeDirectoryManager::FRAME_ORDERS,
+					]);
+		
+					$coverLetter->render();
+					$coverLetter->send();
+					
+					foreach($frameset as $frame) {
+						$wl = WorkLine::findOne($frame->work_line_id);
+						$wl->setStatus(Work::STATUS_BUSY); //STATUS_DONE?
+					}
+				}
+			}
+			Yii::$app->session->setFlash('success', Yii::t('store', 'Orders sent.'));
+			return $this->redirect(Url::to(['/work']));
+		} else {
+			Yii::$app->session->setFlash('warning', Yii::t('store', 'There are no frame ready to order.'));
+			return $this->redirect(Url::to(['/work']));
+		}
+	}
+
+
 	public static function getBadge($id) {
 		$where = Document::getDateClause(intval($id));
 		$all= $id = -2
@@ -368,17 +482,16 @@ class WorkLineController extends Controller
 	
 	public function actionPrepareCuts() {
 		if(isset($_POST['WorkLineDetail'])) {
-			$wld = $_POST['WorkLineDetail'];
-			$count = count($wld);
+			$wlds = $_POST['WorkLineDetail'];
 			$models = [];
 			$dl_ids = [];
 			$segments = [];
 			
 			// all segments to cut
-			for($j = 0; $j < $count; $j++) {
-				$model = new WorkLineDetail($wld[$j]);
+			foreach($wlds as $idx => $wld) {
+				$model = new WorkLineDetail($wld);
 				$models[] = $model;
-				$dl_ids[] = $wld[$j]['document_line_id'];
+				$dl_ids[] = $wld['document_line_id'];
 
 				for($i = 0; $i < $model->cut_width_count; $i++)
 					$segments[] = [

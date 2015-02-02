@@ -67,6 +67,7 @@ if(isset(Yii::$app->user))
 			<ul>
 			    <li><a href="<?= Url::to(['/store/item']) ?>"><?= Yii::t('store', 'Items')?></a></li>
 			    <li><a href="<?= Url::to(['/store/price']) ?>"><?= Yii::t('store', "Price Lists")?></a></li>
+			    <li><a href="<?= Url::to(['/store/provider']) ?>"><?= Yii::t('store', "Frame Providers")?></a></li>
 			    <li><a href="<?= Url::to(['/store/task']) ?>"><?= Yii::t('store', 'Tasks')?></a></li>
 			    <li><a href="<?= Url::to(['/store/item/tasks']) ?>"><?= Yii::t('store', "Items' Associated Tasks")?></a></li>
 			</ul>

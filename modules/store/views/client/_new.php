@@ -137,3 +137,4 @@ use kartik\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+<?= $this->render('_comptabilite') ?>

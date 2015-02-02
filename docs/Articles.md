@@ -12,43 +12,48 @@ Pour les articles, le placement dans l'une ou l'autre catégorie a donc une infl
 La cagétogie `yii_category` a été créée pour répondre aux besoins spécifiques de l'application.
 Elle permet de distinguer les articles suivants:
 
-Catégorie | Utilisation
+Catégorie | Utilisation 
 ---------:|:-------------
-SPECIAL   | Catgorie pour les articles spéciaux, tels que remise,  surcoût, etc. NE PAS MODIFIER.
-Tirage| Articles de type tirage, impression... La colonne 'Catégorie' (voir ci-dessous) est importante pour 
-ChromaLuxe|Article ChromaLuxe (1 seul)
-Cadre|Article de type Cadre
-UV|Article de type protection UV (1 seul)
-Renfort|Article de type refort (1 seul)
-Support|
-Canvas|
-Chassis|
-Vernis de protection|
-MontageParam|
-SupportParam|
-ChromaParam|
-RenfortParam|
-TirageParam|
-CadreParam|
-ChromaType|
-ProtectionParam|
-Divers|
+SPECIAL   | Catégorie pour les articles spéciaux, tels que remise,  surcoût, etc. NE PAS MODIFIER.
+Tirage | Articles de type tirage, impression... La colonne 'Catégorie' (voir ci-dessous) est importante pour 
+ChromaLuxe | Article ChromaLuxe (1 seul)
+Cadre | Article de type Cadre
+UV | Article de type protection UV (1 seul)
+Renfort | Article de type refort (1 seul)
+Support | Support pour les tirages
+Canvas | Tirage sur canvas
+Chassis | Châssis pour les canvas
+Vernis de protection | Vernis de protection
+MontageParam | Paramètres pour le montage
+SupportParam | Paramètres pour les supports
+ChromaParam | Paramètres pour les ChromaLuxe
+RenfortParam | Paramètres pour les renforts
+TirageParam | Paramètres pour le calcul des tirages
+CadreParam | Paramètres pour le calcul des cadres
+ChromaType | Types de ChromaLuxe
+ProtectionParam | Paramètres pour les vernis de protection
 
 
-## Catégories `Categorie`
+## Catégories `Categorie` et  `Fournisseur`
 
-Cette catégorie est utilisée pour subdiviser les articles en sous-catégories.
-Pour l'instant, elle est utilisée pour distinguer les types de tirage:
+Ces catégories sont utilisées pour subdiviser les articles en sous-catégories.
+Pour l'instant, elles sont utilisées pour distinguer les types de tirage:
 
 En fonction des types de Tirages suivants, les options sont ajustées:
 
-Catégorie | Utilisation
+Fournisseur | Utilisation
 ---------:|:-------------
 Papier Type Photo | Papier Type Photo
 Papier Fine Art | Impression sur papier type Fine Art
 Canvas | Tirage sur canvas
 
 Toutes les autres valeurs de Tirages ouvrent toutes les options.
+
+
+### `Fournisseur` YII
+
+Les articles dont le fournisseur est `YII` ont été créés spécialement pour l'application.
+Ils ne devraient pas être modifiés, sauf les informations concernant le prix ou le taux de TVA.
 
 
 # Articles dont le prix est calculé
@@ -79,9 +84,9 @@ Selon certaines règles, les renforts seront parfois ajoutés sans coût aux opt
 
 Pour chacune de ces options, il y a un coût calculé associé.
 
-Les formules et paramètres du calcul du coût seront détaillés dans un autre document.
+Les formules et paramètres du calcul du coût seront détaillés [dans un autre document](help?f=Calculs+des+coûts).
 Les formules ne peuvent être modifiées que par un programmeur, mais les paramètres de ces formules
-(par exemple des coûts partiels) peuvent être ajustés via l'application.
+(par exemple des coûts) peuvent être ajustés via l'application.
 
 
 ## Fine Art

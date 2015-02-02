@@ -12,18 +12,27 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 {
 	protected $w_max;
 	protected $h_max;
-	protected $surfaces;
+	protected $min_price;
+	
+	public $surfaces;
+	public $prices;
+	public $sizes = ['XS', 'S', 'M', 'L', 'XL'];
+
 
 	public function init() {
 		$this->item = Item::findOne(['reference' => Item::TYPE_CHROMALUXE]);
 		$this->type = self::SURFACE;
 		$this->w_max = Parameter::getIntegerValue('chroma_device', 'width');
 		$this->h_max = Parameter::getIntegerValue('chroma_device', 'height');
-		$this->surfaces = Parameter::find()->andWhere(['domain' => 'formule'])
-							  ->andWhere(['like', 'name', 'ChromaLuxe'])
-							  ->orderBy('value_number desc')
-							  ->asArray()
-							  ->all();
+
+		$this->prices = [];
+		$this->surfaces = [];
+		foreach($this->sizes as $size) {
+			$this->prices[$size]   = Item::findOne(['reference' => 'Chroma'.$size]);
+			$this->surfaces[$size] = Parameter::findOne(['domain' => 'formule', 'name' => 'ChromaLuxe'.$size]);
+		}
+
+		$this->min_price = $this->getPrice('ChromaMin');
 		$this->inited = true;		
 	}
 
@@ -36,21 +45,22 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 
 		$s = $w * $h;
 
-		$i = 0;
-		while($i < count($this->surfaces) && $s < $this->surfaces[$i]['value_number'])
-			$i++;
-
-		if($i > 0) $i--;
-	
-		if( $item = Item::findOne(['reference' => str_replace('ChromaLuxe', 'Chroma', $this->surfaces[$i]['name'])]) ) {
+		if( $item = $this->prices[$this->getSize($s)] ) {
 			//Yii::trace($w.'x'.$h.'='.$s.' < '.$p[$i]['value_number'].' i='.$i.', price='.$item->prix_de_vente);
 			$price = ceil($item->prix_de_vente * $s / ($this->w_max * $this->h_max));
-			$price_min = $this->getPrice('ChromaMin');
-			if($price < $price_min)
-				$price = $price_min;
-			return $price;
+			return $price < $this->min_price ? $this->min_price : $price;
 		}
 		
 		return 0; // error
 	}
+	
+
+	public function getSize($s) {
+		$i = 0;
+		$max = count($this->sizes);
+		while( ($i < $max) && ($s < $this->surfaces[$this->sizes[$max-$i-1]]->value_number) )
+			$i++; 
+		return $this->sizes[($i > 0 ? $max-$i : $max - 1)];
+	}
+	
 }

@@ -137,6 +137,13 @@ return [
 
 
 	/** Letters: General texts & watermarks */
+	'FRAME_ORDERS::BEFORE_LIST' => "Veuillez trouver en annexe la liste des cadres que nous commandons.",
+	'FRAME_ORDERS::AFTER_LIST'  => " ",
+	'FRAME_ORDERS::CALL_ACTION' => "Pour toute question, n'hésitez pas à nous contacter au numéro de téléphone 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85, du lundi au vendredi, entre 8h30 et 18h30.",
+	'FRAME_ORDERS::GREETINGS' => "Commercialement vôtre.</p><p>Pour Labo JJ. Micheli,",
+
+
+
 	'ACCOUNT_UNBALANCED::AFTER_LIST' => " ",
 	'ACCOUNT_UNBALANCED::BEFORE_LIST' => "Nous nous référons à notre précédent relevé de compte resté sans suite à ce jour. Nous nous permettons de vous rappeler avec insistance les factures ci-dessous arrivées à échéance.",
 	'ACCOUNT_UNBALANCED::CALL_ACTION' => "Nous vous demandons d'avoir l'obligeance de régulariser votre situation immédiatement. Si votre paiement a été exécuté entre-temps, vous voudrez bien ne pas tenir compte du présent rappel.",

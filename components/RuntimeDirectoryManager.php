@@ -28,6 +28,8 @@ class RuntimeDirectoryManager {
 	const LATE_BILLS = 'LATE_BILLS';
 	/** */
 	const ACCOUNT = 'ACCOUNT_SLIP';
+	/** */
+	const FRAME_ORDERS = 'FRAME_ORDERS';
 	
 	
 	/** Templates */
@@ -39,6 +41,7 @@ class RuntimeDirectoryManager {
 		self::BACKUP => 'backup/{date}',
 		self::DOCUMENT => 'document/document/{client:name}/{model:name}',
 		self::PICTURES => '{id}/{name}',
+		self::FRAME_ORDERS => 'document/frames/{client:name}-{date}',
 	];
 	
 	/** Directories */
@@ -50,6 +53,7 @@ class RuntimeDirectoryManager {
 		self::EXTRACTION => 'extraction',
 		self::BACKUP => 'backup',
 		self::DOCUMENT => 'document',
+		self::FRAME_ORDERS => 'document/frames',
 	];
 	
 	/*	Checks if directory exists, if not creates it.

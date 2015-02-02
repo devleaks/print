@@ -22,8 +22,9 @@ class Bid extends Document
      * @inheritdoc
 	 */
 	public function convert($ticket = false) { // convert BID to ORDER
-		if( $existing_next = $this->find()->andWhere(['parent_id' => $this->id])->andWhere(['document_type' => self::TYPE_ORDER])->one() )
+		if( $existing_next = $this->getOrder() )
 			return $existing_next;
+
 		$copy = $this->deepCopy( $ticket ? self::TYPE_TICKET : self::TYPE_ORDER);
 		$copy->parent_id = $this->id;
 		$copy->status = self::STATUS_OPEN;
@@ -38,6 +39,11 @@ class Bid extends Document
 		$this->save();	
 
 		return $copy;
+	}
+	
+	
+	public function getOrder() {
+		return Order::find()->where(['parent_id' => $this->id])->one();
 	}
 
 

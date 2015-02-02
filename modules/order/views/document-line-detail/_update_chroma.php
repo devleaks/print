@@ -2,8 +2,9 @@
 
 //use kartik\widgets\FileInput;
 //use yii\widgets\ActiveForm;
-use app\models\Item;
 use app\models\DocumentLineDetail;
+use app\models\Item;
+use app\models\ItemCategory;
 use app\models\Parameter;
 use kartik\builder\Form;
 use sjaakp\bandoneon\Bandoneon;
@@ -30,7 +31,7 @@ use yii\helpers\Url;
 
 				        'chroma_id' => [
 							'type' => Form::INPUT_RADIO_LIST,
-							'items' => Item::getListForCategory('ChromaType'),
+							'items' => Item::getListForCategory(ItemCategory::CHROMALUXE_TYPE),
 				            'columnOptions' => ['colspan' => 4],
 							'options' => ['inline'=>true],
 						],
@@ -50,7 +51,7 @@ use yii\helpers\Url;
 						],*/
 				        'frame_id' => [
 							'type' => Form::INPUT_DROPDOWN_LIST,
-							'items' => Item::getListForCategory('Cadre', true),
+							'items' => Item::getListForCategory(ItemCategory::FRAME, true),
 				            'columnOptions' => ['colspan' => 4],
 							'options' => ['class' => 'form-control'],
 						],

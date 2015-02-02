@@ -44,7 +44,7 @@ class Order extends Document
 	 */
 	public function convert($ticket = false) { // convert ORDER into BILL
      	/** if a following document already exists, it returns it rather than create a new one. */
-		if( $existing_next = $this->find()->andWhere(['parent_id' => $this->id])->andWhere(['document_type' => self::TYPE_BILL])->one() )
+		if( $existing_next = $this->getBill() )
 			return $existing_next;
 
 		$copy = $this->deepCopy(self::TYPE_BILL);

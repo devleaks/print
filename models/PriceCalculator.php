@@ -16,8 +16,8 @@ class PriceCalculator extends Model
 	const SURFACE = 'S';
 	
 	protected $inited = false;
-	protected $reg_a;
-	protected $reg_b;
+	public $reg_a;
+	public $reg_b;
 	
 	/** Base item. If minimum price is requested, the price of this item IS the minimum price. */
 	protected $items;

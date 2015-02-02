@@ -280,8 +280,9 @@ class DocumentActionColumn extends Column {
 		if($name == 'print')
 			return '<div class="btn-group"><button type="button" class="'.$this->baseClass.' btn-'.$data['color'].' dropdown-toggle" data-toggle="dropdown">'.
 			        	$this->getButton('print'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
-						'<li>'.Html::a('Page (A4)', [$data['action'], 'id' => $id], ['target' => '_blank', 'title' => Yii::t('store', 'Print on full A4 page')]).'</li>'.
-						'<li>'.Html::a('Ticket (A5)', [$data['action'], 'id' => $id, 'format' => 'A5'], ['target' => '_blank', 'title' => Yii::t('store', 'Print on reduced A5 ticket')]).'</li>'.
+						'<li>'.Html::a(Yii::t('store', 'Page (A4)'), [$data['action'], 'id' => $id], ['target' => '_blank', 'title' => Yii::t('store', 'Print on full A4 page')]).'</li>'.
+						'<li>'.Html::a(Yii::t('store', 'Ticket (A5)'), [$data['action'], 'id' => $id, 'format' => 'A5'], ['target' => '_blank', 'title' => Yii::t('store', 'Print on reduced A5 ticket')]).'</li>'.
+						'<li>'.Html::a(Yii::t('store', 'Labels'), ['/order/document/labels', 'id' => $id], ['target' => '_blank', 'title' => Yii::t('store', 'Print Packing Label')]).'</li>'.
 					'</ul></div>';
 		if($name == 'convert')
 			return '<div class="btn-group"><button type="button" class="'.$this->baseClass.' btn-'.$data['color'].' dropdown-toggle" data-toggle="dropdown">'.

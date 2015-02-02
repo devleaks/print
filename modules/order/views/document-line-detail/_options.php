@@ -2,15 +2,13 @@
 
 use app\models\DocumentLineDetail;
 use app\models\Item;
+use app\models\ItemCategory;
 use app\models\Parameter;
 use kartik\builder\Form;
-use sjaakp\bandoneon\Bandoneon;
-use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\MaskedInput;
-use yii\bootstrap\Tabs;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DocumentLine */
@@ -40,7 +38,7 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 
 		        'chroma_id' => [
 					'type' => Form::INPUT_RADIO_LIST,
-					'items' => Item::getListForCategory('ChromaType'),
+					'items' => Item::getListForCategory(ItemCategory::CHROMALUXE_TYPE),
 		            'columnOptions' => ['colspan' => 4],
 					'options' => ['inline'=>true, 'class' => 'ItemChromaLuxe' ],
 				],
@@ -61,7 +59,7 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 		    'attributes' => [				
 		        'tirage_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Tirage', true) + Item::getListForCategory('Canvas'),
+					'items' => Item::getListForCategory(ItemCategory::TIRAGE, true) + Item::getListForCategory(ItemCategory::CANVAS),
 					'options' => ['class' => 'form-control ItemTirage ItemCanvas'],
 		            'columnOptions' => ['colspan' => 4],
 				],
@@ -71,7 +69,7 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 				],
 		        'finish_id' => [
 					'type' => Form::INPUT_RADIO_LIST,
-					'items' => Item::getListForCategory('TirageParam'),
+					'items' => Item::getListForCategory(ItemCategory::TIRAGE_PARAM),
 					'options' => ['inline'=>true, 'class' => 'ItemTirage'],
 		            'columnOptions' => ['colspan' => 5],
 				],
@@ -84,7 +82,7 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 		    'attributes' => [		
 		        'chassis_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Chassis', true),
+					'items' => Item::getListForCategory(ItemCategory::CHASSIS, true),
 					'options' => ['class' => 'form-control ItemCanvas'],
 		            'columnOptions' => ['colspan' => 4],
 				],
@@ -101,7 +99,7 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 		    'attributes' => [	
 		        'support_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Support', true),
+					'items' => Item::getListForCategory(ItemCategory::SUPPORT, true),
 					'options' => ['class' => 'form-control ItemTirage'],
 		            'columnOptions' => ['colspan' => 4],
 				],
@@ -118,7 +116,7 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 		    'attributes' => [
 		        'protection_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Vernis de protection', true),
+					'items' => Item::getListForCategory(ItemCategory::PROTECTION, true),
 					'options' => ['class' => 'form-control ItemTirage'],
 		            'columnOptions' => ['colspan' => 4],
 				],
@@ -201,7 +199,7 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 				],			
 		        'frame_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Cadre', true),
+					'items' => Item::getListForCategory(ItemCategory::FRAME, true),
 					'options' => ['class' => 'form-control ItemChromaLuxe ItemTirage'],
 		            'columnOptions' => ['colspan' => 4],
 				],

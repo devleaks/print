@@ -1,12 +1,10 @@
 <?php
 
-//use kartik\widgets\FileInput;
-//use yii\widgets\ActiveForm;
-use app\models\Item;
 use app\models\DocumentLineDetail;
+use app\models\Item;
+use app\models\ItemCategory;
 use app\models\Parameter;
 use kartik\builder\Form;
-use sjaakp\bandoneon\Bandoneon;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -28,7 +26,7 @@ use yii\helpers\Url;
 		    'attributes' => [				
 		        'tirage_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Tirage', true),
+					'items' => Item::getListForCategory(ItemCategory::TIRAGE, true) + Item::getListForCategory(ItemCategory::CANVAS),
 					'options' => ['class' => 'form-control'],
 		            'columnOptions' => ['colspan' => 4],
 				],
@@ -38,7 +36,7 @@ use yii\helpers\Url;
 				],
 		        'finish_id' => [
 					'type' => Form::INPUT_RADIO_LIST,
-					'items' => Item::getListForCategory('Finition'),
+					'items' => Item::getListForCategory(ItemCategory::TIRAGE_PARAM),
 		            'columnOptions' => ['colspan' => 5],
 					'options' => ['inline'=>true],
 				],
@@ -51,7 +49,7 @@ use yii\helpers\Url;
 		    'attributes' => [	
 		        'chassis_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Chassis', true),
+					'items' => Item::getListForCategory(ItemCategory::CHASSIS, true),
 					'options' => ['class' => 'form-control'],
 		            'columnOptions' => ['colspan' => 4],
 				],
@@ -68,7 +66,7 @@ use yii\helpers\Url;
 		    'attributes' => [		
 		        'support_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Support', true),
+					'items' => Item::getListForCategory(ItemCategory::SUPPORT, true),
 					'options' => ['class' => 'form-control'],
 		            'columnOptions' => ['colspan' => 4],
 				],
@@ -85,7 +83,7 @@ use yii\helpers\Url;
 		    'attributes' => [
 		        'protection_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Vernis de protection', true),
+					'items' => Item::getListForCategory(ItemCategory::PROTECTION, true),
 					'options' => ['class' => 'form-control'],
 		            'columnOptions' => ['colspan' => 4],
 				],
@@ -106,7 +104,7 @@ use yii\helpers\Url;
 				],			
 		        'frame_id' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => Item::getListForCategory('Cadre', true),
+					'items' => Item::getListForCategory(ItemCategory::FRAME, true),
 					'options' => ['class' => 'form-control'],
 		            'columnOptions' => ['colspan' => 4],
 				],

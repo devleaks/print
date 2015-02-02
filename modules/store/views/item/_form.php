@@ -1,12 +1,13 @@
 <?php
 
 use app\models\AccountingJournal;
+use app\models\ItemCategory;
 use app\models\Parameter;
-use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
 use kartik\builder\Form;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\SwitchInput;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Item */
@@ -64,7 +65,7 @@ use kartik\widgets\SwitchInput;
 				],
 		        'yii_category' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
-					'items' => $model::getCategories(),
+					'items' => ItemCategory::getCategories(),
 		            'columnOptions' => ['colspan' => 2],
 				],
 		        'status' => [

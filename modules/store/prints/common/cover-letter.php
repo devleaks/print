@@ -14,7 +14,7 @@ Yii::$app->i18n->translations['store']->forceTranslation = true
 <table width="100%">
 	<tr>
 		<td style="text-align: center;"></td>
-		<td width="40%" style='font-size: 14px;'><?= $this->render('client', ['model' => $model->client]) ?></td>
+		<td width="40%" style='font-size: 14px;'><?= $model->client ? $this->render('client', ['model' => $model->client]) : '' ?></td>
 	</tr>
 </table>
 <br>
@@ -30,7 +30,10 @@ Yii::$app->i18n->translations['store']->forceTranslation = true
 	<strong><?= Yii::t('print', 'Object') ?></strong>: <?= $model->subject ?>
 </p>
 <p>
-	<?= $model->client->titre.' '.$model->client->nom ?>,
+	<?php
+		if($model->client->titre && $model->client->nom)
+	 		echo $model->client->titre.' '.$model->client->nom.',';
+	?>
 </p>
 <br>
 <br>

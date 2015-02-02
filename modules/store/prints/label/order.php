@@ -1,12 +1,13 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
+use yii\data\ActiveDataProvider;
 ?>
 <div class="order-print-header">
 	<table width="100%">
 	<tr>
 			<td style="text-align: center;"><barcode code="<?= $this->render('qrcode_url', ['model'=>$model]) ?>" size="1" type="QR" error="M" class="barcode" /></td>
-			<td width="80%" style="font-size: 3em; text-align: right;"><?= $model->name ?></td>
+			<td width="80%" style="font-size: 5em; text-align: right;"><?= $model->name ?></td>
 	</tr>
 	</table>
 	<br>
@@ -24,8 +25,17 @@
 			<td colspan="2" style="font-size: 3em; text-align:left;"><?= $model->client->nom ?></td>
 	</tr>
 	<tr>
-			<td colspan="2" style="font-size: 3em; text-align:left;">Total: <?= $model->getDocumentLines()->count(); ?></td>
+			<td colspan="2" style="font-size: 2em; text-align:left;">Total: <?= $model->getDocumentLines()->count(); ?></td>
 	</tr>
 	</table>
 
 </div>
+	<?= $this->render('table', [ // 'table-gv'
+	        'dataProvider' => new ActiveDataProvider([
+					'query' => $model->getDocumentLines(),
+					'pagination' => false,
+			]),
+			'order' => $model
+	    ])
+	?>
+
