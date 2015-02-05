@@ -42,7 +42,7 @@ if(isset(Yii::$app->user))
 
 	<ul>
 	    <li><a href="<?= Url::to(['/order/document/create-credit']) ?>"><?= Yii::t('store', 'Enter new credit note')?></a></li>
-	    <li><a href="<?= Url::to(['/order/document/credits', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Credit Notes')?></a></li>
+	    <li><a href="<?= Url::to(['/order/document/credits', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Credit Notes')?></a></li>
 	</ul>
 
 	<ul>
@@ -67,6 +67,7 @@ if(isset(Yii::$app->user))
 			<ul>
 			    <li><a href="<?= Url::to(['/store/item']) ?>"><?= Yii::t('store', 'Items')?></a></li>
 			    <li><a href="<?= Url::to(['/store/price']) ?>"><?= Yii::t('store', "Price Lists")?></a></li>
+			    <li><a href="<?= Url::to(['/store/price-list']) ?>"><?= Yii::t('store', "Composite Price Lists")?></a></li>
 			    <li><a href="<?= Url::to(['/store/provider']) ?>"><?= Yii::t('store', "Frame Providers")?></a></li>
 			    <li><a href="<?= Url::to(['/store/task']) ?>"><?= Yii::t('store', 'Tasks')?></a></li>
 			    <li><a href="<?= Url::to(['/store/item/tasks']) ?>"><?= Yii::t('store', "Items' Associated Tasks")?></a></li>

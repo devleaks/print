@@ -30,7 +30,7 @@ if(isset(Yii::$app->user))
 	<ul>
 	    <li><a href="<?= Url::to(['/order/document/create-bom']) ?>"><?= Yii::t('store', 'Enter new bill of materials')?></a></li>
 	    <li><a href="<?= Url::to(['/order/document/create']) ?>"><?= Yii::t('store', 'Enter new order')?></a></li>
-	    <li><a href="<?= Url::to(['/order/document/orders', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Order management')?></a></li>
+	    <li><a href="<?= Url::to(['/order/document/orders', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Order management')?></a></li>
 	</ul>
 
 	<ul>

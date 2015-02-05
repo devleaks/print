@@ -3,6 +3,7 @@
 namespace app\modules\store\controllers;
 
 use Yii;
+use app\models\ItemCategory;
 use app\models\PriceCalculator;
 use app\models\NielsenPriceCalculator;
 use app\models\ExhibitPriceCalculator;
@@ -37,11 +38,17 @@ class PriceController extends Controller
         ];
     }
 
+
     public function actionIndex() {
         $searchModel = new ItemSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere(['yii_category' => ['Cadre', 'Support', 'ChromaLuxe', 'UV']])
-							->andWhere(['status' => Item::STATUS_ACTIVE]);
+		$dataProvider->query->andWhere(['yii_category' => [	ItemCategory::CHROMALUXE,
+															ItemCategory::RENFORT,
+															ItemCategory::SUPPORT,
+															ItemCategory::FRAME,
+															ItemCategory::UV,
+															ItemCategory::MONTAGE,
+						 ]])->andWhere(['status' => Item::STATUS_ACTIVE]);
 		
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -50,11 +57,12 @@ class PriceController extends Controller
     }
 
 
-	protected function getTable($id) {
+	protected function getTable($id, $print = false) {
 		$model = $this->findModel($id);
 
 		return $this->renderPartial('_table', [
 			'priceCalculator' => $model->getPriceCalculator(),
+			'print' => $print,
         ]);
 	}
 
@@ -68,7 +76,7 @@ class PriceController extends Controller
 		$pdf = new PDFLetter([
 			'controller'	=> $this,
 			'orientation'	=> PDFLetter::ORIENT_LANDSCAPE,
-			'content'		=> $this->getTable($id),
+			'content'		=> $this->getTable($id, true),
 			'filename'		=> $filename,
 		]);
 		$pdfDoc = $pdf->render();		

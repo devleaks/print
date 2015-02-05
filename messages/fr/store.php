@@ -344,6 +344,13 @@ return [
 	'Order Frames' => 'Commander les cadres',
 	'Orders sent.' => 'Commandes envoyées.',
 	'Frame order for Labo JJ Micheli' => 'Commande de cadres pour le Labo JJ Micheli',
+	'Generate' => 'Extraire',
+	'Frame Providers' => 'Fournisseurs de cadres',
+	'Providers' => 'Fournisseurs',
+	'Create Provider' => 'Ajouter un fournisseur',
+	'By Date' => 'Par date',
+	'By Number' => 'Par numéro',
+	'Composite Price Lists' => 'Listes de prix composites',
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',
@@ -550,6 +557,7 @@ return [
 	'TODO' => 'A faire',
 	'WORK' => 'En traitement',
 	'REFUND' => 'Remboursement',
+	'FRAME_ORDERS' => 'Commande de cadres',
 
 	'Quotes' => 'Devis',
 	'Good Received' => 'Livré',

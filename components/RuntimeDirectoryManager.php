@@ -6,6 +6,7 @@
 namespace app\components;
 
 use Yii;
+use yii\helpers\Url;
 
 class RuntimeDirectoryManager {
 	/**
@@ -63,8 +64,9 @@ class RuntimeDirectoryManager {
 	 *	@return string|null	Directory name if exists and is writable, null otherwise.
 	 */
 	private function checkDir($dirname) {
-		if(!is_dir($dirname))
-		    if(!mkdir($dirname, 0777, true))
+		$dirpath = self::getDocumentRoot().$dirname;
+		if(!is_dir($dirpath))
+		    if(!mkdir($dirpath, 0777, true))
 				return false;
 		return $dirname;
 	}	
@@ -77,27 +79,38 @@ class RuntimeDirectoryManager {
 	}	
 
 	/**
+	 * Get storage root
+	 */
+	public static function getFileStoreUrl($full = false) {
+		return Url::to(['/documents/'], $full);
+	}	
+
+	/**
+	 * Get storage root
+	 */
+	private static function getFileStoreDirectory() {
+		return Yii::getAlias('@app').DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR;
+	}	
+
+	/**
 	 * Get file root
 	 */
-	private function getFileRoot($what) {
-//		return Yii::getAlias('@runtime').DIRECTORY_SEPARATOR;
-		return Yii::getAlias('@app').DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.$what.DIRECTORY_SEPARATOR;
+	private static function getFileRoot($what) {
+		return self::getFileStoreDirectory().$what.DIRECTORY_SEPARATOR;
 	}	
 
 	/**
 	 * Get document root
 	 */
-	public function getDocumentRoot() {
-//		return Yii::getAlias('@runtime').DIRECTORY_SEPARATOR;
+	public static function getDocumentRoot() {
 		return self::getFileRoot('documents');
 	}	
 
 	/**
 	 * Get picture root
 	 */
-	public function getPictureRoot() {
-		return Yii::$app->params['picturePath'];
-//		return self::getFileRoot('pictures');
+	public static function getPictureRoot() {
+		return self::getFileRoot('pictures');
 	}	
 
 	/*	Creates file name of requested purpose.
@@ -126,7 +139,7 @@ class RuntimeDirectoryManager {
 
 		$template = str_replace('{name}', $name, $template);
 		
-		$filename = self::getDocumentRoot().self::checkPDF($template); // @web not defined in web\application
+		$filename = self::checkPDF($template); // @web not defined in web\application
 		Yii::trace('filename='.$filename, 'RuntimeDirectoryManager::getFilename');
 		
 		return self::checkDir(dirname($filename)) ? $filename : null;
@@ -144,7 +157,7 @@ class RuntimeDirectoryManager {
 		if($for == self::PICTURES)
 			$dirname = self::getPictureRoot();
 		else
-			$dirname = Yii::getAlias('@runtime').DIRECTORY_SEPARATOR.self::$DIRS[$for].DIRECTORY_SEPARATOR;
+			$dirname = self::getDocumentRoot().self::$DIRS[$for].DIRECTORY_SEPARATOR;
 
 		return self::checkDir($dirname) ? $dirname : null;
 	}

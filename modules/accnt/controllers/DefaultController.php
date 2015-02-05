@@ -3,6 +3,7 @@
 namespace app\modules\accnt\controllers;
 
 use app\models\Client;
+use app\models\Item;
 use app\models\Document;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
@@ -39,8 +40,10 @@ class DefaultController extends Controller
     public function actionControl()
     {
 		$nopopsyclinum = $this->getNopopsyclinum()->count();
+		$nopopsyitem = $this->getNopopsyitem()->count();
         return $this->render('control', [
-			'nopopsyclinum' => $nopopsyclinum
+			'nopopsyclinum' => $nopopsyclinum,
+			'nopopsyitem' => $nopopsyitem
 		]);
     }
 
@@ -55,11 +58,26 @@ class DefaultController extends Controller
 						);
 	}
 
+	public function getNopopsyitem() {
+		return		Item::find()->where(['comptabilite' => ''])
+				->union(
+					Item::find()->where(['comptabilite' => null])
+				);
+	}
+
 	public function actionNopopsyclinum() {
 		$query = $this->getNopopsyclinum();
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
 		]);
 		return $this->render('nopopsyclinum', ['dataProvider' => $dataProvider]);
+	}
+
+	public function actionNopopsyitem() {
+		$query = $this->getNopopsyitem();
+		$dataProvider = new ActiveDataProvider([
+			'query' => $query,
+		]);
+		return $this->render('nopopsyitem', ['dataProvider' => $dataProvider]);
 	}
 }

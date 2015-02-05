@@ -11,7 +11,7 @@ Votre commande <?=$model->name ?> est prête.
 --
 Labo JJ Micheli
 
-Ouvert du lundi au vendredi de 8h30 à 18h30, sans interruption.
+Ouvert du lundi au vendredi de 9h00 à 18h30, sans interruption.
 
 21-23 rue de Tervaete, 1040 Bruxelles
 Tél. +32 (0)2 733 21 85

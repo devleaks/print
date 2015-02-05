@@ -61,10 +61,16 @@ $this->params['breadcrumbs'][] = $this->title;
 				'template' => '{view} {delete}',
 	            'buttons' => [
 	                'view' => function ($url, $model) {
-						$url = Url::to(['view', 'id' => $model->id]);
-	                    return Html::a('<i class="glyphicon glyphicon-eye-open"></i>', $url, [
-	                        'title' => Yii::t('store', 'View'), 'target' => '_blank'
-	                    ]);
+	                    return file_exists($model->getFilepath()) ?
+								Html::a('<i class="glyphicon glyphicon-eye-open"></i>',
+									Url::to(['view', 'id' => $model->id]),
+									[
+			                        	'title' => Yii::t('store', 'View'),
+										'target' => '_blank'
+			                    	])
+								:
+								''
+								;
 	                },
 	            ]
 			],

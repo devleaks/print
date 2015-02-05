@@ -27,7 +27,7 @@ use app\models\Parameter;
 	<tr>
 		<td><?= $model->document ? $model->document->name : (
 					  ($model->status == Account::TYPE_CREDIT && $model->amount > 0) ?
-							Parameter::getTextValue('paiement', $model->payment_method, '').'. '.Yii::t('print', 'Thank You').'.'
+							Parameter::getTextValue('payment', $model->payment_method, '').'. '.Yii::t('print', 'Thank You').'.'
 							: ''
 					) ?></td>
 		<td><?= $model->document ? Yii::$app->formatter->asDate($model->document->created_at) : '' ?></td>

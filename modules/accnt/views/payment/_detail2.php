@@ -16,7 +16,7 @@ use yii\helpers\Url;
         'dataProvider' => $dataProvider,
 		'extraRowColumns' => ['payment_method'],
 		'extraRowValue' => function($model, $index, $totals) {
-			return Parameter::getTextValue('paiement', $model['payment_method']).' Total:'.var_dump($totals).'.';
+			return Parameter::getTextValue('payment', $model['payment_method']).' Total:'.var_dump($totals).'.';
 		},
 		'extraRowTotalsValue' => function($model, $index, $totals) {
 			if(!isset($totals['amount']))

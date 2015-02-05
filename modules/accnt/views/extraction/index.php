@@ -16,10 +16,11 @@ use kartik\widgets\SwitchInput;
 /* @var $form yii\widgets\ActiveForm */
 $this->title = Yii::t('store', 'Create Extraction');
 
-if($model->extraction_type == '') $model->extraction_type = CaptureExtraction::TYPE_BILL;
+if($model->extraction_type == '') $model->extraction_type = true;
 if($model->extraction_method == '') $model->extraction_method = CaptureExtraction::METHOD_DATE;
 
-$billsandcredits = ArrayHelper::map(Bill::find()->union(Credit::find())->asArray()->all(), 'id', 'name');
+$billsandcredits = ArrayHelper::map(Bill::find()->union(Credit::find())->orderBy('name')->asArray()->all(), 'id', 'name');
+asort($billsandcredits);
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Extractions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -42,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'offText' =>  Yii::t('store', CaptureExtraction::TYPE_CREDIT),
 				'onColor' => 'success',
 				'offColor' => 'primary',
-				'state' => ($model->extraction_type == CaptureExtraction::TYPE_BILL)
+				'state' => $model->extraction_type
 	]]) ?>
 	</div>
 	
@@ -75,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						],
 					],
 				]),
-				'headerOptions' => ['class' => 'method-option', 'data-method' => CaptureExtraction::METHOD_REFN]
+				'headerOptions' => ['class' => 'method-option', 'data-method' => CaptureExtraction::METHOD_DATE]
 			],
 			[
 				'label' => Yii::t('store', 'By Number'),
@@ -95,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						],
 					],
 				]),
-				'headerOptions' => ['class' => 'method-option', 'data-method' => CaptureExtraction::METHOD_DATE]
+				'headerOptions' => ['class' => 'method-option', 'data-method' => CaptureExtraction::METHOD_REFN]
 			]
 		]
 	]) ?>		
@@ -117,7 +118,8 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->beginBlock('JS_EXTRACT_METHOD'); ?>
 $(".method-option").click(function () {
 	method = $(this).data('method');
-	$('#extraction-extraction_method').val(method);
+	console.log(method);
+	$('#captureextraction-extraction_method').val(method);
 });
 <?php $this->endBlock(); ?>
 </script>

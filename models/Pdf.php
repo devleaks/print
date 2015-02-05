@@ -3,8 +3,10 @@
 namespace app\models;
 
 use Yii;
+use app\components\RuntimeDirectoryManager;
 use yii\base\Model;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 
 /**
  * This is the model class to saved Pdf file.
@@ -30,7 +32,8 @@ class Pdf extends _Pdf
 
 
 	public function deleteCascade() {
-		unlink($this->filename);
+		if(file_exists($this->filename))
+			unlink($this->filename);
 		$this->delete();
 	}
 
@@ -63,12 +66,28 @@ class Pdf extends _Pdf
 			}
 		}
 	}
-	
+
+
+	/**
+	 * Get descriptive, localized document type description.
+	 */
 	public function getDocumentType() {
 		if($this->document_type == 'DOCUMENT' && $this->document_id)
 			return Yii::t('store', $this->document->document_type);
 		else
 			return Yii::t('store', $this->document_type);;
+	}
+	
+
+	/**
+	 * Full path name to file.
+	 */
+	public function getFilepath() {
+		return RuntimeDirectoryManager::getDocumentRoot().$this->filename;
+	}
+	
+	public function getUrl() {
+		return Url::to(['/documents/'.$this->filename, 'target' => '_blank']);
 	}
 
 }

@@ -55,6 +55,9 @@ Toutes les autres valeurs de Tirages ouvrent toutes les options.
 Les articles dont le fournisseur est `YII` ont été créés spécialement pour l'application.
 Ils ne devraient pas être modifiés, sauf les informations concernant le prix ou le taux de TVA.
 
+Des exemples typiques de ces articles, créés pour les besoins de l'application,
+sont les paramètres de calcul des coûts des cadres, supports, et autres renforts.
+
 
 # Articles dont le prix est calculé
 
@@ -69,7 +72,7 @@ Le prix des options sera décomposé dans le panneau, et le prix total de l'arti
 
 ## ChromaLuxe
 
-Pour les articles ChromaLuxe les paramètres suivent doivent être fournis pour fixer le coût:
+Pour les articles ChromaLuxe les paramètres suivant doivent être fournis pour fixer le coût:
 
 * Dimensions de l'article,
 * Type de ChromaLuxe.
@@ -89,7 +92,7 @@ Les formules ne peuvent être modifiées que par un programmeur, mais les param�
 (par exemple des coûts) peuvent être ajustés via l'application.
 
 
-## Fine Art
+## Fine Art et autres tirages
 
 Pour les articles de type Fine Art, les paramètres suivent doivent être précisés:
 
@@ -98,11 +101,14 @@ Pour les articles de type Fine Art, les paramètres suivent doivent être préci
 Accessoirement, les options suivantes peuvent être ajoutées:
 
 * Tirage de type Papier Photo: Choix de la finition mate ou brillante (sans coût).
-
 * Tirage de type Papier Fine Art: Précision du papier choisi en note, couche de protection.
-
 * Tirage sur canvas: Cadre de canvas.
 
+Mais aussi:
+
+* Cadre
+* Renfort
+* Montage du cadre
 
 
 ## Article libre
@@ -113,6 +119,7 @@ Pour l'article libre, libellé Article divers, il faut entrer:
 * Un prix unitaire,
 * Le taux de TVA applicable pour cet article.
 
+Note importante: Le libellé de l'article divers est stocké dans le commentaire de la ligne de commande.
 
 
 ## Remise

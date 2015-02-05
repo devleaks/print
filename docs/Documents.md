@@ -110,8 +110,8 @@ Les devis diffèrent des autres documents par les éléments suivants:
 
 Lorsqu'ils sont en cours de réalisation, les devis peuvent:
 
-* Etre modifié en ajoutant ou supprimant des lignes de commande,
-* Etre converti en commande par la fonction "Commander",
+* Etre modifiés en ajoutant ou supprimant des lignes de commande,
+* Etre convertis en commande par la fonction "Commander",
 * Etre annulés, par la fonction "Annuler".
 
 Lorsqu'un devis a été transformé en commande, il ne peut plus être modifié.
@@ -168,10 +168,10 @@ Lorsqu'une commande est transformée en facture, tous les paiements de la comman
 
 Les factures portent un numéro séquentiel  sous la forme:
 
-	YYYY-1XXX
+	YYYY-1XXXX
 
 * où YYYY est l'année de création de la commande,
-* et 1XXX est un numéro séquentiel commançant à 10000 lorsque l'année en cours a été clôturée.
+* et 1XXXX est un numéro séquentiel commançant à 10000 au début de l'année.
 
 
 Les opérations suivantes peuvent être réalisées sur les factures:
@@ -196,7 +196,7 @@ Ils ne sont composés que de lignes de commande "Note de crédit".
 
 #### Ligne de commande " note de crédit "
 
-La ligne de commande "Note de crédit" est une ligne de commande particulière, destinée a préciser u nmontant remboursé à un client.
+La ligne de commande "Note de crédit" est une ligne de commande particulière, destinée a préciser un montant remboursé à un client.
 
 Pour entrer le montant, choisir le type d'_Extra_ "Remise en €", et préciser le montant remboursé dans la case adjacente.
 
@@ -219,14 +219,14 @@ Il n'est pas possible de faire progresser (soumettre les travaux, ou convertir e
 
 Les factures portent un numéro séquentiel  sous la forme:
 
-	YYYY-1XXX
+	YYYY-1XXXX
 
 * où `YYYY` est l'année de création de la commande,
-* et `1XXX` est un numéro séquentiel commançant à 10000 lorsque l'année en cours a été clôturée.
+* et `1XXXX` est un numéro séquentiel commançant à 10000 lorsque l'année en cours a été clôturée.
 
 Les notes de crédits portent un numéro séquentiel  sous la forme:
 
-	YYYY-9XXX
+	YYYY-9XXXX
 
 * où `YYYY` est l'année de création de la commande,
 * et `9XXX` est un numéro séquentiel commançant à 90000 lorsque l'année en cours a été clôturée.
@@ -234,10 +234,10 @@ Les notes de crédits portent un numéro séquentiel  sous la forme:
 
 Les autres documents ont un nom ayant la structure suivante:
 
-	YYYY Parameter(DOCTYPE) 2XXX
+	YYYY Parameter(DOCTYPE) 2XXXX
 
 * où `YYYY` est l'année de création de la commande,
-* `2XXX` est un numéro séquentiel commançant à 20000 lorsque l'année en cours a été clôturée,
+* `2XXXX` est un numéro séquentiel commançant à 20000 au début de l'année,
 * et `Parameter(DOCTYPE)` est une chaîne de caractère optionnelle extraite des paramètres de l'application.
 
 Le paramètre gouvernant la chaîne doit être dans le domaine `application`.
@@ -254,7 +254,7 @@ TICKET | Ticket de vente au comptoir | -A-
 La chaîne qui sera insérée est la valeur du champ `value_text`.
 En son absence, aucune chaîne n'est insérée et le nom du document sera donc simplement
 
-	YYYY2XXX
+	YYYY2XXXX
 
 
 

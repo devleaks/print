@@ -16,6 +16,7 @@ if(!isset($document_type))
 $this->title = Yii::t('store', 'Extractions');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 $this->params['breadcrumbs'][] = $this->title;
+$dataProvider->pagination = false;
 ?>
 <div class="bill-index">
 

@@ -37,6 +37,7 @@ return [
 	'Subject' => 'Sujet',
 	'VAT Client' => 'TVA Client',
 	'VAT Number' => 'Numéro TVA',
+	'Order' => 'Commande',
 	
 	/** Body */
 	

@@ -162,7 +162,8 @@ if($task->name == 'Commande Encadrement') {
 				'label' => Yii::t('store', 'Picture'),
 	            'value' => function ($model, $key, $index, $widget) {
 					$pic = $model->getDocumentLine()->one()->getPictures()->one();
-					return $pic ? Html::img(Url::to($pic->getThumbnailUrl(), true)) : '';
+					$ip  = $model->getDocumentLine()->one()->getPlaceholder();
+					return $pic ? Html::img(Url::to($pic->getThumbnailUrl(), true)) : $ip;
 					// placeholder: Yii::$app->homeUrl . 'assets/i/thumbnail.png';
                 },
 				'hAlign' => GridView::ALIGN_CENTER,

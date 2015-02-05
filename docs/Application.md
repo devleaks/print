@@ -7,7 +7,7 @@ L'application est découpée en modules:
 1. Gestion du magasin, articles, tâches, etc.
 2. Gestion des commandes: Devis, commandes, factures, notes de crédit.
 3. Gestion des travaux: Travaux, tâches à accomplir, etc.
-4. Comptabilité: Extraction des factures, caisse.
+4. Comptabilité: Extraction des factures, caisse, lettres de rappel.
 5. Gestion de l'application: Paramètres, utilisateurs, etc.
 
 

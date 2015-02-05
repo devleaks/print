@@ -77,23 +77,25 @@ class ExtractionController extends Controller
     public function extract($model)
     {
 		if($model->extraction_method == CaptureExtraction::METHOD_DATE) {
-			$date_from = $model->date_from;
-			$date_to = str_replace($model->date_to, '00:00:00', '23:59:59');
-			$docs = ($model->extraction_type == CaptureExtraction::TYPE_CREDIT) ?
-						Credit::find()
-							->andWhere(['>=','created_at',$date_from])
-							->andWhere(['<=','created_at',$date_to])	
+			$date_from = $model->date_from.' 00:00:00';
+			$date_to = $model->date_to.' 23:59:59';
+			Yii::trace('From '.$date_from.' to '.$date_to, 'ExtractionController::actionView');
+			$docs = ($model->extraction_type) ?
+					Bill::find()
+						->andWhere(['>=','created_at',$date_from])
+						->andWhere(['<=','created_at',$date_to])
 					:
-						Bill::find()
-							->andWhere(['>=','created_at',$date_from])
-							->andWhere(['<=','created_at',$date_to]);
+					Credit::find()
+						->andWhere(['>=','created_at',$date_from])
+						->andWhere(['<=','created_at',$date_to])	
+					;
 		} else { // Extraction::TYPE_REFN
 			$docfrom = Document::findDocument($model->document_from);
 			$docto   = Document::findDocument($model->document_to);
 			$docyear = substr($docfrom->name,0,4);
 			if($docyear != substr($docto->name,0,4)) {
 				Yii::$app->session->setFlash('danger', 'Documents need to be from same year.');
-	            return $this->render('create', [
+	            return $this->render('index', [
                 	'model' => $model,
             	]);
 			}
@@ -103,10 +105,11 @@ class ExtractionController extends Controller
 			Yii::trace('From '.$numfrom.' to '.$numto, 'ExtractionController::actionView');
 			for($i = $numfrom; $i <= $numto; $i++)
 				$docs[] = $docyear.'-'.$i;			
-			$docs = ($model->extraction_type == CaptureExtraction::TYPE_CREDIT) ?
-					Credit::find()->andWhere(['name' => $docs])
+			$docs = ($model->extraction_type) ?
+					Bill::find()->andWhere(['name' => $docs])
 					:
-					Bill::find()->andWhere(['name' => $docs]);
+					Credit::find()->andWhere(['name' => $docs])
+					;
 		}
         return $this->render('bills', [
             'dataProvider' => new ActiveDataProvider(['query'=>$docs]),

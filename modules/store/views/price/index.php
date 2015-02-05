@@ -1,5 +1,6 @@
 <?php
 
+use app\models\ItemCategory;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\grid\GridView;
@@ -28,9 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'libelle_long',
 	        [
 	            'attribute' => 'categorie',
-	            'filter' => ['Cadre' => 'Cadre', 'Collage' => 'Support', 'ChromaLuxe' => 'ChromaLuxe', 'UV' => 'UV'],
-	        ],
-             'fournisseur',
+	            'filter' => [
+					ItemCategory::CHROMALUXE => Yii::t('store', ItemCategory::CHROMALUXE),
+					ItemCategory::RENFORT => Yii::t('store', ItemCategory::RENFORT),
+					ItemCategory::SUPPORT => Yii::t('store', ItemCategory::SUPPORT),
+					ItemCategory::FRAME => Yii::t('store', ItemCategory::FRAME),
+					ItemCategory::UV => Yii::t('store', ItemCategory::UV),
+					ItemCategory::PROTECTION => Yii::t('store', ItemCategory::PROTECTION),
+					ItemCategory::MONTAGE => Yii::t('store', ItemCategory::MONTAGE),
+	        	],
+			],
+            'fournisseur',
             'prix_de_vente',
             'taux_de_tva',
             'status',

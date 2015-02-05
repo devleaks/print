@@ -48,14 +48,14 @@ Choisir l'option "Articles".
 Dans la gestion d'article, il est possible de gérer tous les articles, en créer de nouveaux, en supprimer d'anciens,
 ou changer des valeurs associées aux articles, comme par exemple le prix ou le taux de TVA.
 
-Pour associer des tâches aux articles, il faut choisir un article, et en voir ces détails.
+Pour associer des tâches aux articles, il faut choisir un article, et en _voir_ ses détails (Voir, pas Modifier).
 Pour ce faire, on peut sélectionner un article en entrant sa référence, ou son nom dans l'entête des colonnes.
 
 Cherchons par example ChromaLuxe dans la case du libelle long.
 
 Tous les articles dans le libelle contient ChromaLuxe apparaissent.
 
-Cliquer sur l'ocîne de l'oeil pour " voir " l'article ChromaLuxe.
+Cliquer sur l'icône de l'oeil pour _Voir_ l'article ChromaLuxe.
 
 La page suivante énumère toutes les informations associées à l'article ChromaLuxe: Prix, founisseur, etc.
 

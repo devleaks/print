@@ -49,7 +49,7 @@ $dataProvider = new ActiveDataProvider([
 				'label' => Yii::t('store', 'Payment Method'),
 				'attribute' => 'payment_method',
 	            'value' => function ($model, $key, $index, $widget) {
-	                    return Parameter::getTextValue('paiement', $model['payment_method']);
+	                    return Parameter::getTextValue('payment', $model['payment_method']);
 	            },
             ],
 			[

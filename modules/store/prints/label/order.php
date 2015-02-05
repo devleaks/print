@@ -39,3 +39,8 @@ use yii\data\ActiveDataProvider;
 	    ])
 	?>
 
+	<?= $this->render('pics', [ // 'table-gv'
+			'order' => $model
+	    ])
+	?>
+

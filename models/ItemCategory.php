@@ -8,8 +8,8 @@ use yii\base\Model;
 /**
  * This is the model class for new segments.
  */
-class ItemCategory
-{
+class ItemCategory {
+
 	/** */
 	const CHROMALUXE = 'ChromaLuxe';
 	/** */
@@ -42,6 +42,8 @@ class ItemCategory
 	/** */
 	const RENFORT_PARAM = 'RenfortParam';
 
+	/** */
+	const MONTAGE = 'Montage';
 	/** */
 	const MONTAGE_PARAM = 'MontageParam';
 

@@ -15,7 +15,7 @@ use app\models\Parameter;
 	$tot_amount = 0; $tot_count = 0;
 	foreach($totals->each() as $model): ?>
 	<tr>
-		<td><?= Parameter::getTextValue('paiement', $model['payment_method']) ?></td>
+		<td><?= Parameter::getTextValue('payment', $model['payment_method']) ?></td>
 		<td><?= Yii::$app->formatter->asCurrency($model['tot_amount']) ?></td>
 		<td><?= $model['tot_count'] ?></td>
 		<?php $tot_amount += $model['tot_amount']; $tot_count += $model['tot_count']; ?>

@@ -22,7 +22,7 @@ use kartik\date\DatePicker;
 
     <?= $form->field($model, 'lang')->textInput(['maxlength' => 40]) ?>
 
-    <?= $form->field($model, 'value_text')->textInput(['maxlength' => 80]) ?>
+    <?= $form->field($model, 'value_text')->textInput(['maxlength' => 160]) ?>
 
     <?= $form->field($model, 'value_number')->textInput() ?>
 

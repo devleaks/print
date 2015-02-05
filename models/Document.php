@@ -268,7 +268,7 @@ class Document extends _Document
 		/** Delete payments */
 
 		// if yes, we cannot delete the payment, they belong to the other doc with same sale id
-		if(!$this->soloOwnsPayments)
+		if(!$this->soloOwnsPayments())
 			foreach($this->getPayments()->each() as $p)
 				$p->delete();
 

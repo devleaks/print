@@ -18,14 +18,17 @@ class ExhibitPriceCalculator extends PriceCalculator
 	}
 
 	
-	public function price($w, $h, $min = false) {
+	public function price($w2, $h2, $min = false) {
+		$w = min($w2, $h2);
+		$h = max($w2, $h2);
 		$len = $w + $h;
 		$price = $this->item->prix_de_vente * $len / 50;
 		// adjustment
 		$base = ($this->item->reference == "Exhibite-X25Standard") ? $this->getPrice('MontageExhibiteBase2') : $this->getPrice('MontageExhibiteBase5');
-		if($w < 30 || $h < 30) {
+		Yii::trace($w.'x'.$h.' base='.$base, 'ExhibitPriceCalculator::price');
+		/*if($w < 30 || $h < 30) {
 			$price += $base;
-		} else if($len < 121) {
+		} else */if($len < 121) {
 			$price += $base + ($h-30 + $w-30) * $this->getPrice('MontageExhibiteS');		
 		} else if ($len < 130) {
 			$price += $base + ($h-30) * $this->getPrice('MontageExhibiteMH') + ($w-20) * $this->getPrice('MontageExhibiteML');		

@@ -167,25 +167,37 @@ class Item extends _Item
 		return $this->yii_category == 'SPECIAL';
 	}
 	
-
+	/**
+	 * Return price calculation model
+	 */
 	public function getPriceCalculator() {
-		switch(strtolower($this->yii_category)) {
-			case 'chromaluxe':
+		switch($this->yii_category) {
+			case ItemCategory::CHROMALUXE:
 				return new ChromaLuxePriceCalculator();
 				break;
-			case 'cadre':
+			case ItemCategory::FRAME:
 				if($this->fournisseur == 'Nielsen')
 					return new NielsenPriceCalculator(['item' => $this]);
 				else if ($this->fournisseur == 'Exhibit')
 					return new ExhibitPriceCalculator(['item' => $this]);
 				else
-					return new PriceCalculator(['item' => $this, 'type' => PriceCalculator::PERIMETER]);
+					return new LinearRegressionPriceCalculator(['item' => $this, 'type' => PriceCalculator::PERIMETER]);
 				break;
-			case 'support':
-			case 'uv':
-				return new PriceCalculator(['item' => $this, 'type' => PriceCalculator::SURFACE]);
+			case ItemCategory::SUPPORT:
+			case ItemCategory::UV:
+				return new LinearRegressionPriceCalculator(['item' => $this, 'type' => PriceCalculator::SURFACE]);
+				break;
+			case ItemCategory::MONTAGE:
+				return new MontagePriceCalculator(['item' => $this, 'type' => PriceCalculator::PERIMETER]);
+				break;
+			case ItemCategory::RENFORT:
+				return new RenfortPriceCalculator(['item' => $this, 'type' => PriceCalculator::PERIMETER]);
+				break;
+			default:
+				return new PriceCalculator(['item' => $this]);
 				break;
 		}
 		return null;
 	}
+
 }

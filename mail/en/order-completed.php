@@ -11,7 +11,7 @@ Your order <?=$model->name ?> is ready.
 --
 Labo JJ Micheli
 
-Open Mondays to Fridays from 8h30 to 18h30.
+Open Mondays to Fridays from 9h00 to 18h30.
 
 21-23 rue de Tervaete, 1040 Brussels
 Phone: +32 (0)2 733 21 85

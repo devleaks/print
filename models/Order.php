@@ -204,9 +204,11 @@ class Order extends Document
 
 		switch($this->status) {
 			case $this::STATUS_CREATED:
+				$actions[] = '{cancel}';
 				$actions[] = '{edit}';
 				break;
 			case $this::STATUS_OPEN:
+				$actions[] = '{cancel}';
 				$actions[] = '{edit}';
 				$actions[] = '{submit}';
 				$actions[] = '{cancel}';
@@ -225,6 +227,7 @@ class Order extends Document
 			case $this::STATUS_SOLDE:
 			case $this::STATUS_TOPAY:
 			case $this::STATUS_DONE:
+				$actions[] = '{cancel}';
 				$actions[] = '{bill}';
 				break;
 			case $this::STATUS_CANCELLED:

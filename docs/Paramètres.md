@@ -11,6 +11,7 @@ Par exemple, il existe le _domaine_ de paramètre `langue`.
 Ce domaine de paramètre regroupe toutes les langues qu'il est possible d'assigner à un client.
 
 Domaine | Utilisation
+--------|------------
 application|Paramètres utilisés dans l'application
 chroma|Type de ChromaLuxe (White glossy, clear mat, etc.)
 delay|Délais en jour pour supplément. Non utilisé.
@@ -24,6 +25,7 @@ title|Titre pour les clients: Mr, Mme, SPRL...
 ## Paramètres de l'application
 
 Paramètre|Utilisation
+--------|------------
 auto_notify_completion|Si vrai, envoie un message au client lorsque la commande est terminée.
 auto_send_bill|Si vrai, place la facture issue d'une commande directement dans l'état Envoyé.
 auto_submit_work|Si vrai, soumet immédiatement le travail d'une commande résultant de la conversion d'un devis.
@@ -39,5 +41,7 @@ On peut cependant ajuster les valeurs de ces paramètres pour ajuster les formul
 ## Paramètres à ne pas changer
 
 Les paramètres dans les domaines suivants ne peuvent pas être modifiés sans modifier le code.
+
+Ajouter ou supprimer des éléments dans ces domaines peut rendre l'application inutilisable, et/ou provoquer des erreurs.
 
 Domaines: Extra, Langue, Role.

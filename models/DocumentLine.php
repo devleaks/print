@@ -33,6 +33,8 @@ class DocumentLine extends _DocumentLine
 	const IMAGE_ADD = 'ADD';	
 	/** */
 	const IMAGE_REPLACE = 'REPLACE';
+	/** */
+	const IMAGE_SIZE_FACTOR = 1.5;
 
     public $image;
 	public $image_add;
@@ -204,6 +206,18 @@ class DocumentLine extends _DocumentLine
 		return $this->getPictures()->count() > 0;
 	}
 	
+	
+	/**
+	 * 
+	 */
+	public function getPlaceholder() {
+		$fact = self::IMAGE_SIZE_FACTOR;
+		return ($this->work_width > 0 && $this->work_height > 0) ?
+			'<div class="image-placeholder" style="width: '.($fact*$this->work_width).'px; height: '.($fact*$this->work_height).'px;">'.$this->work_width.'&times;'.$this->work_height.'</div>'
+			:
+			''
+			;
+	}
 	/**
 	 * @return boolean Whether DocumentLine model has DocumentLineDetail model associated with it.
 	 */

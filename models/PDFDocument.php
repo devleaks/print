@@ -132,7 +132,7 @@ class PDFDocument extends Model {
 			$this->generateFilename();
 			//Yii::trace('filename='.$this->filename, 'PDFDocument::getPdfData');		
 			$pdfData['destination'] = Pdf::DEST_FILE;
-			$pdfData['filename'] = $this->filename;
+			$pdfData['filename'] = RuntimeDirectoryManager::getDocumentRoot().$this->filename;
 		} else {
 			$pdfData['destination'] = Pdf::DEST_BROWSER;
 		}

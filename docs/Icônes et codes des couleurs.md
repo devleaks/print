@@ -41,7 +41,7 @@ Chaque tâche possède une icône propre.
 
 ### Etiquettes
 
-Les étiquettes présentent un état.
+Les étiquettes présentent l'état dans lequel se trouve une commande, un travail, ou une tâche.
 
 Etiquette | Utilisation
 :--------:|-------------
@@ -60,7 +60,7 @@ Par exemple, si la commande est terminée, son état sera <span class="label lab
 
 
 Bouton | Utilisation
-:-----:|-------------
+:-----:| -------------
 <a class="btn btn-primary" href="#" title="Ajouter"><span class="glyphicon glyphicon-plus"></span> Ajouter</a> | Action principale
 <a class="btn btn-success" href="#" title="Commander"><span class="glyphicon glyphicon-ok"></span> Commander</a> | Action principale modifiant l'état de l'objet
 <a class="btn btn-info" href="#" title="Voir"><span class="glyphicon glyphicon-eye-open"></span> Voir</a> | Action d'information
@@ -75,24 +75,24 @@ Dans la mesure des possibilités, chaque bouton sera accompagné d'une îcone in
 ### Cadres d'information
 
 <div class="alert alert-danger">
-Information de danger
+Information de danger ou d'erreur.
 </div>
 
 
 <div class="alert alert-warning">
-Avertissement
+Avertissement.
 </div>
 
 
 <div class="alert alert-info">
-Information
+Information.
 </div>
 
 
 
 <div class="alert alert-success">
 <a href="#" class="close" data-dismiss="alert">&times;</a>
-Information de succès d'opération
+Confirmation de succès d'opération.
 </div>
 
 

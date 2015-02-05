@@ -53,13 +53,13 @@ class Payment extends _Payment
 	 * @return array()
 	 */
 	public static function getPaymentMethods() {
-		return ArrayHelper::map(Parameter::find()->where(['domain'=>'paiement'])->orderBy('value_int')->asArray()->all(), 'name', 'value_text');
+		return ArrayHelper::map(Parameter::find()->where(['domain'=>'payment'])->orderBy('value_int')->asArray()->all(), 'name', 'value_text');
 	}
 	
 	public function getPaymentMethod() {
 		if($this->payment_method == Payment::CLEAR)
 			return Yii::t('store', 'Bill Debit');
-		$p = Parameter::findOne(['domain'=>'paiement', 'name' => $this->payment_method]);
+		$p = Parameter::findOne(['domain'=>'payment', 'name' => $this->payment_method]);
 		return $p ? $p->value_text : null;
 	}
 	

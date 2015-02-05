@@ -91,7 +91,7 @@ class DocumentActionColumn extends Column {
 				'confirm' => 'Is order ready?'
 			],
 			'bill'	=> [
-				'icon' => 'ok',
+				'icon' => 'euro',
 				'label' => 'Bill To',
 				'title' => 'Bill To',
 				'color' => 'primary',
@@ -190,20 +190,15 @@ class DocumentActionColumn extends Column {
 		$data = $this->documentLabels[$name];
 		$ret = '';
 		switch($name) {
-			case 'ordered':
-				if( $order = $model->getDocuments()->where(['document_type' => [$model::TYPE_ORDER, $model::TYPE_TICKET]])->one() )
+			case 'ordered':	// should only be called on bids
+				if( $order = $model->getOrder() )
 					$ret = Html::a('<span class="label label-success">'.Yii::t('store', 'Order Placed').'</span>',
 										['/order/document/view', 'id' => $order->id], ['data-method' => 'post', 'title' => Yii::t('store', 'View Order')]);
 				else
 					$ret = $this->getActionLabel($name);
 				break;
-			case 'billed':
-				$bill = $model->bom_bool ?
-					Bill::findOne($model->parent_id) // for BOM we set inverse relation, parent_id points to collective bill
-					:
-					$model->getDocuments()->where(['document_type' => $model::TYPE_BILL])->one(); // or Bill::findOne(['parent_id'=>$this->id]) ?
-	
-				if( $bill )
+			case 'billed': // should only be called on orders
+				if( $bill = $model->getBill() )
 					$ret = Html::a('<span class="label label-success">'.Yii::t('store', 'Billed').'</span>',
 										['/order/document/view', 'id' => $bill->id], ['title' => Yii::t('store', 'View Bill'), 'data-method' => 'post']);
 				else

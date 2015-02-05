@@ -9,6 +9,7 @@ use yii\helpers\Html;
 $this->title = Yii::t('store', 'Create {modelClass}', [
     'modelClass' => 'Provider',
 ]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['..']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Providers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

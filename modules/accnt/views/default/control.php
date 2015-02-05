@@ -15,6 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	<ul>
 	    <li><a href="<?= Url::to(['/accnt/default/nopopsyclinum']) ?>"><?= Yii::t('store', 'Client without Popsy Account Identifier')?></a>
 		 	(<?= $nopopsyclinum ?>)</li>
+	    <li><a href="<?= Url::to(['/accnt/default/nopopsyitem']) ?>"><?= Yii::t('store', 'Item without Popsy Journal')?></a>
+		 	(<?= $nopopsyitem ?>)</li>
 	</ul>
 
 

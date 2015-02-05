@@ -74,3 +74,10 @@ li.double-arrow:before {
 .chromaXL {
 	background-color: #faa;
 }
+.image-placeholder {
+	background-color: #eee;
+	border: 1px solid dotted;
+	text-align: center;
+	vertical-align: middle;
+	display: table-cell;
+}

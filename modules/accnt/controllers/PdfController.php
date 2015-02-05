@@ -51,8 +51,7 @@ class PdfController extends Controller
     public function actionView($id)
     {
 		$model = $this->findModel($id);
-		$url = Url::to(['/documents/'.str_replace(RuntimeDirectoryManager::getDocumentRoot(), '', $model->filename), 'target' => '_blank']);
-        echo $this->redirect($url);
+        return $this->redirect($model->getUrl());
     }
 
     /**
