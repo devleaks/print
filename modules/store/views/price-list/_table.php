@@ -68,7 +68,7 @@ foreach($model->getPriceListItems()->orderBy('position')->each() as $pli) {
 			} else if ($pos == $item->pos) {
 				$prc += ($item->pc ? $item->pc->roundPrice($dim[0],$dim[1]) : 0);
 			} else {
-				echo '<td class="text-center">'.Yii::$app->formatter->asDecimal($prc, 2).'</td>';//$h.'&times;'.$w
+				echo '<td class="text-center">'.Yii::$app->formatter->asCurrency($prc).'</td>';//$h.'&times;'.$w
 				$prc = ($item->pc ? $item->pc->roundPrice($dim[0],$dim[1]) : 0);
 				$pos = $item->pos;
 			}
@@ -93,7 +93,7 @@ foreach($model->getPriceListItems()->orderBy('position')->each() as $pli) {
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="<?= $model->getPriceListItems()->select('position')->distinct()->count() + 1 ?>" style="text-align: right; font-size: 9px;"><?= date('d-m-Y') ?></td>
+			<td colspan="<?= $model->getPriceListItems()->select('position')->distinct()->count() + 1 ?>" style="text-align: right; font-size: 9px;"><?= Yii::t('print', 'Printed on').' ' .date('d-m-Y') ?></td>
 		</tr>
 	</tfoot>
 </table>

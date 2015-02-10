@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\PriceListSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('store', 'Price Lists');
+$this->title = Yii::t('store', 'Composite Price Lists');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['..']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

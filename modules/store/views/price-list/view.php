@@ -7,7 +7,8 @@ use yii\widgets\DetailView;
 /* @var $model app\models\PriceList */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Price Lists'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['..']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Composite Price Lists'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="price-list-view">

@@ -94,6 +94,7 @@ return [
 	'Qty' => 'Aantal',		//'Quantité',
 	'Ref.' => 'Ref.',	//'Reference',
 	'U.Pc' => 'Prijs',	//Unit Price
+	'Printed on' => 'Afgedrukt op ',
 	
 	/** Footer Doc */
 	'Advance' => 'Voorschot',

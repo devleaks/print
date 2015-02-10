@@ -57,7 +57,7 @@ var store_values = {
 	item: <?= $js_items ?>,
 	item_ref: <?= $js_itemrefs ?>,
 	error_msg: <?= $js_errors ?>,
-	ajaxUrl: "<?= Url::to(['/order/document/get-item'], true) ?>"
+	ajaxUrl: "<?= Url::to(['/order/document-line/item-price'], true) ?>"
 };
 <?php $this->endBlock(); ?>
 </script>

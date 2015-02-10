@@ -1,45 +1,57 @@
 /**
  *	Helper functions
  */
-function arrondir(i) {
-	return Math.round( i );
-}
-
-
 function arrondir2(i) {
 	return Math.round( i * 100 ) / 100;
 }
 
+/* no longer used. Rounding performed in PriceCalculator only as a business rule
+function arrondir(i) {
+	return Math.round( i );
+}
 
 function arrondir_sup(i) {
 	return Math.ceil( i );
 }
 
+function arrondir5(i) {
+	return Math.round( i * 2 ) / 2;
+}
+*/
+
 
 /** Items */
-function getItemById(id, silence) {
-	console.log('getItemById: fetching '+id);
-	verbose = (typeof silence === "undefined");
-/*
-	item = null;
+function getComputedPrice(id, w, h) {
+	console.log('getComputedPrice: fetching '+id);
+
+	price = null;
 	$.ajax({
 		type: "GET",
 		url: store_values.ajaxUrl,
 		dataType: 'json',
 		async: !1,
 		data: {
-			id: id
+			id: id,
+			 w: w,
+			 h: h
 		},
 		success: function(data) {
-			item = data.item;
+			//console.log(data);
+			price = data.price;
+			console.log('success: p='+price);
 		},
 		error: function(data) {
-			console.log('getItemById: error: no '+id);
+			console.log('getComputedPrice: error: no '+data.error_msg);
+			//console.log(data);
 			add_error("ITEM_NOT_FOUND");
 		},
 	});
-	return item;
-*/
+	return price;
+}
+
+function getItemById(id, silence) {
+	//console.log('getItemById: fetching '+id);
+	verbose = (typeof silence === "undefined");
 	if(store_values.item[id] != undefined)
 		return store_values.item[id];
 	console.log('Not found: '+id);
@@ -48,27 +60,7 @@ function getItemById(id, silence) {
 }
 
 function getItemByReference(ref) {
-	console.log('getItemByReference: fetching '+ref);
-/*
-	item = null;
-	$.ajax({
-		type: "GET",
-		url: store_values.ajaxUrl+'-by-ref',
-		dataType: 'json',
-		async: !1,
-		data: {
-			ref: ref
-		},
-		success: function(data) {
-			item = data.item;
-		},
-		error: function(data) {
-			console.log('getItemByReference: error: no '+id);
-			add_error("ITEM_NOT_FOUND");
-		},
-	});
-	return item;
-*/
+	//console.log('getItemByReference: fetching '+ref);
 	if(store_values.item[store_values.item_ref[ref]] != undefined)
 		return store_values.item[store_values.item_ref[ref]];
 	console.log('Not found: '+ref);
@@ -84,11 +76,6 @@ function getPrice(ref) {
 function getVal(s) {
 	ret = parseFloat( $(s).val() );
 	return isNaN(ret) ? 0 : ret;
-}
-
-
-function arrayHasOwnIndex(array, prop) {
-    return array.hasOwnProperty(prop) && /^0$|^[1-9]\d*$/.test(prop) && prop <= 4294967294; // 2^32 - 2
 }
 
 
@@ -222,9 +209,9 @@ $("#documentline-quantity, #documentline-unit_price, #documentline-vat").change(
 	$("#documentline-quantity_virgule").val($("#documentline-quantity").val().replace(".",","));
 	$("#documentline-unit_price_virgule").val($("#documentline-unit_price").val().replace(".",","));
 	$("#documentline-vat_virgule").val($("#documentline-vat").val().replace(".",","));
-	
-	$("#documentline-price_htva").val(arrondir2( $("#documentline-quantity").val()   * $("#documentline-unit_price").val() ));
-	$("#documentline-price_tvac").val(arrondir2( $("#documentline-price_htva").val() * (1 + $("#documentline-vat").val() / 100) ));
+	var price = arrondir2( $("#documentline-quantity").val()   * $("#documentline-unit_price").val() );
+	$("#documentline-price_htva").val( price );
+	$("#documentline-price_tvac").val(arrondir2( price * (1 + $("#documentline-vat").val() / 100) ));
 	$("#documentline-extra_amount").trigger("change");
 });
 
@@ -339,27 +326,6 @@ function (event) {
  *	Options price calculation
  */
 
-/** generic price based on linear regression a x + b with x being either perimeter or surface in centimeters */
-function price_linreg(w, h, a, b, use_surface) {
-	qty = use_surface ? (w * h / 10000) : ((w + h) / 50); // 2 * (w + h) / 100 in meters, 100cmX100cm=10000cm2 in a m2
-	return a * qty + b;
-}
-
-/** generic frame price based on perimeter and price per length */
-function price_frame_meter(w, h, frame) {
-	return price_linreg(w, h, frame.prix_de_vente, 0, false);
-}
-
-/** generic frame price based on perimeter and price per length */
-function price_regression(w, h, item, use_surface) {
-	param_name = item.reference;
-	reg_a = getPrice(param_name+'_A');
-//	console.log('price_regression: a='+reg_a);
-	reg_b = getPrice(param_name+'_B');
-//	console.log('price_regression: b='+reg_b);
-	return price_linreg(w, h, reg_a, reg_b, use_surface);
-}
-
 /** frame */
 function price_frame() {
 	frame_id = parseInt($("#documentlinedetail-frame_id:enabled").val());
@@ -381,21 +347,8 @@ function price_frame() {
 				$("#documentlinedetail-renfort_bool").prop('readonly', true);
 				$("#documentlinedetail-price_renfort:enabled").val(0);
 			}
-			price = 0;
-			//console.log("frame_ref: "+frame.manufacturer+', '+frame.price);
-			switch(frame.fournisseur) {
-				case 'Nielsen':
-					price = price_frame_meter(w, h, frame);
-					break;
-				case 'Exhibit':
-					price = price_frame_exhibit(w, h, frame);
-					break;
-				case 'American Box':
-					price = price_regression(w, h, frame, false);
-					break;
-			}
-			//console.log('frame / refort price: '+price);
-			$("#documentlinedetail-price_frame:enabled").val(arrondir_sup(price));
+			var price = getComputedPrice(frame.id, w, h);
+			$("#documentlinedetail-price_frame:enabled").val(price);
 		} else {
 			$("#documentlinedetail-price_frame:enabled").val('');
 		}
@@ -441,11 +394,15 @@ function price_renfort() {
 		renfort = $("#documentlinedetail-renfort_bool:enabled").is(':checked');
 		//console.log('price_renfort: place refort: '+renfort);
 		if(renfort) {
+			/*
 			minus_inside = ($("#documentline-item_id").val() == store_values.chroma) ? 40 : 20;
 			price = 2 * (w + h - minus_inside) * getPrice('Renfort') / 100; // renfort placed 10cm inside, all perimeter
-			RenfortPrixMin = getPrice('RenfortPrixMin');			
-			if(price < RenfortPrixMin) price = RenfortPrixMin;
-			price = arrondir_sup(price);
+			Renfort_Min = getPrice('Renfort_Min');			
+			if(price < Renfort_Min) price = Renfort_Min;
+			*/ // Now compute via getComputedPrice
+			minus_inside = ($("#documentline-item_id").val() == store_values.chroma) ? 20 : 10; // renfort placed 10cm inside for ChromaLuxe, 5cm inside for other
+			renfortItem = getItemByReference('Renfort');
+			var price = getComputedPrice(renfortItem.id, w - minus_inside, h - minus_inside); 
 			$("#documentlinedetail-price_renfort:enabled").val(price);
 		} else {
 			$("#documentlinedetail-price_renfort:enabled").val('');
@@ -477,7 +434,7 @@ function price_filmuv() {
 	
 	item = getItemByReference("UV");
 
-	price = price_regression(w, h, item, true);
+	var price = getComputedPrice(item.id, w, h);
 	$("#documentlinedetail-price_filmuv:enabled").val(price);
 	$("#documentlinedetail-price_filmuv:enabled").trigger('change');	
 }
@@ -522,6 +479,7 @@ function price_chromaluxe() {
 	//console.log('chromaluxe type:'+which);
 	if(typeof(which) !== 'undefined') {
 		del_error("CHROMALUXE_TYPE");
+		/*
 		max_area = store_values.param['SublimationMaxHeight'].value_int * store_values.param['SublimationMaxWidth'].value_int;
 		work_area = dim.width * dim.height;
 		del_error("SURFACE_TOO_LARGE");
@@ -539,35 +497,15 @@ function price_chromaluxe() {
 		} else {
 			add_error("SURFACE_TOO_LARGE");
 		}
-
-		min_price = getPrice("ChromaMin");
+		min_price = getPrice("Chroma_Min");
 		if(price < min_price) price = min_price;
-
-		price = arrondir_sup(price);
+		*/
+		var price = getComputedPrice(store_values.chroma, dim.width, dim.height);
 		$("#documentlinedetail-price_chroma:enabled").val(price);
 		$("#documentlinedetail-price_chroma:enabled").trigger('change');
 	} else {
 		add_error("CHROMALUXE_TYPE");
 	}
-}
-
-/** Exhibit */
-function price_frame_exhibit(w, h, frame) {
-	// frame (len in cm, price in €/m)
-	len = w + h;
-	price = frame.prix_de_vente * len / 50;
-	// adjustment
-	base = (frame.reference == "Exhibite-X25Standard") ? getPrice('MontageExhibiteBase2') : getPrice('MontageExhibiteBase5'); // 
-	if(w < 30 || h < 30) {
-		price += base;
-	} else if(len < 121) {
-		price += base + (h-30 + w-30) * getPrice('MontageExhibiteS');		
-	} else if (len < 130) {
-		price += base + (h-30) * getPrice('MontageExhibiteMH') + (w-20) * getPrice('MontageExhibiteML');		
-	} else {
-		price += base + (h-30 + w-30) * getPrice('MontageExhibiteL');		
-	}
-	return arrondir(price);
 }
 
 function enableMontage() {
@@ -744,7 +682,7 @@ $("#documentlinedetail-support_id:enabled").change(function() {
 		var w = dim.width;
 		var h = dim.height;
 		var item = getItemById(item_id);
-		var price = arrondir_sup(price_regression(w, h, item, true));
+		var price = getComputedPrice(item.id, w, h);
 		$('#documentlinedetail-price_support:enabled').val(price);
 	}
 	$("#documentlinedetail-price_support:enabled").trigger('change');

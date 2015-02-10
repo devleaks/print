@@ -11,6 +11,7 @@ use yii\base\Model;
 class RenfortPriceCalculator extends PriceCalculator
 {
 	public $support;
+	public $inside = 0;
 	
 	public function init() {
 		if(!$this->item) return;
@@ -21,6 +22,7 @@ class RenfortPriceCalculator extends PriceCalculator
 	function setSupport($s) {
 		Yii::trace($s ? $s->reference : 'null', 'RenfortPriceCalculator::setSupport');
 		$this->support = $s;
+		$this->inside = $this->support? ($this->support->reference == Item::TYPE_CHROMALUXE ? 40 : 20) : 20;
 	}
 
 	/**
@@ -30,14 +32,14 @@ class RenfortPriceCalculator extends PriceCalculator
 	 *
 	 *	@return float Price of item for supplied width and height.
 	 */
-	public function price($w, $h, $min = false) {
+	public function price($w, $h) {
 		if(!$this->inited) return 0;
 
-		$minus_inside = $this->support? ($this->support->reference == Item::TYPE_CHROMALUXE ? 40 : 20) : 20;
-		$x = ($w + $h - $minus_inside) / 50;
+		$x = ($w + $h - $this->inside) / 50;
 		$price = $this->getPrice('Renfort') * $x;
+		Yii::trace('w='.$w.', h='.$h.', in='.$this->inside.', p='.(100*$x).' €='.$price, 'RenfortPriceCalculator::price');
 
-		$minPrice = $this->getPrice('RenfortPrixMin');
+		$minPrice = $this->getPrice('Renfort_Min');
 		if($price < $minPrice) $price = $minPrice;
 
 		return round($price, 2);

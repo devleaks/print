@@ -6,18 +6,20 @@ use yii\helpers\Html;
 /* @var $content string main view render result */
 ?>
 
-Votre commande <?=$model->name ?> est prête.
+<p>Votre commande <?=$model->name ?> est prête.</p>
 
---
-Labo JJ Micheli
+<hr />
 
-Ouvert du lundi au vendredi de 9h00 à 18h30, sans interruption.
+<p>Labo JJ Micheli</p>
 
-21-23 rue de Tervaete, 1040 Bruxelles
-Tél. +32 (0)2 733 21 85
-e-Mail: info@labojjmicheli.be
-www.labojjmicheli.be
+<p>Ouvert du lundi au vendredi de 9h00 à 18h30, sans interruption.</p>
 
-BNP Paribas Fortis
-IBAN: BE55 2100 3814 9344 - BIC: GEBABEBB
-TVA: BE 428 746 631
+<p>21-23 rue de Tervaete, 1040 Bruxelles<br/>
+
+Tél. +32 (0)2 733 21 85<br/>
+e-Mail: info@labojjmicheli.be<br/>
+www.labojjmicheli.be</p>
+
+<p>BNP Paribas Fortis<br/>
+IBAN: BE55 2100 3814 9344 - BIC: GEBABEBB<br/>
+TVA: BE 428 746 631</p>

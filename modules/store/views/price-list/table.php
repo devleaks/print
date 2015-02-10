@@ -8,13 +8,18 @@ use yii\widgets\DetailView;
 /* @var $model app\models\PriceListItem */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Price List Items'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['..']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Composite Price Lists'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="price-list-item-view">
 
 	<?= $content ?>
 
-	<?= Html::a('<span class="glyphicon glyphicon-print"></span> '.Yii::t('store', 'Print'), Url::to(['print', 'id' => $model->id]), ['class' => 'btn btn-primary', 'target' => '_blank']) ?>
-
+	<div class="btn-group"><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+	 	<span class="glyphicon glyphicon-print"></span> <?= Yii::t('store', 'Print') ?> <span class="caret"></span></button><ul class="dropdown-menu" role="menu">
+						<li><?= Html::a(Yii::t('store', 'Portrait'),  ['print', 'id' => $model->id, 'format' => 'P'], ['target' => '_blank', 'title' => Yii::t('store', 'Portrait')]) ?></li>
+						<li><?= Html::a(Yii::t('store', 'Landscape'), ['print', 'id' => $model->id, 'format' => 'L'], ['target' => '_blank', 'title' => Yii::t('store', 'Landscape')]) ?></li>
+		</ul>
+	</div>
 </div>

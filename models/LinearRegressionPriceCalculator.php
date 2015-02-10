@@ -24,19 +24,19 @@ class LinearRegressionPriceCalculator extends PriceCalculator
 	/**
 	 *	@param float $w Width, in centimeters
 	 *	@param float $h Height, in centimeters
-	 *	@param boolean $min Whether there is a minimum price to be applied.
 	 *
 	 *	@return float Price of item for supplied width and height.
 	 */
-	public function price($w, $h, $min = false) {
+	public function price($w, $h) {
 		if(!$this->inited) return 0;
 
 		$x = ($this->type == self::PERIMETER) ? ($w + $h) / 50 : $w * $h / 10000;
 
+
 		$price = ($this->reg_a ? $this->reg_a->prix_de_vente : 0) * $x + ($this->reg_b ? $this->reg_b->prix_de_vente : 0);
 
-		if($min && $price < $item->prix_de_vente)
-			$price = $item->prix_de_vente;
+		if($w < 60 && $h < 60)
+			Yii::trace($w.'x'.$h.'='.$x.'=>'.$price, 'now');
 
 		return round($price, 2);
 	}

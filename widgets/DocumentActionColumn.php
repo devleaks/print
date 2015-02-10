@@ -5,6 +5,7 @@ namespace app\widgets;
 use Yii;
 use app\widgets\GridViewPDF;
 use yii\grid\Column;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -400,6 +401,7 @@ class DocumentActionColumn extends Column {
 		return $this->renderDataCellContent($model, null, null);
 	}
 
+
     /**
      * Parses and formats a grid column
      */
@@ -408,24 +410,33 @@ class DocumentActionColumn extends Column {
             Html::addCssStyle($this->headerOptions, "text-align:{$this->hAlign};");
             Html::addCssStyle($this->contentOptions, "text-align:{$this->hAlign};");
             Html::addCssStyle($this->footerOptions, "text-align:{$this->hAlign};");
+            Html::addCssStyle($this->pageSummaryOptions, "text-align:{$this->hAlign};");
         }
         if ($this->noWrap) {
             Html::addCssStyle($this->headerOptions, "white-space: nowrap;");
             Html::addCssStyle($this->contentOptions, "white-space: nowrap;");
             Html::addCssStyle($this->footerOptions, "white-space: nowrap;");
+            Html::addCssStyle($this->pageSummaryOptions, "white-space: nowrap;");
         }
         if ($this->vAlign === GridViewPDF::ALIGN_TOP || $this->vAlign === GridViewPDF::ALIGN_MIDDLE || $this->vAlign === GridViewPDF::ALIGN_BOTTOM) {
-            Html::addCssStyle($this->headerOptions, "vertical-align:{$this->hAlign};");
-            Html::addCssStyle($this->contentOptions, "vertical-align:{$this->hAlign};");
-            Html::addCssStyle($this->footerOptions, "vertical-align:{$this->hAlign};");
+            Html::addCssStyle($this->headerOptions, "vertical-align:{$this->vAlign};");
+            Html::addCssStyle($this->contentOptions, "vertical-align:{$this->vAlign};");
+            Html::addCssStyle($this->footerOptions, "vertical-align:{$this->vAlign};");
+            Html::addCssStyle($this->pageSummaryOptions, "text-align:{$this->vAlign};");
         }
         if (trim($this->width) != '') {
             Html::addCssStyle($this->headerOptions, "width:{$this->width};");
             Html::addCssStyle($this->contentOptions, "width:{$this->width};");
             Html::addCssStyle($this->footerOptions, "width:{$this->width};");
+            Html::addCssStyle($this->pageSummaryOptions, "width:{$this->width};");
         }
     }
 
-	public function renderPageSummaryCell() { } // when used in kartik's GridView
+
+	public function renderPageSummaryCell() { // when used in kartik's GridView
+        $prepend = ArrayHelper::remove($this->pageSummaryOptions, 'prepend', '');
+        $append = ArrayHelper::remove($this->pageSummaryOptions, 'append', '');
+        return Html::tag('td', $prepend . '&nbsp;' . $append, $this->pageSummaryOptions);
+	}
     
 }

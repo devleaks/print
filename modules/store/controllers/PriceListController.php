@@ -76,10 +76,10 @@ class PriceListController extends Controller
     }
 
 	
-	public function actionPrint($id, $filename = null) {
+	public function actionPrint($id, $format = 'L', $filename = null) {
 		$pdf = new PDFLetter([
 			'controller'	=> $this,
-			'orientation'	=> PDFLetter::ORIENT_LANDSCAPE,
+			'orientation'	=> (($format == 'L') ? PDFLetter::ORIENT_LANDSCAPE : PDFLetter::ORIENT_PORTRAIT),
 			'content'		=> $this->getTable($id, true),
 			'filename'		=> $filename,
 		]);

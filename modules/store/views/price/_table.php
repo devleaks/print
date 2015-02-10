@@ -1,14 +1,14 @@
 <?php
-use app\models\Item;
-use app\models\Parameter;
-use app\models\DocumentLine;
-use app\models\PriceCalculator;
 use app\models\ChromaLuxePriceCalculator;
+use app\models\DocumentLine;
 use app\models\ExhibitPriceCalculator;
-use app\models\MontagePriceCalculator;
+use app\models\Item;
+use app\models\LinearRegressionPriceCalculator;
+use app\models\Parameter;
+use app\models\PriceCalculator;
 use app\models\RenfortPriceCalculator;
-use yii\helpers\Html;
 use kartik\widgets\TouchSpin;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Item */
@@ -41,12 +41,11 @@ if($model->reference == Item::TYPE_CHROMALUXE) {
 	$stp_h = $hval[2];
 }
 
-$can_adjust = is_a($priceCalculator, PriceCalculator::className())
-					&& !is_a($priceCalculator, ChromaLuxePriceCalculator::className())
-					&& !is_a($priceCalculator, ExhibitPriceCalculator::className())
-					&& !is_a($priceCalculator, MontagePriceCalculator::className())
-					&& !is_a($priceCalculator, RenfortPriceCalculator::className());
+$can_adjust = is_a($priceCalculator, LinearRegressionPriceCalculator::className());
 $chromaluxe = is_a($priceCalculator, ChromaLuxePriceCalculator::className());
+$exhibit    = is_a($priceCalculator, ExhibitPriceCalculator::className());
+
+if(is_a($priceCalculator, RenfortPriceCalculator::className())) $priceCalculator->inside = 40;
 ?>
 <div class="print-price">
 
@@ -161,7 +160,7 @@ $chromaluxe = is_a($priceCalculator, ChromaLuxePriceCalculator::className());
 		echo '<th class="text-center">'.$h.'</th>';
 		for($w = $min_w; $w <= $max_w; $w = $w + $stp_w) {
 			if($chromaluxe)
-				echo '<td class="text-center adjust chroma'.$priceCalculator->getSize($w*$h).'" data-xval="'.($priceCalculator->type == $priceCalculator::SURFACE ? ($w*$h) : ($w+$h)/50).'">'.$priceCalculator->price($w,$h).'</td>';//$h.'&times;'.$w
+				echo '<td class="text-center adjust chroma'.$priceCalculator->getSize($w*$h).'" data-xval="'.($w*$h).'">'.$priceCalculator->price($w,$h).'</td>';//$h.'&times;'.$w
 			else
 				echo '<td class="text-center adjust" data-xval="'.($priceCalculator->type == $priceCalculator::SURFACE ? ($w*$h/10000) : ($w+$h)/50).'">'.$priceCalculator->price($w,$h).'</td>';//$h.'&times;'.$w
 		}
@@ -183,8 +182,13 @@ $chromaluxe = is_a($priceCalculator, ChromaLuxePriceCalculator::className());
 ?>
 	</tbody>
 	<tfoot>
+<?php if(is_a($priceCalculator, RenfortPriceCalculator::className())): ?>
 		<tr>
-			<td colspan="<?= ceil($max_w/$stp_w) + 1 ?>" style="text-align: right; font-size: 9px;"><?= date('d-m-Y') ?></td>
+			<td colspan="<?= ceil($max_w/$stp_w) + 1 ?>" style="text-align: right; font-size: 9px;"><?= Yii::t('store', 'Inside: '.($priceCalculator->inside / 4).' cm.') ?></td>
+		</tr>
+<?php endif;?>
+		<tr>
+			<td colspan="<?= ceil($max_w/$stp_w) + 1 ?>" style="text-align: right; font-size: 9px;"><?= Yii::t('print', 'Printed on').' ' .date('d-m-Y') ?></td>
 		</tr>
 	</tfoot>
 </table>
@@ -205,8 +209,12 @@ $(".adjust-reg").change(function() {
 	reg_b = parseFloat($("input[name='reg_b']").val());
 	$(".adjust").each(function() {
 		x = parseFloat($(this).data('xval'));
+<?php if($exhibit): ?>
+		// if Exhibit and dim < 30
+		if(x < 1.2) x = 1.2;
+<?php endif; ?>
 		p = reg_a * x + reg_b;
-		$(this).html(Math.round(100*p)/100);
+		$(this).html(Math.ceil(p));
 	});
 });
 
@@ -222,7 +230,7 @@ chroma =  {
 	w_max: <?= $w_max ?>,
 	h_max: <?= $h_max ?>,
 	s_max: <?= $h_max * $w_max ?>,
-	min_price: <?= Item::findOne(['reference'=>'ChromaMin'])->prix_de_vente ?>
+	min_price: <?= Item::findOne(['reference'=>'Chroma_Min'])->prix_de_vente ?>
 }
 
 function getSize(s) {

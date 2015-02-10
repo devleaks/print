@@ -32,12 +32,12 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 			$this->surfaces[$size] = Parameter::findOne(['domain' => 'formule', 'name' => 'ChromaLuxe'.$size]);
 		}
 
-		$this->min_price = $this->getPrice('ChromaMin');
+		$this->min_price = $this->getPrice('Chroma_Min');
 		$this->inited = true;		
 	}
 
 	
-	public function price($w, $h, $min = false) {
+	public function price($w, $h) {
 		if(!$this->inited) return 0;
 
 		$maxlen = min($this->w_max, $this->h_max);

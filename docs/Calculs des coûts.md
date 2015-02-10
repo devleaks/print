@@ -82,8 +82,8 @@ Ces données doivent être données en centimètres.
 	SINON
 		ERREUR = Surface supérieure à surface maximum.
 		
-	SI PRIX < Parametre(ChromaMin)
-	ALORS Prix = Parametre(ChromaMin)
+	SI PRIX < Parametre(Chroma_Min)
+	ALORS Prix = Parametre(Chroma_Min)
 
 #### Paramètres
 
@@ -125,8 +125,8 @@ Ces cinq articles sont dans la catégorie 'ChromaSupport'.
 
 	Prix = 2 x (largeur - 20 +  hauteur - 20) x Prix(Renfort) / 100
 	
-	SI Prix < Prix(RenfortPrixMin)
-	ALORS Prix = Prix(RenfortPrixMin)
+	SI Prix < Prix(Renfort_Min)
+	ALORS Prix = Prix(Renfort_Min)
 
 La valeur 20 soustraite aux dimensions n'est pas un paramètre pour l'instant.
 
@@ -136,7 +136,7 @@ La valeur 20 soustraite aux dimensions n'est pas un paramètre pour l'instant.
 Article|Explication
 -------|-----------
 Renfort|Prix du renfort, en € par mètre
-RenfortPrixMin|Prix minimum pour les renforts
+Renfort_Min|Prix minimum pour les renforts
 
 ## Coût des cadres "Nielsen"
 ### Formule
@@ -230,6 +230,54 @@ Intuitivement, les paramètres correspondent à
 * X_A: Le coût de mise en route, et aussi coût minimal.
 * X_B: Le coût "au mètre carré" de l'article.
 
+
+# Règles Métiers
+
+Les règles suivantes ont été ajoutées.
+
+## Arrondis
+
+### Articles
+
+Les prix des ChromaLuxe et des cadres sont arrondis à l'unité supérieure.
+
+Tous les autres prix sont arrondis à la demi unité la plus proche.
+
+
+### Calculs intermédiaires, TVA, etc.
+
+Dans tous les calculs intermédiaires (par exemple prix unitaire multiplié par quantité, application de la TVA de 21% sur les articles, etc.)
+les montants sont arrondis au centime.
+
+
+### Ristournes et Suppléments
+
+Les remises et suppléments sont arrondis au centime.
+
+
+### Factures globales et montants à payer
+
+Le montant final total TVA comprise, et le montant final total hors TVA _dans le cas d'une facture sans TVA_, est arrondi à 5 centimes.
+(Note dans le cas d'une facture avec TVA, le montant final total hors TVA est arrondi au centime.)
+
+
+## Renforts
+
+Le prix des renforts est basé sur le périmètre des renforts placés.
+
+Les renforts sont placés 10cm à l'intérieur des bords d'un ChromaLuxe.
+
+Les renforts sont placés 5cm à l'intérieur des bords de tous les autres supports.
+
+Ceci n'est bien sûr valable que pour le calcul du prix des renforts.
+Les renforts peuvent toujours être placés arbitrairement plus à l'intérieur ou à l'extérieur, mais cela n'affectera pas le calcul du coût.
+
+Le prix minimum pour les renforts est celui de l'article Renfort_Min.
+
+
+## ChromaLuxe
+
+Le prix minimum pour les ChromaLuxe est le prix de l'article ChromaLuxe_Min.
 
 
 

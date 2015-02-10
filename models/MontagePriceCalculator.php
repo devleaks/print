@@ -17,7 +17,7 @@ class MontagePriceCalculator extends PriceCalculator
 	 *
 	 *	@return float Price of item for supplied width and height.
 	 */
-	public function price($w, $h, $min = false) {
+	public function price($w, $h) {
 		$limit = Parameter::getIntegerValue('formule','LargeFrame');
 
 		$price = ($w + $h) > $limit ? $this->getPrice('Montage170L') : $this->getPrice('Montage170S');

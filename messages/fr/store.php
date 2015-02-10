@@ -351,6 +351,9 @@ return [
 	'By Date' => 'Par date',
 	'By Number' => 'Par numéro',
 	'Composite Price Lists' => 'Listes de prix composites',
+	'Create Price List' => 'Créer une liste des prix',
+	'Name' => 'Nom',
+	'Sizes' => 'Dimensions',
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',

@@ -208,33 +208,7 @@ class DocumentLineController extends Controller
         }
     }
 
-	public function actionItemList($search = null, $id = null) {
-	    $out = ['more' => false];
-	    if (!is_null($search)) {
-	        $query = new Query;
-	        $query->select('id, libelle_long AS text') // id, concat(libelle_long," //",reference) as text
-	            ->from('item')
-	            ->orWhere(['like', 'libelle_long', $search])
-	            ->orWhere(['like', 'reference', $search])
-	            ->andWhere(['status' => [Item::STATUS_ACTIVE, Item::STATUS_EXTRA]])
-	            ->limit(50);
-	        $command = $query->createCommand();
-	        $data = $command->queryAll();
-	        $out['results'] = array_values($data);
-	    }
-	    elseif ($id > 0) {
-	        $out['results'] = [
-				'id' => $id,
-				'text' => Item::findOne($id)->libelle_long,
-				'item' => Item::find()->where(['id'=>$id])->asArray()->one()
-			];
-	    }
-	    else {
-	        $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
-	    }
-	    echo Json::encode($out);
-	}
-	
+
 	/** Creates (first) order line of an order
 	 *
 	 */
@@ -339,4 +313,51 @@ class DocumentLineController extends Controller
 		$model = $this->findModel($id);
 		return $model->generateLabels();
 	}
+	
+	
+	/**
+	 * Ajax helper functions
+	 */
+	public function actionItemList($search = null, $id = null) {
+	    $out = ['more' => false];
+	    if (!is_null($search)) {
+	        $query = new Query;
+	        $query->select('id, libelle_long AS text') // id, concat(libelle_long," //",reference) as text
+	            ->from('item')
+	            ->orWhere(['like', 'libelle_long', $search])
+	            ->orWhere(['like', 'reference', $search])
+	            ->andWhere(['status' => [Item::STATUS_ACTIVE, Item::STATUS_EXTRA]])
+	            ->limit(50);
+	        $command = $query->createCommand();
+	        $data = $command->queryAll();
+	        $out['results'] = array_values($data);
+	    }
+	    elseif ($id > 0) {
+	        $out['results'] = [
+				'id' => $id,
+				'text' => Item::findOne($id)->libelle_long,
+				'item' => Item::find()->where(['id'=>$id])->asArray()->one()
+			];
+	    }
+	    else {
+	        $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
+	    }
+	    echo Json::encode($out);
+	}
+
+	
+	public function actionItemPrice($id, $w, $h) {
+		$out = [];
+		if ( $item = Item::findOne($id) ) {
+			if ( $pc = $item->getPriceCalculator() ) {
+				$price = $pc->roundPrice($w, $h);
+				$out = ['price' => $price, 'error_msg' => null];
+			} else // item not found
+				$out = ['price' => 0, 'error_msg' => 'Price calculator not found.'];
+		} else // item not found
+			$out = ['price' => 0, 'error_msg' => 'Item not found.'];
+	    echo Json::encode($out);
+	}
+	
+	
 }

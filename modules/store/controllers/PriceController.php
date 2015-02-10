@@ -48,6 +48,7 @@ class PriceController extends Controller
 															ItemCategory::FRAME,
 															ItemCategory::UV,
 															ItemCategory::MONTAGE,
+															ItemCategory::PROTECTION => Yii::t('store', ItemCategory::PROTECTION),
 						 ]])->andWhere(['status' => Item::STATUS_ACTIVE]);
 		
         return $this->render('index', [

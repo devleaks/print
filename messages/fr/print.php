@@ -93,6 +93,7 @@ return [
 	'Qty' => 'Qté',		//'Quantité',
 	'Ref.' => 'Réf.',	//'Reference',
 	'U.Pc' => 'P.Un',	//Unit Price
+	'Printed on' => 'Imprimé le ',
 	
 	/** Footer Doc */
 	'Advance' => 'Acompte',
