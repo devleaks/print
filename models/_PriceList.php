@@ -33,12 +33,12 @@ class _PriceList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'sizes'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 80],
             [['note'], 'string', 'max' => 160],
-            [['status'], 'string', 'max' => 20],
-            [['sizes'], 'string', 'max' => 255]
+            [['sizes'], 'string', 'max' => 255],
+            [['status'], 'string', 'max' => 20]
         ];
     }
 

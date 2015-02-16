@@ -45,7 +45,10 @@ class PriceCalculator extends Model
 
 
 	/**
-	 * Rounds a price to nearest 0.5.
+	 *	@param float $w Width, in centimeters
+	 *	@param float $h Height, in centimeters
+	 *
+	 *	@return float Price of item for supplied width and height always rounded to larger integer.
 	 */
 	public function roundPrice($w, $h) {
 		return ceil($this->price($w, $h));
@@ -53,7 +56,10 @@ class PriceCalculator extends Model
 
 
 	/**
-	 * Rounds a price to nearest 0.5, format as currency (with € sign)
+	 *	@param float $w Width, in centimeters
+	 *	@param float $h Height, in centimeters
+	 *
+	 *	@return string Price of item for supplied width and height always rounded to larger integer and formatted as currency.
 	 */
 	public function formattedRoundPrice($w, $h) {
 		return Yii::$app->formatter->asCurrency( ceil($this->price($w, $h)) );

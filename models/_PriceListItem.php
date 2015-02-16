@@ -34,8 +34,8 @@ class _PriceListItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['price_list_id', 'item_id', 'position'], 'required'],
             [['price_list_id', 'item_id', 'position'], 'integer'],
-            [['item_id', 'position'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['status'], 'string', 'max' => 20]
         ];

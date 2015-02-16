@@ -109,7 +109,7 @@ class Item extends _Item
 	 * @return array()
 	 */
 	public static function getListForCategory($category, $addnull = false) {
-		$arr = ArrayHelper::map(self::find()->where(['yii_category' => $category, 'status' => 'ACTIVE'])->asArray()->all(), 'id', 'libelle_long');
+		$arr = ArrayHelper::map(self::find()->where(['yii_category' => $category, 'status' => self::STATUS_ACTIVE])->orderBy('libelle_long')->asArray()->all(), 'id', 'libelle_long');
 		return $addnull ? ['' =>  ''] + $arr : $arr;
 	}
 

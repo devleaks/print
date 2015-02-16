@@ -93,7 +93,9 @@ foreach($model->getPriceListItems()->orderBy('position')->each() as $pli) {
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="<?= $model->getPriceListItems()->select('position')->distinct()->count() + 1 ?>" style="text-align: right; font-size: 9px;"><?= Yii::t('print', 'Printed on').' ' .date('d-m-Y') ?></td>
+			<td colspan="<?= $model->getPriceListItems()->select('position')->distinct()->count() + 1 ?>" style="text-align: right; font-size: 9px;">
+				<?= Yii::t('print', 'All price VAT excluded.') .Yii::t('print', 'Printed on').' ' .date('d-m-Y') ?>
+			</td>
 		</tr>
 	</tfoot>
 </table>

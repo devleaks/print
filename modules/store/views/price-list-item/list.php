@@ -36,9 +36,10 @@ $dataProvider = new ActiveDataProvider([
 			[
 				'class' => 'yii\grid\ActionColumn',
              	'controller' => 'price-list-item',
-			 	'template' => '{update} {delete}']
-	        ],
-    ]); ?>
+			 	'template' => '{update} {delete}'
+			]
+		],
+	]); ?>
 
 	<?php
 		$pli = new PriceListItem();

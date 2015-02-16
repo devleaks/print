@@ -10,6 +10,7 @@ class DocumentLineDetail extends _DocumentLineDetail
 	public $free_item_libelle;
 	public $free_item_price_htva;
 	public $free_item_vat;
+	public $tirage_factor_virgule;
 	
     /**
      * @inheritdoc
@@ -19,9 +20,9 @@ class DocumentLineDetail extends _DocumentLineDetail
         return array_merge(parent::rules(), [
 			// added for computation.
 			//[['unit_price'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
-            [['free_item_price_htva', 'free_item_vat'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
+            [['free_item_price_htva', 'free_item_vat', 'tirage_factor_virgule'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
             [['free_item_libelle'], 'string', 'max' => 80],
-            [['free_item_libelle', 'free_item_price_htva', 'free_item_vat'], 'safe'],
+            [['free_item_libelle', 'free_item_price_htva', 'free_item_vat', 'tirage_factor_virgule'], 'safe'],
        ]);
     }
 
@@ -34,6 +35,7 @@ class DocumentLineDetail extends _DocumentLineDetail
 	        'free_item_price_htva' => Yii::t('store', 'Free Item Price Htva'),
 	        'free_item_libelle' => Yii::t('store', 'Free Item Libelle'),
 	        'free_item_vat' => Yii::t('store', 'Free Item Vat'),
+	        'tirage_factor_virgule' => Yii::t('store', 'Tirage Factor'),
         ]);
     }
 

@@ -22,7 +22,8 @@ use yii\grid\GridView;
 			'action_template' => '{view} {update} {delete}'
 		])
 	?>
-
+<?php else: ?>
+	<br/><br/>
 <?php endif; ?>
 
 <?php if(!in_array($order->document_type, [$order::TYPE_CREDIT,$order::TYPE_REFUND])) {

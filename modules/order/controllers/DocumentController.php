@@ -4,8 +4,6 @@ namespace app\modules\order\controllers;
 
 use Yii;
 use app\components\RuntimeDirectoryManager;
-use app\models\PrintedDocument;
-use app\models\PDFLabel;
 use app\models\Account;
 use app\models\Bid;
 use app\models\BidSearch;
@@ -22,13 +20,15 @@ use app\models\DocumentSearch;
 use app\models\Item;
 use app\models\Order;
 use app\models\OrderSearch;
+use app\models\PDFLabel;
 use app\models\Parameter;
 use app\models\Payment;
+use app\models\PrintedDocument;
+use app\models\Refund;
+use app\models\RefundSearch;
 use app\models\Sequence;
 use app\models\Ticket;
 use app\models\TicketSearch;
-use app\models\Refund;
-use app\models\RefundSearch;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\filters\VerbFilter;
@@ -524,6 +524,16 @@ class DocumentController extends Controller
 		return $this->actionUpdateStatus($id, Document::STATUS_TOPAY);
 	}
 
+	public function actionSent2($id) {
+		$model = $this->findModel($id);
+		if($model->document_type == Document::TYPE_ORDER)
+			$model->notify();
+		$model->setStatus(Document::STATUS_TOPAY);
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+	}
+
 	public function actionCancel($id) {
 		return $this->actionUpdateStatus($id, Document::STATUS_CANCELLED);
 	}
@@ -543,9 +553,9 @@ class DocumentController extends Controller
 			
 			if($captureEmail->email != '') {
 				$pdf = new PrintedDocument([
-					'controller' => $this,
 					'document' => $model,
 					'save' => true,
+					'images' => true,
 				]);
 				$pdf->send(Yii::t('store', $model->document_type).' '.$model->name, $captureEmail->body, $captureEmail->email);
 				Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
@@ -561,10 +571,11 @@ class DocumentController extends Controller
 
 	public function actionPdf($id, $format = PrintedDocument::FORMAT_A4) {
 		$model = $this->findModel($id);
+		$f = $format == PrintedDocument::IMAGES ? PrintedDocument::FORMAT_A4 : $format;
 		$pdf = new PrintedDocument([
-			'controller' => $this,
-			'document' => $model,
-			'format'	=> $format,
+			'document'	=> $model,
+			'format'	=> $f,
+			'images'	=> ($format == PrintedDocument::IMAGES),
 		]);
 		return $pdf->render();
 	}

@@ -64,7 +64,7 @@ return [
 	'Checks' => 'Contrôles',
 	'Client Account' => 'Compte client',
 	'Client Accounts' => 'Comptes clients',
-	'Client has no email address. No notification mail sent.' => "Le client n'a pas d'adresse email; il n'a pas été averti de la réalisation de sa commande.",
+	'Client has not been notified.' => "Le client n'a pas été averti de la réalisation de sa commande.",
 	'Client updated' => 'Fiche client mise à jour',
 	'Client without Popsy Account Identifier' => 'Clients sans identifiant Popsy',
 	'Clients with bills and without Popsy Identifier' => 'Clients ayant des factures et sans identifiant Popsy',
@@ -309,6 +309,8 @@ return [
 	'by' => 'par',
 	'for' => 'pour',
 	'{document} updated' => '{document} mise à jour',
+	'Notify' => 'Avertir',
+	'Tirage Factor' => 'Coeff.Tirage',
 
 	'Add a payment' => 'Ajouter un paiement',
 	'Amount is too large to balance all credit notes. Customer left with {0}€ to pay.' => 'Montant à payer supérieur aux montants disponibles sur les notes de crédits. Montant à compléter: {0}€.',
@@ -354,6 +356,10 @@ return [
 	'Create Price List' => 'Créer une liste des prix',
 	'Name' => 'Nom',
 	'Sizes' => 'Dimensions',
+	'Start Price' => 'Prix de départ',
+	'Price by {0}' => 'Prix au {0}',
+	'Adjust Price' => 'Ajuster les prix',
+	'meter' => 'mètre',
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',
@@ -549,6 +555,7 @@ return [
 	'DONE' => 'Terminé',
 	'FACTURE' => 'Facture',
 	'NOTIFIED' => 'Envoyé',
+	'NOTIFY' => 'Avertir',
 	'OPEN' => 'Ouverte',
 	'ORDER' => 'Commande',
 	'PAID' => 'Payé',

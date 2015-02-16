@@ -33,6 +33,7 @@ use Yii;
  * @property double $price_chassis
  * @property integer $filmuv_bool
  * @property double $price_filmuv
+ * @property double $tirage_factor
  *
  * @property Item $finish
  * @property Item $chroma
@@ -62,7 +63,7 @@ class _DocumentLineDetail extends \yii\db\ActiveRecord
         return [
             [['document_line_id'], 'required'],
             [['document_line_id', 'chroma_id', 'corner_bool', 'renfort_bool', 'frame_id', 'montage_bool', 'finish_id', 'support_id', 'tirage_id', 'collage_id', 'protection_id', 'chassis_id', 'filmuv_bool'], 'integer'],
-            [['price_chroma', 'price_corner', 'price_renfort', 'price_frame', 'price_montage', 'price_support', 'price_tirage', 'price_collage', 'price_protection', 'price_chassis', 'price_filmuv'], 'number'],
+            [['price_chroma', 'price_corner', 'price_renfort', 'price_frame', 'price_montage', 'price_support', 'price_tirage', 'price_collage', 'price_protection', 'price_chassis', 'price_filmuv', 'tirage_factor'], 'number'],
             [['note'], 'string', 'max' => 160]
         ];
     }
@@ -99,6 +100,7 @@ class _DocumentLineDetail extends \yii\db\ActiveRecord
             'price_chassis' => Yii::t('store', 'Price Chassis'),
             'filmuv_bool' => Yii::t('store', 'Filmuv Bool'),
             'price_filmuv' => Yii::t('store', 'Price Filmuv'),
+            'tirage_factor' => Yii::t('store', 'Tirage Factor'),
         ];
     }
 

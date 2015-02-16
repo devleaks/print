@@ -41,6 +41,8 @@ class Document extends _Document
 	/** */
 	const STATUS_DONE = 'DONE';
 	/** */
+	const STATUS_NOTIFY = 'NOTIFY';
+	/** */
 	const STATUS_TOPAY = 'TOPAY';
 	/** */
 	const STATUS_PAID = 'PAID';
@@ -195,6 +197,7 @@ class Document extends _Document
 			self::STATUS_CREATED => Yii::t('store', self::STATUS_CREATED),
 			self::STATUS_SOLDE => Yii::t('store', self::STATUS_SOLDE),
 			self::STATUS_DONE => Yii::t('store', self::STATUS_DONE),
+			self::STATUS_NOTIFY => Yii::t('store', self::STATUS_NOTIFY),
 			self::STATUS_TOPAY => Yii::t('store', self::STATUS_TOPAY),
 			self::STATUS_OPEN => Yii::t('store', self::STATUS_OPEN),
 			self::STATUS_PAID => Yii::t('store', self::STATUS_PAID),
@@ -232,6 +235,7 @@ class Document extends _Document
 			self::STATUS_CREATED => 'success',
 			self::STATUS_SOLDE => 'primary',
 			self::STATUS_DONE => 'success',
+			self::STATUS_NOTIFY => 'primary',
 			self::STATUS_TOPAY => 'info',
 			self::STATUS_OPEN => 'primary',
 			self::STATUS_PAID => 'success',

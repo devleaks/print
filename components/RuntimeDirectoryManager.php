@@ -16,7 +16,19 @@ class RuntimeDirectoryManager {
 	 */
 
 	/** */
+	const FILESTORE_DOCUMENTS = 'documents';
+	/** */
+	const FILESTORE_PICTURES = 'pictures';
+	/** */
+	const FILESTORE_BACKUPS = 'backup';
+	/** */
 	const BACKUP = 'BACKUP';
+	/** */
+	const BACKUP_MEDIA = 'BACKUP_MEDIA';
+	/** */
+	const BACKUP1 = 'BACKUP1';
+	/** */
+	const BACKUP_MEDIA1 = 'BACKUP_MEDIA1';
 	/** */
 	const DAILY_REPORT = 'DAILY_REPORT';
 	/** */
@@ -39,7 +51,10 @@ class RuntimeDirectoryManager {
 		self::ACCOUNT => 'document/account/{client:name}-{date}',
 		self::DAILY_REPORT => 'compta/daily/{date}',
 		self::EXTRACTION => 'compta/extraction/{date}',
-		self::BACKUP => 'backup/{date}',
+		self::BACKUP => '{name}-{datetime}.gz',
+		self::BACKUP_MEDIA => 'media-{datetime}.taz',
+		self::BACKUP1 => '{name}.gz',
+		self::BACKUP_MEDIA1 => 'media.taz',
 		self::DOCUMENT => 'document/document/{client:name}/{model:name}',
 		self::PICTURES => '{id}/{name}',
 		self::FRAME_ORDERS => 'document/frames/{client:name}-{date}',
@@ -88,7 +103,7 @@ class RuntimeDirectoryManager {
 	/**
 	 * Get storage root
 	 */
-	private static function getFileStoreDirectory() {
+	public static function getFileStoreDirectory() {
 		return Yii::getAlias('@app').DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR;
 	}	
 
@@ -103,14 +118,24 @@ class RuntimeDirectoryManager {
 	 * Get document root
 	 */
 	public static function getDocumentRoot() {
-		return self::getFileRoot('documents');
+		return self::getFileRoot(self::FILESTORE_DOCUMENTS);
 	}	
 
 	/**
 	 * Get picture root
 	 */
 	public static function getPictureRoot() {
-		return self::getFileRoot('pictures');
+		return self::getFileRoot(self::FILESTORE_PICTURES);
+	}	
+
+	/**
+	 * Get backup root
+	 */
+	public static function getBackupRoot() {
+		$backup_dir = Yii::getAlias('@runtime') . '/' . self::FILESTORE_BACKUPS . '/';
+		if(!is_dir($backup_dir))
+			mkdir($backup_dir);
+		return $backup_dir;
 	}	
 
 	/*	Creates file name of requested purpose.
@@ -129,6 +154,7 @@ class RuntimeDirectoryManager {
 
 		$template = self::$TEMPLATE[$for];
 		$template = str_replace('{date}', date('Y-m-d'), $template);
+		$template = str_replace('{datetime}', date('Y-m-d-H-i-s'), $template);
 		$template = str_replace('{for}', $for, $template);
 		if($model)
 			$template = str_replace('{model:name}', $model->name, $template);			
@@ -139,7 +165,11 @@ class RuntimeDirectoryManager {
 
 		$template = str_replace('{name}', $name, $template);
 		
-		$filename = self::checkPDF($template); // @web not defined in web\application
+		if(in_array($for,[self::BACKUP, self::BACKUP1, self::BACKUP_MEDIA, self::BACKUP_MEDIA1]))
+			$filename = $template; // @web not defined in web\application
+		else
+			$filename = self::checkPDF($template); // @web not defined in web\application
+		
 		Yii::trace('filename='.$filename, 'RuntimeDirectoryManager::getFilename');
 		
 		return self::checkDir(dirname($filename)) ? $filename : null;

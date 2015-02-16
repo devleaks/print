@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+if(! $model->sizes)
+	$model->sizes = '20x30,24x30,30x30,30x40,30x45,40x40,40x50,40x60,50x60,50x70,50x75,60x80,60x90,75x75,70x100,75x100,75x112,80x120,100x100,100x125,100x150';
 /* @var $this yii\web\View */
 /* @var $model app\models\PriceList */
 /* @var $form yii\widgets\ActiveForm */

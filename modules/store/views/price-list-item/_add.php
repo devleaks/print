@@ -24,8 +24,16 @@ use yii\widgets\ActiveForm;
     <?= Html::activeHiddenInput($model, 'price_list_id') ?>
 
     <?= $form->field($model, 'item_id')->dropDownList(ArrayHelper::map(Item::find()->where(['yii_category' => [
-						ItemCategory::CHROMALUXE, ItemCategory::RENFORT, ItemCategory::TIRAGE, ItemCategory::SUPPORT, ItemCategory::FRAME, ItemCategory::UV, ItemCategory::PROTECTION, ItemCategory::MONTAGE
-						]])->asArray()->all(), 'id', 'libelle_long')) ?>
+						ItemCategory::CHROMALUXE,
+						ItemCategory::TIRAGE,
+						ItemCategory::SUPPORT,
+						ItemCategory::MONTAGE,
+						ItemCategory::RENFORT,
+						ItemCategory::FRAME,
+						ItemCategory::UV,
+						ItemCategory::PROTECTION
+						]])
+						->andWhere(['status' => Item::STATUS_ACTIVE])->orderBy('yii_category,libelle_long')->asArray()->all(), 'id', 'libelle_long')) ?>
 
     <?= $form->field($model, 'position')->textInput() ?>
 

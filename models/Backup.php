@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use app\components\RuntimeDirectoryManager;
 
 /**
  * This is the model class for table "backup".
@@ -81,7 +82,9 @@ class Backup extends \yii\db\ActiveRecord
 		return $db;
 	}
 
-	public function doBackup($uniq = true) {
+
+	protected function executeBackup($full, $uniq) {
+		$now = date("Y-m-d-H-i-s");
 		$dsn = $this->getDb()->dsn;
 		$db  = Backup::parseDSN($dsn);
 		$dbhost = $db['host'];
@@ -89,26 +92,41 @@ class Backup extends \yii\db\ActiveRecord
 		$dbuser = $this->getDb()->username;
 		$dbpass = $this->getDb()->password;
 
-		$backup_file = $uniq ? $dbname . date("Y-m-d-H-i-s") . '.gz' : $dbname . '.gz';
-		$backup_dir  = Yii::getAlias('@runtime') . '/backup/';
-		if(!is_dir($backup_dir))
-			mkdir($backup_dir);
+		$backup_dir  = RuntimeDirectoryManager::getBackupRoot();
 			
-		$command = "/Applications/mampstack/mysql/bin/mysqldump --opt -h $dbhost -u $dbuser -p$dbpass ".$dbname.
-		           "| gzip > ". $backup_dir . $backup_file;
-
+		// Database
+		$mylsqldump = Yii::$app->params['mysql_home'] . 'bin/mysqldump';
+		$db_backup_file = RuntimeDirectoryManager::getFilename($uniq ? RuntimeDirectoryManager::BACKUP : RuntimeDirectoryManager::BACKUP1, $dbname);
+		$command = $mylsqldump . " --opt -h $dbhost -u $dbuser -p$dbpass ".$dbname.
+		           "| gzip > ". $backup_dir . $db_backup_file;
 		system($command, $status);
 		Yii::trace($command.': '.$status, 'BackupController::doBackup');
 
+		if($full) {	// Media
+			$media_backup_file = RuntimeDirectoryManager::getFilename($uniq ? RuntimeDirectoryManager::BACKUP_MEDIA : RuntimeDirectoryManager::BACKUP_MEDIA1, $dbname);
+			$command = "(cd ".RuntimeDirectoryManager::getFileStoreDirectory().
+				" ; tar czf $media_backup_file ".RuntimeDirectoryManager::FILESTORE_PICTURES." ".RuntimeDirectoryManager::FILESTORE_DOCUMENTS.")";
+			system($command, $status);
+			Yii::trace($command.': '.$status, 'BackupController::doBackup');
+		}
+
 		if($status == 0) { // ok
-			$this->filename = $backup_file;
+			$this->filename = $db_backup_file;
 			$this->status = 'OK';
 		}
 		return ($status == 0);
 	}
 	
+	public function doBackup($uniq = true) {
+		return $this->executeBackup(false, $uniq);
+	}
+
+	public function doFullBackup($uniq = true) {
+		return $this->executeBackup(true, $uniq);
+	}
+
 	public function delete() {
-		$backup_file = Yii::getAlias('@runtime') . '/backup/' . $this->filename;
+		$backup_file = RuntimeDirectoryManager::getBackupRoot() . $this->filename;
 		if(is_file($backup_file))
 			unlink($backup_file);
 		parent::delete();

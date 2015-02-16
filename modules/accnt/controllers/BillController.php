@@ -245,7 +245,6 @@ class BillController extends Controller
 									$type = floor($days / 30);
 									if($type > 3) $type = 3;
 									$pdf = new PrintedDocument([
-										'controller'	=> $this,
 										'document'		=> $bill,
 										'watermark'		=> Yii::t('store', 'Reminder Type '.$type),
 										'save'			=> true,

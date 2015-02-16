@@ -23,6 +23,18 @@ class BackupController extends Controller {
 		}
     }
 
+    public function actionFull($uniq = true) {
+        $model = new Backup();
+
+		if($model->doFullBackup($uniq != 'false')) {
+			if($model->save()) {
+				echo Yii::t('store', 'Backup completed.');
+				}
+		} else {
+			echo Yii::t('store', 'There was an error producing the backup.');
+		}
+    }
+
 	/**
 	 *  Deletes all backup older than given days.
 	 *

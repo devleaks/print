@@ -41,7 +41,7 @@ if($model->reference == Item::TYPE_CHROMALUXE) {
 	$stp_h = $hval[2];
 }
 
-$can_adjust = is_a($priceCalculator, LinearRegressionPriceCalculator::className());
+$is_reglin = is_a($priceCalculator, LinearRegressionPriceCalculator::className());
 $chromaluxe = is_a($priceCalculator, ChromaLuxePriceCalculator::className());
 $exhibit    = is_a($priceCalculator, ExhibitPriceCalculator::className());
 
@@ -49,29 +49,15 @@ if(is_a($priceCalculator, RenfortPriceCalculator::className())) $priceCalculator
 ?>
 <div class="print-price">
 
-    <h1><?= Html::encode($this->title) . (($can_adjust || $chromaluxe) && !$print ? ' <a href="#" id="adjust-price-button" class="btn btn-sm btn-primary">'.Yii::t('store', 'Adjust Price').'</a>' : '') ?></h1>
+    <h1><?= Html::encode($this->title) . (($is_reglin || $chromaluxe) && !$print ? ' <a href="#" id="adjust-price-button" class="btn btn-sm btn-primary">'.Yii::t('store', 'Adjust Price').'</a>' : '') ?></h1>
 
 	<div id="adjusts-price">
 
-<?php if($can_adjust && !$print): ?>
+<?php if($is_reglin && !$print): ?>
 	<div class="row">
 	
 		<div class="col-lg-2">
-			<?= TouchSpin::widget([
-						'name' => 'reg_a',
-						'pluginOptions' => [
-							'initval' => $priceCalculator->reg_a->prix_de_vente,
-							'verticalbuttons' => true,
-							'min' => 0,
-							'max' => 200,
-							'step' => 0.1,
-							'decimals' => 1,
-						],
-						'options' => ['class' => 'adjust-reg'],
-			]) ?>
-		</div>
-
-		<div class="col-lg-2">
+			<?= Html::label($priceCalculator->reg_b->reference) ?>
 			<?= TouchSpin::widget([
 						'name' => 'reg_b',
 						'pluginOptions' => [
@@ -84,9 +70,29 @@ if(is_a($priceCalculator, RenfortPriceCalculator::className())) $priceCalculator
 						],
 						'options' => ['class' => 'adjust-reg'],
 			]) ?>
+			<?= Html::label(Yii::t('store', 'Start Price'))?>
+		</div>
+
+		<div class="col-lg-2">
+			<?= Html::label($priceCalculator->reg_a->reference) ?>
+			<?= TouchSpin::widget([
+						'name' => 'reg_a',
+						'pluginOptions' => [
+							'initval' => $priceCalculator->reg_a->prix_de_vente,
+							'verticalbuttons' => true,
+							'min' => 0,
+							'max' => 200,
+							'step' => 0.1,
+							'decimals' => 1,
+						],
+						'options' => ['class' => 'adjust-reg'],
+			]) ?>
+			<?= Html::label(Yii::t('store', 'Price by {0}', $priceCalculator->type == 'P' ? Yii::t('store', 'meter') : 'm<SUP>2</SUP>')) ?>
 		</div>
 
 	</div>
+	<br/><br/>
+
 <?php endif; ?>
 
 <?php if($chromaluxe && !$print): ?>
@@ -132,11 +138,9 @@ if(is_a($priceCalculator, RenfortPriceCalculator::className())) $priceCalculator
 		<?php endforeach; ?>
 
 	</div>
+	<br/><br/>
+
 <?php endif; ?>
-
-	<br/>
-	<br/>
-
 	</div><!--adjusts-price-->
 
 	<div class="row">
@@ -188,7 +192,7 @@ if(is_a($priceCalculator, RenfortPriceCalculator::className())) $priceCalculator
 		</tr>
 <?php endif;?>
 		<tr>
-			<td colspan="<?= ceil($max_w/$stp_w) + 1 ?>" style="text-align: right; font-size: 9px;"><?= Yii::t('print', 'Printed on').' ' .date('d-m-Y') ?></td>
+			<td colspan="<?= ceil($max_w/$stp_w) + 1 ?>" style="text-align: right; font-size: 9px;"><?= Yii::t('print', 'All price VAT excluded.') . Yii::t('print', 'Printed on').' ' .date('d-m-Y') ?></td>
 		</tr>
 	</tfoot>
 </table>

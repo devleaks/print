@@ -51,7 +51,8 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 	?>		
 	</div>
 	
-	<div class="yiipanel-Tirage">	
+	<div class="yiipanel-Tirage">
+	<?= Html::activeHiddenInput($detail, 'tirage_factor') ?>	
 	<?= Form::widget([
 		    'model' => $detail,
 		    'form' => $form,
@@ -61,11 +62,14 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 					'type' => Form::INPUT_DROPDOWN_LIST,
 					'items' => Item::getListForCategory(ItemCategory::TIRAGE, true) + Item::getListForCategory(ItemCategory::CANVAS),
 					'options' => ['class' => 'form-control ItemTirage ItemCanvas'],
-		            'columnOptions' => ['colspan' => 4],
+		            'columnOptions' => ['colspan' => 3],
 				],
 		        'price_tirage' => [
 					'type' => Form::INPUT_TEXT,
 					'options' => ['readonly' => true, 'class' => 'form-control ItemTirage ItemCanvas']
+				],
+		        'tirage_factor_virgule' => [
+					'type' => Form::INPUT_TEXT,
 				],
 		        'finish_id' => [
 					'type' => Form::INPUT_RADIO_LIST,

@@ -70,7 +70,7 @@ class Order extends Document
 	 * @inheritdoc
 	 */
 	protected function statusUpdated() {
-		Yii::trace('up', 'Order::statusUpdated()');
+		Yii::trace('status='.$this->status, 'Order::statusUpdated()');
 		if($this->status == self::STATUS_CANCELLED) {
 			if($work = $this->getWorks()->one()) {
 				foreach($work->getWorkLines()->each() as $wl) {
@@ -106,14 +106,60 @@ class Order extends Document
 		}
 	}
 
+
+    /**
+     * If order is completed, send email to client, and create bill if parameters allow it.
+	 */
+	public function notify() {
+		Yii::trace('Order::notify');
+		if($this->client->email != '') {
+			$lang_before = Yii::$app->language;
+			Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
+			try {
+				Yii::$app->mailer->compose('order-completed', ['model' => $this])
+				    ->setFrom( Yii::$app->params['fromEmail'] )
+				    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )
+					->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
+				    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)
+				    ->send();
+				Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
+			} catch (Swift_TransportException $STe) {
+				Yii::error($STe->getMessage(), 'CoverLetter::send::ste');
+				Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
+			} catch (Exception $e) {
+				Yii::error($e->getMessage(), 'CoverLetter::send::e');				
+				Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
+			}
+			Yii::$app->language = $lang_before;
+		} else {
+			$this->status = self::STATUS_NOTIFY;
+			$this->save();
+			Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.'));
+		}
+	}
+
+
     /**
      * If order is completed, send email to client, and create bill if parameters allow it.
 	 */
 	private function completed() {
 		Yii::trace('Order::completed');
+		$send_it = true;
 		// 1. notify client of completion
 		if(Parameter::isTrue('application', 'auto_notify_completion')) {
-			if($this->client->email != '') {
+
+			$now = date('Y-m-d H:i:s');
+			if($this->due_date > $now) {
+				if($date_limit = Parameter::getIntegerValue('application', 'min_days')) {
+					$diff = strtotime($this->due_date) - time(); // in secs.
+					$diff = floor($diff / (24 * 60 * 60));
+					if($diff > $date_limit)
+						$send_it = false;
+					Yii::trace('Min days='.$date_limit.', diff='.$diff.': '.($send_it ? 'send it' : 'DO NOT send it'));
+				}
+			} // else, due_date < now, so we are late, so we notify of completion
+
+			if($this->client->email != '' && $send_it) {
 				Yii::trace('auto_notify_completion '.$this->id, 'Order::completed');
 				$lang_before = Yii::$app->language;
 				Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
@@ -121,6 +167,7 @@ class Order extends Document
 					Yii::$app->mailer->compose('order-completed', ['model' => $this])
 					    ->setFrom( Yii::$app->params['fromEmail'] )
 					    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )
+						->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
 					    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)
 					    ->send();
 					Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
@@ -133,7 +180,9 @@ class Order extends Document
 				}
 				Yii::$app->language = $lang_before;
 			} else {
-				Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has no email address. No notification mail sent.'));
+				$this->status = self::STATUS_NOTIFY;
+				$this->save();
+				Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.'));
 			}
 		}
 		// 2. Create bill from order
@@ -224,6 +273,8 @@ class Order extends Document
 				} else
 					$actions[] = '{terminate}';
 				break;
+			case $this::STATUS_NOTIFY:
+				$actions[] = '{notify}';
 			case $this::STATUS_SOLDE:
 			case $this::STATUS_TOPAY:
 			case $this::STATUS_DONE:

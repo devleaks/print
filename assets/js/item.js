@@ -5,13 +5,13 @@ function arrondir2(i) {
 	return Math.round( i * 100 ) / 100;
 }
 
+function arrondir_sup(i) {
+	return Math.ceil( i );
+}
+
 /* no longer used. Rounding performed in PriceCalculator only as a business rule
 function arrondir(i) {
 	return Math.round( i );
-}
-
-function arrondir_sup(i) {
-	return Math.ceil( i );
 }
 
 function arrondir5(i) {
@@ -215,6 +215,7 @@ $("#documentline-quantity, #documentline-unit_price, #documentline-vat").change(
 	$("#documentline-extra_amount").trigger("change");
 });
 
+
 $("#documentline-quantity_virgule").change( function() {
 	$("#documentline-quantity").val($("#documentline-quantity_virgule").val().replace(",","."));
 	$("#documentline-quantity").trigger('change');
@@ -243,6 +244,22 @@ $("#documentline-work_height_virgule").change( function() {
 $("#documentline-work_width_virgule").change( function() {
 	$("#documentline-work_width").val($("#documentline-work_width_virgule").val().replace(",","."));
 	$("#documentline-work_width").trigger('change');
+});
+
+$("#documentlinedetail-tirage_factor_virgule").change( function() {
+	$("#documentlinedetail-tirage_factor").val($("#documentlinedetail-tirage_factor_virgule").val().replace(",","."));
+	$("#documentlinedetail-tirage_factor").trigger('change');
+});
+
+$("#documentlinedetail-tirage_factor").change( function() {
+	factor = parseFloat($("#documentlinedetail-tirage_factor").val());
+	if(isNaN(factor)) {
+		factor = 1.0;
+		$("#documentlinedetail-tirage_factor").val(factor);
+		$("#documentlinedetail-tirage_factor_virgule").val('1,0');
+	}
+	$('#documentlinedetail-price_tirage:enabled').val(arrondir_sup(item.prix_de_vente * factor));
+	$('#documentlinedetail-price_tirage:enabled').trigger('change');
 });
 
 /**
@@ -439,6 +456,7 @@ function price_filmuv() {
 	$("#documentlinedetail-price_filmuv:enabled").trigger('change');	
 }
 
+
 /** Montage */
 function price_montage() {
 	montage = $("input[name='DocumentLineDetail[montage_bool]']").is(':checked');
@@ -463,6 +481,7 @@ function price_montage() {
 
 	$("#documentlinedetail-price_montage:enabled").trigger('change');
 }
+
 
 /** ChromaLuxe */
 function price_chromaluxe() {
@@ -507,6 +526,7 @@ function price_chromaluxe() {
 		add_error("CHROMALUXE_TYPE");
 	}
 }
+
 
 function enableMontage() {
 	frame_id = parseInt($("#documentlinedetail-frame_id:enabled").val());
@@ -578,8 +598,6 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 	}
 	del_error("FINEART_NO_TIRAGE");
 	
-	item = getItemById(item_id);
-	$('#documentlinedetail-price_tirage:enabled').val(item.prix_de_vente);
 //	console.log('tirage_id: prix: '+item.prix_de_vente);
 
 	// if it changed, need to change item_id as well
@@ -612,6 +630,7 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			break;
 		case 'Papier Fine Art':
 			$("#store-form-shared").toggle(true);
+			$('div.field-documentlinedetail-finish_id').toggle(true);
 			$('div.field-documentlinedetail-support_id').toggle(true);
 			$('div.field-documentlinedetail-price_support').toggle(true);
 			$('div.field-documentlinedetail-frame_id').toggle(true);
@@ -623,7 +642,6 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$('div.field-documentlinedetail-protection_id').toggle(true);
 			$('div.field-documentlinedetail-price_protection').toggle(true);
 
-			$('div.field-documentlinedetail-finish_id input[type="radio"]').prop('checked',false);
 			$('#documentlinedetail-chassis_id').val('');
 			$('#documentlinedetail-price_chassis:enabled').val('');
 			$("#documentlinedetail-filmuv_bool:enabled").prop('checked',false);
@@ -650,6 +668,7 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$("#documentlinedetail-price_filmuv:enabled").val('');
 			break;
 		default: /** sans tirage */
+			$('div.field-documentlinedetail-finish_id').toggle(true);
 			$('div.field-documentlinedetail-support_id').toggle(true);
 			$('div.field-documentlinedetail-price_support').toggle(true);
 			$('div.field-documentlinedetail-frame_id').toggle(true);
@@ -667,7 +686,7 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$('#documentlinedetail-price_chassis:enabled').val('');
 			break;
 	}
-	$('#documentlinedetail-price_tirage:enabled').trigger('change');
+	$("#documentlinedetail-tirage_factor").trigger('change');
 });
 
 $("#documentlinedetail-support_id:enabled").change(function() {

@@ -10,6 +10,8 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$detail->tirage_factor_virgule = str_replace('.',',',$detail->tirage_factor);
+
 ?>
 <div class="document-line-update-options-tirage">
 
@@ -19,6 +21,7 @@ use yii\helpers\Url;
 
     <div>
 
+	<?= Html::activeHiddenInput($detail, 'tirage_factor') ?>	
 	<?=	Form::widget([
 		    'model' => $detail,
 		    'form' => $form,
@@ -28,11 +31,14 @@ use yii\helpers\Url;
 					'type' => Form::INPUT_DROPDOWN_LIST,
 					'items' => Item::getListForCategory(ItemCategory::TIRAGE, true) + Item::getListForCategory(ItemCategory::CANVAS),
 					'options' => ['class' => 'form-control'],
-		            'columnOptions' => ['colspan' => 4],
+		            'columnOptions' => ['colspan' => 3],
 				],
 		        'price_tirage' => [
 					'type' => Form::INPUT_TEXT,
 					'options' => ['readonly' => true, 'class' => 'form-control ']
+				],
+		        'tirage_factor_virgule' => [
+					'type' => Form::INPUT_TEXT,
 				],
 		        'finish_id' => [
 					'type' => Form::INPUT_RADIO_LIST,

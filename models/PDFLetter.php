@@ -10,13 +10,11 @@ use Yii;
 use app\components\RuntimeDirectoryManager;
 
 class PDFLetter extends PDFDocument {
-	public $controller;
 	public $language = 'fr';
 	public $destination;
 	
 	/** Example:
 			$pdfLetter = new PDFLetter([
-				'controller'=> $controller,
 				'filename'	=> $filename,
 				'content'	=> $content,
 				'watermark'	=> $watermark,
@@ -30,7 +28,7 @@ class PDFLetter extends PDFDocument {
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['controller', 'language'], 'safe'],
+            [['language'], 'safe'],
         ]);
     }
 

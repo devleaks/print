@@ -94,6 +94,7 @@ return [
 	'Ref.' => 'Réf.',	//'Reference',
 	'U.Pc' => 'P.Un',	//Unit Price
 	'Printed on' => 'Imprimé le ',
+	'All price VAT excluded.' => 'Prix HTVA.',
 	
 	/** Footer Doc */
 	'Advance' => 'Acompte',
@@ -199,6 +200,7 @@ return [
 	'DEVIS' => 'Devis',
 	'DONE' => 'Terminé',
 	'FACTURE' => 'Facture',
+	'NOTIFY' => 'Avertir',
 	'NOTIFIED' => 'Envoyé',
 	'OPEN' => 'Ouverte',
 	'ORDER' => 'Commande',

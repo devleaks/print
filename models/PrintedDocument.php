@@ -13,14 +13,21 @@ use app\models\Pdf;
 
 class PrintedDocument extends PDFLetter {
 	const SEP = '-';
+	const IMAGES = 'I';
+	const TABLE_IMAGES = 'T';
+	const ANNEX_IMAGES = 'A';
 	
 	public $document;
+
+	/** include images in doc, if available */
+	public $images = false;
 	
+	public $images_loc = self::TABLE_IMAGES;
+
 	public $viewBase;
 	
 	/** Example:
 			$printedDocument = new PrintedDocument([
-				'controller'=> $controller,
 				'format'	=> PDFDocument::FORMAT_A4,
 				'document'	=> $document,
 				'watermark'	=> $watermark,
@@ -69,8 +76,9 @@ class PrintedDocument extends PDFLetter {
      * @inheritdoc
      */
 	public function render() {
+		Yii::trace('Image = '.($this->images?'T':'F'), 'PrintedDocument::render');
 	 	$vb = $this->viewBase ? $this->viewBase : '@app/modules/store/prints/document/';
-	    $this->content = Yii::$app->controller->renderPartial($vb.'body', ['model' => $this->document]);
+	    $this->content = Yii::$app->controller->renderPartial($vb.'body', ['model' => $this->document, 'images' => $this->images ? $this->images_loc : false]);
 
 		return parent::render();
 	}

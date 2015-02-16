@@ -33,7 +33,6 @@ class CoverLetter extends PDFLetter {
 
 	/** Example:
 			$pdfDocument = new PDFDocument([
-				'controller'=> $controller,
 				'format'	=> PDFDocument::FORMAT_A4,
 				'orientation'=> PDFDocument::ORIENT_PORTRAIT,
 				'filename'	=> $filename,
@@ -109,6 +108,7 @@ class CoverLetter extends PDFLetter {
 				$mail = Yii::$app->mailer->compose()
 					->setFrom( Yii::$app->params['fromEmail'] )
 					->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )
+					->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
 					->setSubject($this->subject)
 					->setTextBody($this->body)
 					->attach($this->filename, ['fileName' => basename($this->filename), 'contentType' => 'application/pdf']);

@@ -11,6 +11,7 @@ use yii\base\Model;
 class RenfortPriceCalculator extends PriceCalculator
 {
 	public $support;
+	public $frame;
 	public $inside = 0;
 	
 	public function init() {
@@ -20,24 +21,33 @@ class RenfortPriceCalculator extends PriceCalculator
 
 
 	function setSupport($s) {
-		Yii::trace($s ? $s->reference : 'null', 'RenfortPriceCalculator::setSupport');
 		$this->support = $s;
 		$this->inside = $this->support? ($this->support->reference == Item::TYPE_CHROMALUXE ? 40 : 20) : 20;
+	}
+
+	function setFrame($f) {
+		$this->frame = $f;
 	}
 
 	/**
 	 *	@param float $w Width, in centimeters
 	 *	@param float $h Height, in centimeters
-	 *	@param boolean $min Whether there is a minimum price to be applied.
 	 *
-	 *	@return float Price of item for supplied width and height.
+	 *	@return float Price of item for supplied width and height always rounded to 2 decimals.
 	 */
 	public function price($w, $h) {
 		if(!$this->inited) return 0;
 
+		if($this->frame) {
+			$maxWidth = Parameter::getIntegerValue('formule', 'RenfortMaxWidth');
+			$maxHeight = Parameter::getIntegerValue('formule', 'RenfortMaxHeight');
+			if($w > $maxWidth || $h > $maxHeight) // force renfort, but it is free
+				return 0;
+		}
+
 		$x = ($w + $h - $this->inside) / 50;
 		$price = $this->getPrice('Renfort') * $x;
-		Yii::trace('w='.$w.', h='.$h.', in='.$this->inside.', p='.(100*$x).' €='.$price, 'RenfortPriceCalculator::price');
+//		Yii::trace('w='.$w.', h='.$h.', in='.$this->inside.', p='.(100*$x).' €='.$price, 'RenfortPriceCalculator::price');
 
 		$minPrice = $this->getPrice('Renfort_Min');
 		if($price < $minPrice) $price = $minPrice;

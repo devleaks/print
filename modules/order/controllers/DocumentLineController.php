@@ -4,6 +4,7 @@ namespace app\modules\order\controllers;
 
 use Yii;
 use app\models\Item;
+use app\models\ItemCategory;
 use app\models\Document;
 use app\models\DocumentLine;
 use app\models\DocumentLineDetail;
@@ -327,6 +328,16 @@ class DocumentLineController extends Controller
 	            ->orWhere(['like', 'libelle_long', $search])
 	            ->orWhere(['like', 'reference', $search])
 	            ->andWhere(['status' => [Item::STATUS_ACTIVE, Item::STATUS_EXTRA]])
+	            ->andWhere(['NOT', ['yii_category' => [
+						ItemCategory::CHROMALUXE_PARAM ,
+						ItemCategory::FRAME_PARAM ,
+						ItemCategory::RENFORT_PARAM ,
+						ItemCategory::SUPPORT_PARAM ,
+						ItemCategory::TIRAGE_PARAM ,
+						ItemCategory::MONTAGE_PARAM ,
+						ItemCategory::CORNER_PARAM ,
+						ItemCategory::PROTECTION_PARAM
+					]]])
 	            ->limit(50);
 	        $command = $query->createCommand();
 	        $data = $command->queryAll();

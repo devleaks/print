@@ -82,6 +82,7 @@ class ItemCategory {
 			self::SUPPORT_PARAM => Yii::t('store', self::SUPPORT_PARAM),
 			self::TIRAGE => Yii::t('store', self::TIRAGE),
 			self::TIRAGE_PARAM => Yii::t('store', self::TIRAGE_PARAM),
+			self::MONTAGE => Yii::t('store', self::MONTAGE),
 			self::MONTAGE_PARAM => Yii::t('store', self::MONTAGE_PARAM),
 			self::CORNER_PARAM => Yii::t('store', self::CORNER_PARAM),
 			self::PROTECTION => Yii::t('store', self::PROTECTION),

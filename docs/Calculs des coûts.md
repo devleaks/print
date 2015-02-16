@@ -212,8 +212,8 @@ La formule de calcul, générique, est:
 
 Intuitivement, les paramètres correspondent à
 
-* X_A: Le coût de mise en route, et aussi coût minimal.
-* X_B: Le coût "au mètre" de l'article.
+* X_B: Le coût de mise en route, et aussi coût minimal.
+* X_A: Le coût "au mètre" de l'article.
 
 ## Coût des articles vendu "à la surface"
 
@@ -227,8 +227,8 @@ La formule de calcul, générique, est:
 
 Intuitivement, les paramètres correspondent à
 
-* X_A: Le coût de mise en route, et aussi coût minimal.
-* X_B: Le coût "au mètre carré" de l'article.
+* X_B: Le coût de mise en route, et aussi coût minimal.
+* X_A: Le coût "au mètre carré" de l'article.
 
 
 # Règles Métiers
@@ -280,4 +280,8 @@ Le prix minimum pour les renforts est celui de l'article Renfort_Min.
 Le prix minimum pour les ChromaLuxe est le prix de l'article ChromaLuxe_Min.
 
 
+## Prix Minimum
 
+Certains articles possèdent un "prix minimum", de mise en route, pour des petites dimensions.
+
+Le prix minimum d'un article dont la référence est `REF` est déterminé par le `prix_de_vente` de l'article dont la référence est `REF_Min`.

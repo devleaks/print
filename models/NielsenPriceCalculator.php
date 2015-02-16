@@ -11,11 +11,4 @@ use yii\base\Model;
 class NielsenPriceCalculator extends LinearRegressionPriceCalculator
 {
 
-	public function init() {
-		if(!$this->item) return;
-		$this->reg_a = $this->item;
-		$this->reg_b = null;
-		if($this->reg_a) $this->inited = true;		
-	}
-
 }

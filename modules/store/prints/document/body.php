@@ -1,5 +1,6 @@
 <?php
 
+use app\models\PrintedDocument;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 
@@ -23,7 +24,8 @@ $use_gridview = false;
 					'query' => $model->getDocumentLines(),
 					'pagination' => false,
 			]),
-			'order' => $model
+			'order' => $model,
+			'images' => ($images == PrintedDocument::TABLE_IMAGES)
 	    ])
 	?>
 
@@ -31,5 +33,14 @@ $use_gridview = false;
 			'model' => $model,
 	    ])
 	?>
+	
+	<?php if($images == PrintedDocument::ANNEX_IMAGES && $model->hasPicture()): ?>
+		<pagebreak />
+		<h3><?= Yii::t('print', 'Annexes') ?></h3>
+	<?= $this->render('../label/pics', [
+			'order' => $model
+	    ])
+	?>
+	<?php endif; ?>
 
 </div>

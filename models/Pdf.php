@@ -46,14 +46,16 @@ class Pdf extends _Pdf
 	
 	public function send($subject, $body, $email = null) {
 		$dest = $email ? $email : $this->client->email;
+		$fn = RuntimeDirectoryManager::getDocumentRoot().$this->filename;
 		if($dest != '') {
 			try {
 				$mail = Yii::$app->mailer->compose()
 					->setFrom( Yii::$app->params['fromEmail'] )
 					->setTo( YII_ENV_DEV ? Yii::$app->params['testEmail'] : $dest )
+					->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
 					->setSubject( $subject )
 					->setTextBody( $body )
-					->attach( $this->filename, ['fileName' => basename($this->filename), 'contentType' => 'application/pdf'] )
+					->attach( $fn, ['fileName' => basename($this->filename), 'contentType' => 'application/pdf'] )
 					->send();
 				$this->sent();
 				Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');

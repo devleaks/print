@@ -130,9 +130,10 @@ class PDFDocument extends Model {
 		//Yii::trace('save?='.$this->save, 'PDFDocument::getPdfData');		
 		if($this->save) {
 			$this->generateFilename();
-			//Yii::trace('filename='.$this->filename, 'PDFDocument::getPdfData');		
 			$pdfData['destination'] = Pdf::DEST_FILE;
-			$pdfData['filename'] = RuntimeDirectoryManager::getDocumentRoot().$this->filename;
+			$fn = RuntimeDirectoryManager::getDocumentRoot().$this->filename;
+			$pdfData['filename'] = $fn;
+			Yii::trace('pdfDate[filename]='.$fn, 'PDFDocument::getPdfData');		
 		} else {
 			$pdfData['destination'] = Pdf::DEST_BROWSER;
 		}
