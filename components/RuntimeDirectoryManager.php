@@ -50,7 +50,7 @@ class RuntimeDirectoryManager {
 		self::LATE_BILLS => 'document/late-bill/{client:name}-{name}',
 		self::ACCOUNT => 'document/account/{client:name}-{date}',
 		self::DAILY_REPORT => 'compta/daily/{date}',
-		self::EXTRACTION => 'compta/extraction/{date}',
+		self::EXTRACTION => 'compta/extraction/{name}-{date}.txt',
 		self::BACKUP => '{name}-{datetime}.gz',
 		self::BACKUP_MEDIA => 'media-{datetime}.taz',
 		self::BACKUP1 => '{name}.gz',
@@ -165,10 +165,10 @@ class RuntimeDirectoryManager {
 
 		$template = str_replace('{name}', $name, $template);
 		
-		if(in_array($for,[self::BACKUP, self::BACKUP1, self::BACKUP_MEDIA, self::BACKUP_MEDIA1]))
-			$filename = $template; // @web not defined in web\application
-		else
-			$filename = self::checkPDF($template); // @web not defined in web\application
+		$filename = in_array($for, [self::BACKUP, self::BACKUP1, self::BACKUP_MEDIA, self::BACKUP_MEDIA1, self::EXTRACTION]) ? 
+					$template
+					:
+					self::checkPDF($template);
 		
 		Yii::trace('filename='.$filename, 'RuntimeDirectoryManager::getFilename');
 		

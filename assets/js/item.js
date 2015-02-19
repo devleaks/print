@@ -266,20 +266,39 @@ $("#documentlinedetail-tirage_factor").change( function() {
  *	Changes in main order line
  *  Compute rebate/supplement
  */
+function getMainPrice() {
+	item_id = parseInt($("#documentline-item_id").val());
+	return parseFloat((item_id == store_values.chroma) ? $('#documentlinedetail-price_chroma:enabled').val() : $('#documentlinedetail-price_tirage:enabled').val());
+}
+
+function getAccessoryPrice() {
+	return parseFloat($("#documentline-price_htva").val()) - getMainPrice();
+}
+
 $("#documentline-extra_amount, #documentline-extra_type").change( function() {
 	extra_type = $("#documentline-extra_type").val();
 	if(extra_type != '') {
-		amount = parseFloat(extra_type.indexOf("PERCENT") > -1 ? $("#documentline-price_htva").val() * ($("#documentline-extra_amount").val()/100) : $("#documentline-extra_amount").val());
-		if(amount > 0) {
-			asigne = extra_type.indexOf("SUPPLEMENT_") > -1 ? 1 : -1;
-			amount = arrondir2(asigne * amount);
+		if(extra_type == 'REBATE_FIRST' || extra_type == 'REBATE_ACCESS') {
+			percent = parseFloat($("#documentline-extra_amount").val()/100);
+			item_price = (extra_type == 'REBATE_FIRST') ? getMainPrice() : getAccessoryPrice();
+			console.log('item for rebate='+item_price)
+			amount = arrondir2( - item_price * percent);
 			$("#documentline-extra_htva").val(amount);
 			$("#documentline-final_htva").val(arrondir2(parseFloat($("#documentline-price_htva").val()) + amount));
 			$("#documentline-final_tvac").val(arrondir2(parseFloat($("#documentline-final_htva").val()) * (1 + $("#documentline-vat").val() / 100)));
-		} else if (amount == 0) {
-			$("#documentline-extra_htva").val('');
-			$("#documentline-final_htva").val('');
-			$("#documentline-final_tvac").val('');
+		} else {
+			amount = parseFloat(extra_type.indexOf("PERCENT") > -1 ? $("#documentline-price_htva").val() * ($("#documentline-extra_amount").val()/100) : $("#documentline-extra_amount").val());
+			if(amount > 0) {
+				asigne = extra_type.indexOf("SUPPLEMENT_") > -1 ? 1 : -1;
+				amount = arrondir2(asigne * amount);
+				$("#documentline-extra_htva").val(amount);
+				$("#documentline-final_htva").val(arrondir2(parseFloat($("#documentline-price_htva").val()) + amount));
+				$("#documentline-final_tvac").val(arrondir2(parseFloat($("#documentline-final_htva").val()) * (1 + $("#documentline-vat").val() / 100)));
+			} else if (amount == 0) {
+				$("#documentline-extra_htva").val('');
+				$("#documentline-final_htva").val('');
+				$("#documentline-final_tvac").val('');
+			}
 		}
 	} else {
 		$("#documentline-extra_htva").val('');

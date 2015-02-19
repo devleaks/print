@@ -8,6 +8,11 @@ use yii\helpers\Html;
 
 <p>Uw bestelling <?=$model->name ?> is klaar.</p>
 
+<p>
+Niet reageren op dit bericht. Dit bericht is automatisch verzonden wanneer uw bestelling compleet is.
+U kunt altijd contact met ons opnemen op <a htref=mailto:commande@labojjmicheli.be>commande@labojjmicheli.be</a>, of per telefoon.
+</p>
+
 <hr />
 
 <p>Labo JJ Micheli</p>

@@ -8,6 +8,11 @@ use yii\helpers\Html;
 
 <p>Votre commande <?=$model->name ?> est prête.</p>
 
+<p>
+Ne répondez pas à ce message. Ce message a été envoyé automatiquement lorsque votre commande est terminée.
+Vous pouvez toujours nous contacter à <a htref=mailto:commande@labojjmicheli.be>commande@labojjmicheli.be</a>, ou par téléphone.
+</p>
+
 <hr />
 
 <p>Labo JJ Micheli</p>

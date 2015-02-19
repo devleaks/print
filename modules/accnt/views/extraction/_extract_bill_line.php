@@ -8,8 +8,7 @@ Line:
       AnalID:               
       VATCode:              <?= $model->vat ?>
 
-      Comment:              <?= $model->note ?>
-
+      Comment:
       FlagDC:               <?= $model->price_htva < 0 ? 'D' : 'C' ?>
 
       AmountCrcy:           <?= $amount ?>

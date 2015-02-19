@@ -35,7 +35,20 @@ class DocumentLine extends _DocumentLine
 	const IMAGE_REPLACE = 'REPLACE';
 	/** */
 	const IMAGE_SIZE_FACTOR = 1.5;
-
+	
+	/** */
+	const EXTRA_REBATE_FIRST = 'REBATE_FIRST';
+	/** */
+	const EXTRA_REBATE_ACCESS = 'REBATE_ACCESS';
+	/** */
+	const EXTRA_REBATE_AMOUNT = 'REBATE_AMOUNT';
+	/** */
+	const EXTRA_REBATE_PERCENTAGE = 'REBATE_PERCENTAGE';
+	/** */
+	const EXTRA_SUPPLEMENT_AMOUNT = 'SUPPLEMENT_AMOUNT';
+	/** */
+	const EXTRA_SUPPLEMENT_PERCENTAGE = 'SUPPLEMENT_PERCENT';
+	
     public $image;
 	public $image_add;
 	public $final_htva;
@@ -171,6 +184,16 @@ class DocumentLine extends _DocumentLine
 		}
 	}
 	
+	
+	protected function getMainPrice() {
+		if($detail = $this->getDetail())
+			return ($this->item_id == Item::TYPE_CHROMALUXE) ? $detail->price_chroma : $detail->price_tirage;
+		return 0;
+	}
+
+	protected function getAccessoryPrice() {
+		return $this->price_htva - $this->getDetailMainPrice();
+	}
 
 	/**
 	 * update price of document line
@@ -183,16 +206,22 @@ class DocumentLine extends _DocumentLine
 				$this->unit_price = $item->prix_de_vente;
 
 			$this->vat = $item->taux_de_tva;
-			// this line regular cost
+			// this line regular amount without rebate/supplement
 			$this->price_htva = $this->quantity * $this->unit_price;
 			$this->price_tvac = $this->price_htva * (1 + ($this->vat / 100));
-			// extra cost
+			// extra amount (signed)
 			if(isset($this->extra_type) && ($this->extra_type != '')) {
 				if(isset($this->extra_amount) && ($this->extra_amount > 0)) {
-					$amount = strpos($this->extra_type, "PERCENT") > -1 ? $this->price_htva * ($this->extra_amount/100) : $this->extra_amount;
-					Yii::trace('amount='.$amount, 'DocumentLine::updatePrice');
-					$asigne = strpos($this->extra_type, "SUPPLEMENT_") > -1 ? 1 : -1;
-					$this->extra_htva = round( $asigne * $amount, 2 );
+					if($this->extra_type == self::EXTRA_REBATE_FIRST || $this->extra_type == self::EXTRA_REBATE_ACCESS) {
+						$percent = $this->extra_amount / 100;
+						$item_price = ($this->extra_type == self::EXTRA_REBATE_FIRST) ? $this->getMainPrice() : $this->getAccessoryPrice();
+						$this->extra_htva = round( - $item_price * $percent, 2 ); // always a rebate
+					} else { // rebate on entire DL amount
+						$amount = strpos($this->extra_type, "PERCENT") > -1 ? $this->price_htva * ($this->extra_amount/100) : $this->extra_amount;
+						Yii::trace('amount='.$amount, 'DocumentLine::updatePrice');
+						$asigne = strpos($this->extra_type, "SUPPLEMENT_") > -1 ? 1 : -1;
+						$this->extra_htva = round( $asigne * $amount, 2 );
+					}
 					Yii::trace('htva='.$this->extra_htva, 'DocumentLine::updatePrice');
 				}
 			}

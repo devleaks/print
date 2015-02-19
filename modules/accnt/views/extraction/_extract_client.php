@@ -3,9 +3,13 @@ use app\models\Parameter;
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
 /* QR1000 is a QRCode Content Identifier. It will increase each time we change the content type or structure. */
+
+$has_vat = ($model->numero_tva && $model->numero_tva != 'Non assujetti');
+
 ?>
 
 Customer:<?= $model->comptabilite == '' ? 'UNKNOWN' : $model->comptabilite ?>
+
 {
       FirstName:            <?= $model->prenom ?>
 
@@ -37,12 +41,15 @@ Customer:<?= $model->comptabilite == '' ? 'UNKNOWN' : $model->comptabilite ?>
 
       Url:                  <?= $model->site_web ?>
 
-      VatType:              0
-      VatNum:               <?= trim(str_replace(' ', '', str_replace('BE', '',$model->numero_tva))) ?>
+      VatType:              <?= $has_vat ? 0 : 7 ?>
 
+      VatNum:               <?= $has_vat ? trim(str_replace(' ', '', str_replace('BE', '',$model->numero_tva))) : 'NA' ?>
+
+<?php if($has_vat): ?>
       VatFormat:            <?= $model->numero_tva ?
 									strpos('BE', $model->numero_tva) > -1 ? 'BE' : substr($model->numero_tva, 0, 2) //pas tout à fait correct...
 									:
 									'' ?>
+<?php endif; ?>
 									
 }

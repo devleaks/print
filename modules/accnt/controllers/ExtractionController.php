@@ -3,16 +3,18 @@
 namespace app\modules\accnt\controllers;
 
 use Yii;
+use app\components\RuntimeDirectoryManager;
 use app\models\Bill;
+use app\models\CaptureExtraction;
+use app\models\Client;
 use app\models\Credit;
 use app\models\Document;
-use app\models\CaptureExtraction;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * ExtractionController implements the CRUD actions for Extraction model.
@@ -121,24 +123,57 @@ class ExtractionController extends Controller
 		if(isset($_POST)) {
 			if(isset($_POST['selection'])) {
 				if(count($_POST['selection']) > 0) {
-					$docs = Document::find()->where(['id' => $_POST['selection']]);
+
+					$gooddocs = $_POST['selection'];
+					
+					// 1. Remove doc where there is an invalid item
+					$baddocs = [];
+					foreach(Document::find()
+									->joinWith('documentLines.item')
+									->andWhere(['document.id' => $_POST['selection']])
+									->andWhere(['item.comptabilite' => ''])->each() as $doc) {
+						$key = array_search($doc->id,$gooddocs);
+						if($key!==false)
+						    unset($gooddocs[$key]);
+						$baddocs[] = $doc;
+					}
+
+					// 2. Remove doc where there is an invalid client
+					$client_ids = [];
+					$badclients = [];
+					$baddocscli = [];
+					foreach(Document::find()->where(['id' => $gooddocs])->each() as $doc) {
+						if( strpos($doc->client->comptabilite, '??') === false && !in_array($doc->client_id, $client_ids) )
+							$client_ids[] = $doc->client_id;
+						if( strpos($doc->client->comptabilite, '??') !== false || $doc->client->comptabilite == '') {
+							$badclients[] = $doc->client_id;
+							$key = array_search($doc->id,$gooddocs);
+							if($key!==false)
+							    unset($gooddocs[$key]);
+							$baddocscli[$doc->client_id] = $doc; // bad doc because client is not valid, this only remember the LAST (if there are several) wrong document for the client
+						}
+					}
+
+					// 3. Export good docs
 			        $extraction = $this->renderPartial('_extract', [
-			            'models' => $docs,
+			            'clients' => Client::find()->where(['id' => $client_ids]),
+			            'models' => Document::find()->where(['id' => $gooddocs]),
 			        ]);
-					$badids = $this->renderPartial('_badids', [
-			            'models' => $docs,
+
+					// 4. Report bad clients and bad docs
+					$badreport = $this->renderPartial('_bad', [
+			            'clients' => Client::find()->where(['id' => $badclients])->orderBy('nom'),
+			            'baddocscli' => $baddocscli,
+			            'models' => $baddocs,
 			        ]);
-					$dirname = Yii::getAlias('@runtime').'/extraction/';
-					if(!is_dir($dirname))
-					    if(!mkdir($dirname, 0777, true)) {
-							Yii::$app->session->setFlash('danger', Yii::t('store', 'Cannot create directory for extraction.'));
-							return $this->redirect(Yii::$app->request->referrer);
-					    }
-					$filename = 'popsi-'.date('Y-m-d-H-i-s');
-					file_put_contents($dirname.$filename.'.txt', $extraction);
-					$link = Html::a($filename, Url::to(['download', 'file' => $filename]));
+
+					$dirname  = RuntimeDirectoryManager::getDocumentRoot();
+					$filename = RuntimeDirectoryManager::getFilename(RuntimeDirectoryManager::EXTRACTION, 'popsi');
+					file_put_contents($dirname.$filename, $extraction);
+
+					$link = Html::a($filename, Url::to(['download', 'file' => $filename]));					
 					Yii::$app->session->setFlash('success', Yii::t('store', 'Extracted in {file}.', ['file' => $link]));
-			        return $this->renderContent($badids . '<pre>'.$extraction.'</pre>');
+			        return $this->renderContent($badreport . '<pre>'.$extraction.'</pre>');
 				}
 			}
 		}
@@ -148,7 +183,7 @@ class ExtractionController extends Controller
 	
 	
 	public function actionDownload($file) {
-		$filename = Yii::getAlias('@runtime').'/extraction/'.$file.'.txt';
+		$filename = RuntimeDirectoryManager::getDocumentRoot().$file;
 		if(file_exists($filename)) {
 		    header('Content-Description: File Transfer');
 		    header('Content-Type: application/octet-stream');

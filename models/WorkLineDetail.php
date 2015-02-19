@@ -61,21 +61,26 @@ class WorkLineDetail extends WorkLine {
         ]);
     }
 
-	public function init2() {
-		parent::init();
-		$cut = 5;
-		$this->margin_width = $cut;
+	public function init_delayed($inside) {
 
+		$this->margin_width = 2 * $inside;
 		$this->cut_minwidth = $this->documentLine->work_width / 2;
 		$this->cut_maxwidth = $this->documentLine->work_width;
 		$this->cut_width = $this->documentLine->work_width - $this->margin_width;
-		$this->cut_width_count = 2;
+		$this->cut_width_count = 2 * $this->documentLine->quantity;
 
-		$this->margin_height = $cut;
-
+		$this->margin_height = 2 * $inside;
 		$this->cut_minheight = $this->documentLine->work_height / 2;
 		$this->cut_maxheight = $this->documentLine->work_height;
 		$this->cut_height = $this->documentLine->work_height - $this->margin_height;
-		$this->cut_height_count = 2;
+		$this->cut_height_count = 2 * $this->documentLine->quantity;
+		
+		$master_width = 2 * Parameter::getIntegerValue('renfort', 'width', Master::DEFAULT_WIDTH) / 10; // in mm
+		if($this->documentLine->work_width > $this->documentLine->work_height)
+			$this->cut_width  -= $master_width;
+		else
+			$this->cut_height -= $master_width;
+
+		parent::init();
 	}
 }

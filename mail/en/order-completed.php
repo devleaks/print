@@ -8,6 +8,11 @@ use yii\helpers\Html;
 
 <p>Your order <?=$model->name ?> is ready.</p>
 
+<p>
+This mail was sent automatically upon completion of your order. Please DO NOT reply to this mail.
+You can always contact us at <a htref=mailto:commande@labojjmicheli.be>commande@labojjmicheli.be</a>, or by phone.
+</p>
+
 <hr />
 
 <p>Labo JJ Micheli</p>

@@ -80,7 +80,7 @@ order by 5 desc
 				'quantity' => 1,
 				'unit_price' => 0,
 				'vat' => $credit_item->taux_de_tva,
-				'extra_type' => 'REBATE_AMOUNT',
+				'extra_type' => DocumentLine::EXTRA_REBATE_AMOUNT,
 				'extra_amount' => $payment->amount,
 				'due_date' => $credit->due_date,
 			]);

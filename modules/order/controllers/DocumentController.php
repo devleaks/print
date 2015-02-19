@@ -240,7 +240,7 @@ class DocumentController extends Controller
 						'vat' => $credit_item->taux_de_tva,
 						'due_date' => $model->due_date,
 					]);
-					$model_line->extra_type = 'REBATE_AMOUNT';
+					$model_line->extra_type = DocumentLine::EXTRA_REBATE_AMOUNT;
 					$model_line->save();
 					return $this->redirect(['document-line/update', 'id' => $model_line->id]);
 				} else if($model->document_type == Document::TYPE_REFUND) {
@@ -253,7 +253,7 @@ class DocumentController extends Controller
 						'vat' => $credit_item->taux_de_tva,
 						'due_date' => $model->due_date,
 					]);
-					$model_line->extra_type = 'REBATE_AMOUNT';
+					$model_line->extra_type = DocumentLine::EXTRA_REBATE_AMOUNT;
 					$model_line->save();
 					return $this->redirect(['document-line/update', 'id' => $model_line->id]);
 				}

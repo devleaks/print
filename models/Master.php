@@ -11,11 +11,14 @@ use yii\db\ActiveRecord;
  */
 class Master extends _Master
 {
-	/** */
+	/** Master default length in cm */
 	const DEFAULT_SIZE = 200;
 
-	/** */
-	const MINIMUM_SIZE = 20;
+	/** MAster width in mm */
+	const DEFAULT_WIDTH = 15;
+
+	/** Master leftover minimum size in mm */
+	const MINIMUM_SIZE = 100;
 
 
     /**

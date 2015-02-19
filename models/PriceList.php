@@ -27,4 +27,10 @@ class PriceList extends _PriceList
                 ],
         ];
     }
+
+	public function deleteCascade() {
+		foreach($this->getPriceListItems()->each() as $p)
+			$p->delete();
+		$this->delete();
+	}
 }

@@ -132,7 +132,7 @@ class PriceListController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)->deleteCascade();
 
         return $this->redirect(['index']);
     }

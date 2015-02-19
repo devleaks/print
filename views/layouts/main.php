@@ -1,11 +1,13 @@
 <?php
 use app\assets\AppAsset;
 use app\assets\CalculatorAsset;
-use devleaks\introjs\IntroJSAsset;
 use devleaks\chardinjs\ChardinJSAsset;
+use devleaks\introjs\IntroJSAsset;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
@@ -38,6 +40,8 @@ ChardinJSAsset::register($this);
                     'class' => 'navbar-inverse navbar-fixed-top'
                 ],
             ]);
+
+
 
 			$menu = [];
 			$menu[] = ['label' => Yii::$app->formatter->asDate(date('c')), 'url' => "javascript:do_introjs();"];
@@ -86,6 +90,12 @@ ChardinJSAsset::register($this);
 				],
                 'items' => $menu
             ]);
+
+			$form = ActiveForm::begin(['action' => Url::to(['/order/document/search'])]);
+			echo Html::textInput('search', null, ['maxlength' => 30, 'class' => 'input-sm pull-right', 'style' => 'margin-top: 10px;']);
+			ActiveForm::end();
+
+
             NavBar::end();
         ?>
 

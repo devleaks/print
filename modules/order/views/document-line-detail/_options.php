@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\MaskedInput;
-
+use yii\helpers\VarDumper;
 /* @var $this yii\web\View */
 /* @var $model app\models\DocumentLine */
 /* @var $form yii\widgets\ActiveForm */
@@ -25,8 +25,6 @@ if($detail->free_item_vat == '') $detail->free_item_vat = 21;
 Cliquer sur l'onglet pour sélectionner cet article et révéler un panneau pour remplir les options" data-position='top'
 style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aaa;"
 >
-
-
 	<div id="store-missing-data" class="alert alert-danger" role="alert"></div>
 	
 	<div class="yiipanel-ChromaLuxe">

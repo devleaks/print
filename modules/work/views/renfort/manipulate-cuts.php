@@ -61,7 +61,7 @@ Icon::map($this);
 <div>
 	<a href="javascript:saveCuts();" class='btn btn-primary'><?= Yii::t('store', 'Save cuts') ?></a>
 
-	<a href="<?= Url::to(['/work/work-line/print-cuts'], true) ?>" class='btn btn-primary'><?= Yii::t('store', 'Print cuts') ?></a>
+	<a href="<?= Url::to(['print-cuts'], true) ?>" class='btn btn-primary'><?= Yii::t('store', 'Print cuts') ?></a>
 </div>
 
 </div>
@@ -69,8 +69,8 @@ Icon::map($this);
 <?php
 $this->beginBlock('JS_CUTS'); ?>
 jsonURL = {
-	save: "<?= Url::to(['/work/work-line/save-cuts'], true) ?>",
-	split: "<?= Url::to(['/work/work-line/split'], true) ?>"
+	save: "<?= Url::to(['/work/renfort/save-cuts'], true) ?>",
+	split: "<?= Url::to(['/work/renfort/split'], true) ?>"
 };
 js_cuts_init();
 /** to change segments from masters to masters */

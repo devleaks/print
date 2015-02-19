@@ -1,5 +1,6 @@
 <?php
 use app\models\Item;
+use app\models\Parameter;
 use app\models\Task;
 use app\models\Work;
 use yii\helpers\ArrayHelper;
@@ -20,6 +21,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Works'), 'url' => 
 $this->params['breadcrumbs'][] = $this->title;
 
 Icon::map($this);
+
 ?>
 <div class="work-line-index">
 
@@ -35,23 +37,23 @@ Icon::map($this);
 				'type' => TabularForm::INPUT_RAW,
 	            'label' => Yii::t('store', 'Support'),
 	            'value' => function ($model, $key, $index, $widget) {
-					$model->init2();
-					$dl = $model->getDocumentLine()->one();
-					if($dl->isChromaLuxe())
+					if($model->documentLine->isChromaLuxe())
 						$ret = Item::findOne(['reference'=>Item::TYPE_CHROMALUXE])->libelle_long;
-					else if($sup = $dl->getSupport())
+					else if($sup = $model->documentLine->getSupport())
 						$ret = $sup->libelle_long;
 					else
 						$ret = Yii::t('store', 'None');
-	                return Html::hiddenInput('WorkLineDetail['.$key.'][document_line_id]', $model->document_line_id). $ret;
-	            },
+	                return Html::hiddenInput('WorkLineDetail['.$key.'][document_line_id]', $model->document_line_id)
+							. $ret;
+	            }
 	        ],
 	        'quantity' => [
 				'type' => TabularForm::INPUT_RAW,
 	            'label' => Yii::t('store', 'Qty'),
 	            'value' => function ($model, $key, $index, $widget) {
-	                return $model->getDocumentLine()->one()->quantity;
+	                return $model->documentLine->quantity;
 	            },
+				'columnOptions'=>['hAlign'=>GridView::ALIGN_CENTER]
 	        ],
 	        'work_width' => [
 				'type' => TabularForm::INPUT_RAW,
@@ -59,6 +61,7 @@ Icon::map($this);
 	            'value' => function ($model, $key, $index, $widget) {
 					return $model->documentLine->work_width;
 	            },
+				'columnOptions'=>['hAlign'=>GridView::ALIGN_CENTER]
 	        ],
 	        'work_height' => [
 				'type' => TabularForm::INPUT_RAW,
@@ -66,6 +69,7 @@ Icon::map($this);
 	            'value' => function ($model, $key, $index, $widget) {
 					return $model->documentLine->work_height;
 	            },
+				'columnOptions'=>['hAlign'=>GridView::ALIGN_CENTER]
 	        ],
 	        'cut_width' => [
 				'type' => TabularForm::INPUT_WIDGET,
@@ -79,7 +83,8 @@ Icon::map($this);
 						'decimals' => 1,
 					],
 					'class' => 'input-lg'
-				]
+				],
+				'columnOptions'=>['vAlign'=>GridView::ALIGN_MIDDLE]
 	        ],
 	        'cut_width_count' => [
 				'type' => TabularForm::INPUT_WIDGET,
@@ -92,7 +97,8 @@ Icon::map($this);
 						'step' => 1,
 						'decimals' => 0,
 					]
-				]
+				],
+				'columnOptions'=>['vAlign'=>GridView::ALIGN_MIDDLE]
 	        ],
 	        'margin_width' => [
 				'type' => TabularForm::INPUT_WIDGET,
@@ -106,6 +112,7 @@ Icon::map($this);
 						'decimals' => 1,
 					]
 				],
+				'columnOptions'=>['vAlign'=>GridView::ALIGN_MIDDLE]
 	        ],
 	        'cut_height' => [
 				'type' => TabularForm::INPUT_WIDGET,
@@ -118,7 +125,8 @@ Icon::map($this);
 						'step' => 0.1,
 						'decimals' => 1,
 					]
-				]
+				],
+				'columnOptions'=>['vAlign'=>GridView::ALIGN_MIDDLE]
 	        ],
 	        'cut_height_count' => [
 				'type' => TabularForm::INPUT_WIDGET,
@@ -131,7 +139,8 @@ Icon::map($this);
 						'step' => 1,
 						'decimals' => 0,
 					]
-				]
+				],
+				'columnOptions'=>['vAlign'=>GridView::ALIGN_MIDDLE]
 	        ],
 	        'margin_height' => [
 				'type' => TabularForm::INPUT_WIDGET,
@@ -144,7 +153,8 @@ Icon::map($this);
 						'step' => 0.1,
 						'decimals' => 1,
 					]
-				]
+				],
+				'columnOptions'=>['vAlign'=>GridView::ALIGN_MIDDLE]
 	        ],
 	        'image' => [
 				'type' => TabularForm::INPUT_RAW,

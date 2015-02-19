@@ -1,7 +1,8 @@
 /** S U B R O U T I N E S
  *
  */
-var handleString = '<div class="master-info"><span class="glyphicon glyphicon-move handle"></span>#<span class="master-number">#</span> <meter min="0" max="200" value="0"></meter> <span class="master-work_length">0</span> <input type="checkbox" class="masterKeep" name="masterKeep" value="XXXMASTER_IDXXX"> <span class="master-work_used">0</span></div>';
+var masterLength = 200;
+var handleString = '<div class="master-info"><span class="glyphicon glyphicon-move handle"></span>#<span class="master-number">#</span> <meter min="0" max="'+masterLength+'" value="0"></meter> <span class="master-work_length">0</span> <input type="checkbox" class="masterKeep" name="masterKeep" value="XXXMASTER_IDXXX"> <span class="master-work_used">0</span></div>';
 
 function totalLength($elem) {
 	var sum = 0;
@@ -63,7 +64,8 @@ function cleanUp() {
 			$(this).addClass("master-error");
 		}
 		if(sum === 0) {
-			$(this).parent().remove();
+			if($(this).data('work_length') == masterLength)
+				$(this).parent().remove();
 		} else {
 			val = Math.round(sum, 2);
 			$(this).parent().find('span.master-number').text(cnt++);

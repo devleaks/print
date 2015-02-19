@@ -14,6 +14,10 @@
 		{
 		    "type": "vcs",
 		    "url": "https://github.com/devleaks/yii2-chardinjs"
+		},
+		{
+		    "type": "vcs",
+		    "url": "https://github.com/devleaks/yii2-metafizzy"
 		}
     ],
     "require": {
@@ -48,6 +52,7 @@
         "kartik-v/yii2-widget-datepicker": "*",
 		"devleaks/yii2-chardinjs": "~1.0",
 		"devleaks/yii2-introjs": "~1.0",
+		"devleaks/yii2-metafizzy": "~1.0",
         "yiisoft/yii2-apidoc": "*",
         "bower-asset/packery": "*",
         "bower-asset/draggabilly": "*",

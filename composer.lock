@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cee812ab94a8fa02bef2ba3996800007",
+    "hash": "2557aefe7a2711888e7fc8cf6d478fd6",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -1361,6 +1361,59 @@
             "time": "2014-12-04 16:28:53"
         },
         {
+            "name": "devleaks/yii2-metafizzy",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/devleaks/yii2-metafizzy.git",
+                "reference": "95bb5b0e47b1b29cd6a605d9955fc80fa543db80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/devleaks/yii2-metafizzy/zipball/95bb5b0e47b1b29cd6a605d9955fc80fa543db80",
+                "reference": "95bb5b0e47b1b29cd6a605d9955fc80fa543db80",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/draggabilly": "*",
+                "bower-asset/isotope": "*",
+                "bower-asset/masonry": "*",
+                "bower-asset/packery": "*",
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-bootstrap": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "devleaks\\metafizzy\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pierre M",
+                    "email": "devleaks.be@gmail.com"
+                }
+            ],
+            "description": "Yii2 asset bundle wrapper around several David DeSandro javascript libraries",
+            "keywords": [
+                "draggabilly",
+                "extension",
+                "isotope",
+                "masonry",
+                "metafizzy",
+                "packery",
+                "yii2"
+            ],
+            "support": {
+                "source": "https://github.com/devleaks/yii2-metafizzy/tree/1.0.1",
+                "issues": "https://github.com/devleaks/yii2-metafizzy/issues"
+            },
+            "time": "2015-02-19 14:17:18"
+        },
+        {
             "name": "ezyang/htmlpurifier",
             "version": "v4.6.0",
             "source": {
@@ -1671,16 +1724,16 @@
         },
         {
             "name": "kartik-v/mpdf",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/mpdf.git",
-                "reference": "46148a9d43b88f3832f6bc348b6a55d9a482187f"
+                "reference": "a9d6960e47b4c8d28ba72c229c13a6444d8e2658"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/mpdf/zipball/46148a9d43b88f3832f6bc348b6a55d9a482187f",
-                "reference": "46148a9d43b88f3832f6bc348b6a55d9a482187f",
+                "url": "https://api.github.com/repos/kartik-v/mpdf/zipball/a9d6960e47b4c8d28ba72c229c13a6444d8e2658",
+                "reference": "a9d6960e47b4c8d28ba72c229c13a6444d8e2658",
                 "shasum": ""
             },
             "require": {
@@ -1710,7 +1763,7 @@
                 "php",
                 "utf-8"
             ],
-            "time": "2014-11-08 13:41:48"
+            "time": "2015-02-18 16:00:43"
         },
         {
             "name": "kartik-v/php-date-formatter",
@@ -1763,12 +1816,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-builder.git",
-                "reference": "a9af9bdf9cc1f97ee6a262dbd801d0cdac97a8c8"
+                "reference": "d6e20e23107a3e779e3726eb53fadcd6a046c174"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/a9af9bdf9cc1f97ee6a262dbd801d0cdac97a8c8",
-                "reference": "a9af9bdf9cc1f97ee6a262dbd801d0cdac97a8c8",
+                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/d6e20e23107a3e779e3726eb53fadcd6a046c174",
+                "reference": "d6e20e23107a3e779e3726eb53fadcd6a046c174",
                 "shasum": ""
             },
             "require": {
@@ -1802,20 +1855,20 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-01-28 03:40:28"
+            "time": "2015-02-17 18:42:04"
         },
         {
             "name": "kartik-v/yii2-date-range",
-            "version": "v1.6.0",
+            "version": "v1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-date-range.git",
-                "reference": "b5ea8c1fa3445e15482800fd0a52da18e99b71fe"
+                "reference": "5fb92535697c637190d1d72055f65211e864d365"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-date-range/zipball/b5ea8c1fa3445e15482800fd0a52da18e99b71fe",
-                "reference": "b5ea8c1fa3445e15482800fd0a52da18e99b71fe",
+                "url": "https://api.github.com/repos/kartik-v/yii2-date-range/zipball/5fb92535697c637190d1d72055f65211e864d365",
+                "reference": "5fb92535697c637190d1d72055f65211e864d365",
                 "shasum": ""
             },
             "require": {
@@ -1851,7 +1904,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-01-12 12:15:42"
+            "time": "2015-02-16 16:52:35"
         },
         {
             "name": "kartik-v/yii2-datecontrol",

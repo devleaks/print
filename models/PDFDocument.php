@@ -106,7 +106,7 @@ class PDFDocument extends Model {
 	         // set mPDF properties on the fly
 			'marginHeader'	=> $this->format == PDFDocument::FORMAT_A5 ?  5 : 10,
 			'marginFooter'	=> $this->format == PDFDocument::FORMAT_A5 ?  5 : 10,
-			'marginTop'		=> $this->format == PDFDocument::FORMAT_A5 ? 20 : 35,
+			'marginTop'		=> $this->format == PDFDocument::FORMAT_A5 ? 30 : 35,
 			'marginBottom'	=> $this->format == PDFDocument::FORMAT_A5 ? 25 : 35,
 			'marginLeft'	=> $this->format == PDFDocument::FORMAT_A5 ?  5 : 15,
 			'marginRight'	=> $this->format == PDFDocument::FORMAT_A5 ?  5 : 15,

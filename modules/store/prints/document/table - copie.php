@@ -7,6 +7,9 @@ use yii\helpers\Url;
 <table width="100%" class="table table-bordered">
 	<thead>
 	<tr>
+	<?php if($images): ?>
+		<th style="text-align: center;"><?= Yii::t('print', 'Document') ?></th>
+	<?php endif; ?>
 		<th style="text-align: center;"><?= Yii::t('print', 'Ref.') ?></th>
 		<th style="text-align: left;"><?= Yii::t('print', 'Item')?></th>
 		<th style="text-align: center;"><?= Yii::t('print', 'Qty')?></th>
@@ -21,11 +24,14 @@ use yii\helpers\Url;
 	$tot_amount = 0;
 	foreach($dataProvider->query->each() as $model): ?>
 	<tr>
-	<?php if($images && $model->hasPicture() ): ?>
-		<td rowspan="2"><?= $model->item->reference ?></td>
-	<?php else: ?>
+		<?php if($images): ?>
+			<td style="text-align: center;">
+				<?php if($pic = $model->getPictures()->one()) 
+					echo Html::img(Url::to($pic->getThumbnailUrl(), true));
+				?>
+			</td>
+		<?php endif; ?>
 		<td><?= $model->item->reference ?></td>
-	<?php endif; ?>
 		<td><?= $model->getDescription() ?></td>
 		<td style="text-align: center;"><?= $model->quantity ?></td>
 		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($model->unit_price) ?></td>
@@ -34,17 +40,6 @@ use yii\helpers\Url;
 		<td style="text-align: center;"><?= $model->vat.'&nbsp;%' ?></td>
 		<?php $tot_amount += round($model->price_htva + $model->extra_htva, 2); ?>
 	</tr>
-	<?php if($images && $model->hasPicture() ): ?>
-	<tr>
-		<td colspan="6">
-		<?php
-			foreach($model->getPictures()->each() as $pic) {
-				echo Html::img(Url::to($pic->getThumbnailUrl(), true));
-			}
-		?>
-		</td>
-	</tr>
-	<?php endif; ?>
 <?php endforeach; ?>
 ?>
 	</tbody>
