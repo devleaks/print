@@ -14,6 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	    <li><a href="<?= Yii::$app->homeUrl ?>user/admin/"><?= Yii::t('store', 'User Accounts')?></a></li>
 	    <li><a href="<?= Yii::$app->homeUrl ?>admin/parameter/"><?= Yii::t('store', 'Parameters')?></a></li>
 	    <li><a href="<?= Yii::$app->homeUrl ?>admin/backup/"><?= Yii::t('store', 'Database Backup')?></a></li>
+	    <li><a href="<?= Yii::$app->homeUrl ?>admin/backup/restore"><?= Yii::t('store', 'Restore Database from Backup of Production')?></a></li>
 	    <li><a href="<?= Yii::$app->homeUrl ?>admin/sequence-data/"><?= Yii::t('store', 'Manage Sequence Numbers')?></a></li>
 	</ul>
 

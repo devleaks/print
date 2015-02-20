@@ -3,6 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
+use app\components\RuntimeDirectoryManager;
 use app\models\Backup;
 use app\models\BackupSearch;
 use yii\web\Controller;
@@ -136,4 +137,27 @@ class BackupController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+	public function actionRestore() {
+		$dsn = Yii::$app->getDb()->dsn;
+		$db  = Backup::parseDSN($dsn);
+		$dbname = $db['dbname'];
+		$restore_dir = Yii::getAlias('@runtime');
+		$dbfile = $restore_dir . '/restore/'.$dbname.'.gz';
+		$mediafile = $restore_dir . '/restore/media.taz';
+		return $this->render('restore', [
+			'dbfile' => $dbfile,
+			'mediafile' => $mediafile,
+		]);
+	}
+
+	public function actionDoRestore() {
+		if(Backup::restore())
+			Yii::$app->session->setFlash('success', Yii::t('store', 'Backup restored.'));
+		else
+			Yii::$app->session->setFlash('danger', Yii::t('store', 'Backup not restored.'));
+		
+		return $this->redirect(['/']);
+	}
+
 }

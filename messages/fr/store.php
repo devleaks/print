@@ -315,6 +315,8 @@ return [
 	'Client(s) with no POPSY reference:' => 'Client(s) sans référence comptable:',
 	'Bill(s) with item(s) with no POPSY reference:' => 'Facture(s) contenant des articles sans référence comptable:',
 	'Document deleted.' => 'Document supprimé.',
+	'Restore Database from Backup of Production' => 'Restaurer à partir de la base de donnée de production',
+
 
 	'Add a payment' => 'Ajouter un paiement',
 	'Amount is too large to balance all credit notes. Customer left with {0}€ to pay.' => 'Montant à payer supérieur aux montants disponibles sur les notes de crédits. Montant à compléter: {0}€.',

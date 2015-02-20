@@ -105,7 +105,7 @@ class Backup extends \yii\db\ActiveRecord
 		if($full) {	// Media
 			$media_backup_file = RuntimeDirectoryManager::getFilename($uniq ? RuntimeDirectoryManager::BACKUP_MEDIA : RuntimeDirectoryManager::BACKUP_MEDIA1, $dbname);
 			$command = "(cd ".RuntimeDirectoryManager::getFileStoreDirectory().
-				" ; tar czf $media_backup_file ".RuntimeDirectoryManager::FILESTORE_PICTURES." ".RuntimeDirectoryManager::FILESTORE_DOCUMENTS.")";
+				" ; tar czf ".$backup_dir . $media_backup_file." ".RuntimeDirectoryManager::FILESTORE_PICTURES." ".RuntimeDirectoryManager::FILESTORE_DOCUMENTS.")";
 			system($command, $status);
 			Yii::trace($command.': '.$status, 'BackupController::doBackup');
 		}
@@ -130,6 +130,13 @@ class Backup extends \yii\db\ActiveRecord
 		if(is_file($backup_file))
 			unlink($backup_file);
 		parent::delete();
+	}
+	
+	public static function restore() {
+		$command = Yii::getAlias('@runtime').'/etc/restore.sh';
+		system($command, $status);
+		Yii::trace($command.': '.$status, 'BackupController::doBackup');
+		return $status == 0;
 	}
 
 }
