@@ -12,16 +12,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <h3>Statistiques sur les articles</h3>
 
+<h4>Articles</h4>
+
 	<ul>
-	    <li><a href="<?= Yii::$app->homeUrl ?>stats/masonry/bricks"><?= Yii::t('store', 'Masonry')?></a></li>
 		<li><a href="<?= Url::to(['/stats/item/category']) ?>"><?= Yii::t('store', 'Articles achetés par catégories') ?></a></li>
-		<li>Tailles demandées</li>
+	</ul>
+
+
+<h4>Tailles</h4>
+
+	<ul>
+	    <li><a href="<?= Url::to(['/stats/masonry/frames']) ?>"><?= Yii::t('store', 'Tailles demandées')?></a></li>
+	    <li><a href="<?= Url::to(['/stats/masonry/bricks']) ?>"><?= Yii::t('store', 'Représentation graphique de toutes les tailles')?></a></li>
 	</ul>
 
 <h3>Statistiques sur les clients et les commandes</h3>
 
 	<ul>
-		<li>Commandes par clients (nombres, montants, moyennes)</li>
+		<li><a href="<?= Url::to(['/stats/order/']) ?>"><?= Yii::t('store', 'Commandes par clients (nombres, montants, moyennes)')?></a></li>
 		<li>Commandes par clients (fréquence, périodicité)</li>
 		<li>Commandes dans le temps</li>
 		<li>Argent dans le temps</li>
@@ -32,7 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	<ul>
 		<li>Durée moyenne entre commande et début de réalisation</li>
 		<li>Durée moyenne entre commande et fin de réalisation</li>
-		<li>Durée moyenne entre début et fin de réalisation</li>
+		<li><a href="<?= Url::to(['/stats/work/']) ?>"><?= Yii::t('store', 'Durée moyenne entre début et fin de réalisation')?></a></li>
+		<li><a href="<?= Url::to(['/stats/work/lines']) ?>"><?= Yii::t('store', 'Durée moyenne entre début et fin de tâche')?></a></li>
 		<li>Durée moyenne par tâche</li>
 	</ul>
 

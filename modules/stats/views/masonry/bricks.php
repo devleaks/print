@@ -1,18 +1,23 @@
 <?php
 
-use app\assets\PackeryAsset;
+use devleaks\metafizzy\PackeryAsset;
 use yii\widgets\ListView;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 PackeryAsset::register($this);
 
-$this->title = Yii::t('store', 'Packery');
+$this->title = Yii::t('store', 'Représentation graphique de toutes les tailles');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $dataProvider->pagination = false;
 
 ?>
+<div class="jjm-graphic">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
 <div id="container">
 	<?= ListView::widget([
 		'dataProvider' => $dataProvider,
@@ -21,6 +26,8 @@ $dataProvider->pagination = false;
 		},
 	])
 	?>
+</div>
+
 </div>
 <script type="text/javascript">
 <?php $this->beginBlock('JS_PACKERY'); ?>

@@ -15,7 +15,7 @@ Vous pouvez toujours nous contacter à <a htref=mailto:commande@labojjmicheli.be
 
 <hr />
 
-<p>Labo JJ Micheli</p>
+<p>Labo JJ Micheli SPRL</p>
 
 <p>Ouvert du lundi au vendredi de 9h00 à 18h30, sans interruption.</p>
 

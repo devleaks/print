@@ -81,3 +81,23 @@ li.double-arrow:before {
 	vertical-align: middle;
 	display: table-cell;
 }
+.jjm-frame-container {
+	border: 1px solid red;
+	margin: auto;
+}
+
+.jjm-frame {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: 1px dotted grey;
+	background: none;
+}
+
+.jjm-frame-ref {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: 1px dotted red;
+	background: none;
+}

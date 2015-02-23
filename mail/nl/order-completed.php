@@ -15,7 +15,7 @@ U kunt altijd contact met ons opnemen op <a htref=mailto:commande@labojjmicheli.
 
 <hr />
 
-<p>Labo JJ Micheli</p>
+<p>BVBA Labo JJ Micheli</p>
 
 <p>Open maandag tot vrijdag, vanaf 9h00 tot 18h30.</p>
 

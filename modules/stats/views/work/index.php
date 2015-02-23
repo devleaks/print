@@ -1,8 +1,8 @@
 <?php
 
-use app\models\Item;
+use app\models\Client;
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use miloschuman\highcharts\Highcharts;
 
 /* @var $this yii\web\View */
@@ -12,14 +12,10 @@ $keys = [];
 $values = [];
 $data = [];
 foreach($dataProvider->allModels as $m) {
-	if( $label = Item::findOne($m['item_id'])){
-			$keys[] = $label->libelle_long;
-			$values[] = intval($m['total']);
-			$data[$label->libelle_long] = intval($m['total']);
-		}
+	$data[$m['diff_days'].' d'] = intval($m['tot_count']);
 }
 
-$this->title = Yii::t('store', 'Items');
+$this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -27,23 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php echo '';/* GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'item_id',
-            'total',
-        ],
-    ]); */ ?>
-
-
 	<?= Highcharts::widget([
 		   'options' => [
 			'chart' => [
 				'type' => 'bar'
         	],
-		      'title' => ['text' => Yii::t('store', 'Items')],
+		      'title' => ['text' => Yii::t('store', 'Nb Days')],
 		      'xAxis' => [
 		         'categories' => array_keys($data)
 		      ],
@@ -51,9 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		         'title' => ['text' => Yii::t('store', 'Quantity')]
 		      ],
 		      'series' => [
-		         ['name' => 'Item', 'data' => $values]
+		         ['name' => 'Item', 'data' => array_values($data)]
 		      ]
 		   ]
 	]);?>
+
 
 </div>
