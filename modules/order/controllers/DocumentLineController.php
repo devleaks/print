@@ -327,8 +327,8 @@ class DocumentLineController extends Controller
 	            ->from('item')
 	            ->orWhere(['like', 'libelle_long', $search])
 	            ->orWhere(['like', 'reference', $search])
-	            ->andWhere(['status' => [Item::STATUS_ACTIVE, Item::STATUS_EXTRA]])
-	            ->andWhere(['NOT', ['yii_category' => [
+	            ->andWhere(['OR',
+					['NOT', ['yii_category' => [
 						ItemCategory::CHROMALUXE_PARAM ,
 						ItemCategory::FRAME_PARAM ,
 						ItemCategory::RENFORT_PARAM ,
@@ -336,8 +336,10 @@ class DocumentLineController extends Controller
 						ItemCategory::TIRAGE_PARAM ,
 						ItemCategory::MONTAGE_PARAM ,
 						ItemCategory::CORNER_PARAM ,
-						ItemCategory::PROTECTION_PARAM
-					]]])
+						ItemCategory::PROTECTION_PARAM 
+					]]],
+					['yii_category' => null]])
+	            ->andWhere(['status' => [Item::STATUS_ACTIVE, Item::STATUS_EXTRA]])
 	            ->limit(50);
 	        $command = $query->createCommand();
 	        $data = $command->queryAll();

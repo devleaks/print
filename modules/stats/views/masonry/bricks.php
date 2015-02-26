@@ -22,7 +22,7 @@ $dataProvider->pagination = false;
 	<?= ListView::widget([
 		'dataProvider' => $dataProvider,
 		'itemView' => function($model, $key, $index, $widget) {
-			return $this->render('_to-cut', ['model' => $model]);
+			return $this->render('_frame', ['model' => $model]);
 		},
 	])
 	?>

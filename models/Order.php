@@ -108,59 +108,32 @@ class Order extends Document
 
 
     /**
-     * If order is completed, send email to client, and create bill if parameters allow it.
+     * Checks whether due_date is either past, or not too far in future.
 	 */
-	public function notify() {
-		Yii::trace('Order::notify');
-		if($this->client->email != '') {
-			$lang_before = Yii::$app->language;
-			Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
-			try {
-				Yii::$app->mailer->compose('order-completed', ['model' => $this])
-				    ->setFrom( Yii::$app->params['fromEmail'] )
-				    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )
-					->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
-				    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)
-				    ->send();
-				Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
-			} catch (Swift_TransportException $STe) {
-				Yii::error($STe->getMessage(), 'CoverLetter::send::ste');
-				Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
-			} catch (Exception $e) {
-				Yii::error($e->getMessage(), 'CoverLetter::send::e');				
-				Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
+	public function closeToDueDate() {
+		$DEFAULT_MIN_DAYS = 2;
+		$closeToDueDate = true;
+		$now = date('Y-m-d H:i:s');
+		if($this->due_date > $now) {
+			if($date_limit = Parameter::getIntegerValue('application', 'min_days', $DEFAULT_MIN_DAYS)) {
+				$diff = strtotime($this->due_date) - time(); // in secs.
+				$diff = ceil($diff / (24 * 60 * 60));
+				$closeToDueDate = ($diff <= $date_limit); // If we are finished too early, we do NOT notify the person right away.
+				Yii::trace('Min days='.$date_limit.', diff='.$diff.': '.($closeToDueDate ? 'send it' : 'DO NOT send it'));
 			}
-			Yii::$app->language = $lang_before;
-		} else {
-			$this->status = self::STATUS_NOTIFY;
-			$this->save();
-			Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.'));
-		}
+		}  // else, due_date < now, so we are late, so we notify of completion
+		return $closeToDueDate;
 	}
-
-
+	
+		
     /**
-     * If order is completed, send email to client, and create bill if parameters allow it.
+     * Send email to client if close to due date. Do not send if far from due date; do not send if client has no email. Do not change status of order.
 	 */
-	private function completed() {
-		Yii::trace('Order::completed');
-		$send_it = true;
-		// 1. notify client of completion
-		if(Parameter::isTrue('application', 'auto_notify_completion')) {
-
-			$now = date('Y-m-d H:i:s');
-			if($this->due_date > $now) {
-				if($date_limit = Parameter::getIntegerValue('application', 'min_days')) {
-					$diff = strtotime($this->due_date) - time(); // in secs.
-					$diff = floor($diff / (24 * 60 * 60));
-					if($diff > $date_limit)
-						$send_it = false;
-					Yii::trace('Min days='.$date_limit.', diff='.$diff.': '.($send_it ? 'send it' : 'DO NOT send it'));
-				}
-			} // else, due_date < now, so we are late, so we notify of completion
-
-			if($this->client->email != '' && $send_it) {
-				Yii::trace('auto_notify_completion '.$this->id, 'Order::completed');
+	public function notify($batch = false) {
+		Yii::trace('Order::notify');
+		$sent = false;
+		if($this->closeToDueDate()) {
+			if($this->client->email != '') {
 				$lang_before = Yii::$app->language;
 				Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
 				try {
@@ -170,20 +143,43 @@ class Order extends Document
 						->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
 					    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)
 					    ->send();
-					Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
+					$sent = true;
+					if(!$batch) Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
 				} catch (Swift_TransportException $STe) {
 					Yii::error($STe->getMessage(), 'CoverLetter::send::ste');
-					Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
+					if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
 				} catch (Exception $e) {
 					Yii::error($e->getMessage(), 'CoverLetter::send::e');				
-					Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
+					if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
 				}
 				Yii::$app->language = $lang_before;
-			} else {
-				$this->status = self::STATUS_NOTIFY;
-				$this->save();
-				Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.'));
 			}
+		} else {
+			if(!$batch) Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.').' '.Yii::t('store', 'Due date too far.'));
+		}
+		return $sent;
+	}
+
+
+    /**
+     * If order is completed, send email to client, and create bill if parameters allow it.
+	 */
+	private function completed() {
+		Yii::trace('Order::completed');
+		// 1. notify client of completion
+		if(Parameter::isTrue('application', 'auto_notify_completion')) {
+			if($this->client->email != '') {
+				if($this->notify(true)) {
+					$this->setStatus(Order::STATUS_TOPAY);
+				} else {
+					$this->setStatus(self::STATUS_NOTIFY);
+				}
+			} else { // no email. Will not be notified of completion.
+				Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.').' '.Yii::t('store', 'Client has no email.'));
+				$this->setStatus(self::STATUS_TOPAY);
+			}
+		} else {
+			Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.').' '.Yii::t('store', 'No automatic notification.'));
 		}
 		// 2. Create bill from order
 		if(!$this->bom_bool && Parameter::isTrue('application', 'auto_create_bill')) { // create bill since order is completed

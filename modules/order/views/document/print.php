@@ -5,14 +5,14 @@ use yii\data\ActiveDataProvider;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
-
 PrintAsset::register($this);
 ?>
 <div class="order-print">
 
-	<?= $this->render('_print', [
-			'model' => $model,
-	    ]);
+	<?php
+	  	echo $this->render('@app/modules/store/prints/common/header-web');
+		echo $this->render('@app/modules/store/prints/document/body', ['model' => $model, 'images' => true]);
+	    echo $this->render('@app/modules/store/prints/common/footer');
 	?>
 
 </div>

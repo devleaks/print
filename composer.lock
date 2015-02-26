@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2557aefe7a2711888e7fc8cf6d478fd6",
+    "hash": "3b0ee7d8df85b4f7941245c41f4b84c7",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -3598,6 +3598,45 @@
                 "php"
             ],
             "time": "2014-07-23 18:24:17"
+        },
+        {
+            "name": "pahanini/yii2-consolelog",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pahanini/yii2-consolelog.git",
+                "reference": "1bdf2c28a962ab04cfdd4f43bcb0875afa4dba46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pahanini/yii2-consolelog/zipball/1bdf2c28a962ab04cfdd4f43bcb0875afa4dba46",
+                "reference": "1bdf2c28a962ab04cfdd4f43bcb0875afa4dba46",
+                "shasum": ""
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "pahanini\\log\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Pavel Tetyaev",
+                    "email": "pahanini@gmail.com"
+                }
+            ],
+            "description": "Dumps log to console",
+            "homepage": "https://github.com/pahanini/yii2-consolelog",
+            "keywords": [
+                "console",
+                "log",
+                "yii2"
+            ],
+            "time": "2015-01-26 09:18:06"
         },
         {
             "name": "phpdocumentor/reflection",

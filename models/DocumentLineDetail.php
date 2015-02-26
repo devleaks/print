@@ -127,14 +127,12 @@ class DocumentLineDetail extends _DocumentLineDetail
 		if($m == 'html') {
 			$prep = '<li class="double-arrow">';
 			$post = '</li>';
-			$str = '<small><ul class="list-unstyled">';
 			$obr = '<span style="font-size: 0.8em;"> (';
 			$cbr = ')</span>';
 			$eur = '€';
 		} else {
 			$prep = '';
 			$post = ', ';
-			$str = '';
 			$obr = ' [';
 			$cbr = ']';
 			$eur = '€';
@@ -145,6 +143,8 @@ class DocumentLineDetail extends _DocumentLineDetail
 	protected function getDescriptionMode($mode, $show_price = false) {
 
 		$str = '';
+		if($mode == 'html')
+			$str = '<small><ul class="list-unstyled">';
 
 		if(($item = $this->getChroma()->one()) != null)
 			$str .= $this->price2('ChromaLuxe '.$item->libelle_long, $this->price_chroma, $mode, $show_price);

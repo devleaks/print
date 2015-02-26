@@ -3,10 +3,12 @@
 use app\models\Bid;
 use app\models\Bill;
 use app\models\Document;
+use app\models\User;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\widgets\GridViewPDF;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentSearch */
@@ -75,6 +77,16 @@ $this->params['breadcrumbs'][] = $this->title;
 					return new DateTime($model->updated_at);
 				}
 			],
+	        [
+	            'label' => Yii::t('store', 'Created By'),
+				'attribute' => 'created_by',
+				'filter' => ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username'),
+	            'value' => function ($model, $key, $index, $widget) {
+					$user = $model->getCreatedBy()->one();
+	                return $user ? $user->username : '?';
+	            },
+	            'format' => 'raw',
+	        ],
 			[
 	            'label' => Yii::t('store', 'Last Update'),
 				'attribute' => 'updated_at',

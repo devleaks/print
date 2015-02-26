@@ -33,15 +33,14 @@ ChardinJSAsset::register($this);
 <?php $this->beginBody() ?>
     <div class="wrap">
         <?php
+			$name = Yii::$app->name . (YII_ENV_DEV ? '-DEV' : '') . (YII_DEBUG ? '-DEBUG' : '');
             NavBar::begin([
-                'brandLabel' => Yii::$app->name,
+                'brandLabel' => $name,
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top'
                 ],
             ]);
-
-
 
 			$menu = [];
 			$menu[] = ['label' => Yii::$app->formatter->asDate(date('c')), 'url' => "javascript:do_introjs();"];

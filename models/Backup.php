@@ -83,6 +83,16 @@ class Backup extends \yii\db\ActiveRecord
 	}
 
 
+	/**
+	 *		mysql:host=localhost;port=3307;dbname=testdb
+	 *		mysql:unix_socket=/tmp/mysql.sock;dbname=testdb
+	 */
+	public static function getDbName($name) {
+		$db  = Backup::parseDSN(Yii::$app->getDb()->dsn);
+		return $name ? $name == $db['dbname'] : $db['dbname'];
+	}
+
+
 	protected function executeBackup($full, $uniq) {
 		$now = date("Y-m-d-H-i-s");
 		$dsn = $this->getDb()->dsn;

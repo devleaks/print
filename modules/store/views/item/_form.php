@@ -12,6 +12,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Item */
 /* @var $form yii\widgets\ActiveForm */
+$model->status = $model->status == $model::STATUS_ACTIVE;
+
 ?>
 
 <div class="item-form">
@@ -73,11 +75,11 @@ use yii\helpers\Html;
 					'type' => Form::INPUT_WIDGET,
 					'widgetClass'=>SwitchInput::className(),
 					'options' => ['pluginOptions' => [
-								'onText' => Yii::t('store', 'Active'),
-								'offText' =>  Yii::t('store', 'Inactive'),
+								'onText' => Yii::t('store', $model::STATUS_ACTIVE),
+								'offText' =>  Yii::t('store', $model::STATUS_RETIRED),
 						        'onColor' => 'success',
 						        'offColor' => 'danger',
-								'state' => $model->status == 'ACTIVE'
+								'state' => $model->status == $model::STATUS_ACTIVE
 					]],
 		            'columnOptions' => ['colspan' => 2],
 				],

@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use app\models\Backup;
 /* @var $this yii\web\View */
 $this->title = 'Labo JJ Micheli';
 ?>
@@ -59,6 +60,9 @@ $this->title = 'Labo JJ Micheli';
 					&raquo; <a href="<?= Url::to(['/store/item']) ?>"><?= Yii::t('store', 'Items')?></a>
 					&raquo; <a href="<?= Url::to(['/store/price']) ?>"><?= Yii::t('store', "Price Lists")?></a>
 					&raquo; <a href="<?= Url::to(['/store/price-list']) ?>"><?= Yii::t('store', "Composite Price Lists")?></a>
+					<?php if(Backup::getDbName('yii2print')): ?>
+					&raquo; <a href="<?= Url::to(['/stats/']) ?>"><?= Yii::t('store', "Stats")?></a>
+					<?php endif; ?>
 				</p>
             </div>
             <div class="col-lg-6">

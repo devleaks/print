@@ -14,6 +14,7 @@ use Yii;
  * @property string $status
  * @property string $created_at
  * @property string $updated_at
+ * @property string $event_type
  */
 class _Event extends \yii\db\ActiveRecord
 {
@@ -34,7 +35,8 @@ class _Event extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['date_from', 'date_to', 'created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 80],
-            [['status'], 'string', 'max' => 20]
+            [['status'], 'string', 'max' => 20],
+            [['event_type'], 'string', 'max' => 40]
         ];
     }
 
@@ -51,6 +53,7 @@ class _Event extends \yii\db\ActiveRecord
             'status' => Yii::t('store', 'Status'),
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
+            'event_type' => Yii::t('store', 'Event Type'),
         ];
     }
 }

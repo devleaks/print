@@ -7,6 +7,7 @@
 
 namespace app\assets;
 
+use Yii;
 use yii\web\AssetBundle;
 
 /**
@@ -16,19 +17,22 @@ use yii\web\AssetBundle;
 class AppAsset extends AssetBundle
 {
     public $sourcePath = '@app/assets';
-//    public $basePath = '@webroot';
     public $baseUrl = '@web';
+
     public $css = [
         'css/site.css',
 		'css/dev.css',
-//		'chardin.js/chardinjs.css'
     ];
 		
-    public $js = [
-//		'chardin.js/chardinjs.min.js'
-    ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
+
+	public static function register($view) {
+		$c = Yii::$app->params['bannerColor'];
+		$c = $c ? $c : "#222";
+		$view->registerCss(".navbar-inverse { background-color: ".Yii::$app->params['bannerColor'].";}");	
+		parent::register($view);
+	}
 }

@@ -69,7 +69,7 @@ Icon::map($this);
 <?php
 $this->beginBlock('JS_CUTS'); ?>
 jsonURL = {
-	save: "<?= Url::to(['/work/renfort/save-cuts'], true) ?>",
+	save:  "<?= Url::to(['/work/renfort/save-cuts'], true) ?>",
 	split: "<?= Url::to(['/work/renfort/split'], true) ?>"
 };
 js_cuts_init();

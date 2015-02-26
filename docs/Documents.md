@@ -145,7 +145,7 @@ Lorsqu'une commande a été soumise pour réalisation du travail, elle ne peut p
 Lorsqu'une commande a été convertie en Facture, elle ne peut plus être modifiée.
 
 Lorsqu'une commande est terminée elle peut être transformée en facture automatiquement.
-Cela depénd du paramètre `auto_create_bill`. Si la valeur de ce paramètre est vraie, la facture est automatiquement créée lorsque la commande est terminée.
+Cela dépend du paramètre `auto_create_bill`. Si la valeur de ce paramètre est vraie, la facture est automatiquement créée lorsque la commande est terminée.
 Sinon, il faudra créer la facture manuellement.
 
 
@@ -155,6 +155,7 @@ Les commandes passent par les états suivants:
 * A faire: Le travail pour la réalisation de la commande a été soumis et aucune tâche n'a été commencée.
 * Réalisation: Le travail pour la réalisation est en cours de réalisation, c'est à dire que une tâche au moins a été commencée.
 * Terminée: Le travail pour la réalisation de la commande est terminé; toutes les tâches sont terminées.
+* Avertir: La commande est prête pour le client. Il faut l'avertir en envoyant un mail (si adresse email présente). Le mail sera envoyé automatiquement, au plus 1 jour avant la date de livraison.
 * Avertissement: Le travail pour la réalisation de la commande est dans l'état d'Avertissement; une des tâches nécessaire pour la réalisation de la commande est en état d'Avertissement.
 * A payer: Aucun paiement n'a encore été fait pour la commande.
 * A solder: Un ou plusieurs paiements ont déjà été faits pour la commande, mais le solde n'est pas encore payé.

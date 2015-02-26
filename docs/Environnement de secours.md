@@ -34,7 +34,10 @@ Le second fichier est un fichier TAR compressé de tous les documents.
 
 
 Ces deux fichiers sont backupés par Time Machine, et donc donc récupérable sur le disque de Time Machine.
-Alternativement, on peut copier ces fichiers régulièrement en lieu sûr.
+
+De surcroît, ces fichiers sont copiés sur la machine de développement lorsqu'elle est en fonctionnement.
+
+Enfin, on peut copier ces fichiers régulièrement en lieu sûr très régulièrement.
 
 (Si on n'a pas de backup Time Machine, on n'a pas de backup de la production.)
 
@@ -46,7 +49,33 @@ Pour redémarrer sur l'environnement de secours il faut
   2. Installer ces deux fichiers sur l'environnement de secours.
 
 
-### Restoration des fichiers
+### Restoration Automatique des fichiers
+
+#### Préparation
+
+Copier les deux fichiers `nom-de-la-base-de-donnee.gz` et `media.taz` exactement dans le répertoire
+
+	/Application/mamstack/apps/secours/runtime/restore
+
+Puisque l'environnement de secours et de production ont une base de donnée qui s'appelle `prod`,
+le nom du fichier de la base de données devrait être `prod.gz`.
+
+Se connecter dans l'application avec un utilisateur qui possède les privilèges d'administration de l'application.
+
+Choisir le menu d'administration, et choisir l'action "Restaurer à partir de la base de donnée de production".
+
+Si les fichiers attendus ne sont pas présents au bon endroit, ou son présent sous un mauvais nom,
+l'action est empêchée en donnant les raisons de l'erreur.
+
+Si les fichiers sont détectés, l'action s'effectue et la base de donnée de production est installée dans
+l'environnement de secours.
+
+*Il est souhaitable de répéter cette opération régulièrement, au moins une fois tous les trois mois,
+idéalement, tous les mois, pour s'assurer du bon fonctionnement et de la maîtrise de l'opération
+de récupération en cas de panne.*
+
+
+### Restoration Manuelle des fichiers
 
 #### Effacer les documents de l'environnement de secours
 
@@ -110,22 +139,30 @@ L'environnement de secours est accessible à l'adresse:
 
 Il a une bannière VERTE pour le distinguer de l'environnement de production (bannière noire), et de l'environnement de test (bannière rouge foncé).
 
+Attention: L'environnement de secours n'est PAS un environnement de test.
+Par exemple, sur l'environnement de secours, les messages sont réellement envoyés aux clients.
+(Ils ne le sont pas sur l'environnement de test, à bannière rouge foncée.)
+
 
 ## L'environnement de secours
 
 L'environnement de secours est backupé de la même manière que l'environnement de production.
+Les copies de l'environnement de secours NE SONT PAS copiées vers un autre ordinateur.
 
 Ne pas oublier d'effectuer des backups Time Machine de l'environnement de secours.
+
 
 ## Retour à l'environnement de production
 
 Lorsque l'environnement de production est à nouveau disponible, il faut en fait faire la procédure inverse,
 partir du backup de l'environnement de secours, et le restaurer sur l'environnement de production.
 
-Je conseille de pratiquer cette procédure 2 fois par an au minimum.
+Je conseille de pratiquer cette procédure complètement 2 fois par an au minimum,
+en période creuse.
 
 
-Je réalise cette procédure à chaque fois que je fais une mise à jour de l'environnement de production.
+Note du développeur: Je réalise cette procédure à chaque fois que je fais une mise à jour de l'environnement de production.
+La procédure est donc exercée et contrôlée au moins à chaque mise à jour du logiciel.
 
 PM 16-FEV-2015
 	

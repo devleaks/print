@@ -12,10 +12,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <h3>Statistiques sur les articles</h3>
 
+<h4>Ligne du Temps</h4>
+
+	<ul>
+		<li><a href="<?= Url::to(['/stats/event/']) ?>"><?= Yii::t('store', 'Evénements sur la ligne du temps') ?></a></li>
+	</ul>
+
+
 <h4>Articles</h4>
 
 	<ul>
-		<li><a href="<?= Url::to(['/stats/item/category']) ?>"><?= Yii::t('store', 'Articles achetés par catégories') ?></a></li>
+		<li><a href="<?= Url::to(['/stats/item/item']) ?>"><?= Yii::t('store', 'Articles achetés') ?></a></li>
+		<li><a href="<?= Url::to(['/stats/item/category']) ?>"><?= Yii::t('store', 'Articles achetés par categorie') ?></a></li>
+		<li><a href="<?= Url::to(['/stats/item/yii-category']) ?>"><?= Yii::t('store', 'Articles achetés par Yii Catégories') ?></a></li>
 	</ul>
 
 
@@ -31,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<ul>
 		<li><a href="<?= Url::to(['/stats/order/']) ?>"><?= Yii::t('store', 'Commandes par clients (nombres, montants, moyennes)')?></a></li>
 		<li>Commandes par clients (fréquence, périodicité)</li>
-		<li>Commandes dans le temps</li>
+		<li><a href="<?= Url::to(['/stats/order/by-day']) ?>"><?= Yii::t('store', 'Commandes par jour')?></a></li>
 		<li>Argent dans le temps</li>
 	</ul>
 

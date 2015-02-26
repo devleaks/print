@@ -526,9 +526,11 @@ class DocumentController extends Controller
 
 	public function actionSent2($id) {
 		$model = $this->findModel($id);
+		$sent = false;
 		if($model->document_type == Document::TYPE_ORDER)
-			$model->notify();
-		$model->setStatus(Document::STATUS_TOPAY);
+			$sent = $model->notify();
+		if($sent)
+			$model->setStatus(Document::STATUS_TOPAY);
         return $this->render('view', [
             'model' => $model,
         ]);

@@ -8,12 +8,12 @@ use yii\helpers\Url;
 	<thead>
 	<tr>
 		<th style="text-align: center;"><?= Yii::t('print', 'Ref.') ?></th>
-		<th style="text-align: left;"><?= Yii::t('print', 'Item')?></th>
-		<th style="text-align: center;"><?= Yii::t('print', 'Qty')?></th>
-		<th style="text-align: center;"><?= Yii::t('print', 'Price')?></th>
-		<th style="text-align: center;"><?= Yii::t('print', 'Extra')?></th>
-		<th style="text-align: center;"><?= Yii::t('print', 'Total')?></th>
-		<th style="text-align: center;"><?= Yii::t('print', 'VAT')?></th>
+		<th style="text-align: left;"><?= Yii::t('print', 'Item') ?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Qty') ?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Price') ?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Extra') ?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'Total') ?></th>
+		<th style="text-align: center;"><?= Yii::t('print', 'VAT') ?></th>
 	</tr>
 	</thead>
 	<tbody>
@@ -46,7 +46,6 @@ use yii\helpers\Url;
 	</tr>
 	<?php endif; ?>
 <?php endforeach; ?>
-?>
 	</tbody>
 	<tfoot>
 	<tr>

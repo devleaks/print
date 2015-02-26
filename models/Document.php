@@ -30,6 +30,14 @@ class Document extends _Document
 	const TYPE_REFUND = 'REFUND';
 	
 	
+	/** */
+	const DATE_TODAY = 0;
+	const DATE_TOMORROW = 1;
+	const DATE_NEXT = 2;
+	const DATE_NEXT_WEEK = 7;
+	const DATE_LATE = -1;
+	
+	
 	/** Document status */
 	const STATUS_CREATED = 'CREATED';	
 	/** */
@@ -661,27 +669,33 @@ class Document extends _Document
 	 */
 	public static function getDateClause($id, $table = null) {
 		$column = $table ? $table.'.due_date' : 'due_date';
+		$dayofweek = date('N'); // Mon=1, Sun=7
+		$today = date('Y-m-d');
+		Yii::trace('today='.$today.', dayofweek='.$dayofweek);
 		switch(intval($id)) {
-			case 1: // tomorrow
-			case 2: // after tomorrow
-				$dayofweek = date('N'); // Mon=1, Sun=7
-				$nextday = ($dayofweek > 4) ? $id + 2 : $id;
+			case self::DATE_TOMORROW: // next open day
+				$nextday = ($dayofweek > 4) ? 3 : 1;
 				$day = date('Y-m-d', strtotime('now + '.$nextday.' days'));
 				$where = [$column => $day];
 				break;
-			case 7: // this week
-				$day = date('Y-m-d', strtotime('now + 7 days'));
-				$where = ['<', $column, $day];
+			case self::DATE_NEXT: // 2 days from now, but open day
+				$nextday = ($dayofweek > 3) ? 4 : 2;
+				$day = date('Y-m-d', strtotime('now + '.$nextday.' days'));
+				$where = [$column => $day];
 				break;
-			case -1: // late
+			case self::DATE_NEXT_WEEK:
+				$day = date('Y-m-d', strtotime('now + 7 days'));
+				$where = ['and', ['<', $column, $day], ['>', $column, $today]];
+				break;
+			case self::DATE_LATE:
 				$day = date('Y-m-d', strtotime('today'));
 				$where = ['<', $column, $day];
 				break;
-			case 0: // today
+			case self::DATE_TODAY:
 				$day = date('Y-m-d', strtotime('today'));
 				$where = [$column => $day];
 				break;
-			default: // today
+			default:
 				$where = ['is not', $column, null];
 				break;
 		}
