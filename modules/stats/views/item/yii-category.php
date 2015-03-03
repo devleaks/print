@@ -67,6 +67,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		    'title' => [
 				'text' => Yii::t('store', 'Item Categories')
 			],
+			'credits' => [
+	            'enabled' => false
+	        ],
 		    'xAxis' => [
 		        'type' => 'category'
 			],

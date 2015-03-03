@@ -28,6 +28,9 @@ $(function() {
 	        tooltip: {
 	            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 	        },
+			credits: {
+           		enabled: false
+       		},
 	        plotOptions: {
 	            pie: {
 	                dataLabels: {

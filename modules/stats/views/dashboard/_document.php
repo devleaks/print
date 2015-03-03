@@ -25,6 +25,9 @@ $(function() {
 				title: {
 					text: "<?= Yii::t('store', $title) ?>"
 				},
+				credits: {
+            		enabled: false
+        		},
 		        plotOptions: {
 		            pie: {
 		                dataLabels: {

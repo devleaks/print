@@ -50,6 +50,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			'tooltip' => [
 				'pointFormat' => '{series.name}: <b>{point.percentage:.1f}%</b>'
 			],
+			'credits' => [
+	            'enabled' => false
+	        ],
 			'series' => [ [
 				'type' => 'pie',
 				'name' => 'Item',

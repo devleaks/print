@@ -25,6 +25,9 @@ $(function() {
 	            verticalAlign: 'middle',
 	            y: 50
 	        },
+			credits: {
+           		enabled: false
+       		},
 	        tooltip: {
 	            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 	        },
