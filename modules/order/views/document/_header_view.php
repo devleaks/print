@@ -126,6 +126,9 @@ Icon::map($this);
 							'options' => ['readonly' => true]
 			            ],
 			            [
+			                'attribute'=>'reference_client',
+			            ],
+			            [
 			                'attribute'=>'note',
 			            ],
 			        ],

@@ -52,7 +52,8 @@ ChardinJSAsset::register($this);
                 	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash']];
 				if(Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'admin')
                 	$work_menu[] = ['label' => Yii::t('store', 'Orders'), 'url' => ['/order/']];
-                $work_menu[] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work/']];
+				if(Yii::$app->user->identity->role != 'compta')
+                	$work_menu[] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work/']];
 				if(Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'admin')
                 	$work_menu[] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store/']];
 				if(Yii::$app->user->identity->role == 'admin')

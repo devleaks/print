@@ -15,6 +15,8 @@ class Bill extends Document {
 	const ACTION_CLIENT_ACCOUNT = 'ACCOUNT';
 	/** Bulk action ID */
 	const ACTION_EXTRACT = 'EXTRACT';
+
+	const BILL_NUMBER_LENGTH = 4;
 	
     /**
      * @inheritdoc

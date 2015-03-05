@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'filter' => Parameter::getDomains(),
 	        ],
             'name',
+            'lang',
             'value_text',
             'value_number',
             'value_int',

@@ -16,7 +16,7 @@
 	foreach($dataProvider->query->each() as $model): ?>
 	<tr>
 		<td><?= $model->item->reference ?></td>
-		<td><?= $model->getDescription() ?></td>
+		<td><?= $model->getDescription(false) ?></td>
 		<td style="text-align: center;"><?= $model->quantity ?></td>
 	</tr>
 <?php endforeach; ?>

@@ -1,6 +1,9 @@
 <?php
+
 use app\models\Document;
-$amount = abs($model->price_tvac);
+
+$amount = abs($model->vat_bool ? $model->price_htva : $model->price_tvac);
+
 ?>
 
 Sales:
@@ -19,9 +22,9 @@ Header:
 
       PeriodID:             <?= substr($model->created_at, 5, 2) /** YYYY-MM-DD -> MM; period = month */?>
 
-      DateDoc:              <?= $model->created_at ?>
+      DateDoc:              <?= date('d/m/Y', strtotime($model->created_at)) ?>
 
-      DateDue:              <?= $model->due_date ?>
+      DateDue:              <?= date('d/m/Y', strtotime($model->due_date)) ?>
 
       Piece:                <?= str_replace('-', '', $model->name) ?>
 
@@ -31,5 +34,5 @@ Header:
       AmountCrcyBase:       <?= $amount ?>
 
 }
-<?= $this->render('_extract_bill_lines', ['model' => $model->getDocumentLines()]) ?>
+<?= $this->render('_extract_bill_lines', ['model' => $model->getDocumentLines(), 'order' => $model]) ?>
 }

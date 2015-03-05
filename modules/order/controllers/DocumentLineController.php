@@ -40,7 +40,7 @@ class DocumentLineController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager', 'worker', 'employee'],
+	                    'roles' => ['admin', 'manager', 'worker', 'employee', 'compta'],
 	                ],
 	            ],
 	        ],

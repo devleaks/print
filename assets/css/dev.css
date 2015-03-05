@@ -86,7 +86,6 @@ li.double-arrow:before {
 	position: absolute;
 	top: 0;
 	left: 0;
-	border: 1px dotted grey;
 	background: none;
 }
 
@@ -96,4 +95,22 @@ li.double-arrow:before {
 	left: 0;
 	border: 1px dotted red;
 	background: none;
+}
+
+.jjm-frame-swatches {
+	border: 1px dotted black;
+	margin: auto;
+	margin-top: 20px;
+	padding: 10px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+
+.jjm-frame-swatch {
+	border: 1px solid black;
+	display: inline-block;
+	background: none;
+	text-align: center;
+	vertical-align: middle;
 }

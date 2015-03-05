@@ -49,7 +49,7 @@ class Order extends Document
 
 		$copy = $this->deepCopy(self::TYPE_BILL);
 		$copy->parent_id = $this->id;	
-		$copy->name = substr($this->due_date,0,4).'-'.Sequence::nextval('bill_number'); // get a new official bill number; $this->due_date or $copy->due_date?
+		$copy->name = substr($this->due_date,0,4).'-'.str_pad(Sequence::nextval('bill_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT); // get a new official bill number; $this->due_date or $copy->due_date?
 		Yii::trace($this->isPaid()?'Oui':'Non', 'Order::convert');
 		$copy->status = ($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_SOLDE);
 		$copy->save();

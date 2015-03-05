@@ -61,14 +61,24 @@ if($task->name == 'Commande Encadrement') {
 				'attribute' => 'order_name',
                 'label'=>Yii::t('store','Order'),
 	            'value'=> function ($model, $key, $index, $widget) {
-					return in_array(Yii::$app->user->identity->role, ['manager', 'admin']) ?
+					$who = ''; // '<br/>'.$model->getWork()->one()->getDocument()->one()->getCreatedBy()->one()->username;
+					return (in_array(Yii::$app->user->identity->role, ['manager', 'admin']) ?
 							Html::a($model->getWork()->one()->getDocument()->one()->name,
 								Url::to(['/order/document/view', 'id' => $model->getWork()->one()->getDocument()->one()->id]))
-							: $model->getWork()->one()->getDocument()->one()->name ;
+							: $model->getWork()->one()->getDocument()->one()->name).$who ;
 				},
             	'format' => 'raw',
+				'noWrap' => true,
             ],
-            [
+			[
+                'label'=>Yii::t('store','Created By'),
+	            'value'=> function ($model, $key, $index, $widget) {
+					return $model->work->document->createdBy->username ;
+				},
+            	'format' => 'raw',
+				'hAlign' => GridView::ALIGN_CENTER,
+            ],
+			[
 				'attribute' => 'client_name',
                 'label'=>Yii::t('store','Client'),
 	            'value'=> function ($model, $key, $index, $widget) {

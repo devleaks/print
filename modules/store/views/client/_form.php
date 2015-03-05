@@ -129,10 +129,6 @@ use yii\helpers\Url;
 					'type' => Form::INPUT_TEXTAREA,
 		            'columnOptions' => ['colspan' => 6],
 				],
-		        'comptabilite' => [
-					'type' => Form::INPUT_TEXT,
-		            'columnOptions' => ['colspan' => 2],
-				],
 			]
 		])
 	?>

@@ -15,7 +15,7 @@ $query = WorkLine::find()
 foreach($query->each() as $task_id) {
 	$task = Task::findOne($task_id->task_id);
 	echo Html::a(Icon::show($task->icon) . ' ' .$task->name.'<span class="badge">'.$task_id->total.'</span>',
-		Url::to(['/work/work-line/list-task', 'id' => $task_id->task_id]),
+		Url::to(['/work/work-line/list-task', 'id' => $task_id->task_id, 'sort'=> '-due_date']),
 		['class' => 'list-group-item']	
 	);
 }

@@ -34,7 +34,16 @@ $this->params['breadcrumbs'][] = $this->title;
 							 : $model->document->name;
 	            },
 	            'format' => 'raw',
+				'noWrap' => true,
 	        ],
+			[
+                'label'=>Yii::t('store','Created By'),
+	            'value'=> function ($model, $key, $index, $widget) {
+					return $model->document->createdBy->username ;
+				},
+            	'format' => 'raw',
+				'hAlign' => GridView::ALIGN_CENTER,
+            ],
 	        [
 				'attribute' => 'client_name',
 				'label' => Yii::t('store', 'Client'),

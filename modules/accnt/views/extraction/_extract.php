@@ -5,7 +5,7 @@
 CreateKeyCustomer:Y
 IgnoreAnalClosed:Y
 DossierSelect:001
-AcctingSelect:14
+AcctingSelect:<?= date('y') ?>
 
 <?= $this->render('_extract_clients' , ['model' => $clients]) ?>
 

@@ -131,7 +131,8 @@ class ExtractionController extends Controller
 					foreach(Document::find()
 									->joinWith('documentLines.item')
 									->andWhere(['document.id' => $_POST['selection']])
-									->andWhere(['item.comptabilite' => ''])->each() as $doc) {
+									->andWhere(['OR', ['item.comptabilite' => ''] , ['item.comptabilite' => null]])
+									->each() as $doc) {
 						$key = array_search($doc->id,$gooddocs);
 						if($key!==false)
 						    unset($gooddocs[$key]);

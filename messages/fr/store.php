@@ -385,6 +385,7 @@ return [
 	'This week' => "Cette semaine",
 	'This month' => "Ce mois",
 	'This last month' => "Ce dernier mois",
+	'straightened' => 'redressées',
 
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */

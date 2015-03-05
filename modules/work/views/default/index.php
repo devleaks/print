@@ -2,6 +2,7 @@
 use app\models\Task;
 use app\models\Work;
 use app\models\WorkLine;
+use yii\helpers\Url;
 
 $this->title = Yii::t('store', 'Works');
 $this->params['breadcrumbs'][] = $this->title;
@@ -26,18 +27,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
   		<div class="panel-body">
 			<div class="list-group">
-				<a href="<?= Yii::$app->homeUrl ?>work/work/" class="list-group-item"><?= Work::getBadge(-2) ?><?= Yii::t('store', 'All Works')?></a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work/list?id=-1" class="list-group-item"><?= Work::getBadge(-1) ?>Travaux en retard</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work/list" class="list-group-item"><?= Work::getBadge(0) ?>Travaux pour aujourd'hui</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work/list?id=1" class="list-group-item"><?= Work::getBadge(1) ?>Travaux pour demain</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work/list?id=2" class="list-group-item"><?= Work::getBadge(2) ?>Travaux pour après-demain</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work/list?id=7" class="list-group-item"><?= Work::getBadge(7) ?>Travaux pour les 7 prochains jours</a>
+				<a href="<?= Url::to(['/work/work/']) ?>" class="list-group-item"><?= Work::getBadge(-2) ?><?= Yii::t('store', 'All Works')?></a>
+				<a href="<?= Url::to(['/work/work/list', 'id' => -1, 'sort' => '-due_date']) ?>" class="list-group-item"><?= Work::getBadge(-1) ?>Travaux en retard</a>
+				<a href="<?= Url::to(['/work/work/list', 'sort' => '-due_date']) ?>" class="list-group-item"><?= Work::getBadge(0) ?>Travaux pour aujourd'hui</a>
+				<a href="<?= Url::to(['/work/work/list', 'id' => 1, 'sort' => '-due_date']) ?>" class="list-group-item"><?= Work::getBadge(1) ?>Travaux pour demain</a>
+				<a href="<?= Url::to(['/work/work/list', 'id' => 2, 'sort' => '-due_date']) ?>" class="list-group-item"><?= Work::getBadge(2) ?>Travaux pour après-demain</a>
+				<a href="<?= Url::to(['/work/work/list', 'id' => 7, 'sort' => '-due_date']) ?>" class="list-group-item"><?= Work::getBadge(7) ?>Travaux pour les 7 prochains jours</a>
 			</div>
   		</div>
 	</div>
 
 	<div class="alert alert-default" data-intro="Légende: Les couleurs sont en fonction de la date" data-position='left'>
-		<a href="#" class="close" data-dismiss="alert">&times;</a>
+		<a href="#']) ?>" class="close" data-dismiss="alert">&times;</a>
 		<div style="width:23%;display:inline-block">
 			<span class="badge alert-danger"><i class="glyphicon glyphicon-warning-sign"></i> 22</span> En retard
 		</div>
@@ -57,14 +58,14 @@ $this->params['breadcrumbs'][] = $this->title;
   		<div class="panel-heading"><?= Yii::t('store', 'Tasks by Date')?></div>
   		<div class="panel-body">
 			<div class="list-group">
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/" class="list-group-item"><?= WorkLine::getBadge(-2) ?><?= Yii::t('store', 'All Tasks')?></a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/mine" class="list-group-item"><?= Yii::t('store', 'My Tasks')?></a>
+				<a href="<?= Url::to(['/work/work-line/', 'sort' => '-due_date']) ?>" class="list-group-item"><?= WorkLine::getBadge(-2) ?><?= Yii::t('store', 'All Tasks')?></a>
+				<a href="<?= Url::to(['/work/work-line/mine', 'sort' => '-due_date']) ?>" class="list-group-item"><?= Yii::t('store', 'My Tasks')?></a>
 
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=-1" class="list-group-item"><?= WorkLine::getBadge(-1) ?>Tâches en retard</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list" class="list-group-item"><?= WorkLine::getBadge(0) ?>Tâches pour aujourd'hui</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=1" class="list-group-item"><?= WorkLine::getBadge(1) ?>Tâches pour demain</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=2" class="list-group-item"><?= WorkLine::getBadge(2) ?>Tâches pour après-demain</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/list?id=7" class="list-group-item"><?= WorkLine::getBadge(7) ?>Tâches pour les 7 prochains jours</a>
+				<a href="<?= Url::to(['/work/work-line/list', 'id' => -1, 'sort' => '-due_date']) ?>" class="list-group-item"><?= WorkLine::getBadge(-1) ?>Tâches en retard</a>
+				<a href="<?= Url::to(['/work/work-line/list', 'sort' => '-due_date']) ?>" class="list-group-item"><?= WorkLine::getBadge(0) ?>Tâches pour aujourd'hui</a>
+				<a href="<?= Url::to(['/work/work-line/list', 'id' => 1, 'sort' => '-due_date']) ?>" class="list-group-item"><?= WorkLine::getBadge(1) ?>Tâches pour demain</a>
+				<a href="<?= Url::to(['/work/work-line/list', 'id' => 2, 'sort' => '-due_date']) ?>" class="list-group-item"><?= WorkLine::getBadge(2) ?>Tâches pour après-demain</a>
+				<a href="<?= Url::to(['/work/work-line/list', 'id' => 7, 'sort' => '-due_date']) ?>" class="list-group-item"><?= WorkLine::getBadge(7) ?>Tâches pour les 7 prochains jours</a>
 			</div>
   		</div>
 	</div>
@@ -78,8 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	
 	<div class="row">
 		<div class="col-lg-12">
-				<a href="<?= Yii::$app->homeUrl ?>work/work-line/to-cut">Découpe (expériemental)</a>
-				<a href="<?= Yii::$app->homeUrl ?>work/master">Renforts en stock</a>
+			<a href="<?= Url::to(['/work/renfort']) ?>">Découpe (expérimental)</a><br/>
 		</div>
 	</div>
 
