@@ -11,6 +11,8 @@ nbproject
 
 # windows thumbnail cache
 Thumbs.db
+appl-devl
+appl-prod
 
 # composer vendor dir
 /vendor
