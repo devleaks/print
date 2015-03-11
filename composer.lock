@@ -369,36 +369,53 @@
         },
         {
             "name": "bower-asset/draggabilly",
-            "version": "v1.1.2",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/draggabilly.git",
-                "reference": "634a05dabfad6d3edc36d92f32767596749fb618"
+                "reference": "323588695eba15a82ed513f4e4db4842621fa65b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/draggabilly/zipball/634a05dabfad6d3edc36d92f32767596749fb618",
-                "reference": "634a05dabfad6d3edc36d92f32767596749fb618",
+                "url": "https://api.github.com/repos/desandro/draggabilly/zipball/323588695eba15a82ed513f4e4db4842621fa65b",
+                "reference": "323588695eba15a82ed513f4e4db4842621fa65b",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/classie": ">=1,<2.0",
+                "bower-asset/classie": "~1.0.1",
                 "bower-asset/eventemitter": ">=3,<5",
-                "bower-asset/eventie": ">=1,<2.0",
-                "bower-asset/get-size": ">=1.1.8,<2.0",
-                "bower-asset/get-style-property": ">=1,<2.0"
+                "bower-asset/get-size": "~1.2.2",
+                "bower-asset/get-style-property": "~1.0.4",
+                "bower-asset/unidragger": "~1.1.0"
+            },
+            "require-dev": {
+                "bower-asset/jquery-bridget": "~1.1.0",
+                "bower-asset/qunit": "~1.17.1"
             },
             "type": "bower-asset-library",
             "extra": {
                 "bower-asset-main": "draggabilly.js",
                 "bower-asset-ignore": [
                     "**/.*",
-                    "index.html",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests",
+                    "changelog.md",
                     "Gruntfile.js",
-                    "*.json"
+                    "gulpfile.js",
+                    "package.json",
+                    "sandbox"
                 ]
             },
-            "description": "make that shiz draggable"
+            "license": [
+                "MIT"
+            ],
+            "description": "make that shiz draggable",
+            "keywords": [
+                "drag",
+                "draggable"
+            ]
         },
         {
             "name": "bower-asset/eventEmitter",
@@ -997,17 +1014,96 @@
             }
         },
         {
-            "name": "bower-asset/yii2-pjax",
-            "version": "v2.0.2",
+            "name": "bower-asset/unidragger",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/yiisoft/jquery-pjax.git",
-                "reference": "fb92be865c0fd6583714475cb7d629020749d73f"
+                "url": "https://github.com/metafizzy/unidragger.git",
+                "reference": "a29d3c138ab92ba89ab4b5b980139629d7e9f442"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/fb92be865c0fd6583714475cb7d629020749d73f",
-                "reference": "fb92be865c0fd6583714475cb7d629020749d73f",
+                "url": "https://api.github.com/repos/metafizzy/unidragger/zipball/a29d3c138ab92ba89ab4b5b980139629d7e9f442",
+                "reference": "a29d3c138ab92ba89ab4b5b980139629d7e9f442",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/unipointer": "~1.1.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "unidragger.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests",
+                    "package.json"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Draggable base class",
+            "keywords": [
+                "draggabilly",
+                "draggable",
+                "flickity"
+            ]
+        },
+        {
+            "name": "bower-asset/unipointer",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/metafizzy/unipointer.git",
+                "reference": "a3e1cb65c5d90ea28fec05ad6879c3b3f73d27ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/metafizzy/unipointer/zipball/a3e1cb65c5d90ea28fec05ad6879c3b3f73d27ca",
+                "reference": "a3e1cb65c5d90ea28fec05ad6879c3b3f73d27ca",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/eventemitter": "~4.2.11",
+                "bower-asset/eventie": ">=1.0.0,<2.0.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "unipointer.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests",
+                    "package.json"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Do one thing with one pointer",
+            "keywords": [
+                "mouse",
+                "pointer",
+                "touch"
+            ]
+        },
+        {
+            "name": "bower-asset/yii2-pjax",
+            "version": "v2.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/jquery-pjax.git",
+                "reference": "3f20897307cca046fca5323b318475ae9dac0ca0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/3f20897307cca046fca5323b318475ae9dac0ca0",
+                "reference": "3f20897307cca046fca5323b318475ae9dac0ca0",
                 "shasum": ""
             },
             "require": {
@@ -1024,7 +1120,10 @@
                     "script/",
                     "test/"
                 ]
-            }
+            },
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "cebe/js-search",
@@ -2280,12 +2379,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-mpdf.git",
-                "reference": "cd6afdcc03b6657ca92d1f4bc4f3c10e630d34e3"
+                "reference": "b73e05b72ebaa05de904bd88c0a703eb4ee38f16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/cd6afdcc03b6657ca92d1f4bc4f3c10e630d34e3",
-                "reference": "cd6afdcc03b6657ca92d1f4bc4f3c10e630d34e3",
+                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/b73e05b72ebaa05de904bd88c0a703eb4ee38f16",
+                "reference": "b73e05b72ebaa05de904bd88c0a703eb4ee38f16",
                 "shasum": ""
             },
             "require": {
@@ -2319,7 +2418,7 @@
                 "utf8",
                 "yii2"
             ],
-            "time": "2015-02-26 15:09:02"
+            "time": "2015-03-11 07:33:59"
         },
         {
             "name": "kartik-v/yii2-slider",

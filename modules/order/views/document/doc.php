@@ -36,6 +36,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+		'export' => [
+		    'fontAwesome' => true,
+		],
+		'panel' => [
+	        'heading'=> '<h3 class="panel-title">'.Html::encode($this->title).'</h3>',
+	        'before'=> ' ',
+	        'after'=> false, // Html::submitButton(Yii::t('store', 'Partial BOM'), ['class' => 'btn btn-primary']),
+			'footer' => ' ',
+	    ],
+		'exportConfig' => [
+   			GridView::PDF => [
+				'config' => [
+		            'mode' => 'c',
+		            'format' => 'A4-L',
+           			],
+			]
+		],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 	        [

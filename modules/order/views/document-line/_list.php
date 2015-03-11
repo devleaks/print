@@ -50,6 +50,8 @@ $base = 3;
 				'footer' => ' ',
 		    ],
 			//'panelHeadingTemplate' => '{heading}',
+			'resizableColumns' => true,
+    		'resizeStorageKey' => Yii::$app->user->id . '-' . date("m"),
 			'columns' => [
 				['class' => 'kartik\grid\SerialColumn'],
 				//'item.reference',

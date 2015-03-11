@@ -916,8 +916,8 @@ clean_errors();
 
 $('#documentline-form').on("keyup keypress", function(e) {
 	var code = e.keyCode || e.which; 
-	console.log('keyb='+code);
-	if (code == 13) {               
+	//console.log('keyb='+code);
+	if (code == 13 && e.target.nodeName!='TEXTAREA') {               
 		e.preventDefault();
 		return false;
 	}

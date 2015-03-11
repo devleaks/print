@@ -15,9 +15,9 @@ class BackupController extends Controller {
         $model = new Backup();
 
 		if($model->doBackup($uniq != 'false')) {
-			if($model->save()) {
-				echo Yii::t('store', 'Backup completed.');
-				}
+			if(!$model->save()) {
+				echo Yii::t('store', 'Backup info not saved.');
+			}
 		} else {
 			echo Yii::t('store', 'There was an error producing the backup.');
 		}
@@ -27,9 +27,9 @@ class BackupController extends Controller {
         $model = new Backup();
 
 		if($model->doFullBackup($uniq != 'false')) {
-			if($model->save()) {
-				echo Yii::t('store', 'Backup completed.');
-				}
+			if(!$model->save()) {
+				echo Yii::t('store', 'Backup info not saved.');
+			}
 		} else {
 			echo Yii::t('store', 'There was an error producing the backup.');
 		}
@@ -45,7 +45,7 @@ class BackupController extends Controller {
 		$last = date('Y-m-d', strtotime($days.' days ago'));
 		foreach(Backup::find()->where(['<=','created_at',$last])->each() as $backup)
 			$backup->delete();
-		echo Yii::t('store', 'Backup older than {0} deleted.', [$last]);
+		// echo Yii::t('store', 'Backup older than {0} deleted.', [$last]);
     }
 
 }
