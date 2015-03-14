@@ -114,3 +114,8 @@ li.double-arrow:before {
 	text-align: center;
 	vertical-align: middle;
 }
+
+.rednote {
+	font-weight: bold;
+	color: red;
+}

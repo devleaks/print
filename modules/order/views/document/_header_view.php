@@ -130,6 +130,8 @@ Icon::map($this);
 			            ],
 			            [
 			                'attribute'=>'note',
+			                'value'=> '<span class="rednote">'.$model->note.'</span>',
+							'format' => 'raw',
 			            ],
 			        ],
 			    ]) ?>

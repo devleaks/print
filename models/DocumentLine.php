@@ -285,7 +285,7 @@ class DocumentLine extends _DocumentLine
 		}
 	
 		if($this->item->reference != Item::TYPE_MISC && $this->note != '') // for free text item, comment IS the label
-			$str .= '<br/><small><span style="text-decoration: underline;">Note</span>: '.$this->note.'</small>';
+			$str .= '<br/><small class="rednote"><span style="text-decoration: underline;">Note</span>: '.$this->note.'</small>';
 		
 		return $str;
 	}

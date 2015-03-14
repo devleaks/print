@@ -52,7 +52,8 @@ $this->params['breadcrumbs'][] = Html::encode($this->title);
 			],
             [
                 'attribute'=>'note',
-                'value'=> $model->note ? $model->note : '',
+                'value'=> $model->note ? '<span class="rednote">'.$model->note.'</span>' : '',
+				'format' => 'raw',
 			],
 //          [
 //              'attribute'=>'status',

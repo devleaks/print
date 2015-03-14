@@ -44,6 +44,12 @@ if(isset(Yii::$app->user))
                 'value'=>$can_view ? Html::a($model->getDocument()->one()->name, Url::to(['/order/document/view', 'id' => $model->document_id])) : $model->getDocument()->one()->name,
 				'format' => 'raw',
             ],
+            [
+                'label'=>Yii::t('store','Note'),
+                'attribute'=>'document_id',
+                'value'=> $model->document->note ? '<span class="rednote">'.$model->document->note.'</span>' : '',
+				'format' => 'raw',
+			],
 //            'document_id',
             [
                 'attribute'=>'created_at',

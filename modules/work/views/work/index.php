@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use app\models\Work;
 use kartik\helpers\Html;
 use kartik\grid\GridView;
@@ -38,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	        ],
 			[
                 'label'=>Yii::t('store','Created By'),
+	            // 'filter' => User::getList(),
 	            'value'=> function ($model, $key, $index, $widget) {
 					return $model->document->createdBy->username ;
 				},

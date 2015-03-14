@@ -42,7 +42,11 @@ use yii\widgets\DetailView;
                 'label'=>Yii::t('store','Item'),
                 'value'=> $model->item->libelle_long,
 			],
-            'note',
+            [
+                'attribute'=>'note',
+                'value'=> $model->note ? '<span class="rednote">'.$model->note.'</span>' : '',
+				'format' => 'raw',
+			],
         ],
     ]) ?>
 		</div>

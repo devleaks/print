@@ -33,7 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-			'note',
+            [
+                'attribute'=>'note',
+                'value'=> '<span class="rednote">'.$model->note.'</span>',
+				'format' => 'raw',
+            ],
             'work_id',
             'created_at',
             'updated_at',
