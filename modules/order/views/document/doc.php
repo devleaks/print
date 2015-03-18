@@ -23,7 +23,7 @@ if(isset(Yii::$app->user))
 			$role = Yii::$app->user->identity->role;
 
 $this->title = Yii::t('store', Document::getTypeLabel($document_type, true));
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/order']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/order', 'sort' => '-updated_at']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">

@@ -1,4 +1,5 @@
 <?php
+use app\models\Parameter;
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
 ?>
@@ -36,6 +37,10 @@
 	</table>
 
 	<br>
+	<?php if($model->vat_bool && $model->legal): ?>
+		<p><?= Parameter::getMLText('legal', $model->legal) ?></p>
+		<br>
+	<?php endif; ?>
 
 	<table width="100%" class="table table-bordered" style="text-align: center;">
 	<tr>

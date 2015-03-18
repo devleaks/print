@@ -112,6 +112,17 @@ Icon::map($this);
 							]]
 			            ],
 			            [
+			                'attribute'=>'legal',
+			                'label'=> Yii::t('store','Mention légale'),
+							'format' => 'raw',
+							'value' => $model->legal
+											? Parameter::getMLText('legal', $model->legal)
+											: '',
+							'type' => DetailView::INPUT_DROPDOWN_LIST,
+							'items' => [''=>''] + Parameter::getSelectList('legal', 'value_text'),
+							'visible' => $model->vat_bool
+			            ],
+			            [
 			                'attribute'=>'price_tvac',
 			                'label'=> Yii::t('store','Solde'),
 			                'value'=> $model->getBalance(),

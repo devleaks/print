@@ -15,47 +15,8 @@ use yii\helpers\ArrayHelper;
  * @property integer $value_int
  * @property string $value_date
  */
-class Parameter extends \yii\db\ActiveRecord
+class Parameter extends _Parameter
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'parameter';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['domain', 'name'], 'required'],
-            [['value_number'], 'number'],
-            [['value_int'], 'integer'],
-            [['value_date'], 'safe'],
-            [['domain'], 'string', 'max' => 20],
-            [['name'], 'string', 'max' => 40],
-            [['value_text'], 'string', 'max' => 160]
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'domain' => Yii::t('store', 'Domain'),
-            'name' => Yii::t('store', 'Name'),
-            'value_text' => Yii::t('store', 'Value Text'),
-            'value_number' => Yii::t('store', 'Value Number'),
-            'value_int' => Yii::t('store', 'Value Int'),
-            'value_date' => Yii::t('store', 'Value Date'),
-        ];
-    }
-
 	/**
 	 * Builds a (id,name) pairs for paramter out of a parameter domain
 	 *
@@ -105,10 +66,14 @@ class Parameter extends \yii\db\ActiveRecord
 		return $p ? $p->value_text : $default;
 	}
 
-	public static function getMLText($domain, $name, $lang = 'fr') {
+	public static function getMLText($domain, $name, $lang = null) {
+		$language = $lang ? $lang : Yii::$app->language;
 		$p = self::find()->where(['domain' => $domain, 'name' => $name, 'lang' => $lang])->one();
+
+		$p_fr  = self::find()->where(['domain' => $domain, 'name' => $name, 'lang' => 'fr'])->one();
+		$p_any = self::find()->where(['domain' => $domain, 'name' => $name])->one();
 		
-		return $p ? $p->value_text : $domain.'::'.$name.'('.$lang.')';
+		return $p ? $p->value_text : ($p_any ? $p_any->value_text : $domain.'::'.$name.'('.$lang.')');
 	}
 
 	public static function getIntegerValue($domain, $name, $default = null) {
