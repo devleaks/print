@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		$form = ActiveForm::begin([
 			'type'    => ActiveForm::TYPE_VERTICAL,
 	        'options' => ['enctype' => 'multipart/form-data', 'class' => 'form-compact'],
+			'id' => 'documentline-form'
 		]); ?>
 
 	<?= $this->render('_header_form', [

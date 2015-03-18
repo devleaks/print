@@ -828,7 +828,7 @@ function free_item_update() {
  */
 $('#documentline-form').submit(function(e) {
 	has_error = $("#store-missing-data").is(":visible");
-	//console.log('has error? '+ has_error);
+	console.log('has error? '+ has_error);
 	if( has_error )
 		e.preventDefault();
 	else

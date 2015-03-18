@@ -71,31 +71,37 @@ class Order extends Document
 	 */
 	protected function statusUpdated() {
 		Yii::trace('status='.$this->status, 'Order::statusUpdated()');
-		if($this->status == self::STATUS_CANCELLED) {
-			if($work = $this->getWorks()->one()) {
-				foreach($work->getWorkLines()->each() as $wl) {
-					$wl->status = Work::STATUS_CANCELLED;
-					$wl->save();
+		switch($this->status) {
+			case self::STATUS_CANCELLED:
+				if($work = $this->getWorks()->one()) {
+					foreach($work->getWorkLines()->each() as $wl) {
+						$wl->status = Work::STATUS_CANCELLED;
+						$wl->save();
+					}
+					$work->status = Work::STATUS_CANCELLED;
+					$work->save();
 				}
-				$work->status = Work::STATUS_CANCELLED;
-				$work->save();
-			}
-		}
-		
-		if($this->status == self::STATUS_DONE)
-			$this->completed();
+				break;
+			case self::STATUS_DONE:
+				$this->updatePaymentStatus();
+				break;
+			case self::STATUS_TOPAY:
+				$this->completed();
+				break;
+		}		
 	}
 
 
+	/**
+	 * @inheritdoc
+	 */
 	public function getBill() {
 		return ($this->bom_bool and $this->parent_id != null) ?
 			Bill::findDocument($this->parent_id)
 			:
 			Bill::findOne(['parent_id' => $this->id]);
 	}
-	/**
-	 * @inheritdoc
-	 */
+
 	public function updatePaymentStatus() {
 		Yii::trace('up', 'Order::updatePaymentStatus');
 		if($bill = $this->getBill())
@@ -130,32 +136,36 @@ class Order extends Document
      * Send email to client if close to due date. Do not send if far from due date; do not send if client has no email. Do not change status of order.
 	 */
 	public function notify($batch = false) {
-		Yii::trace('Order::notify');
 		$sent = false;
 		if($this->closeToDueDate()) {
 			if($this->client->email != '') {
 				$lang_before = Yii::$app->language;
 				Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
 				try {
+					$destinataire = YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email;
 					Yii::$app->mailer->compose('order-completed', ['model' => $this])
 					    ->setFrom( Yii::$app->params['fromEmail'] )
-					    ->setTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email )
+					    ->setTo( $destinataire )
 						->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
 					    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)
 					    ->send();
 					$sent = true;
 					if(!$batch) Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
+					else Yii::trace('Order '.$this->name.' mail sent to '.$destinataire, 'Order::notify');
 				} catch (Swift_TransportException $STe) {
 					Yii::error($STe->getMessage(), 'CoverLetter::send::ste');
 					if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
+					else Yii::trace('The system could not send mail.', 'Order::notify');
 				} catch (Exception $e) {
 					Yii::error($e->getMessage(), 'CoverLetter::send::e');				
 					if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
+					else Yii::trace('The system could not send mail.', 'Order::notify');
 				}
 				Yii::$app->language = $lang_before;
 			}
 		} else {
 			if(!$batch) Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.').' '.Yii::t('store', 'Due date too far.'));
+			else Yii::trace('Due date too far for '.$this->name, 'Order::notify');
 		}
 		return $sent;
 	}
