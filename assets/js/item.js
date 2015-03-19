@@ -9,16 +9,6 @@ function arrondir_sup(i) {
 	return Math.ceil( i );
 }
 
-/* no longer used. Rounding performed in PriceCalculator only as a business rule
-function arrondir(i) {
-	return Math.round( i );
-}
-
-function arrondir5(i) {
-	return Math.round( i * 2 ) / 2;
-}
-*/
-
 
 /** Items */
 function getComputedPrice(id, w, h) {
@@ -336,28 +326,6 @@ function (event) {
 	$("#documentline-unit_price").trigger('change');
 });
 
-/** common options trigger recomputation in respective item price
-$('#documentlinedetail-price_frame:enabled, #documentlinedetail-price_montage:enabled, #documentlinedetail-price_renfort:enabled').change(
-function (event) {
-	item_id = parseInt($("#documentline-item_id").val());
-	item = getItemById(item_id);
-	yii_category = item.yii_category;
-	switch(yii_category) {
-		case "ChromaLuxe":
-			$("#documentlinedetail-price_chroma:enabled").trigger('change');
-			break;
-		case "Tirage":
-		case "Canvas":
-			tirage_disabled = $("#documentlinedetail-tirage_id").prop('disabled');
-			if(tirage_disabled)
-				$("#documentlinedetail-tirage_id:disabled").trigger('change');	
-			else
-				$("#documentlinedetail-tirage_id:enabled").trigger('change');	
-			break;
-	} // other items: no nothing
-});*/
-
-
 /**
  *	Options price calculation
  */
@@ -400,14 +368,6 @@ function price_frame() {
 /** renfort */
 function price_renfort() {
 	renfort = $("#documentlinedetail-renfort_bool:enabled").is(':checked');
-/*
-	if(!renfort) {
-		needDimensions();
-		$("#documentlinedetail-price_renfort:enabled").val('');
-		$("#documentlinedetail-price_renfort:enabled").trigger('change');
-		return;
-	}
-*/
 	dim = getDimensions();
 	if(renfort && !dim) {
 		$("#documentlinedetail-price_renfort:enabled").val('');
@@ -430,12 +390,6 @@ function price_renfort() {
 		renfort = $("#documentlinedetail-renfort_bool:enabled").is(':checked');
 		//console.log('price_renfort: place refort: '+renfort);
 		if(renfort) {
-			/*
-			minus_inside = ($("#documentline-item_id").val() == store_values.chroma) ? 40 : 20;
-			price = 2 * (w + h - minus_inside) * getPrice('Renfort') / 100; // renfort placed 10cm inside, all perimeter
-			Renfort_Min = getPrice('Renfort_Min');			
-			if(price < Renfort_Min) price = Renfort_Min;
-			*/ // Now compute via getComputedPrice
 			minus_inside = ($("#documentline-item_id").val() == store_values.chroma) ? 20 : 10; // renfort placed 10cm inside for ChromaLuxe, 5cm inside for other
 			renfortItem = getItemByReference('Renfort');
 			var price = getComputedPrice(renfortItem.id, w - minus_inside, h - minus_inside); 
@@ -517,27 +471,6 @@ function price_chromaluxe() {
 	//console.log('chromaluxe type:'+which);
 	if(typeof(which) !== 'undefined') {
 		del_error("CHROMALUXE_TYPE");
-		/*
-		max_area = store_values.param['SublimationMaxHeight'].value_int * store_values.param['SublimationMaxWidth'].value_int;
-		work_area = dim.width * dim.height;
-		del_error("SURFACE_TOO_LARGE");
-
-		if(work_area <= store_values.param['ChromaLuxeXS'].value_number) {
-			price = getPrice("ChromaXS") * work_area / max_area;
-		} else if(work_area <= store_values.param['ChromaLuxeS'].value_number) {
-			price = getPrice("ChromaS") * work_area / max_area;
-		} else if(work_area <= store_values.param['ChromaLuxeM'].value_number) {
-			price = getPrice("ChromaM") * work_area / max_area;
-		} else if(work_area <= store_values.param['ChromaLuxeL'].value_number) {
-			price = getPrice("ChromaL") * work_area / max_area;
-		} else if(work_area <= max_area) {
-			price = getPrice("ChromaXL") * work_area / max_area;
-		} else {
-			add_error("SURFACE_TOO_LARGE");
-		}
-		min_price = getPrice("Chroma_Min");
-		if(price < min_price) price = min_price;
-		*/
 		var price = getComputedPrice(store_values.chroma, dim.width, dim.height);
 		$("#documentlinedetail-price_chroma:enabled").val(price);
 		$("#documentlinedetail-price_chroma:enabled").trigger('change');
@@ -617,7 +550,7 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 	}
 	del_error("FINEART_NO_TIRAGE");
 	
-//	console.log('tirage_id: prix: '+item.prix_de_vente);
+	//console.log('tirage_id: prix: '+item.prix_de_vente);
 
 	// if it changed, need to change item_id as well
 	setItem(item.id, item.taux_de_tva, item.libelle_long, item.yii_category);
@@ -826,18 +759,8 @@ function free_item_update() {
  *		- Disabled form fields are not submited (HTML rule)
  *  	- This form contains an hardcoded form name
  */
-$('#documentline-form').submit(function(e) {
-	has_error = $("#store-missing-data").is(":visible");
-	console.log('has error? '+ has_error);
-	if( has_error )
-		e.preventDefault();
-	else
-        return;
-});
-
 /** if user selects item with dpecial id, trigger tab opening */
-$("#documentline-item_id").change(
-function() {
+$("#documentline-item_id").change(function() {
 	$("ItemChromaLuxe").prop('disabled', true);
 	$("ItemTirage").prop('disabled', true);
 	$("ItemCanvas").prop('disabled', true);
@@ -893,14 +816,35 @@ function() {
 	}
 });
 
-$(".order-option").click(
-function () {
+$(".order-option").click(function () {
 	item_id   = $(this).data('item_id');
 	item_name = $(this).data('item_name');
 	item_vat  = $(this).data('item_vat');
 	item_yii_category  = $(this).data('item_category');
 	setItem(item_id, item_vat, item_name, item_yii_category);
 	$("#documentline-item_id").trigger('change');
+});
+
+
+/**
+ *	Global form handling.
+ */
+$('#documentline-form').submit(function(e) {
+	has_error = $("#store-missing-data").is(":visible");
+	console.log('has error? '+ has_error);
+	if( has_error )
+		e.preventDefault();
+	else
+        return;
+});
+
+$('#documentline-form').on("keyup keypress", function(e) {
+	var code = e.keyCode || e.which; 
+	//console.log('keyb='+code);
+	if (code == 13 && e.target.nodeName!='TEXTAREA') {               
+		e.preventDefault();
+		return false;
+	}
 });
 
 
@@ -914,11 +858,3 @@ $('.yiipanel-Common').toggle(false);
 $('.document-line-options').toggle(false);
 clean_errors();
 
-$('#documentline-form').on("keyup keypress", function(e) {
-	var code = e.keyCode || e.which; 
-	//console.log('keyb='+code);
-	if (code == 13 && e.target.nodeName!='TEXTAREA') {               
-		e.preventDefault();
-		return false;
-	}
-});

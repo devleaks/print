@@ -30,6 +30,7 @@ phpunit.phar
 
 # Yii special
 config
+web/assets
 web/pictures
 web/documents
 docs/sample
