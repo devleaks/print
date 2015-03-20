@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = Html::encode($this->title);
 				'format' => 'raw'
 			],
             [
-                'attribute'=>'status',
+                'attribute'=>'updated_by',
                 'label'=>Yii::t('store','Updated'),
                 'value'=> $model->getUpdatedBy()->one()->username . ' ' . Yii::t('store', 'at') . ' ' . Yii::$app->formatter->asDateTime($model->updated_at),
 			],

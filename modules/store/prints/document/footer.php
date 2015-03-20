@@ -31,8 +31,8 @@ use app\models\Parameter;
 		<td colspan="2"></td>
 		<td colspan="3"></td>
 
-		<td style="text-align: center; font-weight: bold;"><?= Yii::t('print', 'VAT incl.') ?></td>
-		<td style="text-align: ',' center; font-weight: bold; font-size: 1.2em;"><?= Yii::$app->formatter->asCurrency($model->vat_bool ? $model->price_htva : $model->price_tvac) ?></td>
+		<td style="text-align: center; font-weight: bold; font-size: 1.8em;"><?= Yii::t('print', 'VAT incl.') ?></td>
+		<td style="text-align: ',' center; font-weight: bold; font-size: 1.8em;"><?= Yii::$app->formatter->asCurrency($model->vat_bool ? $model->price_htva : $model->price_tvac) ?></td>
 	</tr>
 	</table>
 
@@ -44,14 +44,23 @@ use app\models\Parameter;
 
 	<table width="100%" class="table table-bordered" style="text-align: center;">
 	<tr>
-			<th style="text-align: center;"><?= Yii::t('print', 'Paid Today') ?></th>
-			<th style="text-align: center;"><?= Yii::t('print', 'Advances') ?></th>
-			<th style="text-align: center;"><?= Yii::t('print', 'Solde') ?></th>
+			<th style="text-align: center;" width="33%"><?= Yii::t('print', 'Paid Today') ?></th>
+			<th style="text-align: center;" width="33%"><?= Yii::t('print', 'Advances') ?></th>
+			<th style="text-align: center;" width="33%"><?= Yii::t('print', 'Solde') ?></th>
 	</tr>
 	<tr>
 			<td><?= Yii::$app->formatter->asCurrency($model->getPrepaid(true)) ?></td>
 			<td><?= Yii::$app->formatter->asCurrency($model->getPrepaid()) ?></td>
 			<td><?= Yii::$app->formatter->asCurrency( ($model->vat_bool ? $model->price_htva : $model->price_tvac) - $model->getPrepaid()) ?></td>
 	</tr>
+	<?php if(false && ($model->getPayments()->count()>0)) {
+			echo '<tr><td></td><td>';
+			echo $this->render('_payments', [
+				'model' => $model,
+			]);
+			echo '</td><td></td></tr>';
+		}
+	?>
 	</table>
+	
 </div>

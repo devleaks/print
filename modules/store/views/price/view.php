@@ -14,4 +14,4 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= $content ?>
 
-<?= Html::a('<span class="glyphicon glyphicon-print"></span> '.Yii::t('store', 'Print'), Url::to(['print', 'id' => $model->id]), ['class' => 'btn btn-primary', 'target' => '_blank']) ?>
+<?= Html::a('<i class="glyphicon glyphicon-print"></i> '.Yii::t('store', 'Print'), Url::to(['print', 'id' => $model->id]), ['class' => 'btn btn-primary', 'target' => '_blank']) ?>

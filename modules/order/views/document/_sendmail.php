@@ -23,7 +23,7 @@ $capture->email = $model->client->email;
 
 <?php Modal::begin([
     'header' => '<h2>'.Yii::t('store', 'Send by e-Mail').'</h2>',
-    'toggleButton' => ['label' => '<span class="glyphicon glyphicon-envelope"></span> '.Yii::t('store', 'Send'), 'class' => 'btn btn-info', 'title' => Yii::t('store', 'Send')],
+    'toggleButton' => ['label' => '<i class="glyphicon glyphicon-envelope"></i> '.Yii::t('store', 'Send'), 'class' => 'btn btn-info', 'title' => Yii::t('store', 'Send')],
 ]) ?>
 
 <?php if($capture->email == '') { ?>
@@ -42,8 +42,8 @@ $capture->email = $model->client->email;
 
 	<div class="modal-footer our-modal-footer">
 	<div class="form-group our-form-group">
-		<?= Html::a('<span class="glyphicon glyphicon-remove"></span> '.Yii::t('store', 'Cancel'), '#', ['class' => 'btn btn-danger', 'data' => ['dismiss' => 'modal']]) ?>
-		<?= Html::submitButton('<span class="glyphicon glyphicon-envelope"></span> '.Yii::t('store', 'Send'), ['class' => 'btn btn-primary']) ?>
+		<?= Html::a('<i class="glyphicon glyphicon-remove"></i> '.Yii::t('store', 'Cancel'), '#', ['class' => 'btn btn-danger', 'data' => ['dismiss' => 'modal']]) ?>
+		<?= Html::submitButton('<i class="glyphicon glyphicon-envelope"></i> '.Yii::t('store', 'Send'), ['class' => 'btn btn-primary']) ?>
 	</div>
 	</div>
 <?php ActiveForm::end();

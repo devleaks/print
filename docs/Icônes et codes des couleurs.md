@@ -9,19 +9,19 @@
 
 Icône | Utilisation
 :----:|-------------
-<span class="glyphicon glyphicon-ok"></span> | Valider
-<span class="glyphicon glyphicon-remove"></span> | Annuler
-<span class="glyphicon glyphicon-eye-open"></span> | Voir
-<span class="glyphicon glyphicon-pencil"></span> | Modifier
-<span class="glyphicon glyphicon-print"></span> | Imprimer
-<span class="glyphicon glyphicon-trash"></span> | Supprimer
-<span class="glyphicon glyphicon-envelope"></span> | Envoyer par email
-<span class="glyphicon glyphicon-send"></span> | Transmettre
-<span class="glyphicon glyphicon-cog"></span> | Soumettre le travail pour la commande
-<span class="glyphicon glyphicon-tasks"></span> | Liste des tâches
-<span class="glyphicon glyphicon-play"></span> | Terminer toutes les tâches
-<span class="glyphicon glyphicon-edit"></span> | Note, commentaire
-<span class="glyphicon glyphicon-tags"></span> | Etiquettes
+<i class="glyphicon glyphicon-ok"></i> | Valider
+<i class="glyphicon glyphicon-remove"></i> | Annuler
+<i class="glyphicon glyphicon-eye-open"></i> | Voir
+<i class="glyphicon glyphicon-pencil"></i> | Modifier
+<i class="glyphicon glyphicon-print"></i> | Imprimer
+<i class="glyphicon glyphicon-trash"></i> | Supprimer
+<i class="glyphicon glyphicon-envelope"></i> | Envoyer par email
+<i class="glyphicon glyphicon-send"></i> | Transmettre
+<i class="glyphicon glyphicon-cog"></i> | Soumettre le travail pour la commande
+<i class="glyphicon glyphicon-tasks"></i> | Liste des tâches
+<i class="glyphicon glyphicon-play"></i> | Terminer toutes les tâches
+<i class="glyphicon glyphicon-edit"></i> | Note, commentaire
+<i class="glyphicon glyphicon-tags"></i> | Etiquettes
 
 
 
@@ -29,11 +29,11 @@ Icône | Utilisation
 
 Icône | Utilisation
 :----:|-------------
-<span class="glyphicon glyphicon-eye-open"></span> | Voir
-<span class="glyphicon glyphicon-tag"></span> | Etiquette
-<span class="glyphicon glyphicon-inbox"></span> | Prendre en charge (placer dans sa boîte de travail)
-<span class="glyphicon glyphicon-ok-sign"></span> | Signaler la tâche comme terminée
-<span class="glyphicon glyphicon-remove"></span> | Refaire la tâche, la replacer dans l'état _A faire_
+<i class="glyphicon glyphicon-eye-open"></i> | Voir
+<i class="glyphicon glyphicon-tag"></i> | Etiquette
+<i class="glyphicon glyphicon-inbox"></i> | Prendre en charge (placer dans sa boîte de travail)
+<i class="glyphicon glyphicon-ok-sign"></i> | Signaler la tâche comme terminée
+<i class="glyphicon glyphicon-remove"></i> | Refaire la tâche, la replacer dans l'état _A faire_
 
 
 Chaque tâche possède une icône propre.
@@ -61,11 +61,11 @@ Par exemple, si la commande est terminée, son état sera <span class="label lab
 
 Bouton | Utilisation
 :-----:| -------------
-<a class="btn btn-primary" href="#" title="Ajouter"><span class="glyphicon glyphicon-plus"></span> Ajouter</a> | Action principale
-<a class="btn btn-success" href="#" title="Commander"><span class="glyphicon glyphicon-ok"></span> Commander</a> | Action principale modifiant l'état de l'objet
-<a class="btn btn-info" href="#" title="Voir"><span class="glyphicon glyphicon-eye-open"></span> Voir</a> | Action d'information
-<a class="btn btn-warning" href="#" title="Avertissement"><span class="glyphicon glyphicon-warning-sign"></span> Avertissement</a> | Action d'avertissement
-<a class="btn btn-danger" href="#" title="Effacer"><span class="glyphicon glyphicon-remove"></span> Effacer</a> | Action dangereuse
+<a class="btn btn-primary" href="#" title="Ajouter"><i class="glyphicon glyphicon-plus"></i> Ajouter</a> | Action principale
+<a class="btn btn-success" href="#" title="Commander"><i class="glyphicon glyphicon-ok"></i> Commander</a> | Action principale modifiant l'état de l'objet
+<a class="btn btn-info" href="#" title="Voir"><i class="glyphicon glyphicon-eye-open"></i> Voir</a> | Action d'information
+<a class="btn btn-warning" href="#" title="Avertissement"><i class="glyphicon glyphicon-warning-sign"></i> Avertissement</a> | Action d'avertissement
+<a class="btn btn-danger" href="#" title="Effacer"><i class="glyphicon glyphicon-remove"></i> Effacer</a> | Action dangereuse
 
 
 Dans la mesure des possibilités, chaque bouton sera accompagné d'une îcone indiquant graphiquement sa fonction.

@@ -20,8 +20,6 @@ if(isset(Yii::$app->user))
 	<ul>
 	    <li><a href="<?= Url::to(['/order/document/create-ticket']) ?>"><strong><?= Yii::t('store', 'New ticket')?></strong></a></li>
 	    <li><a href="<?= Url::to(['/order/document/tickets', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Tickets')?></a></li>
-	    <li><a href="<?= Url::to(['/order/document/create-refund']) ?>"><?= Yii::t('store', 'New refund')?></a></li>
-	    <li><a href="<?= Url::to(['/order/document/refunds', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Refunds')?></a></li>
 	</ul>
 
 	<ul>
@@ -31,13 +29,18 @@ if(isset(Yii::$app->user))
 
 	<ul>
 	    <li><a href="<?= Url::to(['/order/document/create-bom']) ?>"><?= Yii::t('store', 'Enter new bill of materials')?></a></li>
-	    <li><a href="<?= Url::to(['/order/document/create']) ?>"><?= Yii::t('store', 'Enter new order')?></a></li>
+	    <li><a href="<?= Url::to(['/order/document/create']) ?>"><strong><?= Yii::t('store', 'Enter new order')?></strong></a></li>
 	    <li><a href="<?= Url::to(['/order/document/orders', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Order management')?></a></li>
 	</ul>
 
 	<ul>
 	    <li><a href="<?= Url::to(['/order/document/create-bill']) ?>"><?= Yii::t('store', 'Enter new bill')?></a></li>
 	    <li><a href="<?= Url::to(['/order/document/bills', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bills')?></a></li>
+	</ul>
+
+	<ul>
+	    <li><a href="<?= Url::to(['/order/document/create-refund']) ?>"><?= Yii::t('store', 'New refund')?></a></li>
+	    <li><a href="<?= Url::to(['/order/document/refunds', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Refunds')?></a></li>
 	</ul>
 
 	<ul>

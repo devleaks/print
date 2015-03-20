@@ -23,21 +23,21 @@ $client_color = $bottomLine < -0.04 ? 'warning' : 'primary';
 $comptoir = Client::findOne(['nom' => 'Client au comptoir']);
 
 $buttons1 = ($comptoir->id == $client->id) ? '' : '{update} <span class="kv-buttons-1">'.
-Html::a('<span class="glyphicon glyphicon-shopping-cart"></span>',
+Html::a('<i class="glyphicon glyphicon-shopping-cart"></i>',
   ['/order/document/client', 'id' => $client->id], [
 	'title' => Yii::t('store', 'Previous Orders'),
 	'class' => "btn btn-xs btn-primary kv-btn-book",
 	'target' => '_blank',
 ])
 .' '.
-Html::a('<span class="glyphicon glyphicon-euro"></span>',
+Html::a('<i class="glyphicon glyphicon-euro"></i>',
   ['/accnt/bill/client-unpaid', 'id' => $client->id], [
 	'title' => Yii::t('store', 'Unpaid Bills'),
 	'class' => "btn btn-xs btn-$unpaid_color kv-btn-book",
 	'target' => '_blank',
 ])
 .' '.
-Html::a('<span class="glyphicon glyphicon-book"></span>',
+Html::a('<i class="glyphicon glyphicon-book"></i>',
   ['/accnt/account/client', 'id' => $client->id], [
 	'title' => Yii::t('store', 'Client Account'.' - '.$bottomLine),
 	'class' => "btn btn-xs btn-$client_color kv-btn-book",
@@ -45,7 +45,7 @@ Html::a('<span class="glyphicon glyphicon-book"></span>',
 ])
 .'</span>';
 
-//$morebuttons = '<span class="kv-buttons-1"><button type="button" class="btn btn-xs btn-default kv-btn-update" title="Compte client"><span class="glyphicon glyphicon-book"></span></button></span>';
+//$morebuttons = '<span class="kv-buttons-1"><button type="button" class="btn btn-xs btn-default kv-btn-update" title="Compte client"><i class="glyphicon glyphicon-book"></i></button></span>';
 ?>
 <div>
     <?= DetailView::widget([

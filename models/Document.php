@@ -753,7 +753,7 @@ class Document extends _Document
 	 */
 	public function getButton($template, $icon, $text) {
 		return str_replace(
-			'{icon}', '<span class="glyphicon glyphicon-'.$icon.'"></span> ', str_replace(
+			'{icon}', '<i class="glyphicon glyphicon-'.$icon.'"></i> ', str_replace(
 				'{text}', Yii::t('store', $text), $template
 			)
 		);

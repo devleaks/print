@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?= $content ?>
 
 	<div class="btn-group"><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-	 	<span class="glyphicon glyphicon-print"></span> <?= Yii::t('store', 'Print') ?> <span class="caret"></span></button><ul class="dropdown-menu" role="menu">
+	 	<i class="glyphicon glyphicon-print"></i> <?= Yii::t('store', 'Print') ?> <span class="caret"></span></button><ul class="dropdown-menu" role="menu">
 						<li><?= Html::a(Yii::t('store', 'Portrait'),  ['print', 'id' => $model->id, 'format' => 'P'], ['target' => '_blank', 'title' => Yii::t('store', 'Portrait')]) ?></li>
 						<li><?= Html::a(Yii::t('store', 'Landscape'), ['print', 'id' => $model->id, 'format' => 'L'], ['target' => '_blank', 'title' => Yii::t('store', 'Landscape')]) ?></li>
 		</ul>

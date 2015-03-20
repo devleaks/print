@@ -247,7 +247,7 @@ class DocumentActionColumn extends Column {
 		$data = $this->documentButtons[$name];
 		$label = Yii::t('store', $data['label']);
 		return str_replace(
-			'{icon}', '<span class="glyphicon glyphicon-'.$data['icon'].'"></span> ', str_replace(
+			'{icon}', '<i class="glyphicon glyphicon-'.$data['icon'].'"></i> ', str_replace(
 				'{text}', $label, $this->buttonTemplate
 			)
 		);
@@ -264,7 +264,7 @@ class DocumentActionColumn extends Column {
 		$label = Yii::t('store', $data['label']);
 		return Html::a(
 			str_replace(
-				'{icon}', '<span class="glyphicon glyphicon-'.$data['icon'].'"></span> ', str_replace(
+				'{icon}', '<i class="glyphicon glyphicon-'.$data['icon'].'"></i> ', str_replace(
 					'{text}', $label, $this->buttonTemplate
 				)
 			),

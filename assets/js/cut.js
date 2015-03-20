@@ -2,7 +2,7 @@
  *
  */
 var masterLength = 200;
-var handleString = '<div class="master-info"><span class="glyphicon glyphicon-move handle"></span>#<span class="master-number">#</span> <meter min="0" max="'+masterLength+'" value="0"></meter> <span class="master-work_length">0</span> <input type="checkbox" class="masterKeep" name="masterKeep" value="XXXMASTER_IDXXX"> <span class="master-work_used">0</span></div>';
+var handleString = '<div class="master-info"><i class="glyphicon glyphicon-move handle"></i>#<span class="master-number">#</span> <meter min="0" max="'+masterLength+'" value="0"></meter> <span class="master-work_length">0</span> <input type="checkbox" class="masterKeep" name="masterKeep" value="XXXMASTER_IDXXX"> <span class="master-work_used">0</span></div>';
 
 function totalLength($elem) {
 	var sum = 0;

@@ -27,7 +27,7 @@ $capture->submit = 1;
 
 <?php Modal::begin([
     'header' => '<h2>'.$label.'</h2>',
-    'toggleButton' => [ 'label' => '<span class="glyphicon glyphicon-shopping-cart"></span> '.$label,
+    'toggleButton' => [ 'label' => '<i class="glyphicon glyphicon-shopping-cart"></i> '.$label,
 						'class' => 'btn btn-success', 'title' => $label],
 ]) ?>
 
@@ -56,8 +56,8 @@ $capture->submit = 1;
 
 		<div class="modal-footer our-modal-footer">
 		<div class="form-group our-form-group">
-			<?= Html::a('<span class="glyphicon glyphicon-remove"></span> '.Yii::t('store', 'Cancel'), '#', ['class' => 'btn btn-danger', 'data' => ['dismiss' => 'modal']]) ?>
-			<?= Html::submitButton('<span class="glyphicon glyphicon-shopping-cart"></span> '.Yii::t('store', 'Pay'), ['class' => 'btn btn-success']) ?>
+			<?= Html::a('<i class="glyphicon glyphicon-remove"></i> '.Yii::t('store', 'Cancel'), '#', ['class' => 'btn btn-danger', 'data' => ['dismiss' => 'modal']]) ?>
+			<?= Html::submitButton('<i class="glyphicon glyphicon-shopping-cart"></i> '.Yii::t('store', 'Pay'), ['class' => 'btn btn-success']) ?>
 		</div>
 		</div>
 	<?php ActiveForm::end(); ?>

@@ -21,7 +21,8 @@ $this->title = Yii::t('store', 'Order Line Details');
             [
                 'label'=>Yii::t('store','ChromaLuxe'),
                 'attribute'=>'chroma_id',
-                'value'=> $model->chroma ? $model->chroma->libelle_long : Yii::t('store', 'None'), //'chroma.libelle_long',
+                'value'=> $model->chroma ? '<span class="rednote">'.$model->chroma->libelle_long.'</span>' : Yii::t('store', 'None'), //'chroma.libelle_long',
+				'format' => 'raw',
             ],
             'price_chroma',
             [

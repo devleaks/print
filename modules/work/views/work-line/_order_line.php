@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use kartik\detail\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DocumentLine */
@@ -37,6 +37,7 @@ use yii\widgets\DetailView;
             [
                 'label'=>Yii::t('store','Options'),
                 'value'=> $model->getDocumentLineDetails()->one() != null ? $model->getDocumentLineDetails()->one()->getDescription() : '',
+				'format' => 'raw',
 			],
             [
                 'label'=>Yii::t('store','Item'),
