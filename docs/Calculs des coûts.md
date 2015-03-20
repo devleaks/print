@@ -49,7 +49,8 @@ signifie que la longueur d'un article doit être inférieur au paramètre dont l
 
 Tous les paramètres sont ajustables dans l'application, dans la gestion de l'application.
 Suivre le lien 'Paramètres'.
-Tous les paramètres sont dans le _domaine_ `formule`.
+
+Tous les paramètres utilisés dans des formules de calcul sont dans le _domaine_ de paramètre `formule`.
 
 
 ### Données par article
@@ -58,8 +59,8 @@ Souvent, il faut fournir les données suivantes:
 
 * `largeur`
 * `hauteur`
-	
-Ces données doivent être données en centimètres.
+
+Ces données doivent être fournies en centimètres.
 
 ## Coût du ChromaLuxe
 
@@ -120,15 +121,13 @@ Ces cinq articles sont dans la catégorie 'ChromaSupport'.
 
 ### Formule
 
-	Si l'article dispose d'un cadre et si les dimensions de l'article sont supérieures à 50 x 70
+	Si l'article dispose d'un cadre et si les dimensions de l'article sont supérieures à Paramètre(RenfortMaxHeight) x Paramètre(RenfortMaxWidth)
 		on place un refort gratuitement; Prix = 0
 
-	Prix = 2 x (largeur - 20 +  hauteur - 20) x Prix(Renfort) / 100
+	Prix = 2 x (largeur - Paramètre(Inside) +  hauteur - Paramètre(Inside)) x Prix(Renfort) / 100
 	
 	SI Prix < Prix(Renfort_Min)
 	ALORS Prix = Prix(Renfort_Min)
-
-La valeur 20 soustraite aux dimensions n'est pas un paramètre pour l'instant.
 
 
 #### Prix
@@ -138,67 +137,33 @@ Article|Explication
 Renfort|Prix du renfort, en € par mètre
 Renfort_Min|Prix minimum pour les renforts
 
-## Coût des cadres "Nielsen"
-### Formule
-
-	Prix = 2 x (largeur +  hauteur) x Prix(Cadre) / 100
 
 #### Paramètres
 
-Il n'y a pas de paramètre.
+Paramètre|Explication
+-------|-----------
+RenfortMaxHeight|Hauteur minimum avant que le renfort soit placé d'office, et gratuitement
+RenfortMaxWidth|Largeur minimum avant que le renfort soit placé d'office, et gratuitement
+InsideChromaLuxe|Distance, en cm, mesuré à partir du bord, pour le placement des renforts sur les ChromaLuxes
+InsideSupport|Distance, en cm, mesuré à partir du bord, pour le placement des renforts sur tous les supports autres que le ChromaLuxe
 
-#### Prix
 
-Le prix du cadre Nielsen (toutes les variantes) est extrait de la base de données des Articles.
-Le prix est le prix au mètre de cadre.
+## Coût des cadres
 
-#### Prix du montage
+Depuis une discussion au début du mois de janvier, tous les prix des cadres ont tentativement
+été formulés grâce à une formule de régression linéaire simple (voir ci-dessous):
 
-	SI (largeur + hauteur) > 170
+	Longueur = 2 x (largeur +  hauteur)
+	Prix = Longueur * A + B
+
+### Prix du montage
+
+	SI (largeur + hauteur) > Parametre(LargeFrame)
 		Prix = Article(Montage170L)
 	SINON
 		Prix = Article(Montage170M)
 
-Note: La valeur 170 n'est pas un paramètre pour l'instant.
-
-## Coût des cadres "Exhibite"
-
-### Formule
-
-	périmètre = 2 x (largeur + hauteur);
-	PrixDeBase = périmètre x Prix(Cadre);
-
-	// adjustment
-	SI TypeDeCadre = X25Standard
-		Ajustement = Article(MontageExhibiteBase2)
-	SI TypeDeCadre = X50Standard
-		Ajustement = Article(MontageExhibiteBase5)
-
-	SI largeur < 30 ou hauteur < 30
-		Prix = PrixDeBase + Ajustement
-	SINON SI (hauteur + largeur) < 121
-		Prix = PrixDeBase + Ajustement + (hauteur-30 + largeur-30) * Article(MontageExhibiteS)
-	SINON SI (hauteur + largeur) < 130
-		Prix = PrixDeBase + Ajustement + (hauteur-30) * Article(MontageExhibiteMH)  + (largeur-20) * Article(MontageExhibiteML)
-	SINON
-		Prix = PrixDeBase + Ajustement + (hauteur-30 + largeur-30) * Article(MontageExhibiteL)	
-
-
-#### Paramètres
-
-Il n'y a pas de paramètre. Les valeurs des mesures 20, 30, 121, 130 sont placées dans le code.
-
-#### Prix
-
-Le prix du cadre Exhibite (toutes les variantes) est extrait de la base de données des Articles.
-Le prix est le prix au mètre de cadre.
-
-#### Prix du montage
-
-	SI (largeur + hauteur) > 170
-		Prix = Article(Montage170L)
-	SINON
-		Prix = Article(Montage170M)
+Le prix du montage est fixé en fonction du périmètre du cadre, et une valeur pivot déterminant quand le cadre est jugé "grand".
 
 ## Coût des articles vendu "au périmètre" (à la longeur)
 

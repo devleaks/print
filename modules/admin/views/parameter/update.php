@@ -9,6 +9,7 @@ $this->title = Yii::t('store', 'Update {modelClass}: ', [
     'modelClass' => 'Parameter',
 ]) . ' ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Parameters'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->domain, 'url' => ['index', 'ParameterSearch' => ['domain'=>$model->domain]]];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'domain' => $model->domain, 'name' => $model->name]];
 $this->params['breadcrumbs'][] = Yii::t('store', 'Update');
 ?>

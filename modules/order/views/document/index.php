@@ -6,13 +6,23 @@ use app\models\Document;
 use app\models\User;
 use kartik\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-if(!isset($document_type))
+if(!isset($document_type)) {
 	$document_type = 'doc';
+	$button = '<div class="btn-group"><button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">'.
+	        	Yii::t('store', 'Create '.ucfirst(strtolower($document_type))). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
+				'<li>'.Html::a(Yii::t('store', 'Enter new bid'), ['create-bid'], ['title' => Yii::t('store', 'Enter new bid')]).'</li>'.
+				'<li>'.Html::a(Yii::t('store', 'Enter new order'), ['create'], ['title' => Yii::t('store', 'Enter new order')]).'</li>'.
+				'<li>'.Html::a(Yii::t('store', 'Enter new bill'), ['create-bill'], ['title' => Yii::t('store', 'Enter new bill')]).'</li>'.
+				'<li>'.Html::a(Yii::t('store', 'Enter new credit note'), ['create-credit'], ['title' => Yii::t('store', 'Enter new credit note')]).'</li>'.
+			'</ul></div>';
+} else
+	$button = Html::a(Yii::t('store', 'Create '.ucfirst(strtolower($document_type))), ['create-'.strtolower($document_type)], ['class' => 'btn btn-success']);
 
 $role = null;
 if(isset(Yii::$app->user))
@@ -24,11 +34,9 @@ $this->title = Yii::t('store', Document::getTypeLabel($document_type, true));
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/order', 'sort' => '-updated_at']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="order-index">
+<div class="document-index">
 
-    <h1><?= Html::encode($this->title) ?>
-        <?= Html::a(Yii::t('store', 'Create '.ucfirst(strtolower($document_type))), ['create-'.strtolower($document_type)], ['class' => 'btn btn-success']) ?>
-    </h1>
+    <h1><?= Html::encode($this->title).' '.$button ?></h1>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -116,7 +124,16 @@ $this->params['breadcrumbs'][] = $this->title;
             [	// freely let update or delete if accessed throught this screen.
 				'class' => 'kartik\grid\ActionColumn',
 				'controller' => 'document',
-//			 	'template' => '{update} {delete}'
+			 	'template' => '{view} {update} {change} {delete}',
+				'noWrap' => true,
+				'buttons' => [
+	                'change' => function ($url, $model) {
+						$url = Url::to(['change-client', 'id' => $model->id]);
+	                    return Html::a('<i class="glyphicon glyphicon-user"></i>', $url, [
+	                        'title' => Yii::t('store', 'Change Client'),
+	                    ]);
+	                },
+				],
 			],
 
         ],

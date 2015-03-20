@@ -48,4 +48,8 @@ class BackupController extends Controller {
 		// echo Yii::t('store', 'Backup older than {0} deleted.', [$last]);
     }
 
+    public function actionDb() {
+        echo Backup::getDbName(false);
+    }
+
 }

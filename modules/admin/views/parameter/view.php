@@ -8,6 +8,7 @@ use yii\widgets\DetailView;
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Parameters'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->domain, 'url' => ['index', 'ParameterSearch' => ['domain'=>$model->domain]]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="parameter-view">

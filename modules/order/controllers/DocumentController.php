@@ -165,6 +165,21 @@ class DocumentController extends Controller
      * @param integer $id
      * @return mixed
      */
+    public function actionChangeClient($id) {
+		$model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            ; //@setflash?
+        }
+        return $this->render('change-client', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Displays a single Order model.
+     * @param integer $id
+     * @return mixed
+     */
     public function actionSearch($search = null) {
 		if($search == null)
 			if(isset($_POST['search']))
@@ -435,7 +450,8 @@ class DocumentController extends Controller
 		$model = $this->findModel($id);
 		if($model->document_type == Document::TYPE_ORDER && $model->bom_bool) {
 			// all termnated and unbilled orders for same client
-			$query = Order::find()->where(['bom_bool' => true, 'client_id' => $model->client_id, 'status' => [Document::STATUS_DONE, Document::STATUS_NOTIFY]]);
+			$query = Order::find()->where(['bom_bool' => true, 'client_id' => $model->client_id])
+								  ->andWhere(['status' => [Document::STATUS_DONE, Document::STATUS_NOTIFY, Document::STATUS_TOPAY, Document::STATUS_SOLDE]]);
 			$dataProvider = new ActiveDataProvider([
 				'query' => $query,
 			]);

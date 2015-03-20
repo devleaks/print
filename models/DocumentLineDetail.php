@@ -147,7 +147,7 @@ class DocumentLineDetail extends _DocumentLineDetail
 			$str = '<small><ul class="list-unstyled">';
 
 		if(($item = $this->getChroma()->one()) != null)
-			$str .= $this->price2('ChromaLuxe '.$item->libelle_long, $this->price_chroma, $mode, $show_price);
+			$str .= $this->price2('ChromaLuxe <span class="rednote">'.$item->libelle_long.'</span>', $this->price_chroma, $mode, $show_price);
 
 //		if(($item = $this->getTirage()->one()) != null)
 //			$str .= $this->price2($item->libelle_long, $this->price_tirage);

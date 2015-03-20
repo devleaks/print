@@ -14,7 +14,7 @@ use yii\helpers\Url;
 use yii\web\JsExpression;
 
 // url to submit search terms and get result back
-$url = \yii\helpers\Url::to(['client-list']);
+$url = Url::to(['client-list']);
 $docty = $model->document_type;
 if(!isset($model->due_date) || $model->due_date == '') $model->due_date = date('Y-m-d');
 

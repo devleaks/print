@@ -19,7 +19,7 @@ class MailController extends Controller {
 			//echo 'Trying...'.$model->name;
 			Yii::trace('Trying...'.$model->name, 'MailController::actionSend');
 			if($model->notify(true)) {
-				//echo '..sent! ';
+				echo 'Mail sent for '.$model->name.' to '.$model->client->email.'.';
 				$model->setStatus(Order::STATUS_TOPAY);
 			} // else echo '. ';
 		}

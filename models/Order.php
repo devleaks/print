@@ -83,10 +83,10 @@ class Order extends Document
 				}
 				break;
 			case self::STATUS_DONE:
-				$this->updatePaymentStatus();
+				$this->completed();
 				break;
 			case self::STATUS_TOPAY:
-				$this->completed();
+				$this->updatePaymentStatus();
 				break;
 		}		
 	}
@@ -107,8 +107,9 @@ class Order extends Document
 		if($bill = $this->getBill())
 			$bill->updatePaymentStatus();
 		else {// regular order
-			if(!$this->isBusy())
+			if(!$this->isBusy() && ($this->status != self::STATUS_NOTIFY))
 				$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_SOLDE);
+			//else, we leave status as it is.
 		}
 	}
 
@@ -137,18 +138,20 @@ class Order extends Document
 	 */
 	public function notify($batch = false) {
 		$sent = false;
+		$send_mail = true;
 		if($this->closeToDueDate()) {
 			if($this->client->email != '') {
 				$lang_before = Yii::$app->language;
 				Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
 				try {
 					$destinataire = YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email;
-					Yii::$app->mailer->compose('order-completed', ['model' => $this])
-					    ->setFrom( Yii::$app->params['fromEmail'] )
-					    ->setTo( $destinataire )
-						->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
-					    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)
-					    ->send();
+					if($send_mail)
+						Yii::$app->mailer->compose('order-completed', ['model' => $this])
+						    ->setFrom( Yii::$app->params['fromEmail'] )
+						    ->setTo( $destinataire )
+							->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
+						    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)
+						    ->send();
 					$sent = true;
 					if(!$batch) Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
 					else Yii::trace('Order '.$this->name.' mail sent to '.$destinataire, 'Order::notify');
@@ -162,6 +165,8 @@ class Order extends Document
 					else Yii::trace('The system could not send mail.', 'Order::notify');
 				}
 				Yii::$app->language = $lang_before;
+			} else {
+				Yii::trace('No email for '.$this->name.'('.$this->client->nom.')', 'Order::notify');
 			}
 		} else {
 			if(!$batch) Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.').' '.Yii::t('store', 'Due date too far.'));
@@ -185,8 +190,8 @@ class Order extends Document
 					$this->setStatus(self::STATUS_NOTIFY);
 				}
 			} else { // no email. Will not be notified of completion.
-				Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.').' '.Yii::t('store', 'Client has no email.'));
 				$this->setStatus(self::STATUS_TOPAY);
+				Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.').' '.Yii::t('store', 'Client has no email.'));
 			}
 		} else {
 			Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.').' '.Yii::t('store', 'No automatic notification.'));

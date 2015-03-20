@@ -143,7 +143,8 @@ class Backup extends \yii\db\ActiveRecord
 	}
 	
 	public static function restore() {
-		$command = Yii::getAlias('@runtime').'/etc/restore.sh';
+		$logfile = Yii::getAlias('@runtime').'/logs/restore.log';
+		$command = Yii::getAlias('@runtime').'/etc/restore.sh 2>&1 > '.$logfile;
 		system($command, $status);
 		Yii::trace($command.': '.$status, 'BackupController::doBackup');
 		return $status == 0;
