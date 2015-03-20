@@ -10,6 +10,10 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\widgets\Breadcrumbs;
 
+Yii::$container->set('raoul2000\bootswatch\BootswatchAsset', ['sourcePath' => '@app/components/bootswatch']);
+if(isset(Yii::$app->params['BootswatchTheme']))
+	raoul2000\bootswatch\BootswatchAsset::$theme = Yii::$app->params['BootswatchTheme'];
+
 AppAsset::register($this);
 CalculatorAsset::register($this);
 IntroJSAsset::register($this);
