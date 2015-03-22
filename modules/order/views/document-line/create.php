@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
 $this->title = Yii::t('store', 'Create '.ucfirst(strtolower($model->document_type)));
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', Document::getTypeLabel($model->document_type, true)), 'url' => ['document/'.strtolower($model->document_type).'s']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', Document::getTypeLabel($model->document_type, true)), 'url' => ['/order/document/'.strtolower($model->document_type).'s', 'sort' => '-updated_at']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-create">

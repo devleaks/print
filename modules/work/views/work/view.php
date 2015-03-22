@@ -11,7 +11,7 @@ use yii\helpers\Url;
 
 $this->title = $model->document->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work']];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'All Works'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'All Works'), 'url' => ['index', 'sort' => '-updated_at']];
 if(isset($order_line)) {
 	$this->params['breadcrumbs'][] = ['label' => $model->getDocument()->one()->name, 'url' => Url::to(['/work/work/view', 'id' => $model->id])];
 	$this->params['breadcrumbs'][] = $order_line->getItem()->one()->libelle_long;

@@ -11,10 +11,12 @@ use app\models\DocumentLineDetail;
 use app\models\DocumentLineSearch;
 use app\models\Picture;
 use app\models\PDFLabel;
+use app\models\Work;
 use yii\db\Query;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -192,6 +194,25 @@ class DocumentLineController extends Controller
 				$this->createDetail($model);
 				$this->loadImages($model);
 				$order->updatePrice();
+				if(!in_array($order->status, [Document::STATUS_CREATED, Document::STATUS_OPEN])) {
+					if($work = $order->getWorks()->one()) {
+						if($work->status != Work::STATUS_TODO)
+							Yii::$app->session->setFlash('warning', Yii::t('store', 'Work has started on this order.'));
+						else {
+							$work_delete = Html::a(Yii::t('store', 'Click here to delete work.'),
+								['/work/work/delete', 'id'=>$work->id],
+								[
+									'data-method' => 'post',
+									'title' => Yii::t('store', 'Delete work'),
+									'data-confirm' => Yii::t('store', 'Delete associated work?'),
+								]);
+							Yii::$app->session->setFlash('warning', Yii::t('store', 'The order has already submitted work but work has not started yet.').' '.$work_delete.' '.
+									Yii::t('store', 'You must re-submit work when order is filled.'));
+						}
+					} else
+						Yii::$app->session->setFlash('warning', Yii::t('store', 'The order was already submitted.'));
+				}
+					
 				$order->setStatus(Document::STATUS_OPEN);
 			}
 			$newDocumentLine = new DocumentLine();

@@ -46,7 +46,6 @@
 		"mdmsoft/yii2-ar-behaviors": "*",
 		"miloschuman/yii2-highcharts-widget": "*",
 		"raoul2000/yii2-bootswatch-asset": "*",
-		"sjaakp/yii2-bandoneon": "*",
 		"yiisoft/yii2-jui": "*",
 		"yurkinx/yii2-image": "@dev",
         "kartik-v/yii2-widget-datepicker": "*",

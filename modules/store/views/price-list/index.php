@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'buttons' => [
 	                'table' => function ($url, $model) {
 						$url = Url::to(['price-list/table', 'id' => $model->id]);
-	                    return Html::a('<i class="glyphicon glyphicon-calendar"></i>', $url, [
+	                    return Html::a('<i class="glyphicon glyphicon-th"></i>', $url, [
 	                        'title' => Yii::t('store', 'Table'),
 	                    ]);
 	                },

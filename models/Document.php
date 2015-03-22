@@ -798,7 +798,8 @@ class Document extends _Document
 	}
 
 	/**
-	 * Generates belgian Structurer Communication (XXX/XXXXX/XXYY) from supplied number.
+	 * Generates belgian Structured Communication (XXX/XXXXX/XXYY) from supplied number.
+	 * Pattern matched: [0-9]{3}\/[0-9]{5}\/[0-9]{4}, second, XXXXXXXXXX mod 97 = YY
 	 *
 	 * @return string Structurer Communication
 	 */
@@ -806,6 +807,11 @@ class Document extends _Document
         $d=sprintf("%010s",preg_replace("/[^0-9]/", "", $s)); 
         $modulo=(bcmod($s,97)==0?97:bcmod($s,97)); 
         return sprintf("%s/%s/%s%02d",substr($d,0,3),substr($d,3,4),substr($d,7,3),$modulo); 
+	}
+	
+	public function matches($str, $amount = null) {
+		$c = $amount ? (($this->vat_bool ? $amount == $this->price_htva : $amount == $this->price_tvac) && $this->matches($str)) : true;
+		return $c && preg_match('[0-9]{3}\/[0-9]{5}\/[0-9]{4}', $str);
 	}
 	
 	/**

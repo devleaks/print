@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = Html::encode($this->title);
 
 		<div class="col-lg-12">
 
-	    <?php $form = ActiveForm::begin(); ?>
+	    <?php $form = ActiveForm::begin(['id' => 'work-detail']); ?>
 
 	    <?= $form->field($model, 'note')->textInput() ?>
 
@@ -108,7 +108,7 @@ $('.set-workline-status').click(function() {
 	status = $(this).data('status');
 	console.log(status);
 	$('#workline-status').val(status);
-	$('#w1').submit();
+	$('#work-detail').submit();
 });
 <?php $this->endBlock(); ?>
 </script>

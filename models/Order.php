@@ -212,8 +212,10 @@ class Order extends Document
      * @return app\models\Work
      */
 	public function createWork($defaultWork = false) {
-		if( $existing_work = $this->getWorks()->one() )
+		if( $existing_work = $this->getWorks()->one() ) {
+			$this->setStatus(Order::STATUS_TODO);
 			return $existing_work;
+		}
 
 		$this->numberLines();
 		

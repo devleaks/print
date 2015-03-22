@@ -221,6 +221,7 @@ return [
 	'Numero' => 'Numéro',
 	'Opening Balance' => 'Situation',
 	'Operation is not developed yet.' => "L'opération ou l'action n'a pas encore été développée.",
+	'Order Created By' => 'Commande prise par',
 	'Order Date' => 'Commande',
 	'Order Due Date' => 'Livraison',
 	'Order Frames' => 'Commander les cadres',
@@ -372,6 +373,15 @@ return [
 	'Due date too far.' => 'Date de livraison dans le futur trop éloigné.',
 	'Client has no email.' => "Le client n'a pas d'adresse email.",
 	'No automatic notification.' => "L'envoi automatique du message est désactivé.",
+	
+	/* attempt to resubmit work if order modified */
+	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',
+	'Click here to delete work.' => 'Cliquer ici pour supprimer le travail associé.',
+	'Delete work' => 'Supprimer le travail',
+	'Delete associated work?' => 'Supprimer le travail associé à cette commande?',
+	'The order has already submitted work but work has not started yet.' => "Le travail a déjà été soumis, mais il n'a pas encore commancé.",
+	'The order was already submitted.' => 'La commande a déjà été soumise pour travaux.',
+	'You must re-submit work when order is filled.' => 'Vous devez re-soummettre le travail lorsque la commande est prise.',
 
 
 	/* Statistics */

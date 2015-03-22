@@ -1,6 +1,7 @@
 <?php
 use app\assets\AppAsset;
 use app\assets\CalculatorAsset;
+use app\widgets\Alert;
 use devleaks\chardinjs\ChardinJSAsset;
 use devleaks\introjs\IntroJSAsset;
 use yii\bootstrap\Nav;
@@ -111,16 +112,7 @@ ChardinJSAsset::register($this);
 					'data-intro' => 'Menu hiérarchique'
 				]
             ]) ?>
-
-			<?php foreach(array('success', 'error', 'danger', 'warning', 'info') as $category): ?>
-				<?php if (Yii::$app->session->hasFlash($category)): ?>
-		                <div class="alert alert-<?= $category == 'error' ? 'danger' : $category ?>">
-							<a href="#" class="close" data-dismiss="alert">&times;</a>
-		                    <?= Yii::$app->session->getFlash($category) ?>
-		                </div>
-				<?php endif; ?>
-			<?php endforeach; ?>
- 
+        	<?= Alert::widget() ?> 
             <?= $content ?>
         </div>
     </div>

@@ -38,8 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				'noWrap' => true,
 	        ],
 			[
-                'label'=>Yii::t('store','Created By'),
-	            // 'filter' => User::getList(),
+				'attribute' => 'order_created_by',
+                'label'=>Yii::t('store','Order Created By'),
+	            'filter' => User::getList(),
 	            'value'=> function ($model, $key, $index, $widget) {
 					return $model->document->createdBy->username ;
 				},

@@ -14,6 +14,7 @@ class WorkSearch extends Work
 {
 	public $order_name;
 	public $client_name;
+	public $order_created_by;
 	
     /**
      * @inheritdoc
@@ -23,7 +24,7 @@ class WorkSearch extends Work
         return [
             [['id', 'document_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at', 'status', 'due_date'], 'safe'],
-			[['order_name', 'client_name'], 'safe'],
+			[['order_name', 'client_name', 'order_created_by'], 'safe'],
         ];
     }
 
@@ -47,7 +48,8 @@ class WorkSearch extends Work
     {
         $query = Work::find();
 		$query->joinWith('document')
-			  ->joinWith('document.client');
+			  ->joinWith('document.client')
+			  ->joinWith('document.createdBy');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,6 +58,11 @@ class WorkSearch extends Work
 		$dataProvider->sort->attributes['order_name'] = [
 		    'asc' => ['document.name' => SORT_ASC],
 		    'desc' => ['document.name' => SORT_DESC],
+		];
+
+		$dataProvider->sort->attributes['order_created_by'] = [
+		    'asc' => ['document.created_by' => SORT_ASC],
+		    'desc' => ['document.created_by' => SORT_DESC],
 		];
 
 		$dataProvider->sort->attributes['client_name'] = [
@@ -79,6 +86,7 @@ class WorkSearch extends Work
 
         $query->andFilterWhere(['like', 'work.status', $this->status])
     		  ->andFilterWhere(['like', 'document.name', $this->order_name])
+    		  ->andFilterWhere(['like', 'document.created_by', $this->order_created_by])
     		  ->andFilterWhere(['like', 'client.nom', $this->client_name]);
 
         return $dataProvider;

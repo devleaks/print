@@ -22,6 +22,14 @@ foreach($model->getPriceListItems()->orderBy('position')->each() as $pli) {
 	}
 	$items[] = $i;
 }
+if(($n = count($items)) > 0) {
+	$add = $stats ? 2 : 1;
+	$colwidth = floor(100 / ($add + $n));
+	$firstcol = 100 - $n * $colwidth;
+} else {
+	$colwidth = $stats ? 50 : 0;
+	$firstcol = $stats ? 50 : 100;
+}
 ?>
 <div class="print-price">
 
@@ -33,7 +41,7 @@ foreach($model->getPriceListItems()->orderBy('position')->each() as $pli) {
 	<thead>
 	<tr>
 <?php
-	echo '<th class="text-center">'.Yii::t('store', 'Dimensions').'</th>';
+	echo '<th class="text-center" width="'.$firstcol.'%">'.Yii::t('store', 'Dimensions').'</th>';
 	$pos = null;
 	$str = '';
 	foreach($items as $item) {
@@ -43,13 +51,13 @@ foreach($model->getPriceListItems()->orderBy('position')->each() as $pli) {
 		} else if ($pos == $item->pos) {
 			$str .= (' + '.$item->name);
 		} else {
-			echo '<th class="text-center">'.$str.'</th>';
+			echo '<th class="text-center" width="'.$colwidth.'%">'.$str.'</th>';
 			$str = $item->name;
 			$pos = $item->pos;
 		}
 	}
-	echo '<th class="text-center">'.$str.'</th>';
-	if ($stats) echo '<th class="text-center">'.Yii::t('store', 'Quantity').'</th>';
+	echo '<th class="text-center" width="'.$colwidth.'%">'.$str.'</th>';
+	if ($stats) echo '<th class="text-center">'.Yii::t('store', 'Quantity').'</th>'; // col will take remaining width
 ?>
 	</tr>
 	</thead>

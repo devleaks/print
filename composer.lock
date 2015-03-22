@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3b0ee7d8df85b4f7941245c41f4b84c7",
+    "hash": "baec3ccca56405757aec7e45eb5db73b",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -3933,50 +3933,6 @@
                 "yii2"
             ],
             "time": "2015-01-31 16:54:21"
-        },
-        {
-            "name": "sjaakp/yii2-bandoneon",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sjaakp/yii2-bandoneon.git",
-                "reference": "3bf266832d7d3b90126bc1c8aafacba16bcafdf4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sjaakp/yii2-bandoneon/zipball/3bf266832d7d3b90126bc1c8aafacba16bcafdf4",
-                "reference": "3bf266832d7d3b90126bc1c8aafacba16bcafdf4",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "sjaakp\\bandoneon\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sjaak Priester",
-                    "email": "sjaak@sjaakpriester.nl",
-                    "homepage": "http://sjaakpriester.nl"
-                }
-            ],
-            "description": "Lightweight accordion widget for Yii 2.0.",
-            "keywords": [
-                "accordion",
-                "extension",
-                "widget",
-                "yii",
-                "yii2"
-            ],
-            "time": "2014-08-03 13:58:06"
         },
         {
             "name": "swiftmailer/swiftmailer",
