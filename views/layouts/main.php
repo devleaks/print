@@ -119,7 +119,8 @@ ChardinJSAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; Labo JJ Micheli <?= date('Y') ?></p>
+            <p class="pull-left">&copy; Labo JJ Micheli <?= date('Y') ?>
+			<small><?php $dir = Yii::getAlias('@app'); echo `cd $dir ; git describe --tags`; ?></small></p>
         </div>
     </footer>
 <script type="text/javascript">
