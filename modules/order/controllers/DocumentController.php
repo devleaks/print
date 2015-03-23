@@ -404,7 +404,8 @@ class DocumentController extends Controller
 	    }
 	    elseif ($id > 0) {
 			$client = Client::findOne($id);
-			$addr = $client->makeAddress(true, $ret);//$this->render('_header_client', ['client' => $client])
+			$comptoir = Client::findOne(['nom' => 'Client au comptoir']); 			
+			$addr = $client->makeAddress(($comptoir->id != $client->id), $ret);//$this->render('_header_client', ['client' => $client])
 	        $out['results'] = ['id' => $id, 'text' => $client->nom, 'addr' => $addr];
 	    }
 	    else {
