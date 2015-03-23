@@ -53,7 +53,7 @@ $apphomedir = Yii::getAlias('@app');
             if(!Yii::$app->user->isGuest) {
 
 				$work_menu = [];
-				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta' || Yii::$app->user->identity->role == 'employee')
+				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta' || Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'employee')
                 	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash']];
 				if(Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'admin')
                 	$work_menu[] = ['label' => Yii::t('store', 'Orders'), 'url' => ['/order/']];
@@ -123,6 +123,7 @@ $apphomedir = Yii::getAlias('@app');
 				<small><?php echo ' — Version '.`cd $apphomedir ; git describe --tags`;
 					if(YII_DEBUG) {
 						echo ' — Last commit: '.`git log -1 --format=%cd --relative-date`;
+						echo ' — '.`hostname`;
 						echo ' — '.Yii::$app->getDb()->dsn;
 					}
 				?></small>
