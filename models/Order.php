@@ -138,14 +138,14 @@ class Order extends Document
 	 */
 	public function notify($batch = false) {
 		$sent = false;
-		$send_mail = true;
+		$sendmail = isset(Yii::$app->params['sendmail']) ? Yii::$app->params['sendmail'] : true;
 		if($this->closeToDueDate()) {
-			if($this->client->email != '') {
+			if(($email = $this->getNotificationEmail()) != '') {
 				$lang_before = Yii::$app->language;
 				Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
 				try {
-					$destinataire = YII_ENV_DEV ? Yii::$app->params['testEmail'] : $this->client->email;
-					if($send_mail)
+					$destinataire = YII_ENV_DEV ? Yii::$app->params['testEmail'] : $email;
+					if($sendmail)
 						Yii::$app->mailer->compose('order-completed', ['model' => $this])
 						    ->setFrom( Yii::$app->params['fromEmail'] )
 						    ->setTo( $destinataire )
@@ -183,7 +183,7 @@ class Order extends Document
 		Yii::trace('Order::completed');
 		// 1. notify client of completion
 		if(Parameter::isTrue('application', 'auto_notify_completion')) {
-			if($this->client->email != '') {
+			if(($email = $this->getNotificationEmail()) != '') {
 				if($this->notify(true)) {
 					$this->setStatus(Order::STATUS_TOPAY);
 				} else {

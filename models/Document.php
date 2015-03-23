@@ -823,5 +823,12 @@ class Document extends _Document
 		$p = strrpos($this->name, '-');
 		return $p > 0 ? substr($this->name, $p + 1, strlen($this->name) - $p + -1) : 0;
 	}
+	
+	/**
+	 * Returns email for notifications regarding this document
+	 */
+	public function getNotificationEmail() {
+		return $this->email ? $this->email : $this->client->email;
+	}
 
 }

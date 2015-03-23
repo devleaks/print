@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 Icon::map($this);
 $capture = new CaptureEmail();
 $capture->id = $model->id;
-$capture->email = $model->client->email;
+$capture->email = $model->getNotificationEmail(); // client->email;
 ?>
 
 <?php Modal::begin([
