@@ -139,6 +139,8 @@ class DocumentLineDetail extends _DocumentLineDetail
 		}
 		return $prep.$label.' '.($p && $price ? $obr.$price.$eur.$cbr.$post  : $post);
 	}
+	
+	
 
 	protected function getDescriptionMode($mode, $show_price = false) {
 
@@ -146,8 +148,17 @@ class DocumentLineDetail extends _DocumentLineDetail
 		if($mode == 'html')
 			$str = '<small><ul class="list-unstyled">';
 
-		if(($item = $this->getChroma()->one()) != null)
-			$str .= $this->price2('ChromaLuxe <span class="rednote">'.$item->libelle_long.'</span>', $this->price_chroma, $mode, $show_price);
+		if(($item = $this->getChroma()->one()) != null) {
+			switch($item->reference) {
+				case 'ChromaWHITEMAT': $color = 'info'; break;
+				case 'ChromaCLEARGLOSSY': $color = 'success'; break;
+				case 'ChromaCLEARMAT': $color = 'danger'; break;
+				default:
+				case 'ChromaWHITEGLOSSY': $color = 'default'; break;
+			}
+			$str .= $this->price2('ChromaLuxe <span class="label label-'.$color.'">'.$item->libelle_long.'</span>',
+									$this->price_chroma, $mode, $show_price);
+		}
 
 //		if(($item = $this->getTirage()->one()) != null)
 //			$str .= $this->price2($item->libelle_long, $this->price_tirage);
