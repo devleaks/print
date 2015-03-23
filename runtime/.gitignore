@@ -1,2 +1,12 @@
-*
+HTML
+URI
+_dev
+backup
+debug
+gii-2.0.3
+gitignore
+logs
+mail
+mpdf
+restore
 !.gitignore
