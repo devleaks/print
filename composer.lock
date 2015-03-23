@@ -2104,12 +2104,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-helpers.git",
-                "reference": "97968e3b4b32c705c209928078d6ab3ddbeceda9"
+                "reference": "90bb3a1bf021b99a01d3546067f3cc9812477781"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/97968e3b4b32c705c209928078d6ab3ddbeceda9",
-                "reference": "97968e3b4b32c705c209928078d6ab3ddbeceda9",
+                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/90bb3a1bf021b99a01d3546067f3cc9812477781",
+                "reference": "90bb3a1bf021b99a01d3546067f3cc9812477781",
                 "shasum": ""
             },
             "require": {
@@ -2142,7 +2142,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-03-16 18:10:44"
+            "time": "2015-03-22 19:54:53"
         },
         {
             "name": "kartik-v/yii2-icons",
