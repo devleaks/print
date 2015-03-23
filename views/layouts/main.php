@@ -19,7 +19,7 @@ AppAsset::register($this);
 CalculatorAsset::register($this);
 IntroJSAsset::register($this);
 ChardinJSAsset::register($this);
-
+$apphomedir = Yii::getAlias('@app');
 /* @var $this \yii\web\View */
 /* @var $content string */
 ?>
@@ -38,7 +38,7 @@ ChardinJSAsset::register($this);
 <?php $this->beginBody() ?>
     <div class="wrap">
         <?php
-			$name = Yii::$app->name . (YII_ENV_DEV ? '-DEV' : '') . (YII_DEBUG ? '-DEBUG' : '');
+			$name = Yii::$app->name . (YII_ENV_DEV ? ' –DEV='.`cd $apphomedir ; git describe --tags` : '') . (YII_DEBUG ? '–DEBUG' : '') ;
             NavBar::begin([
                 'brandLabel' => $name,
                 'brandUrl' => Yii::$app->homeUrl,
@@ -120,7 +120,12 @@ ChardinJSAsset::register($this);
     <footer class="footer">
         <div class="container">
             <p class="pull-left">&copy; Labo JJ Micheli <?= date('Y') ?>
-			<small><?php $dir = Yii::getAlias('@app'); echo `cd $dir ; git describe --tags`; ?></small></p>
+				<small><?php
+					echo ' — Version '.`cd $apphomedir ; git describe --tags`;
+					if(YII_DEBUG)
+						echo ' — Last commit: '.`git log -1 --format=%cd --relative-date`;
+				?></small>
+			</p>
         </div>
     </footer>
 <script type="text/javascript">
