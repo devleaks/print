@@ -144,6 +144,9 @@ Icon::map($this);
 			                'value'=> '<span class="rednote">'.$model->note.'</span>',
 							'format' => 'raw',
 			            ],
+			            [
+			                'attribute'=>'email',
+			            ],
 			        ],
 			    ]) ?>
 				</div>

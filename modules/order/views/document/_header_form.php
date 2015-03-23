@@ -148,6 +148,10 @@ Vous pouvez soit retrouvez un client dans la base de données, soit en ajouter u
 							'type' => Form::INPUT_TEXT,
 				            'columnOptions' => ['colspan' => 6],
 						],
+				        'email' => [
+							'type' => Form::INPUT_TEXT,
+				            'columnOptions' => ['colspan' => 6],
+						],
 					],
 				])
 		?>
