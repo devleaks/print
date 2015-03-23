@@ -84,8 +84,9 @@ class Backup extends \yii\db\ActiveRecord
 
 
 	/**
-	 *		mysql:host=localhost;port=3307;dbname=testdb
-	 *		mysql:unix_socket=/tmp/mysql.sock;dbname=testdb
+	 *	Returns database name, or check whether database name is equal to supplied name.
+	 *  @param string Database name to test.
+	 *  @return boolean | string . If database name is supplied, returns if current db name matches. Otherwise returns current database name.
 	 */
 	public static function getDbName($name) {
 		$db  = Backup::parseDSN(Yii::$app->getDb()->dsn);
@@ -93,6 +94,10 @@ class Backup extends \yii\db\ActiveRecord
 	}
 
 
+	/**
+	 * @param boolean $full Whether to make a backup of the database only, or pictures and documents included (full).
+	 * @param boolean $uniq Whether to generate unique, time-base file name.
+	 */
 	protected function executeBackup($full, $uniq) {
 		$now = date("Y-m-d-H-i-s");
 		$dsn = $this->getDb()->dsn;

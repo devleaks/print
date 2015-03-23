@@ -43,7 +43,11 @@ class BackupController extends Controller {
     public function actionDelete($days = 7) {
 		if(intval($days)<7) $days = 7;
 		$last = date('Y-m-d', strtotime($days.' days ago'));
-		foreach(Backup::find()->where(['<=','created_at',$last])->each() as $backup)
+		$fn = Backup::getDbName(false).'.gz';
+		foreach(Backup::find()
+					->andWhere(['not',['filename' => $fn]])
+					->andWhere(['<=','created_at',$last])
+					->each() as $backup)
 			$backup->delete();
 		// echo Yii::t('store', 'Backup older than {0} deleted.', [$last]);
     }
