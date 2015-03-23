@@ -28,5 +28,3 @@ phpunit.phar
 
 # Yii app special
 /config
-/web
-/runtime
