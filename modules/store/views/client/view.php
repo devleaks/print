@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'reference_interne',
+            'comptabilite',
             'titre',
             'nom',
             'prenom',
@@ -50,8 +50,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'fax_bureau',
             'pc',
             'autre',
-            'comptabilite',
             'commentaires',
+/*
+            'reference_interne',
             'remise',
             'escompte',
             'delais_de_paiement',
@@ -75,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'date_limite_2',
             'reference_3',
             'date_limite_3',
-        ],
+*/        ],
     ]) ?>
 
 </div>

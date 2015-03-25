@@ -89,13 +89,14 @@ $model->status = $model->status == $model::STATUS_ACTIVE;
 
 	<hr>
 
-    <?= $form->field($model, 'type_travaux_photos')->textInput(['maxlength' => 20]) ?>
-
-    <?= $form->field($model, 'type_numerique')->textInput(['maxlength' => 20]) ?>
-
     <?= $form->field($model, 'fournisseur')->textInput(['maxlength' => 20]) ?>
 
     <?= $form->field($model, 'reference_fournisseur')->textInput(['maxlength' => 20]) ?>
+
+<!--
+    <?= $form->field($model, 'type_travaux_photos')->textInput(['maxlength' => 20]) ?>
+
+    <?= $form->field($model, 'type_numerique')->textInput(['maxlength' => 20]) ?>
 
     <?= $form->field($model, 'conditionnement')->textInput(['maxlength' => 20]) ?>
 
@@ -122,7 +123,7 @@ $model->status = $model->status == $model::STATUS_ACTIVE;
     <?= $form->field($model, 'en_cours')->textInput(['maxlength' => 20]) ?>
 
     <?= $form->field($model, 'stock')->textInput(['maxlength' => 20]) ?>
-
+-->
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('store', 'Create') : Yii::t('store', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

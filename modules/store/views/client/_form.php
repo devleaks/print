@@ -132,7 +132,8 @@ use yii\helpers\Url;
 			]
 		])
 	?>
-	
+
+<!--	
 	<hr>
 
     <?= $form->field($model, 'reference_interne')->textInput(['maxlength' => 80]) ?>
@@ -186,7 +187,7 @@ use yii\helpers\Url;
     <?= $form->field($model, 'reference_3')->textInput(['maxlength' => 80]) ?>
 
     <?= $form->field($model, 'date_limite_3')->textInput(['maxlength' => 80]) ?>
-
+-->
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('store', 'Create') : Yii::t('store', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
