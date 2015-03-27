@@ -728,16 +728,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.1.61",
+            "version": "3.1.62",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/jquery.inputmask.git",
-                "reference": "f2c086411d2557fc485c47afb3cecfa6c1de9ee2"
+                "reference": "da1a274cefa18a52a0519ac7ffe8e8d31e950eae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/f2c086411d2557fc485c47afb3cecfa6c1de9ee2",
-                "reference": "f2c086411d2557fc485c47afb3cecfa6c1de9ee2",
+                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/da1a274cefa18a52a0519ac7ffe8e8d31e950eae",
+                "reference": "da1a274cefa18a52a0519ac7ffe8e8d31e950eae",
                 "shasum": ""
             },
             "require": {
@@ -2104,12 +2104,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-helpers.git",
-                "reference": "90bb3a1bf021b99a01d3546067f3cc9812477781"
+                "reference": "bd52ad81cd758e2b8062fb17e2a9720a347c5f43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/90bb3a1bf021b99a01d3546067f3cc9812477781",
-                "reference": "90bb3a1bf021b99a01d3546067f3cc9812477781",
+                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/bd52ad81cd758e2b8062fb17e2a9720a347c5f43",
+                "reference": "bd52ad81cd758e2b8062fb17e2a9720a347c5f43",
                 "shasum": ""
             },
             "require": {
@@ -2142,7 +2142,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-03-22 19:54:53"
+            "time": "2015-03-26 15:49:39"
         },
         {
             "name": "kartik-v/yii2-icons",
@@ -3891,20 +3891,20 @@
         },
         {
             "name": "raoul2000/yii2-bootswatch-asset",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/raoul2000/yii2-bootswatch-asset.git",
-                "reference": "fd1db711d930072860288d580a3ce01fd4baa3d6"
+                "reference": "10b3f58db91c79d1aa599df273f8f907f84e3152"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raoul2000/yii2-bootswatch-asset/zipball/fd1db711d930072860288d580a3ce01fd4baa3d6",
-                "reference": "fd1db711d930072860288d580a3ce01fd4baa3d6",
+                "url": "https://api.github.com/repos/raoul2000/yii2-bootswatch-asset/zipball/10b3f58db91c79d1aa599df273f8f907f84e3152",
+                "reference": "10b3f58db91c79d1aa599df273f8f907f84e3152",
                 "shasum": ""
             },
             "require": {
-                "thomaspark/bootswatch": "3.3.2",
+                "thomaspark/bootswatch": "3.3.4",
                 "yiisoft/yii2": "*"
             },
             "type": "yii2-extension",
@@ -3932,7 +3932,7 @@
                 "skin",
                 "yii2"
             ],
-            "time": "2015-01-31 16:54:21"
+            "time": "2015-03-25 09:53:41"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3988,16 +3988,16 @@
         },
         {
             "name": "thomaspark/bootswatch",
-            "version": "v3.3.2",
+            "version": "v3.3.4+1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thomaspark/bootswatch.git",
-                "reference": "7e6070630176d8a802c4837345d5998eac7c1d7a"
+                "reference": "49ccd07144a7ed8917ab8b715233ffe288a6a9f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thomaspark/bootswatch/zipball/7e6070630176d8a802c4837345d5998eac7c1d7a",
-                "reference": "7e6070630176d8a802c4837345d5998eac7c1d7a",
+                "url": "https://api.github.com/repos/thomaspark/bootswatch/zipball/49ccd07144a7ed8917ab8b715233ffe288a6a9f0",
+                "reference": "49ccd07144a7ed8917ab8b715233ffe288a6a9f0",
                 "shasum": ""
             },
             "suggest": {
@@ -4042,7 +4042,7 @@
                 }
             ],
             "description": "Themes for Bootstrap",
-            "time": "2015-01-23 03:42:19"
+            "time": "2015-03-23 20:56:57"
         },
         {
             "name": "yiisoft/yii2",
