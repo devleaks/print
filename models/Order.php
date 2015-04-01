@@ -273,7 +273,6 @@ class Order extends Document
 				$actions[] = '{cancel}';
 				$actions[] = '{edit}';
 				$actions[] = '{submit}';
-				$actions[] = '{cancel}';
 				break;
 			case $this::STATUS_WARN:
 				$actions[] = '{warn}';
