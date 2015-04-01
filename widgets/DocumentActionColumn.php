@@ -4,6 +4,7 @@ namespace app\widgets;
 
 use Yii;
 use app\models\PrintedDocument;
+use app\models\Work;
 use app\widgets\GridViewPDF;
 use yii\grid\Column;
 use yii\helpers\ArrayHelper;
