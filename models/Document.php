@@ -260,9 +260,9 @@ class Document extends _Document
 	 */
 	public function soloOwnsPayments() {
 		if ($this->getPayments()->exists())
-			return Document::find()
+			return ! (Document::find()
 				->andWhere(['sale'=>$this->sale])
-				->andWhere(['!=', 'id', $this->id])->exists();
+				->andWhere(['!=', 'id', $this->id])->exists());
 		return false;
 	}
 	/**
