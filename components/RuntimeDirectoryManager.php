@@ -150,7 +150,7 @@ class RuntimeDirectoryManager {
 	public function getFilename($for, $name, $model = null, $client = null) {
 		Yii::trace('for='.$for, 'RuntimeDirectoryManager::getFilename');
 		if($for == self::PICTURES)
-			return $model ? Yii::$app->params['picturePath'].DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR.$name : null;
+			return $model ? RuntimeDirectoryManager::getPictureRoot().DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR.$name : null;
 
 		$template = self::$TEMPLATE[$for];
 		$template = str_replace('{date}', date('Y-m-d'), $template);

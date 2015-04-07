@@ -92,11 +92,11 @@ class Picture extends _Picture
 	 *
 	 */
 	public function deleteCascade() {
-		$tn = Yii::$app->params['picturePath'] . $this->getThumbnailName();
+		$tn = RuntimeDirectoryManager::getPictureRoot() . $this->getThumbnailName();
 		if(file_exists($tn))
 			unlink($tn);
 
-		$fn = Yii::$app->params['picturePath'] . $this->filename;
+		$fn = RuntimeDirectoryManager::getPictureRoot() . $this->filename;
 		if(file_exists($fn))
 			unlink($fn);
 		$dir = dirname($fn);
@@ -156,11 +156,11 @@ class Picture extends _Picture
  		//Yii::trace('Fw: '.$copy->filename, 'Picture::deepCopy');
 		
 		// now copies files	(duplicate dir with images)	
-		$orig = Yii::$app->params['picturePath'] . $this->filename;
+		$orig = RuntimeDirectoryManager::getPictureRoot() . $this->filename;
 		$ls = strrpos($orig ,DIRECTORY_SEPARATOR);
 		$origdir = substr($orig, 0, $ls);
  		//Yii::trace('Od: '.$origdir.', ls='.$ls, 'Picture::deepCopy');
-		$dest = Yii::$app->params['picturePath'] . $copy->filename;
+		$dest = RuntimeDirectoryManager::getPictureRoot() . $copy->filename;
 		$ls = strrpos($dest ,DIRECTORY_SEPARATOR);
 		$destdir = substr($dest, 0, $ls);
  		//Yii::trace('Dd: '.$destdir.', ls='.$ls, 'Picture::deepCopy');
