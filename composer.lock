@@ -1302,24 +1302,27 @@
         },
         {
             "name": "dektrium/yii2-user",
-            "version": "v0.9.3",
+            "version": "v0.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dektrium/yii2-user.git",
-                "reference": "df25484cc999a58490293df4fdd4209817f6ed86"
+                "reference": "891fe6c3957bde7f3a7893775fd304fc84140599"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dektrium/yii2-user/zipball/df25484cc999a58490293df4fdd4209817f6ed86",
-                "reference": "df25484cc999a58490293df4fdd4209817f6ed86",
+                "url": "https://api.github.com/repos/dektrium/yii2-user/zipball/891fe6c3957bde7f3a7893775fd304fc84140599",
+                "reference": "891fe6c3957bde7f3a7893775fd304fc84140599",
                 "shasum": ""
             },
             "require": {
                 "yiisoft/yii2": "~2.0",
                 "yiisoft/yii2-authclient": "~2.0",
+                "yiisoft/yii2-bootstrap": "~2.0",
+                "yiisoft/yii2-jui": "~2.0",
                 "yiisoft/yii2-swiftmailer": "~2.0"
             },
             "require-dev": {
+                "codeception/aspect-mock": "*",
                 "codeception/specify": "*",
                 "codeception/verify": "*",
                 "yiisoft/yii2-codeception": "~2.0"
@@ -1359,7 +1362,7 @@
                 "yii2",
                 "yii2-user"
             ],
-            "time": "2015-02-09 11:35:49"
+            "time": "2015-04-06 09:21:39"
         },
         {
             "name": "devleaks/yii2-chardinjs",
@@ -4437,12 +4440,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yurkinx/yii2-image.git",
-                "reference": "094488a6c644ebb2678858b82c335d24ddf46961"
+                "reference": "60a34e00acbeadac3084f79c3889b733e5b8eb3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yurkinx/yii2-image/zipball/094488a6c644ebb2678858b82c335d24ddf46961",
-                "reference": "094488a6c644ebb2678858b82c335d24ddf46961",
+                "url": "https://api.github.com/repos/yurkinx/yii2-image/zipball/60a34e00acbeadac3084f79c3889b733e5b8eb3f",
+                "reference": "60a34e00acbeadac3084f79c3889b733e5b8eb3f",
                 "shasum": ""
             },
             "require": {
@@ -4472,7 +4475,7 @@
                 "image",
                 "yii2"
             ],
-            "time": "2014-07-09 21:11:29"
+            "time": "2015-04-05 21:03:16"
         }
     ],
     "packages-dev": [
