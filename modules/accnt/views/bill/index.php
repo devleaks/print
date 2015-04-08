@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	    ],
 		'panelHeadingTemplate' => '{heading}',
 		'showPageSummary' => true,
+		'toolbar' => false,
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
 	        [
