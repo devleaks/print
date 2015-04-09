@@ -4556,16 +4556,16 @@
         },
         {
             "name": "jamband/yii2-schemadump",
-            "version": "v0.9.5",
+            "version": "v0.9.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jamband/yii2-schemadump.git",
-                "reference": "ee38293d002dd094c9dc61dde8ad1e618200ac6b"
+                "reference": "9e81b661ed07ed019323e6792da8d088bec50a85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jamband/yii2-schemadump/zipball/ee38293d002dd094c9dc61dde8ad1e618200ac6b",
-                "reference": "ee38293d002dd094c9dc61dde8ad1e618200ac6b",
+                "url": "https://api.github.com/repos/jamband/yii2-schemadump/zipball/9e81b661ed07ed019323e6792da8d088bec50a85",
+                "reference": "9e81b661ed07ed019323e6792da8d088bec50a85",
                 "shasum": ""
             },
             "require": {
@@ -4597,7 +4597,7 @@
                 "migration",
                 "yii2"
             ],
-            "time": "2014-12-08 22:03:06"
+            "time": "2015-04-09 03:17:48"
         },
         {
             "name": "phpspec/php-diff",
