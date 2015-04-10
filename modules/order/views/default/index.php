@@ -43,6 +43,10 @@ if(isset(Yii::$app->user))
 	    <li><a href="<?= Url::to(['/order/document/credits', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Credit Notes')?></a></li>
 	</ul>
 
+	<ul>
+	    <li><a href="<?= Url::to(['/accnt/payment/index-by-type']) ?>"><?= Yii::t('store', 'Daily Summary')?></a></li>
+	</ul>
+
 	<?php elseif(in_array($role, ['compta'])): ?>
 	<ul>
 	    <li><a href="<?= Url::to(['/order/document/bids', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bids')?></a></li>

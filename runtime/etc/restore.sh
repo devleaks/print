@@ -1,5 +1,5 @@
 #
-BASEDIR=/Applications/mampstack/apps/yii2/print
+BASEDIR=/Applications/mampstack/apps/yii/print
 export PATH=/Applications/mampstack/php/bin:/Applications/mampstack/mysql/bin:$PATH
 DATABASE=yii2print
 

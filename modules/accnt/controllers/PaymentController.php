@@ -33,7 +33,7 @@ class PaymentController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'compta'],
+	                    'roles' => ['admin', 'compta', 'employee'],
 	                ],
 	            ],
 	        ],

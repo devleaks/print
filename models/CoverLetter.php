@@ -111,9 +111,10 @@ class CoverLetter extends PDFLetter {
 					->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
 					->setSubject($this->subject)
 					->setTextBody($this->body)
-					->attach($this->filename, ['fileName' => basename($this->filename), 'contentType' => 'application/pdf']);
-				foreach($docs as $doc)
-					$mail->attach($doc->filename, ['fileName' => $doc->title, 'contentType' => $doc->mimetype ? $doc->mimetype : 'application/pdf']);
+					->attach(RuntimeDirectoryManager::getDocumentRoot().$this->filename, ['fileName' => basename($this->filename), 'contentType' => 'application/pdf']);
+				foreach($docs as $doc) {
+					$mail->attach(RuntimeDirectoryManager::getDocumentRoot().$doc->filename, ['fileName' => $doc->title, 'contentType' => $doc->mimetype ? $doc->mimetype : 'application/pdf']);
+				}
 				$mail->send();
 				// timestamp mailed docs
 				if($file = $this->getFile()) $file->sent();

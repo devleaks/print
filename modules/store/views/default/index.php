@@ -49,7 +49,7 @@ if(isset(Yii::$app->user))
 	</ul>
 
 	<ul>
-	    <li><a href="<?= Url::to(['/order/document/', 'sort' => '-updated_at']) ?>"><strong><?= Yii::t('store', 'Manage all documents')?></strong></a></li>
+	    <li><i class="glyphicon glyphicon-warning-sign text-danger"></i> <a href="<?= Url::to(['/order/document/', 'sort' => '-updated_at']) ?>"><strong><?= Yii::t('store', 'Manage all documents')?></strong></a></li>
 	</ul>
 
 	<ul>
@@ -57,6 +57,7 @@ if(isset(Yii::$app->user))
 	</ul>
 
 	<ul>
+	    <li><a href="<?= Url::to(['/accnt/payment/index-by-type']) ?>"><?= Yii::t('store', 'Daily Summary')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/']) ?>"><strong><?= Yii::t('store', 'Accounting')?></strong></a></li>
 	</ul>
 

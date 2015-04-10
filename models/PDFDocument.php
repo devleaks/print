@@ -179,7 +179,7 @@ class PDFDocument extends Model {
 	 */	
 	public function render() {
     	$this->PDF = new Pdf($this->getPdfData());
-		//Yii::trace('rendering'.$this->PDF->filename, 'PDFDocument::render');
+		Yii::trace('rendering'.$this->PDF->filename, 'PDFDocument::render');
 		$pdf = $this->PDF->render();
 		$this->rendered = true;
 		//Yii::trace('saved'.$this->PDF->filename, 'PDFDocument::render');

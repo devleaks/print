@@ -18,30 +18,21 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bill-index">
 
-	<?php $form = ActiveForm::begin(['action' => Url::to(['bulk-action'])]) ?>
-
-    <?= Html::hiddenInput('action') ?>
-
     <?= GridView::widget([
+		'options' => ['id' => 'action-gridview'],
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
 		'panel' => [
 	        'heading'=>'<h3 class="panel-title">'.Yii::t('store', 'Unpaid Bills').'</h3>',
 	        'before'=> '',
-	        'after'=> Html::label(Yii::t('store', 'Selection')).' : '.
-    			Html::submitButton('<i class="glyphicon glyphicon-ok"></i> '.Yii::t('store', 'Add Payment'),
-							['class' => 'btn btn-primary actionButton', 'data-action' => Bill::ACTION_PAYMENT_RECEIVED]).' '.
-    			Html::submitButton('<i class="glyphicon glyphicon-envelope"></i> '.Yii::t('store', 'Send Reminder'),
-							['class' => 'btn btn-warning actionButton', 'data-action' => Bill::ACTION_SEND_REMINDER])
-				,
+	        'after'=> '',
 			'afterOptions' => ['class'=>'kv-panel-after pull-right'],
 	        'footer'=> ''
 	    ],
 		'panelHeadingTemplate' => '{heading}',
 		'showPageSummary' => true,
-		'toolbar' => false,
         'columns' => [
-            ['class' => 'kartik\grid\SerialColumn'],
+            //['class' => 'kartik\grid\SerialColumn'],
 	        [
 				'attribute' => 'client_name',
 	            'label' => Yii::t('store', 'Client'),
@@ -134,7 +125,22 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
+	<div class="pull-right">
+		
+	<?php $form = ActiveForm::begin(['id' => 'store-action', 'action' => Url::to(['bulk-action'])]) ?>
+
+    <?= Html::hiddenInput('action') ?>
+    <?= Html::hiddenInput('selection') ?>
+
+	<?= Html::label(Yii::t('store', 'Selection')).' : '.
+    			Html::submitButton('<i class="glyphicon glyphicon-ok"></i> '.Yii::t('store', 'Add Payment'),
+							['class' => 'btn btn-primary actionButton', 'data-action' => Bill::ACTION_PAYMENT_RECEIVED]).' '.
+    			Html::submitButton('<i class="glyphicon glyphicon-envelope"></i> '.Yii::t('store', 'Send Reminder'),
+							['class' => 'btn btn-warning actionButton', 'data-action' => Bill::ACTION_SEND_REMINDER])?>
+
     <?php ActiveForm::end(); ?>
+
+	</div>
 
 </div>
 <script type="text/javascript">
@@ -142,8 +148,11 @@ $this->params['breadcrumbs'][] = $this->title;
 $('.actionButton').click(function() {
 	status = $(this).data('action');
 	console.log(status);
+	selected = $('#action-gridview').yiiGridView('getSelectedRows');
+	console.log(selected);
 	$('input[name="action"]').val(status);
-	$('#w0').submit();
+	$('input[name="selection"]').val(selected);
+	$('#store-action').submit();
 });
 <?php $this->endBlock(); ?>
 </script>

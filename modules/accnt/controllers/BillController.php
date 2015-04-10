@@ -201,13 +201,14 @@ class BillController extends Controller
 	public function actionBulkAction() {
 		if(isset($_POST))
 			if(isset($_POST['selection'])) {
-				if(count($_POST['selection']) > 0) {
+				$selection = explode(',', $_POST['selection']);
+				if(count($selection) > 0) {
 					if(isset($_POST['action'])) {
-						Yii::trace($_POST['action'], 'BillController::actionBulkAction');
+						Yii::trace($_POST['action'].'for'.$_POST['selection'], 'BillController::actionBulkAction');
 						$action = $_POST['action'];
 						if(in_array($action, [Bill::ACTION_PAYMENT_RECEIVED, Bill::ACTION_SEND_REMINDER, Bill::ACTION_CLIENT_ACCOUNT])) {
 							if($action == Bill::ACTION_PAYMENT_RECEIVED) {
-								$bills = Bill::find()->andWhere(['id'=>$_POST['selection']]);
+								$bills = Bill::find()->andWhere(['id'=>$selection]);
 								$q = clone $bills;
 								$clients = [];
 								foreach($q->each() as $b)
@@ -223,7 +224,7 @@ class BillController extends Controller
 								$clg = new PdfDocumentGenerator($this);
 								
 								$q =  Bill::find()
-											->andWhere(['document.id' => $_POST['selection']])
+											->andWhere(['document.id' => $selection])
 											->andWhere(['!=','document.status',Bill::STATUS_CLOSED])
 //											->andWhere(['<=','created_at',$late])
 											->orderBy('client_id, created_at asc'); // latest bill first
@@ -232,6 +233,7 @@ class BillController extends Controller
 								$bills = [];
 								$docs  = [];
 								foreach($q->each() as $bill) {
+									Yii::trace($bill->name, 'BillController::actionBulkAction');
 									if($client_id == -1) $client_id = $bill->client_id;
 									// generate cover for previous client if we just changed
 									if($bill->client_id != $client_id) {
@@ -250,6 +252,7 @@ class BillController extends Controller
 										'save'			=> true,
 									]);
 									$fn = $pdf->render();
+									Yii::trace('Adding: '.$fn, 'BillController::actionBulkAction');
 									$docs[] = new Attachment(['filename' => $fn, 'title' => $bill->name]);
 									$bills[] = $bill;	
 								}

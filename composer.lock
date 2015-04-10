@@ -497,6 +497,45 @@
             ]
         },
         {
+            "name": "bower-asset/fizzy-ui-utils",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/metafizzy/fizzy-ui-utils.git",
+                "reference": "72dc1353bbc1646ee160e6a9dcb946eb0b66fe67"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/metafizzy/fizzy-ui-utils/zipball/72dc1353bbc1646ee160e6a9dcb946eb0b66fe67",
+                "reference": "72dc1353bbc1646ee160e6a9dcb946eb0b66fe67",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/doc-ready": "~1.0.4",
+                "bower-asset/matches-selector": "~1.0.2"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "utils.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests",
+                    "package.json"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "UI utilities",
+            "keywords": [
+                "ui",
+                "utility"
+            ]
+        },
+        {
             "name": "bower-asset/get-size",
             "version": "v1.2.2",
             "source": {
@@ -605,34 +644,33 @@
         },
         {
             "name": "bower-asset/isotope",
-            "version": "v2.1.1",
+            "version": "2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/isotope.git",
-                "reference": "5bd5acb7ce933aa8ff00a40e6dbf4e4bc53c36e3"
+                "reference": "1d0cd0625908aaf6f15d6a8d9a2e7c0e71c959a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/5bd5acb7ce933aa8ff00a40e6dbf4e4bc53c36e3",
-                "reference": "5bd5acb7ce933aa8ff00a40e6dbf4e4bc53c36e3",
+                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/1d0cd0625908aaf6f15d6a8d9a2e7c0e71c959a5",
+                "reference": "1d0cd0625908aaf6f15d6a8d9a2e7c0e71c959a5",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/get-size": ">=1.2.2,<1.3",
-                "bower-asset/masonry": "dev-3.2.x|3.2.x",
+                "bower-asset/get-size": ">=1,<2",
+                "bower-asset/masonry": ">=3.1.5,<4.0.0",
                 "bower-asset/matches-selector": ">=1,<2",
-                "bower-asset/outlayer": "dev-1.3.x|1.3.x"
+                "bower-asset/outlayer": ">=1.2.0,<2.0.0"
             },
             "require-dev": {
-                "bower-asset/doc-ready": "dev-1.x|1.x",
-                "bower-asset/isotope-cells-by-column": "dev-1.x|1.x",
-                "bower-asset/isotope-cells-by-row": "dev-1.x|1.x",
-                "bower-asset/isotope-fit-columns": "dev-1.x|1.x",
-                "bower-asset/isotope-horizontal": "dev-1.x|1.x",
-                "bower-asset/isotope-masonry-horizontal": "dev-1.x|1.x",
-                "bower-asset/jquery": ">=1.4.3,<2",
-                "bower-asset/jquery-bridget": "dev-1.1.x|1.1.x",
-                "bower-asset/qunit": ">=1.15,<2.0"
+                "bower-asset/doc-ready": "*",
+                "bower-asset/isotope-cells-by-column": "*",
+                "bower-asset/isotope-cells-by-row": "*",
+                "bower-asset/isotope-fit-columns": "*",
+                "bower-asset/isotope-horizontal": "*",
+                "bower-asset/isotope-masonry-horizontal": "*",
+                "bower-asset/jquery": "1",
+                "bower-asset/qunit": "1.12"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -647,16 +685,14 @@
                 "bower-asset-ignore": [
                     "test/",
                     "examples/",
-                    "sandbox/",
                     "**/.*",
                     "Gruntfile.js",
                     "package.json",
-                    "notes.md",
-                    "CONTRIBUTING.mdown",
-                    "changelog.md"
+                    "notes.md"
                 ]
             },
-            "description": "Filter and sort magical layouts"
+            "description": "Filter and sort magical layouts",
+            "time": "2014-03-31 11:45:41"
         },
         {
             "name": "bower-asset/jquery",
@@ -780,21 +816,22 @@
         },
         {
             "name": "bower-asset/masonry",
-            "version": "v3.2.3",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/masonry.git",
-                "reference": "c5c64b7bb842c74284dab47b44738f67accbd059"
+                "reference": "843b498cdb1af3f92020c0d126d4d6730424f971"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/masonry/zipball/c5c64b7bb842c74284dab47b44738f67accbd059",
-                "reference": "c5c64b7bb842c74284dab47b44738f67accbd059",
+                "url": "https://api.github.com/repos/desandro/masonry/zipball/843b498cdb1af3f92020c0d126d4d6730424f971",
+                "reference": "843b498cdb1af3f92020c0d126d4d6730424f971",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/get-size": ">=1.1.4,<1.3",
-                "bower-asset/outlayer": "dev-1.3.x,|1.3.x"
+                "bower-asset/fizzy-ui-utils": "~1.0.1",
+                "bower-asset/get-size": "~1.2.2",
+                "bower-asset/outlayer": "~1.4.0"
             },
             "require-dev": {
                 "bower-asset/doc-ready": "dev-1.x,|1.x",
@@ -871,37 +908,35 @@
         },
         {
             "name": "bower-asset/outlayer",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/outlayer.git",
-                "reference": "6d4ce485b0afe93a039ce8d3caaf6973d45488f8"
+                "reference": "426e906fb2827d1d79f39ed0b33c6fd24257f34a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/outlayer/zipball/6d4ce485b0afe93a039ce8d3caaf6973d45488f8",
-                "reference": "6d4ce485b0afe93a039ce8d3caaf6973d45488f8",
+                "url": "https://api.github.com/repos/metafizzy/outlayer/zipball/426e906fb2827d1d79f39ed0b33c6fd24257f34a",
+                "reference": "426e906fb2827d1d79f39ed0b33c6fd24257f34a",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/doc-ready": "dev-1.0.x|1.0.x",
+                "bower-asset/doc-ready": "dev-1.0.x,|1.0.x",
                 "bower-asset/eventemitter": ">=4.2,<5",
-                "bower-asset/eventie": ">=1.0.3,<1.1",
-                "bower-asset/get-size": ">=1.1.4,<1.3",
-                "bower-asset/get-style-property": "dev-1.x|1.x",
-                "bower-asset/matches-selector": "dev-1.x|1.x"
+                "bower-asset/eventie": "~1.0.3",
+                "bower-asset/fizzy-ui-utils": "~1.0.1",
+                "bower-asset/get-size": "~1.2.2",
+                "bower-asset/get-style-property": "~1.0.4",
+                "bower-asset/matches-selector": "~1.0.2"
             },
             "require-dev": {
                 "bower-asset/jquery": ">=1.4.3,<2",
-                "bower-asset/jquery-bridget": "dev-1.x|1.x",
-                "bower-asset/qunit": ">=1.12.0,<2.0"
+                "bower-asset/jquery-bridget": "dev-1.x,|1.x",
+                "bower-asset/qunit": ">=1.12.0,<2.0.0"
             },
             "type": "bower-asset-library",
             "extra": {
-                "bower-asset-main": [
-                    "item.js",
-                    "outlayer.js"
-                ],
+                "bower-asset-main": "outlayer.js",
                 "bower-asset-ignore": [
                     "test/",
                     "docs/",
@@ -912,7 +947,8 @@
                     "node_modules",
                     "bower_components",
                     "test",
-                    "tests"
+                    "tests",
+                    "package.json"
                 ]
             },
             "license": [
@@ -920,45 +956,41 @@
             ],
             "description": "the brains and guts of a layout library",
             "keywords": [
-                "DOM",
-                "layout"
+                "isotope",
+                "layout",
+                "masonry"
             ]
         },
         {
             "name": "bower-asset/packery",
-            "version": "v1.3.2",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/packery.git",
-                "reference": "ae963a119517f472fcf1ee5314561c7ede40905f"
+                "reference": "61c553add93c2203a897f86ec336c9995e48a37f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/packery/zipball/ae963a119517f472fcf1ee5314561c7ede40905f",
-                "reference": "ae963a119517f472fcf1ee5314561c7ede40905f",
+                "url": "https://api.github.com/repos/metafizzy/packery/zipball/61c553add93c2203a897f86ec336c9995e48a37f",
+                "reference": "61c553add93c2203a897f86ec336c9995e48a37f",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/classie": "dev-1.x|1.x",
-                "bower-asset/get-size": "dev-1.2.x|1.2.x",
-                "bower-asset/get-style-property": "dev-1.x|1.x",
-                "bower-asset/outlayer": "dev-1.3.x|1.3.x"
+                "bower-asset/classie": "dev-1.x,|1.x",
+                "bower-asset/get-size": "dev-1.2.x,|1.2.x",
+                "bower-asset/get-style-property": "dev-1.x,|1.x",
+                "bower-asset/outlayer": "dev-1.4.x,|1.4.x"
             },
             "require-dev": {
-                "bower-asset/draggabilly": "dev-1.x|1.x",
-                "bower-asset/jquery": ">=1,<1.1",
-                "bower-asset/jquery-bridget": "dev-1.1.x|1.1.x",
+                "bower-asset/draggabilly": "dev-1.x,|1.x",
+                "bower-asset/jquery": "~1",
+                "bower-asset/jquery-bridget": "dev-1.1.x,|1.1.x",
                 "bower-asset/jquery-ui-draggable": "*",
-                "bower-asset/qunit": ">=1.15,<2.0"
+                "bower-asset/qunit": ">=1.15.0,<2.0.0"
             },
             "type": "bower-asset-library",
             "extra": {
-                "bower-asset-main": [
-                    "js/rect.js",
-                    "js/packer.js",
-                    "js/item.js",
-                    "js/packery.js"
-                ],
+                "bower-asset-main": "js/packery.js",
                 "bower-asset-ignore": [
                     "**/.*",
                     "test/",
@@ -1872,12 +1904,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-builder.git",
-                "reference": "e7ef7de89e5b40bb174fd27004acc96363a767cf"
+                "reference": "60a9c14ab8fe497ae71d869a3c17b1af54106fc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/e7ef7de89e5b40bb174fd27004acc96363a767cf",
-                "reference": "e7ef7de89e5b40bb174fd27004acc96363a767cf",
+                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/60a9c14ab8fe497ae71d869a3c17b1af54106fc7",
+                "reference": "60a9c14ab8fe497ae71d869a3c17b1af54106fc7",
                 "shasum": ""
             },
             "require": {
@@ -1911,7 +1943,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-03-15 09:08:45"
+            "time": "2015-04-10 08:10:06"
         },
         {
             "name": "kartik-v/yii2-date-range",
