@@ -231,7 +231,7 @@ class Client extends _Client
 	public function getCreditLines() {
 		$creditLines = [];
 		// Credit notes still open
-		foreach(Credit::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => [Credit::STATUS_TOPAY, Credit::STATUS_SOLDE]])->each() as $document) {
+		foreach(Credit::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => Credit::STATUS_TOPAY])->each() as $document) {
 			$creditLines[] = new CreditLine([
 				'note' => $document->name,
 				'date' => $document->created_at,

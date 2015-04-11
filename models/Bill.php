@@ -31,7 +31,7 @@ class Bill extends Document {
 	 *
 	 */
 	public function send() {
-		$this->status = ($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_SOLDE);
+		$this->status = ($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY);
 		$this->save();
 	}
 	

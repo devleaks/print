@@ -55,8 +55,6 @@ class Document extends _Document
 	/** */
 	const STATUS_PAID = 'PAID';
 	/** */
-	const STATUS_SOLDE = 'SOLDE';
-	/** */
 	const STATUS_CANCELLED = 'CANCELLED';
 	/** */
 	const STATUS_CLOSED = 'CLOSED';
@@ -203,7 +201,6 @@ class Document extends _Document
 			self::STATUS_CANCELLED => Yii::t('store', self::STATUS_CANCELLED),
 			self::STATUS_CLOSED => Yii::t('store', self::STATUS_CLOSED),
 			self::STATUS_CREATED => Yii::t('store', self::STATUS_CREATED),
-			self::STATUS_SOLDE => Yii::t('store', self::STATUS_SOLDE),
 			self::STATUS_DONE => Yii::t('store', self::STATUS_DONE),
 			self::STATUS_NOTIFY => Yii::t('store', self::STATUS_NOTIFY),
 			self::STATUS_TOPAY => Yii::t('store', self::STATUS_TOPAY),
@@ -241,7 +238,6 @@ class Document extends _Document
 			self::STATUS_CANCELLED => 'warning',
 			self::STATUS_CLOSED => 'success',
 			self::STATUS_CREATED => 'success',
-			self::STATUS_SOLDE => 'primary',
 			self::STATUS_DONE => 'success',
 			self::STATUS_NOTIFY => 'primary',
 			self::STATUS_TOPAY => 'info',
@@ -454,7 +450,7 @@ class Document extends _Document
 
 				$creditNotes = Credit::find()
 					->andWhere(['client_id' => $this->client_id])
-					->andWhere(['status' => [Credit::STATUS_TOPAY,Credit::STATUS_SOLDE]])
+					->andWhere(['status' => Credit::STATUS_TOPAY])
 					->orderBy('created_at');
 
 				$needed = $amount;

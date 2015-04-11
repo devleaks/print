@@ -51,7 +51,7 @@ class Order extends Document
 		$copy->parent_id = $this->id;	
 		$copy->name = substr($this->due_date,0,4).'-'.str_pad(Sequence::nextval('bill_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT); // get a new official bill number; $this->due_date or $copy->due_date?
 		Yii::trace($this->isPaid()?'Oui':'Non', 'Order::convert');
-		$copy->status = ($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_SOLDE);
+		$copy->status = ($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY);
 		$copy->save();
 		
 		if(Parameter::isTrue('application', 'auto_send_bill')) {
@@ -108,7 +108,7 @@ class Order extends Document
 			$bill->updatePaymentStatus();
 		else {// regular order
 			if(!$this->isBusy() && ($this->status != self::STATUS_NOTIFY))
-				$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_SOLDE);
+				$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY);
 			//else, we leave status as it is.
 		}
 	}
@@ -287,7 +287,6 @@ class Order extends Document
 				break;
 			case $this::STATUS_NOTIFY:
 				$actions[] = '{notify}';
-			case $this::STATUS_SOLDE:
 			case $this::STATUS_TOPAY:
 			case $this::STATUS_DONE:
 				$actions[] = '{cancel}';

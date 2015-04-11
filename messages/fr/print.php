@@ -207,7 +207,6 @@ return [
 	'PAID' => 'Payé',
 	'PENDING' => 'En attente',
 	'RETIRED' => 'Retiré',
-	'SOLDE' => 'Solde à payer',
 	'TICKET' => 'Ticket de vente',
 	'TOPAY' => 'A payer',
 	'TODO' => 'A faire',

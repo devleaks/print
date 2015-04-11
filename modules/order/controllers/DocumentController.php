@@ -437,7 +437,7 @@ class DocumentController extends Controller
 		$model = $this->findModel($id);
 		if($model->document_type == Document::TYPE_TICKET) {			
 			$solde = $model->getBalance();
-			return $this->actionUpdateStatus($model->id, $model->isPaid() ? Document::STATUS_DONE : Document::STATUS_SOLDE);
+			return $this->actionUpdateStatus($model->id, $model->isPaid() ? Document::STATUS_DONE : Document::STATUS_TOPAY);
 		}
 		else
 			return $this->actionUpdateStatus($id, Document::STATUS_DONE);
@@ -457,7 +457,7 @@ class DocumentController extends Controller
 		if($model->document_type == Document::TYPE_ORDER && $model->bom_bool) {
 			// all termnated and unbilled orders for same client
 			$query = Order::find()->where(['bom_bool' => true, 'client_id' => $model->client_id])
-								  ->andWhere(['status' => [Document::STATUS_DONE, Document::STATUS_NOTIFY, Document::STATUS_TOPAY, Document::STATUS_SOLDE]]);
+								  ->andWhere(['status' => [Document::STATUS_DONE, Document::STATUS_NOTIFY, Document::STATUS_TOPAY]]);
 			$dataProvider = new ActiveDataProvider([
 				'query' => $query,
 			]);

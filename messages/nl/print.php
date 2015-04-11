@@ -195,7 +195,6 @@ return [
 	'PAID' => 'Betaald',
 	'PENDING' => 'In afwachting',
 	'RETIRED' => 'Teruggetrokken',
-	'SOLDE' => 'Saldo',
 	'TICKET' => 'Ticket',
 	'TOPAY' => 'Te Betalen',
 	'TODO' => 'Nog te starten',

@@ -70,7 +70,6 @@ class Ticket extends Order
 				break;
 			case $this::STATUS_DONE:
 			case $this::STATUS_TOPAY:
-			case $this::STATUS_SOLDE:
 				$actions[] = '{receive}';
 				break;
 			case $this::STATUS_CANCELLED:
