@@ -644,55 +644,56 @@
         },
         {
             "name": "bower-asset/isotope",
-            "version": "2.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/isotope.git",
-                "reference": "1d0cd0625908aaf6f15d6a8d9a2e7c0e71c959a5"
+                "reference": "9a5457acbdba74a37065ae853f6426d1e12cced8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/1d0cd0625908aaf6f15d6a8d9a2e7c0e71c959a5",
-                "reference": "1d0cd0625908aaf6f15d6a8d9a2e7c0e71c959a5",
+                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/9a5457acbdba74a37065ae853f6426d1e12cced8",
+                "reference": "9a5457acbdba74a37065ae853f6426d1e12cced8",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/get-size": ">=1,<2",
-                "bower-asset/masonry": ">=3.1.5,<4.0.0",
+                "bower-asset/fizzy-ui-utils": "~1.0.1",
+                "bower-asset/get-size": "~1.2.2",
+                "bower-asset/masonry": "~3.3.0",
                 "bower-asset/matches-selector": ">=1,<2",
-                "bower-asset/outlayer": ">=1.2.0,<2.0.0"
+                "bower-asset/outlayer": "~1.4.0"
             },
             "require-dev": {
-                "bower-asset/doc-ready": "*",
-                "bower-asset/isotope-cells-by-column": "*",
-                "bower-asset/isotope-cells-by-row": "*",
-                "bower-asset/isotope-fit-columns": "*",
-                "bower-asset/isotope-horizontal": "*",
-                "bower-asset/isotope-masonry-horizontal": "*",
-                "bower-asset/jquery": "1",
-                "bower-asset/qunit": "1.12"
+                "bower-asset/doc-ready": "dev-1.x,|1.x",
+                "bower-asset/isotope-cells-by-column": "dev-1.x,|1.x",
+                "bower-asset/isotope-cells-by-row": "dev-1.x,|1.x",
+                "bower-asset/isotope-fit-columns": "dev-1.x,|1.x",
+                "bower-asset/isotope-horizontal": "dev-1.x,|1.x",
+                "bower-asset/isotope-masonry-horizontal": "dev-1.x,|1.x",
+                "bower-asset/jquery": ">=1.4.3,<2",
+                "bower-asset/jquery-bridget": "dev-1.1.x,|1.1.x",
+                "bower-asset/qunit": ">=1.15.0,<2.0.0"
             },
             "type": "bower-asset-library",
             "extra": {
-                "bower-asset-main": [
-                    "js/item.js",
-                    "js/layout-mode.js",
-                    "js/isotope.js",
-                    "js/layout-modes/vertical.js",
-                    "js/layout-modes/fit-rows.js",
-                    "js/layout-modes/masonry.js"
-                ],
+                "bower-asset-main": "js/isotope.js",
                 "bower-asset-ignore": [
                     "test/",
                     "examples/",
+                    "sandbox/",
                     "**/.*",
                     "Gruntfile.js",
                     "package.json",
-                    "notes.md"
-                ]
+                    "notes.md",
+                    "CONTRIBUTING.mdown",
+                    "changelog.md"
+                ],
+                "branch-alias": {
+                    "dev-master": "2.2.0-dev"
+                }
             },
             "description": "Filter and sort magical layouts",
-            "time": "2014-03-31 11:45:41"
+            "time": "2015-04-10 19:17:11"
         },
         {
             "name": "bower-asset/jquery",
@@ -1904,12 +1905,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-builder.git",
-                "reference": "60a9c14ab8fe497ae71d869a3c17b1af54106fc7"
+                "reference": "d515cdb99b67b16eb38079667f728b8f13ffe801"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/60a9c14ab8fe497ae71d869a3c17b1af54106fc7",
-                "reference": "60a9c14ab8fe497ae71d869a3c17b1af54106fc7",
+                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/d515cdb99b67b16eb38079667f728b8f13ffe801",
+                "reference": "d515cdb99b67b16eb38079667f728b8f13ffe801",
                 "shasum": ""
             },
             "require": {
@@ -1943,7 +1944,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-04-10 08:10:06"
+            "time": "2015-04-11 04:35:45"
         },
         {
             "name": "kartik-v/yii2-date-range",
