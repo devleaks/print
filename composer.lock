@@ -4553,7 +4553,7 @@
         },
         {
             "name": "yurkinx/yii2-image",
-            "version": "dev-master",
+            "version": "v1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yurkinx/yii2-image.git",

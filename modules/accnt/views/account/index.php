@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
 
-            'client.name',
+            'client.nom',
             'document.name',
             'sale',
             'amount',

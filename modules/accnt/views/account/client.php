@@ -24,12 +24,6 @@ $dataProvider->pagination = false;
 ?>
 <div class="account-index">
 
-	<div  class="alert alert-info" >
-		<a href="#" class="close" data-dismiss="alert">&times;</a>
-		Cette page ne montre que les factures et les notes de crédits pour un client.
-		Les "bons de livraisons" non facturés, les tickets de ventes de comptoir, et les remboursements ne sont pas visibles ici.
-	</div>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
 	    'showPageSummary' => true,

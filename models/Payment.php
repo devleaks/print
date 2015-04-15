@@ -15,6 +15,7 @@ class Payment extends _Payment
 	/** Payment Method */
 	const TYPE_ACCOUNT = 'ACCOUNT';
 	
+	const USE_CREDIT = 'CREDIT';
 	const CLEAR = 'CLEAR';
 
 	/** Document status */
@@ -59,6 +60,8 @@ class Payment extends _Payment
 	public function getPaymentMethod() {
 		if($this->payment_method == Payment::CLEAR)
 			return Yii::t('store', 'Bill Debit');
+		elseif($this->payment_method == Payment::USE_CREDIT)
+			return Yii::t('store', 'Credit Used');
 		$p = Parameter::findOne(['domain'=>'payment', 'name' => $this->payment_method]);
 		return $p ? $p->value_text : null;
 	}

@@ -144,7 +144,7 @@ order by 5 desc
         return $this->render('client', [
             'dataProvider' => new ArrayDataProvider(['allModels' => $accountLines]),
 			'client' => $client,
-			'bottomLine' => count($accountLines) > 0 ? $accountLines[count($accountLines)-1]->account : 0,
+			'bottomLine' => !empty($accountLines) ? end($accountLines)->account : 0,
         ]);
 	}
 	

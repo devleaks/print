@@ -45,6 +45,9 @@ $dataProvider = new ActiveDataProvider([
 	            'format' => 'raw',
 				'hAlign' => GridView::ALIGN_CENTER,
 	        ],
+	        [
+				'attribute' => 'note',
+	        ],
         ],
     ]); ?>
 

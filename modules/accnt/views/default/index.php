@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<ul>
 	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/payment/"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
 	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/account/"><?= Yii::t('store', 'Client Accounts')?></a> - Manipulations directes</li>
-	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/cash/"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
+	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/cash/index2"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
 	</ul>
 
 

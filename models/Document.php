@@ -394,7 +394,7 @@ class Document extends _Document
 			$cash->save();
 			if($amount > $due)
 				Yii::$app->session->setFlash('warning', Yii::t('store', 'You must reimburse {0}€.', $amount - $due));
-		} else if ($method != 'CREDIT' && $method != Payment::CLEAR) {
+		} else if ($method != Payment::USE_CREDIT && $method != Payment::CLEAR) {
 			if($amount <= $due) { // paid enough or less(prepayment)
 				$payment = new Payment([
 					'sale' => $this->sale,
@@ -435,8 +435,8 @@ class Document extends _Document
 					'status' => Payment::STATUS_PAID,
 				]);
 				Yii::trace('Clearing='.$amount, 'AccountController::addPayment');
-		} else { // if($method == 'CREDIT')
-			if($amount >= 0) { // client pays with credit he has
+		} else { // $method == Payment::USE_CREDIT), client pays with credit he has
+			if($amount >= 0) {
 
 				$payment = new Payment([
 					'sale' => $this->sale,
@@ -446,27 +446,24 @@ class Document extends _Document
 					'status' => Payment::STATUS_PAID,
 				]);
 
-				$creditNotes = Credit::find()
-					->andWhere(['client_id' => $this->client_id])
-					->andWhere(['status' => Credit::STATUS_TOPAY])
-					->orderBy('created_at');
+				$creditLines = $this->client->getCreditLines();
 
 				$needed = $amount;
 				$total_available = 0;
 				Yii::trace('Needed='.$needed, 'AccountController::addPayment');
-				foreach($creditNotes->each() as $cn) {
+				foreach($creditLines as $credit_line) {
 					if($needed > 0) {
-						$available = abs($cn->getBalance());
+						$available = abs($credit_line->amount);
 						$total_available += $available;
 						$comment = Yii::t('store', 'Payment of {0} {1}.', [Yii::t('store', $this->document_type),$this->name]);
-						Yii::trace('Available='.$available.' with '.$cn->id, 'Document::addPayment');
+						Yii::trace('Available='.$available.' with '.$credit_line->ref, 'Document::addPayment');
 						if($needed <= $available) { // no problem, we widthdraw from credit note
 							Yii::trace('Found='.$needed, 'Document::addPayment');
-							$cn->addPayment(-$needed, Payment::CLEAR,$comment);
+							$credit_line->useAmount($needed, $comment);
 							$needed = 0;
 						} else {
 							Yii::trace('Clear='.$available, 'Document::addPayment');
-							$cn->addPayment(-$available, Payment::CLEAR,$comment); // this credit note is exhausted
+							$credit_line->useAmount($available, $comment);
 							$needed -= $available;
 						}
 						Yii::trace('Still need='.$needed, 'Document::addPayment');
@@ -485,17 +482,7 @@ class Document extends _Document
 					Yii::$app->session->setFlash('info', Yii::t('store', 'Bill paid with credits. Customer left with {0}€ credit.', round($total_available, 2)));
 				}
 
-			} else { // $capture->amount is negative, and we use CREDIT
-				/*
-				$clear = new Payment([
-					'sale' => $this->sale,
-					'client_id' => $this->client_id,
-					'payment_method' => Payment::CLEAR,
-					'amount' => $amount,		// Amount may be adjusted below if paid with CREDIT
-					'status' => Payment::STATUS_PAID,
-				]);
-				$clear->save();
-				*/
+			} else {
 				$ok = false;
 				Yii::$app->session->setFlash('error', Yii::t('store', 'Negative credit charge not handled yet. Pierre 25/01/2015.'));
 			}
@@ -509,7 +496,7 @@ class Document extends _Document
 		if($ok && $extra)
 			$ok = $extra->save();
 		if($ok)
-			$this->updatePaymentStatus();
+			$this->setStatus(self::STATUS_TOPAY); // will close if necessary (i.e. if isPaid == true)
 
 		Yii::trace('EXITING='.$this->document_type.' '.$this->name, 'AccountController::addPayment');
 

@@ -322,6 +322,8 @@ return [
 	'To Refund' => 'Rembourser',
 	'Transfer to Client Account' => 'Transférer vers le compte client',
 	'Transfered amount split in all bills.' => 'Montant réparti entre toutes les factures sélectionnées.',
+	'Transfered amount was too large to pay all bills: {0}€ remaining.' => "Le montant transféré est plus grand que le montant dû. {0}€ à rembourser.",
+	'Transfered amount was not sufficiant to pay all bills: {0}€ missing.' => "Le montant transféré est insuffisant pour payer le montant dû. {0}€ à payer.",
 	'Update Item' => "Mise à jour de l'article",
 	'Update Order Line' => 'Mettre à jour la commande',
 	'Update' => 'Modifier',
@@ -374,6 +376,8 @@ return [
 	'Client has no email.' => "Le client n'a pas d'adresse email.",
 	'No automatic notification.' => "L'envoi automatique du message est désactivé.",
 	'Older Data' => 'Anciennes données',
+	'Credit Used' => 'Crédit utilisé',
+	'Use Credit' => 'Utilisation de crédits',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

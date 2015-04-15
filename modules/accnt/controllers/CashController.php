@@ -55,6 +55,21 @@ class CashController extends Controller
     }
 
     /**
+     * Lists all Pdf models.
+     * @return mixed
+     */
+    public function actionIndex2()
+    {
+        $searchModel = new CashSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index2', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
      * Displays a single Cash model.
      * @param integer $id
      * @return mixed
@@ -97,8 +112,11 @@ class CashController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+			$mode = ($model->mode == $model::DEBIT) ? -1 : 1;
+			$model->amount = round($mode * str_replace(',','.',$model->amount_virgule), 2);
+			$model->save();
+            return $this->redirect(['index2']);
         } else {
             return $this->render('update', [
                 'model' => $model,

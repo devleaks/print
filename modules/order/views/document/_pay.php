@@ -49,9 +49,9 @@ $capture->submit = 1;
 				]);
 			}
 			$payment_methods = Payment::getPaymentMethods();
-			if(count($credit_lines) == 0) // remove credit option if no credit
-				if(isset($payment_methods['CREDIT']))
-					unset($payment_methods['CREDIT'])
+			if(count($credit_lines) > 0) {// add credit option if any
+				$payment_methods[Payment::USE_CREDIT] = Yii::t('store', 'Use Credit');
+			}
 	?>
 
 	<?php $form = ActiveForm::begin(['action' => Url::to(['/order/document/pay'])]); ?>

@@ -522,15 +522,17 @@ class DocumentController extends Controller
 			// if ($capturePayment->validate()) {
 			$model = $this->findModel($capturePayment->id);
 			
-			$payment_entered = new Account([
-				'sale' => $model->sale,
-				'client_id' => $model->client_id,
-				'document_id' => $model->id,
-				'payment_method' => $capturePayment->method,
-				'amount' => $capturePayment->amount,
-				'status' => $capturePayment->amount > 0 ? 'CREDIT' : 'DEBIT',
-			]);
-			$payment_entered->save();
+			if($capturePayment->method != Payment::USE_CREDIT) { // if we use credit, money is already here, so we don't add it
+				$payment_entered = new Account([
+					'sale' => $model->sale,
+					'client_id' => $model->client_id,
+					'document_id' => $model->id,
+					'payment_method' => $capturePayment->method,
+					'amount' => $capturePayment->amount,
+					'status' => $capturePayment->amount > 0 ? 'CREDIT' : 'DEBIT',
+				]);
+				$payment_entered->save();
+			}
 
 			$ok = $model->addPayment($capturePayment->amount, $capturePayment->method);
 			

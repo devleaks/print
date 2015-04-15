@@ -130,69 +130,64 @@ class Client extends _Client
 	public function getAccountLines() {
 		$accountLines = [];
 		$sales = [];
-		$sales_to_ignore = [];
+		$sales_already_processed = [];
 		
 		/** Sales */
 
-		$dstinct_sales = Document::find()
+		$distinct_sales = Document::find()
 					->select('sale')
 					->andWhere(['client_id' => $this->id])
-					->andWhere(['status' => [
-						Document::STATUS_TODO,  
-						Document::STATUS_BUSY,  
-						Document::STATUS_WARN,  
-						Document::STATUS_DONE,  
-						Document::STATUS_NOTIFY,
-						Document::STATUS_TOPAY, 
-						Document::STATUS_CLOSED,
-					]])
+					->andWhere(['not', ['status' => [
+						Document::STATUS_OPEN,  
+						Document::STATUS_CANCELLED,  
+					]]])
 					->distinct();
-		$documents = Document::find()->where(['sale' => $dstinct_sales]);
+		$documents = Document::find()->where(['sale' => $distinct_sales]);
 		
 		foreach($documents->each() as $document) {
-			if( ! in_array($document->sale, $sales_to_ignore) ) {
-				$color = ($document->getBalance() <= 0) ? 'success' : 'warning';
+			if( ! in_array($document->sale, $sales_already_processed) ) {
+				Yii::trace('DOING SALE:'.$document->sale.'.', 'Client::getAccountLines');
+				$bal = $document->getBalance();
+				$color = ($bal <= 0) ? 'success' : 'warning';
+				Yii::trace($document->document_type.':'.$document->name.'='.$bal, 'Client::getAccountLines');
 				switch($document->document_type) {
 					case Document::TYPE_TICKET:
-					case Document::TYPE_BILL: // we always add bills
+					case Document::TYPE_BILL: // we always add bills and tickets, they should always get paid
 						$accountLines[] = new AccountLine([
 							'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
 							'amount' => - $document->getTotal(),
 							'date' => $document->created_at,
 							'ref' => $document->id,
 						]);
+						$sales_already_processed[] = $document->sale;
 						break;
 					case Document::TYPE_ORDER:
-						if($bill = Order::findOne($document->id)->getBill()) {
-							$accountLines[] = new AccountLine([
-								'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$bill->name.'</span>', Url::to(['/order/document/view', 'id' => $bill->id])),
-								'amount' => - $bill->getTotal(),
-								'date' => $bill->created_at,
-								'ref' => $bill->id,
-							]);
-						} else {
+						if(! Order::findOne($document->id)->getBill()) { // if there is a bill for this order, we ignore the order, the bill will be added
 							$accountLines[] = new AccountLine([
 								'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
 								'amount' => - $document->getTotal(),
 								'date' => $document->created_at,
 								'ref' => $document->id,
 							]);
+							$sales_already_processed[] = $document->sale;
 						}
 						break;
 					case Document::TYPE_CREDIT:
 					case Document::TYPE_REFUND:
+						$color = ($bal < 0) ? 'warning' : 'success';
 						$accountLines[] = new AccountLine([
 							'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
-							'amount' => $document->getTotal(),
+							'amount' => - $document->getTotal(),
 							'date' => $document->created_at,
 							'ref' => $document->id,
 						]);
+						$sales_already_processed[] = $document->sale;
 						break;
 					case Document::TYPE_BID:
-					default: // no money involved. Ignore.
+					default: // no money involved. Ignore. If a order or a ticket was added from this bid it will show.
+						Yii::trace($document->document_type.':'.$document->name.' IGNORED', 'Client::getAccountLines');
 						break;
 				}
-				$sales_to_ignore[] = $document->sale;
 			}
 		}
 		
@@ -215,9 +210,8 @@ class Client extends _Client
 		
 		// build summary column. No other method.
 		$tot = 0;
-		foreach($accountLines as $l) {
+		foreach($accountLines as $l)
 			$l->account = ($tot += $l->amount);
-		}
 		
 		return $accountLines;
 	}
@@ -233,7 +227,10 @@ class Client extends _Client
 	}
 	
 	/**
-	 *	Client has credit under two forms: 1. Credit notes with money left on them, and 2. Unprocessed reimbursements.
+	 *	Client has credit under 3 forms:
+	 *		1. Credit notes with money left on them.
+	 *		2. Reimbursement/refund notes.
+	 *		3. Unprocessed reimbursements. (excess payment)
 	 *
 	 * @return CreditLine[] Credit available.
 	 */
@@ -242,9 +239,20 @@ class Client extends _Client
 		// Credit notes still open
 		foreach(Credit::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => Credit::STATUS_TOPAY])->each() as $document) {
 			$creditLines[] = new CreditLine([
+				'source' => CreditLine::SOURCE_CREDIT,
 				'note' => $document->name,
 				'date' => $document->created_at,
 				'amount' => - $document->getBalance(),
+				'ref' => $document->id,
+			]);
+		}
+		// Credit notes still open
+		foreach(Refund::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => Credit::STATUS_TOPAY])->each() as $document) {
+			$creditLines[] = new CreditLine([
+				'source' => CreditLine::SOURCE_REFUND,
+				'note' => $document->name,
+				'date' => $document->created_at,
+				'amount' => $document->getBalance(),
 				'ref' => $document->id,
 			]);
 		}
@@ -252,6 +260,7 @@ class Client extends _Client
 		/* These are the outstanding "excess" payments */
 		foreach($this->getPayments()->andWhere(['status' => Payment::STATUS_OPEN])->each() as $payment) {
 			$creditLines[] = new CreditLine([
+				'source' => CreditLine::SOURCE_ACCOUNT,
 				'note' => $payment->note,
 				'date' => $payment->created_at,
 				'amount' => - $payment->amount,

@@ -189,7 +189,7 @@ class BillController extends Controller
 								'status' => Payment::STATUS_OPEN,
 							]);
 							$remaining->save();
-							Yii::$app->session->setFlash('info', Yii::t('store', 'Transfered amount was too large to pay all bills: {0}€ remaining.', $available));
+							Yii::$app->session->setFlash('info', Yii::t('store', 'sales_already_processed: {0}€ remaining.', $available));
 						} else if($more_needed > 0) {
 							Yii::$app->session->setFlash('warning', Yii::t('store', 'Transfered amount was not sufficiant to pay all bills: {0}€ missing.', $more_needed));
 						} else {
@@ -262,7 +262,7 @@ class BillController extends Controller
 									if($type > 3) $type = 3;
 									$pdf = new PrintedDocument([
 										'document'		=> $bill,
-										'watermark'		=> Yii::t('store', 'Reminder Type '.$type),
+										'watermark'		=> Yii::t('print', 'Reminder Type '.$type),
 										'save'			=> true,
 									]);
 									$fn = $pdf->render();

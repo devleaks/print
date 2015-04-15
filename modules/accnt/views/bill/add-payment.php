@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
 		'panel' => [
 	        'heading'=>'<h3 class="panel-title">'.Yii::t('store', 'Unbalanced Orders').'</h3>',
-	        'before'=> '',
+	        'before'=> false,
 	        'after'=> $captureForm,
 	        'showFooter'=>false
 	    ],
