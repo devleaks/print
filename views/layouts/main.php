@@ -1,6 +1,7 @@
 <?php
 use app\assets\AppAsset;
 use app\assets\CalculatorAsset;
+use app\models\CaptureSearch;
 use app\widgets\Alert;
 use devleaks\chardinjs\ChardinJSAsset;
 use devleaks\introjs\IntroJSAsset;
@@ -55,7 +56,8 @@ $apphomedir = Yii::getAlias('@app');
             if(!Yii::$app->user->isGuest) {
 
 				$work_menu = [];
-				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta' || Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'employee')
+				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta'
+					|| Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'employee')
                 	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash']];
 				if(Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'admin')
                 	$work_menu[] = ['label' => Yii::t('store', 'Orders'), 'url' => ['/order/']];
@@ -100,15 +102,18 @@ $apphomedir = Yii::getAlias('@app');
                 'items' => $menu
             ]);
 
+
+			/** Search field */
 			$form = ActiveForm::begin(['action' => Url::to(['/order/document/search'])]);
-			echo Html::textInput('search', null, ['maxlength' => 30, 'class' => 'input-sm pull-right', 'style' => 'margin-top: 10px;']);
+			$model = new CaptureSearch();
+			echo $form->field($model, 'search')->textInput(['maxlength' => 40, 'class' => 'input-sm pull-right', 'style' => 'margin-top: 10px;'])->label('');
 			ActiveForm::end();
 
 
             NavBar::end();
         ?>
 
-        <div class="container">
+        <div class="container-fluid" style="margin-top: 60px;">
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 				'options' => [
@@ -122,7 +127,7 @@ $apphomedir = Yii::getAlias('@app');
     </div>
 
     <footer class="footer">
-        <div class="container">
+        <div class="container-fluid">
             <p class="pull-left">&copy; Labo JJ Micheli <?= date('Y') ?>
 				<small><?php echo ' — Version '.`cd $apphomedir ; git describe --tags`;
 					if(YII_DEBUG) {

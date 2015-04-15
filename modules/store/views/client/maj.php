@@ -7,10 +7,10 @@ use yii\helpers\Html;
 
 $this->title = Yii::t('store', 'Update {modelClass}: ', [
     'modelClass' => 'Client',
-]) . ' ' . $model->id;
+]) . ' ' . $model->nom;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['..']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Clients'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id, 'reference_interne' => $model->reference_interne]];
+$this->params['breadcrumbs'][] = ['label' => $model->nom, 'url' => ['view', 'id' => $model->id, 'reference_interne' => $model->reference_interne]];
 $this->params['breadcrumbs'][] = Yii::t('store', 'Update');
 ?>
 <div class="client-update">

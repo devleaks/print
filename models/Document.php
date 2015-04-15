@@ -53,8 +53,6 @@ class Document extends _Document
 	/** */
 	const STATUS_TOPAY = 'TOPAY';
 	/** */
-	const STATUS_PAID = 'PAID';
-	/** */
 	const STATUS_CANCELLED = 'CANCELLED';
 	/** */
 	const STATUS_CLOSED = 'CLOSED';
@@ -66,6 +64,8 @@ class Document extends _Document
 
 	/** */
 	const PAYMENT_LIMIT = 0.01;
+
+
     /**
      * @inheritdoc
      */
@@ -197,17 +197,16 @@ class Document extends _Document
 	 */
 	public static function getStatuses() {
 		return [
-			self::STATUS_BUSY => Yii::t('store', self::STATUS_BUSY),
-			self::STATUS_CANCELLED => Yii::t('store', self::STATUS_CANCELLED),
-			self::STATUS_CLOSED => Yii::t('store', self::STATUS_CLOSED),
 			self::STATUS_CREATED => Yii::t('store', self::STATUS_CREATED),
+			self::STATUS_OPEN => Yii::t('store', self::STATUS_OPEN),
+			self::STATUS_TODO => Yii::t('store', self::STATUS_TODO),
+			self::STATUS_BUSY => Yii::t('store', self::STATUS_BUSY),
+			self::STATUS_WARN => Yii::t('store', self::STATUS_WARN),
 			self::STATUS_DONE => Yii::t('store', self::STATUS_DONE),
 			self::STATUS_NOTIFY => Yii::t('store', self::STATUS_NOTIFY),
 			self::STATUS_TOPAY => Yii::t('store', self::STATUS_TOPAY),
-			self::STATUS_OPEN => Yii::t('store', self::STATUS_OPEN),
-			self::STATUS_PAID => Yii::t('store', self::STATUS_PAID),
-			self::STATUS_TODO => Yii::t('store', self::STATUS_TODO),
-			self::STATUS_WARN => Yii::t('store', self::STATUS_WARN),
+			self::STATUS_CLOSED => Yii::t('store', self::STATUS_CLOSED),
+			self::STATUS_CANCELLED => Yii::t('store', self::STATUS_CANCELLED),
 		];
 	}
 	
@@ -242,7 +241,6 @@ class Document extends _Document
 			self::STATUS_NOTIFY => 'primary',
 			self::STATUS_TOPAY => 'info',
 			self::STATUS_OPEN => 'primary',
-			self::STATUS_PAID => 'success',
 			self::STATUS_TODO => 'primary',
 			self::STATUS_WARN => 'warning',
 		];
@@ -353,8 +351,8 @@ class Document extends _Document
 	/** 
 	 * Update status and reports to parent Work model
 	 */
-	public function setStatus($status) {
-		$this->status = $status;
+	public function setStatus($newstatus) {
+		$this->status = ($newstatus == self::STATUS_TOPAY) ? $this->updatePaymentStatus() : $newstatus;
 		$this->save();
 		$this->statusUpdated();
 	}
@@ -551,15 +549,18 @@ class Document extends _Document
 	/**
 	 * Update payment status of document and triggers proper actions.
 	 */
-	public function updatePaymentStatus() {
-		Yii::trace('isPaid='.($this->isPaid()?'T':'F'), 'Document::updatePaymentStatus');
-		if(!$this->isBusy())
-			$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY);
+	protected function updatePaymentStatus() {
+		if(!$this->isBusy()) {
+			return $this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY;
+		} // otherwise, we leave the status as it is
+		return $this->status;
 	}
 
 
 	public function isBusy() {
-		return $this->status == self::STATUS_TODO || $this->status == self::STATUS_BUSY;
+		return $this->status == self::STATUS_TODO
+		 	|| $this->status == self::STATUS_BUSY
+		 	|| $this->status == self::STATUS_WARN;
 	}
 	
 	

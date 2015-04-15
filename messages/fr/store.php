@@ -125,7 +125,7 @@ return [
 	'Credit note not created.' => "La note de crédit n'a pas pu être ajoutée",
 	'Credit note' => 'Note de crédit',
 	'Credit notes' => 'Notes de crédit',
-	'Credit' => 'Crédit (note, etc.)',
+	'Credit' => 'Crédit',
 	'Customer {0}' => 'Client {0}',
 	'Customers' => 'Clients',
 	'Cuts' => 'Découpes',
@@ -373,6 +373,7 @@ return [
 	'Due date too far.' => 'Date de livraison dans le futur trop éloigné.',
 	'Client has no email.' => "Le client n'a pas d'adresse email.",
 	'No automatic notification.' => "L'envoi automatique du message est désactivé.",
+	'Older Data' => 'Anciennes données',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

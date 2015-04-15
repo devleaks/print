@@ -4,14 +4,15 @@ namespace app\modules\work\controllers;
 
 use Yii;
 use app\components\RuntimeDirectoryManager;
+use app\models\CaptureWorkStatus;
 use app\models\Client;
 use app\models\CoverLetter;
 use app\models\Document;
 use app\models\FrameOrder;
 use app\models\Item;
 use app\models\Master;
-use app\models\Provider;
 use app\models\Parameter;
+use app\models\Provider;
 use app\models\Segment;
 use app\models\Task;
 use app\models\Work;
@@ -271,20 +272,20 @@ class WorkLineController extends Controller
     }
 	
 	public function actionBulkStatus() {
-		if(isset($_POST))
-			if(isset($_POST['status'])) {
-				$status = $_POST['status'];
-				if(Work::isValidStatus($status)) {
-					if(isset($_POST['keylist'])) {
-						foreach($_POST['keylist'] as $id) {
-							$ignore = $this->changeStatus($id, $status);
-						}
-					}
-				} else if($status == 'FRAMES')
-					return $this->redirect(Url::to(['order-frames', 'ids' => implode(',',$_POST['keylist'])]));
-			}
+        $model = new CaptureWorkStatus();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+				//Yii::trace('trying...', 'WorkLineController::actionBulkStatus');
+				if(!is_array($model->keylist))
+					$model->keylist = explode(',',trim($model->keylist));
+				foreach($model->keylist as $id)
+					$ignore = $this->changeStatus($id, $model->status);
+        } elseif ($model->status == 'FRAMES') {
+			//Yii::trace('FRAMES...', 'WorkLineController::actionBulkStatus');
+			return $this->redirect(Url::to(['order-frames', 'ids' => implode(',',$model->keylist)]));
+		}
+		//Yii::trace('no...'.print_r($model->errors, true), 'WorkLineController::actionBulkStatus');
 	}
-	
 	
 	protected function generateFrameOrders($ids) {
 		$providers = [];

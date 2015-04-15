@@ -235,8 +235,8 @@ $('.actionButton').click(function () {
 		url: 'bulk-status',
 		dataType: 'json',
 		data: {
-			keylist: keys,
-			status: status
+			"CaptureWorkStatus[keylist]": keys,
+			"CaptureWorkStatus[status]": status
 		},
 		success: function(data) {
 			alert('I did it! Processed checked rows.')

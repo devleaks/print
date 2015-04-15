@@ -85,9 +85,6 @@ class Order extends Document
 			case self::STATUS_DONE:
 				$this->completed();
 				break;
-			case self::STATUS_TOPAY:
-				$this->updatePaymentStatus();
-				break;
 		}		
 	}
 
@@ -102,15 +99,14 @@ class Order extends Document
 			Bill::findOne(['parent_id' => $this->id]);
 	}
 
-	public function updatePaymentStatus() {
-		Yii::trace('up', 'Order::updatePaymentStatus');
-		if($bill = $this->getBill())
-			$bill->updatePaymentStatus();
-		else {// regular order
-			if(!$this->isBusy() && ($this->status != self::STATUS_NOTIFY))
-				$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY);
-			//else, we leave status as it is.
-		}
+
+	protected function updatePaymentStatus() {
+		if($bill = $this->getBill()) // If the order has already a bill, the bill contains the payment status
+			return $bill->updatePaymentStatus();
+		elseif(!$this->isBusy() && ($this->status != self::STATUS_NOTIFY)) { // order with no bill
+				return $this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY;
+		} // otherwise, we leave the status as it is
+		return $this->status;
 	}
 
 

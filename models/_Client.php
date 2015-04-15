@@ -9,8 +9,8 @@ use Yii;
  *
  * @property integer $id
  * @property string $reference_interne
- * @property string $titre
  * @property string $comptabilite
+ * @property string $titre
  * @property string $nom
  * @property string $prenom
  * @property string $autre_nom
@@ -60,6 +60,7 @@ use Yii;
  * @property string $comm_pref
  * @property string $comm_format
  *
+ * @property Account[] $accounts
  * @property Document[] $documents
  * @property Payment[] $payments
  * @property Pdf[] $pdfs
@@ -82,11 +83,10 @@ class _Client extends \yii\db\ActiveRecord
         return [
             [['comptabilite', 'nom'], 'required'],
             [['mise_a_jour', 'created_at', 'updated_at'], 'safe'],
-            [['reference_interne', 'titre', 'comptabilite', 'nom', 'prenom', 'autre_nom', 'adresse', 'code_postal', 'localite', 'pays', 'langue', 'numero_tva', 'email', 'site_web', 'domicile', 'bureau', 'gsm', 'fax_prive', 'fax_bureau', 'pc', 'autre', 'remise', 'escompte', 'delais_de_paiement', 'mentions', 'exemplaires', 'limite_de_credit', 'formule', 'type', 'execution', 'support', 'format', 'mailing', 'outlook', 'categorie_de_client', 'operation', 'categorie_de_prix_de_vente', 'reference_1', 'date_limite_1', 'reference_2', 'date_limite_2', 'reference_3', 'date_limite_3'], 'string', 'max' => 80],
+            [['reference_interne', 'comptabilite', 'titre', 'nom', 'prenom', 'autre_nom', 'adresse', 'code_postal', 'localite', 'pays', 'langue', 'numero_tva', 'email', 'site_web', 'domicile', 'bureau', 'gsm', 'fax_prive', 'fax_bureau', 'pc', 'autre', 'remise', 'escompte', 'delais_de_paiement', 'mentions', 'exemplaires', 'limite_de_credit', 'formule', 'type', 'execution', 'support', 'format', 'mailing', 'outlook', 'categorie_de_client', 'operation', 'categorie_de_prix_de_vente', 'reference_1', 'date_limite_1', 'reference_2', 'date_limite_2', 'reference_3', 'date_limite_3'], 'string', 'max' => 80],
             [['commentaires'], 'string', 'max' => 255],
             [['status', 'lang', 'comm_pref', 'comm_format'], 'string', 'max' => 20],
-            [['comptabilite'], 'unique'],
-            [['reference_interne'], 'unique']
+            [['comptabilite'], 'unique']
         ];
     }
 
@@ -98,8 +98,8 @@ class _Client extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('store', 'ID'),
             'reference_interne' => Yii::t('store', 'Reference Interne'),
-            'titre' => Yii::t('store', 'Titre'),
             'comptabilite' => Yii::t('store', 'Comptabilite'),
+            'titre' => Yii::t('store', 'Titre'),
             'nom' => Yii::t('store', 'Nom'),
             'prenom' => Yii::t('store', 'Prenom'),
             'autre_nom' => Yii::t('store', 'Autre Nom'),
@@ -149,6 +149,14 @@ class _Client extends \yii\db\ActiveRecord
             'comm_pref' => Yii::t('store', 'Comm Pref'),
             'comm_format' => Yii::t('store', 'Comm Format'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccounts()
+    {
+        return $this->hasMany(Account::className(), ['client_id' => 'id']);
     }
 
     /**

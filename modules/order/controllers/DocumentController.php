@@ -11,6 +11,8 @@ use app\models\Bill;
 use app\models\BillSearch;
 use app\models\CaptureEmail;
 use app\models\CapturePayment;
+use app\models\CaptureSearch;
+use app\models\CaptureSelection;
 use app\models\Client;
 use app\models\Credit;
 use app\models\CreditSearch;
@@ -33,6 +35,7 @@ use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -185,29 +188,29 @@ class DocumentController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionSearch($search = null) {
-		if($search == null)
-			if(isset($_POST['search']))
-				$search = $_POST['search'];
+    public function actionSearch() {
+		$model = new CaptureSearch();
+		if ($model->load(Yii::$app->request->post()) && $model->validate()) {		
+			$searchModel = new DocumentSearch();
+			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $searchModel = new DocumentSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+			if($model->search)
+				$dataProvider->query
+					->with('client')
+					->orWhere(['like', 'document.name', $model->search])
+					->orWhere(['like', 'document.reference', $model->search])
+					->orWhere(['like', 'document.reference_client', $model->search])
+					->orWhere(['like', 'document.note', $model->search])
+					->orWhere(['like', 'client.nom', $model->search])
+					->orWhere(['like', 'client.autre_nom', $model->search])
+					->orderBy('updated_by desc');
 
-		if($search)
-			$dataProvider->query
-				->with('client')
-				->orWhere(['like', 'document.name', $search])
-				->orWhere(['like', 'document.reference', $search])
-				->orWhere(['like', 'document.reference_client', $search])
-				->orWhere(['like', 'document.note', $search])
-				->orWhere(['like', 'client.nom', $search])
-				->orWhere(['like', 'client.autre_nom', $search])
-				->orderBy('updated_by desc');
-
-        return $this->render('doc', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+			return $this->render('doc', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);
+		}
+		return $this->redirect(Url::home());
     }
 
     /**
@@ -362,6 +365,7 @@ class DocumentController extends Controller
 		$model = $this->findModel($id);
 		$cnt = $model->getDocuments()->count();
 		$paycnt = $model->getCashes()->count();
+		Yii::trace('cnt='.$cnt.',payments='.$paycnt, 'DocumentController::actionDelete');
 		if($cnt > 0)
 			Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because a child document depends on it.'));
 		else if ($paycnt > 0 || $model->soloOwnsPayments()) {
@@ -473,16 +477,19 @@ class DocumentController extends Controller
 	}
 
 	public function actionBillBoms() {
-		if(isset($_POST)) {
-			if(isset($_POST['selection'])) {
-				$bill = Bill::createFromBoms($_POST['selection']);
-				if($bill)
-					return $this->redirect(['view', 'id' => $bill->id]);
-				else
-					Yii::$app->session->setFlash('info', Yii::t('store', 'The bill was not created.'));
-			} else {
-					Yii::$app->session->setFlash('info', Yii::t('store', 'There is no bill in selection.'));
-			}
+		$model = new CaptureSelection();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+			//Yii::trace('trying...', 'DocumentController::actionBillBoms');
+			if(!is_array($model->selection))
+				$model->selection = explode(',',trim($model->selection));
+			$bill = Bill::createFromBoms($model->selection);
+			if($bill)
+				return $this->redirect(['view', 'id' => $bill->id]);
+			else
+				Yii::$app->session->setFlash('info', Yii::t('store', 'The bill was not created.'));
+		} else {
+				Yii::$app->session->setFlash('info', Yii::t('store', 'There is no bill in selection.'));
 		}
 		return $this->redirect(Yii::$app->request->referrer);
 	}
@@ -510,14 +517,20 @@ class DocumentController extends Controller
 		$capturePayment = new CapturePayment();
 		
 		if($capturePayment->load(Yii::$app->request->post())) {
-			if(isset($_POST)) // ugly but ok for now
-				if(isset($_POST['CapturePayment'])) {
-					if(isset($_POST['CapturePayment']["amount"]))
-						$capturePayment->amount = str_replace(',', '.', $_POST['CapturePayment']["amount"]);
-					if(isset($_POST['CapturePayment']["total"]))
-						$capturePayment->total = str_replace(',', '.', $_POST['CapturePayment']["total"]);
-				}
+			$capturePayment->amount = str_replace(',', '.', $capturePayment->amount);
+			$capturePayment->total  = str_replace(',', '.', $capturePayment->total);
+			// if ($capturePayment->validate()) {
 			$model = $this->findModel($capturePayment->id);
+			
+			$payment_entered = new Account([
+				'sale' => $model->sale,
+				'client_id' => $model->client_id,
+				'document_id' => $model->id,
+				'payment_method' => $capturePayment->method,
+				'amount' => $capturePayment->amount,
+				'status' => $capturePayment->amount > 0 ? 'CREDIT' : 'DEBIT',
+			]);
+			$payment_entered->save();
 
 			$ok = $model->addPayment($capturePayment->amount, $capturePayment->method);
 			
@@ -527,11 +540,12 @@ class DocumentController extends Controller
 				$feedback = $work ? Yii::t('store', 'Work submitted') : Yii::t('store', 'No work to submit');
 			}
 			Yii::trace('doc='.$model->document_type, 'DocumentController::actionUpdateStatus');
-			$model->updatePaymentStatus();
+			$model->setStatus(Order::STATUS_TOPAY);
 			if($ok) Yii::$app->session->setFlash('success', ($feedback ? $feedback . '; '.strtolower(Yii::t('store', 'Payment added')): Yii::t('store', 'Payment added')).'.');
 	        return $this->render('view', [
 	            'model' => $model,
 	        ]);
+			// } else report capture errors
 		} else {
 			Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem reading payment capture.'));
 			return $this->redirect(Yii::$app->request->referrer);

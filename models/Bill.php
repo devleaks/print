@@ -43,11 +43,8 @@ class Bill extends Document {
 	/**
 	 * @inheritdoc
 	 */
-	public function updatePaymentStatus($send = false) {
-		$this->setStatus($this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY);
-		if($send && $this->status == self::STATUS_TOPAY && Parameter::isTrue('application', 'auto_send_bill')) {
-			$this->send();
-		}
+	protected function updatePaymentStatus() {
+		return $this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY;
 	}
 
 	public function getPrepaid($today = false) {
@@ -125,7 +122,10 @@ class Bill extends Document {
 			} // foreach BOM
 			$model->due_date = $last_date;
 			$model->updatePrice(false);	// do NOT update REBATE lines
-			$model->updatePaymentStatus(true); // auto send bill if necessary
+			$this->status = $model->updatePaymentStatus();
+			if($this->status == self::STATUS_TOPAY && Parameter::isTrue('application', 'auto_send_bill')) { // auto send bill if necessary
+				$this->send();
+			}
 			$model->save();
 			return $model;
 		}	

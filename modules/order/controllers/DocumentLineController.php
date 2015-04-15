@@ -250,7 +250,7 @@ class DocumentLineController extends Controller
 	}
 	
 	protected static function updateDetail($model, $detail) {
-		if($_POST){
+		if(Yii::$app->request->isPost){
 			//Yii::trace('1:'.$model->id, 'DocumentLineController::createDetail');
 			$detail->document_line_id = $model->id;
 			if ($detail->load(Yii::$app->request->post())) {
@@ -301,7 +301,7 @@ class DocumentLineController extends Controller
 	}
 
 	protected static function loadImages($model) {
-		if($_POST) {
+		if(Yii::$app->request->isPost) {
 		    $uploadedFiles = UploadedFile::getInstances($model, 'image');
 			$idx_offset = $model->getPictures()->count();
 		    foreach($uploadedFiles as $idx => $image) {

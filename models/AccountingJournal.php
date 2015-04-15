@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 
 /**
- * This is the model class for accounting journals. (journaux??! :-)
+ * This is the model class for accounting journals.
  */
 class AccountingJournal extends _AccountingJournal
 {

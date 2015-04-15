@@ -23,9 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		'toolbar' => false,
 		'panel' => [
 	        'heading'=> '<h3 class="panel-title">'.Yii::t('store', 'Payments').'</h3>',
-	        'before'=> false,
-	        'after'=> false, // Html::submitButton(Yii::t('store', 'Partial BOM'), ['class' => 'btn btn-primary']),
-			'footer' => false,
 	    ],
 		'panelHeadingTemplate' => '{heading}',
         'columns' => [

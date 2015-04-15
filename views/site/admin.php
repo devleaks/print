@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 use app\models\Backup;
+use app\models\CaptureSearch;
 /* @var $this yii\web\View */
 $this->title = 'Labo JJ Micheli';
 ?>
@@ -17,7 +18,7 @@ $this->title = 'Labo JJ Micheli';
 			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create']) ?>">Nouvelle commande</a>
 			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create-ticket']) ?>">Comptoir</a>
 			
-			<?= $this->render('_form'); ?>
+			<?= $this->render('_form', ['model' => new CaptureSearch()]); ?>
 		</p>
     </div>
 

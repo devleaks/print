@@ -2,16 +2,12 @@
 
 use app\models\Payment;
 use kartik\grid\GridView;
-use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\PaymentSearch */
-$dataProvider = new ArrayDataProvider([
-	'allModels' => $client->getCreditLines(),
-	'pagination' => false,
-]);
+/* @var $dataProvider app\data\dataProvider */
+
 ?>
 <div class="credit-index">
 	<h4><?= Yii::t('store', 'Available credits') ?></h4>

@@ -117,6 +117,7 @@ class Client extends _Client
 		return in_array(strtolower($this->pays), ['belgique','belgie','belgium']);
 	}
 	
+
 	protected function refundPullDown($id) {
 		return '<div class="btn-group"><button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown">'.
 			        	Yii::t('store', 'Refund'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
@@ -129,76 +130,84 @@ class Client extends _Client
 	public function getAccountLines() {
 		$accountLines = [];
 		$sales = [];
+		$sales_to_ignore = [];
 		
-		/** All bills */
-		foreach(Bill::find()->andWhere(['client_id'=>$this->id])->andWhere(['!=', 'status', Bill::STATUS_OPEN])->each() as $document) {
-			$color = ($document->getBalance() <= 0) ? 'success' : 'warning';
-			$accountLines[] = new AccountLine([
-				'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
-				'amount' => - $document->getTotal(),
-				'date' => $document->created_at,
-				'ref' => $document->id,
-			]);
-			$sales[] = $document->sale;
+		/** Sales */
+
+		$dstinct_sales = Document::find()
+					->select('sale')
+					->andWhere(['client_id' => $this->id])
+					->andWhere(['status' => [
+						Document::STATUS_TODO,  
+						Document::STATUS_BUSY,  
+						Document::STATUS_WARN,  
+						Document::STATUS_DONE,  
+						Document::STATUS_NOTIFY,
+						Document::STATUS_TOPAY, 
+						Document::STATUS_CLOSED,
+					]])
+					->distinct();
+		$documents = Document::find()->where(['sale' => $dstinct_sales]);
+		
+		foreach($documents->each() as $document) {
+			if( ! in_array($document->sale, $sales_to_ignore) ) {
+				$color = ($document->getBalance() <= 0) ? 'success' : 'warning';
+				switch($document->document_type) {
+					case Document::TYPE_TICKET:
+					case Document::TYPE_BILL: // we always add bills
+						$accountLines[] = new AccountLine([
+							'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
+							'amount' => - $document->getTotal(),
+							'date' => $document->created_at,
+							'ref' => $document->id,
+						]);
+						break;
+					case Document::TYPE_ORDER:
+						if($bill = Order::findOne($document->id)->getBill()) {
+							$accountLines[] = new AccountLine([
+								'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$bill->name.'</span>', Url::to(['/order/document/view', 'id' => $bill->id])),
+								'amount' => - $bill->getTotal(),
+								'date' => $bill->created_at,
+								'ref' => $bill->id,
+							]);
+						} else {
+							$accountLines[] = new AccountLine([
+								'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
+								'amount' => - $document->getTotal(),
+								'date' => $document->created_at,
+								'ref' => $document->id,
+							]);
+						}
+						break;
+					case Document::TYPE_CREDIT:
+					case Document::TYPE_REFUND:
+						$accountLines[] = new AccountLine([
+							'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
+							'amount' => $document->getTotal(),
+							'date' => $document->created_at,
+							'ref' => $document->id,
+						]);
+						break;
+					case Document::TYPE_BID:
+					default: // no money involved. Ignore.
+						break;
+				}
+				$sales_to_ignore[] = $document->sale;
+			}
 		}
 		
-		/** All orders not currently billed
-		$q = Order::find()->andWhere(['client_id'=>$client->id])->andWhere(['!=', 'status', Order::STATUS_OPEN]);
-		if($sales)
-			$q->andWhere(['not', ['sale' => $sales]]);			
-		foreach($q->each() as $document) {
-			$color = ($document->getBalance() <= 0) ? 'success' : 'warning';
-			$accountLines[] = new AccountLine([
-				'note' => /*'B '.* /<<<<<Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
-				'amount' => - $document->getTotal(),
-				'date' => $document->created_at,
-				'ref' => $document->id,
-			]);
-			$sales[] = $document->sale;
-		}
-		 */
-
-		foreach(Credit::find()->andWhere(['client_id'=>$this->id])->andWhere(['!=', 'status', Credit::STATUS_OPEN])->each() as $document) {
-			$color = ($document->getBalance() >= 0) ? 'success' : 'info';
-			$accountLines[] = new AccountLine([
-				'note' => /*'C '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
-				'amount' => - $document->getTotal(),
-				'date' => $document->created_at,
-				'ref' => $document->id,
-			]);
-			$sales[] = $document->sale;
-		}
-
-		foreach($this->getPayments()->andWhere(['sale' => $sales])->each() as $payment) {
-			$doc = $payment->getDocument()->one();
-			if($doc) {
-				if($doc->document_type == $doc::TYPE_CREDIT)
-					$color = ($doc->getBalance() >= 0) ? 'success' : 'info';
-				else
-					$color = ($doc->getBalance() <= 0) ? 'success' : 'warning';
-			} else
-				$color = 'info';
-				
-			$note = $doc ? Html::a('<span class="label label-'.$color.'">'.$doc->name.'</span>', Url::to(['/order/document/view', 'id' => $doc->id])).' - '.$payment->getPaymentMethod()
-			             : ($payment->note ? $payment->note : '<span class="label label-'.$color.'">'.$payment->payment_method.'</span>'.' - '.$payment->sale);
+		
+		/** Payments */
+		foreach($this->getAccounts()->each() as $account) {
+			//$reimburse = Html::a('<span class="label label-primary">'.Yii::t('store', 'Make credit note').'</span>', Url::to(['refund', 'id' => $account->id]), ['title' => Yii::t('store', 'Make credit note').'-'.$account->sale]);
+			//$reimburse = $this->refundPullDown($account->id);
+			$color = 'info';
+			$note = ($account->note ? $account->note : '<span class="label label-'.$color.'">'.$account->payment_method.'</span>');
 			$accountLines[] = new AccountLine([
 				'note' => /*'P '.*/$note,
-				'amount' => $payment->amount,
-				'date' => $payment->created_at,
-				'ref' => $payment->id,
-			]);
-		}
-
-		/* These are the outstanding "excess" payments */
-		foreach($this->getPayments()->andWhere(['status' => Payment::STATUS_OPEN])->each() as $payment) {
-			//$reimburse = Html::a('<span class="label label-primary">'.Yii::t('store', 'Make credit note').'</span>', Url::to(['refund', 'id' => $payment->id]), ['title' => Yii::t('store', 'Make credit note').'-'.$payment->sale]);
-			$reimburse = $this->refundPullDown($payment->id);
-			$note = ($payment->note ? $payment->note : '<span class="label label-'.$color.'">'.$payment->payment_method.'</span>').' - '.$reimburse;
-			$accountLines[] = new AccountLine([
-				'note' => /*'P '.*/$note,
-				'amount' => $payment->amount,
-				'date' => $payment->created_at,
-				'ref' => $payment->id,
+				'amount' => $account->amount,
+				'date' => $account->created_at,
+				'ref' => $account->id,
 			]);
 		}	
 		

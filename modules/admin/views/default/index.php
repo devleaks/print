@@ -18,6 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	    <li><a href="<?= Yii::$app->homeUrl ?>admin/sequence-data/"><?= Yii::t('store', 'Manage Sequence Numbers')?></a></li>
 	</ul>
 
+<br/>
+<br/>
+<br/>
+
 <h3><span style="color: red;">Opérations dangereuses</span></h3>
 
 <div class="alert alert-danger">
@@ -29,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<ul>
 	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/payment/"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
+	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/account/"><?= Yii::t('store', 'Client Accounts')?></a> - Manipulations directes</li>
 	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/cash/"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
 	</ul>
 

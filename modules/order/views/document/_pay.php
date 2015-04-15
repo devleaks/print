@@ -6,6 +6,7 @@ use app\models\Payment;
 use kartik\icons\Icon;
 use kartik\widgets\SwitchInput;
 use yii\bootstrap\Modal;
+use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveField;
@@ -37,17 +38,27 @@ $capture->submit = 1;
 
 <?php if(!$isPaid): ?>
 
-	<?php if(!in_array($model->document_type, [$model::TYPE_CREDIT,$model::TYPE_REFUND]))
-			echo $this->render('_available_credit', [
-				'client' => $model->client,
-			]);
+	<?php 	$credit_lines = [];
+			if(!in_array($model->document_type, [$model::TYPE_CREDIT,$model::TYPE_REFUND])) {
+				$credit_lines = $model->client->getCreditLines();
+				echo $this->render('_available_credit', [
+					'dataProvider' => new ArrayDataProvider([
+						'allModels' => $credit_lines,
+						'pagination' => false,
+					]),
+				]);
+			}
+			$payment_methods = Payment::getPaymentMethods();
+			if(count($credit_lines) == 0) // remove credit option if no credit
+				if(isset($payment_methods['CREDIT']))
+					unset($payment_methods['CREDIT'])
 	?>
 
 	<?php $form = ActiveForm::begin(['action' => Url::to(['/order/document/pay'])]); ?>
 		<?= Html::activeHiddenInput($capture, 'id') ?>
 		<?= $form->field($capture, 'amount')->textInput() ?>
 		<?= $form->field($capture, 'total')->textInput(['readonly' => true]) ?>
-		<?= $form->field($capture, 'method')->dropDownList(Payment::getPaymentMethods()) ?>
+		<?= $form->field($capture, 'method')->dropDownList($payment_methods) ?>
 		<?php if(in_array($model->document_type, [Document::TYPE_ORDER, Document::TYPE_TICKET]) && !$model->getWorks()->exists() && !$model->getPayments()->exists()): ?>
 		<?= $form->field($capture, 'submit')->widget(SwitchInput::className(),
 			['pluginOptions' => ['onText' => Yii::t('store', 'Yes'), 'offText' =>  Yii::t('store', 'No')]

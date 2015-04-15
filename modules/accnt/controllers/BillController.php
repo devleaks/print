@@ -5,6 +5,7 @@ namespace app\modules\accnt\controllers;
 use Yii;
 use app\components\PdfDocumentGenerator;
 use app\components\RuntimeDirectoryManager;
+use app\models\Account;
 use app\models\Attachment;
 use app\models\Bill;
 use app\models\BillSearch;
@@ -155,9 +156,11 @@ class BillController extends Controller
 				if(isset($_POST['selection']))
 					if(count($_POST['selection']) > 0) {
 						$available = str_replace(',','.',$capture->amount);
+
 						$more_needed = 0;
 						Yii::trace('available='.$available, 'BillController::actionAddPayment');
 						$q = Bill::find()->andWhere(['id'=>$_POST['selection']]);
+						$client_id = null;
 						foreach($q->each() as $b) {
 							if($available > 0) {
 								$needed = $b->getBalance();
@@ -192,6 +195,17 @@ class BillController extends Controller
 						} else {
 							Yii::$app->session->setFlash('success', Yii::t('store', 'Transfered amount split in all bills.'));
 						}
+						$amount = str_replace(',','.',$capture->amount);
+						$payment_entered = new Account([
+							'sale' => null,
+							'client_id' => $capture->client_id,
+							'document_id' => null,
+							'payment_method' => $capture->method,
+							'amount' => $amount,
+							'status' => $amount > 0 ? 'CREDIT' : 'DEBIT',
+						]);
+						$payment_entered->save();
+
 					}
 		}
 		return $this->redirect(['index']);
@@ -201,10 +215,10 @@ class BillController extends Controller
 	public function actionBulkAction() {
 		if(isset($_POST))
 			if(isset($_POST['selection'])) {
-				$selection = explode(',', $_POST['selection']);
+				$selection = trim($_POST['selection']) != '' ? explode(',', $_POST['selection']) : [];
 				if(count($selection) > 0) {
 					if(isset($_POST['action'])) {
-						Yii::trace($_POST['action'].'for'.$_POST['selection'], 'BillController::actionBulkAction');
+						//Yii::trace($_POST['action'].' for '.$_POST['selection'], 'BillController::actionBulkAction');
 						$action = $_POST['action'];
 						if(in_array($action, [Bill::ACTION_PAYMENT_RECEIVED, Bill::ACTION_SEND_REMINDER, Bill::ACTION_CLIENT_ACCOUNT])) {
 							if($action == Bill::ACTION_PAYMENT_RECEIVED) {

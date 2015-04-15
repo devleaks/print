@@ -87,13 +87,17 @@ $model->status = $model->status == $model::STATUS_ACTIVE;
 		])
 	?>
 
-	<hr>
-
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><?= Yii::t('store','Older Data') ?></h3>
+					<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+				</div>
+				<div class="panel-body">
+			
     <?= $form->field($model, 'fournisseur')->textInput(['maxlength' => 20]) ?>
 
     <?= $form->field($model, 'reference_fournisseur')->textInput(['maxlength' => 20]) ?>
 
-<!--
     <?= $form->field($model, 'type_travaux_photos')->textInput(['maxlength' => 20]) ?>
 
     <?= $form->field($model, 'type_numerique')->textInput(['maxlength' => 20]) ?>
@@ -123,7 +127,10 @@ $model->status = $model->status == $model::STATUS_ACTIVE;
     <?= $form->field($model, 'en_cours')->textInput(['maxlength' => 20]) ?>
 
     <?= $form->field($model, 'stock')->textInput(['maxlength' => 20]) ?>
--->
+
+				</div>
+			</div>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('store', 'Create') : Yii::t('store', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
@@ -131,3 +138,22 @@ $model->status = $model->status == $model::STATUS_ACTIVE;
     <?php ActiveForm::end(); ?>
 
 </div>
+<script type="text/javascript">
+<?php
+$this->beginBlock('JS_PANEL'); ?>
+$('.panel-heading span.clickable').on("click", function (e) {
+    if ($(this).hasClass('panel-collapsed')) {
+        $(this).parents('.panel').find('.panel-body').slideDown();
+        $(this).removeClass('panel-collapsed');
+        $(this).find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+    } else {
+        $(this).parents('.panel').find('.panel-body').slideUp();
+        $(this).addClass('panel-collapsed');
+        $(this).find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+    }
+});
+$('.panel-heading span.clickable').trigger("click");
+<?php $this->endBlock(); ?>
+</script>
+<?php
+$this->registerJs($this->blocks['JS_PANEL'], yii\web\View::POS_READY);

@@ -37,19 +37,34 @@ $dataProvider->pagination = false;
             ['class' => 'kartik\grid\SerialColumn'],
 //			'ref',
 			[
-	            'label' => Yii::t('store', 'Amount'),
+	            'label' => Yii::t('store', 'Debit'),
 				'attribute' => 'amount',
 				'format' => 'currency',
 				'hAlign' => GridView::ALIGN_RIGHT,
 				'noWrap' => true,
-				'pageSummary' => true
+				'pageSummary' => true,
+				'value' => function ($model, $key, $index, $widget) {
+					return $model->amount < 0 ? $model->amount : '';
+				}
 			],
 			[
-	            'label' => Yii::t('store', 'Account'),
+	            'label' => Yii::t('store', 'Credit'),
+				'attribute' => 'amount',
+				'format' => 'currency',
+				'hAlign' => GridView::ALIGN_RIGHT,
+				'noWrap' => true,
+				'pageSummary' => true,
+				'value' => function ($model, $key, $index, $widget) {
+					return $model->amount > 0 ? $model->amount : '';
+				}
+			],
+			[
+	            'label' => Yii::t('store', 'Solde'),
 				'attribute' => 'account',
 				'format' => 'currency',
 				'hAlign' => GridView::ALIGN_RIGHT,
 				'noWrap' => true,
+				'pageSummary' => Yii::$app->formatter->asCurrency($bottomLine),
 			],
 			[
 				'attribute' => 'note',

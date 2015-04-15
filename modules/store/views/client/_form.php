@@ -133,8 +133,13 @@ use yii\helpers\Url;
 		])
 	?>
 
-<!--	
-	<hr>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><?= Yii::t('store','Older Data') ?></h3>
+					<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+				</div>
+				<div class="panel-body">
+			
 
     <?= $form->field($model, 'reference_interne')->textInput(['maxlength' => 80]) ?>
 
@@ -187,7 +192,10 @@ use yii\helpers\Url;
     <?= $form->field($model, 'reference_3')->textInput(['maxlength' => 80]) ?>
 
     <?= $form->field($model, 'date_limite_3')->textInput(['maxlength' => 80]) ?>
--->
+
+				</div>
+			</div>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('store', 'Create') : Yii::t('store', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
@@ -196,3 +204,22 @@ use yii\helpers\Url;
 
 </div>
 <?= $this->render('_comptabilite') ?>
+<script type="text/javascript">
+<?php
+$this->beginBlock('JS_PANEL'); ?>
+$('.panel-heading span.clickable').on("click", function (e) {
+    if ($(this).hasClass('panel-collapsed')) {
+        $(this).parents('.panel').find('.panel-body').slideDown();
+        $(this).removeClass('panel-collapsed');
+        $(this).find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+    } else {
+        $(this).parents('.panel').find('.panel-body').slideUp();
+        $(this).addClass('panel-collapsed');
+        $(this).find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+    }
+});
+$('.panel-heading span.clickable').trigger("click");
+<?php $this->endBlock(); ?>
+</script>
+<?php
+$this->registerJs($this->blocks['JS_PANEL'], yii\web\View::POS_READY);

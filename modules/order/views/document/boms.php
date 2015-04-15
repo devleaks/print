@@ -20,15 +20,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-	<?php $form = ActiveForm::begin(['action' => Url::to(['bill-boms'])]) ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
 		'toolbar' => false,
 		'panel' => [
 	        'heading'=> '<h3 class="panel-title">'.Yii::t('store', 'Bills of Materials').'</h3>',
 	        'before'=> ' ',
-	        'after'=> Html::submitButton(Yii::t('store', 'Bill To'), ['class' => 'btn btn-primary']),
+	        'after'=> Html::button(Yii::t('store', 'Bill To'), ['class' => 'btn btn-primary actionButton']),
 	    ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
@@ -75,6 +73,23 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-    <?php ActiveForm::end(); ?>
-
 </div>
+<script type="text/javascript">
+<?php $this->beginBlock('JS_SUBMIT_STATUS') ?>
+$('.actionButton').click(function () {
+	var selection = $('#w0').yiiGridView('getSelectedRows');
+	console.log('bill-boms for '+selection+'.');
+	$.ajax({
+		type: "POST",
+		url: 'bill-boms',
+		dataType: 'json',
+		data: {
+			"CaptureSelection[selection]": selection,
+		},
+	});
+});
+<?php $this->endBlock(); ?>
+</script>
+
+<?php
+$this->registerJs($this->blocks['JS_SUBMIT_STATUS'], yii\web\View::POS_END);
