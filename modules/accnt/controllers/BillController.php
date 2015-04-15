@@ -180,6 +180,7 @@ class BillController extends Controller
 							}
 						}
 						Yii::trace('Bottomline: missing='.$more_needed.', available='.$available, 'BillController::actionAddPayment');
+						$available = round($available, 2);
 						if($available > 0) {
 							$remaining = new Payment([
 								'sale' => Sequence::nextval('sale'), // its a new sale transaction...
@@ -189,13 +190,14 @@ class BillController extends Controller
 								'status' => Payment::STATUS_OPEN,
 							]);
 							$remaining->save();
-							Yii::$app->session->setFlash('info', Yii::t('store', 'sales_already_processed: {0}€ remaining.', $available));
+							Yii::$app->session->setFlash('info', Yii::t('store', 'Transfered amount exceeds amount to pay all bills: {0}€ remaining.', $available,2));
 						} else if($more_needed > 0) {
 							Yii::$app->session->setFlash('warning', Yii::t('store', 'Transfered amount was not sufficiant to pay all bills: {0}€ missing.', $more_needed));
 						} else {
 							Yii::$app->session->setFlash('success', Yii::t('store', 'Transfered amount split in all bills.'));
 						}
 						$amount = str_replace(',','.',$capture->amount);
+						
 						$payment_entered = new Account([
 							'sale' => null,
 							'client_id' => $capture->client_id,
@@ -205,7 +207,6 @@ class BillController extends Controller
 							'status' => $amount > 0 ? 'CREDIT' : 'DEBIT',
 						]);
 						$payment_entered->save();
-
 					}
 		}
 		return $this->redirect(['index']);

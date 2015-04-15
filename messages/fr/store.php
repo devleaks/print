@@ -324,6 +324,7 @@ return [
 	'Transfered amount split in all bills.' => 'Montant réparti entre toutes les factures sélectionnées.',
 	'Transfered amount was too large to pay all bills: {0}€ remaining.' => "Le montant transféré est plus grand que le montant dû. {0}€ à rembourser.",
 	'Transfered amount was not sufficiant to pay all bills: {0}€ missing.' => "Le montant transféré est insuffisant pour payer le montant dû. {0}€ à payer.",
+	'Transfered amount exceeds amount to pay all bills: {0}€ remaining.' => "Le montant tranféré excède le montant requis pour payer toutes les factures. {0}€ en crédit.",
 	'Update Item' => "Mise à jour de l'article",
 	'Update Order Line' => 'Mettre à jour la commande',
 	'Update' => 'Modifier',

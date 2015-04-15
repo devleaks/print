@@ -217,13 +217,8 @@ class Client extends _Client
 	}
 	
 	public function getBottomLine() {
-		$al = $this->getAccountLines();
-		if ( ($cnt = count($al)) > 0) {		
-			$last = $al[$cnt-1];
-			Yii::trace(print_r($last, true), 'Client::getBottomLine');
-			return $last->account;
-		}
-		return 0;
+		$accountLines = $this->getAccountLines();
+		return !empty($accountLines) ? end($accountLines)->account : 0;
 	}
 	
 	/**

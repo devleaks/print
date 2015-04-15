@@ -377,25 +377,19 @@ class Document extends _Document
 		$ok = true;
 		$due = round($this->getBalance(), 2);
 		
-		if($method == 'CASH') {
-			$payment = new Payment([
-				'sale' => $this->sale,
-				'client_id' => $this->client_id,
-				'payment_method' => $method,
-				'amount' => $amount,
-				'status' => Payment::STATUS_PAID,
-			]);
-			$cash = new Cash([
-				'document_id' => $this->id,
-				'sale' => $this->sale,
-				'amount' => $amount,
-				'payment_date' => date('Y-m-d H:i:s'),
-			]);
-			$cash->save();
-			if($amount > $due)
-				Yii::$app->session->setFlash('warning', Yii::t('store', 'You must reimburse {0}€.', $amount - $due));
-		} else if ($method != Payment::USE_CREDIT && $method != Payment::CLEAR) {
-			if($amount <= $due) { // paid enough or less(prepayment)
+		if ($method != Payment::USE_CREDIT && $method != Payment::CLEAR) {
+
+			if($method == 'CASH') {
+				$cash = new Cash([
+					'document_id' => $this->id,
+					'sale' => $this->sale,
+					'amount' => $amount,
+					'payment_date' => date('Y-m-d H:i:s'),
+				]);
+				$cash->save();
+			}
+
+			if($amount <= $due) {
 				$payment = new Payment([
 					'sale' => $this->sale,
 					'client_id' => $this->client_id,
@@ -403,7 +397,6 @@ class Document extends _Document
 					'amount' => $amount,
 					'status' => Payment::STATUS_PAID,
 				]);
-				Yii::$app->session->setFlash('success', Yii::t('store', 'Payment recorded.'));
 			} else { // paid too much, split payment in amount due and surplus
 				// 1. record the payment
 				$payment = new Payment([
@@ -423,10 +416,17 @@ class Document extends _Document
 					'note' => 'Extra payment for '.$this->name,
 					'status' => Payment::STATUS_OPEN,
 				]);
-				Yii::$app->session->setFlash('success', Yii::t('store', 'Payment recorded.'));
-				Yii::$app->session->setFlash('info', Yii::t('store', 'Bill paid. Customer left with {0}€ credit.', $surplus));
+
+				if($method == 'CASH')
+					Yii::$app->session->setFlash('info', Yii::t('store', 'You must reimburse {0}€.', $surplus));
+				else
+					Yii::$app->session->setFlash('info', Yii::t('store', 'Bill paid. Customer left with {0}€ credit.', $surplus));
 			}
-		} else if ($method == Payment::CLEAR) { // we just record a payment because it clears an existing credit note
+
+			Yii::$app->session->setFlash('success', Yii::t('store', 'Payment recorded.'));
+
+		} elseif ($method == Payment::CLEAR) { // we just record a payment because it clears an existing credit note
+
 				$payment = new Payment([
 					'sale' => $this->sale,
 					'client_id' => $this->client_id,
@@ -435,6 +435,7 @@ class Document extends _Document
 					'status' => Payment::STATUS_PAID,
 				]);
 				Yii::trace('Clearing='.$amount, 'AccountController::addPayment');
+
 		} else { // $method == Payment::USE_CREDIT), client pays with credit he has
 			if($amount >= 0) {
 
@@ -442,7 +443,7 @@ class Document extends _Document
 					'sale' => $this->sale,
 					'client_id' => $this->client_id,
 					'payment_method' => $method,
-					'amount' => $amount,		// Amount may be adjusted below if paid with CREDIT
+					'amount' => $amount,		// XXXXXXXX Amount may be adjusted below if paid with CREDIT
 					'status' => Payment::STATUS_PAID,
 				]);
 
@@ -476,7 +477,7 @@ class Document extends _Document
 				Yii::trace('Final need='.$needed, 'Document::addPayment');
 
 				if($needed > 0) { // still some amount to pay and credit notes exhausted, this bill is not completed paid.
-					$payment->amount = $amount - $needed;
+					$payment->amount = $amount - $needed; // XXXXXXXX Amount adjusted
 					Yii::$app->session->setFlash('warning', Yii::t('store', 'Amount is too large to balance all credit notes. Customer left with {0}€ to pay.', round($needed, 2)));
 				} else if ($total_available > 0) {
 					Yii::$app->session->setFlash('info', Yii::t('store', 'Bill paid with credits. Customer left with {0}€ credit.', round($total_available, 2)));

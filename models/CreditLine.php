@@ -63,7 +63,7 @@ class CreditLine extends Model {
 				$doc->addPayment(- $amount, Payment::CLEAR, $note);
 			}
 		} else { // must be SOURCE_ACCOUNT
-			if($payment = Payment::fincOne($this->ref)) {
+			if($payment = Payment::findOne($this->ref)) {
 				Yii::trace('ACCOUNT='.$this->source.' '.$this->ref, 'CreditLine::useAmount');
 				$payment->note = $note; // .= $note?
 				$payment->status = Payment::STATUS_PAID;
