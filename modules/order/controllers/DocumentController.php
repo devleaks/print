@@ -425,11 +425,11 @@ class DocumentController extends Controller
 	    echo Json::encode($out);
 	}
 	
-	public function actionDocumentList($search = null, $id = null, $sale = null, $ret = null) {
+	public function actionDocumentList($search = null, $sale = null, $ret = null) {
 	    $out = ['more' => false];
 	    if (!is_null($search)) {
 	        $query = new Query;
-	        $query->select(['id', 'text' => 'concat(name," - ",sale)', 'sale'])
+	        $query->select(['id' => 'sale', 'text' => 'concat(name," - ",sale)'])
 	            ->from('document')
 	            ->orWhere(['like', 'name', $search])
 	            ->orWhere(['like', 'reference', $search])
@@ -442,15 +442,15 @@ class DocumentController extends Controller
 	    elseif ($sale > 0) {
 			$doc = Document::findOne(['sale' => $sale]);
 			Yii::trace('sale'.$sale."=".$doc->name);
-	        $out['results'] = ['id' => $doc->id, 'text' => $doc->name.' - '.$doc->sale, 'sale' => $doc->sale];
+	        $out['results'] = ['id' => $doc->sale, 'text' => $doc->name.' - '.$doc->sale];
 	    }
 	    elseif ($id > 0) {
 			$doc = Document::findOne(['id' => $id]);
 			Yii::trace('id'.$id."=".$doc->name);
-	        $out['results'] = ['id' => $doc->id, 'text' => $doc->name.' - '.$doc->sale, 'sale' => $doc->sale];
+	        $out['results'] = ['id' => $doc->sale, 'text' => $doc->name.' - '.$doc->sale];
 	    }
 	    else {
-	        $out['results'] = ['id' => 0, 'text' => 'No matching document found', 'sale' => 0];
+	        $out['results'] = ['id' => 0, 'text' => 'No matching document found', 'id' => 0];
 	    }
 		Yii::trace('ret='.print_r($out,true));
 	    echo Json::encode($out);

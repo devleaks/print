@@ -29,10 +29,11 @@ $urlSale = Url::to(['/order/document/document-list']);
 $initScriptSale = <<< SCRIPT
 function (element, callback) {
     var sale=\$(element).val();
+	console.log("init:"+sale);
     if (sale !== "") {
         \$.ajax("{$urlSale}?sale=" + sale, {
             dataType: "json"
-        }).done(function(data) { callback(data.results);});
+        }).done(function(data) { callback(data.results); });
     }
 }
 SCRIPT;
@@ -58,7 +59,7 @@ SCRIPT;
    			"change" => 'function(e) {
 				id=e.target.value;
 				if (id !== "") {
-			        $.ajax("{$urlClient}?id=" + id, {
+			        $.ajax("'.$urlClient.'?id=" + id, {
 			            dataType: "json"
 			        }).done(function(data) {
 						console.log(data);
@@ -83,13 +84,11 @@ SCRIPT;
 		],
 		'pluginEvents' => [
    			"change" => 'function(e) {
-				sale=e.target.value;
 				if (sale !== "") {
-			        $.ajax("{$urlSale}?sale=" + sale, {
+			        $.ajax("'.$urlSale.'?sale=" + sale, {
 			            dataType: "json"
 			        }).done(function(data) {
-						console.log(data);
-						$("#payment-sale").val(data.results.sale);
+						$("#payment-sale").val(data.results.id);
 					});
 		    	}
 		     }',
