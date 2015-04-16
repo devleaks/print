@@ -4,7 +4,6 @@ use yii\helpers\Url;
 
 $this->title = Yii::t('store', 'Accounting');
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
 <div class="accnt-default-index">
 
@@ -20,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	    <li><a href="<?= Url::to(['/accnt/extraction']) ?>"><?= Yii::t('store', 'Monthly Extraction')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/pdf']) ?>"><?= Yii::t('store', 'Documents')?></a></li>
 	    <li><a href="<?= Url::to(['/store/client', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Clients')?></a></li>
-	    <li><a href="<?= Url::to(['/accnt/cash']) ?>"><?= Yii::t('store', 'Cash')?></a></li>
+	    <li><a href="<?= Url::to(['/accnt/cash/list']) ?>"><?= Yii::t('store', 'Cash')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/bank']) ?>"><?= Yii::t('store', 'Bank Slips')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/default/control']) ?>"><?= Yii::t('store', 'Checks')?></a></li>
 	</ul>
@@ -39,9 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 	<ul>
-	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/payment/"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
-	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/account/"><?= Yii::t('store', 'Client Accounts')?></a> - Manipulations directes</li>
-	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/cash/index2"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
+	    <li><a href="<?= Url::to(['/accnt/payment/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
+	    <li><a href="<?= Url::to(['/accnt/account/index', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Apports clients')?></a> - Manipulations directes</li>
+	    <li><a href="<?= Url::to(['/accnt/cash/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
 	</ul>
 
 
