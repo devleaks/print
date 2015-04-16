@@ -11,7 +11,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* */
+
 $this->title = Yii::t('store', 'Bill Bills of Materials');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -20,17 +20,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-	
-	<?php $form = ActiveForm::begin(['id' => 'boms-selection', 'action' => Url::to(['bill-boms']), 'method' => 'post']); ?>
-	<?= Html::activeHiddenInput($capture, 'selection') ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
 		'toolbar' => false,
 		'panel' => [
 	        'heading'=> '<h3 class="panel-title">'.Yii::t('store', 'Bills of Materials').'</h3>',
 	        'before'=> ' ',
-	        'after'=> Html::submitButton(Yii::t('store', 'Bill To'), ['class' => 'btn btn-primary actionButton']),
+	        'after'=> Html::button(Yii::t('store', 'Bill To'), ['class' => 'btn btn-primary actionButton']),
 	    ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
@@ -77,16 +73,20 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-	<?php ActiveForm::end(); ?>
-
 </div>
 <script type="text/javascript">
 <?php $this->beginBlock('JS_SUBMIT_STATUS') ?>
-$('#boms-selection').submit(function () {
+$('.actionButton').click(function () {
 	var selection = $('#w0').yiiGridView('getSelectedRows');
 	console.log('bill-boms for '+selection+'.');
-	$("#captureselection-selection").val(selection);
-	$(this).submit();
+	$.ajax({
+		type: "POST",
+		url: 'bill-boms',
+		dataType: 'json',
+		data: {
+			"CaptureSelection[selection]": selection,
+		},
+	});
 });
 <?php $this->endBlock(); ?>
 </script>

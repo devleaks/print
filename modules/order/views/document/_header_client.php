@@ -24,7 +24,7 @@ $comptoir = Client::findOne(['nom' => 'Client au comptoir']);
 
 $buttons1 = ($comptoir->id == $client->id) ? '' : '{update} <span class="kv-buttons-1">'.
 Html::a('<i class="glyphicon glyphicon-shopping-cart"></i>',
-  ['/order/document/client', 'id' => $client->id], [
+  ['/order/document/client', 'id' => $client->id, 'sort' => '-updated_at'], [
 	'title' => Yii::t('store', 'Previous Orders'),
 	'class' => "btn btn-xs btn-primary kv-btn-book",
 	'target' => '_blank',

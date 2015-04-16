@@ -43,9 +43,9 @@ class Bid extends Document
 	
 	
 	public function getOrder() {
-		$o = Order::find()->where(['parent_id' => $this->id])->one();
+		$o = Order::find()->andWhere(['parent_id' => $this->id])->one();
 		if(!$o)
-			$o = Ticket::find()->where(['parent_id' => $this->id])->one();
+			$o = Ticket::find()->andWhere(['parent_id' => $this->id])->one();
 		return $o;
 	}
 

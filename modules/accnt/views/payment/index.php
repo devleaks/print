@@ -30,11 +30,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
 	        [
+	            'label' => Yii::t('store', 'Client'),
+				'attribute' => 'client.nom',
+			],
+	        [
 				'attribute' => 'order_name',
 	            'label' => Yii::t('store', 'Order'),
 	            'value' => function ($model, $key, $index, $widget) {
-						$doc = $model->getDocument()->one();
-	                    return Html::a($doc->name, Url::to(['/order/document/view', 'id' => $doc->id]));
+						if($doc = $model->getDocument()->one())
+	                    	return Html::a($doc->name, Url::to(['/order/document/view', 'id' => $doc->id]));
+						else
+							return null;
 	            },
 	            'format' => 'raw',
 	        ],

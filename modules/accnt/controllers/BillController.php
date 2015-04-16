@@ -126,11 +126,11 @@ class BillController extends Controller
 			if(isset($_POST['selection'])) {
 				if(count($_POST['selection']) > 0) {
 					Yii::trace('Count:'.count($_POST['selection']), 'BillController::actionBillBoms');
-					$q = Order::find()->where(['document.id' => $_POST['selection']])->select('client_id')->distinct();
+					$q = Order::find()->andWhere(['document.id' => $_POST['selection']])->select('client_id')->distinct();
 					$bills = [];
 					foreach($q->each() as $client) {
 						$docs = [];
-						foreach(Order::find()->where(['document.id' => $_POST['selection'], 'client_id' => $client->client_id])->each() as $doc)
+						foreach(Order::find()->andWhere(['document.id' => $_POST['selection'], 'client_id' => $client->client_id])->each() as $doc)
 							$docs[] = $doc->id;
 						$bills[] = Bill::createFromBoms($docs);
 						Yii::trace('client:'.$client->client_id.', bill='.$bills[count($bills)-1]->id, 'BillController::actionBillBoms');

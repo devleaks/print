@@ -51,7 +51,7 @@ class Bill extends Document {
 		$sales = [];
 		$sales[] = $this->sale;
 		if($this->bom_bool) {
-			foreach(Order::find()->where(['bom_bool' => true, 'parent_id' => $this->id])->each() as $order)
+			foreach(Order::find()->andWhere(['bom_bool' => true, 'parent_id' => $this->id])->each() as $order)
 				$sales[] = $order->sale;
 		} else {
 			if($order = Order::findOne(['id' => $this->id]))
@@ -78,7 +78,7 @@ class Bill extends Document {
 	public function createFromBoms($boms) {
 		if(!count($boms) > 0)
 			return null;
-		$boms = Order::find()->where(['bom_bool' => true, 'id' => $boms])->orderBy('created_at');
+		$boms = Order::find()->andWhere(['bom_bool' => true, 'id' => $boms])->orderBy('created_at');
 		if($boms->exists()) {
 			$model = null;
 			foreach($boms->each() as $bom) {
@@ -122,9 +122,9 @@ class Bill extends Document {
 			} // foreach BOM
 			$model->due_date = $last_date;
 			$model->updatePrice(false);	// do NOT update REBATE lines
-			$this->status = $model->updatePaymentStatus();
-			if($this->status == self::STATUS_TOPAY && Parameter::isTrue('application', 'auto_send_bill')) { // auto send bill if necessary
-				$this->send();
+			$model->status = $model->updatePaymentStatus();
+			if($model->status == self::STATUS_TOPAY && Parameter::isTrue('application', 'auto_send_bill')) { // auto send bill if necessary
+				$model->send();
 			}
 			$model->save();
 			return $model;
@@ -140,7 +140,7 @@ class Bill extends Document {
 		if($this->bom_bool) { // this bill comes from a list of BOM
 			$bom_sales = [];
 			$bom_sales[] = $this->sale; // payments made on bill
-			foreach(Order::find()->where(['bom_bool' => true, 'parent_id' => $this->id])->each() as $bom)
+			foreach(Order::find()->andWhere(['bom_bool' => true, 'parent_id' => $this->id])->each() as $bom)
 				$bom_sales[] = $bom->sale; // build array os sales id from all boms in this bill
 			return Payment::find()->andWhere(['sale' => $bom_sales]); // find payments made for this list of sales
 		} else

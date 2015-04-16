@@ -533,7 +533,15 @@ class Document extends _Document
 	public function isPaid() {
 		return $this->getBalance() < Document::PAYMENT_LIMIT;
 	}
+	
+	
+	
+	/**
+	 * 
+	 */
+	public static function updateSalePayments($sale) {
 		
+	}	
 	/**
 	 * Update payment status of document and triggers proper actions.
 	 */

@@ -364,11 +364,13 @@ class DocumentController extends Controller
     public function actionDelete($id) {
 		$model = $this->findModel($id);
 		$cnt = $model->getDocuments()->count();
-		$paycnt = $model->getCashes()->count();
-		Yii::trace('cnt='.$cnt.',payments='.$paycnt, 'DocumentController::actionDelete');
+		$cash_cnt = $model->getCashes()->count();
+		$payment_cnt = $model->getPayments()->count();
+		$account_cnt = $model->getAccounts()->count();
+		Yii::trace('cnt='.$cnt.',payments='.$cash_cnt, 'DocumentController::actionDelete');
 		if($cnt > 0)
 			Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because a child document depends on it.'));
-		else if ($paycnt > 0 || $model->soloOwnsPayments()) {
+		else if ( ($cash_cnt > 0 || $model->soloOwnsPayments()) || $payment_cnt > 0 || $account_cnt > 0) {
 				Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because there are payment attached to it.'));
 		} else {  // ok to remove
 			if($model->document_type == Document::TYPE_BILL && $model->bom_bool) { // remove pointer from BOM to this bill if any.
@@ -418,8 +420,39 @@ class DocumentController extends Controller
 	        $out['results'] = ['id' => $id, 'text' => $client->nom, 'addr' => $addr];
 	    }
 	    else {
-	        $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
+	        $out['results'] = ['id' => 0, 'text' => 'No matching client found'];
 	    }
+	    echo Json::encode($out);
+	}
+	
+	public function actionDocumentList($search = null, $id = null, $sale = null, $ret = null) {
+	    $out = ['more' => false];
+	    if (!is_null($search)) {
+	        $query = new Query;
+	        $query->select(['id', 'text' => 'concat(name," - ",sale)', 'sale'])
+	            ->from('document')
+	            ->orWhere(['like', 'name', $search])
+	            ->orWhere(['like', 'reference', $search])
+	            ->orWhere(['like', 'sale', $search])
+	            ->limit(20);
+	        $command = $query->createCommand();
+	        $data = $command->queryAll();
+	        $out['results'] = array_values($data);
+	    }
+	    elseif ($sale > 0) {
+			$doc = Document::findOne(['sale' => $sale]);
+			Yii::trace('sale'.$sale."=".$doc->name);
+	        $out['results'] = ['id' => $doc->id, 'text' => $doc->name.' - '.$doc->sale, 'sale' => $doc->sale];
+	    }
+	    elseif ($id > 0) {
+			$doc = Document::findOne(['id' => $id]);
+			Yii::trace('id'.$id."=".$doc->name);
+	        $out['results'] = ['id' => $doc->id, 'text' => $doc->name.' - '.$doc->sale, 'sale' => $doc->sale];
+	    }
+	    else {
+	        $out['results'] = ['id' => 0, 'text' => 'No matching document found', 'sale' => 0];
+	    }
+		Yii::trace('ret='.print_r($out,true));
 	    echo Json::encode($out);
 	}
 	
@@ -460,13 +493,14 @@ class DocumentController extends Controller
 		$model = $this->findModel($id);
 		if($model->document_type == Document::TYPE_ORDER && $model->bom_bool) {
 			// all termnated and unbilled orders for same client
-			$query = Order::find()->where(['bom_bool' => true, 'client_id' => $model->client_id])
+			$query = Order::find()->andWhere(['bom_bool' => true, 'client_id' => $model->client_id])
 								  ->andWhere(['status' => [Document::STATUS_DONE, Document::STATUS_NOTIFY, Document::STATUS_TOPAY]]);
 			$dataProvider = new ActiveDataProvider([
 				'query' => $query,
 			]);
 	        return $this->render('boms', [
 	            'dataProvider' => $dataProvider,
+				'capture' => new CaptureSelection()
 	        ]);
 		} else {
 			$order = $model->convert($ticket);
@@ -485,7 +519,7 @@ class DocumentController extends Controller
 				$model->selection = explode(',',trim($model->selection));
 			$bill = Bill::createFromBoms($model->selection);
 			if($bill)
-				return $this->redirect(['view', 'id' => $bill->id]);
+				return $this->redirect(Url::to(['view', 'id' => $bill->id]));
 			else
 				Yii::$app->session->setFlash('info', Yii::t('store', 'The bill was not created.'));
 		} else {

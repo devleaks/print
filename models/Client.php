@@ -144,7 +144,8 @@ class Client extends _Client
 					->distinct();
 		$documents = Document::find()->where(['sale' => $distinct_sales]);
 		
-		foreach($documents->each() as $document) {
+		foreach($documents->each() as $doc) {
+			$document = Document::findDocument($doc->id); // get proper type to call proper functions (getBalance is not the same for orders or bills from boms)
 			if( ! in_array($document->sale, $sales_already_processed) ) {
 				Yii::trace('DOING SALE:'.$document->sale.'.', 'Client::getAccountLines');
 				$bal = $document->getBalance();
