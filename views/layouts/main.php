@@ -51,9 +51,9 @@ $apphomedir = Yii::getAlias('@app');
 
 			$menu = [];
 			$menu[] = ['label' => Yii::$app->formatter->asDate(date('c')), 'url' => "javascript:do_introjs();"];
-			$menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash']];
 				
             if(!Yii::$app->user->isGuest) {
+				$menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash']];
 
 				$work_menu = [];
 				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta'
