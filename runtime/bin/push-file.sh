@@ -1,19 +1,20 @@
 #
-target=192.168.9.105
+. ../../config/shell.sh
 
-count=`ping -c 1 $target | grep icmp* | wc -l `
+count=`ping -c 1 ${REMOTE_HOST} | grep icmp* | wc -l`
 
-if [ $count -eq 0 ]
+if [ $count -gt 0 ]
 then
-    echo "Host is not Alive! Try again later.."
-else
-scp /Applications/mampstack/apps/prod/runtime/backup/prod.gz \
-                           jj@${target}:/Applications/mampstack/apps/yii2/print/runtime/restore/prod.gz
-scp /Applications/mampstack/apps/prod/runtime/backup/media.taz \
-                           jj@${target}:/Applications/mampstack/apps/yii2/print/runtime/restore/media.taz
-scp /Applications/mampstack/apps/prod/runtime/backup/prod.gz \
-                           jj@${target}:/Applications/mampstack/apps/devl/runtime/restore/devl.gz
-scp /Applications/mampstack/apps/prod/runtime/backup/media.taz \
-                           jj@${target}:/Applications/mampstack/apps/devl/runtime/restore/media.taz
-fi
+scp ${YIIDIR}/runtime/backup/${DBNAME}.gz \
+                           ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_YIIDIR}/runtime/restore/${REMOTE_DBNAME}.gz
+scp ${YIIDIR}/runtime/backup/media.taz \
+                           ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_YIIDIR}/runtime/restore/media.taz
 
+## Added to test only: Note dbname hardcoded
+#scp ${YIIDIR}/runtime/backup/prod.gz \
+#                           ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_YIIDIR}/runtime/restore/devl.gz
+#scp ${YIIDIR}/runtime/backup/media.taz \
+#                           ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_YIIDIR}/runtime/restore/media.taz
+else
+    echo "Host unreachable. Try again later."
+fi

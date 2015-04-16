@@ -1,10 +1,11 @@
 #
-if [ ! -d /Applications/mampstack/apps/yii2/print/runtime/restore ]
+. ../../config/shell.sh
+if [ ! -d ${YIIDIR}/runtime/restore ]
 then
-  mkdir /Applications/mampstack/secours/secours/runtime/restore
+  mkdir ${YIIDIR}/runtime/restore
 fi
 
-scp comptoir@192.168.9.123:/Applications/mampstack/apps/prod/runtime/backup/prod.gz \
-                           /Applications/mampstack/apps/yii2/print/runtime/restore/prod.gz
-scp comptoir@192.168.9.123:/Applications/mampstack/apps/prod/runtime/backup/media.taz \
-                           /Applications/mampstack/apps/yii2/print/runtime/restore/media.taz
+scp ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_YIIDIR}/runtime/backup/${REMOTE_DBNAME}.gz \
+                           ${YIIDIR}/runtime/restore/${DBNAME}.gz
+scp ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_YIIDIR}/runtime/backup/media.taz \
+                           ${REMOTE_YIIDIR}/runtime/restore/media.taz
