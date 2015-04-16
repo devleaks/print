@@ -29,8 +29,10 @@ use yii\helpers\Url;
 				'attribute' => 'order_name',
 	            'label' => Yii::t('store', 'Order'),
 	            'value' => function ($model, $key, $index, $widget) {
-						$latest_doc = $model->getDocument()->one();
-	                    return Html::a($latest_doc->name, Url::to(['/order/document/view', 'id' => $latest_doc->id]));
+						if($latest_doc = $model->getDocument()->one())
+	                    	return Html::a($latest_doc->name, Url::to(['/order/document/view', 'id' => $latest_doc->id]));
+						else
+							return '';
 	            },
 	            'format' => 'raw',
 	        ],
