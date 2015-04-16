@@ -124,13 +124,19 @@ $this->params['breadcrumbs'][] = $this->title;
             [	// freely let update or delete if accessed throught this screen.
 				'class' => 'kartik\grid\ActionColumn',
 				'controller' => 'document',
-			 	'template' => '{view} {update} {change} {delete}',
+			 	'template' => '{view} {update} {change} {payment} {delete}',
 				'noWrap' => true,
 				'buttons' => [
 	                'change' => function ($url, $model) {
 						$url = Url::to(['change-client', 'id' => $model->id]);
 	                    return Html::a('<i class="glyphicon glyphicon-user"></i>', $url, [
 	                        'title' => Yii::t('store', 'Change Client'),
+	                    ]);
+	                },
+	                'payment' => function ($url, $model) {
+						$url = Url::to(['payments', 'id' => $model->id]);
+	                    return Html::a('<i class="glyphicon glyphicon-euro"></i>', $url, [
+	                        'title' => Yii::t('store', 'View Payments'),
 	                    ]);
 	                },
 				],
