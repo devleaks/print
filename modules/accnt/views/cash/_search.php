@@ -12,7 +12,7 @@ use yii\helpers\Html;
 <div class="payment-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => ['list'],
         'method' => 'get',
 		'layout' => 'horizontal',
     ]); ?>

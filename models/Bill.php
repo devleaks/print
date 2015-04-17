@@ -51,11 +51,15 @@ class Bill extends Document {
 		$sales = [];
 		$sales[] = $this->sale;
 		if($this->bom_bool) {
-			foreach(Order::find()->andWhere(['bom_bool' => true, 'parent_id' => $this->id])->each() as $order)
-				$sales[] = $order->sale;
+			foreach(Order::find()->andWhere(['bom_bool' => true, 'parent_id' => $this->id])->each() as $order) {
+				//Yii::trace('+adding '.$order->sale, 'Bill::getPrepaid');
+				$sales[] = $order->sale;				
+			}
 		} else {
-			if($order = Order::findOne(['id' => $this->id]))
-				$sales[] = $order->sale;
+			if($order = Order::findOne(['id' => $this->parent_id])) {
+				$sales[] = $order->sale;				
+				//Yii::trace('adding '.$order->sale, 'Bill::getPrepaid');
+			}
 		}
 
 		if($today) {
@@ -68,7 +72,7 @@ class Bill extends Document {
 		} else
 			$ret = Payment::find()->where(['sale' => $sales])->sum('amount');
 
-		//Yii::trace($this->id.'='.print_r($sales, true), 'Bill::getPrepaid');
+		//Yii::trace($this->id.'='.$ret.', from: '.print_r($sales, true), 'Bill::getPrepaid');
 		return $ret ? $ret : 0;
 	}
 
@@ -96,6 +100,7 @@ class Bill extends Document {
 					$model->note = $bom->name;
 					$model->status = self::STATUS_OPEN;
 					$model->sale = Sequence::nextval('sale');
+					$model->reference = $model->commStruct(date('y')*10000000 + $model->sale);
 					$model->save();
 					//Yii::trace('New bill created:'.print_r($model->errors, true), 'Bill::createFromBoms');
 				} else {

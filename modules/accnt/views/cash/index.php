@@ -1,9 +1,10 @@
 <?php
 
-use yii\helpers\Html;
+use app\models\User;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
-use app\models\User;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CashSearch */
@@ -59,7 +60,23 @@ $this->params['breadcrumbs'][] = $this->title;
 	        ],
 
 
-            ['class' => 'kartik\grid\ActionColumn'],
+            [
+				'class' => 'kartik\grid\ActionColumn',
+				'template' => '{view} {custom-delete}',
+	            'buttons' => [
+	                'custom-delete' => function ($url, $model) {
+						$url = Url::to(['delete', 'id'=> $model->id]);
+	                    return $model->sale ? '' :
+								Html::a('<i class="glyphicon glyphicon-trash"></i>', $url, [
+									'title' => Yii::t('store', 'Delete'),
+	                        		'data-method' => 'post',
+	                        		'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+								]
+								);
+	                },
+				],
+
+			],
         ],
     ]); ?>
 

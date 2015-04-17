@@ -258,5 +258,14 @@ En son absence, aucune chaîne n'est insérée et le nom du document sera donc s
 	YYYY2XXXX
 
 
+## Note Technique
 
+A propos des documents, lorsqu'un devis est transformé en commande, ou lorsqu'une commande est transformée en facture,
+un lien de parenté est maintenu entre les documents. 
+L'attribut `parent` pointe vers le document qui a servi à son élaboration:
+Pour la commande (resp. la facture) l'attribut parent pointe vers le devis (resp. la commande).
+
+Attention: Pour les bons de livraison, cette relation est inversée.
+Dans ce cas, l'attribut `parent` de chacun des bons de livraisons repris dans une facture pointe vers cette facture.
+Dans ce cas, le lien entre le bon de livraison et le devis n'est pas maintenu, mais peut être retrouvé par d'autres moyens de recherche.
 

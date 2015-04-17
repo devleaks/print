@@ -467,16 +467,16 @@
         },
         {
             "name": "bower-asset/draggabilly",
-            "version": "v1.2.1",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/draggabilly.git",
-                "reference": "b0962fff289a7c9631af05c1d6791a7f10087a9e"
+                "reference": "a97d83bcd38ad79e602e618ae08ef29847292832"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/draggabilly/zipball/b0962fff289a7c9631af05c1d6791a7f10087a9e",
-                "reference": "b0962fff289a7c9631af05c1d6791a7f10087a9e",
+                "url": "https://api.github.com/repos/desandro/draggabilly/zipball/a97d83bcd38ad79e602e618ae08ef29847292832",
+                "reference": "a97d83bcd38ad79e602e618ae08ef29847292832",
                 "shasum": ""
             },
             "require": {
@@ -499,6 +499,7 @@
                     "test",
                     "tests",
                     "changelog.md",
+                    "contributing.md",
                     "Gruntfile.js",
                     "gulpfile.js",
                     "package.json",

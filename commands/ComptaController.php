@@ -149,8 +149,7 @@ class ComptaController extends Controller {
 						->andWhere(['>=','created_at',$day_start])
 						->andWhere(['<=','created_at',$day_end])
 						->andWhere(['payment_method' => $payment_method]);
-			$content .= $this->renderPartial($payment_method == Payment::TYPE_ACCOUNT ? $viewBase.'_detail-account_pdf' : $viewBase.'_detail_pdf',
-					['query' => $query, 'method' => $payment_label]);
+			$content .= $this->renderPartial($viewBase.'_detail_pdf', ['query' => $query, 'method' => $payment_label]);
 		}
 		
 		$pdfData = [

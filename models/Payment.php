@@ -12,8 +12,8 @@ use yii\helpers\ArrayHelper;
  */
 class Payment extends _Payment
 {
-	/** Payment Method */
-	const TYPE_ACCOUNT = 'ACCOUNT';
+	/** Payment Methods */
+	const CASH = 'CASH';
 	
 	const USE_CREDIT = 'CREDIT';
 	const CLEAR = 'CLEAR';

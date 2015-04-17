@@ -605,43 +605,7 @@ class Document extends _Document
      */
 	public function convert($ticket = false) {
 		return null;
-	}
-	
-	public function convert_old() {
-		if($this->document_type == self::TYPE_BILL) // no next operation after billing
-			return null;
-
-		$next_type = $this->document_type == self::TYPE_BID ? self::TYPE_ORDER :
-						$this->document_type == self::TYPE_ORDER ? self::TYPE_BILL : null;
-
-     	/** if a following document already exists, it returns it rather than create a new one. */
-		if( $existing_next = $this->find()->andWhere(['parent_id' => $this->id])->andWhere(['document_type' => $next_type])->one() )
-			return $existing_next;
-
-		$new_type = ($this->document_type == self::TYPE_BID) ? self::TYPE_ORDER : self::TYPE_BILL;
-		$copy = $this->deepCopy($new_type);
-		$copy->parent_id = $this->id;
-		
-		if($copy->document_type == self::TYPE_BILL) // get a new official bill number
-			$copy->name = substr($this->due_date,0,4).'-'.Sequence::nextval('bill_number'); // $this->due_date or $copy->due_date?
-		
-		$copy->status = self::STATUS_OPEN;
-		$copy->save();
-		
-		if($copy->document_type == self::TYPE_ORDER && Parameter::isTrue('application', 'auto_submit_work')) {
-			Yii::trace('auto_submit_work for '.$copy->id, 'Document::convert');
-			$work = $copy->createWork();
-		} if($copy->document_type == self::TYPE_BILL && Parameter::isTrue('application', 'auto_send_bill')) {
-			Yii::trace('auto_send_bill for '.$copy->id, 'Document::convert');
-			$copy->send();
-		}
-
-		$this->status = self::STATUS_CLOSED;
-		$this->save();	
-
-		return $copy;
-	}
-	
+	}	
 	
 	public function numberLines() {
 		$pos = 1;

@@ -31,8 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
 	        [
+				'attribute' => 'client_name',
 	            'label' => Yii::t('store', 'Client'),
-				'attribute' => 'client.nom',
+				'value' => 'client.nom',
 			],
 	        [
 				'attribute' => 'order_name',
@@ -69,8 +70,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'format' => 'raw',
 				'hAlign' => GridView::ALIGN_CENTER,
 	        ],
+			'note',
 	        [
 	            'attribute' => 'status',
+            	'filter' => [Payment::STATUS_PAID => Yii::t('store', Payment::STATUS_PAID), Payment::STATUS_OPEN => Yii::t('store', Payment::STATUS_OPEN)],
 	            'value' => function ($model, $key, $index, $widget) {
 	                    return $model->getStatusLabel();
 	            },
@@ -82,7 +85,10 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'updated_at',
             // 'updated_by',
 
-            ['class' => 'kartik\grid\ActionColumn'],
+            [
+				'class' => 'kartik\grid\ActionColumn',
+				'template' => '{view} {delete}'
+			],
         ],
 	    'showPageSummary' => true,
     ]); ?>

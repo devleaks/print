@@ -1,7 +1,9 @@
 <?php
 
+use app\models\Payment;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\widgets\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Account */
@@ -12,21 +14,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'client_id')->textInput() ?>
+	<?= $form->field($model, 'payment_method')->dropDownList(Payment::getPaymentMethods()) ?>
 
-    <?= $form->field($model, 'document_id')->textInput() ?>
-
-    <?= $form->field($model, 'sale')->textInput() ?>
-
-    <?= $form->field($model, 'amount')->textInput() ?>
-
-    <?= $form->field($model, 'payment_date')->textInput() ?>
-
-    <?= $form->field($model, 'payment_method')->textInput(['maxlength' => 20]) ?>
+    <?= $form->field($model, 'payment_date')->widget(DateTimePicker::className(), [
+			'pluginOptions' => [
+                'format' => 'yyyy-mm-dd h:i',
+                'todayHighlight' => true
+            	],
+				'options' => ['data-intro' => "Vous devez mentionner une date de livraison pour la commande. Si la date de livraison n'a pas d'importance, entrez la date du jour."],
+	]) ?>
 
     <?= $form->field($model, 'note')->textInput(['maxlength' => 160]) ?>
-
-    <?= $form->field($model, 'status')->textInput(['maxlength' => 20]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('store', 'Create') : Yii::t('store', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -10,8 +10,8 @@ use app\models\User;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('store', 'Cash');
-$this->params['breadcrumbs'][] = $this->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cash-index">
 

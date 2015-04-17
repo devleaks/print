@@ -3,8 +3,12 @@
 namespace app\modules\accnt\controllers;
 
 use Yii;
+use app\models\Account;
+use app\models\Cash;
+use app\models\Document;
 use app\models\Payment;
 use app\models\PaymentSearch;
+use app\models\Sequence;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -135,9 +139,52 @@ class PaymentController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $payment = $this->findModel($id);
+		$sale = $payment->sale;
+		if ($doc = Document::find()->andWhere(['sale' => $sale])->orderBy('created_at desc')->one()) {
+			$typedDoc = Document::findDocument($doc->id);
+			if($payment->payment_method == Payment::CASH) {
+				if($cash = Cash::find()->andWhere(['sale' => $payment->sale, 'amount' => $payment->amount])->one()) {
+					$cash_date = $cash->created_at;
+					$cash->delete();
+					$payment->delete();
+					$typedDoc->setStatus(Document::STATUS_TOPAY);
+					Yii::$app->session->setFlash('info', Yii::t('store', 'Cash payment deleted. {0} updated. You must review cash balance for {1}.',
+								[$typedDoc->name, Yii::$app->formatter->asDate($cash_date)]));
+				} else {
+					Yii::$app->session->setFlash('danger', Yii::t('store', 'Cash payment not deleted because cash entry was not found.'));
+				}
+			} elseif($payment->payment_method == Payment::USE_CREDIT) { // used credit, we have to place the credit back
+				$credit_amount = $payment->amount;
+				// OPEN TRANSACTION
+				$payment->delete();
+				$credit = new Payment([
+					'sale' => Sequence::nextval('sale'),
+					'client_id' => $payment->client_id,
+					'payment_method' => Payment::USE_CREDIT,
+					'amount' => $credit_amount,
+					'note' => Yii::t('store', 'Credit payment cancelled.'),
+					'status' => Payment::STATUS_OPEN,
+				]);
+				$credit->save();
+				$typedDoc->setStatus(Document::STATUS_TOPAY);
+				// CLOSE TRANSACTION
+				Yii::$app->session->setFlash('info', Yii::t('store', 'Payment with credit deleted. {0} updated. Credit amount {0}€ restored.',
+							[$credit_amount]));
+			} else {
+				if($account = Account::find()->andWhere(['sale' => $payment->sale, 'client_id' => $payment->client_id, 'amount' => $payment->amount])->one()) {
+					$account->delete();
+					$payment->delete();
+					$typedDoc->setStatus(Document::STATUS_TOPAY);
+					Yii::$app->session->setFlash('info', Yii::t('store', 'Payment deleted. {0} updated.', [$typedDoc->name]));
+				} else {
+					Yii::$app->session->setFlash('danger', Yii::t('store', 'Payment not deleted because account entry was not found.'));
+				}
 
-        return $this->redirect(['index']);
+			}
+		} else
+			Yii::$app->session->setFlash('danger', Yii::t('store', 'Payment not deleted. Document not found for sale {0}.', [$sale]));
+        return $this->redirect(['index', 'sort' => '-created_at']);
     }
 
     /**

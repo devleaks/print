@@ -39,7 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<ul>
 	    <li><a href="<?= Url::to(['/accnt/payment/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
-	    <li><a href="<?= Url::to(['/accnt/account/index', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Apports clients')?></a> - Manipulations directes</li>
 	    <li><a href="<?= Url::to(['/accnt/cash/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
 	</ul>
 

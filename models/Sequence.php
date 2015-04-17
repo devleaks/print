@@ -93,5 +93,13 @@ class Sequence extends \yii\db\ActiveRecord
         $modulo = (bcmod($s,97)==0?97:bcmod($s,97));
         return sprintf("+++ %s/%s/%s%02d +++",substr($d,0,3),substr($d,3,4),substr($d,7,3),$modulo);
 	}
+	
+	public static function getReservationNumber($len = 5, $valid_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') {
+		$rn = '';
+		for ($i = 0; $i < $len; $i++) {
+      		$rn .= $valid_chars[rand(0, strlen($valid_chars) - 1)];
+		}
+		return $rn;
+	}
 
 }

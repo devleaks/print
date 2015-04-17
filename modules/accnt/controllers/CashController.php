@@ -30,25 +30,25 @@ class CashController extends Controller
      * Lists all Cash models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionList()
     {
         $searchModel = new CashSearch();
        	$searchModel->load(Yii::$app->request->queryParams);
 
-		if($searchModel->created_at != '') {
-			$day_start = $searchModel->created_at. ' 00:00:00';
-			$day_end   = $searchModel->created_at. ' 23:59:59';
-			$created_at = $searchModel->created_at;
-			$searchModel->created_at = null;
-       		$dataProvider = $searchModel->search($searchModel->attributes);
-			$dataProvider->query
-				->andWhere(['>=','created_at',$day_start])
-				->andWhere(['<=','created_at',$day_end]);
-			$searchModel->created_at = $created_at;
-		} else
-       		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		if(empty($searchModel->created_at))
+			$searchModel->created_at = date('Y-m-d');
+			
+		$day_start = $searchModel->created_at. ' 00:00:00';
+		$day_end   = $searchModel->created_at. ' 23:59:59';
+		$created_at = $searchModel->created_at;
+		$searchModel->created_at = null;
+      		$dataProvider = $searchModel->search($searchModel->attributes);
+		$dataProvider->query
+			->andWhere(['>=','created_at',$day_start])
+			->andWhere(['<=','created_at',$day_end]);
+		$searchModel->created_at = $created_at;
 
-        return $this->render('index', [
+        return $this->render('list', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -58,12 +58,12 @@ class CashController extends Controller
      * Lists all Pdf models.
      * @return mixed
      */
-    public function actionIndex2()
+    public function actionIndex()
     {
         $searchModel = new CashSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index2', [
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -94,7 +94,7 @@ class CashController extends Controller
 			$mode = ($model->mode == $model::DEBIT) ? -1 : 1;
 			$model->amount = round($mode * str_replace(',','.',$model->amount_virgule), 2);
 			$model->save();
-            return $this->redirect(['index']);
+            return $this->redirect(['list']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -116,7 +116,7 @@ class CashController extends Controller
 			$mode = ($model->mode == $model::DEBIT) ? -1 : 1;
 			$model->amount = round($mode * str_replace(',','.',$model->amount_virgule), 2);
 			$model->save();
-            return $this->redirect(['index2']);
+            return $this->redirect(['list']);
         } else {
             return $this->render('update', [
                 'model' => $model,

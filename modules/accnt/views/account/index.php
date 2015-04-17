@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="account-index">
 
-    <h1><?= Html::encode($this->title) ?> <?= Html::a(Yii::t('store', 'Create Account'), ['create'], ['class' => 'btn btn-success']) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

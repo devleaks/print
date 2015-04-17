@@ -53,12 +53,12 @@ $apphomedir = Yii::getAlias('@app');
 			$menu[] = ['label' => Yii::$app->formatter->asDate(date('c')), 'url' => "javascript:do_introjs();"];
 				
             if(!Yii::$app->user->isGuest) {
-				$menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash']];
+				$menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash/list']];
 
 				$work_menu = [];
 				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta'
 					|| Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'employee')
-                	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash']];
+                	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash/list']];
 				if(Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'admin')
                 	$work_menu[] = ['label' => Yii::t('store', 'Orders'), 'url' => ['/order/']];
 				if(Yii::$app->user->identity->role != 'compta')
