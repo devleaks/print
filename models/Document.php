@@ -109,6 +109,14 @@ class Document extends _Document
 		return null;
 	}
 	
+	
+	public static function findBySale($sale) {
+		if($document = Document::find()->andWhere(['sale' => $sale])->orderBy('created_at desc')->one()) {
+			return self::findDocument($document->id);
+		}
+		return null;
+	}
+	
 	protected function newCopy($new_type = null) {
 		switch($new_type ? $new_type : $this->document_type) {
 			case Document::TYPE_BID:	return new Bid($this->attributes);	break;
@@ -365,9 +373,10 @@ class Document extends _Document
 	}
 
 
-	public function addPayment($amount_gross, $method, $note = null) {
+	public function addPayment($account, $amount_gross, $method, $note = null) {
 		$payment = null;
 		$extra = null;
+		$new_payment = true;
 
 		Yii::trace('ENTERING='.$this->document_type.' '.$this->name, 'AccountController::addPayment');
 		
@@ -376,8 +385,9 @@ class Document extends _Document
 
 		$ok = true;
 		$due = round($this->getBalance(), 2);
+		$cash = null;
 		
-		if ($method != Payment::USE_CREDIT && $method != Payment::CLEAR) {
+		if (!in_array($method, [Payment::USE_CREDIT,Payment::CLEAR])) {
 
 			if($method == 'CASH') {
 				$cash = new Cash([
@@ -387,6 +397,7 @@ class Document extends _Document
 					'payment_date' => date('Y-m-d H:i:s'),
 				]);
 				$cash->save();
+				$cash->refresh();
 			}
 
 			if($amount <= $due) {
@@ -396,6 +407,8 @@ class Document extends _Document
 					'payment_method' => $method,
 					'amount' => $amount,
 					'status' => Payment::STATUS_PAID,
+					'cash_id' => $cash ? $cash->id : null,
+					'account_id' => $account ? $account->id : null,
 				]);
 			} else { // paid too much, split payment in amount due and surplus
 				// 1. record the payment
@@ -405,6 +418,8 @@ class Document extends _Document
 					'payment_method' => $method,
 					'amount' => $due,
 					'status' => Payment::STATUS_PAID,
+					'cash_id' => $cash ? $cash->id : null,
+					'account_id' => $account ? $account->id : null,
 				]);
 				// 2. record an extra payment in status OPEN
 				$surplus = $amount - $due;
@@ -415,6 +430,8 @@ class Document extends _Document
 					'amount' => $surplus,
 					'note' => 'Extra payment for '.$this->name,
 					'status' => Payment::STATUS_OPEN,
+					'cash_id' => $cash ? $cash->id : null,
+					'account_id' => $account ? $account->id : null,
 				]);
 
 				if($method == 'CASH')
@@ -433,66 +450,76 @@ class Document extends _Document
 					'payment_method' => $method,
 					'amount' => $amount,
 					'status' => Payment::STATUS_PAID,
+					'account_id' => $account ? $account->id : null,
 				]);
 				Yii::trace('Clearing='.$amount, 'AccountController::addPayment');
 
 		} else { // $method == Payment::USE_CREDIT), client pays with credit he has
 			if($amount >= 0) {
 
-				$payment = new Payment([
-					'sale' => $this->sale,
-					'client_id' => $this->client_id,
-					'payment_method' => $method,
-					'amount' => $amount,		// XXXXXXXX Amount may be adjusted below if paid with CREDIT
-					'status' => Payment::STATUS_PAID,
-				]);
-
-				$creditLines = $this->client->getCreditLines();
-
 				$needed = $amount;
 				$total_available = 0;
 				Yii::trace('Needed='.$needed, 'AccountController::addPayment');
-				foreach($creditLines as $credit_line) {
+				foreach($this->client->getCreditLines() as $credit_line) { // now use (delete/remove) credit lines as they are used
+					$available = abs($credit_line->amount);
+					$total_available += $available;
+					$add_payment = false;
 					if($needed > 0) {
-						$available = abs($credit_line->amount);
-						$total_available += $available;
 						$comment = Yii::t('store', 'Payment of {0} {1}.', [Yii::t('store', $this->document_type),$this->name]);
 						Yii::trace('Available='.$available.' with '.$credit_line->ref, 'Document::addPayment');
 						if($needed <= $available) { // no problem, we widthdraw from credit note
 							Yii::trace('Found='.$needed, 'Document::addPayment');
-							$credit_line->useAmount($needed, $comment);
+							$credit_used = $needed;
 							$needed = 0;
 						} else {
 							Yii::trace('Clear='.$available, 'Document::addPayment');
-							$credit_line->useAmount($available, $comment);
+							$credit_used = $available;
 							$needed -= $available;
 						}
-						Yii::trace('Still need='.$needed, 'Document::addPayment');
-					} else
-						$total_available += $available;
+						Yii::trace('...still need='.$needed, 'Document::addPayment');
+						$add_payment = $credit_line->useAmount($this, $credit_used, $comment);
+					}
+					if($add_payment) {
+						$account_id = null;
+						if($credit_line->source == CreditLine::SOURCE_ACCOUNT) { // we need to carry the account_id to the payment
+							if($credit = Payment::findOne($credit_line->ref))
+								$account_id = $credit->account_id;
+						}
+						$payment = new Payment([
+							'sale' => $this->sale,
+							'client_id' => $this->client_id,
+							'payment_method' => $method,
+							'amount' => $credit_used,
+							'status' => Payment::STATUS_PAID,
+							'account_id' => $account_id,
+						]);
+						$payment->save();
+						Yii::trace('Added payment '.$payment->id.' for credit '.$credit_line->ref, 'Document::addPayment');
+					}
 				}
+				$new_payment = false;
+
 				Yii::trace('Total credit available before='.$total_available, 'Document::addPayment');
 				$total_available -= $amount;
 				Yii::trace('Total credit available after='.$total_available, 'Document::addPayment');
 				Yii::trace('Final need='.$needed, 'Document::addPayment');
 
 				if($needed > 0) { // still some amount to pay and credit notes exhausted, this bill is not completed paid.
-					$payment->amount = $amount - $needed; // XXXXXXXX Amount adjusted
 					Yii::$app->session->setFlash('warning', Yii::t('store', 'Amount is too large to balance all credit notes. Customer left with {0}€ to pay.', round($needed, 2)));
 				} else if ($total_available > 0) {
-					Yii::$app->session->setFlash('info', Yii::t('store', 'Bill paid with credits. Customer left with {0}€ credit.', round($total_available, 2)));
+					Yii::$app->session->setFlash('success', Yii::t('store', 'Bill paid with credits. Customer left with {0}€ credit.', round($total_available, 2)));
 				}
 
 			} else {
 				$ok = false;
-				Yii::$app->session->setFlash('error', Yii::t('store', 'Negative credit charge not handled yet. Pierre 25/01/2015.'));
+				Yii::$app->session->setFlash('warning', Yii::t('store', 'Negative credit charge not allowed.'));
 			}
 		}
 		
 		if($note && $payment)
 			$payment->note = $note;
 			
-		if($ok && $payment)
+		if($ok && $payment && $new_payment)
 			$ok = $payment->save();
 		if($ok && $extra)
 			$ok = $extra->save();
@@ -504,6 +531,70 @@ class Document extends _Document
 		return $ok;
 	}
 
+
+
+	/**
+	 *	Delete payment from document. Reset status to TOPAY. Set status will check if payment sufficient.
+	 *  Do_account = false means multi-document payment and account is not deleted.
+	 */
+	public function deletePayment($id, $do_account = true) {
+		if($payment = Payment::findOne($id)) {
+			if($do_account && $payment->partOfMultiplePayment()) {
+				Yii::$app->session->setFlash('warning', Yii::t('store', 'Payment was part of a multiple sale payment and cannot be deleted here.'));
+				return;
+			}
+			if($payment->payment_method == Payment::USE_CREDIT) { // used credit, we have to place the credit back, there is no account line for credit
+				// OPEN TRANSACTION
+				if(empty($payment->account_id)) { // we must restore the previous credit
+					$credit = new Payment([
+						'sale' => Sequence::nextval('sale'),
+						'client_id' => $payment->client_id,
+						'payment_method' => Payment::USE_CREDIT,
+						'amount' => $payment->amount,
+						'note' => Yii::t('store', 'Credit payment cancelled.'),
+						'status' => Payment::STATUS_OPEN,
+					]);
+					$credit->save();
+					Yii::trace('Created credit for='.$this->name, 'Document::deletePayment');
+					Yii::$app->session->setFlash('success', Yii::t('store', 'Payment with credit deleted. {0} updated. Credit amount {0}€ restored.',
+								[$credit->amount]));
+				}
+				$payment->delete();
+				Yii::trace('Deleted credit for='.$this->name, 'Document::deletePayment');
+				$this->setStatus(Document::STATUS_TOPAY);
+				Yii::trace('Status TOPAY for '.$this->name, 'Document::deletePayment');
+				// CLOSE TRANSACTION
+			} else {
+				if($account = Account::findOne($payment->account_id)) {
+					if($payment->payment_method == Payment::CASH) {
+						if($cash = Cash::findOne($payment->cash_id)) {
+							$cash_date = $cash->created_at;
+							$payment->delete();
+							$cash->delete();
+							if($do_account) $account->delete();
+							Yii::$app->session->setFlash('success', Yii::t('store', 'Cash payment deleted. {0} updated. You must review cash balance from {1}.',
+										[$this->name, Yii::$app->formatter->asDate($cash_date)]));
+							Yii::trace('Deleted cash for='.$this->name, 'Document::deletePayment');
+						} else {
+							Yii::$app->session->setFlash('danger', Yii::t('store', 'Cash payment not deleted because cash entry was not found.'));
+							return;
+						}
+					} else {
+						$payment->delete();
+						if($do_account) $account->delete();
+						Yii::$app->session->setFlash('success', Yii::t('store', 'Payment deleted. {0} updated.', [$this->name]));
+						Yii::trace('Deleted payment for='.$this->name, 'Document::deletePayment');
+					}
+					$this->setStatus(Document::STATUS_TOPAY);
+					Yii::trace('Status TOPAY for '.$this->name, 'Document::deletePayment');
+				} else {
+					Yii::$app->session->setFlash('danger', Yii::t('store', 'Payment not deleted because account entry was not found.'));
+					return;
+				}
+			}
+		} else
+			Yii::$app->session->setFlash('danger', Yii::t('store', 'Payment not found.'));
+	}
 
 	/**
 	 * Returns amount due.

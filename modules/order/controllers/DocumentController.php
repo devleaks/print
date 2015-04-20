@@ -198,6 +198,7 @@ class DocumentController extends Controller
 				$dataProvider->query
 					->with('client')
 					->orWhere(['like', 'document.name', $model->search])
+					->orWhere(['like', 'document.sale', $model->search])
 					->orWhere(['like', 'document.reference', $model->search])
 					->orWhere(['like', 'document.reference_client', $model->search])
 					->orWhere(['like', 'document.note', $model->search])
@@ -366,11 +367,10 @@ class DocumentController extends Controller
 		$cnt = $model->getDocuments()->count();
 		$cash_cnt = $model->getCashes()->count();
 		$payment_cnt = $model->getPayments()->count();
-		$account_cnt = $model->getAccounts()->count();
 		Yii::trace('cnt='.$cnt.',payments='.$cash_cnt, 'DocumentController::actionDelete');
 		if($cnt > 0)
 			Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because a child document depends on it.'));
-		else if ( ($cash_cnt > 0 || $model->soloOwnsPayments()) || $payment_cnt > 0 || $account_cnt > 0) {
+		else if ( ($cash_cnt > 0 || $model->soloOwnsPayments()) || $payment_cnt > 0) {
 				Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because there are payment attached to it.'));
 		} else {  // ok to remove
 			if($model->document_type == Document::TYPE_BILL && $model->bom_bool) { // remove pointer from BOM to this bill if any.
@@ -556,19 +556,20 @@ class DocumentController extends Controller
 			// if ($capturePayment->validate()) {
 			$model = $this->findModel($capturePayment->id);
 			
+			$payment_entered = null;
 			if($capturePayment->method != Payment::USE_CREDIT) { // if we use credit, money is already here, so we don't add it
 				$payment_entered = new Account([
-					'sale' => $model->sale,
 					'client_id' => $model->client_id,
-					'document_id' => $model->id,
 					'payment_method' => $capturePayment->method,
+					'payment_date' => date('Y-m-d H:i:s'),
 					'amount' => $capturePayment->amount,
 					'status' => $capturePayment->amount > 0 ? 'CREDIT' : 'DEBIT',
 				]);
 				$payment_entered->save();
+				$payment_entered->refresh();
 			}
 
-			$ok = $model->addPayment($capturePayment->amount, $capturePayment->method);
+			$ok = $model->addPayment($payment_entered, $capturePayment->amount, $capturePayment->method);
 			
 			$feedback = '';
 			if($capturePayment->submit) { // do we need to create a new work order for this order?

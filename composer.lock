@@ -1419,6 +1419,44 @@
             "time": "2014-10-20 23:24:21"
         },
         {
+            "name": "components/flag-icon-css",
+            "version": "0.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lipis/flag-icon-css.git",
+                "reference": "5fe239c747e91e498a903e437e70279256e1f27f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/5fe239c747e91e498a903e437e70279256e1f27f",
+                "reference": "5fe239c747e91e498a903e437e70279256e1f27f",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "name": "flag-icon-css",
+                    "files": [
+                        "less/**",
+                        "css/**",
+                        "flags/**"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Panayiotis Lipiridis (Lipis)",
+                    "email": "lipiridis@gmail.com"
+                }
+            ],
+            "description": "CSS for vector based country flags",
+            "time": "2015-03-02 17:43:04"
+        },
+        {
             "name": "dektrium/yii2-user",
             "version": "v0.9.4",
             "source": {
@@ -2271,15 +2309,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-icons.git",
-                "reference": "29e72f6e432af729f6d6a6ccaceb0d1bc8d81e55"
+                "reference": "4f07e7c0758eab3646357158276850d0d17f537a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/29e72f6e432af729f6d6a6ccaceb0d1bc8d81e55",
-                "reference": "29e72f6e432af729f6d6a6ccaceb0d1bc8d81e55",
+                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/4f07e7c0758eab3646357158276850d0d17f537a",
+                "reference": "4f07e7c0758eab3646357158276850d0d17f537a",
                 "shasum": ""
             },
             "require": {
+                "components/flag-icon-css": "*",
                 "fortawesome/font-awesome": "*",
                 "kartik-v/yii2-krajee-base": "*",
                 "yiisoft/yii2-jui": "*"
@@ -2310,7 +2349,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-02-26 14:25:16"
+            "time": "2015-04-20 14:24:31"
         },
         {
             "name": "kartik-v/yii2-krajee-base",

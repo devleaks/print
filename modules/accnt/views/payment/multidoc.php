@@ -17,7 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
 
@@ -32,7 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'updated_at',
             // 'updated_by',
 
-            ['class' => 'kartik\grid\ActionColumn'],
+            [
+				'class' => 'kartik\grid\ActionColumn',
+				'controller' => 'account',
+				'template' => '{view}',
+			],
         ],
     ]); ?>
 

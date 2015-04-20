@@ -10,8 +10,6 @@ use yii\db\ActiveRecord;
  */
 class Account extends _Account
 {
-	
-	
     /**
      * @inheritdoc
      */

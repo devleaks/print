@@ -9,9 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property integer $client_id
- * @property integer $document_id
- * @property integer $sale
- * @property double $amount
+ * @property string $amount
  * @property string $payment_date
  * @property string $payment_method
  * @property string $note
@@ -22,9 +20,9 @@ use Yii;
  * @property integer $updated_by
  *
  * @property Client $client
- * @property Document $document
  * @property User $createdBy
  * @property User $updatedBy
+ * @property Payment[] $payments
  */
 class _Account extends \yii\db\ActiveRecord
 {
@@ -43,7 +41,7 @@ class _Account extends \yii\db\ActiveRecord
     {
         return [
             [['client_id', 'amount'], 'required'],
-            [['client_id', 'document_id', 'sale', 'created_by', 'updated_by'], 'integer'],
+            [['client_id', 'created_by', 'updated_by'], 'integer'],
             [['amount'], 'number'],
             [['payment_date', 'created_at', 'updated_at'], 'safe'],
             [['payment_method', 'status'], 'string', 'max' => 20],
@@ -59,8 +57,6 @@ class _Account extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('store', 'ID'),
             'client_id' => Yii::t('store', 'Client ID'),
-            'document_id' => Yii::t('store', 'Document ID'),
-            'sale' => Yii::t('store', 'Sale'),
             'amount' => Yii::t('store', 'Amount'),
             'payment_date' => Yii::t('store', 'Payment Date'),
             'payment_method' => Yii::t('store', 'Payment Method'),
@@ -84,14 +80,6 @@ class _Account extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDocument()
-    {
-        return $this->hasOne(Document::className(), ['id' => 'document_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
@@ -103,5 +91,13 @@ class _Account extends \yii\db\ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPayments()
+    {
+        return $this->hasMany(Payment::className(), ['account_id' => 'id']);
     }
 }

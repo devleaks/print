@@ -284,8 +284,7 @@ class Order extends Document
 				$actions[] = '{notify}';
 			case $this::STATUS_TOPAY:
 			case $this::STATUS_DONE:
-				$actions[] = '{cancel}';
-				$actions[] = '{bill}';
+				$actions[] = ($this->getBill() ? '{link:billed}' : '{cancel} {bill}');
 				break;
 			case $this::STATUS_CANCELLED:
 				$actions[] = '{label:cancelled}';

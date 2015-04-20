@@ -1,6 +1,7 @@
 <?php
 use app\assets\AppAsset;
 use app\assets\CalculatorAsset;
+use app\models\Backup;
 use app\models\CaptureSearch;
 use app\widgets\Alert;
 use devleaks\chardinjs\ChardinJSAsset;
@@ -56,6 +57,12 @@ $apphomedir = Yii::getAlias('@app');
 				$menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash/list']];
 
 				$work_menu = [];
+				if(Backup::getDbName('yii2print')) {
+					$dev_menu = [];
+                	$dev_menu[] = ['label' => Yii::t('store', 'All documents'), 'url' => ['/order/document/', 'sort' => '-updated_at']];
+					$dev_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt/']];
+					$menu[] = ['label' => Yii::t('store', 'Development'), 'items' => $dev_menu];
+				}
 				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta'
 					|| Yii::$app->user->identity->role == 'manager' || Yii::$app->user->identity->role == 'employee')
                 	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash/list']];

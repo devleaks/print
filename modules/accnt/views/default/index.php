@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	    <li><a href="<?= Url::to(['/accnt/bill']) ?>"><?= Yii::t('store', 'Unpaid Bills')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/bill/boms']) ?>"><?= Yii::t('store', 'Bill all BOMs')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/extraction']) ?>"><?= Yii::t('store', 'Monthly Extraction')?></a></li>
-	    <li><a href="<?= Url::to(['/accnt/pdf']) ?>"><?= Yii::t('store', 'Documents')?></a></li>
+	    <li><a href="<?= Url::to(['/accnt/pdf']) ?>"><?= Yii::t('store', 'Documents to Print')?></a></li>
 	    <li><a href="<?= Url::to(['/store/client', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Clients')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/cash/list']) ?>"><?= Yii::t('store', 'Cash')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/bank']) ?>"><?= Yii::t('store', 'Bank Slips')?></a></li>
@@ -38,7 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 	<ul>
-	    <li><a href="<?= Url::to(['/accnt/payment/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
+	    <li><a href="<?= Url::to(['/accnt/account/create']) ?>"><?= Yii::t('store', 'Add payment with no sale')?></a></li>
+	    <li><a href="<?= Url::to(['/accnt/payment/multidoc']) ?>"><?= Yii::t('store', 'Remove payment for multiple documents')?></a> - Danger</li>
+	    <li><a href="<?= Url::to(['/order/document/index', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
 	    <li><a href="<?= Url::to(['/accnt/cash/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
 	</ul>
 

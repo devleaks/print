@@ -5,15 +5,17 @@ namespace app\modules\accnt\controllers;
 use Yii;
 use app\models\Account;
 use app\models\AccountSearch;
+use app\models\CaptureAccountNoSale;
 use app\models\Client;
-use app\models\Payment;
 use app\models\Credit;
-use app\models\Order;
 use app\models\Document;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use app\models\Order;
+use app\models\Payment;
+use app\models\Sequence;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * AccountController implements the CRUD actions for Account model.
@@ -66,13 +68,31 @@ class AccountController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Account();
+        $capture = new CaptureAccountNoSale();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($capture->load(Yii::$app->request->post()) && $capture->validate()) {
+			$account = new Account([
+				'client_id' => $capture->client_id,
+				'payment_method' => $capture->method,
+				'payment_date' => $capture->date ? $capture->date : date('Y-m-d'),
+				'amount' => $capture->amount,
+				'status' => $capture->amount > 0 ? 'CREDIT' : 'DEBIT',
+			]);
+			$account->save();
+			$account->refresh();
+			$payment = new Payment([
+				'sale' => Sequence::nextval('sale'), // its a new sale transaction, payment is not added to any existing sale
+				'client_id' => $capture->client_id,
+				'payment_method' => $capture->method,
+				'amount' => $capture->amount,
+				'status' => Payment::STATUS_OPEN,
+				'account_id' => $account->id,
+			]);
+			$payment->save();
+            return $this->redirect(['/accnt/account/client', 'id' => $capture->client_id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'model' => $capture,
             ]);
         }
     }
@@ -104,9 +124,18 @@ class AccountController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+		$account = $this->findModel($id);
+		foreach($account->getPayments()->each() as $payment) {
+			$doc = Document::findBySale($payment->sale);
+			if(!$doc && $payment->status == Payment::STATUS_OPEN) {
+				$payment->delete();
+			} else {
+				$doc->deletePayment($payment->id, false);
+			}
+		}
+		$account->delete();
+		Yii::$app->session->setFlash('success', Yii::t('store', 'Account line deleted. All payments deleted.'));
+        return $this->redirect(['payment/multidoc']);
     }
 
     /**

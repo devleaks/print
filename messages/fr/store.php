@@ -141,7 +141,8 @@ return [
 	'Do you want to UNDO/REDO this task?' => 'Souhaitez-vous refaire ou cette tâche?',
 	'Document From' => 'Premier document',
 	'Document To' => 'Dernier document (inclu)',
-	'Document Type' => 'Type de lettre',
+	'Document Type' => 'Type de document',
+	'Documents to Print' => 'Documents PDF à imprimer',
 	'Document deleted.' => 'Document supprimé.',
 	'Document(s) status updated.' => 'Documents mis à jour',
 	'Domicile' => 'Tel. Domicile',
@@ -340,6 +341,7 @@ return [
 	'View Bill of Materials' => 'Bons de livraison',
 	'View Bill' => 'Voir la facture',
 	'View Order' => 'Voir la commande',
+	'View Payments' => 'Voir les paiements',
 	'View' => 'Voir',
 	'W-' => 'L', // abbrev.
 	'WARN' => 'Avertissement',
@@ -379,6 +381,8 @@ return [
 	'Older Data' => 'Anciennes données',
 	'Credit Used' => 'Crédit utilisé',
 	'Use Credit' => 'Utilisation de crédits',
+	'Add payment with no sale' => 'Ajouter un paiement sans vente',
+	'Remove payment for multiple documents' => 'Supprimer un paiement réparti sur plusieurs ventes',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',
@@ -388,6 +392,7 @@ return [
 	'The order has already submitted work but work has not started yet.' => "Le travail a déjà été soumis, mais il n'a pas encore commancé.",
 	'The order was already submitted.' => 'La commande a déjà été soumise pour travaux.',
 	'You must re-submit work when order is filled.' => 'Vous devez re-soummettre le travail lorsque la commande est prise.',
+	'All documents' => 'Tous les documents',
 
 
 	/* Statistics */

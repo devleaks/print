@@ -233,14 +233,16 @@ class Client extends _Client
 	public function getCreditLines() {
 		$creditLines = [];
 		// Credit notes still open
-		foreach(Credit::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => Credit::STATUS_TOPAY])->each() as $document) {
-			$creditLines[] = new CreditLine([
-				'source' => CreditLine::SOURCE_CREDIT,
-				'note' => $document->name,
-				'date' => $document->created_at,
-				'amount' => - $document->getBalance(),
-				'ref' => $document->id,
-			]);
+		foreach(Credit::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => [Credit::STATUS_TOPAY, Credit::STATUS_CLOSED]])->each() as $document) {
+			$balance = $document->getBalance();
+			if($balance < -Document::PAYMENT_LIMIT)
+				$creditLines[] = new CreditLine([
+					'source' => CreditLine::SOURCE_CREDIT,
+					'note' => $document->name,
+					'date' => $document->created_at,
+					'amount' => $balance,
+					'ref' => $document->id,
+				]);
 		}
 		// Credit notes still open
 		foreach(Refund::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => Credit::STATUS_TOPAY])->each() as $document) {

@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             // 'id',
 	        [
+	            'label' => Yii::t('store', 'Document Type'),
 				'attribute' => 'document_type',
 				'value' => function ($model, $key, $index, $widget) {
 					return Yii::t('store', $model->getDocumentType());

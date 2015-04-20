@@ -18,7 +18,7 @@ class AccountSearch extends Account
     public function rules()
     {
         return [
-            [['id', 'client_id', 'document_id', 'sale', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'client_id', 'created_by', 'updated_by'], 'integer'],
             [['amount'], 'number'],
             [['payment_date', 'payment_method', 'note', 'status', 'created_at', 'updated_at'], 'safe'],
         ];
@@ -59,8 +59,6 @@ class AccountSearch extends Account
         $query->andFilterWhere([
             'id' => $this->id,
             'client_id' => $this->client_id,
-            'document_id' => $this->document_id,
-            'sale' => $this->sale,
             'amount' => $this->amount,
             'payment_date' => $this->payment_date,
             'created_at' => $this->created_at,

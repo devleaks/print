@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $document_id
  * @property integer $sale
- * @property double $amount
+ * @property string $amount
  * @property string $payment_date
  * @property string $note
  * @property string $created_at
@@ -21,6 +21,7 @@ use Yii;
  * @property Document $document
  * @property User $createdBy
  * @property User $updatedBy
+ * @property Payment[] $payments
  */
 class _Cash extends \yii\db\ActiveRecord
 {
@@ -87,5 +88,13 @@ class _Cash extends \yii\db\ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPayments()
+    {
+        return $this->hasMany(Payment::className(), ['cash_id' => 'id']);
     }
 }

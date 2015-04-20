@@ -29,6 +29,11 @@ if(isset(Yii::$app->user))
 	if(isset(Yii::$app->user->identity))
 		if(isset(Yii::$app->user->identity->role))
 			$role = Yii::$app->user->identity->role;
+	
+$template = '{view} {update} {delete}';
+if(in_array($role, ['manager', 'admin', 'compta'])) {
+	$template = '{view} {update} {change} {payment} {delete}';
+}
 
 $this->title = Yii::t('store', Document::getTypeLabel($document_type, true));
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/order', 'sort' => '-updated_at']];
@@ -124,7 +129,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [	// freely let update or delete if accessed throught this screen.
 				'class' => 'kartik\grid\ActionColumn',
 				'controller' => 'document',
-			 	'template' => '{view} {update} {change} {payment} {delete}',
+			 	'template' => $template,
 				'noWrap' => true,
 				'buttons' => [
 	                'change' => function ($url, $model) {
@@ -134,7 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	                    ]);
 	                },
 	                'payment' => function ($url, $model) {
-						$url = Url::to(['payments', 'id' => $model->id]);
+						$url = Url::to(['/accnt/payment/sale', 'id' => $model->id]);
 	                    return Html::a('<i class="glyphicon glyphicon-euro"></i>', $url, [
 	                        'title' => Yii::t('store', 'View Payments'),
 	                    ]);

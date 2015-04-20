@@ -59,7 +59,7 @@ class Payment extends _Payment
 	
 	public function getPaymentMethod() {
 		if($this->payment_method == Payment::CLEAR)
-			return Yii::t('store', 'Bill Debit');
+			return Yii::t('store', 'Credit Clearance');
 		elseif($this->payment_method == Payment::USE_CREDIT)
 			return Yii::t('store', 'Credit Used');
 		$p = Parameter::findOne(['domain'=>'payment', 'name' => $this->payment_method]);
@@ -77,4 +77,16 @@ class Payment extends _Payment
     {
         return Document::find()->where(['sale' => $this->sale])->orderBy('created_at desc')->limit(1);
     }
+
+	/**
+	 * Whether this payment was part of a global payment or not.
+	 */
+	public function partOfMultiplePayment() {
+		// not 100% correct: What is all payments are form the same sale... should check how many distinct sales there are. Later.
+		if($account = $this->getAccount()->one()) {
+			return $account->getPayments()->count() > 1;
+		}
+		return false;
+	}
+
 }

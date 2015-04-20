@@ -51,25 +51,32 @@ class CreditLine extends Model {
 	/**
 	 * Does necessary thing to record credit use.
 	 */
-	public function useAmount($amount, $note) {
+	public function useAmount($document, $amount, $note) {
 		if($this->source == self::SOURCE_CREDIT) {
 			if ($doc = Credit::findOne($this->ref)) {
 				Yii::trace('C='.$this->source.' '.$this->ref, 'CreditLine::useAmount');
-				$doc->addPayment(- $amount, Payment::CLEAR, $note);
+				$doc->addPayment(null, - $amount, Payment::CLEAR, $note);
 			}
 		} elseif($this->source == self::SOURCE_REFUND) {
 			if ($doc = Refund::findOne($this->ref)) {
 				Yii::trace('R='.$this->source.' '.$this->ref, 'CreditLine::useAmount');
-				$doc->addPayment(- $amount, Payment::CLEAR, $note);
+				$doc->addPayment(null, - $amount, Payment::CLEAR, $note);
 			}
-		} else { // must be SOURCE_ACCOUNT
-			if($payment = Payment::findOne($this->ref)) {
+		} else { // use credit line
+			if($credit = Payment::findOne($this->ref)) {
 				Yii::trace('ACCOUNT='.$this->source.' '.$this->ref, 'CreditLine::useAmount');
-				$payment->note = $note; // .= $note?
-				$payment->status = Payment::STATUS_PAID;
-				$payment->save();
+				if($amount < $credit->amount) { // we just take what's necessary
+					$credit->amount -= $amount;
+					$credit->save();
+				} else {
+					$credit->status = Payment::STATUS_PAID;
+					$credit->sale = $document->sale;
+					$credit->save();
+					return false; // we do NOT create a new payment, this one will do
+				}
 			}
 		}
+		return true;
 	}
 
 }

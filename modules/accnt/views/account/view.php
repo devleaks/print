@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\data\ActiveDataProvider;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Account */
@@ -28,20 +29,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'client_id',
-            'document_id',
-            'sale',
+            'client.nom',
             'amount',
             'payment_date',
             'payment_method',
             'note',
             'status',
             'created_at',
-            'created_by',
+            'createdBy.username',
             'updated_at',
-            'updated_by',
+            'updatedBy.username',
         ],
     ]) ?>
+
+	<?= $this->render('../payment/_account.php', [
+		'dataProvider' => new ActiveDataProvider(['query' => $model->getPayments()]),
+		'model' => $model,
+	])?>
 
 </div>

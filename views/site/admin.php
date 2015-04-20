@@ -61,11 +61,22 @@ $this->title = 'Labo JJ Micheli';
 					&raquo; <a href="<?= Url::to(['/store/item']) ?>"><?= Yii::t('store', 'Items')?></a>
 					&raquo; <a href="<?= Url::to(['/store/price']) ?>"><?= Yii::t('store', "Price Lists")?></a>
 					&raquo; <a href="<?= Url::to(['/store/price-list']) ?>"><?= Yii::t('store', "Composite Price Lists")?></a>
-					<?php if(Backup::getDbName('yii2print')): ?>
-					&raquo; <a href="<?= Url::to(['/stats/']) ?>"><?= Yii::t('store', "Stats")?></a>
-					<?php endif; ?>
 				</p>
             </div>
+            <div class="col-lg-6">
+                <h2>Comptabilité</h2>
+
+                <p>Gestion de la comptabilité, de la caisse, et des paiements.</p>
+
+                <p><a class="btn btn-primary" href="<?= Url::to(['/accnt/']) ?>">Comptabilité &raquo;</a></p>
+				<p data-intro='Menu rapide vers actions les plus courantes'>
+					&raquo; <a href="<?= Url::to(['/accnt/pdf']) ?>"><?= Yii::t('store', 'Documents')?></a></li>
+					&raquo; <a href="<?= Url::to(['/accnt/cash']) ?>"><?= Yii::t('store', 'Cash')?></a></li>
+				</p>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-lg-6">
                 <h2>Gestion de l'Application</h2>
 
@@ -73,7 +84,18 @@ $this->title = 'Labo JJ Micheli';
 
                 <p><a class="btn btn-primary" href="<?= Url::to(['/admin/']) ?>">Application &raquo;</a></p>
             </div>
-        </div>
+			<?php if(Backup::getDbName('yii2print')): ?>
+            <div class="col-lg-6">
+                <h2>Développements</h2>
 
+                <p>Liens rapides vers les développements.</p>
+
+				<p data-intro='Menu rapide vers actions les plus courantes'>
+					&raquo; <a href="<?= Url::to(['/order/document/', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'All documents')?></a>
+					&raquo; <a href="<?= Url::to(['/stats/']) ?>"><?= Yii::t('store', "Stats")?></a>
+				</p>
+            </div>
+			<?php endif; ?>
+        </div>
     </div>
 </div>

@@ -3,6 +3,8 @@
 namespace app\widgets;
 
 use Yii;
+use app\models\Client;
+use app\models\Document;
 use app\models\PrintedDocument;
 use app\models\Work;
 use app\widgets\GridViewPDF;
@@ -291,12 +293,18 @@ class DocumentActionColumn extends Column {
 						'<li>'.Html::a(Yii::t('store', 'Ticket (A5)'),			[$data['action'], 'id' => $id, 'format' => PrintedDocument::FORMAT_A5],	['target' => '_blank', 'title' => Yii::t('store', 'Print on reduced A5 ticket')]).'</li>'.
 						'<li>'.Html::a(Yii::t('store', 'Labels'),				['/order/document/labels', 'id' => $id],								['target' => '_blank', 'title' => Yii::t('store', 'Print Packing Label')]).'</li>'.
 					'</ul></div>';
-		if($name == 'convert')
-			return '<div class="btn-group"><button type="button" class="'.$this->baseClass.' btn-'.$data['color'].' dropdown-toggle" data-toggle="dropdown">'.
-			        	$this->getButton('convert'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
-						'<li>'.Html::a(Yii::t('store', 'Convert to order'), [$data['action'], 'id' => $id], ['title' => Yii::t('store', 'Convert to order')]).'</li>'.
-						'<li>'.Html::a(Yii::t('store', 'Convert to sale'),  [$data['action'], 'id' => $id, 'ticket' => true], ['title' => Yii::t('store', 'Convert to sale')]).'</li>'.
-					'</ul></div>';
+		if($name == 'convert') {
+			$comptoir = Client::findOne(['nom' => 'Client au comptoir']);
+			$doc = Document::findOne($id);
+			if($doc->client_id == $comptoir->id)
+				return Html::a(Yii::t('store', 'Convert to sale'),  [$data['action'], 'id' => $id, 'ticket' => true], ['class' => $this->baseClass . ' btn-' . $data['color'], 'title' => Yii::t('store', 'Convert to sale')]);
+			else
+				return '<div class="btn-group"><button type="button" class="'.$this->baseClass.' btn-'.$data['color'].' dropdown-toggle" data-toggle="dropdown">'.
+				        	$this->getButton('convert'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
+							'<li>'.Html::a(Yii::t('store', 'Convert to order'), [$data['action'], 'id' => $id], ['title' => Yii::t('store', 'Convert to order')]).'</li>'.
+							'<li>'.Html::a(Yii::t('store', 'Convert to sale'),  [$data['action'], 'id' => $id, 'ticket' => true], ['title' => Yii::t('store', 'Convert to sale')]).'</li>'.
+						'</ul></div>';
+		}
 		return '';
 	}
 	
