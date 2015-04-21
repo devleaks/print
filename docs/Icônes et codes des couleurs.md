@@ -104,4 +104,3 @@ Confirmation de succès d'opération.
 
 Souvent, ces cadres possèdent une petite croix sur la droite.
 En pressant cette petite croix, on fait disparaître le cadre d'avertissement.
-
