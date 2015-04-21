@@ -32,8 +32,8 @@ class BankTransaction extends _BankTransaction
     public function rules()
     {
         return [
-            [['name', 'execution_date', 'value_date', 'amount', 'currency', 'source', 'account', 'status'], 'required'],
-            [['execution_date', 'value_date', 'created_at'], 'safe'],
+            [['name', 'execution_date', 'amount', 'currency', 'source', 'account', 'status'], 'required'],
+            [['execution_date', 'created_at'], 'safe'],
             [['amount'], 'number'],
             [['name', 'currency', 'status'], 'string', 'max' => 20],
             [['source', 'account'], 'string', 'max' => 40],

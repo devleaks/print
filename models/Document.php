@@ -564,6 +564,9 @@ class Document extends _Document
 				$this->setStatus(Document::STATUS_TOPAY);
 				Yii::trace('Status TOPAY for '.$this->name, 'Document::deletePayment');
 				// CLOSE TRANSACTION
+			} else if($payment->payment_method == Payment::CLEAR) {
+				Yii::$app->session->setFlash('danger', Yii::t('store', 'Restitution of refund/credit note is not handled yet.'));
+				return;
 			} else {
 				if($account = Account::findOne($payment->account_id)) {
 					if($payment->payment_method == Payment::CASH) {

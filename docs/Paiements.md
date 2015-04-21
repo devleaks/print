@@ -57,6 +57,7 @@ et toutes les facturées couvertes par le paiement seront débitées du montant 
 Il n'est pas possible d'annuler le paiement d'une seule facture, car le montant réparti entre les factures
 dépend précisément du montant global crédité.
 
+### Cas Particuliers
 
 #### Paiements par crédits
 
@@ -65,6 +66,28 @@ l'annulation du paiement résultera en l'annulation du paiement proprement dit, 
 
 (Note: Si le crédit utilisé pour le paiement résultait de l'addition de plusieurs crédits disponibles pour le client,
 l'annulation du paiement provoquera la restitution d'une seul crédit reprenant le montant total de crédit utilisé.)
+
+#### Paiement via un Remboursement ou une Note de Crédit
+
+Le montant d'un remboursement ou d'une note de crédit non remboursé au client apparaîtra dans la liste des crédits disponibles.
+
+Si ce crédit est utilisé, il sera 1. d'abord transformé en ligne de crédit et sera 2. ensuite débité d'un achat à payer.
+Il s'agit là de deux opérations:
+
+	1. la première marque le remboursement ou la note de crédit comme utilisé et crée une ligne de crédit disponible pour les achats.
+	1. la seconde opération consomme ce crédit (partiellement ou totalement) pour payer un achat.
+
+Si on souhaite complètement annuler cette opération, il faut donc le faire en deux étapes:
+
+	1. Annuler le paiement de la vente en supprimant le paiement via les crédits disponibles.
+	1. Annuler la "transformation" du remboursement ou de la note de crédit en ligne de crédit.
+
+Pour la première étape, visualiser les paiements de l'achat et supprimer le paiement effectué avec le crédit.
+Ceci restituera un ligne de crédit à nouveau disponible pour d'autres achats.
+On peut laisser cette ligne de crédit telle quelle.
+
+Si on souhaite annuler la transformation du remboursement ou la note de crédit en ligne de crédit,
+il faut visualiser les "paiements" de la note de crédit, et supprimer la ligne de crédit.
 
 #### Paiements cash (à la caisse)
 

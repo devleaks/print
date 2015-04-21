@@ -91,14 +91,14 @@ $this->params['breadcrumbs'][] = $this->title;
 						$url = Url::to(['/order/document/client', 'id' => $model->id]);
 	                    return Html::a('<i class="glyphicon glyphicon-shopping-cart"></i>', $url, [
 //	                        'class' => 'btn btn-xs btn-primary',
-	                        'title' => Yii::t('store', 'View'),
+	                        'title' => Yii::t('store', 'Orders'),
 	                    ]);
 	                },
 	                'accnt' => function ($url, $model) {
 						$url = Url::to(['/accnt/account/client', 'id' => $model->id]);
 	                    return Html::a('<i class="glyphicon glyphicon-book"></i>', $url, [
 //	                        'class' => 'btn btn-xs btn-primary',
-	                        'title' => Yii::t('store', 'View'),
+	                        'title' => Yii::t('store', 'Account'),
 	                    ]);
 	                },
 				],

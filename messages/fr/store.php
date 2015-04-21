@@ -369,7 +369,7 @@ return [
 	'by' => 'par',
 	'for' => 'pour',
 	'meter' => 'mètre',
-	'{document} updated' => '{document} mise à jour',
+	'{document} updated.' => '{document} mise à jour.',
  	'Cash' => 'Caisse',
   	'Compute Cuts' => 'Calculer les découpes',
   	'Cut' => 'Découpes',
@@ -383,6 +383,7 @@ return [
 	'Use Credit' => 'Utilisation de crédits',
 	'Add payment with no sale' => 'Ajouter un paiement sans vente',
 	'Remove payment for multiple documents' => 'Supprimer un paiement réparti sur plusieurs ventes',
+	'Bank Slips' => 'Extraits de comptes',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',
@@ -393,6 +394,7 @@ return [
 	'The order was already submitted.' => 'La commande a déjà été soumise pour travaux.',
 	'You must re-submit work when order is filled.' => 'Vous devez re-soummettre le travail lorsque la commande est prise.',
 	'All documents' => 'Tous les documents',
+	'You cannot change the client of a Bill of Material or of a bill of BoM.' => "Vous ne pouvez pas changer le client d'un bon de livraison ou d'une facture regroupant des bons de livraisons.",
 
 
 	/* Statistics */

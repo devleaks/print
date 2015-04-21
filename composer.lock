@@ -2263,12 +2263,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-helpers.git",
-                "reference": "bd52ad81cd758e2b8062fb17e2a9720a347c5f43"
+                "reference": "250a9c824295754f20fb8fecda02387da4a3b20d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/bd52ad81cd758e2b8062fb17e2a9720a347c5f43",
-                "reference": "bd52ad81cd758e2b8062fb17e2a9720a347c5f43",
+                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/250a9c824295754f20fb8fecda02387da4a3b20d",
+                "reference": "250a9c824295754f20fb8fecda02387da4a3b20d",
                 "shasum": ""
             },
             "require": {
@@ -2301,7 +2301,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-03-26 15:49:39"
+            "time": "2015-04-20 18:21:55"
         },
         {
             "name": "kartik-v/yii2-icons",
@@ -2309,12 +2309,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-icons.git",
-                "reference": "4f07e7c0758eab3646357158276850d0d17f537a"
+                "reference": "719af14be1bcb3581855ddfd8b389792383a905a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/4f07e7c0758eab3646357158276850d0d17f537a",
-                "reference": "4f07e7c0758eab3646357158276850d0d17f537a",
+                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/719af14be1bcb3581855ddfd8b389792383a905a",
+                "reference": "719af14be1bcb3581855ddfd8b389792383a905a",
                 "shasum": ""
             },
             "require": {
@@ -2349,7 +2349,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-04-20 14:24:31"
+            "time": "2015-04-20 16:17:56"
         },
         {
             "name": "kartik-v/yii2-krajee-base",

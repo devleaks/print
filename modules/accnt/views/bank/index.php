@@ -24,11 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'name',
-            'execution_date',
-            'value_date',
+            'execution_date:date',
             'amount',
             // 'currency',
-            'source',
+            [
+				'attribute' => 'source',
+				'noWrap' => true,
+			],
             'note',
             // 'account',
             // 'status',

@@ -22,7 +22,7 @@ class CaptureAccountNoSale extends Model
     public function rules()
     {
         return [
-            [['amount', 'client_id'], 'required'],
+            [['amount', 'method', 'client_id'], 'required'],
             [['amount', 'method', 'date', 'client_id', 'note'], 'safe'],
 			[['amount'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
 			[['client_id'], 'integer'],

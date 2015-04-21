@@ -10,8 +10,7 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property string $execution_date
- * @property string $value_date
- * @property double $amount
+ * @property string $amount
  * @property string $currency
  * @property string $source
  * @property string $note
@@ -35,8 +34,8 @@ class _BankTransaction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'execution_date', 'value_date', 'amount', 'currency', 'source', 'account', 'status', 'created_at'], 'required'],
-            [['execution_date', 'value_date', 'created_at'], 'safe'],
+            [['name', 'execution_date', 'amount', 'currency', 'source', 'account', 'status', 'created_at'], 'required'],
+            [['execution_date', 'created_at'], 'safe'],
             [['amount'], 'number'],
             [['name', 'currency', 'status'], 'string', 'max' => 20],
             [['source', 'account'], 'string', 'max' => 40],
@@ -53,7 +52,6 @@ class _BankTransaction extends \yii\db\ActiveRecord
             'id' => Yii::t('store', 'ID'),
             'name' => Yii::t('store', 'Name'),
             'execution_date' => Yii::t('store', 'Execution Date'),
-            'value_date' => Yii::t('store', 'Value Date'),
             'amount' => Yii::t('store', 'Amount'),
             'currency' => Yii::t('store', 'Currency'),
             'source' => Yii::t('store', 'Source'),

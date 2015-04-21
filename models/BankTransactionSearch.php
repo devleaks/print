@@ -19,7 +19,7 @@ class BankTransactionSearch extends BankTransaction
     {
         return [
             [['id'], 'integer'],
-            [['name', 'execution_date', 'value_date', 'currency', 'source', 'note', 'account', 'status', 'created_at'], 'safe'],
+            [['name', 'execution_date', 'currency', 'source', 'note', 'account', 'status', 'created_at'], 'safe'],
             [['amount'], 'number'],
         ];
     }
@@ -59,7 +59,6 @@ class BankTransactionSearch extends BankTransaction
         $query->andFilterWhere([
             'id' => $this->id,
             'execution_date' => $this->execution_date,
-            'value_date' => $this->value_date,
             'amount' => $this->amount,
             'created_at' => $this->created_at,
         ]);

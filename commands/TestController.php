@@ -28,14 +28,13 @@ class TestController extends Controller {
 				} else {
 					$doc->setStatus($doc::STATUS_TOPAY);
 				}
+				echo "Document ".$doc->document_type.' '.$doc->name." updated.\n";
 			} elseif ($doc->status == $doc::STATUS_TOPAY) {
 				if($bill) {
 					$bill->setStatus($doc::STATUS_TOPAY);
 					$doc->setStatus($doc::STATUS_CLOSED);
+					echo "Document ".$doc->document_type.' '.$doc->name." updated.\n";
 				}
 			}
-
-
-			echo "Document ".$doc->document_type.' '.$doc->name." updated.\n";
 	}
 }

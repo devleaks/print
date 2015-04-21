@@ -32,9 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 	<ul>
-	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/payment/"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
-	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/account/"><?= Yii::t('store', 'Client Accounts')?></a> - Manipulations directes</li>
-	    <li><a href="<?= Yii::$app->homeUrl ?>accnt/cash/"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
+	    <li><a href="<?= Url::to(['/order/document/index', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
+	    <li><a href="<?= Url::to(['/accnt/payment/multidoc']) ?>"><?= Yii::t('store', 'Remove payment for multiple documents')?></a> - Danger</li>
+	    <li><a href="<?= Url::to(['/accnt/cash/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
 	</ul>
 
 </div>
