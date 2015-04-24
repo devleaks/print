@@ -38,7 +38,35 @@ Dans tous les cas:
 * Si le montant est supérieur au montant total des factures cochées, l'excédant est laissé comme _disponible_.
 L'excédant disponible apparaît alors dans l'écran de paiement d'une vente, et peut être affecté à cette vente en choisissant le mode de paiement `Utilisation de crédits`.
 
+### Apport d'argent sans vente
 
+Il est possible d'ajouter un crédit à un client sans l'attacher à une vente.
+Ce crédit sera ensuite consommé en payant des factures par `Utilisation des crédits`.
+
+Attention: Tant que les crédits n'ont pas été consommés par les ventes,
+apporter un crédit fausse temporairement le bilan du client.
+En effet, le bilan du client reflètera le crédit apporté, mais les ventes effectuées par ce client
+resteront impayées et dûes jusqu'au moment de leur paiement, via ce crédit ou par un autre moyen.
+Pour ne pas arriver dans ce cas, il suffit tout simplement d'utiliser les opérations normales décrites
+dans la section ci-dessus.
+
+Pour ajouter un crédit à un client, dans la comptabilité, choisir l'option `Ajouter un paiement sans vente`.
+Choisir le client, indiquer le montant et l'orgine du payment (virement, etc.).
+Il est vivement conseillé d'également rentrer un commentaire pour se rappeler de la raison de ce paiement sans facture en regard.
+
+Les crédits déposés pour un client ne peuvent être consommé que sur des ventes assignées à ce client.
+Un client ne peut pas payer la facture d'un autre client avec ses crédits.
+
+Attention: Ce mode de fonctionnement a été ajouté pour faire face à des situations exceptionnelles.
+Il n'est pas normal de recevoir un paiement pour une commande qui n'est pas dans le système.
+Avant de créditer le client, il est important de se poser la question de pourquoi il n'y a pas des commandes
+en regard de ce paiement.
+
+Dans l'application, l'entrée des paiements en regard des commandes n'a pour seul but que
+de s'assurer que le montant dû est entré dans la comptabilité.
+
+Entrer les paiements en regard des commandes est une opération importante qui garantit non seulement le suivi de la commande
+mais aussi le suivi global du client.
 
 
 ## Suppression des paiements
@@ -88,6 +116,14 @@ On peut laisser cette ligne de crédit telle quelle.
 
 Si on souhaite annuler la transformation du remboursement ou la note de crédit en ligne de crédit,
 il faut visualiser les "paiements" de la note de crédit, et supprimer la ligne de crédit.
+
+(Note: Il n'est parfois plus possible de faire cette dernière opération,
+si les crédits ont été factionnés sur plusieurs commandes.)
+
+#### Apport d'argent sans vente
+
+En cas de suppression d'un apport d'argent (crédit) à un client sans vente associée,
+le crédit sera supprimé de toutes les commandes ayant utilisé partiellement ou totalement ce crédit.
 
 #### Paiements cash (à la caisse)
 

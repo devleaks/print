@@ -395,6 +395,7 @@ return [
 	'You must re-submit work when order is filled.' => 'Vous devez re-soummettre le travail lorsque la commande est prise.',
 	'All documents' => 'Tous les documents',
 	'You cannot change the client of a Bill of Material or of a bill of BoM.' => "Vous ne pouvez pas changer le client d'un bon de livraison ou d'une facture regroupant des bons de livraisons.",
+	'Bulk Bill' => 'Facturer par lot',
 
 
 	/* Statistics */

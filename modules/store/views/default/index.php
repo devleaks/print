@@ -57,6 +57,7 @@ if(isset(Yii::$app->user))
 	</ul>
 
 	<ul>
+	    <li><a href="<?= Url::to(['/order/document/bulk', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bulk Bill')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/payment/index-by-type']) ?>"><?= Yii::t('store', 'Daily Summary')?></a></li>
 	    <li><a href="<?= Url::to(['/accnt/']) ?>"><strong><?= Yii::t('store', 'Accounting')?></strong></a></li>
 	</ul>

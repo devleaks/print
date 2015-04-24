@@ -45,6 +45,7 @@ use yii\web\NotFoundHttpException;
 class DocumentController extends Controller
 {
 	const TYPE_BOM = 'BOM';
+	const ACTION_CONVERT = 'CONVERT';
 
 	/**
 	 *  Sets global behavior for database line create/update and basic security
@@ -85,6 +86,20 @@ class DocumentController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lists all Order models.
+     * @return mixed
+     */
+    public function actionBulk() {
+        $searchModel = new DocumentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('bulk', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -674,5 +689,25 @@ class DocumentController extends Controller
 		]);		
 		return $pdf->render();
 	}
+
+
+	/**
+	 * Bulk process document for PJAXed gridview.
+	 */
+    public function actionBulkAction()
+    {
+		$ids = (array)Yii::$app->request->post('ids'); // Array or selected records primary keys
+		$status = Yii::$app->request->post('action');
+
+	    if (!$ids) // Preventing extra unnecessary query
+	        return;
+
+		if($status == DocumentController::ACTION_CONVERT)
+			foreach($ids as $id) {
+				if($d = Document::findDocument($id)) {
+					$d->convert();
+				}
+	        }
+    }
 
 }

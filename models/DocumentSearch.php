@@ -3,9 +3,10 @@
 namespace app\models;
 
 use Yii;
+use app\models\Document;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Document;
+use yii\db\Query;
 
 /**
  * OrderSearch represents the model behind the search form about `app\models\Document`.
@@ -13,7 +14,8 @@ use app\models\Document;
 class DocumentSearch extends Document
 {
 	public $client_name;
-
+	public $bill_exists;
+	
     /**
      * @inheritdoc
      */
@@ -23,7 +25,7 @@ class DocumentSearch extends Document
             [['id', 'parent_id', 'client_id', 'created_by', 'updated_by', 'vat_bool'], 'integer'],
             [['document_type', 'name', 'due_date', 'note', 'status', 'created_at', 'updated_at', 'lang', 'reference', 'reference_client'], 'safe'],
             [['price_htva', 'price_tvac'], 'number'],
-            [['client_name'], 'safe'],
+            [['client_name', 'bill_exists'], 'safe'],
         ];
     }
 
@@ -96,6 +98,25 @@ class DocumentSearch extends Document
             ->andFilterWhere(['like', 'document.reference', $this->reference])
             ->andFilterWhere(['like', 'document.reference_client', $this->reference_client])
             ->andFilterWhere(['like', 'client.nom', $this->client_name]);
+		if($this->bill_exists == 'Y') { // docs that have a bill
+			/*select * from document d1 where not exists (select id from document d2 where d2.document_type = 'BILL' and d2.parent_id = d1.id) */
+			$q2 = new Query();
+			$q2->select('id')
+			   ->from(['d2' => 'document'])
+			   ->andWhere(['d2.document_type' => Document::TYPE_BILL])
+			   ->andwhere('`d2`.`parent_id` = `document`.`id`');
+			$query->andWhere(['not', ['document.bom_bool' => 1]])
+				  ->andWhere(['exists', $q2]);
+		} elseif($this->bill_exists == 'N') {
+			$q2 = new Query();
+			$q2->select('id')
+			   ->from(['d2' => 'document'])
+			   ->andWhere(['d2.document_type' => Document::TYPE_BILL])
+			   ->andwhere('`d2`.`parent_id` = `document`.`id`');
+			$query->andWhere(['not', ['document.bom_bool' => 1]])
+				  ->andWhere(['document.document_type' => Document::TYPE_ORDER])
+				  ->andWhere(['not exists', $q2]);
+		}
 
         return $dataProvider;
     }

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "baec3ccca56405757aec7e45eb5db73b",
+    "hash": "f17814936b1133dcc34885228fee0fe9",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -1420,16 +1420,16 @@
         },
         {
             "name": "components/flag-icon-css",
-            "version": "0.7.0",
+            "version": "0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lipis/flag-icon-css.git",
-                "reference": "5fe239c747e91e498a903e437e70279256e1f27f"
+                "reference": "db9d702ac15e74a84d5d859c9f3b1ce4c1882304"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/5fe239c747e91e498a903e437e70279256e1f27f",
-                "reference": "5fe239c747e91e498a903e437e70279256e1f27f",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/db9d702ac15e74a84d5d859c9f3b1ce4c1882304",
+                "reference": "db9d702ac15e74a84d5d859c9f3b1ce4c1882304",
                 "shasum": ""
             },
             "type": "component",
@@ -1454,7 +1454,7 @@
                 }
             ],
             "description": "CSS for vector based country flags",
-            "time": "2015-03-02 17:43:04"
+            "time": "2015-03-26 16:41:06"
         },
         {
             "name": "dektrium/yii2-user",
@@ -2028,12 +2028,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-builder.git",
-                "reference": "0d7c8ca5f4f79778521ae22e7ce927cea367e7b7"
+                "reference": "f27e8e763e750f9d0421eaa4be496e7dc61d6eca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/0d7c8ca5f4f79778521ae22e7ce927cea367e7b7",
-                "reference": "0d7c8ca5f4f79778521ae22e7ce927cea367e7b7",
+                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/f27e8e763e750f9d0421eaa4be496e7dc61d6eca",
+                "reference": "f27e8e763e750f9d0421eaa4be496e7dc61d6eca",
                 "shasum": ""
             },
             "require": {
@@ -2067,7 +2067,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-04-13 14:55:34"
+            "time": "2015-04-21 15:05:51"
         },
         {
             "name": "kartik-v/yii2-date-range",
@@ -2124,12 +2124,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-datecontrol.git",
-                "reference": "e64aec336c3fc8eb22e056749a6cc35e18997e19"
+                "reference": "cf12569e79848a08bf690329493dc6e314a641c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-datecontrol/zipball/e64aec336c3fc8eb22e056749a6cc35e18997e19",
-                "reference": "e64aec336c3fc8eb22e056749a6cc35e18997e19",
+                "url": "https://api.github.com/repos/kartik-v/yii2-datecontrol/zipball/cf12569e79848a08bf690329493dc6e314a641c1",
+                "reference": "cf12569e79848a08bf690329493dc6e314a641c1",
                 "shasum": ""
             },
             "require": {
@@ -2163,7 +2163,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-02-25 19:38:14"
+            "time": "2015-04-21 15:07:44"
         },
         {
             "name": "kartik-v/yii2-detail-view",
@@ -2263,12 +2263,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-helpers.git",
-                "reference": "250a9c824295754f20fb8fecda02387da4a3b20d"
+                "reference": "094a1c4df1bc4db95048da194a276607ac6f16e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/250a9c824295754f20fb8fecda02387da4a3b20d",
-                "reference": "250a9c824295754f20fb8fecda02387da4a3b20d",
+                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/094a1c4df1bc4db95048da194a276607ac6f16e5",
+                "reference": "094a1c4df1bc4db95048da194a276607ac6f16e5",
                 "shasum": ""
             },
             "require": {
@@ -2301,7 +2301,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-04-20 18:21:55"
+            "time": "2015-04-21 15:14:46"
         },
         {
             "name": "kartik-v/yii2-icons",
@@ -2309,12 +2309,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-icons.git",
-                "reference": "719af14be1bcb3581855ddfd8b389792383a905a"
+                "reference": "bce5f85e8e9b76a11e34dd43156f2db4bdb566a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/719af14be1bcb3581855ddfd8b389792383a905a",
-                "reference": "719af14be1bcb3581855ddfd8b389792383a905a",
+                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/bce5f85e8e9b76a11e34dd43156f2db4bdb566a5",
+                "reference": "bce5f85e8e9b76a11e34dd43156f2db4bdb566a5",
                 "shasum": ""
             },
             "require": {
@@ -2349,7 +2349,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-04-20 16:17:56"
+            "time": "2015-04-21 15:15:10"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -2451,12 +2451,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-markdown.git",
-                "reference": "8e3d233af93d306a978c5a4f5a794025ccd2020f"
+                "reference": "29091f6934804fa88a6a392071432b9821bafc9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-markdown/zipball/8e3d233af93d306a978c5a4f5a794025ccd2020f",
-                "reference": "8e3d233af93d306a978c5a4f5a794025ccd2020f",
+                "url": "https://api.github.com/repos/kartik-v/yii2-markdown/zipball/29091f6934804fa88a6a392071432b9821bafc9b",
+                "reference": "29091f6934804fa88a6a392071432b9821bafc9b",
                 "shasum": ""
             },
             "require": {
@@ -2495,7 +2495,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-02-26 15:05:16"
+            "time": "2015-04-21 15:16:41"
         },
         {
             "name": "kartik-v/yii2-money",
@@ -2553,12 +2553,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-mpdf.git",
-                "reference": "b73e05b72ebaa05de904bd88c0a703eb4ee38f16"
+                "reference": "f65fe859e01374545276d40428d6ff75e4985050"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/b73e05b72ebaa05de904bd88c0a703eb4ee38f16",
-                "reference": "b73e05b72ebaa05de904bd88c0a703eb4ee38f16",
+                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/f65fe859e01374545276d40428d6ff75e4985050",
+                "reference": "f65fe859e01374545276d40428d6ff75e4985050",
                 "shasum": ""
             },
             "require": {
@@ -2592,7 +2592,7 @@
                 "utf8",
                 "yii2"
             ],
-            "time": "2015-03-11 07:33:59"
+            "time": "2015-04-21 15:19:01"
         },
         {
             "name": "kartik-v/yii2-slider",
@@ -3530,12 +3530,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widgets.git",
-                "reference": "ec147a73b5d4f4a20aaaea2ae2c63e6a0cb0bfa7"
+                "reference": "b7eb84987a1bb55e227f6bf148a8322ec553a427"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widgets/zipball/ec147a73b5d4f4a20aaaea2ae2c63e6a0cb0bfa7",
-                "reference": "ec147a73b5d4f4a20aaaea2ae2c63e6a0cb0bfa7",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widgets/zipball/b7eb84987a1bb55e227f6bf148a8322ec553a427",
+                "reference": "b7eb84987a1bb55e227f6bf148a8322ec553a427",
                 "shasum": ""
             },
             "require": {
@@ -3584,7 +3584,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-02-26 16:21:10"
+            "time": "2015-04-21 15:37:51"
         },
         {
             "name": "mdmsoft/yii2-ar-behaviors",
@@ -3907,6 +3907,45 @@
                 "yii2"
             ],
             "time": "2015-01-26 09:18:06"
+        },
+        {
+            "name": "perminder-klair/yii2-dropzone",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/perminder-klair/yii2-dropzone.git",
+                "reference": "36de5a44fc89d9674bc6247a157ef785b291ec10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/perminder-klair/yii2-dropzone/zipball/36de5a44fc89d9674bc6247a157ef785b291ec10",
+                "reference": "36de5a44fc89d9674bc6247a157ef785b291ec10",
+                "shasum": ""
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kato\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Parminder Klair",
+                    "email": "perminder.klair@gmail.com"
+                }
+            ],
+            "description": "DropzoneJs Extention for Yii2",
+            "keywords": [
+                "dropzone",
+                "extension",
+                "upload",
+                "yii2"
+            ],
+            "time": "2014-11-20 21:15:18"
         },
         {
             "name": "phpdocumentor/reflection",
@@ -4989,7 +5028,8 @@
         "kartik-v/yii2-markdown": 20,
         "kartik-v/yii2-mpdf": 20,
         "kartik-v/yii2-widgets": 20,
-        "yurkinx/yii2-image": 20
+        "yurkinx/yii2-image": 20,
+        "perminder-klair/yii2-dropzone": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
