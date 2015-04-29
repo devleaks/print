@@ -330,14 +330,14 @@ class DocumentController extends Controller
     }
 
     public function actionCreateRefund($id = null) {
-		$cli = Client::findOne(['nom' => 'Client au comptoir']);
-		if($cli) $id = $cli->id;
+		if($cli = Client::auComptoir())
+			$id = $cli->id;
         return $this->actionCreate($id, Document::TYPE_REFUND);
     }
 
     public function actionCreateTicket($id = null) {
-		$cli = Client::findOne(['nom' => 'Client au comptoir']);
-		if($cli) $id = $cli->id;
+		if($cli = Client::auComptoir())
+			$id = $cli->id;
         return $this->actionCreate($id, Document::TYPE_TICKET);
     }
 
@@ -429,8 +429,7 @@ class DocumentController extends Controller
 	    }
 	    elseif ($id > 0) {
 			$client = Client::findOne($id);
-			$comptoir = Client::findOne(['nom' => 'Client au comptoir']); 			
-			$addr = $client->makeAddress(($comptoir->id != $client->id), $ret);//$this->render('_header_client', ['client' => $client])
+			$addr = $client->makeAddress(! $client->isComptoir(), $ret);//$this->render('_header_client', ['client' => $client])
 	        $out['results'] = ['id' => $id, 'text' => $client->nom, 'addr' => $addr];
 	    }
 	    else {
