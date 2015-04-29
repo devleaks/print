@@ -13,6 +13,8 @@ use yii\helpers\Url;
  */
 class Client extends _Client
 {
+	const COMPTOIR = 'CCC';
+
     /**
      * @inheritdoc
      */
@@ -29,6 +31,19 @@ class Client extends _Client
                 ],
         ];
     }
+
+
+	public static function auComptoir() {
+		return Client::findOne(['comptabilite' => Client::COMPTOIR]);
+	}
+
+
+	public function isComptoir() {
+		if($comptoir = Client::auComptoir())
+			return $this->id == $comptoir->id;
+		return false;
+	}
+
 
     /**
      * create client name label for display
