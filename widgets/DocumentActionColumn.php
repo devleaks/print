@@ -294,7 +294,7 @@ class DocumentActionColumn extends Column {
 						'<li>'.Html::a(Yii::t('store', 'Labels'),				['/order/document/labels', 'id' => $id],								['target' => '_blank', 'title' => Yii::t('store', 'Print Packing Label')]).'</li>'.
 					'</ul></div>';
 		if($name == 'convert') {
-			$comptoir = Client::findOne(['nom' => 'Client au comptoir']);
+			$comptoir = Client::auComptoir();
 			$doc = Document::findOne($id);
 			if($doc->client_id == $comptoir->id)
 				return Html::a(Yii::t('store', 'Convert to sale'),  [$data['action'], 'id' => $id, 'ticket' => true], ['class' => $this->baseClass . ' btn-' . $data['color'], 'title' => Yii::t('store', 'Convert to sale')]);
