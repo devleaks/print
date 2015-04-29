@@ -20,9 +20,7 @@ $bottomLine = $client->getBottomLine();
 
 $client_color = $bottomLine < -0.04 ? 'warning' : 'primary';
 
-$comptoir = Client::findOne(['nom' => 'Client au comptoir']);
-
-$buttons1 = ($comptoir->id == $client->id) ? '' : '{update} <span class="kv-buttons-1">'.
+$buttons1 = $client->isComptoir() ? '' : '{update} <span class="kv-buttons-1">'.
 Html::a('<i class="glyphicon glyphicon-shopping-cart"></i>',
   ['/order/document/client', 'id' => $client->id, 'sort' => '-updated_at'], [
 	'title' => Yii::t('store', 'Previous Orders'),

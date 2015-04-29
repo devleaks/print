@@ -2,6 +2,13 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
 use yii\data\ActiveDataProvider;
+
+$client_nom = $model->client->nom;
+if($model->client->auComptoir()) {
+	if($model->reference_client)
+		$client_nom = $model->reference_client;
+}
+
 ?>
 <div class="order-print-header">
 	<table width="100%">
@@ -22,7 +29,7 @@ use yii\data\ActiveDataProvider;
 			<td style="font-size: 2em;"><?= Yii::$app->formatter->asDate($model->due_date, 'medium') ?></td>
 	</tr>
 	<tr>
-			<td colspan="2" style="font-size: 3em; text-align:left;"><?= $model->client->nom ?></td>
+			<td colspan="2" style="font-size: <?= ($model->client->auComptoir() ? 1.5 : 3) ?>em; text-align:left;"><?= $client_nom ?></td>
 	</tr>
 	<tr>
 			<td colspan="2" style="font-size: 2em; text-align:left;">Total: <?= $model->getDocumentLines()->count(); ?></td>
