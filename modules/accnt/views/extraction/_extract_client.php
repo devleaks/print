@@ -43,11 +43,11 @@ Customer:<?= $model->comptabilite == '' ? 'UNKNOWN' : $model->comptabilite ?>
 
       VatType:              <?= $has_vat ? 0 : 7 ?>
 
-      VatNum:               <?= $has_vat ? trim(str_replace(' ', '', str_replace('BE', '',$model->numero_tva))) : 'NA' ?>
+      VatNum:               <?= $has_vat ? preg_replace('/[^a-zA-Z0-9]/', '', $model->numero_tva) : 'NA'  ?>
 
 <?php if($has_vat): ?>
       VatFormat:            <?= $model->numero_tva ?
-									strpos('BE', $model->numero_tva) > -1 ? 'BE' : substr($model->numero_tva, 0, 2) //pas tout à fait correct...
+									stripos('be', $model->numero_tva) > -1 ? 'BE' : substr($model->numero_tva, 0, 2) //pas tout à fait correct...
 									:
 									'' ?>
 <?php endif; ?>
