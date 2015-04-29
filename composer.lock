@@ -782,16 +782,16 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "2.1.3",
+            "version": "2.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jquery/jquery.git",
-                "reference": "8f2a9d9272d6ed7f32d3a484740ab342c02541e0"
+                "reference": "7751e69b615c6eca6f783a81e292a55725af6b85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery/zipball/8f2a9d9272d6ed7f32d3a484740ab342c02541e0",
-                "reference": "8f2a9d9272d6ed7f32d3a484740ab342c02541e0",
+                "url": "https://api.github.com/repos/jquery/jquery/zipball/7751e69b615c6eca6f783a81e292a55725af6b85",
+                "reference": "7751e69b615c6eca6f783a81e292a55725af6b85",
                 "shasum": ""
             },
             "require-dev": {
@@ -806,6 +806,7 @@
                 "bower-asset-ignore": [
                     "**/.*",
                     "build",
+                    "dist/cdn",
                     "speed",
                     "test",
                     "*.md",
@@ -1146,16 +1147,16 @@
         },
         {
             "name": "bower-asset/unidragger",
-            "version": "v1.1.1",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/unidragger.git",
-                "reference": "28089e1dc64e04b433329fe1af5073eb5f2057ca"
+                "reference": "7647629725c21c0cd577fd88d64285edd23497a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/unidragger/zipball/28089e1dc64e04b433329fe1af5073eb5f2057ca",
-                "reference": "28089e1dc64e04b433329fe1af5073eb5f2057ca",
+                "url": "https://api.github.com/repos/metafizzy/unidragger/zipball/7647629725c21c0cd577fd88d64285edd23497a3",
+                "reference": "7647629725c21c0cd577fd88d64285edd23497a3",
                 "shasum": ""
             },
             "require": {
@@ -2263,12 +2264,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-helpers.git",
-                "reference": "094a1c4df1bc4db95048da194a276607ac6f16e5"
+                "reference": "9fad64668fb60c0a56744ea7e7faa06f94c9805e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/094a1c4df1bc4db95048da194a276607ac6f16e5",
-                "reference": "094a1c4df1bc4db95048da194a276607ac6f16e5",
+                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/9fad64668fb60c0a56744ea7e7faa06f94c9805e",
+                "reference": "9fad64668fb60c0a56744ea7e7faa06f94c9805e",
                 "shasum": ""
             },
             "require": {
@@ -2301,7 +2302,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-04-21 15:14:46"
+            "time": "2015-04-24 20:05:26"
         },
         {
             "name": "kartik-v/yii2-icons",
