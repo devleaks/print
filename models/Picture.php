@@ -183,8 +183,8 @@ class Picture extends _Picture
 			$newidth  = round($pic->width  / $ratio);
 			$neheight = round($pic->height / $ratio);
 			$pic->resize($newidth, $neheight);
-			$pic->save($thumbPath);
-		}	
+		} // else picture already smaller than thumbnail, so we leave it as it is
+		$pic->save($thumbPath);
 		if($pic->width > self::maxsize || $pic->height > self::maxsize) {
 		    $ratio = ($pic->width > $pic->height) ? $pic->width / self::maxsize : $pic->height / self::maxsize;
 		    $newidth  = $pic->width  / $ratio;
