@@ -35,6 +35,7 @@ use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -297,6 +298,16 @@ class DocumentController extends Controller
 				}
 				$addDocumentLine = DocumentLineController::addFirstLine($model);
 				$model->updatePrice();
+				
+				$cancel = Html::a(Yii::t('store', 'Cancel'),
+								['/order/document/delete', 'id'=>$model->id],
+								[
+									'data-method' => 'post',
+									'title' => Yii::t('store', 'Delete {0}', Yii::t('store', $model->document_type)),
+									'data-confirm' => Yii::t('store', 'Delete {0}?', Yii::t('store', $model->document_type)),
+								]);
+				Yii::$app->session->setFlash('success', Yii::t('store', 'Document added. {0}.', $cancel));
+				
 				return $this->redirect(['document-line/create', 'id' => $model->id]);
 			}
         } else {
@@ -397,7 +408,7 @@ class DocumentController extends Controller
 			Yii::$app->session->setFlash('success', Yii::t('store', 'Document deleted.'));
 		}
 
-		return $this->redirect(Yii::$app->request->referrer);
+		return $this->redirect(Url::to(['/order/document']));
     }
 
     /**
@@ -544,9 +555,17 @@ class DocumentController extends Controller
 	public function actionSubmit($id) {
 		$model = $this->findModel($id);
 		$work = $model->createWork();
-		if($work)
+		if($work) {
+			$cancel = Html::a(Yii::t('store', 'Cancel work submission'),
+							['/work/work/delete', 'id'=>$work->id],
+							[
+								'data-method' => 'post',
+								'title' => Yii::t('store', 'Delete work order'),
+								'data-confirm' => Yii::t('store', 'Delete work order?'),
+							]);
+			Yii::$app->session->setFlash('success', Yii::t('store', 'Work submitted ({0})', $cancel));
         	return $this->redirect(['/work/work/view', 'id' => $work->id, 'sort' => 'position']);
-		else {
+		} else {
 			Yii::$app->session->setFlash('info', Yii::t('store', 'There is no work for this order.'));
         	return $this->redirect(Yii::$app->request->referrer);			
 		}
@@ -564,38 +583,59 @@ class DocumentController extends Controller
 		$capturePayment = new CapturePayment();
 		
 		if($capturePayment->load(Yii::$app->request->post())) {
-			$capturePayment->amount = str_replace(',', '.', $capturePayment->amount);
-			$capturePayment->total  = str_replace(',', '.', $capturePayment->total);
-			// if ($capturePayment->validate()) {
-			$model = $this->findModel($capturePayment->id);
-			
-			$payment_entered = null;
-			if($capturePayment->method != Payment::USE_CREDIT) { // if we use credit, money is already here, so we don't add it
-				$payment_entered = new Account([
-					'client_id' => $model->client_id,
-					'payment_method' => $capturePayment->method,
-					'payment_date' => date('Y-m-d H:i:s'),
-					'amount' => $capturePayment->amount,
-					'status' => $capturePayment->amount > 0 ? 'CREDIT' : 'DEBIT',
-				]);
-				$payment_entered->save();
-				$payment_entered->refresh();
-			}
+			if ($capturePayment->validate()) {
 
-			$ok = $model->addPayment($payment_entered, $capturePayment->amount, $capturePayment->method);
-			
-			$feedback = '';
-			if($capturePayment->submit) { // do we need to create a new work order for this order?
-				$work = $model->createWork();
-				$feedback = $work ? Yii::t('store', 'Work submitted') : Yii::t('store', 'No work to submit');
+				$capturePayment->amount = str_replace(',', '.', $capturePayment->amount);
+				$capturePayment->total  = str_replace(',', '.', $capturePayment->total);
+				
+				$model = $this->findModel($capturePayment->id);
+
+				// submit work before dealing with paymebts
+				$feedback = '';
+				if($capturePayment->submit) { // do we need to create a new work order for this order?
+					$work = $model->createWork();
+					$cancel = Html::a(Yii::t('store', 'Cancel work submission'),
+									['/work/work/delete', 'id'=>$work->id],
+									[
+										'data-method' => 'post',
+										'title' => Yii::t('store', 'Delete work order'),
+										'data-confirm' => Yii::t('store', 'Delete work order?'),
+									]);
+					$feedback = $work ? Yii::t('store', 'Work submitted ({0})', $cancel) : Yii::t('store', 'No work to submit');
+				}
+
+				// deal with payment in a single transaction: Everything OK or fail.
+				$transaction = Yii::$app->db->beginTransaction();
+
+				$payment_entered = null;
+				if($capturePayment->method != Payment::USE_CREDIT) { // if we use credit, money is already here, so we don't add it
+					$payment_entered = new Account([
+						'client_id' => $model->client_id,
+						'payment_method' => $capturePayment->method,
+						'payment_date' => date('Y-m-d H:i:s'),
+						'amount' => $capturePayment->amount,
+						'status' => $capturePayment->amount > 0 ? 'CREDIT' : 'DEBIT',
+					]);
+					$payment_entered->save();
+					$payment_entered->refresh();
+				}
+
+				if( $model->addPayment($payment_entered, $capturePayment->amount, $capturePayment->method) ) {
+					Yii::trace('doc='.$model->document_type, 'DocumentController::actionUpdateStatus');
+					$model->setStatus(Order::STATUS_TOPAY);
+					Yii::$app->session->setFlash('success', ($feedback ? $feedback . '; '.strtolower(Yii::t('store', 'Payment added')): Yii::t('store', 'Payment added')).'.');
+					$transaction->commit();
+				} else {
+					Yii::$app->session->setFlash('danger', ($feedback ? $feedback . '; '.strtolower(Yii::t('store', 'Payment was not added')): Yii::t('store', 'Payment was not added')).'.');
+					$transaction->rollback();
+				}
+
+			} else { // report capture errors
+				Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem capturing payment: {0}.', VarDumper::dumpAsString($capture->errors, 4, true)));
 			}
-			Yii::trace('doc='.$model->document_type, 'DocumentController::actionUpdateStatus');
-			$model->setStatus(Order::STATUS_TOPAY);
-			if($ok) Yii::$app->session->setFlash('success', ($feedback ? $feedback . '; '.strtolower(Yii::t('store', 'Payment added')): Yii::t('store', 'Payment added')).'.');
 	        return $this->render('view', [
 	            'model' => $model,
 	        ]);
-			// } else report capture errors
 		} else {
 			Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem reading payment capture.'));
 			return $this->redirect(Yii::$app->request->referrer);

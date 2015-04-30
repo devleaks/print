@@ -214,6 +214,15 @@ class DocumentLineController extends Controller
 				}
 					
 				$order->setStatus(Document::STATUS_OPEN);
+				
+				$cancel = Html::a(Yii::t('store', 'Cancel'),
+								['/order/document-line/delete', 'id'=>$model->id],
+								[
+									'data-method' => 'post',
+									'title' => Yii::t('store', 'Delete order line'),
+									'data-confirm' => Yii::t('store', 'Delete order line?'),
+								]);
+				Yii::$app->session->setFlash('success', Yii::t('store', 'Line added. {0}.', $cancel));
 			}
 			$newDocumentLine = new DocumentLine();
 			$newDocumentLine->document_id = $order->id;

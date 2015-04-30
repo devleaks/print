@@ -396,7 +396,16 @@ return [
 	'All documents' => 'Tous les documents',
 	'You cannot change the client of a Bill of Material or of a bill of BoM.' => "Vous ne pouvez pas changer le client d'un bon de livraison ou d'une facture regroupant des bons de livraisons.",
 	'Bulk Bill' => 'Facturer par lot',
-
+	'Document added. {0}.' => 'Document créé. {0}.',
+	'Line added. {0}.' => 'Ligne de commande ajoutéé. {0}.',
+	'Cancel work submission' => 'Annuler le lancement du travail',
+	'Delete work order' => 'Annuler le travail',
+	'Delete work order?' => 'Annuler le travail?',
+	'Delete order line' => 'Supprimer la ligne de commande',
+	'Delete order line?' => 'Supprimer la ligne de commande?',
+	'Delete {0}' => 'Supprimer la {0}',
+	'Delete {0}?' => 'Supprimer la {0}?',
+	
 
 	/* Statistics */
 	'Statistics' => 'Statistiques',

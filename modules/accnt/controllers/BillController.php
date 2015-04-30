@@ -157,6 +157,8 @@ class BillController extends Controller
 					if(count($_POST['selection']) > 0) {
 						$available = str_replace(',','.',$capture->amount);
 						
+						$transaction = Yii::$app->db->beginTransaction();
+						
 						$payment_entered = new Account([
 							'client_id' => $capture->client_id,
 						//	'sale' => null, // explicitely: Sales will be null for a global payment.
@@ -209,6 +211,8 @@ class BillController extends Controller
 						} else {
 							Yii::$app->session->setFlash('success', Yii::t('store', 'Transfered amount split in all bills.'));
 						}
+
+						$transaction->commit();
 					}
 		}
 		return $this->redirect(['index']);
