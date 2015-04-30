@@ -45,3 +45,27 @@ Les paramètres dans les domaines suivants ne peuvent pas être modifiés sans m
 Ajouter ou supprimer des éléments dans ces domaines peut rendre l'application inutilisable, et/ou provoquer des erreurs.
 
 Domaines: Extra, Langue, Role.
+
+## Articles spéciaux, clients spéciaux
+
+### Client Spécial
+
+Le client au comptoir est un client particulier. Il est reconnu par son code de COMPTABILITE (CCC).
+Si on change le nom de comptabilité du client au comptoir, il faut adapter le code pour la gestion des clients (simple, mais à faire!).
+
+### Articles spéciaux
+
+Il existe quelques articles spéciaux, détecté par leur code REFERENCE.
+Si on change la REFERENCE de ces articles spéciaux, il faut adapter le code pour la gestion des articles (simple, mais à faire!).
+
+Articles spéciaux: 
+
+Article | Référence (à ne pas modifier)
+----------------------------- | -------
+ChromaLuxe | 1
+Divers | #
+Remise | %
+Crédit | Credit
+Remboursement | Refund
+
+
