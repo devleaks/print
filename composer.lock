@@ -3782,16 +3782,16 @@
         },
         {
             "name": "miloschuman/yii2-highcharts-widget",
-            "version": "v4.0.4.1",
+            "version": "v4.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/miloschuman/yii2-highcharts.git",
-                "reference": "69a0800266e380ecd9207287d4aa07a18b3a32f8"
+                "reference": "c6c2e163d2cb537b09c5f46b65fc73adc604e904"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/miloschuman/yii2-highcharts/zipball/69a0800266e380ecd9207287d4aa07a18b3a32f8",
-                "reference": "69a0800266e380ecd9207287d4aa07a18b3a32f8",
+                "url": "https://api.github.com/repos/miloschuman/yii2-highcharts/zipball/c6c2e163d2cb537b09c5f46b65fc73adc604e904",
+                "reference": "c6c2e163d2cb537b09c5f46b65fc73adc604e904",
                 "shasum": ""
             },
             "require": {
@@ -3823,7 +3823,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2014-10-08 14:16:58"
+            "time": "2015-04-29 19:14:33"
         },
         {
             "name": "nikic/php-parser",
