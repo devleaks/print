@@ -405,6 +405,7 @@ return [
 	'Delete order line?' => 'Supprimer la ligne de commande?',
 	'Delete {0}' => 'Supprimer la {0}',
 	'Delete {0}?' => 'Supprimer la {0}?',
+	'Work submitted. {0}.' => 'Travail envoyé. {0}.',
 	
 
 	/* Statistics */

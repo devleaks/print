@@ -563,7 +563,7 @@ class DocumentController extends Controller
 								'title' => Yii::t('store', 'Delete work order'),
 								'data-confirm' => Yii::t('store', 'Delete work order?'),
 							]);
-			Yii::$app->session->setFlash('success', Yii::t('store', 'Work submitted ({0})', $cancel));
+			Yii::$app->session->setFlash('success', Yii::t('store', 'Work submitted. {0}.', $cancel));
         	return $this->redirect(['/work/work/view', 'id' => $work->id, 'sort' => 'position']);
 		} else {
 			Yii::$app->session->setFlash('info', Yii::t('store', 'There is no work for this order.'));

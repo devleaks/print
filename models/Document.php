@@ -373,6 +373,8 @@ class Document extends _Document
 	}
 
 
+	/** IMPORTANT: Calls to this method should be framed in a transacation
+	 */
 	public function addPayment($account, $amount_gross, $method, $note = null) {
 		$payment = null;
 		$extra = null;

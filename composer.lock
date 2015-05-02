@@ -1806,16 +1806,16 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.1.8",
+            "version": "v4.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "dead0e4302567e87e66296290b62da936ec6793e"
+                "reference": "00bf2212c4c005850267dd27803dba350e90a5be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/dead0e4302567e87e66296290b62da936ec6793e",
-                "reference": "dead0e4302567e87e66296290b62da936ec6793e",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/00bf2212c4c005850267dd27803dba350e90a5be",
+                "reference": "00bf2212c4c005850267dd27803dba350e90a5be",
                 "shasum": ""
             },
             "type": "library",
@@ -1850,7 +1850,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2015-03-31 07:23:22"
+            "time": "2015-05-02 11:29:22"
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
@@ -2029,12 +2029,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-builder.git",
-                "reference": "f27e8e763e750f9d0421eaa4be496e7dc61d6eca"
+                "reference": "0145817429f80d66f4f8f069df5392426a823dc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/f27e8e763e750f9d0421eaa4be496e7dc61d6eca",
-                "reference": "f27e8e763e750f9d0421eaa4be496e7dc61d6eca",
+                "url": "https://api.github.com/repos/kartik-v/yii2-builder/zipball/0145817429f80d66f4f8f069df5392426a823dc6",
+                "reference": "0145817429f80d66f4f8f069df5392426a823dc6",
                 "shasum": ""
             },
             "require": {
@@ -2068,7 +2068,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-04-21 15:05:51"
+            "time": "2015-05-02 07:55:55"
         },
         {
             "name": "kartik-v/yii2-date-range",
