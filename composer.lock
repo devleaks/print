@@ -2354,16 +2354,16 @@
         },
         {
             "name": "kartik-v/yii2-krajee-base",
-            "version": "v1.7.4",
+            "version": "v1.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-krajee-base.git",
-                "reference": "01e9fa8c19970070d0aba5b16a7bfd8c241bc7f9"
+                "reference": "2b1d3cafd3864d3ecf3e16db69256dd967fe911d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/01e9fa8c19970070d0aba5b16a7bfd8c241bc7f9",
-                "reference": "01e9fa8c19970070d0aba5b16a7bfd8c241bc7f9",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/2b1d3cafd3864d3ecf3e16db69256dd967fe911d",
+                "reference": "2b1d3cafd3864d3ecf3e16db69256dd967fe911d",
                 "shasum": ""
             },
             "require": {
@@ -2396,7 +2396,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-02-13 03:36:35"
+            "time": "2015-05-03 08:11:52"
         },
         {
             "name": "kartik-v/yii2-label-inplace",
@@ -2986,16 +2986,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-fileinput",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-fileinput.git",
-                "reference": "be89168cc8c8d2648411b9f400312f1a19851e40"
+                "reference": "505c429ef5787de9038ee3a24b2406082d6c6633"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-fileinput/zipball/be89168cc8c8d2648411b9f400312f1a19851e40",
-                "reference": "be89168cc8c8d2648411b9f400312f1a19851e40",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-fileinput/zipball/505c429ef5787de9038ee3a24b2406082d6c6633",
+                "reference": "505c429ef5787de9038ee3a24b2406082d6c6633",
                 "shasum": ""
             },
             "require": {
@@ -3032,20 +3032,20 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-03-31 07:25:24"
+            "time": "2015-05-03 08:54:26"
         },
         {
             "name": "kartik-v/yii2-widget-growl",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-growl.git",
-                "reference": "aa319f266fd8e88d4a1f61bdc5c4bf92d0ecc0d2"
+                "reference": "c79abaa47e9103e93345cd1eca7bc75e17e9a92e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-growl/zipball/aa319f266fd8e88d4a1f61bdc5c4bf92d0ecc0d2",
-                "reference": "aa319f266fd8e88d4a1f61bdc5c4bf92d0ecc0d2",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-growl/zipball/c79abaa47e9103e93345cd1eca7bc75e17e9a92e",
+                "reference": "c79abaa47e9103e93345cd1eca7bc75e17e9a92e",
                 "shasum": ""
             },
             "require": {
@@ -3081,7 +3081,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2014-11-10 15:16:14"
+            "time": "2015-05-03 08:23:04"
         },
         {
             "name": "kartik-v/yii2-widget-rangeinput",
@@ -3185,16 +3185,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-select2",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "c65d0f7b85e5a03ac661ae1f9ab9eaf5be6e0d89"
+                "reference": "890e3055d1803e74b325cf8838908b4334d993ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/c65d0f7b85e5a03ac661ae1f9ab9eaf5be6e0d89",
-                "reference": "c65d0f7b85e5a03ac661ae1f9ab9eaf5be6e0d89",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/890e3055d1803e74b325cf8838908b4334d993ac",
+                "reference": "890e3055d1803e74b325cf8838908b4334d993ac",
                 "shasum": ""
             },
             "require": {
@@ -3229,7 +3229,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2014-11-08 18:34:38"
+            "time": "2015-05-03 09:10:33"
         },
         {
             "name": "kartik-v/yii2-widget-sidenav",
@@ -4753,16 +4753,16 @@
         },
         {
             "name": "jamband/yii2-schemadump",
-            "version": "v0.9.6",
+            "version": "v0.9.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jamband/yii2-schemadump.git",
-                "reference": "9e81b661ed07ed019323e6792da8d088bec50a85"
+                "reference": "8d0409daf84a772beb15249178470145cbc2aaaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jamband/yii2-schemadump/zipball/9e81b661ed07ed019323e6792da8d088bec50a85",
-                "reference": "9e81b661ed07ed019323e6792da8d088bec50a85",
+                "url": "https://api.github.com/repos/jamband/yii2-schemadump/zipball/8d0409daf84a772beb15249178470145cbc2aaaa",
+                "reference": "8d0409daf84a772beb15249178470145cbc2aaaa",
                 "shasum": ""
             },
             "require": {
@@ -4794,7 +4794,7 @@
                 "migration",
                 "yii2"
             ],
-            "time": "2015-04-09 03:17:48"
+            "time": "2015-05-02 13:07:54"
         },
         {
             "name": "phpspec/php-diff",
