@@ -1,0 +1,7 @@
+export PATH=/Applications/mampstack/php/bin:/Applications/mampstack/mysql/bin:$PATH
+export CDPATH=.:/Applications/mampstack/apps
+which php
+which mysql
+
+cd yii2/basic
+ls -l yii

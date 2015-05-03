@@ -1,0 +1,11 @@
+delete from cash;
+delete from extraction;
+delete from payment;
+delete from picture;
+delete from pdf;
+delete from work_line;
+delete from work;
+delete from document_line_detail;
+delete from document_line;
+update document set parent_id = null;
+delete from document;

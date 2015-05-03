@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key> 
+    <string>com.bitnami-print.apache.service</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/Applications/mampstack/ctlscript.sh</string>
+      <string>start</string>   
+      <string>apache</string>    
+    </array>
+    <key>UserName</key>
+    <string>root</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>OnDemand</key>
+    <false/>
+	<key>StandardInPath</key> <string>/tmp/test.stdin</string>
+	<key>StandardOutPath</key> <string>/tmp/test.stdout</string>
+	<key>StandardErrorPath</key> <string>/tmp/test.stderr</string>
+  </dict>
+</plist>

@@ -1,0 +1,6 @@
+select client_id, sum(price_htva), count(id)
+from document
+group by client_id
+
+
+

@@ -496,7 +496,7 @@ class Document extends _Document
 							'account_id' => $account_id,
 						]);
 						$payment->save();
-						History::record($payment, 'ADD_PAYMENT', 'Payment added for '.$this->name, true, null);
+						History::record($payment, 'ADD', 'Payment added for '.$this->name, true, null);
 						Yii::trace('Added payment '.$payment->id.' for credit '.$credit_line->ref, 'Document::addPayment');
 					}
 				}
@@ -524,11 +524,11 @@ class Document extends _Document
 			
 		if($ok && $payment && $new_payment) {
 			$ok = $payment->save();
-			History::record($payment, 'ADD_PAYMENT', 'Payment added for '.$this->name, true, null);
+			History::record($payment, 'ADD', 'Payment added for '.$this->name, true, null);
 		}
 		if($ok && $extra) {
 			$ok = $extra->save();
-			History::record($payment, 'ADD_PAYMENT', 'Extra credit added: '.$extra->amount, true, null);
+			History::record($payment, 'ADD', 'Extra credit added: '.$extra->amount, true, null);
 		}
 		if($ok)
 			$this->setStatus(self::STATUS_TOPAY); // will close if necessary (i.e. if isPaid == true)
@@ -562,13 +562,13 @@ class Document extends _Document
 						'status' => Payment::STATUS_OPEN,
 					]);
 					$credit->save();
-					History::record($payment, 'DELETE_PAYMENT', 'Credit added for '.$this->name.'='.$credit->amount, true, null);
+					History::record($payment, 'DELETE', 'Credit added for '.$this->name.'='.$credit->amount, true, null);
 					Yii::trace('Created credit for='.$this->name, 'Document::deletePayment');
 					Yii::$app->session->setFlash('success', Yii::t('store', 'Payment with credit deleted. {0} updated. Credit amount {0}€ restored.',
 								[$credit->amount]));
 				}
 				$payment->delete();
-				History::record($payment, 'DELETE_PAYMENT', 'Payment deleted', true, null);
+				History::record($payment, 'DELETE', 'Payment deleted', true, null);
 				Yii::trace('Deleted credit for='.$this->name, 'Document::deletePayment');
 				$this->setStatus(Document::STATUS_TOPAY);
 				Yii::trace('Status TOPAY for '.$this->name, 'Document::deletePayment');
@@ -585,7 +585,7 @@ class Document extends _Document
 							if(! $cash->getPayments()->exists()) { // are there other payments that depends on this cash? If not, we delete cash as well.
 								$cash->delete();
 							}
-							History::record($payment, 'DELETE_PAYMENT', 'Cash payment deleted', true, null);
+							History::record($payment, 'DELETE', 'Cash payment deleted', true, null);
 							if($do_account) $account->delete();
 							Yii::$app->session->setFlash('success', Yii::t('store', 'Cash payment deleted. {0} updated. You must review cash balance from {1}.',
 										[$this->name, Yii::$app->formatter->asDate($cash_date)]));
@@ -596,7 +596,7 @@ class Document extends _Document
 						}
 					} else {
 						$payment->delete();
-						History::record($payment, 'DELETE_PAYMENT', 'Payment deleted', true, null);
+						History::record($payment, 'DELETE', 'Payment deleted', true, null);
 						if($do_account) $account->delete();
 						Yii::$app->session->setFlash('success', Yii::t('store', 'Payment deleted. {0} updated.', [$this->name]));
 						Yii::trace('Deleted payment for='.$this->name, 'Document::deletePayment');

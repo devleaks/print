@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\HistorySearch */
@@ -25,7 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'action',
             'summary',
             'note',
-            'performer_id',
+            [
+				'attribute' => 'performer_id',
+				'value' => function($model, $key, $index, $widget) {
+					$performer = User::findOne($model->performer_id);
+					return $performer ? $performer->username : '';
+				}
+			],
             'created_at',
 
             ['class' => 'kartik\grid\ActionColumn', 'template' => '{view} {delete}'],

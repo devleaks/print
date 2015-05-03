@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>Label</key>
+        <string>com.bitnami-print.mysql.service</string>
+        <key>ProgramArguments</key>
+        <array>
+                <string>/Applications/mampstack/mysql/bin/mysqld_safe</string>
+                <string>--defaults-file=/Applications/mampstack/mysql/my.cnf</string>
+                <string>--port=3306</string>
+                <string>--socket=/Applications/mampstack/mysql/tmp/mysql.sock</string>
+                <string>--datadir=/Applications/mampstack/mysql/data</string>
+                <string>--log-error=/Applications/mampstack/mysql/data/mysqld.log</string>
+                <string>--pid-file=/Applications/mampstack/mysql/data/mysqld.pid</string>
+       </array>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>UserName</key>
+        <string>_mysql</string>
+        <key>GroupName</key>
+        <string>_mysql</string>
+        <key>StandardInPath</key> <string>/tmp/test1.stdin</string>
+        <key>StandardOutPath</key> <string>/tmp/test1.stdout</string>
+        <key>StandardErrorPath</key> <string>/tmp/test1.stderr</string>
+</dict>
+</plist>

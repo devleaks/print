@@ -1,0 +1,15 @@
+# Cronjobs for print
+
+# Runs backup every hour
+0 * * * * /Applications/mampstack/apps/devl/runtime/bin/backup.sh
+
+# Clean older backup once a day at noon.
+0 12 * * 2 /Applications/mampstack/apps/devl/runtime/bin/clean_backup.sh
+
+# Run on first monday of the month
+#
+# If it's Monday - Friday, and the 1st of the month
+00 10 1 * * [ $(date '+%u') -le 5 ] && /Applications/mampstack/apps/devl/runtime/bin/monthly.sh
+# If it's Monday and the 2nd or 3rd of the month (1rst was Sat or Sun)
+00 10 2-3 * * [ $(date '+%u') -eq 1 ] && /Applications/mampstack/apps/devl/runtime/bin/monthly.sh
+

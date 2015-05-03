@@ -528,10 +528,34 @@ class DocumentController extends Controller
 	        ]);
 		} else {
 			$order = $model->convert($ticket);
+			$cancel = Html::a(Yii::t('store', 'Cancel'),
+							['/order/document/cancel-convert', 'id'=>$order->id],
+							[
+								'data-method' => 'post',
+								'title' => Yii::t('store', 'Cancel'),
+								'data-confirm' => Yii::t('store', 'Cancel?'),
+							]);
+			Yii::$app->session->setFlash('success', Yii::t('store', 'Successful onvertion. {0}.', $cancel));
 	        return $this->render('view', [
 	            'model' => $order,
 	        ]);
 		}
+	}
+
+
+	public function actionCancelConvert($id) {
+		if( $model = $this->findModel($id) ) {
+			$parent = $this->findModel($model->parent_id);
+			$what = $model->document_type;
+			$model->deleteCascade();
+			$parent->setStatus($parent->document_type == Document::TYPE_BID ? Document::STATUS_OPEN : Document::STATUS_TOPAY);
+			Yii::$app->session->setFlash('success', Yii::t('store', '{0} deleted.', Yii::t('store', $what)));
+	        return $this->render('view', [
+	            'model' => $parent,
+	        ]);
+		}
+		Yii::$app->session->setFlash('danger', Yii::t('store', 'Document {0} not found.', $id));
+		return $this->actionIndex();
 	}
 
 	public function actionBillBoms() {

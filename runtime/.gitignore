@@ -1,9 +1,8 @@
 HTML
 URI
-_dev
 backup
 debug
-gii-2.0.3
+gii-*
 gitignore
 logs
 mail
