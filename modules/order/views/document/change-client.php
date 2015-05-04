@@ -84,11 +84,6 @@ $this->params['breadcrumbs'][] = $this->title;
 								],
 							],
 						],
-						'actions' => [    // embed raw HTML content
-				            'type' => Form::INPUT_RAW, 
-				            'value'=> Html::label('&nbsp;').Html::a(Yii::t('store', 'Create Client'), Url::to(['/store/client/new', 'ret' => $model->document_type]),
-								['class' => 'btn btn-warning', 'data-intro' => "Pour aller vers l'écran d'ajout d'un nouveau client"]),
-				        ]						
 					],
 				])
 		?>
