@@ -1,4 +1,5 @@
 :
 # Delete old database backup files
-. ../../config/shell.sh
+dir=`dirname $0`
+. $dir/../../config/shell.sh
 $YIIDIR/yii backup/create true

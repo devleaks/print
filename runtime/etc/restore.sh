@@ -1,18 +1,17 @@
 #
-BASEDIR=/Applications/mampstack/apps/yii/print
-export PATH=/Applications/mampstack/php/bin:/Applications/mampstack/mysql/bin:$PATH
-DATABASE=yii2print
+dir=`dirname $0`
+. $dir/../../config/shell.sh
 
-cd $BASEDIR/runtime/etc
+cd $dir
 
-if [ -f $BASEDIR/runtime/restore/$DATABASE.gz -a -f $BASEDIR/runtime/restore/media.taz ]
+if [ -f $YIIDIR/runtime/restore/$DBNAME.gz -a -f $YIIDIR/runtime/restore/media.taz ]
 then
-  gunzip < $BASEDIR/runtime/restore/$DATABASE.gz > $DATABASE.sql
-  mysql -u$DATABASE -p$DATABASE $DATABASE < drop_all_tables.sql
-  mysql -u$DATABASE -p$DATABASE $DATABASE < $DATABASE.sql
+  gunzip < $YIIDIR/runtime/restore/$DBNAME.gz > $DBNAME.sql
+  mysql -u$DBNAME -p$DBNAME $DBNAME < $YIIDIR/runtime/restore/drop_all_tables.sql
+  mysql -u$DBNAME -p$DBNAME $DBNAME < $DBNAME.sql
   rm $DATABASE.sql
-  ( cd $BASEDIR/web ; rm -rf pictures documents ; tar xzf $BASEDIR/runtime/restore/media.taz )
-  # sudo -u daemon chown -R daemon:daemon $BASEDIR/web/documents $BASEDIR/web/pictures $BASEDIR/runtime
+  ( cd $YIIDIR/web ; rm -rf pictures documents ; tar xzf $YIIDIR/runtime/restore/media.taz )
+  # sudo -u daemon chown -R daemon:daemon $YIIDIR/web/documents $YIIDIR/web/pictures $YIIDIR/runtime
   echo "Restored."
 else
   echo "Files not found."

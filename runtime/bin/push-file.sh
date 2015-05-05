@@ -1,5 +1,6 @@
 #
-. ../../config/shell.sh
+dir=`dirname $0`
+. $dir/../../config/shell.sh
 
 count=`ping -c 1 ${REMOTE_HOST} | grep icmp* | wc -l`
 
