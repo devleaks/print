@@ -9,12 +9,13 @@ Chaque devis, commande, ou ticket de caisse donne lieu à une vente, qu'elle soi
 A chaque vente sont associés un ou plusieurs paiements, jusqu'au moment où les paiements couvent le montant total de la vente.
 Tant que le montant des paiements est inférieur au montant de la vente, la vente est en état <span class="label label-info">A payer</span>.
 Quand le montant des paiements atteint le montant de la vente,
+le statut de la commande prend celui des travaux associés (si il y en a), ou
 la vente est <span class="label label-info">Clôturée</span> puisque le paiement d'une vente est la dernière opération.
 
 
 ## Entrée des Paiements
 
-Un paiement ne peut être enregistré qu'en regard d'un achat à payer.
+Un paiement peut être enregistré en regard d'un achat à payer.
 
 Si une commande, une facture, un ticket de caisse est déjà payé,
 il n'est plus possible d'ajouter un paiement.
@@ -27,7 +28,11 @@ Les paiements sont entrés en regard des ventes à deux endroits:
   1. Dans la vente elle-même, choisir l'option `Paiements`.
   1. Pour les factures, il est possible d'effectuer un seul paiement pour plusieurs factures.
 
-Dans le deuxième cas, choisir l'écran des factures impayées du client, cocher les factures pour lesquelles le client paie, et choisir l'option `Ajouter un paiement`.
+Dans le premier cas, si le montant entré est supérieur au montant à payer, le solde apparaît comme crédit (pour le client),
+et est utilisable pour payer d'autres factures.
+
+Dans le deuxième cas, choisir l'écran des factures impayées du client, cocher les factures pour lesquelles le client paie,
+et choisir l'option `Ajouter un paiement`.
 Le montant indiqué est ventilé entre les factures cochées, par date de création des factures (les plus anciennes factures sont payées en premier lieu).
 
 Si les factures sélectionnées émanent de plusieurs clients différents, il faut préciser quel est le client qui paie pour toutes les factures.

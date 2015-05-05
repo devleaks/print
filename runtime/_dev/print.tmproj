@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>currentDocument</key>
-	<string>../../modules/order/views/document/print.php</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -103,8 +101,6 @@
 			<string>../../models</string>
 		</dict>
 		<dict>
-			<key>expanded</key>
-			<true/>
 			<key>name</key>
 			<string>modules</string>
 			<key>regexFolderFilter</key>
@@ -113,6 +109,8 @@
 			<string>../../modules</string>
 		</dict>
 		<dict>
+			<key>expanded</key>
+			<true/>
 			<key>name</key>
 			<string>runtime</string>
 			<key>regexFolderFilter</key>
@@ -231,20 +229,6 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>../../modules/order/views/document/print.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>4</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>../../views/layouts/main.php</key>
 		<dict>
 			<key>caret</key>
@@ -290,14 +274,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>openDocuments</key>
-	<array>
-		<string>../../views/layouts/main.php</string>
-		<string>../../models/_Pdf.php</string>
-		<string>../../modules/order/views/document/_header_form.php</string>
-		<string>../../modules/order/views/document/list.php</string>
-		<string>../../modules/order/views/document/print.php</string>
-	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
