@@ -38,6 +38,16 @@ class Ticket extends Order
 
     /**
      * @inheritdoc
+     * Note: If we convert a sale ticket to a bill, we change its type to ORDER
+	 */
+	public function convert($ticket = false) { // convert ORDER into BILL
+		$this->document_type = self::TYPE_ORDER;
+		return parent::convert($ticket);
+	}
+
+
+    /**
+     * @inheritdoc
 	 */
 	public function getActions($show_work = false) {
 		$actions = [];
@@ -61,6 +71,7 @@ class Ticket extends Order
 			case $this::STATUS_TODO:
 			case $this::STATUS_BUSY:
 				$actions[] = '{cancel}';
+				$actions[] = '{bill-ticket}';
 				if( $work  ) { // there should always be a work if doc status is TODO or BUSY or WARN
 					$actions[] = '{work}';
 					$actions[] = '{workterminate}';
@@ -69,6 +80,7 @@ class Ticket extends Order
 				break;
 			case $this::STATUS_DONE:
 			case $this::STATUS_TOPAY:
+				$actions[] = '{bill-ticket}';
 				$actions[] = '{receive}';
 				break;
 			case $this::STATUS_CANCELLED:

@@ -27,6 +27,7 @@ SCRIPT;
 $this->title = Yii::t('store', 'Change Client');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', ucfirst(strtolower($model->document_type).'s')), 'url' => [strtolower($model->document_type).'s', 'sort' => '-updated_at']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/order/document/view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-create">

@@ -103,6 +103,14 @@ class DocumentActionColumn extends Column {
 				'action' => '/order/document/convert',
 				'confirm' => 'Send bill?'
 			],
+			'bill-ticket'	=> [
+				'icon' => 'euro',
+				'label' => 'Bill To',
+				'title' => 'Bill To',
+				'color' => 'primary',
+				'action' => '/order/document/convert',
+				'confirm' => 'Are you sure you want to convert a sales ticket into an order and bill?'
+			],
 			'work'	=> [
 				'icon' => 'tasks',
 				'label' => 'Work',

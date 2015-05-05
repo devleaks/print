@@ -113,7 +113,7 @@ class Bill extends Document {
 					$bl->note = self::append($bl->note,
 											($ol->item->reference === Item::TYPE_REBATE)
 										? '/'.Yii::t('store', $bl->extra_htva > 0 ? 'Supplement' : 'Rebate').' '.Yii::t('store', 'for').' '.$bom->name.'.'
-										: '/'.$bom->name.':'.$line.'.'
+										: '/'.$bom->name/*.':'.$line*/.'.'
 								, ' ', 160);
 					$bl->save();
 					$line++;

@@ -527,9 +527,21 @@ class DocumentController extends Controller
 				'capture' => new CaptureSelection()
 	        ]);
 		} else {
+			if($model->client->isComptoir()) {
+				$change_client = Html::a(Yii::t('store', 'Change client'),
+								['/order/document/change-client', 'id'=>$model->id],
+								[
+									'title' => Yii::t('store', 'Change client for this order.'),
+								]);
+				Yii::$app->session->setFlash('error', Yii::t('store', 'You cannot convert a sale ticket with no client. {0}.', $change_client));
+		        return $this->render('view', [
+		            'model' => $model,
+		        ]);
+			}
+			$ticket = $model->document_type == Document::TYPE_TICKET ? 1 : 0;
 			$order = $model->convert($ticket);
 			$cancel = Html::a(Yii::t('store', 'Cancel'),
-							['/order/document/cancel-convert', 'id'=>$order->id],
+							['/order/document/cancel-convert', 'id'=>$order->id, 'ticket' => $ticket],
 							[
 								'data-method' => 'post',
 								'title' => Yii::t('store', 'Cancel'),
@@ -543,11 +555,14 @@ class DocumentController extends Controller
 	}
 
 
-	public function actionCancelConvert($id) {
+	public function actionCancelConvert($id, $ticket) {
 		if( $model = $this->findModel($id) ) {
 			$parent = $this->findModel($model->parent_id);
 			$what = $model->document_type;
 			$model->deleteCascade();
+			if($ticket == 1) { // it was a ticket sale, restore its type
+				$parent->document_type = Document::TYPE_TICKET;
+			}
 			$parent->setStatus($parent->document_type == Document::TYPE_BID ? Document::STATUS_OPEN : Document::STATUS_TOPAY);
 			Yii::$app->session->setFlash('success', Yii::t('store', '{0} deleted.', Yii::t('store', $what)));
 	        return $this->render('view', [

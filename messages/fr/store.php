@@ -70,6 +70,7 @@ return [
 	'By Number' => 'Par numéro',
 	'Cancel order?' => 'Annuler la commande?',
 	'Cancel' => 'Annuler',
+	'Cancel?' => 'Annuler?',
 	'Cancelled' => 'Annulé',
 	'Categorie' => 'Catégorie',
 	'Checks' => 'Contrôles',
@@ -408,6 +409,7 @@ return [
 	'Work submitted. {0}.' => 'Travail envoyé. {0}.',
 	'{0} deleted.' => '{0} supprimé(e).',
 	'Successful onvertion. {0}.' => 'Conversion réussie. {0}.',
+	'Are you sure you want to convert a sales ticket into an order and bill?' => "Etes-vous certain de vouloir convertir ce ticket de caisse en une commande et facture?",
 	
 
 	/* Statistics */
