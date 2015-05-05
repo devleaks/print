@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'created_at',
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->updated_at);
+					return new DateTime($model->created_at);
 				}
 			],
 	        [

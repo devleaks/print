@@ -28,3 +28,5 @@ phpunit.phar
 
 # Yii app special
 /config
+
+runtime/etc/yii2print.sql

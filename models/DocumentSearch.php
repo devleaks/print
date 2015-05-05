@@ -72,6 +72,11 @@ class DocumentSearch extends Document
 			'desc' => ['client.nom' => SORT_DESC],
 		];
 
+		$dataProvider->sort->attributes['created_at'] = [
+			'asc'  => ['document.created_at' => SORT_ASC],
+			'desc' => ['document.created_at' => SORT_DESC],
+		];
+
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
