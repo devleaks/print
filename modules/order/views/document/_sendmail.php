@@ -2,7 +2,6 @@
 
 use app\models\CaptureEmail;
 use kartik\detail\DetailView;
-use kartik\icons\Icon;
 use kartik\widgets\SwitchInput;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
@@ -15,10 +14,14 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Document */
 /* @var $form yii\widgets\ActiveForm */
 
-Icon::map($this);
 $capture = new CaptureEmail();
 $capture->id = $model->id;
 $capture->email = $model->getNotificationEmail(); // client->email;
+
+$lang_before = Yii::$app->language;
+Yii::$app->language = isset($model->client->lang) ? $model->client->lang : 'fr';
+$capture->body = Yii::t('print', 'STD_SIGNATURE');
+Yii::$app->language = $lang_before;
 ?>
 
 <?php Modal::begin([

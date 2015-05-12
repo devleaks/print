@@ -119,6 +119,7 @@ return [
 	'Please read attached document(s).' => 'Veuillez lire le(s) document(s) joint(s) à ce message. Merci.',
 	'Unpaid Bills' => 'Factures impayées',
 
+	'STD_SIGNATURE' => "Please carefully check your order, sizes, and options.",
 
 	/** Letters: Headings, subjects, date, place & Footers */
 	'Brussels, {0}' => 'Bruxelles, le {0}',
