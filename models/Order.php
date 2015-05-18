@@ -130,6 +130,7 @@ class Order extends Document
 		
     /**
      * Send email to client if close to due date. Do not send if far from due date; do not send if client has no email. Do not change status of order.
+	 * Note: There are a couple of Yii::t() inside a language change. Make sure strings are available in other languages.
 	 */
 	public function notify($batch = false) {
 		$sent = false;
