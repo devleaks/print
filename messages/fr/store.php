@@ -385,6 +385,7 @@ return [
 	'Add payment with no sale' => 'Ajouter un paiement sans vente',
 	'Remove payment for multiple documents' => 'Supprimer un paiement réparti sur plusieurs ventes',
 	'Bank Slips' => 'Extraits de comptes',
+	'Are you sure you want to delete this item?' => 'Etes-vous certain de vouloir supprimer cet enregistrement?',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

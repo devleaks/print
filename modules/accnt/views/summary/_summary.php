@@ -24,6 +24,7 @@ if($searchModel->created_at != '') {
 
 $dataProvider = new ActiveDataProvider([
 	'query' => $query->select(['payment_method, count(id) as tot_count, sum(amount) as tot_amount'])
+					 ->andWhere(['not', ['payment_method' => Payment::CASH]])
 					 ->groupBy(['payment_method'])
 ]);
 ?>

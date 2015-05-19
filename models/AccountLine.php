@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 
 /**
- * This is the model class for table "extraction".
+ * This is the model class for working object AccountLine.
  *
  */
 class AccountLine extends Model {

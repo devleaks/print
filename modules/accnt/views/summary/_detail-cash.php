@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Document;
 use app\models\Payment;
 use kartik\grid\GridView;
 use yii\helpers\Html;
@@ -26,20 +27,22 @@ use yii\helpers\Url;
 
             //'id',
 	        [
-				'attribute' => 'order_name',
-	            'label' => Yii::t('store', 'Order'),
+				'attribute' => 'note',
+	            'label' => Yii::t('store', 'Transaction'),
 	            'value' => function ($model, $key, $index, $widget) {
-						if($latest_doc = $model->getDocument()->one())
-	                    	return Html::a($latest_doc->name, Url::to(['/order/document/view', 'id' => $latest_doc->id]));
-						return '';
+						if($model->ref != null) {
+							$doc = Document::find()->andWhere(['sale' => $model->ref])->one();
+	                    	return Html::a($doc->name, Url::to(['/order/document/view', 'id' => $doc->id]));
+						}
+						return $model->note;
 	            },
 	            'format' => 'raw',
 	        ],
 			[
-				'attribute' => 'created_at',
+				'attribute' => 'date',
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->created_at);
+					return new DateTime($model->date);
 				},
 				'noWrap' => true,
 			],
@@ -50,20 +53,6 @@ use yii\helpers\Url;
 				'noWrap' => true,
 			    'pageSummary' => true,
 			],
-	        [
-	            'attribute' => 'status',
-	            'value' => function ($model, $key, $index, $widget) {
-	                    return $model->getStatusLabel();
-	            },
-	            'format' => 'raw',
-				'hAlign' => GridView::ALIGN_CENTER,
-	        ],
-            // 'created_at',
-            // 'created_by',
-            // 'updated_at',
-            // 'updated_by',
-
-            //['class' => 'kartik\grid\ActionColumn'],
         ],
 	    'showPageSummary' => true,
     ]); ?>

@@ -37,7 +37,7 @@ SCRIPT;
 	        'ajax' => [
 	            'url' => $urlClient,
 	            'dataType' => 'json',
-	            'data' => new JsExpression('function(term,page) { return {search:term}; }'),
+	            'data' => new JsExpression('function(params) { return {search:params.term}; }'),
 	            'results' => new JsExpression('function(data,page) { return {results:data.results}; }'),
 	        ],
 	        'initSelection' => new JsExpression($initScriptClient)

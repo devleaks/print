@@ -50,6 +50,21 @@ class AccountController extends Controller
     }
 
     /**
+     * Lists all Account models.
+     * @return mixed
+     */
+    public function actionList()
+    {
+        $searchModel = new AccountSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
      * Displays a single Account model.
      * @param integer $id
      * @return mixed
@@ -71,12 +86,13 @@ class AccountController extends Controller
         $capture = new CaptureAccountNoSale();
 
         if ($capture->load(Yii::$app->request->post()) && $capture->validate()) {
+			$amount = str_replace(',','.',$capture->amount);
 			$account = new Account([
 				'client_id' => $capture->client_id,
 				'payment_method' => $capture->method,
 				'payment_date' => $capture->date ? $capture->date : date('Y-m-d'),
-				'amount' => $capture->amount,
-				'status' => $capture->amount > 0 ? 'CREDIT' : 'DEBIT',
+				'amount' => $amount,
+				'status' => $amount > 0 ? 'CREDIT' : 'DEBIT',
 			]);
 			$account->save();
 			$account->refresh();
@@ -84,7 +100,7 @@ class AccountController extends Controller
 				'sale' => Sequence::nextval('sale'), // its a new sale transaction, payment is not added to any existing sale
 				'client_id' => $capture->client_id,
 				'payment_method' => $capture->method,
-				'amount' => $capture->amount,
+				'amount' => $amount,
 				'status' => Payment::STATUS_OPEN,
 				'account_id' => $account->id,
 			]);

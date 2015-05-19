@@ -12,6 +12,7 @@ use yii\helpers\ArrayHelper;
  */
 class Payment extends _Payment
 {
+	public $payment_date;
 	/** Payment Methods */
 	const CASH = 'CASH';
 	

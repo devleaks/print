@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
 								Html::a('<i class="glyphicon glyphicon-trash"></i>', $url, [
 									'title' => Yii::t('store', 'Delete'),
 	                        		'data-method' => 'post',
-	                        		'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+	                        		'data-confirm' => Yii::t('store', 'Are you sure you want to delete this item?'),
 								]
 								);
 	                },

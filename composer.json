@@ -60,7 +60,8 @@
         "kartik-v/yii2-date-range": "*",
         "kartik-v/yii2-slider": "*",
         "pahanini/yii2-consolelog": "*",
-        "perminder-klair/yii2-dropzone": "dev-master"
+        "perminder-klair/yii2-dropzone": "dev-master",
+        "kartik-v/yii2-widget-select2": "*"
   },
     "require-dev": {
 		"yiisoft/yii2-codeception": "*",

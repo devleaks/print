@@ -1,10 +1,13 @@
 <?php
 
+use app\models\AccountLine;
+use app\models\Cash;
 use app\models\Payment;
 use app\models\PaymentSearch;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\data\ArrayDataProvider;
 use yii\data\ActiveDataProvider;
 
 /* @var $this yii\web\View */
@@ -34,14 +37,53 @@ $this->params['breadcrumbs'][] = $this->title;
 		if($searchModel->created_at != '') {
 			$day_start = $searchModel->created_at. ' 00:00:00';
 			$day_end   = $searchModel->created_at. ' 23:59:59';
-			foreach(Payment::getPaymentMethods() as $payment_method => $payment_label) {
-				$dataProvider = new ActiveDataProvider([
-					'query' => Payment::find()
-								->andWhere(['>=','created_at',$day_start])
-								->andWhere(['<=','created_at',$day_end])
-								->andWhere(['payment_method' => $payment_method])
+			
+			// Do cash first
+			$cashLines = [];
+			$payment_ids = [];
+
+			foreach(Payment::find()
+				->andWhere(['>=','created_at',$day_start])
+				->andWhere(['<=','created_at',$day_end])
+				->andWhere(['payment_method' => Payment::CASH])->each() as $payment) {
+					$payment_ids[] = $payment->cash_id;
+					$cashLines[] = new AccountLine([
+						'note' => $payment->note,
+						'amount' => $payment->amount,
+						'date' => $payment->created_at,
+						'ref' => $payment->sale,
+					]);
+				}
+				;
+
+			// Get cash operations that are NOT a payment
+			foreach(Cash::find()
+				->andWhere(['>=','created_at',$day_start])
+				->andWhere(['<=','created_at',$day_end])
+				->andWhere(['not', ['id' => $payment_ids]])->each() as $cash) {
+				$cashLines[] = new AccountLine([
+					'note' => $cash->note,
+					'amount' => $cash->amount,
+					'date' => $cash->created_at,
+					'ref' => null,
 				]);
-				echo $this->render('_detail', ['dataProvider' => $dataProvider, 'method' => $payment_label]);
+			}
+				
+			$dataProvider = new ArrayDataProvider([
+				'allModels' => $cashLines,
+			]);
+			echo $this->render('_detail-cash', ['dataProvider' => $dataProvider, 'method' => Yii::t('store', 'Cash')]);
+
+			foreach(Payment::getPaymentMethods() as $payment_method => $payment_label) {
+				if($payment_method != Payment::CASH) {
+					$dataProvider = new ActiveDataProvider([
+						'query' => Payment::find()
+									->andWhere(['>=','created_at',$day_start])
+									->andWhere(['<=','created_at',$day_end])
+									->andWhere(['payment_method' => $payment_method])
+					]);
+					echo $this->render('_detail', ['dataProvider' => $dataProvider, 'method' => $payment_label]);
+				}
 			}
 		} else
 			foreach(Payment::getPaymentMethods() as $payment_method => $payment_label) {
