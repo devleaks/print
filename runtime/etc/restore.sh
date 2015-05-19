@@ -7,7 +7,7 @@ cd $dir
 if [ -f $YIIDIR/runtime/restore/$DBNAME.gz -a -f $YIIDIR/runtime/restore/media.taz ]
 then
   gunzip < $YIIDIR/runtime/restore/$DBNAME.gz > $DBNAME.sql
-  mysql -u$DBNAME -p$DBNAME $DBNAME < $YIIDIR/runtime/restore/drop_all_tables.sql
+  mysql -u$DBNAME -p$DBNAME $DBNAME < $YIIDIR/runtime/etc/drop_all_tables.sql
   mysql -u$DBNAME -p$DBNAME $DBNAME < $DBNAME.sql
   rm $DATABASE.sql
   ( cd $YIIDIR/web ; rm -rf pictures documents ; tar xzf $YIIDIR/runtime/restore/media.taz )
