@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $searchModel app\models\AccountSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('store', 'Accounts');
+$this->title = Yii::t('store', 'Payments Split Into Two or More Sale');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

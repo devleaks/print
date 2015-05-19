@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $searchModel app\models\AccountSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('store', 'Accounts');
+$this->title = Yii::t('store', 'Payment with No Sale');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -32,7 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'updated_at',
             // 'updated_by',
 
-            ['class' => 'kartik\grid\ActionColumn'],
+            [
+				'class' => 'kartik\grid\ActionColumn',
+				'template' => '{delete}',
+			],
         ],
     ]); ?>
 

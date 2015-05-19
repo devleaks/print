@@ -57,6 +57,7 @@ class AccountController extends Controller
     {
         $searchModel = new AccountSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere(['id' => Payment::find()->andWhere(['not', ['sale' => Document::find()->select('sale')]])->select('account_id')]);
 
         return $this->render('list', [
             'searchModel' => $searchModel,
@@ -151,7 +152,7 @@ class AccountController extends Controller
 		}
 		$account->delete();
 		Yii::$app->session->setFlash('success', Yii::t('store', 'Account line deleted. All payments deleted.'));
-        return $this->redirect(['payment/multidoc']);
+        return $this->redirect(['/accnt']);
     }
 
     /**

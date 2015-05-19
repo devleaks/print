@@ -88,7 +88,14 @@ return [
 	'Reference' => 'Référence',
 	'Supplement' => 'Supplément',
 	'Unit Price' => 'Prix unitaire',
+
+	'Bill' => 'Facture',
+	'Order Due Date' => 'Livraison commande',
+	'Bill Issue Date' => 'Facture émise',
+	'Bill Due Date' => 'Echéance facture',
+	'Due' => 'Dû',
 	
+		
 	/** Abbreviations (entêtes de colonnes) */
 	'Qty' => 'Qté',		//'Quantité',
 	'Ref.' => 'Réf.',	//'Reference',

@@ -88,6 +88,12 @@ return [
 	'Reference' => 'Referentie',
 	'Supplement' => 'Extra',
 	'Unit Price' => 'Eenheidsprijs',
+
+	'Bill' => 'Faktuur',
+	'Order Due Date' => 'Leveringsdatum',
+	'Bill Issue Date' => 'Gefactureerd',
+	'Bill Due Date' => 'Vervaldatum',
+	'Due' => 'Te betalen',	
 	
 	
 	/** Abbreviations (entêtes de colonnes) */

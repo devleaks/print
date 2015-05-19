@@ -386,6 +386,10 @@ return [
 	'Remove payment for multiple documents' => 'Supprimer un paiement réparti sur plusieurs ventes',
 	'Bank Slips' => 'Extraits de comptes',
 	'Are you sure you want to delete this item?' => 'Etes-vous certain de vouloir supprimer cet enregistrement?',
+	'Remove payment with no sale' => 'Supprimer un paiement sans vente associée',
+	'Payments with No Sale' => 'Paiements sans vente associée',
+	'Payment with No Sale' => 'Paiement sans vente associée',
+	'Payments Split Into Two or More Sale' => 'Paiements répartis sur plusieurs ventes',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',
