@@ -415,6 +415,10 @@ return [
 	'{0} deleted.' => '{0} supprimé(e).',
 	'Successful onvertion. {0}.' => 'Conversion réussie. {0}.',
 	'Are you sure you want to convert a sales ticket into an order and bill?' => "Etes-vous certain de vouloir convertir ce ticket de caisse en une commande et facture?",
+	'All works' => 'Tous les travaux',
+	'All documents' => 'Tous les documents',
+	'Next {0} days' => 'Les {0} prochain jours',
+	'Next month' => 'Le mois suivant',
 	
 
 	/* Statistics */

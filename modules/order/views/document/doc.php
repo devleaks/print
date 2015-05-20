@@ -94,15 +94,26 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format' => 'date',
 				'hAlign' => GridView::ALIGN_CENTER,
 			],
-			[
+/*			[
 	            'label' => Yii::t('store', 'Created At'),
 				'attribute' => 'created_at',
 				'format' => 'datetime',
-				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->created_at);
-				},
 				'hAlign' => GridView::ALIGN_RIGHT,
-			],
+			],*/
+			[
+                'attribute'=>'created_at',
+                'filterType' => GridView::FILTER_DATE_RANGE,
+                'filterWidgetOptions' => [
+	                'model'=>$searchModel,
+	                'attribute'=>'created_at',
+	                'presetDropdown'=>TRUE,                
+	                'convertFormat'=>true,                
+	                'pluginOptions'=>[                                          
+	                    'format'=>'Y-m-d',
+	                    'opens'=>'left'
+	                ]
+	            ]
+            ],
 	        [
 	            'label' => Yii::t('store', 'Created By'),
 				'attribute' => 'created_by',
