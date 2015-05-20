@@ -4,11 +4,12 @@ use app\models\Bid;
 use app\models\Bill;
 use app\models\Document;
 use app\models\User;
+use app\widgets\GridViewPDF;
+use kartik\daterange\DateRangePicker;
 use kartik\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\widgets\GridViewPDF;
-use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentSearch */
@@ -30,6 +31,8 @@ if(isset(Yii::$app->user))
 	if(isset(Yii::$app->user->identity))
 		if(isset(Yii::$app->user->identity->role))
 			$role = Yii::$app->user->identity->role;
+			
+Yii::$app->formatter->datetimeFormat = 'php:D j/n G:i';
 
 $this->title = Yii::t('store', Document::getTypeLabel($document_type, true));
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/order', 'sort' => '-updated_at']];
@@ -89,6 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 				'attribute' => 'due_date',
 				'format' => 'date',
+				'hAlign' => GridView::ALIGN_CENTER,
 			],
 			[
 	            'label' => Yii::t('store', 'Created At'),
@@ -96,7 +100,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
 					return new DateTime($model->created_at);
-				}
+				},
+				'hAlign' => GridView::ALIGN_RIGHT,
 			],
 	        [
 	            'label' => Yii::t('store', 'Created By'),
@@ -107,6 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	                return $user ? $user->username : '?';
 	            },
 	            'format' => 'raw',
+				'hAlign' => GridView::ALIGN_CENTER,
 	        ],
 			[
 	            'label' => Yii::t('store', 'Last Update'),
@@ -114,7 +120,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
 					return new DateTime($model->updated_at);
-				}
+				},
+				'hAlign' => GridView::ALIGN_RIGHT,
 			],
 	        [
 	            'label' => Yii::t('store', 'Status'),
