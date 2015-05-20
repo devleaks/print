@@ -9,31 +9,38 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Yii::t('store', 'Accounting') ?></h1>
 
-	<ul>
-        <li><a href="<?= Url::to(['/accnt/cash/list']) ?>"><?= Yii::t('store', 'Cash')?></a></li>
-	    <li><a href="<?= Url::to(['/accnt/summary']) ?>"><?= Yii::t('store', 'Daily Summary')?></a></li>
-	</ul>
-	<ul>
-	    <li><a href="<?= Url::to(['/order/document/bills', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bills')?></a></li>
-	    <li><a href="<?= Url::to(['/order/document/credits']) ?>"><?= Yii::t('store', 'Credit Notes')?></a></li>
-	    <li><a href="<?= Url::to(['/order/document/create-refund']) ?>"><?= Yii::t('store', 'Create Refund')?></a></li>
-	</ul>
-	<ul>
-	    <li><a href="<?= Url::to(['/accnt/bill/boms']) ?>"><?= Yii::t('store', 'Bill all BOMs')?></a></li>
-	    <li><a href="<?= Url::to(['/accnt/bill']) ?>"><?= Yii::t('store', 'Unpaid Bills')?></a></li>
-	    <li><a href="<?= Url::to(['/accnt/account/create']) ?>"><?= Yii::t('store', 'Add payment with no sale')?></a></li>
-	</ul>
-	<ul>
-	    <li><a href="<?= Url::to(['/accnt/extraction']) ?>"><?= Yii::t('store', 'Monthly Extraction')?></a></li>
-	    <li><a href="<?= Url::to(['/accnt/pdf']) ?>"><?= Yii::t('store', 'Documents to Print')?></a></li>
-	</ul>
-	<ul>
-	    <li><a href="<?= Url::to(['/store/client', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Clients')?></a></li>
-	    <li><a href="<?= Url::to(['/accnt/default/control']) ?>"><?= Yii::t('store', 'Checks')?></a></li>
-	</ul>
-	<ul>
-	    <li><a href="<?= Url::to(['/accnt/bank']) ?>"><?= Yii::t('store', 'Bank Slips')?></a></li>
-	</ul>
+<div class="row">
+	<div class="col-lg-6">
+		<ul>
+	        <li><a href="<?= Url::to(['/accnt/cash/list']) ?>"><?= Yii::t('store', 'Cash')?></a></li>
+		    <li><a href="<?= Url::to(['/accnt/payment/index-by-type']) ?>"><?= Yii::t('store', 'Daily Summary')?></a></li>
+		</ul>
+		<ul>
+		    <li><a href="<?= Url::to(['/order/document/bills', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bills')?></a></li>
+		    <li><a href="<?= Url::to(['/order/document/credits']) ?>"><?= Yii::t('store', 'Credit Notes')?></a></li>
+		    <li><a href="<?= Url::to(['/order/document/refunds']) ?>"><?= Yii::t('store', 'Refunds')?></a></li>
+		</ul>
+		<ul>
+		    <li><a href="<?= Url::to(['/accnt/bill/boms']) ?>"><?= Yii::t('store', 'Bill all BOMs')?></a></li>
+		    <li><a href="<?= Url::to(['/accnt/bill']) ?>"><?= Yii::t('store', 'Unpaid Bills')?></a></li>
+		    <li><a href="<?= Url::to(['/accnt/account/create']) ?>"><?= Yii::t('store', 'Add payment with no sale')?></a></li>
+		</ul>
+	</div>
+
+	<div class="col-lg-6">
+		<ul>
+		    <li><a href="<?= Url::to(['/accnt/extraction']) ?>"><?= Yii::t('store', 'Monthly Extraction')?></a></li>
+		    <li><a href="<?= Url::to(['/accnt/pdf', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Documents to Print')?></a></li>
+		</ul>
+		<ul>
+		    <li><a href="<?= Url::to(['/store/client', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Clients')?></a></li>
+		    <li><a href="<?= Url::to(['/accnt/default/control']) ?>"><?= Yii::t('store', 'Checks')?></a></li>
+		</ul>
+		<ul>
+		    <li><a href="<?= Url::to(['/accnt/bank']) ?>"><?= Yii::t('store', 'Bank Slips')?></a></li>
+		</ul>
+	</div>
+</div>
 
 <br/>
 <br/>
