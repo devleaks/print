@@ -148,6 +148,7 @@ class Document extends _Document
 							->sum('amount');	
 		} else
 			$ret = Payment::find()->where(['sale' => $this->sale])->sum('amount');
+		Yii::trace('ret='.$ret, 'Document::getPrepaid');
 		return $ret ? $ret : 0;
 	}
 		
@@ -254,6 +255,18 @@ class Document extends _Document
 		];
 	}
 	
+	
+	public static function parseDateRange($field, $range, $query = null) {
+		$q = $query ? $query : Document::find();
+		if( ($sep = strpos($range, ' - ')) == 10) { // range in form of YYYY-MM-DD - YYYY-MM-DD.
+			$date_from = substr($range, 0, 10).' 00:00:00';
+			$date_to = substr($range, 13, 10).' 23:59:59';
+			Yii::trace('From '.$date_from.' to '.$date_to, 'Document::parseDateRange');
+	        $q->andWhere(['>=', $field, $date_from])
+		      ->andWhere(['<=', $field, $date_to]);
+		}
+		return $q;
+	}
 	
 	/**
 	 * Checks whether a document owns payments and no other document with same sale id owns it.
@@ -380,7 +393,7 @@ class Document extends _Document
 		$extra = null;
 		$new_payment = true;
 
-		Yii::trace('ENTERING='.$this->document_type.' '.$this->name, 'AccountController::addPayment');
+		Yii::trace('ENTERING='.$this->document_type.' '.$this->name, 'Document::addPayment');
 		
 		$amount = round($amount_gross, 2);
 		if($amount == 0) return;		
@@ -454,14 +467,14 @@ class Document extends _Document
 					'status' => Payment::STATUS_PAID,
 					'account_id' => $account ? $account->id : null,
 				]);
-				Yii::trace('Clearing='.$amount, 'AccountController::addPayment');
+				Yii::trace('Clearing='.$amount, 'Document::addPayment');
 
 		} else { // $method == Payment::USE_CREDIT), client pays with credit he has
 			if($amount >= 0) {
 
 				$needed = $amount;
 				$total_available = 0;
-				Yii::trace('Needed='.$needed, 'AccountController::addPayment');
+				Yii::trace('Needed='.$needed, 'Document::addPayment');
 				foreach($this->client->getCreditLines() as $credit_line) { // now use (delete/remove) credit lines as they are used
 					$available = abs($credit_line->amount);
 					$total_available += $available;
@@ -533,7 +546,7 @@ class Document extends _Document
 		if($ok)
 			$this->setStatus(self::STATUS_TOPAY); // will close if necessary (i.e. if isPaid == true)
 
-		Yii::trace('EXITING='.$this->document_type.' '.$this->name, 'AccountController::addPayment');
+		Yii::trace('EXITING='.$this->document_type.' '.$this->name, 'Document::addPayment');
 
 		return $ok;
 	}
@@ -611,6 +624,7 @@ class Document extends _Document
 		} else
 			Yii::$app->session->setFlash('danger', Yii::t('store', 'Payment not found.'));
 	}
+
 
 	/**
 	 * Returns amount due.
