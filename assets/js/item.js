@@ -134,6 +134,7 @@ function isChromaLuxe() {
 }
 
 function setItem(id, vat, name, category) {
+	$("#documentline-item_id").append('<option value='+id+'>'+name+'</option>');
 	$("#documentline-item_id").val(id);
 	$("#documentline-vat").val(vat);
 	$("#documentline-item-yii_category").val(category);
