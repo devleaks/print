@@ -193,7 +193,7 @@ class Client extends _Client
 						$color = ($bal < 0) ? 'warning' : 'success';
 						$accountLines[] = new AccountLine([
 							'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
-							'amount' => - $document->getTotal(),
+							'amount' => $bal, // We display balance; not total.
 							'date' => $document->created_at,
 							'ref' => $document->id,
 						]);
