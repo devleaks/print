@@ -419,7 +419,11 @@ return [
 	'All documents' => 'Tous les documents',
 	'Next {0} days' => 'Les {0} prochain jours',
 	'Next month' => 'Le mois suivant',
-	
+	'Remove reimbursement of client credit' => "Supprimer le remboursement de crédits",
+	'Reimburse client credit' => "Rembourser des crédits",
+	'Reimburse' => "Rembourser",
+	'Excess Payments' => "Crédits des clients",
+	'Excess Payments for Reimbursement' => "Crédits des clients",
 
 	/* Statistics */
 	'Statistics' => 'Statistiques',

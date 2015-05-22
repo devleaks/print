@@ -57,7 +57,8 @@ class AccountController extends Controller
     {
         $searchModel = new AccountSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere(['id' => Payment::find()->andWhere(['not', ['sale' => Document::find()->select('sale')]])->select('account_id')]);
+		$dataProvider->query->andWhere(['id' => Payment::find()->andWhere(['not', ['sale' => Document::find()->select('sale')]])->select('account_id')])
+							->andWhere(['not', ['id' => Payment::find()->andWhere(['not',['account_id' => null]])->select('account_id')->groupBy('account_id')->having('count(account_id) > 1')]]);
 
         return $this->render('list', [
             'searchModel' => $searchModel,

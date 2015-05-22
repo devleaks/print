@@ -147,9 +147,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->beginBlock('JS_SUBMIT_ACTION') ?>
 $('.actionButton').click(function() {
 	status = $(this).data('action');
-	console.log(status);
 	selected = $('#action-gridview').yiiGridView('getSelectedRows');
-	console.log(selected);
 	$('input[name="action"]').val(status);
 	$('input[name="selection"]').val(selected);
 	$('#store-action').submit();

@@ -53,14 +53,6 @@ $dataProvider->pagination = false;
 				}
 			],
 			[
-	            'label' => Yii::t('store', 'Solde'),
-				'attribute' => 'account',
-				'format' => 'currency',
-				'hAlign' => GridView::ALIGN_RIGHT,
-				'noWrap' => true,
-				'pageSummary' => Yii::$app->formatter->asCurrency($bottomLine),
-			],
-			[
 				'attribute' => 'note',
 				'format' => 'raw',
 			],
@@ -71,6 +63,14 @@ $dataProvider->pagination = false;
 				'value' => function ($model, $key, $index, $widget) {
 					return new DateTime($model->date);
 				}
+			],
+			[
+	            'label' => Yii::t('store', 'Solde'),
+				'attribute' => 'account',
+				'format' => 'currency',
+				'hAlign' => GridView::ALIGN_RIGHT,
+				'noWrap' => true,
+				'pageSummary' => Yii::$app->formatter->asCurrency($bottomLine),
 			],
 //            [
 //				'class' => 'kartik\grid\ActionColumn',

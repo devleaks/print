@@ -5,14 +5,19 @@ namespace app\modules\accnt\controllers;
 use Yii;
 use app\models\Account;
 use app\models\Cash;
+use app\models\CaptureRefund;
 use app\models\Document;
+use app\models\DocumentLine;
+use app\models\Item;
 use app\models\Payment;
 use app\models\PaymentSearch;
+use app\models\Refund;
 use app\models\Sequence;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 
 /**
  * PaymentController implements the CRUD actions for Payment model.
@@ -206,4 +211,99 @@ class PaymentController extends Controller
             'dataProvider' => $dataProvider,
         ]);
 	}
+	
+	public function actionCreditList() {
+        $searchModel = new PaymentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere(['payment.status' => Payment::STATUS_OPEN]);
+
+        return $this->render('credit', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+			'capture' => new CaptureRefund(),
+        ]);
+    }
+
+	public function actionRefund() {
+		$capture = new CaptureRefund();
+        if ($capture->load(Yii::$app->request->post()) && $capture->validate()) {
+			$capture->selection = isset($_POST['selection']) ? $_POST['selection'] : [];
+			if(count($capture->selection) > 0) {
+				$transaction = Yii::$app->db->beginTransaction();
+				$client_id = -1;
+				$ok = true;
+				$total = 0;
+				$note = '';
+				foreach(Payment::find()->andWhere(['id' => $_POST['selection']])->each() as $payment) {
+					if($client_id = -1 && $ok)
+						$client_id = $payment->client_id;
+					else
+						$ok = ($payment->client_id == $client_id);
+					$total += $payment->amount;
+					$note = Document::append($note, $payment->note, '; ', 160);;
+					$payment->status = Payment::STATUS_PAID;
+					$payment->save();
+				}
+				if($ok) {
+					// 1. Create refund document
+					$newSale = Sequence::nextval('sale');
+					$newReference = Document::commStruct(date('y')*10000000 + $newSale);
+					$credit = new Refund([
+						'document_type' => Refund::TYPE_REFUND,
+						'client_id' => $payment->client_id,
+						'name' => substr($payment->created_at,0,4).'-'.Sequence::nextval('doc_number'),
+						'due_date' => date('Y-m-d H:i:s'),
+						'note' => $payment->note, // $payment->payment_method.'-'.$payment->sale.'. '.
+						'sale' => $newSale,
+						'reference' => $newReference,
+						'status' => Refund::STATUS_CLOSED,
+					]);
+					$credit->save();
+					$credit->refresh();
+					$credit_item = Item::findOne(['reference' => Item::TYPE_CREDIT]);
+					$creditLine = new DocumentLine([
+						'document_id' => $credit->id,
+						'item_id' => $credit_item->id,
+						'quantity' => 1,
+						'unit_price' => 0,
+						'vat' => $credit_item->taux_de_tva,
+						'extra_type' => DocumentLine::EXTRA_REBATE_AMOUNT,
+						'extra_amount' => $total,
+						'due_date' => $credit->due_date,
+						'note' => $note,
+					]);
+					$creditLine->updatePrice(); // adjust htva/tvac from extra's
+					$creditLine->save();
+					$credit->updatePrice();
+					$credit->save();
+					
+					// 2. Refund credits
+					$refund = new Account([
+						'client_id' => $client_id,
+						'payment_method' => $capture->method,
+						'payment_date' => date('Y-m-d H:i:s'),
+						'amount' => -$total,
+						'status' => (-$total > 0) ? 'CREDIT' : 'DEBIT',
+					]);
+					$refund->save();
+					$refund->refresh();
+					$credit->addPayment($refund, -$total, $capture->method, $capture->note);
+
+					$transaction->commit();
+					Yii::$app->session->setFlash('success', Yii::t('store', 'Reimbursement created.'));
+					return $this->redirect(Url::to(['/order/document/view', 'id' => $credit->id]));
+				} else {
+					$transaction->rollback();
+					Yii::$app->session->setFlash('error', Yii::t('store', 'Credits must be for the same client.'));
+				}
+			} else {
+				Yii::$app->session->setFlash('error', Yii::t('store', 'Please select one or more credit.'));
+			}
+		} else {
+			Yii::$app->session->setFlash('error', Yii::t('store', 'Wrong capture data.'));
+		}
+
+	    return $this->redirect(Url::to(['/accnt/payment/credit-list']));
+    }
+
 }

@@ -39,7 +39,7 @@ $capture->submit = 1;
 <?php if(!$isPaid): ?>
 
 	<?php 	$credit_lines = [];
-			//if(!in_array($model->document_type, [$model::TYPE_CREDIT,$model::TYPE_REFUND])) {
+			if(!in_array($model->document_type, [$model::TYPE_CREDIT,$model::TYPE_REFUND])) {
 				$credit_lines = $model->client->getCreditLines();
 				echo $this->render('_available_credit', [
 					'dataProvider' => new ArrayDataProvider([
@@ -47,7 +47,7 @@ $capture->submit = 1;
 						'pagination' => false,
 					]),
 				]);
-			//}
+			}
 			$payment_methods = Payment::getPaymentMethods();
 			if(count($credit_lines) > 0) {// add credit option if any
 				$payment_methods[Payment::USE_CREDIT] = Yii::t('store', 'Use Credit');

@@ -36,10 +36,6 @@ class Bill extends Document {
 	}
 	
 	
-	protected static function append($to, $src, $sep, $max = 160) {
-		return (strlen($src)+strlen($sep)+strlen($to)) < $max ? $to.$sep.$src : $to ;
-	}
-	
 	/**
 	 * @inheritdoc
 	 */

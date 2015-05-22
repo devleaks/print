@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		    <li><a href="<?= Url::to(['/accnt/bill/boms']) ?>"><?= Yii::t('store', 'Bill all BOMs')?></a></li>
 		    <li><a href="<?= Url::to(['/accnt/bill']) ?>"><?= Yii::t('store', 'Unpaid Bills')?></a></li>
 		    <li><a href="<?= Url::to(['/accnt/account/create']) ?>"><?= Yii::t('store', 'Add payment with no sale')?></a></li>
+		    <li><a href="<?= Url::to(['/accnt/payment/credit-list']) ?>"><?= Yii::t('store', 'Reimburse client credit')?></a></li>
 		</ul>
 	</div>
 
@@ -46,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <br/>
 <br/>
 
-<h3><span style="color: red;">Opérations dangereuses</span></h3>
+<h3><a name="dangerousops"></a><span style="color: red;">Opérations dangereuses</span></h3>
 
 <div class="alert alert-danger" style="text-indent:-70px;padding-left:80px;">
 	<a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -59,6 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	    <li><a href="<?= Url::to(['/order/document/index', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
 	    <li><a href="<?= Url::to(['/accnt/payment/multidoc']) ?>"><?= Yii::t('store', 'Remove payment for multiple documents')?></a> - Danger</li>
 	    <li><a href="<?= Url::to(['/accnt/account/list']) ?>"><?= Yii::t('store', 'Remove payment with no sale')?></a> - Danger</li>
+	    <li><a href="<?= Url::to(['/accnt/payment/cancel-refund']) ?>"><?= Yii::t('store', 'Remove reimbursement of client credit')?></a> - Danger</li>
 	    <li><a href="<?= Url::to(['/accnt/cash/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
 	</ul>
 
