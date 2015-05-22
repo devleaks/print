@@ -39,7 +39,7 @@ $capture->submit = 1;
 <?php if(!$isPaid): ?>
 
 	<?php 	$credit_lines = [];
-			if(!in_array($model->document_type, [$model::TYPE_CREDIT,$model::TYPE_REFUND])) {
+			//if(!in_array($model->document_type, [$model::TYPE_CREDIT,$model::TYPE_REFUND])) {
 				$credit_lines = $model->client->getCreditLines();
 				echo $this->render('_available_credit', [
 					'dataProvider' => new ArrayDataProvider([
@@ -47,7 +47,7 @@ $capture->submit = 1;
 						'pagination' => false,
 					]),
 				]);
-			}
+			//}
 			$payment_methods = Payment::getPaymentMethods();
 			if(count($credit_lines) > 0) {// add credit option if any
 				$payment_methods[Payment::USE_CREDIT] = Yii::t('store', 'Use Credit');
@@ -59,11 +59,13 @@ $capture->submit = 1;
 		<?= $form->field($capture, 'amount')->textInput() ?>
 		<?= $form->field($capture, 'total')->textInput(['readonly' => true]) ?>
 		<?= $form->field($capture, 'method')->dropDownList($payment_methods) ?>
-		<?php if(in_array($model->document_type, [Document::TYPE_ORDER, Document::TYPE_TICKET]) && !$model->getWorks()->exists() && !$model->getPayments()->exists()): ?>
-		<?= $form->field($capture, 'submit')->widget(SwitchInput::className(),
-			['pluginOptions' => ['onText' => Yii::t('store', 'Yes'), 'offText' =>  Yii::t('store', 'No')]
-		]) ?>
-		<?php endif; ?>
+		<?php
+			if(in_array($model->document_type, [Document::TYPE_ORDER, Document::TYPE_TICKET]) && !$model->getWorks()->exists() && !$model->getPayments()->exists()) {
+				echo $form->field($capture, 'submit')->widget(SwitchInput::className(),
+					['pluginOptions' => ['onText' => Yii::t('store', 'Yes'), 'offText' =>  Yii::t('store', 'No')]
+				]);
+			}
+		?>
 
 		<div class="modal-footer our-modal-footer">
 		<div class="form-group our-form-group">

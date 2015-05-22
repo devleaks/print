@@ -13,11 +13,6 @@ use yii\db\Query;
  */
 class DocumentSearch extends Document
 {
-	public $created_at_range;
-	public $updated_at_range;
-	public $duedate_range;
-
-	public $client_name;
 	public $bill_exists;
 	
     /**
@@ -29,22 +24,10 @@ class DocumentSearch extends Document
             [['id', 'parent_id', 'client_id', 'created_by', 'updated_by', 'vat_bool'], 'integer'],
             [['document_type', 'name', 'due_date', 'note', 'status', 'created_at', 'updated_at', 'lang', 'reference', 'reference_client'], 'safe'],
             [['price_htva', 'price_tvac'], 'number'],
-            [['client_name', 'bill_exists'], 'safe'],
+            [['client_name'], 'safe'],
             [['created_at_range', 'updated_at_range', 'duedate_range'], 'safe'],
+            [['bill_exists'], 'safe'],
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return array_merge(parent::attributeLabels(), [
-        	'client_name' => Yii::t('store', 'Client'),
-        	'created_at_range' => Yii::t('store', 'Created At'),
-        	'updated_at_range' => Yii::t('store', 'Updated At'),
-        	'duedate_range' => Yii::t('store', 'Due Date'),
-        ]);
     }
 
 	protected function newSearch($new_type = null) {
@@ -75,10 +58,7 @@ class DocumentSearch extends Document
             'query' => $query,
         ]);
 
-		$dataProvider->sort->attributes['client_name'] = [
-			'asc'  => ['client.nom' => SORT_ASC],
-			'desc' => ['client.nom' => SORT_DESC],
-		];
+		$this->addToDataProvider($dataProvider);
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
@@ -95,34 +75,15 @@ class DocumentSearch extends Document
             'document.vat_bool' => $this->vat_bool,
         ]);
 
-		$query = Document::parseDateRange('document.created_at', $this->created_at_range, $query);
-		$query = Document::parseDateRange('document.updated_at', $this->updated_at_range, $query);
-		$query = Document::parseDateRange('document.due_date',   $this->duedate_range, $query);
-
-		$dataProvider->sort->attributes['created_at_range'] = [
-			'asc'  => ['document.created_at' => SORT_ASC],
-			'desc' => ['document.created_at' => SORT_DESC],
-		];
-
-		$dataProvider->sort->attributes['updated_at_range'] = [
-			'asc'  => ['document.updated_at' => SORT_ASC],
-			'desc' => ['document.updated_at' => SORT_DESC],
-		];
-
-		$dataProvider->sort->attributes['duedate_range'] = [
-			'asc'  => ['document.due_date' => SORT_ASC],
-			'desc' => ['document.due_date' => SORT_DESC],
-		];
-
-
         $query->andFilterWhere(['like', 'document.document_type', $this->document_type])
               ->andFilterWhere(['like', 'document.name', $this->name])
               ->andFilterWhere(['like', 'document.note', $this->note])
               ->andFilterWhere(['like', 'document.status', $this->status])
               ->andFilterWhere(['like', 'document.lang', $this->lang])
               ->andFilterWhere(['like', 'document.reference', $this->reference])
-              ->andFilterWhere(['like', 'document.reference_client', $this->reference_client])
-              ->andFilterWhere(['like', 'client.nom', $this->client_name]);
+              ->andFilterWhere(['like', 'document.reference_client', $this->reference_client]);
+
+		$this->addToQuery($query);
 
 		if($this->bill_exists == 'Y') { // docs that have a bill
 			/*select * from document d1 where not exists (select id from document d2 where d2.document_type = 'BILL' and d2.parent_id = d1.id) */

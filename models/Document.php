@@ -66,6 +66,14 @@ class Document extends _Document
 	const PAYMENT_LIMIT = 0.01;
 
 
+	/** Variables added for search models (DocumentSearch, BillSearch, etc.) */
+	public $created_at_range;
+	public $updated_at_range;
+	public $duedate_range;
+
+	public $client_name;
+
+
     /**
      * @inheritdoc
      */
@@ -89,6 +97,20 @@ class Document extends _Document
                 ],
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return array_merge(parent::attributeLabels(), [
+        	'client_name' => Yii::t('store', 'Client'),
+        	'created_at_range' => Yii::t('store', 'Created At'),
+        	'updated_at_range' => Yii::t('store', 'Updated At'),
+        	'duedate_range' => Yii::t('store', 'Due Date'),
+        ]);
+    }
+
 
 	/**
 	 * find a document instance and returns it property typed.
@@ -255,18 +277,6 @@ class Document extends _Document
 		];
 	}
 	
-	
-	public static function parseDateRange($field, $range, $query = null) {
-		$q = $query ? $query : Document::find();
-		if( ($sep = strpos($range, ' - ')) == 10) { // range in form of YYYY-MM-DD - YYYY-MM-DD.
-			$date_from = substr($range, 0, 10).' 00:00:00';
-			$date_to = substr($range, 13, 10).' 23:59:59';
-			Yii::trace('From '.$date_from.' to '.$date_to, 'Document::parseDateRange');
-	        $q->andWhere(['>=', $field, $date_from])
-		      ->andWhere(['<=', $field, $date_to]);
-		}
-		return $q;
-	}
 	
 	/**
 	 * Checks whether a document owns payments and no other document with same sale id owns it.
@@ -907,6 +917,48 @@ class Document extends _Document
 	 */
 	public function getNotificationEmail() {
 		return $this->email ? $this->email : $this->client->email;
+	}
+	
+
+	public static function parseDateRange($field, $range, $query = null) {
+		$q = $query ? $query : Document::find();
+		if( ($sep = strpos($range, ' - ')) == 10) { // range in form of YYYY-MM-DD - YYYY-MM-DD.
+			$date_from = substr($range, 0, 10).' 00:00:00';
+			$date_to = substr($range, 13, 10).' 23:59:59';
+			Yii::trace('From '.$date_from.' to '.$date_to, 'Document::parseDateRange');
+	        $q->andWhere(['>=', $field, $date_from])
+		      ->andWhere(['<=', $field, $date_to]);
+		}
+		return $q;
+	}
+	
+
+	protected function addToDataProvider($dataProvider) {
+		$dataProvider->sort->attributes['client_name'] = [
+			'asc'  => ['client.nom' => SORT_ASC],
+			'desc' => ['client.nom' => SORT_DESC],
+		];
+		$dataProvider->sort->attributes['created_at_range'] = [
+			'asc'  => ['document.created_at' => SORT_ASC],
+			'desc' => ['document.created_at' => SORT_DESC],
+		];
+
+		$dataProvider->sort->attributes['updated_at_range'] = [
+			'asc'  => ['document.updated_at' => SORT_ASC],
+			'desc' => ['document.updated_at' => SORT_DESC],
+		];
+
+		$dataProvider->sort->attributes['duedate_range'] = [
+			'asc'  => ['document.due_date' => SORT_ASC],
+			'desc' => ['document.due_date' => SORT_DESC],
+		];
+	}
+	
+	protected function addToQuery($query) {
+		$query->andFilterWhere(['like', 'client.nom', $this->client_name]);
+		$query = Document::parseDateRange('document.created_at', $this->created_at_range, $query);
+		$query = Document::parseDateRange('document.updated_at', $this->updated_at_range, $query);
+		$query = Document::parseDateRange('document.due_date',   $this->duedate_range, $query);
 	}
 
 }

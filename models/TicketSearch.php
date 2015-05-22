@@ -11,8 +11,6 @@ use yii\data\ActiveDataProvider;
  */
 class TicketSearch extends Ticket
 {
-	public $client_name;
-
     /**
      * @inheritdoc
      */
@@ -22,18 +20,9 @@ class TicketSearch extends Ticket
             [['id', 'parent_id', 'client_id', 'created_by', 'updated_by', 'vat_bool'], 'integer'],
             [['document_type', 'name', 'due_date', 'note', 'status', 'created_at', 'updated_at', 'lang', 'reference', 'reference_client'], 'safe'],
             [['price_htva', 'price_tvac'], 'number'],
+            [['created_at_range', 'updated_at_range', 'duedate_range'], 'safe'],
             [['client_name'], 'safe'],
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return array_merge(parent::attributeLabels(), [
-	        'client_name' => Yii::t('store', 'Client'),
-        ]);
     }
 
     /**
@@ -53,10 +42,7 @@ class TicketSearch extends Ticket
             'query' => $query,
         ]);
 
-		$dataProvider->sort->attributes['client_name'] = [
-			'asc'  => ['client.nom' => SORT_ASC],
-			'desc' => ['client.nom' => SORT_DESC],
-		];
+		$this->addToDataProvider($dataProvider);
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
@@ -84,6 +70,8 @@ class TicketSearch extends Ticket
             ->andFilterWhere(['like', 'document.reference', $this->reference])
             ->andFilterWhere(['like', 'document.reference_client', $this->reference_client])
             ->andFilterWhere(['like', 'client.nom', $this->client_name]);
+
+		$this->addToQuery($query);
 
         return $dataProvider;
     }

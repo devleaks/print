@@ -408,7 +408,7 @@ class DocumentController extends Controller
 			Yii::$app->session->setFlash('success', Yii::t('store', 'Document deleted.'));
 		}
 
-		return $this->redirect(Url::to(['/order/document']));
+		return $this->redirect(Url::to(['/order/document', 'sort' => '-updated_at']));
     }
 
     /**

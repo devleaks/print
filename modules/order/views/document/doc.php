@@ -90,10 +90,38 @@ $this->params['breadcrumbs'][] = $this->title;
 				'noWrap' => true,
 			],
 			[
-				'attribute' => 'due_date',
+	            'label' => Yii::t('store', 'Due Date'),
+                'attribute'=>'duedate_range',
+	            'value' => function ($model, $key, $index, $widget) {
+							return $model->updated_at;
+				},
 				'format' => 'date',
-				'hAlign' => GridView::ALIGN_CENTER,
-			],
+				'options' => ['class' => 'form-control'],
+                'filterType' => GridView::FILTER_DATE_RANGE,
+                'filterWidgetOptions' => [
+	                'model'=>$searchModel,
+	                'attribute'=>'due_date',
+	                'presetDropdown'=>TRUE,                
+	                'convertFormat'=>true,                
+					'initRangeExpr' => true,
+					'presetDropdown' => false,
+					'pluginOptions'=>[                                          
+	                    'format'=>'Y-m-d',
+	                    'opens'=>'left',
+						'ranges' => [
+						    Yii::t('store', "Today") => ["moment().startOf('day')", "moment()"],
+					    	Yii::t('store', "This week") => ["moment().startOf('week')", "moment().endOf('week')"],
+					    	Yii::t('store', "Next {0} days", 14) => ["moment()", "moment().add(14, 'day')"],
+						    Yii::t('store', "This month") => ["moment().startOf('month')", "moment().endOf('month')"],
+						    Yii::t('store', "Next month") => ["moment()", "moment().add(31, 'day')"],
+						],
+	                ],
+					'pluginEvents' => [
+						"apply.daterangepicker" => 'function() { $(".grid-view").yiiGridView("applyFilter"); }',
+						"cancel.daterangepicker" => 'function() { $("#'.strtolower($document_type).'search-duedate_range").val(""); $(".grid-view").yiiGridView("applyFilter"); }',
+					]
+				]
+            ],
 /*			[
 	            'label' => Yii::t('store', 'Created At'),
 				'attribute' => 'created_at',
@@ -101,7 +129,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'hAlign' => GridView::ALIGN_RIGHT,
 			],*/
 			[
-                'attribute'=>'created_at',
+	            'label' => Yii::t('store', 'Created At'),
+                'attribute'=>'created_at_range',
+	            'value' => function ($model, $key, $index, $widget) {
+							return $model->created_at;
+				},
+				'options' => ['class' => 'form-control'],
                 'filterType' => GridView::FILTER_DATE_RANGE,
                 'filterWidgetOptions' => [
 	                'model'=>$searchModel,
@@ -111,8 +144,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	                'pluginOptions'=>[                                          
 	                    'format'=>'Y-m-d',
 	                    'opens'=>'left'
-	                ]
-	            ]
+	                ],
+					'pluginEvents' => [
+						"apply.daterangepicker" => 'function() { $(".grid-view").yiiGridView("applyFilter"); }',
+						"cancel.daterangepicker" => 'function() { $("#'.strtolower($document_type).'search-created_at_range").val(""); $(".grid-view").yiiGridView("applyFilter"); }',
+					]
+				]
             ],
 	        [
 	            'label' => Yii::t('store', 'Created By'),
@@ -126,14 +163,28 @@ $this->params['breadcrumbs'][] = $this->title;
 				'hAlign' => GridView::ALIGN_CENTER,
 	        ],
 			[
-	            'label' => Yii::t('store', 'Last Update'),
-				'attribute' => 'updated_at',
-				'format' => 'datetime',
-				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->updated_at);
+	            'label' => Yii::t('store', 'Updated At'),
+                'attribute'=>'updated_at_range',
+	            'value' => function ($model, $key, $index, $widget) {
+							return $model->updated_at;
 				},
-				'hAlign' => GridView::ALIGN_RIGHT,
-			],
+				'options' => ['class' => 'form-control'],
+                'filterType' => GridView::FILTER_DATE_RANGE,
+                'filterWidgetOptions' => [
+	                'model'=>$searchModel,
+	                'attribute'=>'updated_at',
+	                'presetDropdown'=>TRUE,                
+	                'convertFormat'=>true,                
+	                'pluginOptions'=>[                                          
+	                    'format'=>'Y-m-d',
+	                    'opens'=>'left'
+	                ],
+					'pluginEvents' => [
+						"apply.daterangepicker" => 'function() { $(".grid-view").yiiGridView("applyFilter"); }',
+						"cancel.daterangepicker" => 'function() { $("#'.strtolower($document_type).'search-updated_at_range").val(""); $(".grid-view").yiiGridView("applyFilter"); }',
+					]
+				]
+            ],
 	        [
 	            'label' => Yii::t('store', 'Status'),
 	            'attribute' => 'status',

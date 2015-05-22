@@ -30,6 +30,8 @@ if(isset(Yii::$app->user))
 	if(isset(Yii::$app->user->identity))
 		if(isset(Yii::$app->user->identity->role))
 			$role = Yii::$app->user->identity->role;
+
+Yii::$app->formatter->datetimeFormat = 'php:D j/n G:i';
 	
 $template = '{view} {update} {delete}';
 if(in_array($role, ['manager', 'admin', 'compta'])) {
