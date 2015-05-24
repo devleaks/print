@@ -241,7 +241,6 @@ function getSize(s) {
 	i = 0;
 	while( (i < sizes.length) && (s > surfaces[i]) )
 		i++;
-//	console.log(s+'<'+surfaces[i]+' i='+i);
 	return i >= sizes.length ? sizes.length - 1 : i;
 }
 
@@ -249,15 +248,12 @@ function chroma_price(s) {
 	size = getSize(s);
 	uprice = prices[size];
 	price = Math.ceil(uprice * s / (chroma.w_max * chroma.h_max));
-//	if (s = 3600) console.log(s+'=>'+size+"->"+uprice+"="+price);
 	return price < chroma.min_price ? chroma.min_price : price;
 }
 
 $(".adjust-chroma-price").change(function() {
-	console.log('yup');
 	for(i=0;i<sizes.length;i++) {
 		prices[i] = parseFloat($("input[name='price"+sizes[i]+"']").val());
-		console.log(prices[i]+','+surfaces[i]);
 	}
 	$(".adjust").each(function() {
 		x = parseFloat($(this).data('xval'));
@@ -269,7 +265,6 @@ $(".adjust-chroma-price").change(function() {
 $(".adjust-chroma-surface").change(function() {
 	for(i=0;i<sizes.length;i++) {
 		surfaces[i] = parseFloat($("input[name='size"+sizes[i]+"']").val());
-//		console.log(prices[i]+',S'+surfaces[i]);
 	}
 	$(".adjust").each(function() {
 		for(i=0;i<sizes.length;i++) {

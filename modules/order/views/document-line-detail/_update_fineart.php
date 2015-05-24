@@ -156,8 +156,7 @@ $detail->tirage_factor_virgule = str_replace('.',',',$detail->tirage_factor);
 <script type="text/javascript">
 <?php
 $this->beginBlock('JS_INIT'); ?>
-console.log('setting fineart_price...');
-$("#documentline-item_id").trigger('change');
+-item_id").trigger('change');
 <?php $this->endBlock(); ?>
 </script>
 <?php

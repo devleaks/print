@@ -29,7 +29,6 @@ $urlSale = Url::to(['/order/document/document-list']);
 $initScriptSale = <<< SCRIPT
 function (element, callback) {
     var sale=\$(element).val();
-	console.log("init:"+sale);
     if (sale !== "") {
         \$.ajax("{$urlSale}?sale=" + sale, {
             dataType: "json"
@@ -62,7 +61,6 @@ SCRIPT;
 			        $.ajax("'.$urlClient.'?id=" + id, {
 			            dataType: "json"
 			        }).done(function(data) {
-						console.log(data);
 						$("#payment-client_id").val(data.results.id);
 					});
 		    	}

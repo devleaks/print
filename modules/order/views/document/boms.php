@@ -84,7 +84,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->beginBlock('JS_SUBMIT_STATUS') ?>
 $('#boms-selection').submit(function () {
 	var selection = $('#w0').yiiGridView('getSelectedRows');
-	console.log('bill-boms for '+selection+'.');
 	$("#captureselection-selection").val(selection);
 	$(this).submit();
 });

@@ -89,7 +89,6 @@ use yii\helpers\Url;
 <script type="text/javascript">
 <?php
 $this->beginBlock('JS_INIT'); ?>
-console.log('setting chroma_price...');
 chroma_price();
 <?php $this->endBlock(); ?>
 </script>

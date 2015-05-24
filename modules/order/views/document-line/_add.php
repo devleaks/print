@@ -91,7 +91,6 @@ $do_form = $form;
 										$("#documentline-unit_price").val(data.results.item.prix_de_vente);
 										$("#documentline-vat").val(data.results.item.taux_de_tva);
 										$("#documentline-item-yii_category").val(data.results.item.yii_category);
-										//console.log(data.results.item);
 										$("#documentline-unit_price").trigger("change");
 									});
 						    	}

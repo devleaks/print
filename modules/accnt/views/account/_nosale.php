@@ -49,7 +49,6 @@ SCRIPT;
 			        $.ajax("'.$urlClient.'?id=" + id, {
 			            dataType: "json"
 			        }).done(function(data) {
-						console.log(data);
 						$("#payment-client_id").val(data.results.id);
 					});
 		    	}

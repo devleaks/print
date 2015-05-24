@@ -66,9 +66,7 @@ echo '<pre>'.print_r($t, true).'</pre>';
 <script type="text/javascript">
 <?php $this->beginBlock('JS_TEST'); ?>
 $("#doit").click(function() {
-	//console.log($("#src").val());
 	t = eval("o="+$("#src").val());
-	console.log(JSON.stringify(t));
 	$("dest").text("Toto" + JSON.stringify(t));
 });
 <?php $this->endBlock(); ?>

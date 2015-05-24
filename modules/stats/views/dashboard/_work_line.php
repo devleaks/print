@@ -14,7 +14,6 @@ HighchartsAsset::register($this)->withScripts(['modules/drilldown']);
 <?php $this->beginBlock('JS_WORKLINE_CHART'.$date); ?>
 $(function() {
     $.getJSON("<?= Url::to(['work-lines', 'id' => $date]) ?>", function(data) {
-		console.log(data);
 		if(data.length > 0) {
 	        $("#workline<?= $date ?>").highcharts({
 		        chart: {

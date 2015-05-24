@@ -185,7 +185,6 @@ $("#document-due_date").change(function() {
 	else if (days < 5) message = "warning";
 	else if (days < 7) message = "info";
 	else               message = "success";
-	console.log('adding '+message);
 	$('#daysComputed').val(days).parent()
 		.removeClass('bg-danger')
 		.removeClass('bg-warning')

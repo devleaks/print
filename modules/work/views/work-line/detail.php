@@ -106,7 +106,6 @@ $this->params['breadcrumbs'][] = Html::encode($this->title);
 <?php $this->beginBlock('JS_SUBMIT_STATUS') ?>
 $('.set-workline-status').click(function() {
 	status = $(this).data('status');
-	console.log(status);
 	$('#workline-status').val(status);
 	$('#work-detail').submit();
 });

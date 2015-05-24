@@ -164,7 +164,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->beginBlock('JS_PJAXREG') ?>
 $("a.store-action").click(function(e) {
 	action = $(this).data('action');
-	console.log('action to '+action);
 	collected = $('#documents').yiiGridView('getSelectedRows');
 	if(collected != '') {
 		$.post(

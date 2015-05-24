@@ -14,7 +14,6 @@ HighchartsAsset::register($this)->withScripts(['modules/drilldown']);
 <?php $this->beginBlock('JS_WORKLINE_CHART_TODAY_DOC'); ?>
 $(function() {
     $.getJSON("<?= Url::to(['documents']) ?>", function(data) {
-		console.log(data);
 		if(data.length > 0) {
 	        $("#today-doc").highcharts({
 		        chart: {

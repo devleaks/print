@@ -396,6 +396,9 @@ return [
 	'Payment was split {0}. Click on link to view all sales.' => "Le paiement a été réparti {0}. Suivez le lien pour voir toutes les ventes affectées.",
     'across multiple sales' => 'sur plusieurs ventes',
 	'Extra payment for {0}' => 'Paiement excédentaire pour {0}',
+	'Refund amount cannot be larger than amount to reimburse.' => 'Le montant remboursé ne peut pas être supérieur au montant à rembourser.',
+	'Payment was not added' => "Le paiement n'a pas été enregistré",
+	'Change Client' => 'Changer le client',
 	
 	
 	/* attempt to resubmit work if order modified */

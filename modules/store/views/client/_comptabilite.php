@@ -5,10 +5,8 @@ use yii\helpers\Url;
 <?php $this->beginBlock('JS_COMPTAUNIQ'); ?>
 $("#client-nom").change(function() {
 	ident = $("#client-comptabilite").val();
-	//console.log('cur val='+ident);
 	if(ident == '') {		
 		s = $("#client-nom").val();
-		//console.log('client='+s);
 		$.ajax({
 			type: "GET",
 			url: "<?= Url::to(['/store/client/get-unique-identifier'], true) ?>",

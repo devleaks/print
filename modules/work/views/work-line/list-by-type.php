@@ -227,9 +227,7 @@ if($task->name == 'Commande Encadrement') {
 <?php $this->beginBlock('JS_SUBMIT_STATUS') ?>
 $('.actionButton').click(function () {
 	var status = $(this).data('status');
-	console.log('doing for '+status);
 	var keys = $('#w0').yiiGridView('getSelectedRows');
-	console.log('doing for '+keys);
 	$.ajax({
 		type: "POST",
 		url: 'bulk-status',

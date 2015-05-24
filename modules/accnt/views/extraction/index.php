@@ -118,7 +118,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->beginBlock('JS_EXTRACT_METHOD'); ?>
 $(".method-option").click(function () {
 	method = $(this).data('method');
-	console.log(method);
 	$('#captureextraction-extraction_method').val(method);
 });
 <?php $this->endBlock(); ?>

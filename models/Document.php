@@ -175,7 +175,7 @@ class Document extends _Document
 							->sum('amount');	
 		} else
 			$ret = Payment::find()->where(['sale' => $this->sale])->sum('amount');
-		Yii::trace('ret='.$ret, 'Document::getPrepaid');
+		Yii::trace('ret='.$ret ? $ret : 0, 'Document::getPrepaid');
 		return $ret ? $ret : 0;
 	}
 		
@@ -422,7 +422,8 @@ class Document extends _Document
 
 			if($due < 0) { // refund
 
-				if($amount == $due) { //@todo
+				Yii::trace('Reimbursement: due='.$due.', amount='.$amount, 'Document::addPayment');
+				if($amount >= $due) {
 					$payment = new Payment([
 						'sale' => $this->sale,
 						'client_id' => $this->client_id,
@@ -432,9 +433,10 @@ class Document extends _Document
 						'cash_id' => $account->cash_id,
 						'account_id' => $account ? $account->id : null,
 					]);
-					$payment->save();
+					Yii::$app->session->setFlash('success', Yii::t('store', 'Payment recorded.'));
 				} else {
-					Yii::$app->session->setFlash('error', Yii::t('store', 'Refund amount cannot be larger than amount to reimburse.'));
+					$ok = false;
+					Yii::$app->session->setFlash('warning', Yii::t('store', 'Refund amount cannot be larger than amount to reimburse.'));
 				}
 
 			} else { // regular payment
@@ -477,9 +479,9 @@ class Document extends _Document
 					else
 						Yii::$app->session->setFlash('info', Yii::t('store', 'Bill paid. Customer left with {0}€ credit.', $surplus));
 				}
+				Yii::$app->session->setFlash('success', Yii::t('store', 'Payment recorded.'));
 			}
 
-			Yii::$app->session->setFlash('success', Yii::t('store', 'Payment recorded.'));
 
 		} elseif ($method == Payment::CLEAR) { // we just record a payment because it clears an existing credit note
 
