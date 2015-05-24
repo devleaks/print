@@ -46,7 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				->andWhere(['>=','created_at',$day_start])
 				->andWhere(['<=','created_at',$day_end])
 				->andWhere(['payment_method' => Payment::CASH])->each() as $payment) {
-					$payment_ids[] = $payment->cash_id;
+					if($payment->cash_id)
+						$payment_ids[] = $payment->cash_id;
 					$cashLines[] = new AccountLine([
 						'note' => $payment->note,
 						'amount' => $payment->amount,

@@ -390,6 +390,13 @@ return [
 	'Payments with No Sale' => 'Paiements sans vente associée',
 	'Payment with No Sale' => 'Paiement sans vente associée',
 	'Payments Split Into Two or More Sale' => 'Paiements répartis sur plusieurs ventes',
+	'Cash payment deleted. {0} updated. You must review cash balance from {1}.' => "Paiement en espèce supprimé. {0} mise à jour. Vous devez revoir la balance de la caisse en date du {1}.",
+	'Reimbursement created.' => 'Remboursement créé.',
+	'Delete all payments' => 'Supprimer tous les paiements',
+	'Payment was split {0}. Click on link to view all sales.' => "Le paiement a été réparti {0}. Suivez le lien pour voir toutes les ventes affectées.",
+    'across multiple sales' => 'sur plusieurs ventes',
+	'Extra payment for {0}' => 'Paiement excédentaire pour {0}',
+	
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

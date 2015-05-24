@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 
 /**
  * Base class for all things common to bid, order, and bill
@@ -419,33 +420,23 @@ class Document extends _Document
 		
 		if (!in_array($method, [Payment::USE_CREDIT,Payment::CLEAR])) {
 
-			if($method == 'CASH') {
-				$cash = new Cash([
-					'document_id' => $this->id,
-					'sale' => $this->sale,
-					'amount' => $amount,
-					'payment_date' => date('Y-m-d H:i:s'),
-				]);
-				$cash->save();
-				$cash->refresh();
-			}
-			Yii::trace('amount='.$amount.' due='.$due, 'Document::addPayment');
-
 			if($due < 0) { // refund
-				if($amount == $due) {
+
+				if($amount == $due) { //@todo
 					$payment = new Payment([
 						'sale' => $this->sale,
 						'client_id' => $this->client_id,
 						'payment_method' => $method,
 						'amount' => $amount,
 						'status' => Payment::STATUS_PAID,
-						'cash_id' => $cash ? $cash->id : null,
+						'cash_id' => $account->cash_id,
 						'account_id' => $account ? $account->id : null,
 					]);
 					$payment->save();
 				} else {
-					Yii::$app->session->setFlash('error', Yii::t('store', 'Refund amount must match refund money.'));
+					Yii::$app->session->setFlash('error', Yii::t('store', 'Refund amount cannot be larger than amount to reimburse.'));
 				}
+
 			} else { // regular payment
 				if($amount <= $due) {
 					$payment = new Payment([
@@ -454,7 +445,7 @@ class Document extends _Document
 						'payment_method' => $method,
 						'amount' => $amount,
 						'status' => Payment::STATUS_PAID,
-						'cash_id' => $cash ? $cash->id : null,
+						'cash_id' => $account->cash_id,
 						'account_id' => $account ? $account->id : null,
 					]);
 				} else { // paid too much, split payment in amount due and surplus
@@ -465,7 +456,7 @@ class Document extends _Document
 						'payment_method' => $method,
 						'amount' => $due,
 						'status' => Payment::STATUS_PAID,
-						'cash_id' => $cash ? $cash->id : null,
+						'cash_id' => $account->cash_id,
 						'account_id' => $account ? $account->id : null,
 					]);
 					// 2. record an extra payment in status OPEN
@@ -475,13 +466,13 @@ class Document extends _Document
 						'client_id' => $this->client_id,
 						'payment_method' => $method,
 						'amount' => $surplus,
-						'note' => 'Extra payment for '.$this->name,
+						'note' => Yii::t('store', 'Extra payment for {0}',$this->name),
 						'status' => Payment::STATUS_OPEN,
-						'cash_id' => $cash ? $cash->id : null,
+						'cash_id' => $account->cash_id,
 						'account_id' => $account ? $account->id : null,
 					]);
 
-					if($method == 'CASH')
+					if($method == Payment::CASH)
 						Yii::$app->session->setFlash('info', Yii::t('store', 'You must reimburse {0}€.', $surplus));
 					else
 						Yii::$app->session->setFlash('info', Yii::t('store', 'Bill paid. Customer left with {0}€ credit.', $surplus));
@@ -593,26 +584,27 @@ class Document extends _Document
 	public function deletePayment($id, $do_account = true) {
 		if($payment = Payment::findOne($id)) {
 			if($do_account && $payment->partOfMultiplePayment()) {
-				Yii::$app->session->setFlash('warning', Yii::t('store', 'Payment was part of a multiple sale payment and cannot be deleted here.'));
+				Yii::$app->session->setFlash('warning', Yii::t('store', 'Payment was split {0}. Click on link to view all sales.',
+					Html::a(Yii::t('store', 'across multiple sales'), ['/accnt/account/view', 'id' => $payment->account_id])));
 				return;
 			}
 			
 			$transaction = Yii::$app->db->beginTransaction();
 			if($payment->amount < 0) { // cancel refund
-
-				$credit = new Payment([
-					'sale' => Sequence::nextval('sale'),
-					'client_id' => $payment->client_id,
-					'payment_method' => Payment::USE_CREDIT,
-					'amount' => $payment->amount,
-					'note' => Yii::t('store', 'Credit payment cancelled.').($payment->note ? ' '.Yii::t('store', '(Was: {0}.)', $payment->note):''),
-					'status' => Payment::STATUS_OPEN,
-				]);
-				$credit->save();
-				History::record($payment, 'DELETE', 'Credit added for '.$this->name.'='.$credit->amount, true, null);
+				$credit_amount = 0;
+				foreach($payment->getPaymentLinks()->each() as $pl) {
+					if($credit = $pl->getLinked()->one()) {
+						$credit_amount += $credit->amount;
+						$credit->status = Payment::STATUS_OPEN;
+						$credit->save();
+					}
+					$pl->delete();
+				}
+				
+				History::record($payment, 'DELETE', 'Credit restored for '.$this->name.'='.$credit_amount, true, null);
 				Yii::trace('Created credit for='.$this->name, 'Document::deletePayment');
 				Yii::$app->session->setFlash('success', Yii::t('store', 'Payment with credit deleted. {0} updated. Credit amount {0}€ restored.',
-							[$credit->amount]));
+							[$credit_amount]));
 				
 				if($account = Account::findOne($payment->account_id)) {
 					if($payment->payment_method == Payment::CASH) {
@@ -623,7 +615,7 @@ class Document extends _Document
 								$cash->delete();
 							}
 							History::record($payment, 'DELETE', 'Cash payment deleted', true, null);
-							if($do_account) $account->delete();
+							if($do_account) $account->deleteWithCash();
 							Yii::$app->session->setFlash('success', Yii::t('store', 'Cash payment deleted. {0} updated. You must review cash balance from {1}.',
 										[$this->name, Yii::$app->formatter->asDate($cash_date)]));
 							Yii::trace('Deleted cash for='.$this->name, 'Document::deletePayment');
@@ -634,7 +626,7 @@ class Document extends _Document
 					} else {
 						$payment->delete();
 						History::record($payment, 'DELETE', 'Payment deleted', true, null);
-						if($do_account) $account->delete();
+						if($do_account) $account->deleteWithCash();
 						Yii::$app->session->setFlash('success', Yii::t('store', 'Payment deleted. {0} updated.', [$this->name]));
 						Yii::trace('Deleted payment for='.$this->name, 'Document::deletePayment');
 					}
@@ -682,11 +674,8 @@ class Document extends _Document
 							if($cash = Cash::findOne($payment->cash_id)) {
 								$cash_date = $cash->created_at;
 								$payment->delete();
-								if(! $cash->getPayments()->exists()) { // are there other payments that depends on this cash? If not, we delete cash as well.
-									$cash->delete();
-								}
 								History::record($payment, 'DELETE', 'Cash payment deleted', true, null);
-								if($do_account) $account->delete();
+								if($do_account) $account->deleteWithCash();
 								Yii::$app->session->setFlash('success', Yii::t('store', 'Cash payment deleted. {0} updated. You must review cash balance from {1}.',
 											[$this->name, Yii::$app->formatter->asDate($cash_date)]));
 								Yii::trace('Deleted cash for='.$this->name, 'Document::deletePayment');
@@ -697,7 +686,7 @@ class Document extends _Document
 						} else {
 							$payment->delete();
 							History::record($payment, 'DELETE', 'Payment deleted', true, null);
-							if($do_account) $account->delete();
+							if($do_account) $account->deleteWithCash();
 							Yii::$app->session->setFlash('success', Yii::t('store', 'Payment deleted. {0} updated.', [$this->name]));
 							Yii::trace('Deleted payment for='.$this->name, 'Document::deletePayment');
 						}

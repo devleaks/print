@@ -70,4 +70,10 @@ class Cash extends _Cash
 	}
 
 
+	public function delete() {
+		if($account = $this->getAccounts()->one())
+			$account->delete();
+		parent::delete();
+	}
+
 }

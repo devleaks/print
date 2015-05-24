@@ -15,16 +15,8 @@ use app\components\RuntimeDirectoryManager;
  * @property string $created_at
  * @property string $updated_at
  */
-class Backup extends \yii\db\ActiveRecord
+class Backup extends _Backup
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'backup';
-    }
-
     /**
      * @inheritdoc
      */
@@ -34,38 +26,10 @@ class Backup extends \yii\db\ActiveRecord
                 'timestamp' => [
                         'class' => 'yii\behaviors\TimestampBehavior',
                         'attributes' => [
-                                ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                                ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                                ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
                         ],
                         'value' => function() { return date('Y-m-d H:i:s'); },
                 ],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-//			[['created_at', 'updated_at'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['filename'], 'string', 'max' => 250],
-            [['status'], 'string', 'max' => 20]
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('store', 'ID'),
-            'filename' => Yii::t('store', 'Filename'),
-            'status' => Yii::t('store', 'Status'),
-            'created_at' => Yii::t('store', 'Created At'),
-            'updated_at' => Yii::t('store', 'Updated At'),
         ];
     }
 

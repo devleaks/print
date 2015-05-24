@@ -22,7 +22,7 @@ $capture = new CapturePayment();
 $capture->id = $model->id;
 $capture->total  = number_format($model->getTotal()  , 2, ',', '');
 $capture->amount = number_format($model->getBalance(), 2, ',', '');
-$capture->method = 'CASH';
+$capture->method = Payment::CASH;
 $capture->submit = 1;
 ?>
 

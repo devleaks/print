@@ -89,22 +89,35 @@ class AccountController extends Controller
 
         if ($capture->load(Yii::$app->request->post()) && $capture->validate()) {
 			$amount = str_replace(',','.',$capture->amount);
+			$sale = Sequence::nextval('sale');
+			$cash = null;
+			if($capture->method == Payment::CASH) {
+				$cash = new Cash([
+					'sale' => $sale,
+					'amount' => $amount,
+					'payment_date' => $capture->date ? $capture->date : date('Y-m-d'),
+				]);
+				$cash->save();
+				$cash->refresh();
+			}
 			$account = new Account([
 				'client_id' => $capture->client_id,
 				'payment_method' => $capture->method,
 				'payment_date' => $capture->date ? $capture->date : date('Y-m-d'),
 				'amount' => $amount,
 				'status' => $amount > 0 ? 'CREDIT' : 'DEBIT',
+				'cash_id' => $cash ? $cash->id : null,
 			]);
 			$account->save();
 			$account->refresh();
 			$payment = new Payment([
-				'sale' => Sequence::nextval('sale'), // its a new sale transaction, payment is not added to any existing sale
+				'sale' => $sale, // its a new sale transaction, payment is not added to any existing sale
 				'client_id' => $capture->client_id,
 				'payment_method' => $capture->method,
 				'amount' => $amount,
 				'status' => Payment::STATUS_OPEN,
 				'account_id' => $account->id,
+				'cash_id' => $cash ? $cash->id : null,
 			]);
 			$payment->save();
             return $this->redirect(['/accnt/account/client', 'id' => $capture->client_id]);
@@ -151,7 +164,7 @@ class AccountController extends Controller
 				$doc->deletePayment($payment->id, false);
 			}
 		}
-		$account->delete();
+		$account->deleteWithCash();
 		Yii::$app->session->setFlash('success', Yii::t('store', 'Account line deleted. All payments deleted.'));
         return $this->redirect(['/accnt']);
     }

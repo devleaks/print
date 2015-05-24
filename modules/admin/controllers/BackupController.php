@@ -6,9 +6,10 @@ use Yii;
 use app\components\RuntimeDirectoryManager;
 use app\models\Backup;
 use app\models\BackupSearch;
+use yii\filters\VerbFilter;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * BackupController implements the CRUD actions for Backup model.
@@ -55,6 +56,7 @@ class BackupController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+			'model' => new Backup(),
         ]);
     }
 
@@ -78,15 +80,14 @@ class BackupController extends Controller
     public function actionCreate()
     {
         $model = new Backup();
-
-		if($model->doBackup()) {
-			if($model->save()) {
-				Yii::$app->session->setFlash('success', Yii::t('store', 'Backup completed.'));
-				}
-		} else {
-			Yii::$app->session->setFlash('error', Yii::t('store', 'There was an error producing the backup.'));
+		$model->load(Yii::$app->request->post());
+		
+		if($model->doBackup() && $model->save()) {
+			Yii::$app->session->setFlash('success', Yii::t('store', 'Backup completed.'));
+			return $this->redirect(['index']);
 		}
- 			
+
+		Yii::$app->session->setFlash('error', Yii::t('store', 'There was an error producing the backup: {0}.', VarDumper::dumpAsString($model->errors, 4, true))); 			
 		return $this->redirect(['index']);
     }
 

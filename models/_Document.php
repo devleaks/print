@@ -16,9 +16,9 @@ use Yii;
  * @property integer $parent_id
  * @property integer $client_id
  * @property string $due_date
- * @property double $price_htva
- * @property double $price_tvac
- * @property double $vat
+ * @property string $price_htva
+ * @property string $price_tvac
+ * @property string $vat
  * @property integer $vat_bool
  * @property integer $bom_bool
  * @property string $note
@@ -31,8 +31,8 @@ use Yii;
  * @property integer $priority
  * @property string $legal
  * @property string $email
+ * @property integer $credit_bool
  *
- * @property Account[] $accounts
  * @property Cash[] $cashes
  * @property User $updatedBy
  * @property _Document $parent
@@ -41,6 +41,7 @@ use Yii;
  * @property User $createdBy
  * @property DocumentLine[] $documentLines
  * @property Extraction[] $extractions
+ * @property Extraction[] $extractions0
  * @property Pdf[] $pdfs
  * @property Work[] $works
  */
@@ -61,7 +62,7 @@ class _Document extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'sale', 'client_id', 'due_date'], 'required'],
-            [['sale', 'parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by', 'priority'], 'integer'],
+            [['sale', 'parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by', 'priority', 'credit_bool'], 'integer'],
             [['due_date', 'created_at', 'updated_at'], 'safe'],
             [['price_htva', 'price_tvac', 'vat'], 'number'],
             [['document_type', 'name', 'lang', 'status'], 'string', 'max' => 20],
@@ -77,7 +78,7 @@ class _Document extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('store', 'ID'),
+            'id' => Yii::t('store', 'Document'),
             'document_type' => Yii::t('store', 'Document Type'),
             'name' => Yii::t('store', 'Name'),
             'sale' => Yii::t('store', 'Sale'),
@@ -101,15 +102,8 @@ class _Document extends \yii\db\ActiveRecord
             'priority' => Yii::t('store', 'Priority'),
             'legal' => Yii::t('store', 'Legal'),
             'email' => Yii::t('store', 'Email'),
+            'credit_bool' => Yii::t('store', 'Credit Bool'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAccounts()
-    {
-        return $this->hasMany(Account::className(), ['document_id' => 'id']);
     }
 
     /**
@@ -172,6 +166,14 @@ class _Document extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getExtractions()
+    {
+        return $this->hasMany(Extraction::className(), ['document_from' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getExtractions0()
     {
         return $this->hasMany(Extraction::className(), ['document_to' => 'id']);
     }

@@ -146,6 +146,7 @@ class Client extends _Client
 		$accountLines = [];
 		$sales = [];
 		$sales_already_processed = [];
+		$accounts_already_processed = [];
 		
 		/** Sales */
 
@@ -200,12 +201,34 @@ class Client extends _Client
 						break;
 					case Document::TYPE_REFUND:
 						$color = ($bal < 0) ? 'warning' : 'success';
-						$accountLines[] = new AccountLine([
-							'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
-							'amount' => 0, // We display balance; not total.
-							'date' => $document->created_at,
-							'ref' => $document->id,
-						]);
+						if($document->credit_bool) {
+							if($payment = $document->getPayments()->one()) {
+								if($account = $payment->getAccount()->one()) {
+									$note = ($account->note ? $account->note : '<span class="label label-info">'.$account->payment_method.'</span>');
+									$accountLines[] = new AccountLine([
+										'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])).' / '.$note,
+										'amount' => $account->amount,
+										'date' => $document->created_at,
+										'ref' => $document->id,
+									]);
+									$accounts_already_processed[] = $account->id;
+								}
+							} else {
+								$accountLines[] = new AccountLine([
+									'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
+									'amount' => 0, // We display balance; not total.
+									'date' => $document->created_at,
+									'ref' => $document->id,
+								]);
+							}
+						} else {
+							$accountLines[] = new AccountLine([
+								'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
+								'amount' => - $document->getTotal(),
+								'date' => $document->created_at,
+								'ref' => $document->id,
+							]);
+						}
 						$sales_already_processed[] = $document->sale;
 						break;
 					case Document::TYPE_BID:
@@ -218,7 +241,7 @@ class Client extends _Client
 		
 		
 		/** Payments */
-		foreach($this->getAccounts()->each() as $account) {
+		foreach($this->getAccounts()->andWhere(['not',['id'=>$accounts_already_processed]])->each() as $account) {
 			//$reimburse = Html::a('<span class="label label-primary">'.Yii::t('store', 'Make credit note').'</span>', Url::to(['refund', 'id' => $account->id]), ['title' => Yii::t('store', 'Make credit note').'-'.$account->sale]);
 			//$reimburse = $this->refundPullDown($account->id);
 			$color = 'info';

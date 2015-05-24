@@ -18,6 +18,7 @@ use Yii;
  * @property string $updated_at
  * @property integer $updated_by
  *
+ * @property Account[] $accounts
  * @property Document $document
  * @property User $createdBy
  * @property User $updatedBy
@@ -64,6 +65,14 @@ class _Cash extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccounts()
+    {
+        return $this->hasMany(Account::className(), ['cash_id' => 'id']);
     }
 
     /**

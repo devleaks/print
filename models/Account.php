@@ -34,4 +34,11 @@ class Account extends _Account
         ];
     }
 
+	public function deleteWithCash() {
+		if($cash = $this->getCash()->one())
+			$cash->delete(); //$cash will delete it.
+		else
+			$this->delete();
+	}
+
 }

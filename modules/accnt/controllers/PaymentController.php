@@ -10,6 +10,7 @@ use app\models\Document;
 use app\models\DocumentLine;
 use app\models\Item;
 use app\models\Payment;
+use app\models\PaymentLink;
 use app\models\PaymentSearch;
 use app\models\Refund;
 use app\models\Sequence;
@@ -257,6 +258,7 @@ class PaymentController extends Controller
 						'sale' => $newSale,
 						'reference' => $newReference,
 						'status' => Refund::STATUS_CLOSED,
+						'credit_bool' => true,
 					]);
 					$credit->save();
 					$credit->refresh();
@@ -278,16 +280,36 @@ class PaymentController extends Controller
 					$credit->save();
 					
 					// 2. Refund credits
+					$cash = null;
+					if($capture->method == Payment::CASH) {
+						$cash = new Cash([
+							'sale' => $sale,
+							'amount' => $amount,
+							'payment_date' => $capture->date ? $capture->date : date('Y-m-d'),
+						]);
+						$cash->save();
+						$cash->refresh();
+					}
 					$refund = new Account([
 						'client_id' => $client_id,
 						'payment_method' => $capture->method,
 						'payment_date' => date('Y-m-d H:i:s'),
 						'amount' => -$total,
 						'status' => (-$total > 0) ? 'CREDIT' : 'DEBIT',
+						'cash_id' => $cash ? $cash->id : null,
 					]);
 					$refund->save();
 					$refund->refresh();
+					//
 					$credit->addPayment($refund, -$total, $capture->method, $capture->note);
+					$credit_payment = $credit->getPayments()->one();
+					foreach(Payment::find()->andWhere(['id' => $_POST['selection']])->each() as $payment) {
+						$link = new PaymentLink([
+							'payment_id' => $credit_payment->id,
+							'linked_id' => $payment->id
+						]);
+						$link->save();
+					}
 
 					$transaction->commit();
 					Yii::$app->session->setFlash('success', Yii::t('store', 'Reimbursement created.'));

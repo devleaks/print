@@ -9,6 +9,7 @@ use app\models\Account;
 use app\models\Attachment;
 use app\models\Bill;
 use app\models\BillSearch;
+use app\models\Cash;
 use app\models\CaptureBalance;
 use app\models\Client;
 use app\models\Order;
@@ -159,16 +160,26 @@ class BillController extends Controller
 						
 						$transaction = Yii::$app->db->beginTransaction();
 						
-						$payment_entered = new Account([
+						$cash = null;
+						if($capture->method == Payment::CASH) {
+							$cash = new Cash([
+								'amount' => $available,
+								'payment_date' => $capture->date ? $capture->date : date('Y-m-d'),
+							]);
+							$cash->save();
+							$cash->refresh();
+						}
+						$account_entered = new Account([
 							'client_id' => $capture->client_id,
 						//	'sale' => null, // explicitely: Sales will be null for a global payment.
 							'payment_method' => $capture->method,
 							'payment_date' => $capture->date ? $capture->date : date('Y-m-d H:i:s'),
 							'amount' => $available,
 							'status' => $available > 0 ? 'CREDIT' : 'DEBIT',
+							'cash_id' => $cash ? $cash->id : null,
 						]);
-						$payment_entered->save();
-						$payment_entered->refresh();
+						$account_entered->save();
+						$account_entered->refresh();
 
 						$more_needed = 0;
 						Yii::trace('available='.$available, 'BillController::actionAddPayment');
@@ -179,11 +190,11 @@ class BillController extends Controller
 								$needed = $b->getBalance();
 								Yii::trace('needed='.$needed.' for '.$b->id, 'BillController::actionAddPayment');
 								if($needed <= $available) {
-									$b->addPayment($payment_entered, $needed, $capture->method);
+									$b->addPayment($account_entered, $needed, $capture->method);
 									$available -= $needed;
 									Yii::trace('found, available='.$available, 'BillController::actionAddPayment');
 								} else {
-									$b->addPayment($payment_entered, $available, $capture->method);
+									$b->addPayment($account_entered, $available, $capture->method);
 									$more_needed = $needed - $available;
 									$available = 0;
 									Yii::trace('NOT found, missing='.$more_needed, 'BillController::actionAddPayment');
@@ -202,7 +213,7 @@ class BillController extends Controller
 								'payment_method' => $capture->method,
 								'amount' => $available,
 								'status' => Payment::STATUS_OPEN,
-								'account_id' => $payment_entered->id,
+								'account_id' => $account_entered->id,
 							]);
 							$remaining->save();
 							Yii::$app->session->setFlash('info', Yii::t('store', 'Transfered amount exceeds amount to pay all bills: {0}€ credited and available.', $available));

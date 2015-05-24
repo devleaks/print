@@ -58,9 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<ul>
 	    <li><a href="<?= Url::to(['/order/document/index', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
-	    <li><a href="<?= Url::to(['/accnt/payment/multidoc']) ?>"><?= Yii::t('store', 'Remove payment for multiple documents')?></a> - Danger</li>
 	    <li><a href="<?= Url::to(['/accnt/account/list']) ?>"><?= Yii::t('store', 'Remove payment with no sale')?></a> - Danger</li>
-	    <li><a href="<?= Url::to(['/accnt/payment/cancel-refund']) ?>"><?= Yii::t('store', 'Remove reimbursement of client credit')?></a> - Danger</li>
 	    <li><a href="<?= Url::to(['/accnt/cash/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
 	</ul>
 

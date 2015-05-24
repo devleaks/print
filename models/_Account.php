@@ -18,7 +18,9 @@ use Yii;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
+ * @property integer $cash_id
  *
+ * @property Cash $cash
  * @property Client $client
  * @property User $createdBy
  * @property User $updatedBy
@@ -41,7 +43,7 @@ class _Account extends \yii\db\ActiveRecord
     {
         return [
             [['client_id', 'amount'], 'required'],
-            [['client_id', 'created_by', 'updated_by'], 'integer'],
+            [['client_id', 'created_by', 'updated_by', 'cash_id'], 'integer'],
             [['amount'], 'number'],
             [['payment_date', 'created_at', 'updated_at'], 'safe'],
             [['payment_method', 'status'], 'string', 'max' => 20],
@@ -66,7 +68,16 @@ class _Account extends \yii\db\ActiveRecord
             'created_by' => Yii::t('store', 'Created By'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
+            'cash_id' => Yii::t('store', 'Cash ID'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCash()
+    {
+        return $this->hasOne(Cash::className(), ['id' => 'cash_id']);
     }
 
     /**

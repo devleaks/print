@@ -5,6 +5,7 @@ namespace app\modules\order\controllers;
 use Yii;
 use app\components\RuntimeDirectoryManager;
 use app\models\Account;
+use app\models\Cash;
 use app\models\Bid;
 use app\models\BidSearch;
 use app\models\Bill;
@@ -34,8 +35,9 @@ use app\models\TicketSearch;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\filters\VerbFilter;
-use yii\helpers\Json;
 use yii\helpers\Html;
+use yii\helpers\VarDumper;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -648,12 +650,24 @@ class DocumentController extends Controller
 
 				$payment_entered = null;
 				if($capturePayment->method != Payment::USE_CREDIT) { // if we use credit, money is already here, so we don't add it
+					$cash = null;
+					if($capturePayment->method == Payment::CASH) {
+						$cash = new Cash([
+							'document_id' => $model->id,
+							'sale' => $model->sale,
+							'amount' => $capturePayment->amount,
+							'payment_date' => date('Y-m-d'),
+						]);
+						$cash->save();
+						$cash->refresh();
+					}
 					$payment_entered = new Account([
 						'client_id' => $model->client_id,
 						'payment_method' => $capturePayment->method,
 						'payment_date' => date('Y-m-d H:i:s'),
 						'amount' => $capturePayment->amount,
 						'status' => $capturePayment->amount > 0 ? 'CREDIT' : 'DEBIT',
+						'cash_id' => $cash ? $cash->id : null,
 					]);
 					$payment_entered->save();
 					$payment_entered->refresh();

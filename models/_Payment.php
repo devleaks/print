@@ -10,6 +10,8 @@ use Yii;
  * @property integer $id
  * @property integer $client_id
  * @property integer $sale
+ * @property integer $cash_id
+ * @property integer $account_id
  * @property string $amount
  * @property string $payment_method
  * @property string $note
@@ -18,14 +20,14 @@ use Yii;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
- * @property integer $cash_id
- * @property integer $account_id
  *
- * @property User $updatedBy
- * @property Cash $cash
  * @property Account $account
  * @property User $createdBy
+ * @property User $updatedBy
  * @property Client $client
+ * @property Cash $cash
+ * @property PaymentLink[] $paymentLinks
+ * @property PaymentLink[] $paymentLinks0
  */
 class _Payment extends \yii\db\ActiveRecord
 {
@@ -44,7 +46,7 @@ class _Payment extends \yii\db\ActiveRecord
     {
         return [
             [['client_id', 'sale'], 'required'],
-            [['client_id', 'sale', 'created_by', 'updated_by', 'cash_id', 'account_id'], 'integer'],
+            [['client_id', 'sale', 'cash_id', 'account_id', 'created_by', 'updated_by'], 'integer'],
             [['amount'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
             [['payment_method', 'status'], 'string', 'max' => 20],
@@ -61,6 +63,8 @@ class _Payment extends \yii\db\ActiveRecord
             'id' => Yii::t('store', 'ID'),
             'client_id' => Yii::t('store', 'Client ID'),
             'sale' => Yii::t('store', 'Sale'),
+            'cash_id' => Yii::t('store', 'Cash ID'),
+            'account_id' => Yii::t('store', 'Account ID'),
             'amount' => Yii::t('store', 'Amount'),
             'payment_method' => Yii::t('store', 'Payment Method'),
             'note' => Yii::t('store', 'Note'),
@@ -69,25 +73,7 @@ class _Payment extends \yii\db\ActiveRecord
             'created_by' => Yii::t('store', 'Created By'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
-            'cash_id' => Yii::t('store', 'Cash ID'),
-            'account_id' => Yii::t('store', 'Account ID'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUpdatedBy()
-    {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCash()
-    {
-        return $this->hasOne(Cash::className(), ['id' => 'cash_id']);
     }
 
     /**
@@ -109,8 +95,40 @@ class _Payment extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getClient()
     {
         return $this->hasOne(Client::className(), ['id' => 'client_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCash()
+    {
+        return $this->hasOne(Cash::className(), ['id' => 'cash_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPaymentLinks()
+    {
+        return $this->hasMany(PaymentLink::className(), ['payment_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPaymentLinks0()
+    {
+        return $this->hasMany(PaymentLink::className(), ['linked_id' => 'id']);
     }
 }

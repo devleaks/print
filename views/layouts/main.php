@@ -59,9 +59,10 @@ $apphomedir = Yii::getAlias('@app');
 				$work_menu = [];
 				if(Backup::getDbName('yii2print')) {
 					$dev_menu = [];
-					$dev_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt/']];
                 	$dev_menu[] = ['label' => Yii::t('store', 'All documents'), 'url' => ['/order/document/', 'sort' => '-updated_at']];
+					$dev_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt/']];
 					$dev_menu[] = ['label' => Yii::t('store', 'History'), 'url' => ['/admin/history', 'sort' => '-created_at']];
+					$dev_menu[] = ['label' => Yii::t('store', 'Gii'), 'url' => ['/gii']];
 					$menu[] = ['label' => Yii::t('store', 'Development'), 'items' => $dev_menu];
 				}
 				if(Yii::$app->user->identity->role == 'admin' || Yii::$app->user->identity->role == 'compta'
