@@ -46,7 +46,6 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 		$s = $w * $h;
 
 		if( $item = $this->prices[$this->getSize($s)] ) {
-			//Yii::trace($w.'x'.$h.'='.$s.' < '.$p[$i]['value_number'].' i='.$i.', price='.$item->prix_de_vente);
 			$price = ceil($item->prix_de_vente * $s / ($this->w_max * $this->h_max));
 			return $price < $this->min_price ? $this->min_price : $price;
 		}

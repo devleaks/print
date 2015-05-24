@@ -70,10 +70,8 @@ class DocumentLineDetail extends _DocumentLineDetail
 	 * @param string $name reference name of item
      */
 	protected function addTasks($work, $order_line, $name) {
-		//Yii::trace('1:'.$order_line->id, 'DocumentLineDetail::addTask');
 		$item = Item::findOne(['reference' => $name]);
 		if($item) {
-			//Yii::trace('2:'.$item->reference, 'DocumentLineDetail::addTask');
 			$item->createTasks($work, $order_line);
 		}
 	}
@@ -87,8 +85,6 @@ class DocumentLineDetail extends _DocumentLineDetail
 	 * @param DocumentLine $order_line DocumentLine model to which this DocumentLineDetail is attached to.
      */
 	public function createTask($work, $order_line) {
-		//Yii::trace($order_line->id, 'DocumentLineDetail::createTask');
-
 		if(($item = $this->getChroma()->one()) != null)
 			$item->createTasks($work, $order_line);
 //		if(($item = $this->getTirage()->one()) != null) // tirage operations are created by document_line.item when it IS a tirage

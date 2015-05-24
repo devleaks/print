@@ -64,7 +64,7 @@ class CreditLine extends Model {
 			}
 		} else { // use credit line
 			if($credit = Payment::findOne($this->ref)) {
-				Yii::trace('ACCOUNT='.$this->source.' '.$this->ref, 'CreditLine::useAmount');
+				Yii::trace('A='.$this->source.' '.$this->ref, 'CreditLine::useAmount');
 				if($amount < $credit->amount) { // we just take what's necessary
 					$credit->amount -= $amount;
 					$credit->save();

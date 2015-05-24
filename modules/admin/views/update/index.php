@@ -56,21 +56,3 @@ $versions[] = Update::LATEST;
 <?php ActiveForm::end(); ?>
 
 </div>
-<script type="text/javascript">
-<?php
-$this->beginBlock('JS_UPDATE') ?>
-var $grid = $('#grid-versions');
- 
-$grid.on('grid.radiochecked', function(ev, key, val) {
-    console.log("Key = " + key + ", Val = " + val);
-});
- 
-$grid.on('grid.radiocleared', function(ev, key, val) {
-    console.log("Key = " + key + ", Val = " + val);
-});	
-
-<?php $this->endBlock(); ?>
-</script>
-<?php
-$this->registerJs($this->blocks['JS_UPDATE'], yii\web\View::POS_READY);
-

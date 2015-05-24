@@ -166,7 +166,7 @@ class Client extends _Client
 				Yii::trace('DOING SALE:'.$document->sale.'.', 'Client::getAccountLines');
 				$bal = $document->getBalance();
 				$color = ($bal <= 0) ? 'success' : 'warning';
-				Yii::trace($document->document_type.':'.$document->name.'='.$bal, 'Client::getAccountLines');
+				//Yii::trace($document->document_type.':'.$document->name.'='.$bal, 'Client::getAccountLines');
 				switch($document->document_type) {
 					case Document::TYPE_TICKET:
 					case Document::TYPE_BILL: // we always add bills and tickets, they should always get paid
@@ -233,7 +233,7 @@ class Client extends _Client
 						break;
 					case Document::TYPE_BID:
 					default: // no money involved. Ignore. If a order or a ticket was added from this bid it will show.
-						Yii::trace($document->document_type.':'.$document->name.' IGNORED', 'Client::getAccountLines');
+						//Yii::trace($document->document_type.':'.$document->name.' IGNORED', 'Client::getAccountLines');
 						break;
 				}
 			}
