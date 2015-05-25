@@ -2,12 +2,6 @@
 use yii\helpers\Url;
 use app\models\CaptureSearch;
 /* @var $this yii\web\View */
-$role = null;
-if(isset(Yii::$app->user))
-	if(isset(Yii::$app->user->identity))
-		if(isset(Yii::$app->user->identity->role))
-			$role = Yii::$app->user->identity->role;
-
 $this->title = 'Labo JJ Micheli @Work';
 ?>
 <div class="admin-index">

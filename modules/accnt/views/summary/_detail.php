@@ -8,6 +8,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PaymentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$dataProvider->sort->attributes  = null;
 ?>
 <div class="payment-index">
 
@@ -15,7 +16,7 @@ use yii\helpers\Url;
         'dataProvider' => $dataProvider,
 		'toolbar' => false,
 		'panel' => [
-	        'heading'=> '<h3 class="panel-title">'.Yii::t('store', 'Payments').': '.$method.'</h3>',
+	        'heading'=> '<h3 class="panel-title"><a name="'.$method.'"></a>'.Yii::t('store', 'Payments').': '.$label.'</h3>',
 	        'before'=> false,
 	        'after'=> false, // Html::submitButton(Yii::t('store', 'Partial BOM'), ['class' => 'btn btn-primary']),
 			'footer' => false,
@@ -29,14 +30,16 @@ use yii\helpers\Url;
 				'attribute' => 'order_name',
 	            'label' => Yii::t('store', 'Order'),
 	            'value' => function ($model, $key, $index, $widget) {
-						if($latest_doc = $model->getDocument()->one())
-	                    	return Html::a($latest_doc->name, Url::to(['/order/document/view', 'id' => $latest_doc->id]));
-						return '';
+						if($client = $model->client)
+                    		return $client->nom;
+						else
+							return '';
 	            },
 	            'format' => 'raw',
 	        ],
 			[
 				'attribute' => 'created_at',
+            	'label' => Yii::t('store', 'Date'),
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
 					return new DateTime($model->created_at);
@@ -50,14 +53,6 @@ use yii\helpers\Url;
 				'noWrap' => true,
 			    'pageSummary' => true,
 			],
-	        [
-	            'attribute' => 'status',
-	            'value' => function ($model, $key, $index, $widget) {
-	                    return $model->getStatusLabel();
-	            },
-	            'format' => 'raw',
-				'hAlign' => GridView::ALIGN_CENTER,
-	        ],
             // 'created_at',
             // 'created_by',
             // 'updated_at',

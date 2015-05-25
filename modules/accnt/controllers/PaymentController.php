@@ -95,6 +95,9 @@ class PaymentController extends Controller
      */
     public function actionIndexByType()
     {
+        return $this->redirect(['summary/index']);
+
+		// never reached
         $searchModel = new PaymentSearch();
         $searchModel->load(Yii::$app->request->queryParams);
 		if($searchModel->created_at == '')
@@ -283,8 +286,8 @@ class PaymentController extends Controller
 					$cash = null;
 					if($capture->method == Payment::CASH) {
 						$cash = new Cash([
-							'sale' => $sale,
-							'amount' => $amount,
+							'sale' => $newSale,
+							'amount' => $total,
 							'payment_date' => $capture->date ? $capture->date : date('Y-m-d'),
 						]);
 						$cash->save();

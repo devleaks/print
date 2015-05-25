@@ -1,24 +1,19 @@
 <?php
 
 use app\models\Parameter;
-use yii\helpers\Html;
-use kartik\widgets\ActiveForm;
+use app\models\User;
 use kartik\grid\GridView;
+use kartik\widgets\ActiveForm;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AccountSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$role = null;
-if(isset(Yii::$app->user))
-	if(isset(Yii::$app->user->identity))
-		if(isset(Yii::$app->user->identity->role))
-			$role = Yii::$app->user->identity->role;
-
 $this->title = Yii::t('store', 'Customer {0}', [$client->niceName()]);
-$this->params['breadcrumbs'][] = ['label' => in_array($role, ['manager', 'admin']) ? Yii::t('store', 'Management') : Yii::t('store', 'Accounting'),
-								  'url'   => [in_array($role, ['manager', 'admin']) ? '/store' : '/accnt']];
+$this->params['breadcrumbs'][] = ['label' => User::hasRole(['manager', 'admin']) ? Yii::t('store', 'Management') : Yii::t('store', 'Accounting'),
+								  'url'   => [User::hasRole(['manager', 'admin']) ? '/store' : '/accnt']];
 $this->params['breadcrumbs'][] = $this->title;
 $dataProvider->pagination = false;
 ?>

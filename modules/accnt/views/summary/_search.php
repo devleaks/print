@@ -12,7 +12,6 @@ use yii\helpers\Html;
 <div class="payment-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index-by-type'],
         'method' => 'get',
 		'layout' => 'horizontal',
     ]); ?>

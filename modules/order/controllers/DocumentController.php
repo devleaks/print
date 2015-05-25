@@ -68,7 +68,7 @@ class DocumentController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager', 'compta', 'frontdesk', 'employee'],
+	                    'roles' => ['admin', 'manager', 'compta', 'employee'],
 	                ],
 	            ],
 	        ],
@@ -90,6 +90,20 @@ class DocumentController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lists all Order models.
+     * @return mixed
+     */
+    public function actionIndex2() {
+        $searchModel = new DocumentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index2', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

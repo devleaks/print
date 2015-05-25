@@ -165,6 +165,15 @@ class Document extends _Document
         return $this->hasMany(Payment::className(), ['sale' => 'sale']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+	public function getPictures()
+    {
+        return $this->hasMany(Picture::className(), ['document_line_id' => 'id'])
+            ->viaTable('document_line', ['document_id' => 'id']);
+    }
+
 	public function getPrepaid($today = false) {
 		if($today) {
 			$date_from = date('Y-m-d 00:00:00', strtotime('today'));

@@ -57,8 +57,8 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 	<ul>
+	    <li><a href="<?= Url::to(['/accnt/account/list']) ?>"><?= Yii::t('store', 'Remove payment with no sale')?></a></li>
 	    <li><a href="<?= Url::to(['/order/document/index', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
-	    <li><a href="<?= Url::to(['/accnt/account/list']) ?>"><?= Yii::t('store', 'Remove payment with no sale')?></a> - Danger</li>
 	    <li><a href="<?= Url::to(['/accnt/cash/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
 	</ul>
 

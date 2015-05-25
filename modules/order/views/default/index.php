@@ -1,14 +1,9 @@
 <?php
 use yii\helpers\Url;
+use app\models\User;
 
 $this->title = Yii::t('store', 'Orders');
 $this->params['breadcrumbs'][] = $this->title;
-$role = null;
-if(isset(Yii::$app->user))
-	if(isset(Yii::$app->user->identity))
-		if(isset(Yii::$app->user->identity->role))
-			$role = Yii::$app->user->identity->role;
-
 ?>
 <div class="order-default-index">
     <h1><?= Yii::t('store', 'Orders') ?></h1>
@@ -68,7 +63,7 @@ if(isset(Yii::$app->user))
 		</ul>
 		
 	</div>
-	<?php if(in_array($role, ['manager', 'admin', 'frontdesk', 'employee', 'compta'])): ?>
+	<?php if(User::hasRole(['manager', 'admin', 'frontdesk', 'employee', 'compta'])): ?>
 	<div class="col-lg-6">
 
 		<h3>Comptabilité</h3>

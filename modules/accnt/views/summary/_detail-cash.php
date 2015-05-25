@@ -1,7 +1,6 @@
 <?php
 
-use app\models\Document;
-use app\models\Payment;
+use app\models\Account;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -14,9 +13,10 @@ use yii\helpers\Url;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => false,
 		'toolbar' => false,
 		'panel' => [
-	        'heading'=> '<h3 class="panel-title">'.Yii::t('store', 'Payments').': '.$method.'</h3>',
+	        'heading'=> '<h3 class="panel-title"><a name="CASH"></a>'.Yii::t('store', 'Payments').': '.$label.'</h3>',
 	        'before'=> false,
 	        'after'=> false, // Html::submitButton(Yii::t('store', 'Partial BOM'), ['class' => 'btn btn-primary']),
 			'footer' => false,
@@ -31,8 +31,10 @@ use yii\helpers\Url;
 	            'label' => Yii::t('store', 'Transaction'),
 	            'value' => function ($model, $key, $index, $widget) {
 						if($model->ref != null) {
-							$doc = Document::find()->andWhere(['sale' => $model->ref])->one();
-	                    	return Html::a($doc->name, Url::to(['/order/document/view', 'id' => $doc->id]));
+							if($account = Account::findOne(['cash_id' => $model->ref]))
+	                    		return $account->client->nom;
+							else
+								return '';
 						}
 						return $model->note;
 	            },

@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\User;
 
 class SiteController extends Controller
 {
@@ -30,7 +31,8 @@ class SiteController extends Controller
         	return $this->render('index');
 		else {
 			$this->layout = "main2";
-       		return $this->render(Yii::$app->user->identity->role != '' ? Yii::$app->user->identity->role : 'welcome');
+			$role = User::getRole();
+       		return $this->render($role ? $role : 'welcome');
 		}
     }
 

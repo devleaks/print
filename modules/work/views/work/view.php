@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use app\models\WorkLineSearch;
 use kartik\detail\DetailView;
 use yii\data\ActiveDataProvider;
@@ -19,11 +20,7 @@ if(isset($order_line)) {
 	$this->params['breadcrumbs'][] = $this->title;
 }
 
-$can_view = false;
-if(isset(Yii::$app->user))
-	if(isset(Yii::$app->user->identity))
-		if(isset(Yii::$app->user->identity->role))
-			$can_view = in_array(Yii::$app->user->identity->role, ['manager', 'admin']);
+$can_view = User::hasRole(['manager', 'admin']);
 
 ?>
 <div class="work-view">

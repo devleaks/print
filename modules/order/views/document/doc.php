@@ -26,16 +26,10 @@ if(!isset($document_type)) {
 } else
 	$button = Html::a(Yii::t('store', 'Create '.ucfirst(strtolower($document_type))), ['create-'.strtolower($document_type)], ['class' => 'btn btn-success']);
 
-$role = null;
-if(isset(Yii::$app->user))
-	if(isset(Yii::$app->user->identity))
-		if(isset(Yii::$app->user->identity->role))
-			$role = Yii::$app->user->identity->role;
-			
 Yii::$app->formatter->datetimeFormat = 'php:D j/n G:i';
 
 $this->title = Yii::t('store', Document::getTypeLabel($document_type, true));
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/order', 'sort' => '-updated_at']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [User::hasRole(['manager', 'admin']) ? '/store' : '/order', 'sort' => '-updated_at']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">

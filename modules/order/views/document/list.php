@@ -3,20 +3,15 @@
 use app\models\Bid;
 use app\models\Bill;
 use app\models\Document;
+use app\models\User;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$role = null;
-if(isset(Yii::$app->user))
-	if(isset(Yii::$app->user->identity))
-		if(isset(Yii::$app->user->identity->role))
-			$role = Yii::$app->user->identity->role;
-
 $this->title = Yii::t('store', 'Customer {0}', [ucfirst(strtolower($client->nom))]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/order']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [User::hasRole(['manager', 'admin']) ? '/store' : '/order']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">

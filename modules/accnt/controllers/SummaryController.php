@@ -3,8 +3,8 @@
 namespace app\modules\accnt\controllers;
 
 use Yii;
-use app\models\Payment;
-use app\models\PaymentSearch;
+use app\models\Account;
+use app\models\AccountSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -33,16 +33,10 @@ class SummaryController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'compta', 'frontdesk', 'employee', 'manager'],
+	                    'roles' => ['admin', 'compta', 'employee', 'manager'],
 	                ],
 	            ],
 	        ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
         ];
     }
 
@@ -53,7 +47,8 @@ class SummaryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PaymentSearch();
+		//$this->layout = "@app/views/layouts/main2";
+        $searchModel = new AccountSearch();
         $searchModel->load(Yii::$app->request->queryParams);
 		if($searchModel->created_at == '')
 			$searchModel->created_at = date('Y-m-d', strtotime('now'));

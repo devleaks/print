@@ -3,6 +3,7 @@ use app\assets\AppAsset;
 use app\assets\CalculatorAsset;
 use app\models\Backup;
 use app\models\CaptureSearch;
+use app\models\User;
 use app\widgets\Alert;
 use devleaks\chardinjs\ChardinJSAsset;
 use devleaks\introjs\IntroJSAsset;
@@ -65,17 +66,17 @@ $apphomedir = Yii::getAlias('@app');
 					$dev_menu[] = ['label' => Yii::t('store', 'Gii'), 'url' => ['/gii']];
 					$menu[] = ['label' => Yii::t('store', 'Development'), 'items' => $dev_menu];
 				}
-				if(in_array(Yii::$app->user->identity->role, ['admin', 'compta', 'manager', 'frontdesk', 'employee']))
+				if(User::hasRole(['admin', 'compta', 'manager', 'frontdesk', 'employee']))
                 	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash/list']];
-				if(in_array(Yii::$app->user->identity->role, ['admin', 'manager', 'frontdesk', 'employee']))
+				if(User::hasRole(['admin', 'manager', 'frontdesk', 'employee']))
                 	$work_menu[] = ['label' => Yii::t('store', 'Orders'), 'url' => ['/order']];
-				if(in_array(Yii::$app->user->identity->role, ['admin', 'manager', 'employee', 'worker']))
+				if(User::hasRole(['admin', 'manager', 'employee', 'worker']))
                 	$work_menu[] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work']];
-				if(in_array(Yii::$app->user->identity->role, ['admin', 'manager']))
+				if(User::hasRole(['admin', 'manager']))
                 	$work_menu[] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store']];
-				if(in_array(Yii::$app->user->identity->role, ['admin']))
+				if(User::hasRole(['admin']))
                 	$work_menu[] = ['label' => Yii::t('store', 'Administration'), 'url' => ['/admin']];
-				if(in_array(Yii::$app->user->identity->role, ['admin', 'compta']))
+				if(User::hasRole(['admin', 'compta']))
                 	$work_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 
                	$work_menu[] = ['label' => Yii::t('store', 'Calculator'), 'url' => ['/assets/calculator/'], 'linkOptions' => ['target' => '_blank']];

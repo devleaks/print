@@ -53,4 +53,22 @@ class User extends \yii\db\ActiveRecord
     {
 		return ArrayHelper::map(User::find()->orderBy('username')->asArray()->all(), 'id', 'username');
     }
+
+
+	public static function getRole() {
+		$role = null;
+		if(isset(Yii::$app->user))
+			if(isset(Yii::$app->user->identity))
+				if(isset(Yii::$app->user->identity->role))
+					$role = Yii::$app->user->identity->role;
+		return $role;
+	}
+
+	public static function hasRole($role) {
+		return is_array($role) ?
+			in_array(User::getRole(), $role)
+			:
+			User::getRole() == $role
+			;
+	}
 }

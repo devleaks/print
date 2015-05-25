@@ -17,14 +17,8 @@ use yii\helpers\ArrayHelper;
 
 $buttons = Html::a(Yii::t('store', 'Bill To'), null, ['class' => 'btn btn-primary store-action', 'data-action' => DocumentController::ACTION_CONVERT]);
 
-$role = null;
-if(isset(Yii::$app->user))
-	if(isset(Yii::$app->user->identity))
-		if(isset(Yii::$app->user->identity->role))
-			$role = Yii::$app->user->identity->role;
-
 $this->title = Yii::t('store', Document::getTypeLabel('All Documents', true));
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [in_array($role, ['manager', 'admin']) ? '/store' : '/order', 'sort' => '-updated_at']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [User::hasRole(['manager', 'admin']) ? '/store' : '/order', 'sort' => '-updated_at']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">
@@ -73,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'name',
 	            'label' => Yii::t('store', 'Référence'),
 	            'value' => function ($model, $key, $index, $widget) {
-                    return in_array(Yii::$app->user->identity->role, ['manager', 'admin']) ? 
+                    return User::hasRole(['manager', 'admin']) ? 
 							Html::a($model->name, Url::to(['/order/document/view', 'id' => $model->id]))
 							 : $model->name;
 	            },
