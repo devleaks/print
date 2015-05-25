@@ -16,7 +16,7 @@ $this->title = 'Labo JJ Micheli';
         <p>
 			<a class="btn btn-lg btn-primary" href="<?= Url::to(['/order/document/create-bid']) ?>">Nouveau devis</a>
 			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create']) ?>">Nouvelle commande</a>
-			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create-ticket']) ?>">Comptoir</a>
+			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create-ticket']) ?>">Vente Comptoir</a>
 			
 			<?= $this->render('_form', ['model' => new CaptureSearch()]); ?>
 		</p>
@@ -84,7 +84,7 @@ $this->title = 'Labo JJ Micheli';
 
                 <p><a class="btn btn-primary" href="<?= Url::to(['/admin/']) ?>">Application &raquo;</a></p>
             </div>
-			<?php if(Backup::getDbName('yii2print')): ?>
+			<?php if(defined('YII_DEVLEAKS')): ?>
             <div class="col-lg-6">
                 <h2>Développements</h2>
 

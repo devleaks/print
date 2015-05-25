@@ -30,7 +30,7 @@ class ItemController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager', 'compta'],
+	                    'roles' => ['admin', 'manager', 'frontdesk', 'employee', 'compta'],
 	                ],
 	            ],
 	        ],

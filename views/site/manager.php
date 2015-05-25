@@ -43,7 +43,7 @@ $this->title = 'Labo JJ Micheli @Work';
 
                 <p><a class="btn btn-default" href="<?=Yii::$app->homeUrl?>work/">Travaux &raquo;</a></p>
 				<p>
-					&raquo; <a href="<?= Url::to(['/work/work/']) ?>"><?= Yii::t('store', 'Manage all works')?></a>
+					&raquo; <a href="<?= Url::to(['/work/work/', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Manage all works')?></a>
 				</p>
             </div>
             <div class="col-lg-4">

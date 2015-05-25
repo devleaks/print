@@ -23,6 +23,7 @@ $capture->id = $model->id;
 $capture->total  = number_format($model->getTotal()  , 2, ',', '');
 $capture->amount = number_format($model->getBalance(), 2, ',', '');
 $capture->method = Payment::CASH;
+$capture->use_credit = false;
 $capture->submit = 1;
 ?>
 
@@ -39,8 +40,9 @@ $capture->submit = 1;
 <?php if(!$isPaid): ?>
 
 	<?php 	$credit_lines = [];
-			if(!in_array($model->document_type, [$model::TYPE_CREDIT,$model::TYPE_REFUND])) {
-				$credit_lines = $model->client->getCreditLines();
+			if(!in_array($model->document_type, [$model::TYPE_CREDIT])) {
+				$exclude = ($model->document_type == $model::TYPE_REFUND) ? $model->id : null;
+				$credit_lines = $model->client->getCreditLines($exclude);
 				echo $this->render('_available_credit', [
 					'dataProvider' => new ArrayDataProvider([
 						'allModels' => $credit_lines,
@@ -56,6 +58,11 @@ $capture->submit = 1;
 
 	<?php $form = ActiveForm::begin(['action' => Url::to(['/order/document/pay'])]); ?>
 		<?= Html::activeHiddenInput($capture, 'id') ?>
+		<?php /** Experimental */
+			if(defined('YII_DEVLEAKS') && in_array($model->document_type, [Document::TYPE_REFUND])) {
+				echo $form->field($capture, 'use_credit')->checkbox();
+			}
+		?>
 		<?= $form->field($capture, 'amount')->textInput() ?>
 		<?= $form->field($capture, 'total')->textInput(['readonly' => true]) ?>
 		<?= $form->field($capture, 'method')->dropDownList($payment_methods) ?>
@@ -76,5 +83,18 @@ $capture->submit = 1;
 	<?php ActiveForm::end(); ?>
 
 <?php endif; ?>
+<script type="text/javascript">
+<?php
+$this->beginBlock('JS_CREDIT') ?>
+$('#capturepayment-use_credit').change(function() {
+	if($(this).prop('checked')) {
+		$('#capturepayment-amount').val($('#capturepayment-total').val()).prop('readonly', true);;
+	} else
+		$('#capturepayment-amount').prop('readonly', false);;
+});
+<?php $this->endBlock(); ?>
+</script>
+<?php
+$this->registerJs($this->blocks['JS_CREDIT'], yii\web\View::POS_READY);
 
-<?php Modal::end();
+Modal::end();

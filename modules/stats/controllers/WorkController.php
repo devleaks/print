@@ -12,6 +12,28 @@ use yii\data\ArrayDataProvider;
 
 class WorkController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+	        'access' => [
+	            'class' => 'yii\filters\AccessControl',
+	            'ruleConfig' => [
+	                'class' => 'app\components\AccessRule'
+	            ],
+	            'rules' => [
+	                [
+	                    'allow' => false,
+	                    'roles' => ['?']
+               		],
+					[
+	                    'allow' => true,
+	                    'roles' => ['admin', 'manager'],
+	                ],
+	            ],
+	        ],
+        ];
+    }
+
 	/**
 	 *
 select DATEDIFF(updated_at, created_at) diff_days, count(id) as tot_count

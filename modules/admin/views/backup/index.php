@@ -1,7 +1,7 @@
 <?php
 
 use app\models\Backup;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'kartik\grid\SerialColumn'],
 
             //'id',
             'filename',
@@ -45,26 +45,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
 
             [
-				'class' => 'yii\grid\ActionColumn',
+				'class' => 'kartik\grid\ActionColumn',
 				'template' => '{delete} {restore}',
 				'buttons' => [
 					'restore' => function ($url, $model) {
-						return Backup::getDbName('yii2print') ? 
-									Html::a('<span class="glyphicon glyphicon-warning-sign"></span>', $url, [
-										'title' => Yii::t('app', 'Restore database only'),
+						return defined('YII_DEVLEAKS') ? 
+									Html::a('<span class="glyphicon glyphicon-warning-sign"></span>', Url::to(['restore-dev', 'id' => $model->id]), [
+										'title' => Yii::t('store', 'Restore database only'),
 										'data-confirm' => Yii::t('store', 'Restore database?')
 									]) : '';
 					}
 				],
-				'urlCreator' => function ($action, $model, $key, $index) {
-					$url = '';
-					switch($action) {
-						case 'restore':
-							$url = Url::to(['restore-dev', 'id' => $model->id]);
-							break;
-					}
-					return $url;
-				}
 			],
         ],
     ]); ?>

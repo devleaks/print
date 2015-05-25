@@ -26,6 +26,7 @@ use app\models\OrderSearch;
 use app\models\PDFLabel;
 use app\models\Parameter;
 use app\models\Payment;
+use app\models\PaymentLink;
 use app\models\PrintedDocument;
 use app\models\Refund;
 use app\models\RefundSearch;
@@ -67,7 +68,7 @@ class DocumentController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager', 'compta', 'employee'],
+	                    'roles' => ['admin', 'manager', 'compta', 'frontdesk', 'employee'],
 	                ],
 	            ],
 	        ],
@@ -676,6 +677,21 @@ class DocumentController extends Controller
 				if( $model->addPayment($payment_entered, $capturePayment->amount, $capturePayment->method) ) {
 					Yii::trace('doc='.$model->document_type, 'DocumentController::actionUpdateStatus');
 					$model->setStatus(Order::STATUS_TOPAY);
+					if($model->document_type == $model::TYPE_REFUND && $capturePayment->use_credit) {
+						Yii::trace('capture use_credit', 'DocumentController::actionDelete');
+						$model->credit_bool = true;
+						$model->save();
+						$credit_payment = $model->getPayments()->one();
+						foreach(Payment::find()->andWhere(['client_id' => $model->client_id, 'status' => Payment::STATUS_OPEN])->each() as $payment) {
+							$payment->status = Payment::STATUS_PAID;
+							$payment->save();
+							$link = new PaymentLink([
+								'payment_id' => $credit_payment->id,
+								'linked_id' => $payment->id
+							]);
+							$link->save();
+						}
+					}
 					Yii::$app->session->setFlash('success', ($feedback ? $feedback . '; '.strtolower(Yii::t('store', 'Payment added')): Yii::t('store', 'Payment added')).'.');
 					$transaction->commit();
 				} else {
@@ -684,7 +700,8 @@ class DocumentController extends Controller
 				}
 
 			} else { // report capture errors
-				Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem capturing payment: {0}.', VarDumper::dumpAsString($capture->errors, 4, true)));
+				Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem capturing payment: {0}.',
+				 		VarDumper::dumpAsString($capture->errors, 4, true)));
 			}
 	        return $this->render('view', [
 	            'model' => $model,

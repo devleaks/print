@@ -56,7 +56,7 @@ Pour ne pas arriver dans ce cas, il suffit tout simplement d'utiliser les opéra
 dans la section ci-dessus.
 
 Pour ajouter un crédit à un client, dans la comptabilité, choisir l'option `Ajouter un paiement sans vente`.
-Choisir le client, indiquer le montant et l'orgine du payment (virement, etc.).
+Choisir le client, indiquer le montant et l'origine du paiement (virement, etc.).
 Il est vivement conseillé d'également rentrer un commentaire pour se rappeler de la raison de ce paiement sans facture en regard.
 
 Les crédits déposés pour un client ne peuvent être consommé que sur des ventes assignées à ce client.
@@ -72,6 +72,10 @@ de s'assurer que le montant dû est entré dans la comptabilité.
 
 Entrer les paiements en regard des commandes est une opération importante qui garantit non seulement le suivi de la commande
 mais aussi le suivi global du client.
+
+Pour supprimer un paiement sans vente, sélectionner le menu `Supprimer un paiement sans vente` dans la comptabilité.
+Note: Lorsqu'un _paiement sans vente associée_ est utilisé pour payer une vente,
+il perd son statut de paiement _sans vente associée_ et devient un paiement normal qui peut être manipulé comme tous les autres paiements.
 
 
 ## Suppression des paiements
@@ -97,8 +101,6 @@ dépend précisément du montant global crédité.
 Si on annule un paiement effectué par le transfert d'un crédit dont le client disposait,
 l'annulation du paiement résultera en l'annulation du paiement proprement dit, et la restitution du crédit.
 
-(Note: Si le crédit utilisé pour le paiement résultait de l'addition de plusieurs crédits disponibles pour le client,
-l'annulation du paiement provoquera la restitution d'une seul crédit reprenant le montant total de crédit utilisé.)
 
 #### Paiement via un Remboursement ou une Note de Crédit
 
@@ -123,7 +125,7 @@ Si on souhaite annuler la transformation du remboursement ou la note de crédit 
 il faut visualiser les "paiements" de la note de crédit, et supprimer la ligne de crédit.
 
 (Note: Il n'est parfois plus possible de faire cette dernière opération,
-si les crédits ont été factionnés sur plusieurs commandes.)
+si les crédits ont été fractionnés sur plusieurs commandes.)
 
 #### Apport d'argent sans vente
 
@@ -145,7 +147,7 @@ Les manipulation de la caisse non liées à des achats peuvent être modifiées 
 Aller dans l'écran `Caisse - Manipulation directes`.
 Toutes les entrées et sorties de la caisse sont visibles et peuvent être annulées, ou modifiées.
 
-Les entrées de la caisse liées à des achats ne peuvent pas être modifiées ici.
-Il faut modifier de tels paiements via l'achat et annuler le paiement via la caisse.
+Les entrées de la caisse liées à des ventes ne peuvent pas être modifiées ici.
+Il faut modifier de tels paiements via la vente et annuler le paiement de la vente. La caisse sera ajustée.
 
 Attention, toute modification du montant d'un mouvement de la caisse invalide tous les montants entrés après ce mouvement.

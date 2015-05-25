@@ -10,6 +10,28 @@ use yii\db\Query;
 
 class MasonryController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+	        'access' => [
+	            'class' => 'yii\filters\AccessControl',
+	            'ruleConfig' => [
+	                'class' => 'app\components\AccessRule'
+	            ],
+	            'rules' => [
+	                [
+	                    'allow' => false,
+	                    'roles' => ['?']
+               		],
+					[
+	                    'allow' => true,
+	                    'roles' => ['admin', 'manager'],
+	                ],
+	            ],
+	        ],
+        ];
+    }
+
     public function actionBricks()
     {
         return $this->render('bricks', ['dataProvider' => new ActiveDataProvider([

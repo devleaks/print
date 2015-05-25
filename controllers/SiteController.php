@@ -28,8 +28,10 @@ class SiteController extends Controller
     {
 		if(Yii::$app->user->isGuest)
         	return $this->render('index');
-		else
+		else {
+			$this->layout = "main2";
        		return $this->render(Yii::$app->user->identity->role != '' ? Yii::$app->user->identity->role : 'welcome');
+		}
     }
 
     public function actionHelp($f = null)

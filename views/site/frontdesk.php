@@ -30,7 +30,7 @@ $this->title = 'Labo JJ Micheli @Work';
 
 		<div class="row">
 
-			<div class="col-lg-4">
+			<div class="col-lg-6">
 
 				<h3>Commandes</h3>
 
@@ -55,7 +55,7 @@ $this->title = 'Labo JJ Micheli @Work';
 			</div>
 
 
-			<div class="col-lg-4">
+			<div class="col-lg-6">
 
 				<h3>Listes</h3>
 
@@ -70,21 +70,6 @@ $this->title = 'Labo JJ Micheli @Work';
 				    <li><a href="<?= Url::to(['/store/price']) ?>"><?= Yii::t('store', "Price Lists")?></a></li>
 				    <li><a href="<?= Url::to(['/store/price-list']) ?>"><?= Yii::t('store', "Composite Price Lists")?></a></li>
 				</ul>
-
-			</div>
-
-			<div class="col-lg-4">
-
-				<h3>Comptabilité</h3>
-
-				<div data-intro='Menu secondaire vers options de recherches et actions'>
-
-					<ul>
-					    <li><a href="<?= Url::to(['/accnt/payment/index-by-type']) ?>"><?= Yii::t('store', 'Daily Summary')?></a></li>
-					    <li><a href="<?= Url::to(['/accnt/bill/boms']) ?>"><?= Yii::t('store', 'Bill all BOMs')?></a></li>
-					</ul>
-
-				</div>
 
 			</div>
 

@@ -121,7 +121,7 @@ $apphomedir = Yii::getAlias('@app');
             NavBar::end();
         ?>
 
-        <div class="container-fluid" style="margin-top: 60px;">
+        <div class="container" style="margin-top: 60px;">
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 				'options' => [
@@ -135,7 +135,7 @@ $apphomedir = Yii::getAlias('@app');
     </div>
 
     <footer class="footer">
-        <div class="container-fluid">
+        <div class="container">
             <p class="pull-left">&copy; Labo JJ Micheli <?= date('Y') ?>
 				<small><?php echo ' — Version '.`cd $apphomedir ; git describe --tags`;
 					if(YII_DEBUG) {

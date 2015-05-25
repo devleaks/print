@@ -277,10 +277,14 @@ class Client extends _Client
 	 *
 	 * @return CreditLine[] Credit available.
 	 */
-	public function getCreditLines() {
+	public function getCreditLines($exclude = null) {
 		$creditLines = [];
 		// Credit notes still open
-		foreach(Credit::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => [Credit::STATUS_TOPAY, Credit::STATUS_CLOSED]])->each() as $document) {
+		$credits = Credit::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => [Credit::STATUS_TOPAY, Credit::STATUS_CLOSED]]);
+		if($exclude)
+			$credits->andWhere(['not', ['id' => $exclude]]);
+			
+		foreach($credits->each() as $document) {
 			$balance = $document->getBalance();
 			if($balance < -Document::PAYMENT_LIMIT)
 				$creditLines[] = new CreditLine([
@@ -292,7 +296,11 @@ class Client extends _Client
 				]);
 		}
 		// Credit notes still open
-		foreach(Refund::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => Credit::STATUS_TOPAY])->each() as $document) {
+		$refunds = Refund::find()->andWhere(['client_id'=>$this->id])->andWhere(['status' => Credit::STATUS_TOPAY]);
+		if($exclude)
+			$refunds->andWhere(['not', ['id' => $exclude]]);
+			
+		foreach($refunds->each() as $document) {
 			$creditLines[] = new CreditLine([
 				'source' => CreditLine::SOURCE_REFUND,
 				'note' => $document->name,

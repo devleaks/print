@@ -23,12 +23,12 @@ if(isset(Yii::$app->user))
 				<a href="<?= Url::to(['/order/document/create-bid']) ?>"><span class="label label-success"><i class="glyphicon glyphicon-plus"></i> <?= Yii::t('store', 'Add')?></span></a></li>
 		    <li><a href="<?= Url::to(['/order/document/orders', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Order')?></a>
 				<a href="<?= Url::to(['/order/document/create']) ?>"><span class="label label-success"><i class="glyphicon glyphicon-plus"></i> <?= Yii::t('store', 'Add')?></span></a>
-				<a href="<?= Url::to(['/order/document/create']) ?>"><span class="label label-success"><i class="glyphicon glyphicon-plus"></i> <?= Yii::t('store', 'BOM')?></span></a></li>
+				<a href="<?= Url::to(['/order/document/create-bom']) ?>"><span class="label label-primary"><i class="glyphicon glyphicon-plus"></i> <?= Yii::t('store', 'BOM')?></span></a></li>
 		</ul>
 
 		<ul>
 		    <li><a href="<?= Url::to(['/order/document/refunds', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Refunds')?></a>
-				<a href="<?= Url::to(['/order/document/create-refund']) ?>"><span class="label label-primary"><i class="glyphicon glyphicon-plus"></i> <?= Yii::t('store', 'Add')?></span></a></li>
+				<a href="<?= Url::to(['/order/document/create-refund']) ?>"><span class="label label-warning"><i class="glyphicon glyphicon-plus"></i> <?= Yii::t('store', 'Add')?></span></a></li>
 		    <li><a href="<?= Url::to(['/order/document/bills', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bills')?></a>
 				<a href="<?= Url::to(['/order/document/create-bill']) ?>"><span class="label label-warning"><i class="glyphicon glyphicon-plus"></i> <?= Yii::t('store', 'Add')?></span></a></li>
 		    <li><a href="<?= Url::to(['/order/document/credits', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Credit Notes')?></a>
@@ -68,32 +68,22 @@ if(isset(Yii::$app->user))
 		</ul>
 		
 	</div>
+	<?php if(in_array($role, ['manager', 'admin', 'frontdesk', 'employee', 'compta'])): ?>
 	<div class="col-lg-6">
 
 		<h3>Comptabilité</h3>
 
 		<div data-intro='Menu secondaire vers options de recherches et actions'>
-			<?php if(in_array($role, ['manager', 'admin'])): ?>
 
 			<ul>
 			    <li><a href="<?= Url::to(['/accnt/payment/index-by-type']) ?>"><?= Yii::t('store', 'Daily Summary')?></a></li>
 			    <li><a href="<?= Url::to(['/accnt/bill/boms']) ?>"><?= Yii::t('store', 'Bill all BOMs')?></a></li>
 			</ul>
 
-			<?php elseif(in_array($role, ['compta'])): ?>
-			<ul>
-			    <li><a href="<?= Url::to(['/order/document/bids', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bids')?></a></li>
-			    <li><a href="<?= Url::to(['/order/document/tickets', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Tickets')?></a></li>
-			    <li><a href="<?= Url::to(['/order/document/orders', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Orders')?></a></li>
-			    <li><a href="<?= Url::to(['/order/document/bills', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bills')?></a></li>
-			    <li><a href="<?= Url::to(['/order/document/refunds', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Refunds')?></a></li>
-			    <li><a href="<?= Url::to(['/order/document/credits', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Credit Notes')?></a></li>
-			</ul>
-
-			<?php endif; ?>
 		</div>
 
 	</div>
+	<?php endif; ?>
 </div>
 
 </div>

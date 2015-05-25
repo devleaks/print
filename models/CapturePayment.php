@@ -15,6 +15,7 @@ class CapturePayment extends Model
 	public $amount;
 	public $method;
 	public $submit;
+	public $use_credit;
 	
     /**
      * @inheritdoc
@@ -23,7 +24,7 @@ class CapturePayment extends Model
     {
         return [
             [['amount'], 'required'],
-            [['total', 'amount', 'method', 'id', 'submit'], 'safe'],
+            [['total', 'amount', 'method', 'id', 'use_credit', 'submit'], 'safe'],
             [['id'], 'number'],
 			[['total', 'amount'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
             [['method'], 'string', 'max' => 20],
@@ -39,6 +40,7 @@ class CapturePayment extends Model
             'total'  => Yii::t('store', 'Total'),
             'amount' => Yii::t('store', 'Amount'),
             'method' => Yii::t('store', 'Payment Method'),
+            'use_credit' => Yii::t('store', 'Reimburse all credit'),
             'submit' => Yii::t('store', 'Submit work?'),
         ];
     }

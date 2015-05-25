@@ -85,7 +85,7 @@ return [
 	'Closed' => 'Clôturé',
 	'Closing Balance' => 'Situation',
 	'Company' => 'Société',
-	'Composite Price Lists' => 'Listes de prix composites',
+	'Composite Price Lists' => 'Listes de prix « composites »',
 	'Comptabilite' => 'Référence Comptabilité',
 	'Convert to Bill' => 'Facturer',
 	'Convert to Bill?' => 'Facturer?',
@@ -193,7 +193,7 @@ return [
 	'Mail(s) sent' => 'Message(s) envoyé(s)',
 	'Make credit note' => 'Transformer en note de crédit',
 	'Manage Sequence Numbers' => 'Gérer les numéros de séquences',
-	'Manage all documents' => 'Gérer tous les documents',
+	'Manage all documents' => 'Tous les documents',
 	'Manage all works' => 'Gérer tous les travaux',
 	'Manage bids' => 'Gestion des devis',
 	'Management' => 'Gestion',
@@ -274,7 +274,7 @@ return [
 	'Replace' => 'Remplacer',
 	'Restore Database from Backup of Production' => 'Restaurer à partir de la base de donnée de production',
 	'Round Corners' => 'Coins arrondis',
-	'Sales Tickets' => 'Tickets de caisse',
+	'Sales Tickets' => 'Ventes comptoir',
 	'Save Email?' => "Conserver l'adresse email dans le profil du client?",
 	'Search for a customer ...' => 'Rechercher un client ...',
 	'Search' => 'Rechercher',
@@ -399,6 +399,7 @@ return [
 	'Refund amount cannot be larger than amount to reimburse.' => 'Le montant remboursé ne peut pas être supérieur au montant à rembourser.',
 	'Payment was not added' => "Le paiement n'a pas été enregistré",
 	'Change Client' => 'Changer le client',
+	'Reimburse all credit' => 'Rembourser tous le crédit',
 	
 	
 	/* attempt to resubmit work if order modified */
@@ -465,6 +466,7 @@ return [
 	'admin'	=> 'Superviseur',
 	'compta' => 'Comptable',
 	'employee' => 'Employé',
+	'frontdesk' => 'Comptoir',
 	'manager' => 'Gestionnaire',
 	'worker' => 'Ouvrier',
 	

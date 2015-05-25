@@ -33,7 +33,7 @@ class SummaryController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'compta', 'employee', 'manager'],
+	                    'roles' => ['admin', 'compta', 'frontdesk', 'employee', 'manager'],
 	                ],
 	            ],
 	        ],

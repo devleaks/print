@@ -12,6 +12,29 @@ use yii\db\Query;
 
 class OrderController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+	        'access' => [
+	            'class' => 'yii\filters\AccessControl',
+	            'ruleConfig' => [
+	                'class' => 'app\components\AccessRule'
+	            ],
+	            'rules' => [
+	                [
+	                    'allow' => false,
+	                    'roles' => ['?']
+               		],
+					[
+	                    'allow' => true,
+	                    'roles' => ['admin', 'manager'],
+	                ],
+	            ],
+	        ],
+        ];
+    }
+
+
 	/**
 	 * select client_id, sum(price_htva), count(id)
 	 * from document

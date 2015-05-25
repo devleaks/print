@@ -31,7 +31,7 @@ class PriceController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager'],
+	                    'roles' => ['admin', 'manager', 'frontdesk', 'employee'],
 	                ],
 	            ],
 	        ],
