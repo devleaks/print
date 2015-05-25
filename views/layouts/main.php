@@ -60,25 +60,23 @@ $apphomedir = Yii::getAlias('@app');
 				if(defined('YII_DEVLEAKS')) {
 					$dev_menu = [];
                 	$dev_menu[] = ['label' => Yii::t('store', 'All documents'), 'url' => ['/order/document/', 'sort' => '-updated_at']];
-					$dev_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt/']];
+					$dev_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 					$dev_menu[] = ['label' => Yii::t('store', 'History'), 'url' => ['/admin/history', 'sort' => '-created_at']];
 					$dev_menu[] = ['label' => Yii::t('store', 'Gii'), 'url' => ['/gii']];
 					$menu[] = ['label' => Yii::t('store', 'Development'), 'items' => $dev_menu];
 				}
 				if(in_array(Yii::$app->user->identity->role, ['admin', 'compta', 'manager', 'frontdesk', 'employee']))
                 	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash/list']];
+				if(in_array(Yii::$app->user->identity->role, ['admin', 'manager', 'frontdesk', 'employee']))
+                	$work_menu[] = ['label' => Yii::t('store', 'Orders'), 'url' => ['/order']];
+				if(in_array(Yii::$app->user->identity->role, ['admin', 'manager', 'employee', 'worker']))
+                	$work_menu[] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work']];
 				if(in_array(Yii::$app->user->identity->role, ['admin', 'manager']))
-                	$work_menu[] = ['label' => Yii::t('store', 'Orders'), 'url' => ['/order/']];
-				if(in_array(Yii::$app->user->identity->role, ['compta']))
-                	$work_menu[] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work/']];
-				if(in_array(Yii::$app->user->identity->role, ['admin', 'manager']))
-                	$work_menu[] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store/']];
+                	$work_menu[] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store']];
 				if(in_array(Yii::$app->user->identity->role, ['admin']))
-                	$work_menu[] = ['label' => Yii::t('store', 'Administration'), 'url' => ['/admin/']];
+                	$work_menu[] = ['label' => Yii::t('store', 'Administration'), 'url' => ['/admin']];
 				if(in_array(Yii::$app->user->identity->role, ['admin', 'compta']))
-                	$work_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt/']];
-				if(in_array(Yii::$app->user->identity->role, ['admin', 'frontdesk', 'employee']))
-                	$work_menu[] = ['label' => Yii::t('store', 'Administration'), 'url' => ['/accnt/payment/index-by-type']];
+                	$work_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 
                	$work_menu[] = ['label' => Yii::t('store', 'Calculator'), 'url' => ['/assets/calculator/'], 'linkOptions' => ['target' => '_blank']];
 

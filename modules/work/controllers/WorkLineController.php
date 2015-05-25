@@ -49,7 +49,7 @@ class WorkLineController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager', 'worker'],
+	                    'roles' => ['admin', 'manager', 'employee', 'worker'],
 	                ],
 	            ],
 	        ],
