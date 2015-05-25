@@ -111,9 +111,12 @@ class Backup extends _Backup
 		parent::delete();
 	}
 	
-	public static function restore() {
+	public static function restore($filename = null) {
 		$logfile = Yii::getAlias('@runtime').'/logs/restore.log';
-		$command = Yii::getAlias('@runtime').'/etc/restore.sh 2>&1 > '.$logfile;
+		$command = $filename ?
+				Yii::getAlias('@runtime').'/etc/restore-dev.sh '.$filename.' 2>&1 >> '.$logfile
+				:
+				Yii::getAlias('@runtime').'/etc/restore.sh 2>&1 >> '.$logfile;
 		system($command, $status);
 		Yii::trace($command.': '.$status, 'BackupController::doBackup');
 		return $status == 0;

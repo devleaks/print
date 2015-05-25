@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Backup;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -45,7 +46,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
 				'class' => 'yii\grid\ActionColumn',
-				'template' => '{delete}'
+				'template' => '{delete} {restore}',
+				'buttons' => [
+					'restore' => function ($url, $model) {
+						return Backup::getDbName('yii2print') ? 
+									Html::a('<span class="glyphicon glyphicon-warning-sign"></span>', $url, [
+										'title' => Yii::t('app', 'Restore database only'),
+										'data-confirm' => Yii::t('store', 'Restore database?')
+									]) : '';
+					}
+				],
+				'urlCreator' => function ($action, $model, $key, $index) {
+					$url = '';
+					switch($action) {
+						case 'restore':
+							$url = Url::to(['restore-dev', 'id' => $model->id]);
+							break;
+					}
+					return $url;
+				}
 			],
         ],
     ]); ?>

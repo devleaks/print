@@ -152,6 +152,18 @@ class BackupController extends Controller
 		]);
 	}
 
+	public function actionRestoreDev($id) {
+		$model = $this->findModel($id);
+		$fn = Yii::getAlias('@runtime') . '/backup/' . $model->filename;
+		
+		if(Backup::restore($fn))
+			Yii::$app->session->setFlash('success', Yii::t('store', 'Backup restored.'));
+		else
+			Yii::$app->session->setFlash('danger', Yii::t('store', 'Backup not restored.'));
+		
+		return $this->redirect(['/']);
+	}
+
 	public function actionDoRestore() {
 		if(Backup::restore())
 			Yii::$app->session->setFlash('success', Yii::t('store', 'Backup restored.'));
