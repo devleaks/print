@@ -400,6 +400,8 @@ return [
 	'Payment was not added' => "Le paiement n'a pas été enregistré",
 	'Change Client' => 'Changer le client',
 	'Reimburse all credit' => 'Rembourser tous le crédit',
+	'Daily Summary for {0}' => 'Résumé quotidien pour le {0}',
+	'Details' => 'Détails',
 	
 	
 	/* attempt to resubmit work if order modified */

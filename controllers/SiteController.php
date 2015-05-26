@@ -30,7 +30,6 @@ class SiteController extends Controller
 		if(Yii::$app->user->isGuest)
         	return $this->render('index');
 		else {
-			$this->layout = "main2";
 			$role = User::getRole();
        		return $this->render($role ? $role : 'welcome');
 		}

@@ -21,13 +21,17 @@ $this->params['breadcrumbs'][] = $this->title;
 $cash_amount = 0;
 $cash_count  = 0;
 $cashLines = [];
+$is_print = isset($print) ? '_print' : '';
 /*
 <h1><?= Html::encode($this->title) ?> <?= Html::a(Yii::t('store', 'Create Payment'), ['create'], ['class' => 'btn btn-success']) ?></h1>
 */
 ?>
 <div class="payment-index">
     <div class="row">
-		<?= $this->render('_search', ['model' => $searchModel]) ?>
+		<?php
+		 	if(! isset($print))
+				echo $this->render('_search', ['model' => $model]);
+		 ?>
     </div>
 
 <?php
@@ -66,7 +70,7 @@ $cashLines = [];
 	?>
 
 	<div class="row">
-		<?= $this->render('_summary', ['searchModel' => $searchModel, 'cash_amount' => $cash_amount, 'cash_count' => $cash_count]) ?>
+		<?= $this->render('_summary'.$is_print, ['searchModel' => $searchModel, 'cash_amount' => $cash_amount, 'cash_count' => $cash_count]) ?>
 	</div>
 	
 	<?php
@@ -76,7 +80,7 @@ $cashLines = [];
 	$dataProvider = new ArrayDataProvider([
 		'allModels' => $cashLines,
 	]);
-	echo $this->render('_detail-cash', ['dataProvider' => $dataProvider, 'label' => Yii::t('store', 'Cash')]);
+	echo $this->render('_detail-cash'.$is_print, ['dataProvider' => $dataProvider, 'label' => Yii::t('store', 'Cash')]);
 
 	
 
@@ -96,7 +100,7 @@ $cashLines = [];
 								->andWhere(['<=','created_at',$day_end])
 								->andWhere(['payment_method' => $payment_method])
 				]);
-				echo $this->render('_detail', ['dataProvider' => $dataProvider, 'method' => $payment_method, 'label' => $payment_label]);
+				echo $this->render('_detail'.$is_print, ['dataProvider' => $dataProvider, 'method' => $payment_method, 'label' => $payment_label]);
 			}
 		}
 	} else {			
@@ -105,7 +109,7 @@ $cashLines = [];
 					'query' => Account::find()
 								->andWhere(['payment_method' => $payment_method])
 				]);
-				echo $this->render('_detail', ['dataProvider' => $dataProvider, 'method' => $payment_method, 'label' => $payment_label]);
+				echo $this->render('_detail'.$is_print, ['dataProvider' => $dataProvider, 'method' => $payment_method, 'label' => $payment_label]);
 		}
 	}
 ?>

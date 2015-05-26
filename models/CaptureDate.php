@@ -8,9 +8,10 @@ use yii\base\Model;
 /**
  * This is the model class to capture searchess.
  */
-class CaptureSearch extends Model
+class CaptureDate extends Model
 {
-	public $search;
+	public $date;
+	public $action;
 	
     /**
      * @inheritdoc
@@ -18,7 +19,7 @@ class CaptureSearch extends Model
     public function rules()
     {
         return [
-            [['search'], 'safe'],
+            [['date', 'action'], 'safe'],
         ];
     }
 
@@ -28,7 +29,8 @@ class CaptureSearch extends Model
     public function attributeLabels()
     {
         return [
-            'search' => Yii::t('store', 'Search'),
+            'date' => Yii::t('store', 'Date'),
+        	'action' => Yii::t('store', 'Action'),
         ];
     }
 }

@@ -33,7 +33,7 @@ return [
 	'Note' => 'Nota',
 	'Object' => 'Betreft',
 	'Reference Client' => 'Klantreferentie', // 'Uw Referentie',
-	'Reference Operation' => 'Operatiereferentie', // 'Referentie nummer',
+	'Reference Operation' => 'Referentie voor betaling', // 'Referentie nummer',
 	'Subject' => 'Betreft',
 	'VAT Client' => 'BTW Klant',
 	'VAT Number' => 'BTW Nummer',

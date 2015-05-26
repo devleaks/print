@@ -17,6 +17,9 @@ use yii\data\ActiveDataProvider;
  */
 class WorkController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
@@ -44,6 +47,14 @@ class WorkController extends Controller
             ],
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+	public function init() {
+		$this->layout = "@app/views/layouts/main-fluid";
+		return parent::init();
+	}
 
     /**
      * Lists all Work models.

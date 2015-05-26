@@ -165,6 +165,17 @@ class Document extends _Document
         return $this->hasMany(Payment::className(), ['sale' => 'sale']);
     }
 
+	/**
+	 *
+	 */
+    public function getAmount($display = false)	{
+		if($display) {
+			$a = Yii::$app->formatter->asCurrency($this->getAmount());
+			return $this->vat_bool ?  '<sup>HTVA</sup> '. $a : $a;
+		}		
+		return $this->vat_bool ? $this->price_htva : $this->price_tvac;
+	}
+	
     /**
      * @return \yii\db\ActiveQuery
      */

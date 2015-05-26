@@ -61,7 +61,7 @@ $apphomedir = Yii::getAlias('@app');
 				if(defined('YII_DEVLEAKS')) {
 					$dev_menu = [];
                 	$dev_menu[] = ['label' => Yii::t('store', 'All documents'), 'url' => ['/order/document/', 'sort' => '-updated_at']];
-					$dev_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt/']];
+					$dev_menu[] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 					$dev_menu[] = ['label' => Yii::t('store', 'History'), 'url' => ['/admin/history', 'sort' => '-created_at']];
 					$dev_menu[] = ['label' => Yii::t('store', 'Gii'), 'url' => ['/gii']];
 					$menu[] = ['label' => Yii::t('store', 'Development'), 'items' => $dev_menu];
@@ -120,7 +120,7 @@ $apphomedir = Yii::getAlias('@app');
             NavBar::end();
         ?>
 
-        <div class="container" style="margin-top: 60px;">
+        <div class="container-fluid" style="margin-top: 60px;">
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 				'options' => [
@@ -134,7 +134,7 @@ $apphomedir = Yii::getAlias('@app');
     </div>
 
     <footer class="footer">
-        <div class="container">
+        <div class="container-fluid">
             <p class="pull-left">&copy; Labo JJ Micheli <?= date('Y') ?>
 				<small><?php echo ' — Version '.`cd $apphomedir ; git describe --tags`;
 					if(YII_DEBUG) {

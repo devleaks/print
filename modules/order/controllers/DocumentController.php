@@ -238,7 +238,7 @@ class DocumentController extends Controller
 					->orWhere(['like', 'client.autre_nom', $model->search])
 					->orderBy('updated_by desc');
 
-			return $this->render('doc', [
+			return $this->render('index', [
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 			]);

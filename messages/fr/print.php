@@ -33,7 +33,7 @@ return [
 	'Note' => 'Note',
 	'Object' => 'Objet',
 	'Reference Client' => 'Référence Client',
-	'Reference Operation' => 'Référence Opération',
+	'Reference Operation' => 'A rappeler lors du paiement',
 	'Subject' => 'Sujet',
 	'VAT Client' => 'TVA Client',
 	'VAT Number' => 'Numéro TVA',

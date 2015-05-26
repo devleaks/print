@@ -22,9 +22,14 @@ if($searchModel->created_at != '') {
 		  ->andWhere(['<=','created_at',$day_end]);
 }
 
+$q = new Query();
+$q->select('concat("CASH") as payment_method, sum(0) as total_count, sum(0) as total_amount');
+
 $dataProvider = new ActiveDataProvider([
 	'query' => $query->select(['payment_method, count(id) as tot_count, sum(amount) as tot_amount'])
+	                 ->where(['not', ['payment_method' => Payment::CASH]])
 					 ->groupBy(['payment_method'])
+					 ->union($q)
 ]);
 ?>
 
