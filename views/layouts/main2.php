@@ -68,7 +68,7 @@ $apphomedir = Yii::getAlias('@app');
 				}
 				if(User::hasRole(['admin', 'compta', 'manager', 'frontdesk', 'employee']))
                 	$work_menu[] = ['label' => Yii::t('store', 'Cash'), 'url' => ['/accnt/cash/list']];
-				if(User::hasRole(['admin', 'manager', 'frontdesk', 'employee']))
+				if(User::hasRole(['admin', 'manager', 'frontdesk', 'employee', 'compta']))
                 	$work_menu[] = ['label' => Yii::t('store', 'Orders'), 'url' => ['/order']];
 				if(User::hasRole(['admin', 'manager', 'employee', 'worker']))
                 	$work_menu[] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work']];

@@ -34,3 +34,5 @@ runtime/etc/yii2print.sql
 *.tmproj
 
 *.tmproj
+
+runtime/_dev/print.tmproj
