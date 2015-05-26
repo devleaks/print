@@ -32,3 +32,5 @@ phpunit.phar
 runtime/etc/yii2print.sql
 
 *.tmproj
+
+*.tmproj

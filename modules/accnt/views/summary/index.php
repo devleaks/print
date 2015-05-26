@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url
 $this->params['breadcrumbs'][] = $this->title;
 $cash_amount = 0;
 $cash_count  = 0;
+$cashLines = [];
 /*
 <h1><?= Html::encode($this->title) ?> <?= Html::a(Yii::t('store', 'Create Payment'), ['create'], ['class' => 'btn btn-success']) ?></h1>
 */
