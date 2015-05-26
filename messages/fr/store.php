@@ -319,7 +319,7 @@ return [
 	'There is no work for this order.' => "Il n'y pas de travail à soumettre pour cette commande.",
 	'This document cannot be deleted because a child document depends on it.' => 'Ce document ne peut être effacé parce que un autre document en dépend.',
 	'This document cannot be deleted because there are payment attached to it.' => 'Ce document ne peut être effacé parce un ou plusieurs paiements lui sont attachés.',
-	'Tickets' => 'Tickets de caisse',
+	'Tickets' => 'Ventes comptoir',
 	'Tirage Factor' => 'Coeff.Tirage',
 	'To Refund' => 'Rembourser',
 	'Transfer to Client Account' => 'Transférer vers le compte client',
