@@ -9,6 +9,7 @@ use app\models\CaptureRefund;
 use app\models\Document;
 use app\models\DocumentLine;
 use app\models\Item;
+use app\models\Parameter;
 use app\models\Payment;
 use app\models\PaymentLink;
 use app\models\PaymentSearch;
@@ -252,13 +253,14 @@ class PaymentController extends Controller
 					// 1. Create refund document
 					$newSale = Sequence::nextval('sale');
 					$newReference = Document::commStruct(date('y')*10000000 + $newSale);
+					$o = Parameter::getTextValue('application', Refund::TYPE_REFUND, '-');
 					$credit = new Refund([
 						'document_type' => Refund::TYPE_REFUND,
+						'sale' => $newSale,
 						'client_id' => $payment->client_id,
-						'name' => substr($payment->created_at,0,4).'-'.Sequence::nextval('doc_number'),
+						'name' => substr($payment->created_at,0,4).$o.Sequence::nextval('doc_number'),
 						'due_date' => date('Y-m-d H:i:s'),
 						'note' => $payment->note, // $payment->payment_method.'-'.$payment->sale.'. '.
-						'sale' => $newSale,
 						'reference' => $newReference,
 						'status' => Refund::STATUS_CLOSED,
 						'credit_bool' => true,
@@ -286,8 +288,9 @@ class PaymentController extends Controller
 					$cash = null;
 					if($capture->method == Payment::CASH) {
 						$cash = new Cash([
+							'document_id' => $credit->id,
 							'sale' => $newSale,
-							'amount' => $total,
+							'amount' => -$total,
 							'payment_date' => $capture->date ? $capture->date : date('Y-m-d'),
 						]);
 						$cash->save();
