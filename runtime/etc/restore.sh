@@ -9,7 +9,7 @@ then
   gunzip < $YIIDIR/runtime/restore/$DBNAME.gz > $DBNAME.sql
   mysql -u$DBNAME -p$DBNAME $DBNAME < $YIIDIR/runtime/etc/drop_all_tables.sql
   mysql -u$DBNAME -p$DBNAME $DBNAME < $DBNAME.sql
-  rm $DATABASE.sql
+  echo rm $DBNAME.sql
   ( cd $YIIDIR/web ; rm -rf pictures documents ; tar xzf $YIIDIR/runtime/restore/media.taz )
   # sudo -u daemon chown -R daemon:daemon $YIIDIR/web/documents $YIIDIR/web/pictures $YIIDIR/runtime
   echo "Restored."
