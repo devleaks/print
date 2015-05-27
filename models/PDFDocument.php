@@ -158,7 +158,7 @@ class PDFDocument extends Model {
 		if($this->filename) {
 			$this->deletePrevious();
 			$pdf = new PMAPdf([
-				'document_type' => RuntimeDirectoryManager::DOCUMENT,
+				'document_type' => $this->destination,
 				'filename' => $this->filename,
 			]);
 			return $pdf->save();

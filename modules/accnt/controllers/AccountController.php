@@ -3,6 +3,7 @@
 namespace app\modules\accnt\controllers;
 
 use Yii;
+use app\components\RuntimeDirectoryManager;
 use app\models\Account;
 use app\models\AccountSearch;
 use app\models\CaptureAccountNoSale;
@@ -10,6 +11,7 @@ use app\models\Client;
 use app\models\Credit;
 use app\models\Document;
 use app\models\Order;
+use app\models\PDFAccount;
 use app\models\Payment;
 use app\models\Sequence;
 use yii\data\ArrayDataProvider;
@@ -206,6 +208,28 @@ order by 5 desc
 			'client' => $client,
 			'bottomLine' => !empty($accountLines) ? end($accountLines)->account : 0,
         ]);
+	}
+	
+	public function actionClientPrint($id) {
+		$client = Client::findOne($id);
+		if(!$client)
+        	throw new NotFoundHttpException('The requested page does not exist.');
+
+		$accountLines = $client->getAccountLines();
+
+		$filename = RuntimeDirectoryManager::getFilename(RuntimeDirectoryManager::ACCOUNT, null, null, $client);
+		$pdf = new PDFAccount([
+			'content'		=> $this->renderPartial('_client_print', [
+				'allModels' => $accountLines,
+				'client' => $client,
+				'bottomLine' => !empty($accountLines) ? end($accountLines)->account : 0,
+	        ]),
+			'client'		=> $client,
+			'destination'	=> RuntimeDirectoryManager::ACCOUNT,
+			'save'			=> true,
+		]);
+		$pdfDoc = $pdf->render();		
+		return $this->redirect(['pdf/display', 'fn' => $pdfDoc]);
 	}
 	
 	/**

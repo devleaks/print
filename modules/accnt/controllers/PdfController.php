@@ -55,6 +55,17 @@ class PdfController extends Controller
     }
 
     /**
+     * Displays a single Pdf model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDisplay($fn)
+    {
+		$model = Pdf::findOne(['filename' => $fn]);
+        return $this->redirect($model->getUrl());
+    }
+
+    /**
      * Deletes an existing Pdf model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id

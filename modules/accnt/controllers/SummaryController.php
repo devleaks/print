@@ -3,6 +3,7 @@
 namespace app\modules\accnt\controllers;
 
 use Yii;
+use app\components\RuntimeDirectoryManager;
 use app\models\Account;
 use app\models\AccountSearch;
 use app\models\CaptureDate;
@@ -61,23 +62,50 @@ class SummaryController extends Controller
 		$searchModel->created_at = $capture->date;
 
 		if($capture->action == self::ACTION_PRINT) {
-			$filename = null;
 			$pdf = new PDFLetter([
 				'content'		=> $this->renderPartial('index', [
 		            'searchModel' => $searchModel,
 					'model' => $capture,
 					'print' => true,
 		        ]),
-				'filename'		=> $filename,
+				'destination'	=> RuntimeDirectoryManager::DAILY_REPORT,
+				'save'			=> true,
 			]);
 			$pdfDoc = $pdf->render();		
-			return $filename ? $filename : $pdfDoc;
+			return $this->redirect(['pdf/display', 'fn' => $pdfDoc]);
 		}
 		
         return $this->render('index', [
             'searchModel' => $searchModel,
 			'model' => $capture,
         ]);
+    }
+
+
+    /**
+     * Displays a single Payment model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionPrint($d)
+    {
+		$capture = new CaptureDate();
+        $capture->date = $d ? $d : date('Y-m-d', strtotime('now'));
+
+        $searchModel = new AccountSearch();
+		$searchModel->created_at = $capture->date;
+
+		$pdf = new PDFLetter([
+			'content'		=> $this->renderPartial('index', [
+	            'searchModel' => $searchModel,
+				'model' => $capture,
+				'print' => true,
+	        ]),
+			'destination'	=> RuntimeDirectoryManager::DAILY_REPORT,
+			'save'			=> true,
+		]);
+		$pdfDoc = $pdf->render();		
+		return $this->redirect(['pdf/display', 'fn' => $pdfDoc]);
     }
 
 

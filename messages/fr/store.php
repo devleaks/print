@@ -402,6 +402,7 @@ return [
 	'Reimburse all credit' => 'Rembourser tous le crédit',
 	'Daily Summary for {0}' => 'Résumé quotidien pour le {0}',
 	'Details' => 'Détails',
+	'Account Status for {0}' => 'Etat du compte pour {0}',
 	
 	
 	/* attempt to resubmit work if order modified */

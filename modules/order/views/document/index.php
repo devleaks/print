@@ -27,10 +27,9 @@ if(!isset($document_type)) {
 
 Yii::$app->formatter->datetimeFormat = 'php:D j/n G:i';
 	
-$template = '{view} {update} {delete}';
-if(User::hasRole(['manager', 'admin', 'compta'])) {
-	$template = '{view} {update} {change} {payment} {delete}';
-}
+$template = User::hasRole(['manager', 'admin', 'compta'])
+	? '{view} {update} {change} {payment} {delete}'
+	: '{view}';
 
 $this->title = Yii::t('store', Document::getTypeLabel($document_type, true));
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [User::hasRole(['manager', 'admin']) ? '/store' : '/order', 'sort' => '-updated_at']];

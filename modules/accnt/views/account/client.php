@@ -74,4 +74,8 @@ $dataProvider->pagination = false;
         ],
     ]); ?>
 
+
+	<?= Html::a('<i class="glyphicon glyphicon-print"></i> '.Yii::t('store', 'Print'), Url::to(['client-print', 'id' => $client->id]), ['class' => 'btn btn-primary store-action', 'target' => '_blank']) ?>
+
+
 </div>
