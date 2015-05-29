@@ -68,7 +68,7 @@ class DocumentController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager', 'compta', 'employee'],
+	                    'roles' => ['admin', 'manager', 'compta', 'employee', 'frontdesk'],
 	                ],
 	            ],
 	        ],

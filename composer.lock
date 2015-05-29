@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d2d9c1aa3a9cb072053befb28966b94d",
+    "hash": "0968b618ccd803b1d8df3f908dafd658",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -467,16 +467,16 @@
         },
         {
             "name": "bower-asset/draggabilly",
-            "version": "v1.2.3",
+            "version": "v1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/draggabilly.git",
-                "reference": "a97d83bcd38ad79e602e618ae08ef29847292832"
+                "reference": "ed35f65b40b8983d100c66d5caf16dba3bbd0afd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/draggabilly/zipball/a97d83bcd38ad79e602e618ae08ef29847292832",
-                "reference": "a97d83bcd38ad79e602e618ae08ef29847292832",
+                "url": "https://api.github.com/repos/desandro/draggabilly/zipball/ed35f65b40b8983d100c66d5caf16dba3bbd0afd",
+                "reference": "ed35f65b40b8983d100c66d5caf16dba3bbd0afd",
                 "shasum": ""
             },
             "require": {
@@ -1761,6 +1761,52 @@
             "time": "2015-01-22 18:09:42"
         },
         {
+            "name": "ghunti/highcharts-php",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ghunti/HighchartsPHP.git",
+                "reference": "b416a4af316b2b1f914dc370a4955c020229503b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ghunti/HighchartsPHP/zipball/b416a4af316b2b1f914dc370a4955c020229503b",
+                "reference": "b416a4af316b2b1f914dc370a4955c020229503b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ghunti\\HighchartsPHP\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Gonçalo Queirós",
+                    "email": "mail@goncaloqueiros.net",
+                    "homepage": "http://goncaloqueiros.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A php wrapper for highcharts and highstock javascript libraries",
+            "homepage": "http://goncaloqueiros.net/highcharts.php",
+            "keywords": [
+                "charts",
+                "highcharts",
+                "highstock",
+                "javascript",
+                "php"
+            ],
+            "time": "2014-02-17 23:57:35"
+        },
+        {
             "name": "insolita/yii2-iconpicker",
             "version": "dev-master",
             "source": {
@@ -2020,6 +2066,48 @@
                 "time"
             ],
             "time": "2014-11-08 13:38:47"
+        },
+        {
+            "name": "kartik-v/strength-meter",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/strength-meter.git",
+                "reference": "e2c94d4bdd033171a9650afa69973e48146d5cf6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/strength-meter/zipball/e2c94d4bdd033171a9650afa69973e48146d5cf6",
+                "reference": "e2c94d4bdd033171a9650afa69973e48146d5cf6",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "A dynamic strength meter for password input validation with various configurable options.",
+            "homepage": "https://github.com/kartik-v/strength-meter",
+            "keywords": [
+                "bootstrap",
+                "jquery",
+                "meter",
+                "password",
+                "strength"
+            ],
+            "time": "2015-02-15 04:52:51"
         },
         {
             "name": "kartik-v/yii2-builder",
@@ -2592,6 +2680,57 @@
                 "yii2"
             ],
             "time": "2015-04-21 15:19:01"
+        },
+        {
+            "name": "kartik-v/yii2-password",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-password.git",
+                "reference": "99ab77bf5d30f019e264fc632c832d471be12d32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/99ab77bf5d30f019e264fc632c832d471be12d32",
+                "reference": "99ab77bf5d30f019e264fc632c832d471be12d32",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/strength-meter": "*",
+                "kartik-v/yii2-krajee-base": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\password\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Useful password strength validation utilities for Yii Framework 2.0",
+            "homepage": "https://github.com/kartik-v/yii2-password",
+            "keywords": [
+                "auth",
+                "bootstrap",
+                "extension",
+                "form",
+                "input",
+                "jquery",
+                "password",
+                "strength",
+                "yii",
+                "yii2"
+            ],
+            "time": "2015-04-21 15:20:34"
         },
         {
             "name": "kartik-v/yii2-slider",
@@ -5040,7 +5179,8 @@
         "kartik-v/yii2-mpdf": 20,
         "kartik-v/yii2-widgets": 20,
         "yurkinx/yii2-image": 20,
-        "perminder-klair/yii2-dropzone": 20
+        "perminder-klair/yii2-dropzone": 20,
+        "kartik-v/yii2-password": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

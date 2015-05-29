@@ -4,6 +4,7 @@ namespace app\modules\stats\controllers;
 
 use app\models\Event;
 use app\models\Order;
+use app\models\Document;
 use app\models\DocumentLine;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
@@ -78,6 +79,50 @@ class OrderController extends Controller
 
 
 	/**
+	 * select document_type,
+	       year(due_date) as year,
+	       month(due_date) as month,
+	       count(*) as total_count,
+	       sum(if(vat_bool = 1, price_htva, price_tvac)) as total_amount
+	  from document
+	 where document_type = 'ORDER'
+	 group by year, month
+	 */
+	public function actionByMonth() {
+		$archive = new Query();
+		$archive->from('document_archive')
+				->select([
+				'document_type',
+				'year' => 'year(due_date)',
+				'month' => 'month(due_date)',
+				'total_count' => 'count(id)',
+				'total_amount' => 'sum(if(vat_bool = 1, price_htva, price_tvac))'
+			])
+			->groupBy('document_type,year,month');
+			
+		$q = Document::find()
+			->select([
+				'document_type',
+				'year' => 'year(due_date)',
+				'month' => 'month(due_date)',
+				'total_count' => 'count(id)',
+				'total_amount' => 'sum(if(vat_bool = 1, price_htva, price_tvac))'
+			])
+			->andWhere(['document_type' => [Document::TYPE_ORDER, Document::TYPE_TICKET]])
+			->groupBy('document_type,year,month')
+			->union($archive)
+			->asArray()->all();
+
+        return $this->render('by-month',[
+			'dataProvider' => new ArrayDataProvider([
+				'allModels' => $q
+			]),
+			'events' => Event::find(),
+		]);
+	}
+
+
+	/**
 	 *
 	 */
 	public function actionByDayStacked() {
@@ -131,5 +176,9 @@ class OrderController extends Controller
         return $this->render('by-day-stacked',[
 			'series' => $series,
 		]);
+	}
+	
+	public function actionExpand() {
+		return $this->render('expand');
 	}
 }

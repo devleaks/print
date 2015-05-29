@@ -61,7 +61,9 @@
         "kartik-v/yii2-slider": "*",
         "pahanini/yii2-consolelog": "*",
         "perminder-klair/yii2-dropzone": "dev-master",
-        "kartik-v/yii2-widget-select2": "*"
+        "kartik-v/yii2-widget-select2": "*",
+        "kartik-v/yii2-password": "dev-master",
+        "ghunti/highcharts-php": "~2.0"
   },
     "require-dev": {
 		"yiisoft/yii2-codeception": "*",

@@ -36,7 +36,7 @@ $thick_level = 4;
 	for($i = $max_dim; $i > 0; $i-=$step): ?>
 		<div class="jjm-frame-ref"
 			style="width: <?= $i * $factor ?>px; height: <?= $i * $factor ?>px;"
-			title="<?= $i.'&times;'.$i ?>">
+			title="<?= $i.'&times;'.$i ?>"><div class="jjm-frame-ref-label"><?= $i ?></div>
 		</div>
 <?php endfor; ?>
 <?php

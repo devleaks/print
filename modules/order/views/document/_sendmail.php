@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
 $capture = new CaptureEmail();
 $capture->id = $model->id;
-$capture->email = $model->getNotificationEmail(); // client->email;
+$capture->email = $model->getNotificationEmail();
 
 $lang_before = Yii::$app->language;
 Yii::$app->language = isset($model->client->lang) ? $model->client->lang : 'fr';

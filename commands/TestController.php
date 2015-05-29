@@ -37,4 +37,22 @@ class TestController extends Controller {
 				}
 			}
 	}
+
+
+	public function actionDuplicate() {
+		if($order = Order::findOne(0)) {
+			for($i = 1; $i <= 12; $i++) {
+				$new = $order->deepCopy();
+				//$new->document_type = $new::TYPE_TICKET;
+				$new->due_date = '2014-'.sprintf("%02d", $i).'-15 00:00:00';
+				$new->created_at = '2014-'.sprintf("%02d", $i).'-15 00:00:00';
+				$new->name = '2014-CA-'.sprintf("%02d", $i);
+				$new->save();
+				if($ol = $new->getDocumentLines()->one()) {
+					$ol->note = '2014-CA-'.sprintf("%02d", $i);
+					$ol->save();
+				}
+			}
+		}
+	}
 }
