@@ -403,7 +403,11 @@ return [
 	'Daily Summary for {0}' => 'Résumé quotidien pour le {0}',
 	'Details' => 'Détails',
 	'Account Status for {0}' => 'Etat du compte pour {0}',
-	
+	'Next week' => 'Semaine prochaine',
+	'Late' => 'En retard',
+	'Monthly Report' => 'Rapport Mensuel',
+	'No data.' => 'Pas de donnée.',
+ 	
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

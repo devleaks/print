@@ -11,13 +11,13 @@ use yii\helpers\Url;
 		<?= $this->render('_work_line', ['title' => 'Today', 'date' => Document::DATE_TODAY]) ?>
 	</div>
 	<div class="col-lg-3">
-		<?= $this->render('_work_line', ['title' => 'Next', 'date' => Document::DATE_NEXT]) ?>
+		<?= $this->render('_work_line', ['title' => 'Tomorrow', 'date' => Document::DATE_NEXT]) ?>
 	</div>
 	<div class="col-lg-3">
 		<?= $this->render('_work_line', ['title' => 'Next week', 'date' => Document::DATE_NEXT_WEEK]) ?>
 	</div>
 	<div class="col-lg-3">
-		<?= $this->render('_work_line', ['title' => 'All', 'date' => null]) ?>
+		<?= $this->render('_work_line', ['title' => 'Late', 'date' => Document::DATE_LATE]) ?>
 	</div>
 </div>
 

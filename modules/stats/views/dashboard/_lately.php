@@ -27,15 +27,19 @@ $(function() {
 			            text: "<?= Yii::t('store', 'Monthly Report') ?>"
 			        },
 
+					credits: {
+	            		enabled: false
+	        		},
+
 			        xAxis: {
-			            categories: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+			            categories: ['Janv','Févr','Mars','Avr','Mai','Juin','Juil','Août','Sept','Oct','Nov','Déc']
 			        },
 
 			        yAxis: {
 			            allowDecimals: false,
 			            min: 0,
 			            title: {
-			                text: 'Number of fruits'
+			                text: '€'
 			            }
 			        },
 
