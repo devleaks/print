@@ -850,7 +850,7 @@ class Document extends _Document
 		$column = $table ? $table.'.due_date' : 'due_date';
 		$dayofweek = date('N'); // Mon=1, Sun=7
 		$today = date('Y-m-d');
-		Yii::trace('today='.$today.', dayofweek='.$dayofweek);
+		Yii::trace('today='.$today.', dayofweek='.$dayofweek.', requested='.$id);
 		switch(intval($id)) {
 			case self::DATE_TOMORROW: // next open day
 				$nextday = ($dayofweek > 4) ? 3 : 1;
@@ -860,7 +860,7 @@ class Document extends _Document
 			case self::DATE_NEXT: // 2 days from now, but open day
 				$nextday = ($dayofweek > 3) ? 4 : 2;
 				$day = date('Y-m-d', strtotime('now + '.$nextday.' days'));
-				$where = [$column => $day];
+				$where = ['<', $column, $day];
 				break;
 			case self::DATE_NEXT_WEEK:
 				$day = date('Y-m-d', strtotime('now + 7 days'));

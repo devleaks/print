@@ -6,7 +6,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\VarDumper;
 
-HighchartsAsset::register($this)->withScripts(['highstock']);
+HighchartsAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParameterSearch */
@@ -25,7 +25,7 @@ foreach($data1 as $k => $v)
 		foreach($v1 as $d)
 			$v2[] = $d;
 		$data[] = [
-			'name' => $k1.'-'.$k,
+			'name' => Yii::t('store', $k1).'-'.$k,
 			'stack' => $k,
 			'data' => $v2
 		];
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-	<?= VarDumper::dumpAsString($data, 4, true) ?>
+	<?php VarDumper::dumpAsString($data, 4, true) ?>
 	
 	<?= Highcharts::widget([
 		'options' => [
@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		            'type' => 'column'
 		        ],
 		        'title' => [
-		            'text' => $this->title = Yii::t('store', 'CA Mensuel')
+		            'text' => $this->title
 		        ],
 		        'subtitle' => [
 		            'text' => $this->title = Yii::t('store', 'Commandes et Ventes Comptoir'),

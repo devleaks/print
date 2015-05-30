@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="col-lg-8">
 		<?= $this->render('_work') ?>
 	</div>
-	<div class="col-lg-8">
+	<div class="col-lg-4">
 		<?= $this->render('_misc') ?>
 	</div>
 </div>

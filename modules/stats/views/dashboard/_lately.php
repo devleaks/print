@@ -1,30 +1,66 @@
 <?php
+
 use yii\helpers\Url;
+use miloschuman\highcharts\HighchartsAsset;
+
+HighchartsAsset::register($this);
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\ParameterSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 ?>
-<div class="dashboard-lately">
-
-<div class="row">
-	<div class="col-lg-4">
-		<?= Yii::t('store', '1') ?>
-	</div>
-	<div class="col-lg-4">
-		<?= Yii::t('store', '2') ?>
-	</div>
-	<div class="col-lg-4">
-		<?= Yii::t('store', '3') ?>
-	</div>
+<div id="lately" class="dashboard-lately">
 </div>
 
-<div class="row">
-	<div class="col-lg-4">
-		<?= Yii::t('store', '4') ?>
-	</div>
-	<div class="col-lg-4">
-		<?= Yii::t('store', '5') ?>
-	</div>
-	<div class="col-lg-4">
-		<?= Yii::t('store', '6') ?>
-	</div>
-</div>
+<script type="text/javascript">
+<?php $this->beginBlock('JS_LATELY'); ?>
+$(function() {
+    $.getJSON("<?= Url::to(['by-month']) ?>", function(data) {
+		if(data.length > 0) {
+	        $('#lately').highcharts({
 
-</div>
+			        chart: {
+			            type: 'column'
+			        },
+
+			        title: {
+			            text: "<?= Yii::t('store', 'Monthly Report') ?>"
+			        },
+
+			        xAxis: {
+			            categories: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+			        },
+
+			        yAxis: {
+			            allowDecimals: false,
+			            min: 0,
+			            title: {
+			                text: 'Number of fruits'
+			            }
+			        },
+
+			        tooltip: {
+			            formatter: function () {
+			                return '<b>' + this.x + '</b><br/>' +
+			                    this.series.name + ': ' + this.y + '<br/>' +
+			                    'Total: ' + this.point.stackTotal;
+			            }
+			        },
+
+			        plotOptions: {
+			            column: {
+			                stacking: 'normal'
+			            }
+			        },
+
+			        series: data
+			    });
+		} else {
+			$("#lately").html("<?= Yii::t('store', 'No data.') ?>");
+		}
+    });
+});
+<?php $this->endBlock(); ?>
+</script>
+<?php
+$this->registerJs($this->blocks['JS_LATELY'], yii\web\View::POS_READY);

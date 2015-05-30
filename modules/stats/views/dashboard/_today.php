@@ -3,22 +3,8 @@ use yii\helpers\Url;
 ?>
 <div class="dashboard-today">
 
-<div class="row">
-	<div class="col-lg-6">
-		<?= $this->render('_document', ['title' => 'Today']) ?>
-	</div>
-	<div class="col-lg-6">
-		<?= Yii::t('store', '2') ?>
-	</div>
-</div>
+	<h4><?= Yii::t('store', 'Today') ?></h4>
 
-<div class="row">
-	<div class="col-lg-6">
-		<?= Yii::t('store', '3') ?>
-	</div>
-	<div class="col-lg-6">
-		<?= Yii::t('store', '4') ?>
-	</div>
-</div>
+	<?= $this->render('_document', ['title' => 'Today']) ?>
 
 </div>
