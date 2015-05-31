@@ -2,6 +2,7 @@
 use yii\helpers\Url;
 
 $this->title = Yii::t('store', 'Dashboard');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dashboard-index">

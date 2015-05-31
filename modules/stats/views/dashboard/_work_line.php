@@ -51,7 +51,7 @@ $(function() {
 		        }]
 		    });
 		} else {
-			$("#workline<?= $date ?>").html("<?= Yii::t('store', 'No data.') ?>");
+			$("#workline<?= $date ?>").html("<?= Yii::t('store', $title).': '.Yii::t('store', 'No data.') ?>");
 		}
     });
 });

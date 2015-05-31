@@ -79,11 +79,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 
 		<div class="col-lg-6">
-			<h3>?</h3>
-
-			<ul>
-				<li>?</li>
-			</ul>
 		</div>
 	
 	</div>

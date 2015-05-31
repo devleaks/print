@@ -85,6 +85,12 @@ $this->params['breadcrumbs'][] = $this->title;
 		    	<li><a href="<?= Url::to(['/accnt']) ?>"><strong><?= Yii::t('store', 'Accounting')?></strong></a></li>
 			</ul>
 
+			<?php if(User::is('jjm')): ?>
+			<ul>
+		    	<li><a href="<?= Url::to(['/stats']) ?>"><?= Yii::t('store', 'Statistics')?></a></li>
+			</ul>
+			<?php endif; ?>
+
 		</div>
 
 	</div>
