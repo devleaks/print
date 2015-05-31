@@ -9,6 +9,7 @@ use app\models\WorkLine;
 use app\models\Document;
 use yii\web\Controller;
 use yii\db\Query;
+use Moment\Moment;
 
 class DashboardController extends Controller
 {
@@ -36,7 +37,28 @@ class DashboardController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+		$last_week = new Moment();
+		$last_week->subtractWeeks(1);
+		$q = new Query();
+		$docs = $q->from('document')
+			->select([
+				'document_type',
+				'status',
+				'total_count' => 'count(id)'])
+			->andWhere(['>', 'due_date', $last_week->format('Y-m-d')])
+			->groupBy('status,document_type')
+			;
+		$documents = [];
+		foreach($docs->each() as $d) {
+			if(!isset($documents[$d['document_type']]))
+				$documents[$d['document_type']] = [];
+			$documents[$d['document_type']][$d['status']] = $d['total_count'];
+		}
+
+		Yii::trace('Moment:'.$last_week->format('Y-m-d'));
+        return $this->render('index', [
+			'documents' => $documents
+		]);
     }
 
     public function actionTest()

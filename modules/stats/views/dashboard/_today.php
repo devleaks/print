@@ -5,6 +5,6 @@ use yii\helpers\Url;
 
 	<h4><?= Yii::t('store', 'Today') ?></h4>
 
-	<?= $this->render('_document', ['title' => 'Today']) ?>
+	<?= $this->render('_document', ['title' => 'Today', 'documents' => $documents]) ?>
 
 </div>

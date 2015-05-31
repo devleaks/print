@@ -8,10 +8,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="dashboard-index">
 
 <div class="row">
-	<div class="col-lg-4">
-		<?= $this->render('_today') ?>
+	<div class="col-lg-6">
+		<?= $this->render('_today', ['documents' => $documents]) ?>
 	</div>
-	<div class="col-lg-8">
+	<div class="col-lg-6">
 		<?= $this->render('_lately') ?>
 	</div>
 </div>
