@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'label' => Yii::t('store', 'Due Date'),
                 'attribute'=>'duedate_range',
 	            'value' => function ($model, $key, $index, $widget) {
-							return $model->updated_at;
+							return $model->due_date;
 				},
 				'format' => 'date',
 				'options' => ['class' => 'form-control'],
