@@ -20,6 +20,8 @@ class WorkLineDetailSearch extends WorkLine
 	public $work_width;
 	public $work_height;
 	public $task_name;
+	public $duedate_range;
+	
 
     /**
      * @inheritdoc
@@ -29,7 +31,7 @@ class WorkLineDetailSearch extends WorkLine
         return [
             [['id', 'work_id', 'created_by', 'updated_by', 'document_line_id', 'task_id', 'position', 'item_id'], 'integer'],
             [['created_at', 'updated_at', 'status', 'note', 'due_date'], 'safe'],
-			[['item_name', 'task_name'], 'safe'],
+			[['item_name', 'task_name', 'duedate_range'], 'safe'],
         ];
     }
 
@@ -100,6 +102,11 @@ class WorkLineDetailSearch extends WorkLine
 		    'desc' => ['task.name' => SORT_DESC],
 		];
 
+		$dataProvider->sort->attributes['duedate_range'] = [
+			'asc'  => ['work_line.due_date' => SORT_ASC],
+			'desc' => ['work_line.due_date' => SORT_DESC],
+		];
+
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
@@ -123,6 +130,8 @@ class WorkLineDetailSearch extends WorkLine
 
 		$query->andFilterWhere(['like', 'item.libelle_long', $this->item_name]);
 		$query->andFilterWhere(['like', 'task.name', $this->task_name]);
+
+		$query = Document::parseDateRange('work_line.due_date',   $this->duedate_range, $query);
 
         return $dataProvider;
     }

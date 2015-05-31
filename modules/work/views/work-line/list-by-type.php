@@ -87,13 +87,38 @@ if($task->name == 'Commande Encadrement') {
 				},
             	'format' => 'raw',
             ],
-            [
-				'attribute' => 'due_date',
-                'label'=>Yii::t('store','Due Date'),
-	            'value'=> function ($model, $key, $index, $widget) {
-					return $model->due_date;
+			[
+	            'label' => Yii::t('store', 'Due Date'),
+                'attribute'=>'duedate_range',
+	            'value' => function ($model, $key, $index, $widget) {
+							return $model->due_date;
 				},
-            	'format' => 'date',
+				'format' => 'date',
+				'options' => ['class' => 'form-control'],
+                'filterType' => GridView::FILTER_DATE_RANGE,
+                'filterWidgetOptions' => [
+	                'model'=>$searchModel,
+	                'attribute'=>'due_date',
+	                'presetDropdown'=>TRUE,                
+	                'convertFormat'=>true,                
+					'initRangeExpr' => true,
+					'presetDropdown' => false,
+					'pluginOptions'=>[                                          
+	                    'format'=>'Y-m-d',
+	                    'opens'=>'left',
+						'ranges' => [
+						    Yii::t('store', "Today") => ["moment().startOf('day')", "moment()"],
+					    	Yii::t('store', "This week") => ["moment().startOf('week')", "moment().endOf('week')"],
+					    	Yii::t('store', "Next {0} days", 14) => ["moment()", "moment().add(14, 'day')"],
+						    Yii::t('store', "This month") => ["moment().startOf('month')", "moment().endOf('month')"],
+						    Yii::t('store', "Next month") => ["moment()", "moment().add(31, 'day')"],
+						],
+	                ],
+					'pluginEvents' => [
+						"apply.daterangepicker" => 'function() { $(".grid-view").yiiGridView("applyFilter"); }',
+						"cancel.daterangepicker" => 'function() { $("#documentsearch-duedate_range").val(""); $(".grid-view").yiiGridView("applyFilter"); }',
+					]
+				]
             ],
             [
 				'attribute' => 'status',

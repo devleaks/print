@@ -15,6 +15,7 @@ class WorkSearch extends Work
 	public $order_name;
 	public $client_name;
 	public $order_created_by;
+	public $duedate_range;
 	
     /**
      * @inheritdoc
@@ -24,7 +25,7 @@ class WorkSearch extends Work
         return [
             [['id', 'document_id', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at', 'status', 'due_date'], 'safe'],
-			[['order_name', 'client_name', 'order_created_by'], 'safe'],
+			[['order_name', 'client_name', 'order_created_by', 'duedate_range'], 'safe'],
         ];
     }
 
@@ -70,6 +71,11 @@ class WorkSearch extends Work
 		    'desc' => ['client.nom' => SORT_DESC],
 		];
 
+		$dataProvider->sort->attributes['duedate_range'] = [
+			'asc'  => ['work.due_date' => SORT_ASC],
+			'desc' => ['work.due_date' => SORT_DESC],
+		];
+
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
@@ -88,6 +94,8 @@ class WorkSearch extends Work
     		  ->andFilterWhere(['like', 'document.name', $this->order_name])
     		  ->andFilterWhere(['like', 'document.created_by', $this->order_created_by])
     		  ->andFilterWhere(['like', 'client.nom', $this->client_name]);
+
+		$query = Document::parseDateRange('work.due_date',   $this->duedate_range, $query);
 
         return $dataProvider;
     }
