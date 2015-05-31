@@ -71,4 +71,13 @@ class User extends \yii\db\ActiveRecord
 			User::getRole() == $role
 			;
 	}
+
+	public static function is($user) {
+		if(isset(Yii::$app->user))
+			if(isset(Yii::$app->user->identity))
+				if(isset(Yii::$app->user->identity->username))
+					if(Yii::$app->user->identity->username == $user)
+						return true;
+		return false;
+	}
 }
