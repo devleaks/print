@@ -105,11 +105,13 @@ $is_print = isset($print) ? '_print' : '';
 		}
 	} else {			
 		foreach(Payment::getPaymentMethods() as $payment_method => $payment_label) {
+			if($payment_method != Payment::CASH) {
 				$dataProvider = new ActiveDataProvider([
 					'query' => Account::find()
 								->andWhere(['payment_method' => $payment_method])
 				]);
 				echo $this->render('_detail'.$is_print, ['dataProvider' => $dataProvider, 'method' => $payment_method, 'label' => $payment_label]);
+			}
 		}
 	}
 ?>

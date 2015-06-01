@@ -23,7 +23,9 @@ if($searchModel->created_at != '') {
 }
 
 $dataProvider = new ActiveDataProvider([
-	'query' => $query->select(['payment_method, count(id) as tot_count, sum(amount) as tot_amount'])
+	'query' => $query->select(['payment_method',
+						'tot_count' => 'count(id)',
+						'tot_amount' => 'sum(amount)'])
 					 ->groupBy(['payment_method'])
 ]);
 ?>

@@ -45,7 +45,7 @@ order by diff_days desc
     public function actionIndex()
     {
 		$q = Work::find()
-			->select(['datediff(updated_at,created_at) as diff_days', 'count(id) as tot_count'])
+			->select(['diff_days' => 'datediff(updated_at,created_at)', 'tot_count' => 'count(id)'])
 			->groupBy('diff_days')
 			->orderBy('diff_days')
 			->asArray()->all();
@@ -70,7 +70,7 @@ order by diff_days desc
     public function actionLines()
     {
 		$q = WorkLine::find()
-			->select(['datediff(updated_at,created_at) as diff_days', 'count(id) as tot_count'])
+			->select(['diff_days' => 'datediff(updated_at,created_at)', 'tot_count' => 'count(id)'])
 			->groupBy('diff_days')
 			->orderBy('diff_days')
 			->asArray()->all();

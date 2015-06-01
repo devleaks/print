@@ -353,7 +353,7 @@ class DocumentLineController extends Controller
 	    $out = ['more' => false];
 	    if (!is_null($search)) {
 	        $query = new Query;
-	        $query->select('id, libelle_long AS text') // id, concat(libelle_long," //",reference) as text
+	        $query->select(['id', 'text' => 'libelle_long']) // id, concat(libelle_long," //",reference) as text
 	            ->from('item')
 	            ->orWhere(['like', 'libelle_long', $search])
 	            ->orWhere(['like', 'reference', $search])

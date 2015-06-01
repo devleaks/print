@@ -36,7 +36,7 @@ class ItemController extends Controller {
 
     public function actionItem() {
 		$q = new Query();
-		$q->select(['item.libelle_long as name', 'sum(document_line.quantity) as tot_count'])
+		$q->select(['name' => 'item.libelle_long', 'tot_count' => 'sum(document_line.quantity)'])
 			->from(['document', 'document_line', 'item'])
 			->andwhere('document.id = document_line.document_id')
 			->andwhere('document_line.item_id = item.id')
@@ -54,7 +54,7 @@ class ItemController extends Controller {
 
     public function actionCategory() {
 		$q = new Query();
-		$q->select(['item.categorie as category', 'sum(document_line.quantity) as tot_count'])
+		$q->select(['category' => 'item.categorie', 'tot_count' => 'sum(document_line.quantity)'])
 			->from(['document', 'document_line', 'item'])
 			->andwhere('document.id = document_line.document_id')
 			->andwhere('document_line.item_id = item.id')
@@ -72,7 +72,7 @@ class ItemController extends Controller {
 
     public function actionYiiCategory() {
 		$q = new Query();
-		$q->select(['item.libelle_long as name', 'item.yii_category as category', 'sum(document_line.quantity) as tot_count'])
+		$q->select(['name' => 'item.libelle_long', 'category' => 'item.yii_category', 'tot_count' => 'sum(document_line.quantity)'])
 			->from(['document', 'document_line', 'item'])
 			->andwhere('document.id = document_line.document_id')
 			->andwhere('document_line.item_id = item.id')
@@ -99,7 +99,7 @@ class ItemController extends Controller {
 	 */
     public function actionSizes() {
 		$q = new Query();
-		$q->select(['item.libelle_long as name', 'item.yii_category as category', 'sum(document_line.quantity) as tot_count'])
+		$q->select(['name' => 'item.libelle_long', 'category' => 'item.yii_category', 'tot_count' => 'sum(document_line.quantity)'])
 			->from(['document', 'document_line', 'item'])
 			->andwhere('document.id = document_line.document_id')
 			->andwhere('document_line.item_id = item.id')

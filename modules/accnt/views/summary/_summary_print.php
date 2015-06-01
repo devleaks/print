@@ -23,7 +23,11 @@ if($searchModel->created_at != '') {
 }
 
 $q = new Query();
-$q->select('concat("CASH") as payment_method, sum(0) as total_count, sum(0) as total_amount');
+$q->select([
+	'payment_method' => 'concat("CASH")',
+	'total_count' => 'sum(0)',
+	'total_amount' => 'sum(0)',
+]);
 
 $dataProvider = new ActiveDataProvider([
 	'query' => $query->select(['payment_method, count(id) as tot_count, sum(amount) as tot_amount'])

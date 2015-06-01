@@ -446,7 +446,7 @@ class DocumentController extends Controller
 	    $out = ['more' => false];
 	    if (!is_null($search)) {
 	        $query = new Query;
-	        $query->select('id, nom AS text')
+	        $query->select(['id', 'text' => 'nom'])
 	            ->from('client')
 	            ->orWhere(['like', 'nom', $search])
 	            ->orWhere(['like', 'autre_nom', $search])

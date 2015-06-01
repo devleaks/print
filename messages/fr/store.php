@@ -407,6 +407,7 @@ return [
 	'Late' => 'En retard',
 	'Monthly Report' => 'Rapport Mensuel',
 	'No data.' => 'Pas de donnée.',
+	'Orders by Day' => 'Commandes, par jour',
  	
 	
 	/* attempt to resubmit work if order modified */

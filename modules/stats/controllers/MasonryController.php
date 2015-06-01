@@ -58,7 +58,7 @@ class MasonryController extends Controller
     public function actionFrames()
     {
 		$q = (new Query())->from('document_line,document')
-											->select(['sum(document_line.quantity) as tot_count', 'document_line.work_width as width', 'document_line.work_height as height'])
+											->select(['tot_count' => 'sum(document_line.quantity)', 'width' => 'document_line.work_width', 'height' => 'document_line.work_height'])
 											->where('document_line.document_id = document.id')
 											->andWhere(['>', 'work_width', 0])
 											->andWhere(['>', 'work_height', 0])
@@ -97,7 +97,7 @@ class MasonryController extends Controller
 	*/
     public function actionFramesStraightened() {
 		$q = (new Query())->from('document_size')
-											->select(['sum(quantity) as tot_count', 'largest as width', 'shortest as height'])
+											->select(['tot_count' => 'sum(quantity)', 'width' => 'largest', 'height' => 'shortest'])
 											->groupBy('largest,shortest')
 											->orderBy('tot_count asc,largest desc,shortest desc')
 											;

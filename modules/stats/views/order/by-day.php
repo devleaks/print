@@ -58,11 +58,15 @@ $this->params['breadcrumbs'][] = $this->title;
 			'yAxis' => [
 				'title' => ['text' => Yii::t('store', 'Total Amount'), 'min' => 0]
 			],
+	        'credits' => [
+	            'enabled' => false
+	        ],
 			'series' => [ [
-					'name' => 'Orders by day',
+					'name' => Yii::t('store', 'Orders by Day'),
 					'data' => $data
 				],
 				[
+					'name' => Yii::t('store', 'Events'),
 					'type' => 'flags',
 					'data' => $evts,
 				]

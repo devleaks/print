@@ -76,7 +76,7 @@ class DashboardController extends Controller
 		$where = Document::getDateClause(0);
 		$data = [];
 		foreach($q->from('document')
-			->select(['status', 'count(id) as tot_count'])
+			->select(['status', 'tot_count' => 'count(id)'])
 			->andWhere($where)
 			->groupBy('status')
 			->each() as $w)

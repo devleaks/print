@@ -2,6 +2,7 @@
 
 namespace app\modules\stats\controllers;
 
+use app\models\Client;
 use app\models\Event;
 use app\models\Order;
 use app\models\Document;
@@ -43,8 +44,10 @@ class OrderController extends Controller
 	 */
     public function actionIndex()
     {
+		$ccc = Client::auComptoir()->id;
 		$q = Order::find()
-			->select(['client_id', 'sum(price_htva) as tot_price', 'count(id) as tot_count'])
+			->select(['client_id', 'tot_price' => 'sum(price_htva)', 'tot_count' => 'count(id)'])
+			->andWhere(['not', ['client_id' => $ccc]])
 			->groupBy('client_id')
 			->orderBy('tot_price desc')
 			->asArray()->all();
@@ -64,7 +67,7 @@ class OrderController extends Controller
 	 */
 	public function actionByDay() {
 		$q = Order::find()
-			->select(['unix_timestamp(date(created_at)) the_date', 'count(id) as tot_count', 'sum(price_htva) as tot_price'])
+			->select(['the_date' => 'unix_timestamp(date(created_at))', 'tot_count' => 'count(id)', 'tot_price' => 'sum(price_htva)'])
 			->groupBy('the_date')
 			->orderBy('the_date')
 			->asArray()->all();
@@ -127,7 +130,7 @@ class OrderController extends Controller
 	 */
 	public function actionByDayStacked() {
 		$q = new Query();
-		$q->select(['unix_timestamp(date(document.created_at)) the_date', 'item.yii_category as the_category', 'sum(document_line.price_htva) as the_amount'])
+		$q->select(['the_date' => 'unix_timestamp(date(document.created_at))', 'the_category' => 'item.yii_category', 'the_amount' => 'sum(document_line.price_htva)'])
 			->from(['document', 'document_line', 'item'])
 			->andwhere('document.id = document_line.document_id')
 			->andwhere('document_line.item_id = item.id')

@@ -22,15 +22,28 @@ if($searchModel->created_at != '') {
 		  ->andWhere(['<=','created_at',$day_end]);
 }
 
-$q = new Query();
-$q->select('concat("CASH") as payment_method, sum(0) as total_count, sum(0) as total_amount');
+$q = new Query(); // dummy query in case no data found
+$q->select([
+	'payment_method' => 'concat("CASH")',
+	'total_count' => 'sum(0)',
+	'total_amount' => 'sum(0)',
+]);
 
 $dataProvider = new ActiveDataProvider([
-	'query' => $query->select(['payment_method, count(id) as tot_count, sum(amount) as tot_amount'])
+	'query' => $query->select(['payment_method',
+						'tot_count' => 'count(id)',
+						'tot_amount' => 'sum(amount)'])
 	                 ->where(['not', ['payment_method' => Payment::CASH]])
 					 ->groupBy(['payment_method'])
 					 ->union($q)
 ]);
+
+if($searchModel->created_at != '') { //?
+	$dataProvider->query
+		->andWhere(['>=','created_at',$day_start])
+		->andWhere(['<=','created_at',$day_end]);
+}
+
 ?>
 
 <div class="payment-summary">
