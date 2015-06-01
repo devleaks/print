@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		            'text' => $this->title = Yii::t('store', 'Commandes et Ventes Comptoir'),
 		        ],
 		        'xAxis' => [
-		            'categories' => ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+		            'categories' => array_values(Enum::monthList()),
 		            'title' => [
 		                'text' => null
 		            ]

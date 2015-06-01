@@ -32,7 +32,7 @@ $(function() {
 	        		},
 
 			        xAxis: {
-			            categories: ['Janv','Févr','Mars','Avr','Mai','Juin','Juil','Août','Sept','Oct','Nov','Déc']
+			            categories: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc']
 			        },
 
 			        yAxis: {
