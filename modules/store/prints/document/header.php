@@ -20,14 +20,14 @@ use app\models\Document;
 			<th style="text-align: center;"><?= Yii::t('print', 'Reference Client') ?></td>
 			<th style="text-align: center;"><?= Yii::t('print', 'VAT Client') ?></td>
 			<th style="text-align: center;"><?= Yii::t('print', 'Reference Operation') ?></td>
-			<th style="text-align: center;"><?= Yii::t('print', 'Number') ?></td>
+			<th style="text-align: center;"><?= Yii::t('print', 'Order') ?></td>
 	</tr>
 	<tr>
 			<td><?= Yii::$app->formatter->asDate($model->created_at, 'short') ?></td>
 			<td><?= $model->reference_client ?></td>
 			<td><?= $model->client->numero_tva ?></td>
 			<td><?= '+++ '.$model->reference.' +++' ?></td>
-			<td><?= $model->name ?></td>
+			<td><?= $model->parent ? $model->parent->name : $model->name ?></td>
 	</tr>
 	<?php if($model->note != ''): ?>
 	<tr>
