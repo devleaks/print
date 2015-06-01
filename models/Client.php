@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\components\VATValidator;
 use kartik\helpers\Html as KHtml;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
@@ -32,6 +33,18 @@ class Client extends _Client
         ];
     }
 
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+			[['numero_tva'], VATValidator::className()],
+		]);
+	}
+	
+	
 
 	public static function auComptoir() {
 		return Client::findOne(['comptabilite' => Client::COMPTOIR]);

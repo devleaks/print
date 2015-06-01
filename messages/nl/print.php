@@ -38,6 +38,7 @@ return [
 	'VAT Client' => 'BTW Klant',
 	'VAT Number' => 'BTW Nummer',
 	'Number' => 'Nummer',
+	'Order' => 'Bestelling',
 	
 	/** Body */
 	
