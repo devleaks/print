@@ -27,7 +27,7 @@ use app\models\Document;
 			<td><?= $model->reference_client ?></td>
 			<td><?= $model->client->numero_tva ?></td>
 			<td><?= '+++ '.$model->reference.' +++' ?></td>
-			<td><?= $model->parent ? $model->parent->name : $model->name ?></td>
+			<td><?= $model->getRelatedReference() ?></td>
 	</tr>
 	<?php if($model->note != ''): ?>
 	<tr>

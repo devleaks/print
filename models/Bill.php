@@ -27,6 +27,19 @@ class Bill extends Document {
         $query->andWhere(['document_type' => self::TYPE_BILL]);
     }
 
+	public function getRelatedReference() {
+		if($this->bom_bool) {
+			$str = '';
+			foreach(Order::find()->andWhere(['bom_bool' => true, 'parent_id' => $this->id])->each() as $order) {
+				$str .= $order->name.', ';				
+			}
+			return trim($str, ', ');
+		} else {
+			return $this->parent ? $this->parent->name : '';
+		}
+	}
+	
+	
 	/**
 	 *
 	 */

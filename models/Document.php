@@ -303,6 +303,11 @@ class Document extends _Document
 	}
 	
 	
+	public function getRelatedReference() {
+		return $this->parent ? $this->parent->name : '';
+	}
+	
+	
 	/**
 	 * Checks whether a document owns payments and no other document with same sale id owns it.
 	 *
@@ -409,7 +414,9 @@ class Document extends _Document
 	 * Update status and reports to parent Work model
 	 */
 	public function setStatus($newstatus) {
-		$this->status = ($newstatus == self::STATUS_TOPAY) ? $this->updatePaymentStatus() : $newstatus;
+		$this->status = $newstatus;
+		if($this->status == self::STATUS_TOPAY)
+			$this->updatePaymentStatus();
 		$this->save();
 		$this->statusUpdated();
 	}
