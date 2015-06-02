@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Account;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PaymentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
