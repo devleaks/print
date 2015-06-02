@@ -82,6 +82,8 @@ class ClientController extends Controller
         $model = new Client();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$model->nom = mb_strtoupper($model->nom, 'UTF-8'); // on creation only, we force uppercase
+			$model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -137,6 +139,8 @@ class ClientController extends Controller
 			/*if($model->reference_interne == '') {
 				$model->reference_interne = 'YII-'.$model->id;
 			}*/
+			$model->nom = mb_strtoupper($model->nom, 'UTF-8'); // on creation only, we force uppercase
+			$model->save();
 			if($ret == null)
             	return $this->redirect(Url::to(['index']));
 			else if($ret == Document::TYPE_BID)
