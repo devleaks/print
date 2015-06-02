@@ -8,7 +8,7 @@ Line:
       GnrlID:               <?= /*$model->item->comptabilite == '' ? '??????' :*/ $model->item->comptabilite ?>
 
       AnalID:               
-      VATCode:              <?= $order->vat_bool ? 0 : $model->vat ?>
+      VATCode:              <?= $order->vat_bool ? 0 : number_format($model->vat, 0) ?>
 
       Comment:
       FlagDC:               <?= $model->price_htva < 0 ? 'D' : 'C' ?>

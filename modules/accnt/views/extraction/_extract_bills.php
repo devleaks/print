@@ -7,6 +7,10 @@ use yii\widgets\DetailView;
 /* @var $model app\models\ExtractionLine */
 ?>
 <?php
-	foreach($model->each() as $bill)
+	foreach($model->each() as $bill) {
+		if($bill->created_at < '2015-05-31') {
+			$bill->updatePrice();
+		}
 		echo $this->render('_extract_bill' , ['model' => $bill]);
+	}
 ?>

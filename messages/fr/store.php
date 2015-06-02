@@ -408,6 +408,8 @@ return [
 	'Monthly Report' => 'Rapport Mensuel',
 	'No data.' => 'Pas de donnée.',
 	'Orders by Day' => 'Commandes, par jour',
+	'New Client' => 'Nouveau client',
+	'End order work and bill' => "Terminer des commandes et les facturer",
  	
 	
 	/* attempt to resubmit work if order modified */
@@ -432,7 +434,7 @@ return [
 	'Delete {0}?' => 'Supprimer la {0}?',
 	'Work submitted. {0}.' => 'Travail envoyé. {0}.',
 	'{0} deleted.' => '{0} supprimé(e).',
-	'Successful onvertion. {0}.' => 'Conversion réussie. {0}.',
+	'Successful onvertion. {0}.' => 'Document créé. {0}.',
 	'Are you sure you want to convert a sales ticket into an order and bill?' => "Etes-vous certain de vouloir convertir ce ticket de caisse en une commande et facture?",
 	'All works' => 'Tous les travaux',
 	'All documents' => 'Tous les documents',
