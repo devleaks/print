@@ -649,14 +649,16 @@ class DocumentController extends Controller
 				// submit work before dealing with paymebts
 				$feedback = '';
 				if($capturePayment->submit) { // do we need to create a new work order for this order?
-					$work = $model->createWork();
-					$cancel = Html::a(Yii::t('store', 'Cancel work submission'),
-									['/work/work/delete', 'id'=>$work->id],
-									[
-										'data-method' => 'post',
-										'title' => Yii::t('store', 'Delete work order'),
-										'data-confirm' => Yii::t('store', 'Delete work order?'),
-									]);
+					$cancel = '';
+					if($work = $model->createWork()) {					
+						$cancel = Html::a(Yii::t('store', 'Cancel work submission'),
+										['/work/work/delete', 'id'=>$work->id],
+										[
+											'data-method' => 'post',
+											'title' => Yii::t('store', 'Delete work order'),
+											'data-confirm' => Yii::t('store', 'Delete work order?'),
+										]);
+					}
 					$feedback = $work ? Yii::t('store', 'Work submitted ({0})', $cancel) : Yii::t('store', 'No work to submit');
 				}
 
