@@ -75,6 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<ul>
 					<li><a href="<?= Url::to(['/stats/event/']) ?>"><?= Yii::t('store', 'Evénements sur la ligne du temps') ?></a></li>
+					<li><a href="<?= Url::to(['/stats/archive/']) ?>"><?= Yii::t('store', 'Bilans mensuels passés') ?></a></li>
 				</ul>
 		</div>
 
