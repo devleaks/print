@@ -415,8 +415,17 @@ class Document extends _Document
 	 */
 	public function setStatus($newstatus) {
 		$this->status = $newstatus;
-		if($this->status == self::STATUS_TOPAY)
-			$this->updatePaymentStatus();
+		if($this->status == self::STATUS_TOPAY) { // if this is a request to set the status to 'TOPAY'
+			if($work = $this->getWorks()->one()) {
+				if($work->status == Work::STATUS_DONE) { // if work exists and is not complete
+					$this->updatePaymentStatus();
+				} else { // document takes status of its associated work
+					$this->status = $work->status;
+				}
+			} else {
+				$this->updatePaymentStatus();
+			}
+		}
 		$this->save();
 		$this->statusUpdated();
 	}

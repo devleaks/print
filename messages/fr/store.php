@@ -663,7 +663,7 @@ return [
 	'PAID' => 'Payé',
 	'PENDING' => 'En attente',
 	'RETIRED' => 'Retiré',
-	'TICKET' => 'Ticket de vente',
+	'TICKET' => 'Vente Comptoir',
 	'TOPAY' => 'A payer',
 	'TODO' => 'A faire',
 	'WORK' => 'En traitement',
