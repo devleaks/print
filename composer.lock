@@ -95,20 +95,20 @@
         },
         {
             "name": "2amigos/yii2-gallery-widget",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/2amigos/yii2-gallery-widget.git",
-                "reference": "f488ad42081eace2a90e0640ac30903e7c09b431"
+                "reference": "77b82b4a4d33a5cb9013220ff843de75984e7e82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/2amigos/yii2-gallery-widget/zipball/f488ad42081eace2a90e0640ac30903e7c09b431",
-                "reference": "f488ad42081eace2a90e0640ac30903e7c09b431",
+                "url": "https://api.github.com/repos/2amigos/yii2-gallery-widget/zipball/77b82b4a4d33a5cb9013220ff843de75984e7e82",
+                "reference": "77b82b4a4d33a5cb9013220ff843de75984e7e82",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/blueimp-gallery": "~2.15",
+                "bower-asset/blueimp-gallery": "~2.15.0",
                 "yiisoft/yii2": "~2.0.0"
             },
             "require-dev": {
@@ -156,7 +156,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2015-04-12 20:19:40"
+            "time": "2015-04-12 22:21:58"
         },
         {
             "name": "2amigos/yii2-grid-view-library",
@@ -733,12 +733,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/isotope.git",
-                "reference": "4298d6698d81013dc6e59d22ac9222a5e1552c4b"
+                "reference": "06b26b2f140b9d16b2c91873d09d9f67b741027b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/4298d6698d81013dc6e59d22ac9222a5e1552c4b",
-                "reference": "4298d6698d81013dc6e59d22ac9222a5e1552c4b",
+                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/06b26b2f140b9d16b2c91873d09d9f67b741027b",
+                "reference": "06b26b2f140b9d16b2c91873d09d9f67b741027b",
                 "shasum": ""
             },
             "require": {
@@ -778,7 +778,7 @@
                 }
             },
             "description": "Filter and sort magical layouts",
-            "time": "2015-05-05 19:10:57"
+            "time": "2015-06-03 12:42:53"
         },
         {
             "name": "bower-asset/jquery",
@@ -2274,12 +2274,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-datecontrol.git",
-                "reference": "cf12569e79848a08bf690329493dc6e314a641c1"
+                "reference": "16d34bcbebee43f494b0dd5034d45796d3cef826"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-datecontrol/zipball/cf12569e79848a08bf690329493dc6e314a641c1",
-                "reference": "cf12569e79848a08bf690329493dc6e314a641c1",
+                "url": "https://api.github.com/repos/kartik-v/yii2-datecontrol/zipball/16d34bcbebee43f494b0dd5034d45796d3cef826",
+                "reference": "16d34bcbebee43f494b0dd5034d45796d3cef826",
                 "shasum": ""
             },
             "require": {
@@ -2294,7 +2294,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD 3-Clause"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -2313,7 +2313,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-04-21 15:07:44"
+            "time": "2015-06-02 05:01:07"
         },
         {
             "name": "kartik-v/yii2-detail-view",
@@ -2413,12 +2413,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-helpers.git",
-                "reference": "9fad64668fb60c0a56744ea7e7faa06f94c9805e"
+                "reference": "187839c05d5cc8261e389dbeb2cf34bc7f625c16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/9fad64668fb60c0a56744ea7e7faa06f94c9805e",
-                "reference": "9fad64668fb60c0a56744ea7e7faa06f94c9805e",
+                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/187839c05d5cc8261e389dbeb2cf34bc7f625c16",
+                "reference": "187839c05d5cc8261e389dbeb2cf34bc7f625c16",
                 "shasum": ""
             },
             "require": {
@@ -2451,7 +2451,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-04-24 20:05:26"
+            "time": "2015-06-03 10:31:27"
         },
         {
             "name": "kartik-v/yii2-icons",
