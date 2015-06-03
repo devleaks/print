@@ -55,6 +55,16 @@ use yii\helpers\Url;
 				'noWrap' => true,
 			    'pageSummary' => true,
 			],
+			[
+				'attribute' => 'solde',
+				'format' => 'currency',
+            	'label' => Yii::$app->formatter->asCurrency($cash_start),
+				'hAlign' => GridView::ALIGN_RIGHT,
+				'noWrap' => true,
+			    'pageSummary' => function ($summary, $data, $widget) {
+					return Yii::$app->formatter->asCurrency(end($data));
+				},
+			],
         ],
 	    'showPageSummary' => true,
     ]); ?>

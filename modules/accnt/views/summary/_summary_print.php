@@ -9,37 +9,13 @@ use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PaymentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$query = new Query();
-$query->from('account');
-if($searchModel->created_at != '') {
-	$day_start = $searchModel->created_at. ' 00:00:00';
-	$day_end   = $searchModel->created_at. ' 23:59:59';
-	$query->andWhere(['>=','created_at',$day_start])
-		  ->andWhere(['<=','created_at',$day_end]);
-}
-
-$q = new Query();
-$q->select([
-	'payment_method' => 'concat("CASH")',
-	'total_count' => 'sum(0)',
-	'total_amount' => 'sum(0)',
-]);
-
-$dataProvider = new ActiveDataProvider([
-	'query' => $query->select(['payment_method, count(id) as tot_count, sum(amount) as tot_amount'])
-	                 ->where(['not', ['payment_method' => Payment::CASH]])
-					 ->groupBy(['payment_method'])
-					 ->union($q)
-]);
 ?>
-
 <div class="daily-summary-summary">
 	
-	<h2><?= Yii::t('store', 'Daily Summary for {0}', Yii::$app->formatter->asDate($searchModel->created_at)) ?></h2>
+	<h3><?= Yii::t('store', 'Daily Summary for {0}', Yii::$app->formatter->asDate($searchModel->created_at)) ?></h3>
 	
 <table width="100%" class="table table-bordered">
 	<thead>

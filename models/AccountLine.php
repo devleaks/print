@@ -15,6 +15,7 @@ class AccountLine extends Model {
 	public $amount;
 	public $note;
 	public $account;
+	public $solde;
 
     /**
      * @inheritdoc
@@ -23,8 +24,8 @@ class AccountLine extends Model {
     {
         return [
             [['date', 'note'], 'string'],
-            [['amount', 'account', 'ref'], 'number'],
-            [['date', 'note','amount', 'account', 'ref'], 'safe'],
+            [['amount', 'account', 'ref', 'solde'], 'number'],
+            [['date', 'note','amount', 'account', 'ref', 'solde'], 'safe'],
         ];
     }
 

@@ -6,14 +6,14 @@
 ?>
 <div class="daily-summary-detail">
 
-	<h3><?= $label ?></h3>
+	<h4><?= $label ?></h4>
 
 <table width="100%" class="table table-bordered">
 	<thead>
 	<tr>
-		<th style="text-align: center;"><?= Yii::t('store', 'Order') ?></th>
+		<th style="text-align: center;"><?= Yii::t('store', 'Client') ?></th>
+		<th style="text-align: center;"><?= Yii::t('store', 'Date') ?></th>
 		<th style="text-align: center;"><?= Yii::t('store', 'Amount') ?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Quantity') ?></th>
 	</tr>
 	</thead>
 	<tbody>

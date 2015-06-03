@@ -5,10 +5,15 @@ namespace app\modules\accnt\controllers;
 use Yii;
 use app\components\RuntimeDirectoryManager;
 use app\models\Account;
+use app\models\AccountLine;
 use app\models\AccountSearch;
 use app\models\CaptureDate;
+use app\models\Cash;
 use app\models\PDFLetter;
+use app\models\Payment;
+use yii\data\ArrayDataProvider;
 use yii\data\ActiveDataProvider;
+use yii\db\Query;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -19,7 +24,7 @@ use yii\web\NotFoundHttpException;
 class SummaryController extends Controller
 {
 	const ACTION_SEARCH = 'S';
-	const ACTION_PRINT = 'P';
+	const ACTION_PRINT  = 'P';
 	/**
 	 *  Sets global behavior for database line create/update and basic security
 	 */
@@ -45,6 +50,125 @@ class SummaryController extends Controller
         ];
     }
 
+
+	protected function doSummary($searchModel, $print = '') {
+		$cash_amount = 0;
+		$cash_count  = 0;
+		$cashLines = [];
+		$cash_start = 0;
+		$solde = $cash_start;
+
+		if($searchModel->created_at != '') {
+			$day_start = $searchModel->created_at. ' 00:00:00';
+			$day_end   = $searchModel->created_at. ' 23:59:59';
+			$cash_start = Cash::find()->andWhere(['<','created_at',$day_start])->sum('amount');
+			$solde = $cash_start;
+
+			foreach(Cash::find()
+				->andWhere(['>=','created_at',$day_start])
+				->andWhere(['<=','created_at',$day_end])->each() as $cash) {
+				$solde += $cash->amount;
+				$cashLines[] = new AccountLine([
+					'note' => $cash->note,
+					'amount' => $cash->amount,
+					'date' => $cash->created_at,
+					'ref' => $cash->sale ? $cash->id : null,
+					'solde' => $solde,
+				]);
+				$cash_amount += $cash->amount;
+				$cash_count++;
+			}
+		} else {
+			foreach(Cash::find()->each() as $cash) {
+				$solde += $cash->amount;
+				$cashLines[] = new AccountLine([
+					'note' => $cash->note,
+					'amount' => $cash->amount,
+					'date' => $cash->created_at,
+					'ref' => $cash->sale ? $cash->id : null,
+					'solde' => $solde,
+				]);
+				$cash_amount += $cash->amount;
+				$cash_count++;
+			}
+		}
+		
+		$query = new Query();
+		$query->from('account');
+		if($searchModel->created_at != '') {
+			$day_start = $searchModel->created_at. ' 00:00:00';
+			$day_end   = $searchModel->created_at. ' 23:59:59';
+			$query->andWhere(['>=','created_at',$day_start])
+				  ->andWhere(['<=','created_at',$day_end]);
+		}
+
+		$q = new Query(); // dummy query in case no data found
+		$q->select([
+			'payment_method' => 'concat("CASH")',
+			'total_count' => 'sum(0)',
+			'total_amount' => 'sum(0)',
+		]);
+
+		$dataProvider = new ActiveDataProvider([
+			'query' => $query->select(['payment_method',
+								'tot_count' => 'count(id)',
+								'tot_amount' => 'sum(amount)'])
+			                 ->where(['not', ['payment_method' => Payment::CASH]])
+							 ->groupBy(['payment_method'])
+							 ->union($q)
+		]);
+
+		if($searchModel->created_at != '') { //?
+			$dataProvider->query
+				->andWhere(['>=','created_at',$day_start])
+				->andWhere(['<=','created_at',$day_end]);
+		}
+
+		return 	$this->renderPartial('_summary'.$print, [
+					'dataProvider' => $dataProvider,
+					'searchModel' => $searchModel,
+					'cash_amount' => $cash_amount, 
+					'cash_count'  => $cash_count
+				]) 	.  $this->renderPartial('_detail-cash'.$print, [
+					'dataProvider' => new ArrayDataProvider([
+						'allModels' => $cashLines,
+					]),
+					'label' => Yii::t('store', 'Cash'),
+					'cash_start' => $cash_start
+				]);
+	}
+
+	protected function doDetail($searchModel, $print = '') {
+		$output = '';
+		if($searchModel->created_at != '') {
+			$day_start = $searchModel->created_at. ' 00:00:00';
+			$day_end   = $searchModel->created_at. ' 23:59:59';
+
+			foreach(Payment::getPaymentMethods() as $payment_method => $payment_label) {
+				if($payment_method != Payment::CASH) {
+					$dataProvider = new ActiveDataProvider([
+						'query' => Account::find()
+									->andWhere(['>=','created_at',$day_start])
+									->andWhere(['<=','created_at',$day_end])
+									->andWhere(['payment_method' => $payment_method])
+					]);
+					$output .= $this->renderPartial('_detail'.$print, ['dataProvider' => $dataProvider, 'method' => $payment_method, 'label' => $payment_label]);
+				}
+			}
+		} else {			
+			foreach(Payment::getPaymentMethods() as $payment_method => $payment_label) {
+				if($payment_method != Payment::CASH) {
+					$dataProvider = new ActiveDataProvider([
+						'query' => Account::find()
+									->andWhere(['payment_method' => $payment_method])
+					]);
+					$output .= $this->renderPartial('_detail'.$print, ['dataProvider' => $dataProvider, 'method' => $payment_method, 'label' => $payment_label]);
+				}
+			}
+		}
+		return $output;
+	}
+
     /**
      * Displays a single Payment model.
      * @param integer $id
@@ -64,9 +188,10 @@ class SummaryController extends Controller
 		if($capture->action == self::ACTION_PRINT) {
 			$pdf = new PDFLetter([
 				'content'		=> $this->renderPartial('index', [
-		            'searchModel' => $searchModel,
+		            'summary' => $this->doSummary($searchModel, '_print'),
+		        	'detail' => $this->doDetail($searchModel, '_print'),
 					'model' => $capture,
-					'print' => true,
+					'print' => true
 		        ]),
 				'destination'	=> RuntimeDirectoryManager::DAILY_REPORT,
 				'save'			=> true,
@@ -76,7 +201,8 @@ class SummaryController extends Controller
 		}
 		
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'summary' => $this->doSummary($searchModel),
+        	'detail' => $this->doDetail($searchModel),
 			'model' => $capture,
         ]);
     }
@@ -94,12 +220,13 @@ class SummaryController extends Controller
 
         $searchModel = new AccountSearch();
 		$searchModel->created_at = $capture->date;
-
+		
 		$pdf = new PDFLetter([
 			'content'		=> $this->renderPartial('index', [
-	            'searchModel' => $searchModel,
+	            'summary' => $this->doSummary($searchModel, '_print'),
+	        	'detail' => $this->doDetail($searchModel, '_print'),
 				'model' => $capture,
-				'print' => true,
+				'print' => true
 	        ]),
 			'destination'	=> RuntimeDirectoryManager::DAILY_REPORT,
 			'save'			=> true,

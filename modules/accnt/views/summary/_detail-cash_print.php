@@ -8,14 +8,19 @@ use app\models\Account;
 ?>
 <div class="daily-summary-detail">
 
-<h3><?= $label ?></h3>
+<h4><?= $label ?></h4>
 
 <table width="100%" class="table table-bordered">
 	<thead>
 	<tr>
 		<th style="text-align: center;"><?= Yii::t('store', 'Transaction') ?></th>
+		<th style="text-align: center;"><?= Yii::t('store', 'Date') ?></th>
 		<th style="text-align: center;"><?= Yii::t('store', 'Amount') ?></th>
-		<th style="text-align: center;"><?= Yii::t('store', 'Quantity') ?></th>
+		<th style="text-align: center;"><?= Yii::t('store', 'Solde') ?></th>
+	</tr>
+	<tr>
+		<td colspan="3"></td>
+		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($cash_start) ?></td>
 	</tr>
 	</thead>
 	<tbody>
@@ -35,7 +40,8 @@ use app\models\Account;
 		?></td>
 		<td style="text-align: center;"><?= $model->date ?></td>
 		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($model->amount) ?></td>
-		<?php $tot_amount += $model->amount; ?>
+		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($model->solde) ?></td>
+		<?php $tot_amount += $model->amount; $solde = $model->solde; ?>
 	</tr>
 <?php endforeach; ?>
 	</tbody>
@@ -43,6 +49,7 @@ use app\models\Account;
 	<tr>
 		<th colspan="2"></th>
 		<th style="text-align: right;"><?= Yii::$app->formatter->asCurrency($tot_amount) ?></th>
+		<th style="text-align: right;"><?= Yii::$app->formatter->asCurrency($solde) ?></th>
 	</tr>
 	</tfoot>
 </table>

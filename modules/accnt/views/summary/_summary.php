@@ -6,46 +6,12 @@ use app\models\PaymentSearch;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\data\ActiveDataProvider;
-use yii\db\Query;
-
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PaymentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$query = new Query();
-$query->from('account');
-if($searchModel->created_at != '') {
-	$day_start = $searchModel->created_at. ' 00:00:00';
-	$day_end   = $searchModel->created_at. ' 23:59:59';
-	$query->andWhere(['>=','created_at',$day_start])
-		  ->andWhere(['<=','created_at',$day_end]);
-}
-
-$q = new Query(); // dummy query in case no data found
-$q->select([
-	'payment_method' => 'concat("CASH")',
-	'total_count' => 'sum(0)',
-	'total_amount' => 'sum(0)',
-]);
-
-$dataProvider = new ActiveDataProvider([
-	'query' => $query->select(['payment_method',
-						'tot_count' => 'count(id)',
-						'tot_amount' => 'sum(amount)'])
-	                 ->where(['not', ['payment_method' => Payment::CASH]])
-					 ->groupBy(['payment_method'])
-					 ->union($q)
-]);
-
-if($searchModel->created_at != '') { //?
-	$dataProvider->query
-		->andWhere(['>=','created_at',$day_start])
-		->andWhere(['<=','created_at',$day_end]);
-}
 
 ?>
-
 <div class="payment-summary">
 
     <?= GridView::widget([
