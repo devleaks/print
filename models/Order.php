@@ -274,8 +274,7 @@ class Order extends Document
 				$actions[] = '{warn}';
 			case $this::STATUS_TODO:
 			case $this::STATUS_BUSY:
-				$actions[] = '{cancel}';
-				$actions[] = ($this->getBill() ? '{link:billed}' : '{bill}');
+				$actions[] = ($this->getBill() ? '{link:billed}' : '{cancel} {bill}');
 				if( $work  ) { // there should always be a work if doc status is TODO or BUSY or WARN
 					$actions[] = '{work}';
 					$actions[] = '{workterminate}';
