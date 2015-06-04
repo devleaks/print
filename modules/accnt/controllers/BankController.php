@@ -170,7 +170,6 @@ class BankController extends Controller
 			$transaction = new BankTransaction([
 				'name' => $details[0],
 				'execution_date' => \DateTime::createFromFormat('d/m/Y', $details[1])->format('Y-m-d'),
-				'value_date' => \DateTime::createFromFormat('d/m/Y', $details[2])->format('Y-m-d'),
 				'amount' => floatval( str_replace(',', '.', $details[3]) ),
 				'currency' => $details[4],
 				'source' => $details[5],
