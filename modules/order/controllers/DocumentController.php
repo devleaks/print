@@ -530,6 +530,25 @@ class DocumentController extends Controller
 		*/
 	}
 
+	public function actionReceive($id) {
+		$model = $this->findModel($id);
+		if($model->document_type == Document::TYPE_TICKET) {			
+			$solde = $model->getBalance();
+			return $this->actionUpdateStatus($model->id, $model->isPaid() ? Document::STATUS_CLOSED : Document::STATUS_TOPAY);
+		}
+		else
+			return $this->actionUpdateStatus($id, Document::STATUS_CLOSED);
+		/*
+		$model = $this->findModel($id);
+		if($work = $model->getWorks()->one())
+			$work->terminate(); // should only be one, at most
+		$model->refresh();
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+		*/
+	}
+
 	public function actionConvert($id, $ticket = false) {
 		$model = $this->findModel($id);
 		if($model->document_type == Document::TYPE_ORDER && $model->bom_bool) {

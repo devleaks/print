@@ -139,7 +139,7 @@ class DocumentActionColumn extends Column {
 				'label' => 'Receive',
 				'title' => 'Receive',
 				'color' => 'primary',
-				'action' => '/order/document/view',
+				'action' => '/order/document/receive',
 			],
 			// order
 			'notify'	=> [
