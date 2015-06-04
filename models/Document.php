@@ -414,17 +414,19 @@ class Document extends _Document
 	 * Update status and reports to parent Work model
 	 */
 	public function setStatus($newstatus) {
-		$this->status = $newstatus;
-		if($this->status == self::STATUS_TOPAY) { // if this is a request to set the status to 'TOPAY'
+		if($newstatus == self::STATUS_TOPAY) { // if this is a request to set the status to 'TOPAY'
 			if($work = $this->getWorks()->one()) {
-				if($work->status == Work::STATUS_DONE) { // if work exists and is not complete
-					$this->updatePaymentStatus();
+				if($work->status == Work::STATUS_DONE) { // if work exists and is completed
+					$this->status = $this->updatePaymentStatus();
 				} else { // document takes status of its associated work
 					$this->status = $work->status;
 				}
-			} else {
-				$this->updatePaymentStatus();
+			} else { // there is no work. If document in "TODO" status, we leave it as TODO.
+				if($this->status != self::STATUS_TODO)
+					$this->status = $this->updatePaymentStatus();
 			}
+		} else {
+			$this->status = $newstatus;
 		}
 		$this->save();
 		$this->statusUpdated();
