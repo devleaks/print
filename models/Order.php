@@ -58,8 +58,8 @@ class Order extends Document
 			$copy->send();
 		}
 
-		$this->status = self::STATUS_CLOSED;
-		$this->save();	
+		//$this->status = self::STATUS_CLOSED;
+		//$this->save();	
 
 		return $copy;
 	}
@@ -275,6 +275,7 @@ class Order extends Document
 			case $this::STATUS_TODO:
 			case $this::STATUS_BUSY:
 				$actions[] = '{cancel}';
+				$actions[] = ($this->getBill() ? '{link:billed}' : '{bill}');
 				if( $work  ) { // there should always be a work if doc status is TODO or BUSY or WARN
 					$actions[] = '{work}';
 					$actions[] = '{workterminate}';
