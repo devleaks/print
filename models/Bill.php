@@ -104,15 +104,15 @@ class Bill extends Document {
 					$model->due_date = $bom->due_date;
 					// Note: BOM gets temporary number, bill gets next number available.
 					$model->name = substr($bom->due_date,0,4).'-'.Sequence::nextval('bill_number');
-					$model->note = $bom->name;
+					//$model->note = $bom->name;
 					$model->status = self::STATUS_OPEN;
 					$model->sale = Sequence::nextval('sale');
 					$model->reference = $model->commStruct(date('y')*10000000 + $model->sale);
 					$model->save();
-				} else {
+				} /*else {
 					$model->note = self::append($model->note, $bom->name, ',', 160);
 					$model->save();
-				}
+				}*/
 				// add order lines from bom to bill
 				foreach($bom->getDocumentLines()->each() as $ol) {
 					$bl = $ol->deepCopy($model->id);

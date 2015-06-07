@@ -189,10 +189,12 @@ class BankController extends Controller
 		foreach(BankTransaction::find()->andWhere(['status' => BankTransaction::STATUS_UPLOADED])->each() as $trans) {
 			if ( preg_match_all( '/([0-9]{12})/', $trans->note, $matches ) ) {
 				$document = null;
-				$i = 1;
+				$i = 0;
 				$found = $matches[1];
+				Yii::trace('Found '.print_r($found, true).'...', 'BankController::actionReconsile');
 				while($i < count($found) && !$document) {
 					$code = substr($found[$i], 0, 3).'/'.substr($found[$i], 3, 4).'/'.substr($found[$i], 7, 5);
+					Yii::trace('Trying '.$code.'...', 'BankController::actionReconsile');
 					$document = Document::findOne(['reference' => $code]);
 					$i++;
 				}

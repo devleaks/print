@@ -1718,12 +1718,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fightbulc/moment.php.git",
-                "reference": "d5436482991460a4152a58c46df54f6c57044fae"
+                "reference": "6ba3cc5e5b24c7fc6c3d94c6c0f8141f1d14f896"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/d5436482991460a4152a58c46df54f6c57044fae",
-                "reference": "d5436482991460a4152a58c46df54f6c57044fae",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/6ba3cc5e5b24c7fc6c3d94c6c0f8141f1d14f896",
+                "reference": "6ba3cc5e5b24c7fc6c3d94c6c0f8141f1d14f896",
                 "shasum": ""
             },
             "require": {
@@ -1773,7 +1773,7 @@
                 "translation",
                 "validate"
             ],
-            "time": "2015-05-28 05:52:33"
+            "time": "2015-06-05 08:11:32"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -4336,23 +4336,23 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.0",
+            "version": "v5.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "31454f258f10329ae7c48763eb898a75c39e0a9f"
+                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/31454f258f10329ae7c48763eb898a75c39e0a9f",
-                "reference": "31454f258f10329ae7c48763eb898a75c39e0a9f",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0697e6aa65c83edf97bb0f23d8763f94e3f11421",
+                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9.1"
+                "mockery/mockery": "~0.9.1,<0.9.4"
             },
             "type": "library",
             "extra": {
@@ -4381,10 +4381,11 @@
             "description": "Swiftmailer, free feature-rich PHP mailer",
             "homepage": "http://swiftmailer.org",
             "keywords": [
+                "email",
                 "mail",
                 "mailer"
             ],
-            "time": "2015-03-14 06:06:39"
+            "time": "2015-06-06 14:19:39"
         },
         {
             "name": "thomaspark/bootswatch",
