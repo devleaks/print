@@ -410,19 +410,30 @@ class DocumentController extends Controller
 		$cash_cnt = $model->getCashes()->count();
 		$payment_cnt = $model->getPayments()->count();
 		Yii::trace('cnt='.$cnt.',payments='.$cash_cnt, 'DocumentController::actionDelete');
-		if($cnt > 0)
-			Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because a child document depends on it.'));
-		else if ( ($cash_cnt > 0 || $model->soloOwnsPayments()) || $payment_cnt > 0) {
-				Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because there are payment attached to it.'));
-		} else {  // ok to remove
-			if($model->document_type == Document::TYPE_BILL && $model->bom_bool) { // remove pointer from BOM to this bill if any.
-				foreach(Document::find()->where(['parent_id' => $model->id])->each() as $bom) {
-					$bom->parent_id = null;
-					$bom->save();
+		if ( ($cash_cnt > 0 || $model->soloOwnsPayments()) || $payment_cnt > 0 ) {
+			Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because there are payment attached to it. You must delete payment(s) first.'));
+		} else if($cnt > 0 && !($model->document_type == Document::TYPE_BILL && $model->bom_bool)) {
+			Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because a document depends on it.'));
+		} else {
+			$ok = true;
+			if($model->bom_bool) {
+				if($model->document_type == Document::TYPE_BILL) { // remove pointer from BOM to this bill if any.
+					foreach(Document::find()->where(['parent_id' => $model->id])->each() as $bom) {
+						$bom->parent_id = null;
+						$bom->setSTatus(Document::STATUS_TOPAY);
+						$bom->save();
+					}
+				} else if ($model->document_type == Document::TYPE_ORDER) {
+					if($bill = $model->getBill()) {
+						Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because a document depends on it.'));
+						$ok = false;
+					}
 				}
-			}			
-        	$this->findModel($id)->deleteCascade();
-			Yii::$app->session->setFlash('success', Yii::t('store', 'Document deleted.'));
+			}
+			if($ok) {
+	        	$model->deleteCascade();
+				Yii::$app->session->setFlash('success', Yii::t('store', 'Document deleted.'));
+			}
 		}
 
 		return $this->redirect(Url::to(['/order/document', 'sort' => '-updated_at']));

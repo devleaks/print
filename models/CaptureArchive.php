@@ -27,7 +27,8 @@ class CaptureArchive extends _DocumentArchive
             [['note', 'legal'], 'string', 'max' => 160],
             [['email'], 'string', 'max' => 80],
 			[['price_htva_virgule', 'price_tvac_virgule'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
-			[['price_htva_virgule', 'price_tvac_virgule'], 'safe']
+			[['price_htva_virgule', 'price_tvac_virgule'], 'safe'],
+            [['name', 'due_date', 'price_tvac_virgule'], 'required'],
         ];
     }
 
@@ -37,6 +38,7 @@ class CaptureArchive extends _DocumentArchive
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
+	        'document_type' => Yii::t('store', 'Archive Type'),
 	        'due_date' => Yii::t('store', 'Date'),
 	        'price_htva' => Yii::t('store', 'Amount HTVA'),
 	        'price_tvac' => Yii::t('store', 'Amount TVAC'),

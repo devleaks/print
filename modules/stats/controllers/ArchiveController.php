@@ -88,7 +88,9 @@ class ArchiveController extends Controller
 			
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-			Yii::$app->session->setFlash('error', Yii::t('store', 'There was an error: {0}.', VarDumper::dumpAsString($capture->errors, 4, true)));
+			$capture->status = DocumentArchive::STATUS_ACTIVE;
+			if(count($capture->errors) > 0)
+				Yii::$app->session->setFlash('error', Yii::t('store', 'There was an error: {0}.', VarDumper::dumpAsString($capture->errors, 4, true)));
             return $this->render('create', [
                 'model' => $capture,
             ]);
@@ -117,13 +119,15 @@ class ArchiveController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
 			$capture->id = $model->id;
+			$capture->isNewRecord = false;
 			$capture->document_type = $model->document_type;
 			$capture->name = $model->name;
 			$capture->due_date = $model->due_date;
 			$capture->price_htva_virgule = str_replace('.',',',$model->price_htva);
 			$capture->price_tvac_virgule = str_replace('.',',',$model->price_tvac);
-			$capture->status = $model->status == 1 ? DocumentArchive::STATUS_ACTIVE : DocumentArchive::STATUS_INACTIVE;
-			Yii::$app->session->setFlash('error', Yii::t('store', 'There was an error: {0}.', VarDumper::dumpAsString($capture->errors, 4, true)));
+			$capture->status = ($model->status == 1 || $model->status == DocumentArchive::STATUS_ACTIVE) ? DocumentArchive::STATUS_ACTIVE : DocumentArchive::STATUS_INACTIVE;
+			if(count($capture->errors) > 0)
+				Yii::$app->session->setFlash('error', Yii::t('store', 'There was an error: {0}.', VarDumper::dumpAsString($capture->errors, 4, true)));
             return $this->render('update', [
                 'model' => $capture,
             ]);

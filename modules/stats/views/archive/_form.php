@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="document-archive-form">
-
+	
     <?php $form = ActiveForm::begin(); ?>
 
 	<?= $form->field($model, 'document_type')->dropDownList([
@@ -39,7 +39,7 @@ use yii\widgets\ActiveForm;
 								'offText' =>  Yii::t('store', 'Inactive'),
 						        'onColor' => 'success',
 						        'offColor' => 'danger',
-								'state' => $model->status == DocumentArchive::STATUS_ACTIVE
+								'state' => ($model->status == DocumentArchive::STATUS_ACTIVE)
 					]]
 	) ?>
 

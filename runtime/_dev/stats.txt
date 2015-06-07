@@ -4,3 +4,23 @@ group by client_id
 
 
 
+select client_id,
+sum(if(vat_bool = 1, price_htva, price_tvac)) as total_amount,
+count(id) as total_count,
+min(created_at) as date_min,
+max(created_at) as date_max,
+DATEDIFF(max(created_at), min(created_at)) as date_diff,
+DATEDIFF(max(created_at), min(created_at)) / count(id) as avg_day_between_order,
+sum(if(vat_bool = 1, price_htva, price_tvac)) / DATEDIFF(max(created_at), min(created_at)) as avg_amount_per_day
+from document
+where client_id <> 1680
+group by client_id
+having
+total_count > 3
+and
+total_amount > 2000
+
+
+
+<?= '<pre>'.print_r($model->attributes, true) . '</pre>' ?>
+

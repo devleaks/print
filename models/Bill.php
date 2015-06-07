@@ -116,10 +116,11 @@ class Bill extends Document {
 				// add order lines from bom to bill
 				foreach($bom->getDocumentLines()->each() as $ol) {
 					$bl = $ol->deepCopy($model->id);
+					$sep = $bl->note ? '/' : '';
 					$bl->note = self::append($bl->note,
 											($ol->item->reference === Item::TYPE_REBATE)
-										? '/'.Yii::t('store', $bl->extra_htva > 0 ? 'Supplement' : 'Rebate').' '.Yii::t('store', 'for').' '.$bom->name.'.'
-										: '/'.$bom->name/*.':'.$line*/.'.'
+										? $sep.Yii::t('store', $bl->extra_htva > 0 ? 'Supplement' : 'Rebate').' '.Yii::t('store', 'for').' '.$bom->name.'.'
+										: $sep.$bom->name/*.':'.$line*/.'.'
 								, ' ', 160);
 					$bl->save();
 					$line++;

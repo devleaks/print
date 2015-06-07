@@ -317,8 +317,8 @@ return [
 	'There is no bill in selection.' => "Il n'y a pas de bon de livraison sélectionné.",
 	'There is no email address associated with this client. Please provide one.' => "Il n'y a pas d'adresse eMail associée au profil du client. Veuillez en fournir une.",
 	'There is no work for this order.' => "Il n'y pas de travail à soumettre pour cette commande.",
-	'This document cannot be deleted because a child document depends on it.' => 'Ce document ne peut être effacé parce que un autre document en dépend.',
-	'This document cannot be deleted because there are payment attached to it.' => 'Ce document ne peut être effacé parce un ou plusieurs paiements lui sont attachés.',
+	'This document cannot be deleted because a document depends on it.' => 'Ce document ne peut être effacé parce que un autre document en dépend.',
+	'This document cannot be deleted because there are payment attached to it. You must delete payment(s) first.' => "Ce document ne peut être effacé parce un ou plusieurs paiements lui sont attachés. Vous devez d'abord supprimer les paiements attachés.",
 	'Tickets' => 'Ventes comptoir',
 	'Tirage Factor' => 'Coeff.Tirage',
 	'To Refund' => 'Rembourser',
@@ -410,6 +410,7 @@ return [
 	'Orders by Day' => 'Commandes, par jour',
 	'New Client' => 'Nouveau client',
 	'End order work and bill' => "Terminer des commandes et les facturer",
+	'Create Document Archive' => 'Créer un bilan mensuel',
  	
 	
 	/* attempt to resubmit work if order modified */
@@ -523,6 +524,10 @@ return [
 	'White Mat' => 'Blanc Mat',
 	'Clear Glossy' => 'Transparent Brillant',
 	'Clear Mat' => 'Transparent Mat',
+
+	'Amount HTVA' => 'Montant HTVA',
+	'Amount TVAC' => 'Montant TVAC',
+	'Archive Type' => 'Type de ventes',
 
 	'Price HTVA' => 'Prix HTVA',
 	'Price Htva' => 'Prix HTVA',

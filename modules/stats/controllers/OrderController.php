@@ -184,4 +184,51 @@ class OrderController extends Controller
 	public function actionExpand() {
 		return $this->render('expand');
 	}
+	
+	/**
+	 * 
+	select client_id,
+	sum(if(vat_bool = 1, price_htva, price_tvac)) as total_amount,
+	count(id) as total_count,
+	min(created_at) as date_min,
+	max(created_at) as date_max,
+	DATEDIFF(max(created_at), min(created_at)) as date_diff,
+	DATEDIFF(max(created_at), min(created_at)) / count(id) as avg_day_between_order,
+	sum(if(vat_bool = 1, price_htva, price_tvac)) / DATEDIFF(max(created_at), min(created_at)) as avg_amount_per_day
+	from document
+	where client_id <> 1680
+	group by client_id
+	having
+	total_count > 3
+	and
+	total_amount > 2000
+	 */
+	public function actionFrequency() {
+		$ccc = Client::auComptoir()->id;
+		$q = Order::find()
+			->select([
+				'client_id',
+				'total_amount' => 'sum(if(vat_bool = 1, price_htva, price_tvac))',
+				'total_count' => 'count(id)',
+				'date_min' => 'min(created_at)',
+				'date_max' => 'max(created_at)',
+				'date_diff' => 'DATEDIFF(max(created_at), min(created_at))',
+				'avg_day_between_order' => 'DATEDIFF(max(created_at), min(created_at)) / count(id)',
+				'avg_amount_per_day' => 'sum(if(vat_bool = 1, price_htva, price_tvac)) / DATEDIFF(max(created_at), min(created_at))'
+			])
+			->andWhere(['not', ['client_id' => $ccc]])
+			->groupBy('client_id')
+			->andHaving(['>', 'total_amount', 2500])
+			->andHaving(['>', 'total_count', 3])
+			->orderBy('total_amount desc')
+			->asArray()->all();
+
+        return $this->render('frequency',[
+			'dataProvider' => new ArrayDataProvider([
+				'allModels' => $q
+			])
+		]);
+		
+	}
+	
 }
