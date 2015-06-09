@@ -102,6 +102,16 @@ class Document extends _Document
     /**
      * @inheritdoc
      */
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+        	[['email'], 'email'],
+		]);
+	}
+	
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [

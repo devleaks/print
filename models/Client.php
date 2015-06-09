@@ -41,6 +41,7 @@ class Client extends _Client
     {
         return array_merge(parent::rules(), [
 			[['numero_tva'], VATValidator::className()],
+        	[['email'], 'email'],
 		]);
 	}
 	
