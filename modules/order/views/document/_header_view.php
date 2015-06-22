@@ -180,7 +180,7 @@ Icon::map($this);
 					echo $ab->getButtons($model);
 				 	//echo $model->getActions('btn', false);
 					echo $this->render('_sendmail', ['model' => $model]); /** modal */
-				 	if(in_array($model->document_type, [Document::TYPE_ORDER,Document::TYPE_BILL,Document::TYPE_TICKET,Document::TYPE_REFUND,Document::TYPE_CREDIT])
+				 	if(in_array($model->document_type, [Document::TYPE_BID,Document::TYPE_ORDER,Document::TYPE_BILL,Document::TYPE_TICKET,Document::TYPE_REFUND,Document::TYPE_CREDIT])
 					  && $model->status != Document::STATUS_CANCELLED )
 						echo $this->render('_pay', ['model' => $model]); /** modal */
 				?>
