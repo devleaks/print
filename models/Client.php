@@ -63,9 +63,9 @@ class Client extends _Client
      * create client name label for display
 	 */
 	public function niceName($show_autre = false) {
-		return ucwords(strtolower(
+		return ucwords(mb_strtolower(
 			$this->prenom.' '.$this->nom.($show_autre ? ' - '.$this->autre_nom : '')
-		));
+		, 'UTF-8'));
 	}
 
     /**

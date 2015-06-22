@@ -9,6 +9,7 @@ use app\models\Document;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\Json;
 
@@ -84,6 +85,24 @@ class ClientController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			$model->nom = mb_strtoupper($model->nom, 'UTF-8'); // on creation only, we force uppercase
 			$model->save();
+			// Checks for duplicates
+			$model->refresh();
+			$delete_link = Html::a($model->niceName(), Url::to(['delete', 'id' => $model->id]));
+			$q = Client::find()->select('soundex(nom)')->andWhere(['id' => $model->id]);
+			$output = '';
+			foreach(Client::find()
+							->select(['nom_soundex' => 'soundex(nom)'])
+							->andWhere(['nom_soundex' => $q])
+							->each() as $client) {
+				$output .= '» Client '.$client->niceName().'.<br/>';
+			}
+			if($output != '') {
+				Yii::$app->session->setFlash('info', 
+					'<p>'.Yii::t('store', 'The following client have similar sounding names:').'</p>'.$output.
+					'<p>'.Yii::t('store', 'Delete {0}', $delete_link).'</p>'
+				);
+			}
+			
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -141,8 +160,31 @@ class ClientController extends Controller
 			}*/
 			$model->nom = mb_strtoupper($model->nom, 'UTF-8'); // on creation only, we force uppercase
 			$model->save();
+
+			// Checks for duplicates
+			$model->refresh();
+			$delete_link = Html::a($model->niceName(), Url::to(['delete', 'id' => $model->id]), [
+				'title' => Yii::t('store', 'Delete client'),
+        		'data-method' => 'post',
+        		'data-confirm' => Yii::t('store', 'Are you sure you want to delete this client?'),
+			]);
+			$q = Client::find()->select('soundex(nom)')->andWhere(['id' => $model->id]);
+			$output = '';
+			foreach(Client::find()
+							->andWhere(['soundex(nom)' => $q])
+							->andWhere(['not',['id' => $model->id]])
+							->each() as $client) {
+				$output .= Yii::t('store', '» Client {0}',$client->niceName()).'.<br/>';
+			}
+			if($output != '') {
+				Yii::$app->session->setFlash('info', 
+					'<p>'.Yii::t('store', 'The following client have similar sounding names:').'</p>'.$output.
+					'<p>'.Yii::t('store', 'Delete client {0}', $delete_link).'</p>'
+				);
+			}
+			
 			if($ret == null)
-            	return $this->redirect(Url::to(['index']));
+            	return $this->redirect(Url::to(['index', 'sort' => '-updated_at']));
 			else if($ret == Document::TYPE_BID)
             	return $this->redirect(Url::to(['/order/document/create-bid', 'id' => $model->id]));
 			else if($ret == Document::TYPE_BID)
