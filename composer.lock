@@ -1910,16 +1910,16 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.2.1",
+            "version": "v4.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "6ca9f207ad33deeb8556cbdd762182678c67bf10"
+                "reference": "963ab33aad3bceebe906437382e1a5aaa05ae754"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/6ca9f207ad33deeb8556cbdd762182678c67bf10",
-                "reference": "6ca9f207ad33deeb8556cbdd762182678c67bf10",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/963ab33aad3bceebe906437382e1a5aaa05ae754",
+                "reference": "963ab33aad3bceebe906437382e1a5aaa05ae754",
                 "shasum": ""
             },
             "type": "library",
@@ -1954,20 +1954,20 @@
                 "progress",
                 "upload"
             ],
-            "time": "2015-06-14 19:58:04"
+            "time": "2015-06-18 14:51:09"
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
-            "version": "v3.5.2",
+            "version": "v3.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-star-rating.git",
-                "reference": "8ae690a192a18d2cab46c2d8aa3455b18092f6ed"
+                "reference": "bd9c52db6ac71cb270620c1aee601d142ab2cc00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/8ae690a192a18d2cab46c2d8aa3455b18092f6ed",
-                "reference": "8ae690a192a18d2cab46c2d8aa3455b18092f6ed",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/bd9c52db6ac71cb270620c1aee601d142ab2cc00",
+                "reference": "bd9c52db6ac71cb270620c1aee601d142ab2cc00",
                 "shasum": ""
             },
             "type": "library",
@@ -1978,7 +1978,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD 3-Clause"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -1995,20 +1995,20 @@
                 "jquery",
                 "star"
             ],
-            "time": "2015-05-10 19:28:14"
+            "time": "2015-06-18 14:42:46"
         },
         {
             "name": "kartik-v/dependent-dropdown",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/dependent-dropdown.git",
-                "reference": "a938210be3276606b1d81d82776aff0e4962d3c9"
+                "reference": "5af96f871606fc75aa8f3a3b34b01c8fe56345fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/dependent-dropdown/zipball/a938210be3276606b1d81d82776aff0e4962d3c9",
-                "reference": "a938210be3276606b1d81d82776aff0e4962d3c9",
+                "url": "https://api.github.com/repos/kartik-v/dependent-dropdown/zipball/5af96f871606fc75aa8f3a3b34b01c8fe56345fd",
+                "reference": "5af96f871606fc75aa8f3a3b34b01c8fe56345fd",
                 "shasum": ""
             },
             "type": "library",
@@ -2037,7 +2037,7 @@
                 "option",
                 "select"
             ],
-            "time": "2015-05-22 12:25:10"
+            "time": "2015-06-18 15:04:37"
         },
         {
             "name": "kartik-v/mpdf",
@@ -2084,16 +2084,16 @@
         },
         {
             "name": "kartik-v/php-date-formatter",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/php-date-formatter.git",
-                "reference": "5b753132ba47a6d06d25a4e9c3c64642b097ecdf"
+                "reference": "7d3dc3495dd10bd1909c0dfdecd673967019cc21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/php-date-formatter/zipball/5b753132ba47a6d06d25a4e9c3c64642b097ecdf",
-                "reference": "5b753132ba47a6d06d25a4e9c3c64642b097ecdf",
+                "url": "https://api.github.com/repos/kartik-v/php-date-formatter/zipball/7d3dc3495dd10bd1909c0dfdecd673967019cc21",
+                "reference": "7d3dc3495dd10bd1909c0dfdecd673967019cc21",
                 "shasum": ""
             },
             "type": "library",
@@ -2104,7 +2104,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD 3-Clause"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -2125,7 +2125,7 @@
                 "php-date-formatter.js",
                 "time"
             ],
-            "time": "2014-11-08 13:38:47"
+            "time": "2015-06-18 15:14:51"
         },
         {
             "name": "kartik-v/strength-meter",
@@ -4288,20 +4288,20 @@
         },
         {
             "name": "raoul2000/yii2-bootswatch-asset",
-            "version": "1.2.3",
+            "version": "1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/raoul2000/yii2-bootswatch-asset.git",
-                "reference": "10b3f58db91c79d1aa599df273f8f907f84e3152"
+                "reference": "5844876a64cc8e0d919e89b76ce11e52519253d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raoul2000/yii2-bootswatch-asset/zipball/10b3f58db91c79d1aa599df273f8f907f84e3152",
-                "reference": "10b3f58db91c79d1aa599df273f8f907f84e3152",
+                "url": "https://api.github.com/repos/raoul2000/yii2-bootswatch-asset/zipball/5844876a64cc8e0d919e89b76ce11e52519253d4",
+                "reference": "5844876a64cc8e0d919e89b76ce11e52519253d4",
                 "shasum": ""
             },
             "require": {
-                "thomaspark/bootswatch": "3.3.4",
+                "thomaspark/bootswatch": "3.3.5",
                 "yiisoft/yii2": "*"
             },
             "type": "yii2-extension",
@@ -4327,9 +4327,10 @@
                 "bootswatch",
                 "extension",
                 "skin",
+                "theme",
                 "yii2"
             ],
-            "time": "2015-03-25 09:53:41"
+            "time": "2015-06-19 07:49:08"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4386,16 +4387,16 @@
         },
         {
             "name": "thomaspark/bootswatch",
-            "version": "v3.3.4+1",
+            "version": "v3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thomaspark/bootswatch.git",
-                "reference": "49ccd07144a7ed8917ab8b715233ffe288a6a9f0"
+                "reference": "57a25bd6da65fcc034c2029c0390272830572b93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thomaspark/bootswatch/zipball/49ccd07144a7ed8917ab8b715233ffe288a6a9f0",
-                "reference": "49ccd07144a7ed8917ab8b715233ffe288a6a9f0",
+                "url": "https://api.github.com/repos/thomaspark/bootswatch/zipball/57a25bd6da65fcc034c2029c0390272830572b93",
+                "reference": "57a25bd6da65fcc034c2029c0390272830572b93",
                 "shasum": ""
             },
             "suggest": {
@@ -4440,7 +4441,7 @@
                 }
             ],
             "description": "Themes for Bootstrap",
-            "time": "2015-03-23 20:56:57"
+            "time": "2015-06-17 01:58:15"
         },
         {
             "name": "yiisoft/yii2",
