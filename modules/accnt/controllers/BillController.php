@@ -133,7 +133,10 @@ class BillController extends Controller
 						$docs = [];
 						foreach(Order::find()->andWhere(['document.id' => $_POST['selection'], 'client_id' => $client->client_id])->each() as $doc)
 							$docs[] = $doc->id;
-						$bills[] = Bill::createFromBoms($docs);
+							
+						if($tmpBill = Bill::createFromBoms($docs))
+							$bills[] = $tmpBill;
+							
 						Yii::trace('client:'.$client->client_id.', bill='.$bills[count($bills)-1]->id, 'BillController::actionBillBoms');
 					}
 			        $dataProvider = new ArrayDataProvider([

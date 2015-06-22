@@ -92,6 +92,7 @@ class Bill extends Document {
 		if($boms->exists()) {
 			Yii::trace('bill='.$this->id, 'Bill::createFromBoms');
 			$model = null;
+			$vat_bool = null;
 			foreach($boms->each() as $bom) {
 				$line = 1;
 				if(! $model) {
@@ -109,10 +110,13 @@ class Bill extends Document {
 					$model->sale = Sequence::nextval('sale');
 					$model->reference = $model->commStruct(date('y')*10000000 + $model->sale);
 					$model->save();
-				} /*else {
-					$model->note = self::append($model->note, $bom->name, ',', 160);
-					$model->save();
-				}*/
+					$vat_bool = $bom->vat_bool;
+				} else {
+					if($vat_bool != $bom->vat_bool) {
+						Yii::trace('bom='.$bom->id.' has different VAT convention', 'Bill::createFromBoms');
+						return null;
+					}
+				}
 				// add order lines from bom to bill
 				foreach($bom->getDocumentLines()->each() as $ol) {
 					$bl = $ol->deepCopy($model->id);

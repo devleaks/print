@@ -248,7 +248,9 @@ class ComptaController extends Controller {
 				$this->report(Yii::t('store', 'Added of Bills of Materials {bom}.', ['bom' => $doc->name]));
 			}
 	
-			$bills[] = Bill::createFromBoms($docs);
+			if($tmpBill = Bill::createFromBoms($docs))
+				$bills[] = $tmpBill;
+
 			$this->report(Yii::t('store', 'Bill {bill}', ['bill' => $bills[count($bills)-1]->name]));
 			echo 'client:'.$client->client_id.', bill='.$bills[count($bills)-1]->id;
 		}

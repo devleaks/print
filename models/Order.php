@@ -92,10 +92,16 @@ class Order extends Document
 	 * @inheritdoc
 	 */
 	public function getBill() {
-		return ($this->bom_bool and $this->parent_id != null) ?
-			Bill::findDocument($this->parent_id)
-			:
-			Bill::findOne(['parent_id' => $this->id]);
+		Yii::trace('Id='.$this->id.', bom='.($this->bom_bool ? 'T': 'F').', parent='.$this->parent_id, 'Order::getBill');
+		if($this->bom_bool and $this->parent_id != null) {
+			if($doc = Document::findDocument($this->parent_id)) {
+				return $doc->document_type == Document::TYPE_BILL ? $doc : null;
+			} else {
+				return null;
+			}
+		} else {
+			return Bill::findOne(['parent_id' => $this->id]);
+		}
 	}
 
 

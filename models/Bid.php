@@ -25,7 +25,7 @@ class Bid extends Document
 		if( $existing_next = $this->getOrder() )
 			return $existing_next;
 
-		$copy = $this->deepCopy( $ticket ? self::TYPE_TICKET : self::TYPE_ORDER);
+		$copy = $this->deepCopy( $ticket ? self::TYPE_TICKET : self::TYPE_ORDER );
 		$copy->parent_id = $this->id;
 		$copy->status = self::STATUS_OPEN;
 		$copy->save();
@@ -56,6 +56,7 @@ class Bid extends Document
 	public function getActions($show_work = false) {
 		$actions = [];
 		switch($this->status) {
+			case $this::STATUS_TOPAY:
 			case $this::STATUS_OPEN:
 				$actions[] = '{edit}';
 				$actions[] = '{convert}';
