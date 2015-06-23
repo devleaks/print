@@ -26,6 +26,7 @@ use app\models\Account;
 	<tbody>
 <?php
 	$tot_amount = 0;
+	$solde = 0;
 	foreach($dataProvider->allModels as $model): ?>
 	<tr>
 		<td><?php

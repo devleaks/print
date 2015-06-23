@@ -170,7 +170,8 @@ class ExtractionController extends Controller
 
 					$dirname  = RuntimeDirectoryManager::getDocumentRoot();
 					$filename = RuntimeDirectoryManager::getFilename(RuntimeDirectoryManager::EXTRACTION, 'popsi');
-					file_put_contents($dirname.$filename, $extraction);
+					$data = mb_convert_encoding($extraction, 'ISO-8859-1', 'auto');
+					file_put_contents($dirname.$filename, $data);
 
 					$link = Html::a($filename, Url::to(['download', 'file' => $filename]));					
 					Yii::$app->session->setFlash('success', Yii::t('store', 'Extracted in {file}.', ['file' => $link]));

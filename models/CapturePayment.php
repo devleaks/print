@@ -15,6 +15,7 @@ class CapturePayment extends Model
 	public $amount;
 	public $method;
 	public $submit;
+	public $note;
 	public $use_credit;
 	
     /**
@@ -24,10 +25,11 @@ class CapturePayment extends Model
     {
         return [
             [['amount'], 'required'],
-            [['total', 'amount', 'method', 'id', 'use_credit', 'submit'], 'safe'],
+            [['total', 'amount', 'method', 'id', 'use_credit', 'note', 'submit'], 'safe'],
             [['id'], 'number'],
 			[['total', 'amount'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[,]?[0-9]/'],
             [['method'], 'string', 'max' => 20],
+            [['note'], 'string', 'max' => 160],
         ];
     }
 
@@ -37,10 +39,11 @@ class CapturePayment extends Model
     public function attributeLabels()
     {
         return [
-            'total'  => Yii::t('store', 'Total'),
-            'amount' => Yii::t('store', 'Amount'),
+            'total'  => Yii::t('store', 'Total to Pay'),
+            'amount' => Yii::t('store', 'Amount Paid'),
             'method' => Yii::t('store', 'Payment Method'),
             'use_credit' => Yii::t('store', 'Reimburse all credit'),
+            'note' => Yii::t('store', 'Note'),
             'submit' => Yii::t('store', 'Submit work?'),
         ];
     }

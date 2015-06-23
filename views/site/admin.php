@@ -70,7 +70,7 @@ $this->title = 'Labo JJ Micheli';
 
                 <p><a class="btn btn-primary" href="<?= Url::to(['/accnt/']) ?>">Comptabilité &raquo;</a></p>
 				<p data-intro='Menu rapide vers actions les plus courantes'>
-					&raquo; <a href="<?= Url::to(['/accnt/pdf']) ?>"><?= Yii::t('store', 'Documents')?></a></li>
+					&raquo; <a href="<?= Url::to(['/accnt/pdf']) ?>"><?= Yii::t('store', 'PDF Documents to Print')?></a></li>
 					&raquo; <a href="<?= Url::to(['/accnt/cash']) ?>"><?= Yii::t('store', 'Cash')?></a></li>
 				</p>
             </div>

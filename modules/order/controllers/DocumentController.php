@@ -704,6 +704,7 @@ class DocumentController extends Controller
 							'sale' => $model->sale,
 							'amount' => $capturePayment->amount,
 							'payment_date' => date('Y-m-d'),
+							'note' => $capturePayment->note,
 						]);
 						$cash->save();
 						$cash->refresh();
@@ -715,12 +716,13 @@ class DocumentController extends Controller
 						'amount' => $capturePayment->amount,
 						'status' => $capturePayment->amount > 0 ? 'CREDIT' : 'DEBIT',
 						'cash_id' => $cash ? $cash->id : null,
+						'note' => $capturePayment->note,
 					]);
 					$payment_entered->save();
 					$payment_entered->refresh();
 				}
 
-				if( $model->addPayment($payment_entered, $capturePayment->amount, $capturePayment->method) ) {
+				if( $model->addPayment($payment_entered, $capturePayment->amount, $capturePayment->method, $capturePayment->note) ) {
 					Yii::trace('doc='.$model->document_type, 'DocumentController::actionUpdateStatus');
 					$model->setStatus(Order::STATUS_TOPAY);
 					if($model->document_type == $model::TYPE_REFUND && $capturePayment->use_credit) {

@@ -1064,6 +1064,19 @@
             <uid><![CDATA[C0D26348-00A8-441B-BE2F-63488A1C2D98]]></uid>
         </SQLField>
         <SQLField>
+            <name><![CDATA[bank_transaction_id]]></name>
+            <type><![CDATA[INTEGER]]></type>
+            <referencesField>id</referencesField>
+            <referencesTable>bank_transaction</referencesTable>
+            <referencesField><![CDATA[id]]></referencesField>
+            <referencesTable><![CDATA[bank_transaction]]></referencesTable>
+            <sourceCardinality>0</sourceCardinality>
+            <destinationCardinality>0</destinationCardinality>
+            <referencesFieldUID><![CDATA[3EE5C792-9D43-457D-8C7C-648744365850]]></referencesFieldUID>
+            <referencesTableUID><![CDATA[6F7FE38B-3B49-4155-8743-6B1CAC8BD4A1]]></referencesTableUID>
+            <uid><![CDATA[BC5AF4FB-61F5-4606-98CF-D264DD2D2DB8]]></uid>
+        </SQLField>
+        <SQLField>
             <name><![CDATA[cash_id]]></name>
             <type><![CDATA[INTEGER]]></type>
             <referencesField>id</referencesField>
@@ -1145,7 +1158,7 @@
         </location>
         <size>
             <width>256.00</width>
-            <height>220.00</height>
+            <height>240.00</height>
         </size>
         <zorder>20</zorder>
         <SQLField>
@@ -1153,8 +1166,17 @@
             <type><![CDATA[INTEGER]]></type>
             <primaryKey>1</primaryKey>
             <autoIncrement><![CDATA[1]]></autoIncrement>
+            <forcedUnique><![CDATA[1]]></forcedUnique>
             <indexed><![CDATA[0]]></indexed>
             <uid><![CDATA[3EE5C792-9D43-457D-8C7C-648744365850]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[account]]></name>
+            <type><![CDATA[VARCHAR(40)]]></type>
+            <notNull><![CDATA[1]]></notNull>
+            <temporaryOriginalName><![CDATA[status_1]]></temporaryOriginalName>
+            <uid><![CDATA[0C975F76-6CE7-4B02-A6D6-0DDBEFB0EFB1]]></uid>
+            <unique><![CDATA[0]]></unique>
         </SQLField>
         <SQLField>
             <name><![CDATA[name]]></name>
@@ -1200,14 +1222,6 @@
             <forcedUnique><![CDATA[0]]></forcedUnique>
             <temporaryOriginalName><![CDATA[name]]></temporaryOriginalName>
             <uid><![CDATA[C3E87B6E-3C0B-4BE4-BCD1-053719F0C5ED]]></uid>
-        </SQLField>
-        <SQLField>
-            <name><![CDATA[account]]></name>
-            <type><![CDATA[VARCHAR(40)]]></type>
-            <notNull><![CDATA[1]]></notNull>
-            <temporaryOriginalName><![CDATA[status_1]]></temporaryOriginalName>
-            <uid><![CDATA[0C975F76-6CE7-4B02-A6D6-0DDBEFB0EFB1]]></uid>
-            <unique><![CDATA[0]]></unique>
         </SQLField>
         <SQLField>
             <name><![CDATA[status]]></name>
@@ -2170,6 +2184,12 @@
             <name><![CDATA[numero_tva]]></name>
             <type><![CDATA[VARCHAR(80)]]></type>
             <uid><![CDATA[0A5B5709-484B-4BEF-8A67-B6C33A06E629]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[assujetti_tva]]></name>
+            <type><![CDATA[VARCHAR(20)]]></type>
+            <temporaryOriginalName><![CDATA[name_1]]></temporaryOriginalName>
+            <uid><![CDATA[E183E99F-4E98-4ADF-A46E-0563B90AF3C5]]></uid>
         </SQLField>
         <SQLField>
             <name><![CDATA[email]]></name>
@@ -3651,7 +3671,7 @@ bU1hcmdpboaShKOeqKEehpKEmZkPTlNTY2FsaW5nRmFjdG9yhpKEo56ooQGGkoSZ
 mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
 ]]></encodedPrintInfo>
         <autoSizeTablesOption><![CDATA[0]]></autoSizeTablesOption>
-        <documentScaleFactor><![CDATA[0.55]]></documentScaleFactor>
+        <documentScaleFactor><![CDATA[0.75]]></documentScaleFactor>
         <exportDialect><![CDATA[mysql]]></exportDialect>
         <fileversion><![CDATA[3.1]]></fileversion>
         <generator><![CDATA[com.malcolmhardie.sqleditor]]></generator>
@@ -3667,7 +3687,7 @@ mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
         <windowHeight><![CDATA[1315.000000]]></windowHeight>
         <windowLocationX><![CDATA[424.000000]]></windowLocationX>
         <windowLocationY><![CDATA[100.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{0, 496}]]></windowScrollOrigin>
+        <windowScrollOrigin><![CDATA[{1, 306}]]></windowScrollOrigin>
         <windowWidth><![CDATA[1854.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>

@@ -30,6 +30,14 @@ $dataProvider = new ActiveDataProvider([
 				'noWrap' => true,
 			],
 			[
+				'attribute' => 'created_by',
+	            'value' => function ($model, $key, $index, $widget) {
+					$user = $model->getCreatedBy()->one();
+	                return $user ? $user->username : '?';
+	            },
+				'noWrap' => true,
+			],
+			[
 				'attribute' => 'amount',
 				'format' => 'currency',
 				'hAlign' => GridView::ALIGN_RIGHT,

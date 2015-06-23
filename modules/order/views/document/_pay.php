@@ -64,6 +64,7 @@ $capture->submit = 1;
 			}
 		?>
 		<?= $form->field($capture, 'amount')->textInput() ?>
+		<?= $form->field($capture, 'note')->textInput() ?>
 		<?= $form->field($capture, 'total')->textInput(['readonly' => true]) ?>
 		<?= $form->field($capture, 'method')->dropDownList($payment_methods) ?>
 		<?php

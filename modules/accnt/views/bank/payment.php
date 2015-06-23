@@ -9,14 +9,12 @@ use kartik\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 
-$this->title = Yii::t('store', 'Pay');
+$this->title = Yii::t('store', 'Added Payments');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Bank Slip Upload'), 'url' => ['/accnt/bank']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reconsile-form">
-
-	<?php $form = ActiveForm::begin(['action' => Url::to(['make-payments'])]) ?>
 
     <?= GridView::widget([
 		'options' => ['id' => 'action-gridview'],
@@ -35,8 +33,30 @@ $this->params['breadcrumbs'][] = $this->title;
 		'panelHeadingTemplate' => '{heading}',
         'columns' => [
 	        [
+				'attribute' => 'order_name',
+				'label' => Yii::t('store', 'Order'),
+	            'value' => function ($model, $key, $index, $widget) {
+					if($model['bill'])
+						if($doc = Document::findOne(['name' => $model['bill']]))
+	                    	return Html::a($doc->name, Url::to(['/order/document/view', 'id' => $doc->id]), ['target' => '_blank']);
+					return $model['bill'];
+	            },
+	            'format' => 'raw',
+				'noWrap' => true,
+	        ],
+	        [
 				'attribute' => 'code',
 				'label' => Yii::t('store', 'Structured Communication'),
+			],
+	        [
+				'attribute' => 'bill_amount',
+				'format' => 'currency',
+				'label' => Yii::t('store', 'Order Amount'),
+			],
+	        [
+				'attribute' => 'bill_due',
+				'format' => 'currency',
+				'label' => Yii::t('store', 'Amount Due'),
 			],
 	        [
 				'attribute' => 'extract',
@@ -51,34 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'extract_status',
 				'label' => Yii::t('store', 'Slip Status'),
 			],
-	        [
-				'attribute' => 'bill_amount',
-				'format' => 'currency',
-				'label' => Yii::t('store', 'Order Amount'),
-			],
-	        [
-				'attribute' => 'bill_due',
-				'format' => 'currency',
-				'label' => Yii::t('store', 'Amount Due'),
-			],
-	        [
-				'attribute' => 'order_name',
-				'label' => Yii::t('store', 'Order'),
-	            'value' => function ($model, $key, $index, $widget) {
-					if($model['bill'])
-						if($doc = Document::findOne(['name' => $model['bill']]))
-	                    	return Html::a($doc->name, Url::to(['/order/document/view', 'id' => $doc->id]), ['target' => '_blank']);
-					return $model['bill'];
-	            },
-	            'format' => 'raw',
-				'noWrap' => true,
-	        ],
-			[
-				'class' => 'kartik\grid\CheckboxColumn',
-			]
         ],
     ]); ?>
-
-	<?php ActiveForm::end(); ?>
 
 </div>

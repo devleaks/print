@@ -2,11 +2,14 @@
 
 namespace app\modules\accnt\controllers;
 
-use Yii;
 use app\models\CaptureUpload;
+use app\models\Account;
+use app\models\Payment;
 use app\models\Document;
 use app\models\BankTransaction;
 use app\models\BankTransactionSearch;
+
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -199,12 +202,14 @@ class BankController extends Controller
 					$i++;
 				}
 				if($document) {
-					$documents[] = [
+					$documents[$trans->id] = [
 						'extract' => $trans->name,
-						'bill' => $document->name,
-						'bill_amount' => $document->vat_bool ? $document->price_htva : $document->price_tvac,
 						'extract_amount' => $trans->amount,
-						'code' => $code
+						'extract_status' => $trans->status,
+						'code' => $code,
+						'bill' => $document->name,
+						'bill_amount' => $document->getTotal(),
+						'bill_due' => $document->getBalance(),
 					];
 				}
 			}
@@ -216,5 +221,75 @@ class BankController extends Controller
 			]),
         ]);
     }
+
+		public function actionMakePayments() {
+			if(isset($_POST)) {
+				if(isset($_POST['selection'])) {
+					foreach(BankTransaction::find()
+								->andWhere(['id' => $_POST['selection']])
+								->andWhere(['status' => BankTransaction::STATUS_UPLOADED])->each() as $trans) {
+						if ( preg_match_all( '/([0-9]{12})/', $trans->note, $matches ) ) {
+							$document = null;
+							$i = 0;
+							$found = $matches[1];
+							Yii::trace('Found '.print_r($found, true).'...', 'BankController::actionMakePayments');
+							while($i < count($found) && !$document) {
+								$code = substr($found[$i], 0, 3).'/'.substr($found[$i], 3, 4).'/'.substr($found[$i], 7, 5);
+								Yii::trace('Trying '.$code.'...', 'BankController::actionMakePayments');
+								$document = Document::findOne(['reference' => $code]);
+								$i++;
+							}
+							if($document) {
+								$ok = true;
+								$transaction = Yii::$app->db->beginTransaction();
+								
+								$account_entered = new Account([
+									'client_id' => $document->client_id,
+									'payment_method' => Payment::METHOD_TRANSFER,
+									'payment_date' => $trans->execution_date,
+									'amount' => $trans->amount,
+									'status' => $trans->amount > 0 ? 'CREDIT' : 'DEBIT',
+									'note' => $trans->name, // .' ('.substr($trans->note, 0, 120).')',
+								]);
+								$account_entered->save();
+								$account_entered->refresh();
+								
+								$document->addPayment($account_entered, $trans->amount, Payment::METHOD_TRANSFER, $trans->name);
+								$trans->status = BankTransaction::STATUS_USED;
+								$trans->save();
+								$documents[$trans->id] = [
+									'bill' => $document->name,
+									'bill_amount' => $document->getTotal(),
+									'bill_due' => $document->getBalance(),
+									'extract' => $trans->name,
+									'extract_amount' => $trans->amount,
+									'extract_status' => $trans->status,
+									'code' => $code,
+								];
+								
+								if($ok) {
+									Yii::$app->session->setFlash('success', Yii::t('store', 'Payment added'));
+									$transaction->commit();
+								} else {
+									Yii::$app->session->setFlash('danger', Yii::t('store', 'Payment was not added'));
+									$transaction->rollback();
+								}
+									
+							}
+						}
+					}
+					Yii::$app->session->setFlash('success', 'Payment processed.');
+			        return $this->render('payment', [
+			            'dataProvider' => new ArrayDataProvider([
+							'allModels' => $documents
+						]),
+			        ]);
+				}
+			}
+
+			Yii::$app->session->setFlash('warning', Yii::t('store', 'No document selected.'));
+			return $this->redirect(Yii::$app->request->referrer);
+		}
+
 
 }

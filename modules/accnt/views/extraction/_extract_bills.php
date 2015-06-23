@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 ?>
 <?php
 	foreach($model->each() as $bill) {
-		if($bill->created_at < '2015-05-31') {
+		if($bill->created_at < '2015-06-24') {
 			$bill->updatePrice();
 		}
 		echo $this->render('_extract_bill' , ['model' => $bill]);

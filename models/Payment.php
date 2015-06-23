@@ -18,6 +18,8 @@ class Payment extends _Payment
 	
 	const USE_CREDIT = 'CREDIT';
 	const CLEAR = 'CLEAR';
+	
+	const METHOD_TRANSFER = 'TRANSFER';
 
 	/** Document status */
 	const STATUS_PAID = 'PAID';	

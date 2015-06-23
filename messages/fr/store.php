@@ -415,7 +415,14 @@ return [
 	'The following client have similar sounding names:' => "Les clients suivants ont des noms similaires:",
 	'Delete client' => 'Supprimer le client',
 	'Are you sure you want to delete this client?' => "Etes-vous certain de vouloir supprimer ce client?",
- 	
+	'PDF Documents to Print' => 'Document PDF à imprimer',
+	'Total to Pay' => 'Montant à payer',
+	'Amount Paid' => 'Montant payé maintenant',
+ 	'Bank Slip Upload' => 'Analyse des virements',
+	'Upload Bank Transaction' => 'Charger des virements',
+	'Reconsile Transactions' => 'Analyser les virements',
+	'Add Payments' => 'Ajouter des paiements',
+	'Bill Orders' => 'Facturer des commandes',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

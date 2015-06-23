@@ -23,7 +23,8 @@ class BankTransaction extends _BankTransaction
 {
 	const STATUS_UPLOADED = 'UPLOADED';
 	const STATUS_PROCESSED = 'PROCESSED';
-	const STATUS_REJECTED = 'PROCESSED';
+	const STATUS_REJECTED = 'REJECTED';
+	const STATUS_USED = 'USED';
 
     /**
      * @inheritdoc

@@ -115,6 +115,7 @@ class Document extends _Document
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
+        	'client_id' => Yii::t('store', 'Client'),
         	'client_name' => Yii::t('store', 'Client'),
         	'created_at_range' => Yii::t('store', 'Created At'),
         	'updated_at_range' => Yii::t('store', 'Updated At'),
@@ -480,6 +481,7 @@ class Document extends _Document
 						'status' => Payment::STATUS_PAID,
 						'cash_id' => $account->cash_id,
 						'account_id' => $account ? $account->id : null,
+						'note' => $note,
 					]);
 					Yii::$app->session->setFlash('success', Yii::t('store', 'Payment recorded.'));
 				} else {
@@ -497,6 +499,7 @@ class Document extends _Document
 						'status' => Payment::STATUS_PAID,
 						'cash_id' => $account->cash_id,
 						'account_id' => $account ? $account->id : null,
+						'note' => $note,
 					]);
 				} else { // paid too much, split payment in amount due and surplus
 					// 1. record the payment
@@ -508,6 +511,7 @@ class Document extends _Document
 						'status' => Payment::STATUS_PAID,
 						'cash_id' => $account->cash_id,
 						'account_id' => $account ? $account->id : null,
+						'note' => $note,
 					]);
 					// 2. record an extra payment in status OPEN
 					$surplus = $amount - $due;
@@ -540,6 +544,7 @@ class Document extends _Document
 					'amount' => $amount,
 					'status' => Payment::STATUS_PAID,
 					'account_id' => $account ? $account->id : null,
+					'note' => $note,
 				]);
 				Yii::trace('Clearing='.$amount, 'Document::addPayment');
 
@@ -581,6 +586,7 @@ class Document extends _Document
 							'amount' => $credit_used,
 							'status' => Payment::STATUS_PAID,
 							'account_id' => $account_id,
+							'note' => $note,
 						]);
 						$payment->save();
 						History::record($payment, 'ADD', 'Payment added for '.$this->name, true, null);

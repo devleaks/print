@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?>
 		 <?= Html::a(Yii::t('store', 'Upload Bank Transaction'), ['upload'], ['class' => 'btn btn-primary']) ?>
-		 <?= Html::a(Yii::t('store', 'Reconsile Transactions'), ['reconsile'], ['class' => 'btn btn-warning']) ?></h1>
+		 <?= Html::a(Yii::t('store', 'Reconsile Transactions'), ['reconsile'], ['class' => 'btn btn-success']) ?></h1>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

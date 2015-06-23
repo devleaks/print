@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\PdfSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('store', 'Documents');
+$this->title = Yii::t('store', 'PDF Documents to Print');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'value' => 'document.name'
 			],
 	        [
-				'attribute' => 'client_id',
+				'attribute' => 'client_name',
 				'value' => function ($model, $key, $index, $widget) {
 					if($cli = $model->getClient()->one() )
 					return $cli->nom.($cli->email? ' ('.$cli->email.')' : '');

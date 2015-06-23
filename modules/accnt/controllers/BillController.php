@@ -168,6 +168,7 @@ class BillController extends Controller
 							$cash = new Cash([
 								'amount' => $available,
 								'payment_date' => $capture->date ? $capture->date : date('Y-m-d'),
+								'note' => $capture->note,
 							]);
 							$cash->save();
 							$cash->refresh();
@@ -180,6 +181,7 @@ class BillController extends Controller
 							'amount' => $available,
 							'status' => $available > 0 ? 'CREDIT' : 'DEBIT',
 							'cash_id' => $cash ? $cash->id : null,
+							'note' => $capture->note,
 						]);
 						$account_entered->save();
 						$account_entered->refresh();

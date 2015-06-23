@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<ul>
 		    <li><a href="<?= Url::to(['/accnt/bill/boms']) ?>"><?= Yii::t('store', 'Bill all BOMs')?></a></li>
 		    <li><a href="<?= Url::to(['/accnt/bill']) ?>"><?= Yii::t('store', 'Unpaid Bills')?></a></li>
-		    <li><a href="<?= Url::to(['/order/document/bulk']) ?>"><?= Yii::t('store', 'End order work and bill')?></a></li>
+		    <li><a href="<?= Url::to(['/order/document/bulk']) ?>"><?= Yii::t('store', 'Bill Orders')?></a></li>
 		</ul>
 		<ul>
 		    <li><a href="<?= Url::to(['/accnt/account/create']) ?>"><?= Yii::t('store', 'Add payment with no sale')?></a></li>

@@ -19,8 +19,8 @@ $this->title = Yii::t('store', 'Create Extraction');
 if($model->extraction_type == '') $model->extraction_type = true;
 if($model->extraction_method == '') $model->extraction_method = CaptureExtraction::METHOD_DATE;
 
-$billsandcredits = ArrayHelper::map(Bill::find()->union(Credit::find())->orderBy('name')->asArray()->all(), 'id', 'name');
-asort($billsandcredits);
+$billsandcredits = ArrayHelper::map(Bill::find()->union(Credit::find())->asArray()->all(), 'id', 'name');
+arsort($billsandcredits);
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Extractions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
