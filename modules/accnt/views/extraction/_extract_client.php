@@ -6,12 +6,13 @@ use app\components\VATValidator;
 /* @var $model app\models\Document */
 $COUNTRY_CODES = ['AT','BE','BR','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','EL','HU','IS','IE','IT','LV','LT','LU','MT','NL','NO','PL','PT','RO','RU','RS','SK','SI','ZA','ES','SE','CH','GB','VE'];
 
-$has_vat = ($model->numero_tva && $model->numero_tva != 'Non assujetti');
+$has_vat = ($model->numero_tva && strtolower($model->numero_tva) != strtolower('Non assujetti'));
 
 $vat_clean = preg_replace('/[^a-zA-Z0-9]/', '', $model->numero_tva);
 
 $country_code = $has_vat ? substr($vat_clean, 0, 2) : null;
 $vat_number = null;
+
 if(in_array($country_code, $COUNTRY_CODES)) { // if first two characters are a valid country code
 	$vat_number = substr($vat_clean, 2);
 } else {
