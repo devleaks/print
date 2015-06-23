@@ -28,14 +28,14 @@ use yii\db\ActiveRecord;
 class DocumentLine extends _DocumentLine
 {
 	/** Maximum number of images with one order line */
-	const MAX_IMAGES = 20;	
+	const MAX_IMAGES = 20;
 	/** Image verbs */
-	const IMAGE_ADD = 'ADD';	
+	const IMAGE_ADD = 'ADD';
 	/** */
 	const IMAGE_REPLACE = 'REPLACE';
 	/** */
 	const IMAGE_SIZE_FACTOR = 1.5;
-	
+
 	/** */
 	const EXTRA_REBATE_FIRST = 'REBATE_FIRST';
 	/** */
@@ -48,7 +48,9 @@ class DocumentLine extends _DocumentLine
 	const EXTRA_SUPPLEMENT_AMOUNT = 'SUPPLEMENT_AMOUNT';
 	/** */
 	const EXTRA_SUPPLEMENT_PERCENTAGE = 'SUPPLEMENT_PERCENT';
-	
+
+	const SEPARATOR = '###';
+
     public $image;
 	public $image_add;
 	public $final_htva;
@@ -137,7 +139,7 @@ class DocumentLine extends _DocumentLine
 			$pic->deepCopy($copy->id);
 		return $copy;
 	}
-		
+
     /**
      * @inheritdoc
      */
@@ -149,7 +151,7 @@ class DocumentLine extends _DocumentLine
 
 		$this->delete();
 	}
-	
+
 	/**
 	 * Delete all pictures associated with DocumentLine.
 	 */
@@ -157,7 +159,7 @@ class DocumentLine extends _DocumentLine
 		foreach($this->getPictures()->each() as $pic)
 			$pic->deleteCascade();
 	}
-	
+
     /**
      * @param string $filename
 	 *
@@ -178,13 +180,13 @@ class DocumentLine extends _DocumentLine
      * @return app\models\Work
      */
 	public function createTask($work) {
-		$this->item->createTasks($work, $this);		
+		$this->item->createTasks($work, $this);
 		foreach($this->getDocumentLineDetails()->each() as $old) {	// there should only be one...
 			$old->createTask($work, $this);
 		}
 	}
-	
-	
+
+
 	protected function getMainPrice() {
 		if($detail = $this->getDetail())
 			return ($this->item_id == Item::TYPE_CHROMALUXE) ? $detail->price_chroma : $detail->price_tirage;
@@ -227,17 +229,17 @@ class DocumentLine extends _DocumentLine
 			}
 		} // else, ignore global rebate line
 	}
-	
+
 	/**
 	 * @return boolean whether the order line has picture attached to it
 	 */
 	public function hasPicture() {
 		return $this->getPictures()->count() > 0;
 	}
-	
-	
+
+
 	/**
-	 * 
+	 *
 	 */
 	public function getPlaceholder() {
 		$fact = self::IMAGE_SIZE_FACTOR;
@@ -253,14 +255,14 @@ class DocumentLine extends _DocumentLine
 	public function hasDetail() {
 		return $this->getDocumentLineDetails()->count() > 0;
 	}
-	
+
 	/**
 	 * @return DocumentLineDetail DocumentLineDetail model associated with it or null.
 	 */
 	public function getDetail() {
 		return $this->getDocumentLineDetails()->one();
 	}
-	
+
 	/**
 	 * @return string Description of DocumentLine, together with description of DocumentLineDetail if any.
 	 */
@@ -272,21 +274,30 @@ class DocumentLine extends _DocumentLine
 			return $str;
 		}
 
-		$str = ($this->item->reference == Item::TYPE_MISC) ? $this->note : $this->item->libelle_long;
+		$misc_label = $this->note;
+		$misc_note  = '';
+		if(($pos = strpos($this->note, self::SEPARATOR)) !== false) {
+			$misc_label = substr($this->note, 0, $pos);
+			$misc_note  = substr($this->note, $pos + strlen(self::SEPARATOR));
+		}
+
+		$str = ($this->item->reference == Item::TYPE_MISC) ? $misc_label : $this->item->libelle_long;
 
 		if($this->work_width > 0 && $this->work_height > 0)
 			$str .= ' '.$this->work_width.'×'.$this->work_height;
-			
+
 		if($detail = $this->getDetail()) {
 			if($show_price && $this->isTirage(true))
 				$str .= ' <small>('.$detail->price_tirage.'<span style="font-size: 0.8em;">€</span>)</small>';
-				
+
 			$str .= $detail->getDescriptionHTML($show_price); // $str .= ' ('.$detail->getDescription($show_price).')';
 		}
-	
+
 		if($this->item->reference != Item::TYPE_MISC && $this->note != '') // for free text item, comment IS the label
 			$str .= '<br/><small class="rednote"><span style="text-decoration: underline;">Note</span>: '.$this->note.'</small>';
-		
+		else if($this->item->reference == Item::TYPE_MISC && $misc_note != '')
+			$str .= '<br/><small class="rednote"><span style="text-decoration: underline;">Note</span>: '.$misc_note.'</small>';
+
 		return $str;
 	}
 
@@ -307,11 +318,11 @@ class DocumentLine extends _DocumentLine
 		}
 		return $extra;
 	}
-	
+
 
 	public function generateLabels() {
 		$viewBase = '@app/modules/store/prints/label/';
-		
+
 		if($pics_array = $this->getPictures()->all())
 			$pics_count = count($pics_array);
 		else
@@ -328,27 +339,27 @@ class DocumentLine extends _DocumentLine
 				'picture' => $i < $pics_count ? $pics_array[$i] : null,
 			]);
 		}
-		
+
 		$pdf = new PDFLabel([
 			'content' => $content
-		]);		
+		]);
 		return $pdf->render();
 	}
-	
+
 	public static function getHeightCount($item_id, $min, $max) {
 		return self::find()->andWhere(['item_id' => $item_id])
 						->andWhere(['>=',  'work_height', $min])
 						->andWhere(['<', 'work_height', $max])
 						->sum('quantity');
 	}
-	
+
 	public static function getWidthCount($item_id, $min,$max) {
 		return self::find()->andWhere(['item_id' => $item_id])
 						->andWhere(['>=',  'work_width', $min])
 						->andWhere(['<', 'work_width', $max])
 						->sum('quantity');
 	}
-	
+
 	public static function getDetailHeightCount($what, $item_id, $min, $max) {
 		return self::find()->joinWith('documentLineDetails')
 						->andWhere(['document_line_detail.'.$what.'_id' => $item_id])
@@ -356,7 +367,7 @@ class DocumentLine extends _DocumentLine
 						->andWhere(['<', 'work_height', $max])
 						->sum('quantity');
 	}
-	
+
 	public static function getDetailWidthCount($what, $item_id, $min,$max) {
 		return self::find()->joinWith('documentLineDetails')
 						->andWhere(['document_line_detail.'.$what.'_id' => $item_id])
@@ -364,7 +375,7 @@ class DocumentLine extends _DocumentLine
 						->andWhere(['<', 'work_width', $max])
 						->sum('quantity');
 	}
-	
+
 	public function isChromaLuxe() {
 		$item = Item::findOne($this->item_id);
 		return $item->yii_category == 'ChromaLuxe';
