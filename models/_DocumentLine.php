@@ -80,7 +80,7 @@ class _DocumentLine extends \yii\db\ActiveRecord
             'extra_amount' => Yii::t('store', 'Extra Amount'),
             'extra_htva' => Yii::t('store', 'Extra Htva'),
             'price_htva' => Yii::t('store', 'Price Htva'),
-            'price_tvac' => Yii::t('store', 'Price Tvac'),
+            'price_tvac' => Yii::t('store', 'Price TVAC'),
             'vat' => Yii::t('store', 'Vat'),
             'due_date' => Yii::t('store', 'Due Date'),
             'note' => Yii::t('store', 'Note'),

@@ -98,7 +98,7 @@ class DocumentLine extends _DocumentLine
 	        'extra_amount_virgule' => Yii::t('store', 'Extra Amount'),
 
 	        'final_htva' => Yii::t('store', 'Total Htva'),
-	        'final_tvac' => Yii::t('store', 'Total Tvac'),
+	        'final_tvac' => Yii::t('store', 'Total TVAC'),
 
             'work_width_virgule' => Yii::t('store', 'Work Width'),
             'work_height_virgule' => Yii::t('store', 'Work Height'),

@@ -12,6 +12,7 @@ use app\models\Pdf;
  */
 class PdfSearch extends Pdf
 {
+	public $client_name;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class PdfSearch extends Pdf
     {
         return [
             [['id', 'document_id', 'client_id'], 'integer'],
-            [['document_type', 'filename', 'created_at', 'sent_at', 'updated_at'], 'safe'],
+            [['document_type', 'filename', 'created_at', 'sent_at', 'updated_at', 'client_name'], 'safe'],
         ];
     }
 
@@ -43,9 +44,16 @@ class PdfSearch extends Pdf
     {
         $query = Pdf::find();
 
+	    $query->joinWith('client');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+		$dataProvider->sort->attributes['client_name'] = [
+			'asc'  => ['client.nom' => SORT_ASC],
+			'desc' => ['client.nom' => SORT_DESC],
+		];
 
         $this->load($params);
 
@@ -56,16 +64,17 @@ class PdfSearch extends Pdf
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'document_id' => $this->document_id,
-            'client_id' => $this->client_id,
-            'created_at' => $this->created_at,
-            'sent_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'pdf.id' => $this->id,
+            'pdf.document_id' => $this->document_id,
+            'pdf.client_id' => $this->client_id,
+            'pdf.created_at' => $this->created_at,
+            'pdf.sent_at' => $this->created_at,
+            'pdf.updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'document_type', $this->document_type])
-            ->andFilterWhere(['like', 'filename', $this->filename]);
+        $query->andFilterWhere(['like', 'pdf.document_type', $this->document_type])
+              ->andFilterWhere(['like', 'pdf.filename', $this->filename])
+        	  ->andFilterWhere(['like', 'client.nom', $this->client_name]);
 
         return $dataProvider;
     }

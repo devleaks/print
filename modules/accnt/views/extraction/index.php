@@ -4,7 +4,7 @@ use app\models\Bill;
 use app\models\Credit;
 use app\models\CaptureExtraction;
 use kartik\builder\Form;
-use kartik\date\DatePicker;
+use kartik\daterange\DateRangePicker;
 use kartik\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
@@ -19,7 +19,8 @@ $this->title = Yii::t('store', 'Create Extraction');
 if($model->extraction_type == '') $model->extraction_type = true;
 if($model->extraction_method == '') $model->extraction_method = CaptureExtraction::METHOD_DATE;
 
-$billsandcredits = ArrayHelper::map(Bill::find()->union(Credit::find())->asArray()->all(), 'id', 'name');
+$label = ['id', 'label' => "concat(name, date_format(due_date, ' - %d/%m/%y'))"];
+$billsandcredits = ArrayHelper::map(Bill::find()->select($label)->union(Credit::find()->select($label))->asArray()->all(), 'id', 'label');
 arsort($billsandcredits);
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Extractions'), 'url' => ['index']];
@@ -58,21 +59,23 @@ $this->params['breadcrumbs'][] = $this->title;
 					'form' => $form,
 					'columns' => 2,
 					'attributes' => [       // 2 column layout
-				        'date_from' => [
+				        'date_range' => [
+							'label' => Yii::t('store', 'Date Range'),
 							'type' => Form::INPUT_WIDGET,
-							'widgetClass'=> DatePicker::classname(),
-							'options' => ['pluginOptions' => [
-				                'format' => 'yyyy-mm-dd',
-				                'todayHighlight' => true
-				            ]],
-						],
-				        'date_to' => [
-							'type' => Form::INPUT_WIDGET,
-							'widgetClass'=> DatePicker::classname(),
-							'options' => ['pluginOptions' => [
-				                'format' => 'yyyy-mm-dd',
-				                'todayHighlight' => true
-				            ]],
+							'widgetClass'=> DateRangePicker::classname(),
+                            'options'=> [
+				                'convertFormat'=> true,                
+								'initRangeExpr' => true,
+								'presetDropdown' => false,
+								'pluginOptions' => [
+									'format' => 'Y-m-d',
+									'ranges' => [
+									    Yii::t('store', "This month") => ["moment().startOf('month')", "moment().endOf('month')"],
+								    	Yii::t('store', "Last month") => ["moment().subtract(1, 'month').startOf('month')", "moment().subtract(1, 'month').endOf('month')"],
+								    	Yii::t('store', "Last week") => ["moment().subtract(7, 'day').startOf('week')", "moment().subtract(7, 'day').endOf('week')"],
+									],
+								]
+							]
 						],
 					],
 				]),

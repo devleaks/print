@@ -20,6 +20,7 @@ use Yii;
  * @property string $pays
  * @property string $langue
  * @property string $numero_tva
+ * @property string $lang
  * @property string $email
  * @property string $site_web
  * @property string $domicile
@@ -56,9 +57,9 @@ use Yii;
  * @property string $status
  * @property string $created_at
  * @property string $updated_at
- * @property string $lang
  * @property string $comm_pref
  * @property string $comm_format
+ * @property string $assujetti_tva
  *
  * @property Account[] $accounts
  * @property Document[] $documents
@@ -84,8 +85,8 @@ class _Client extends \yii\db\ActiveRecord
             [['comptabilite', 'nom'], 'required'],
             [['mise_a_jour', 'created_at', 'updated_at'], 'safe'],
             [['reference_interne', 'comptabilite', 'titre', 'nom', 'prenom', 'autre_nom', 'adresse', 'code_postal', 'localite', 'pays', 'langue', 'numero_tva', 'email', 'site_web', 'domicile', 'bureau', 'gsm', 'fax_prive', 'fax_bureau', 'pc', 'autre', 'remise', 'escompte', 'delais_de_paiement', 'mentions', 'exemplaires', 'limite_de_credit', 'formule', 'type', 'execution', 'support', 'format', 'mailing', 'outlook', 'categorie_de_client', 'operation', 'categorie_de_prix_de_vente', 'reference_1', 'date_limite_1', 'reference_2', 'date_limite_2', 'reference_3', 'date_limite_3'], 'string', 'max' => 80],
+            [['lang', 'status', 'comm_pref', 'comm_format', 'assujetti_tva'], 'string', 'max' => 20],
             [['commentaires'], 'string', 'max' => 255],
-            [['status', 'lang', 'comm_pref', 'comm_format'], 'string', 'max' => 20],
             [['comptabilite'], 'unique']
         ];
     }
@@ -109,6 +110,7 @@ class _Client extends \yii\db\ActiveRecord
             'pays' => Yii::t('store', 'Pays'),
             'langue' => Yii::t('store', 'Langue'),
             'numero_tva' => Yii::t('store', 'Numero Tva'),
+            'lang' => Yii::t('store', 'Lang'),
             'email' => Yii::t('store', 'Email'),
             'site_web' => Yii::t('store', 'Site Web'),
             'domicile' => Yii::t('store', 'Domicile'),
@@ -145,9 +147,9 @@ class _Client extends \yii\db\ActiveRecord
             'status' => Yii::t('store', 'Status'),
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
-            'lang' => Yii::t('store', 'Lang'),
             'comm_pref' => Yii::t('store', 'Comm Pref'),
             'comm_format' => Yii::t('store', 'Comm Format'),
+            'assujetti_tva' => Yii::t('store', 'Assujetti Tva'),
         ];
     }
 

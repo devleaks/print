@@ -248,6 +248,7 @@ class BankController extends Controller
 									'payment_method' => Payment::METHOD_TRANSFER,
 									'payment_date' => $trans->execution_date,
 									'amount' => $trans->amount,
+									'bank_transaction_id' => $trans->id,
 									'status' => $trans->amount > 0 ? 'CREDIT' : 'DEBIT',
 									'note' => $trans->name, // .' ('.substr($trans->note, 0, 120).')',
 								]);

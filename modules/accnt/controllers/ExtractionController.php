@@ -79,17 +79,18 @@ class ExtractionController extends Controller
     public function extract($model)
     {
 		if($model->extraction_method == CaptureExtraction::METHOD_DATE) {
-			$date_from = $model->date_from.' 00:00:00';
-			$date_to = $model->date_to.' 23:59:59';
+			$dates = explode(' - ', $model->date_range);
+			$date_from = trim($dates[0]).' 00:00:00';
+			$date_to = date('Y-m-d 00:00:00', strtotime('+ 1 day', strtotime(trim($dates[1]))));
 			Yii::trace('From '.$date_from.' to '.$date_to, 'ExtractionController::actionView');
 			$docs = ($model->extraction_type) ?
 					Bill::find()
 						->andWhere(['>=','created_at',$date_from])
-						->andWhere(['<=','created_at',$date_to])
+						->andWhere(['<','created_at',$date_to])
 					:
 					Credit::find()
 						->andWhere(['>=','created_at',$date_from])
-						->andWhere(['<=','created_at',$date_to])	
+						->andWhere(['<','created_at',$date_to])	
 					;
 		} else { // Extraction::TYPE_REFN
 			$docfrom = Document::findDocument($model->document_from);

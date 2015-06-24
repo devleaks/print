@@ -17,6 +17,8 @@ use Yii;
  * @property string $account
  * @property string $status
  * @property string $created_at
+ *
+ * @property Account[] $accounts
  */
 class _BankTransaction extends \yii\db\ActiveRecord
 {
@@ -60,5 +62,13 @@ class _BankTransaction extends \yii\db\ActiveRecord
             'status' => Yii::t('store', 'Status'),
             'created_at' => Yii::t('store', 'Created At'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccounts()
+    {
+        return $this->hasMany(Account::className(), ['bank_transaction_id' => 'id']);
     }
 }

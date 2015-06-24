@@ -199,7 +199,7 @@ class Document extends _Document
 	public function getPrepaid($today = false) {
 		if($today) {
 			$date_from = date('Y-m-d 00:00:00', strtotime('today'));
-			$date_to = str_replace($date_from, '00:00:00', '23:59:59');
+			$date_to = str_replace($date_from, '00:00:00', '23:59:59'); // date('Y-m-d 00:00:00', strtotime('tomorrow'));
 			$ret = Payment::find()->andWhere(['sale' => $this->sale])
 							->andWhere(['>=','created_at',$date_from])
 							->andWhere(['<=','created_at',$date_to])
@@ -739,6 +739,19 @@ class Document extends _Document
 								Yii::$app->session->setFlash('danger', Yii::t('store', 'Cash payment not deleted because cash entry was not found.'));
 								return;
 							}
+						} elseif ($payment->payment_method == Payment::METHOD_TRANSFER) {
+							if($trans = BankTransaction::findOne($account->bank_transaction_id)) {
+								Yii::trace('Found trans id '.$trans->id, 'Document::deletePayment');
+								$trans->status = BankTransaction::STATUS_UPLOADED;
+								$trans->save();
+								History::record($trans, 'RESTORED', 'Bank restored', true, null);
+								Yii::$app->session->setFlash('info', Yii::t('store', 'Bank transfer {0} restored.', $trans->name));
+							}
+							$payment->delete();
+							History::record($payment, 'DELETE', 'Payment deleted with bank restored', true, null);
+							if($do_account) $account->delete();
+							Yii::$app->session->setFlash('success', Yii::t('store', 'Payment deleted. {0} updated.', [$this->name]));
+							Yii::trace('Deleted payment for='.$this->name, 'Document::deletePayment');
 						} else {
 							$payment->delete();
 							History::record($payment, 'DELETE', 'Payment deleted', true, null);

@@ -87,7 +87,7 @@ class _Item extends \yii\db\ActiveRecord
             'libelle_long' => Yii::t('store', 'Libelle Long'),
             'categorie' => Yii::t('store', 'Categorie'),
             'prix_de_vente' => Yii::t('store', 'Prix De Vente'),
-            'taux_de_tva' => Yii::t('store', 'Taux De Tva'),
+            'taux_de_tva' => Yii::t('store', 'Taux De TVA'),
             'type_travaux_photos' => Yii::t('store', 'Type Travaux Photos'),
             'type_numerique' => Yii::t('store', 'Type Numerique'),
             'fournisseur' => Yii::t('store', 'Fournisseur'),

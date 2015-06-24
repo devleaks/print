@@ -1,8 +1,11 @@
 <?php
 
+use app\models\Pdf;
+
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PdfSearch */
@@ -22,10 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            // 'id',
 	        [
 	            'label' => Yii::t('store', 'Document Type'),
 				'attribute' => 'document_type',
+				'filter' => ArrayHelper::map(Pdf::find()->select(['document_type', 'document_type'])->distinct()->asArray()->all(), 'document_type', 'document_type'),
 				'value' => function ($model, $key, $index, $widget) {
 					return Yii::t('store', $model->getDocumentType());
 				}

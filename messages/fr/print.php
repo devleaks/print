@@ -65,10 +65,10 @@ return [
 	'Price HTVA' => 'Prix HTVA',
 	'Price Htva' => 'Prix HTVA',
 	'Price TVAC' => 'Prix TVAC',
-	'Price Tvac' => 'Prix TVAC',
+	'Price TVAC' => 'Prix TVAC',
 	'Price' => 'Prix',
 	'Total Htva' => 'Total HTVA',
-	'Total Tvac' => 'Total TVAC',
+	'Total TVAC' => 'Total TVAC',
 	'Htva' => 'Hors TVA',
 	'Total' => 'Total',
 	

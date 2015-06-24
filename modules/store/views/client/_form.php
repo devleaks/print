@@ -70,9 +70,13 @@ use yii\helpers\Url;
 					'type' => Form::INPUT_TEXT,
 		            'columnOptions' => ['colspan' => 1],
 				],
+		        'assujetti_tva' => [
+					'type' => Form::INPUT_CHECKBOX,
+		            'columnOptions' => ['colspan' => 1],
+				],
 		        'numero_tva' => [
 					'type' => Form::INPUT_TEXT,
-		            'columnOptions' => ['colspan' => 5],
+		            'columnOptions' => ['colspan' => 4],
 				],
 		        'lang' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,

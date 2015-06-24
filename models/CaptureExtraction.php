@@ -27,6 +27,7 @@ class CaptureExtraction extends Model
 	public $extraction_method;
 	public $document_from ;
 	public $document_to;
+	public $date_range;
 	public $date_from;
 	public $date_to;
 
@@ -36,7 +37,7 @@ class CaptureExtraction extends Model
     public function rules()
     {
         return [
-            [['date_from', 'date_to'], 'safe'],
+            [['date_from', 'date_to', 'date_range'], 'safe'],
             [['document_from', 'document_to'], 'integer'],
             [['extraction_type', 'extraction_method'], 'string', 'max' => 20]
         ];
@@ -51,6 +52,7 @@ class CaptureExtraction extends Model
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'extraction_type' => Yii::t('store', 'Document Type'),
+            'date_range' => Yii::t('store', 'Date Range'),
             'date_from' => Yii::t('store', 'Date From'),
             'date_to' => Yii::t('store', 'Date To'),
             'document_from' => Yii::t('store', 'Document From'),

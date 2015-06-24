@@ -45,6 +45,17 @@ class Client extends _Client
 		]);
 	}
 	
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return array_merge(parent::attributeLabels(), [
+            'numero_tva' => Yii::t('store', 'Numero TVA'),
+            'assujetti_tva' => Yii::t('store', 'NON Assujetti à la TVA'),
+        ]);
+    }
 	
 
 	public static function auComptoir() {

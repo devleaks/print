@@ -75,7 +75,7 @@ class _DocumentArchive extends \yii\db\ActiveRecord
             'client_id' => Yii::t('store', 'Client ID'),
             'due_date' => Yii::t('store', 'Due Date'),
             'price_htva' => Yii::t('store', 'Price Htva'),
-            'price_tvac' => Yii::t('store', 'Price Tvac'),
+            'price_tvac' => Yii::t('store', 'Price TVAC'),
             'vat' => Yii::t('store', 'Vat'),
             'vat_bool' => Yii::t('store', 'Vat Bool'),
             'bom_bool' => Yii::t('store', 'Bom Bool'),

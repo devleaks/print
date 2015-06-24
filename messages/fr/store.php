@@ -166,7 +166,7 @@ return [
 	'Film UV'	=> 'Protection UV',
 	'Filmuv Bool' => 'Protection UV',
 	'Final Htva' => 'Final HTVA',
-	'Final Tvac' => 'Final TVAC',
+	'Final TVAC' => 'Final TVAC',
 	'Frame ID'	=> 'Encadremenent',
 	'Frame Providers' => 'Fournisseurs de cadres',
 	'Frame order for Labo JJ Micheli' => 'Commande de cadres pour le Labo JJ Micheli',
@@ -423,6 +423,9 @@ return [
 	'Reconsile Transactions' => 'Analyser les virements',
 	'Add Payments' => 'Ajouter des paiements',
 	'Bill Orders' => 'Facturer des commandes',
+	"Last month" => 'Le mois dernier',
+	"Date Range" => 'Dates',
+	"Last week" => 'La semaine dernière',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',
@@ -468,7 +471,7 @@ return [
 	'Next' => "Prochainement",
 	'Lately' => "Dernièrement",
 	'This week' => "Cette semaine",
-	'This month' => "Ce mois",
+	'This month' => "Ce mois-ci",
 	'This last month' => "Ce dernier mois",
 	'straightened' => 'redressées',
 
@@ -543,10 +546,10 @@ return [
 	'Price HTVA' => 'Prix HTVA',
 	'Price Htva' => 'Prix HTVA',
 	'Price TVAC' => 'Prix TVAC',
-	'Price Tvac' => 'Prix TVAC',
+	'Price TVAC' => 'Prix TVAC',
 	'Price' => 'Prix',
 	'Total Htva' => 'Total HTVA',
-	'Total Tvac' => 'Total TVAC',
+	'Total TVAC' => 'Total TVAC',
 	'Htva' => 'Hors TVA',
 	'Total' => 'Total',
 	

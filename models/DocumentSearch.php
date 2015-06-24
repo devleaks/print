@@ -14,6 +14,7 @@ use yii\db\Query;
 class DocumentSearch extends Document
 {
 	public $bill_exists;
+	public $search;
 	
     /**
      * @inheritdoc
@@ -26,7 +27,7 @@ class DocumentSearch extends Document
             [['price_htva', 'price_tvac'], 'number'],
             [['client_name'], 'safe'],
             [['created_at_range', 'updated_at_range', 'duedate_range'], 'safe'],
-            [['bill_exists'], 'safe'],
+            [['bill_exists', 'search'], 'safe'],
         ];
     }
 

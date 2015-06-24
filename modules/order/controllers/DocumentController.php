@@ -222,28 +222,30 @@ class DocumentController extends Controller
      */
     public function actionSearch() {
 		$model = new CaptureSearch();
-		if ($model->load(Yii::$app->request->post()) && $model->validate()) {		
-			$searchModel = new DocumentSearch();
-			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$model->load(Yii::$app->request->post());
+		
+		$searchModel = new DocumentSearch();
+		if($model->search)
+			$searchModel->search = $model->search;
+			
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-			if($model->search)
-				$dataProvider->query
-					->with('client')
-					->orWhere(['like', 'document.name', $model->search])
-					->orWhere(['like', 'document.sale', $model->search])
-					->orWhere(['like', 'document.reference', $model->search])
-					->orWhere(['like', 'document.reference_client', $model->search])
-					->orWhere(['like', 'document.note', $model->search])
-					->orWhere(['like', 'client.nom', $model->search])
-					->orWhere(['like', 'client.autre_nom', $model->search])
-					->orderBy('updated_by desc');
-
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-			]);
+		if($searchModel->search) {
+			$dataProvider->query
+				->with('client')
+				->orWhere(['like', 'document.name', $searchModel->search])
+				->orWhere(['like', 'document.sale', $searchModel->search])
+				->orWhere(['like', 'document.reference', $searchModel->search])
+				->orWhere(['like', 'document.reference_client', $searchModel->search])
+				->orWhere(['like', 'document.note', $searchModel->search])
+				->orWhere(['like', 'client.nom', $searchModel->search])
+				->orWhere(['like', 'client.autre_nom', $searchModel->search])
+				->orderBy('updated_by desc');
 		}
-		return $this->redirect(Url::home());
+		return $this->render('index', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
     }
 
     /**

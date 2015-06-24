@@ -9,6 +9,8 @@ use Yii;
  *
  * @property integer $id
  * @property integer $client_id
+ * @property integer $cash_id
+ * @property integer $bank_transaction_id
  * @property string $amount
  * @property string $payment_date
  * @property string $payment_method
@@ -18,12 +20,12 @@ use Yii;
  * @property integer $created_by
  * @property string $updated_at
  * @property integer $updated_by
- * @property integer $cash_id
  *
- * @property Cash $cash
  * @property Client $client
  * @property User $createdBy
  * @property User $updatedBy
+ * @property BankTransaction $bankTransaction
+ * @property Cash $cash
  * @property Payment[] $payments
  */
 class _Account extends \yii\db\ActiveRecord
@@ -43,7 +45,7 @@ class _Account extends \yii\db\ActiveRecord
     {
         return [
             [['client_id', 'amount'], 'required'],
-            [['client_id', 'created_by', 'updated_by', 'cash_id'], 'integer'],
+            [['client_id', 'cash_id', 'bank_transaction_id', 'created_by', 'updated_by'], 'integer'],
             [['amount'], 'number'],
             [['payment_date', 'created_at', 'updated_at'], 'safe'],
             [['payment_method', 'status'], 'string', 'max' => 20],
@@ -59,6 +61,8 @@ class _Account extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('store', 'ID'),
             'client_id' => Yii::t('store', 'Client ID'),
+            'cash_id' => Yii::t('store', 'Cash ID'),
+            'bank_transaction_id' => Yii::t('store', 'Bank Transaction ID'),
             'amount' => Yii::t('store', 'Amount'),
             'payment_date' => Yii::t('store', 'Payment Date'),
             'payment_method' => Yii::t('store', 'Payment Method'),
@@ -68,16 +72,7 @@ class _Account extends \yii\db\ActiveRecord
             'created_by' => Yii::t('store', 'Created By'),
             'updated_at' => Yii::t('store', 'Updated At'),
             'updated_by' => Yii::t('store', 'Updated By'),
-            'cash_id' => Yii::t('store', 'Cash ID'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCash()
-    {
-        return $this->hasOne(Cash::className(), ['id' => 'cash_id']);
     }
 
     /**
@@ -102,6 +97,22 @@ class _Account extends \yii\db\ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBankTransaction()
+    {
+        return $this->hasOne(BankTransaction::className(), ['id' => 'bank_transaction_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCash()
+    {
+        return $this->hasOne(Cash::className(), ['id' => 'cash_id']);
     }
 
     /**
