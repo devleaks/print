@@ -290,7 +290,7 @@ class BankController extends Controller
 							}
 						}
 					}
-					Yii::$app->session->setFlash('success', 'Payment processed.');
+					Yii::$app->session->setFlash('success', Yii::t('store', 'Payment processed.'));
 			        return $this->render('payment', [
 			            'dataProvider' => new ArrayDataProvider([
 							'allModels' => $documents

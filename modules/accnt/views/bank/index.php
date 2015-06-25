@@ -20,13 +20,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            //['class' => 'kartik\grid\SerialColumn'],
-
-            //'id',
             'name',
-            'execution_date:date',
-            'amount',
-            // 'currency',
+			[
+				'attribute' => 'execution_date',
+				'format' => 'date',
+				'hAlign' => GridView::ALIGN_CENTER,
+				'noWrap' => true,
+			],
+			[
+				'attribute' => 'amount',
+				'format' => 'currency',
+				'hAlign' => GridView::ALIGN_RIGHT,
+				'noWrap' => true,
+			],
             [
 				'attribute' => 'source',
 				'noWrap' => true,
@@ -38,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'value' => function ($model, $key, $index, $widget) {
 					return substr($model->note, 0, 10).'&nbsp;...';
 				},
+				'options' => ['width' => '40%'],
 			],
             // 'account',
             // 'status',

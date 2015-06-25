@@ -460,6 +460,15 @@ return [
 	'Reimburse' => "Rembourser",
 	'Excess Payments' => "Crédits des clients",
 	'Excess Payments for Reimbursement' => "Crédits des clients",
+	'Payment processed.' => 'Paiement ajouté.',
+	'Added Payments' => 'Paiements ajoutés',
+	'Make Payments' => 'Payer',
+	'Structured Communication' => 'Communication Structurée',
+	'Slip Number' => 'Extrait',
+	'Slip Amount' => 'Montant Extrait',
+	'Slip Status' => "Etat de l'extrait",
+	'Order Amount' => 'Montant Commande',
+	'Amount Due' => 'Montant Dû',
 
 	/* Statistics */
 	'Statistics' => 'Statistiques',
@@ -478,6 +487,9 @@ return [
 	"Upload" => "Télécharger",
 	"Filename" => 'Fichier',
 	"Bank Transactions" => 'Transactions bancaires',
+	'Execution Date' => "Date d'exécution",
+	'Bank transfer {0} restored.' => "Transaction bancaire restituée.",
+	'Payment deleted. {0} updated.' => "Paiement supprimé. {0} mis à jour.",
 
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
