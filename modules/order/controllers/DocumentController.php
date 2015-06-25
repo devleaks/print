@@ -596,7 +596,7 @@ class DocumentController extends Controller
 								'title' => Yii::t('store', 'Cancel'),
 								'data-confirm' => Yii::t('store', 'Cancel?'),
 							]);
-			Yii::$app->session->setFlash('success', Yii::t('store', 'Successful onvertion. {0}.', $cancel));
+			Yii::$app->session->setFlash('success', Yii::t('store', 'Successful convertion. {0}.', $cancel));
 	        return $this->render('view', [
 	            'model' => $order,
 	        ]);

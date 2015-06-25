@@ -449,7 +449,7 @@ return [
 	'Delete {0}?' => 'Supprimer la {0}?',
 	'Work submitted. {0}.' => 'Travail envoyé. {0}.',
 	'{0} deleted.' => '{0} supprimé(e).',
-	'Successful onvertion. {0}.' => 'Document créé. {0}.',
+	'Successful convertion. {0}.' => 'Document créé. {0}.',
 	'Are you sure you want to convert a sales ticket into an order and bill?' => "Etes-vous certain de vouloir convertir ce ticket de caisse en une commande et facture?",
 	'All works' => 'Tous les travaux',
 	'All documents' => 'Tous les documents',
@@ -474,11 +474,15 @@ return [
 	'This month' => "Ce mois-ci",
 	'This last month' => "Ce dernier mois",
 	'straightened' => 'redressées',
+	'{0} transactions uploaded, {1} duplicates rejected.' => "{0} transactions chargées, {1} transactions refusées (duplicata).",
+	"Upload" => "Télécharger",
+	"Filename" => 'Fichier',
+	"Bank Transactions" => 'Transactions bancaires',
 
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',
-	'Surface too large.' => "Surface supérieure à 18700 cm2.",
+	'Surface too large.' => "Surface supérieure à 18700 cm².",
 	'Width or height too large.' => "Largeur ou hauteur trop grande.",
 	'You must enter a description for the item.' => "Vous devez entrer une description pour l'article.",
 	'You must enter a price (or 0) for the item.' => "Vous devez entrer un prix pour l'article ou le chiffre 0.",

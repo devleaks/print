@@ -159,6 +159,8 @@ class BankController extends Controller
 
 		$rows = explode($endofline, $contents);
 		
+		$loaded = 0;
+		$rejected = 0;
 		for ($i = 0; $i < count($rows); $i++) {
 			if( $ignorefirstline and ($i == 0) ) continue; // skip first line
 			
@@ -169,20 +171,29 @@ class BankController extends Controller
 
 			$details = explode($delimiter, $rows[$i]);
 			$details = array_map(function($val) { return trim($val, '"');}, $details);
-				
-			$transaction = new BankTransaction([
+			
+			if(! BankTransaction::find()->andWhere([
 				'name' => $details[0],
-				'execution_date' => \DateTime::createFromFormat('d/m/Y', $details[1])->format('Y-m-d'),
-				'amount' => floatval( str_replace(',', '.', $details[3]) ),
-				'currency' => $details[4],
-				'source' => $details[5],
-				'note' => $details[6],
-				'account' => $details[7],
-				'status' => BankTransaction::STATUS_UPLOADED
-			]);
-			$transaction->save();
+				'account' => $details[7]
+			])->exists()) { // checks unicity
+				$transaction = new BankTransaction([
+					'name' => $details[0],
+					'execution_date' => \DateTime::createFromFormat('d/m/Y', $details[1])->format('Y-m-d'),
+					'amount' => floatval( str_replace(',', '.', $details[3]) ),
+					'currency' => $details[4],
+					'source' => $details[5],
+					'note' => $details[6],
+					'account' => $details[7],
+					'status' => BankTransaction::STATUS_UPLOADED
+				]);
+				if($transaction->save()) {
+					$loaded++;
+				}
+			} else {
+				$rejected++;
+			}
 		}
-		Yii::$app->session->setFlash('success', Yii::t('store', '{0} transactions uploaded.', [count($rows) - 1]));
+		Yii::$app->session->setFlash('success', Yii::t('store', '{0} transactions uploaded, {1} duplicates rejected.', [$loaded, $rejected]));
 		return true;
 	}
 

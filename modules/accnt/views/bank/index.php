@@ -31,7 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'source',
 				'noWrap' => true,
 			],
-            'note',
+            [
+				'attribute' => 'note',
+				'noWrap' => true,
+				'format' => 'raw',
+				'value' => function ($model, $key, $index, $widget) {
+					return substr($model->note, 0, 10).'&nbsp;...';
+				},
+			],
             // 'account',
             // 'status',
             // 'created_at',
