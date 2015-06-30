@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'code_postal',
             'localite',
             'pays',
-            'langue',
+            'lang',
             'numero_tva',
             'email:email',
             'site_web',
