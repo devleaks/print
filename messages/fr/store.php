@@ -426,6 +426,9 @@ return [
 	"Last month" => 'Le mois dernier',
 	"Date Range" => 'Dates',
 	"Last week" => 'La semaine dernière',
+	'fr' => 'Français',
+	'nl' => 'Néerlandais',
+	'en' => 'Anglais',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

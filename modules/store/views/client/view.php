@@ -39,7 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'code_postal',
             'localite',
             'pays',
-            'lang',
+			[
+				'attribute' => 'lang',
+				'value' => Yii::t('store', $model->lang),
+			],
             'numero_tva',
             'email:email',
             'site_web',
