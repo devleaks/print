@@ -2,16 +2,19 @@
 
 use app\models\Document;
 use app\models\Parameter;
+use app\models\User;
 use app\widgets\DocumentActionColumn;
+
 use kartik\detail\DetailView;
 use kartik\icons\Icon;
+use kartik\widgets\SwitchInput;
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Modal;
 use yii\widgets\ActiveForm;
 use yii\widgets\ActiveField;
-use kartik\widgets\SwitchInput;
 //use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -134,7 +137,9 @@ Icon::map($this);
 			                'label'=> Yii::t('store','Status'),
 			                'value'=> $model->getStatusLabel(true),
 							'format' => 'raw',
-							'options' => ['readonly' => true]
+							'type' => DetailView::INPUT_DROPDOWN_LIST,
+							'items' => [''=>''] + Document::getStatuses(),
+							'options' => ['readonly' => !User::hasRole(['manager', 'admin'])]
 			            ],
 			            [
 			                'attribute'=>'reference_client',

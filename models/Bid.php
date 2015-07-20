@@ -55,6 +55,7 @@ class Bid extends Document
 	 */
 	public function getActions($show_work = false) {
 		$actions = [];
+		$actions[] = '{copy}';
 		switch($this->status) {
 			case $this::STATUS_TOPAY:
 			case $this::STATUS_OPEN:

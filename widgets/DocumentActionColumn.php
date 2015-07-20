@@ -78,6 +78,13 @@ class DocumentActionColumn extends Column {
 				'action' => '/order/document/convert',
 				'confirm' => 'Convert to order?'
 			],
+			'copy'	=> [
+				'icon' => 'copy',
+				'label' => 'Duplicate',
+				'title' => 'Duplicate',
+				'color' => 'primary',
+				'action' => '/order/document/copy',
+			],
 			// orders
 			'submit'	=> [
 				'icon' => 'cog',

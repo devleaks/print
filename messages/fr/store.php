@@ -429,6 +429,8 @@ return [
 	'fr' => 'Français',
 	'nl' => 'Néerlandais',
 	'en' => 'Anglais',
+	'Duplicate' => 'Copier',
+	'Copied. {0}.' => 'Copié. {0}.',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

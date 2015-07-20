@@ -20,7 +20,10 @@ class MailController extends Controller {
 			Yii::trace('Trying...'.$model->name, 'MailController::actionSend');
 			if($model->notify(true)) {
 				echo 'Mail sent for '.$model->name.' to '.$model->getNotificationEmail().".\n";
-				$model->setStatus(Order::STATUS_TOPAY);
+				$model->status = Order::STATUS_TOPAY;
+				$model->status = $model->updatePaymentStatus(Order::STATUS_TOPAY);
+				//$model->setStatus(Order::STATUS_TOPAY);
+				$model->save();
 			} // else echo '. ';
 		}
     }

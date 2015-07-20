@@ -242,8 +242,9 @@ class DocumentController extends Controller
 				->orWhere(['like', 'client.autre_nom', $searchModel->search])
 				->orderBy('updated_by desc');
 		}
+		$dataProvider->sort = false;
 		return $this->render('index', [
-			'searchModel' => $searchModel,
+			'searchModel' => null, // $searchModel,
 			'dataProvider' => $dataProvider,
 		]);
     }
@@ -603,6 +604,40 @@ class DocumentController extends Controller
 		}
 	}
 
+
+	public function actionCopy($id) {
+		$model = $this->findModel($id);
+		$copy  = $model->deepCopy();
+
+		$now = date('Y-m-d', strtotime('now'));
+		switch($copy->document_type) {
+			case Document::TYPE_BILL:
+				$copy->name = substr($now,0,4).'-'.Sequence::nextval('bill_number');
+				break;
+			case Document::TYPE_CREDIT:
+				$copy->name = substr($now,0,4).'-'.Sequence::nextval('credit_number');
+				break;
+			default:
+				$o = Parameter::getTextValue('application', $copy->bom_bool ? 'BOM' : $copy->document_type, '-');
+				$copy->name = substr($now,0,4).$o.Sequence::nextval('doc_number');
+				break;
+		}
+		$copy->save();
+
+		$cancel = Html::a(Yii::t('store', 'Cancel'),
+						['/order/document/delete', 'id'=>$copy->id],
+						[
+							'data-method' => 'post',
+							'title' => Yii::t('store', 'Cancel'),
+							'data-confirm' => Yii::t('store', 'Cancel?'),
+						]);
+		$cancel = "";
+		Yii::$app->session->setFlash('success', Yii::t('store', 'Copied. {0}.', $cancel));
+        return $this->render('view', [
+            'model' => $copy,
+        ]);
+	}
+	
 
 	public function actionCancelConvert($id, $ticket) {
 		if( $model = $this->findModel($id) ) {
