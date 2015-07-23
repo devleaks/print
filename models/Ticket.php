@@ -22,7 +22,8 @@ class Ticket extends Order
 	 */
 	protected function statusUpdated() {
 		if($this->status == self::STATUS_DONE) {
-			$this->updatePaymentStatus();
+			$this->status = $this->updatePaymentStatus();
+			$this->save();
 		}
 	}
 
