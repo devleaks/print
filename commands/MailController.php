@@ -15,14 +15,12 @@ class MailController extends Controller {
 	 *
 	 */
     public function actionSend() {
-		foreach(Order::find()->andWhere(['status' => Order::STATUS_NOTIFY])->each() as $model) {
+		foreach(Order::find()->andWhere(['status' => Order::STATUS_NOTIFY])->andWhere(['notified_at' => null])->each() as $model) {
 			//echo 'Trying...'.$model->name;
 			Yii::trace('Trying...'.$model->name, 'MailController::actionSend');
 			if($model->notify(true)) {
 				echo 'Mail sent for '.$model->name.' to '.$model->getNotificationEmail().".\n";
-				$model->status = Order::STATUS_TOPAY;
-				$model->status = $model->updatePaymentStatus(Order::STATUS_TOPAY);
-				//$model->setStatus(Order::STATUS_TOPAY);
+				$model->status = $model->updatePaymentStatus();
 				$model->save();
 			} // else echo '. ';
 		}

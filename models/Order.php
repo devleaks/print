@@ -143,33 +143,40 @@ class Order extends Document
 		$sent = false;
 		$sendmail = isset(Yii::$app->params['sendmail']) ? Yii::$app->params['sendmail'] : true;
 		if($this->closeToDueDate()) {
-			if(($email = $this->getNotificationEmail()) != '') {
-				$lang_before = Yii::$app->language;
-				Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
-				try {
-					$destinataire = YII_ENV_DEV ? Yii::$app->params['testEmail'] : $email;
-					if($sendmail)
-						Yii::$app->mailer->compose('order-completed', ['model' => $this])
-						    ->setFrom( Yii::$app->params['fromEmail'] )
-						    ->setTo( $destinataire )
-							->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
-						    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)
-						    ->send();
-					$sent = true;
-					if(!$batch) Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
-					else Yii::trace('Order '.$this->name.' mail sent to '.$destinataire, 'Order::notify');
-				} catch (Swift_TransportException $STe) {
-					Yii::error($STe->getMessage(), 'CoverLetter::send::ste');
-					if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
-					else Yii::trace('The system could not send mail.', 'Order::notify');
-				} catch (Exception $e) {
-					Yii::error($e->getMessage(), 'CoverLetter::send::e');				
-					if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
-					else Yii::trace('The system could not send mail.', 'Order::notify');
-				}
-				Yii::$app->language = $lang_before;
+			if($this->notified_at) { // if already notified, do not send again
+				if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'Client has already be notified on {0}.', Yii::$app->formatter->asDateTime($this->notified_at)));
+				else Yii::trace('Order '.$this->name.' notified on '.$this->notified_at.'.', 'Order::notify');
 			} else {
-				Yii::trace('No email for '.$this->name.'('.$this->client->nom.')', 'Order::notify');
+				if(($email = $this->getNotificationEmail()) != '') {
+					$lang_before = Yii::$app->language;
+					Yii::$app->language = $this->client->lang ? $this->client->lang : 'fr';
+					try {
+						$destinataire = YII_ENV_DEV ? Yii::$app->params['testEmail'] : $email;
+						if($sendmail)
+							Yii::$app->mailer->compose('order-completed', ['model' => $this])
+							    ->setFrom( Yii::$app->params['fromEmail'] )
+							    ->setTo( $destinataire )
+								->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
+							    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)
+							    ->send();
+						$sent = true;
+						$this->notified_at = date('Y-m-d H:i:s');
+						$this->save();
+						if(!$batch) Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
+						else Yii::trace('Order '.$this->name.' mail sent to '.$destinataire, 'Order::notify');
+					} catch (Swift_TransportException $STe) {
+						Yii::error($STe->getMessage(), 'CoverLetter::send::ste');
+						if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
+						else Yii::trace('The system could not send mail.', 'Order::notify');
+					} catch (Exception $e) {
+						Yii::error($e->getMessage(), 'CoverLetter::send::e');				
+						if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
+						else Yii::trace('The system could not send mail.', 'Order::notify');
+					}
+					Yii::$app->language = $lang_before;
+				} else {
+					Yii::trace('No email for '.$this->name.'('.$this->client->nom.')', 'Order::notify');
+				}
 			}
 		} else {
 			if(!$batch) Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.').' '.Yii::t('store', 'Due date too far.'));

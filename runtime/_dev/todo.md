@@ -15,3 +15,9 @@ si delete un paiement:
 si ce paiement est lié à un cash
 ?? only delete/re-create possible
 
+:::::::::::
+
+Quid paiements sur commande annulée?
+
+
+ALTER TABLE document ADD COLUMN notified_at DATETIME;

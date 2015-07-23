@@ -649,7 +649,7 @@
         </location>
         <size>
             <width>256.00</width>
-            <height>520.00</height>
+            <height>540.00</height>
         </size>
         <zorder>5</zorder>
         <SQLField>
@@ -804,6 +804,12 @@
             <type><![CDATA[VARCHAR(20)]]></type>
             <temporaryOriginalName><![CDATA[name_1]]></temporaryOriginalName>
             <uid><![CDATA[081244B4-D03D-420E-9458-DAE9CA2093F8]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[notified_at]]></name>
+            <type><![CDATA[DATETIME]]></type>
+            <temporaryOriginalName><![CDATA[limit_0]]></temporaryOriginalName>
+            <uid><![CDATA[0A91942D-90CA-43D5-A637-BE8ACECCAF3B]]></uid>
         </SQLField>
         <SQLField>
             <name><![CDATA[created_at]]></name>
@@ -3687,7 +3693,7 @@ mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
         <windowHeight><![CDATA[1315.000000]]></windowHeight>
         <windowLocationX><![CDATA[424.000000]]></windowLocationX>
         <windowLocationY><![CDATA[100.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{1, 306}]]></windowScrollOrigin>
+        <windowScrollOrigin><![CDATA[{0, 1}]]></windowScrollOrigin>
         <windowWidth><![CDATA[1854.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>
