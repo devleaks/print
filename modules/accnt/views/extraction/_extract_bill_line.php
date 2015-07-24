@@ -2,9 +2,9 @@
 use app\models\Item;
 
 $rebate_item = Item::findOne(['reference' => Item::TYPE_REBATE]);
-$factor = ($model->item_id == $rebate_item->id) ? -1 : 1;
+$factor = ($model->item_id == $rebate_item->id) ? -1 : ($model->price_htva < 0 ? -1 : 1);
 
-$amount = $factor * abs($model->price_htva + $model->extra_htva);
+$amount = abs($model->price_htva + $model->extra_htva);
 
 ?>
 Line:
@@ -15,7 +15,7 @@ Line:
       VATCode:              <?= $order->vat_bool ? 0 : number_format($model->vat, 0) ?>
 
       Comment:
-      FlagDC:               <?= $model->price_htva < 0 ? 'D' : 'C' ?>
+      FlagDC:               <?= $factor < 0 ? 'D' : 'C' ?>
 
       AmountCrcy:           <?= $amount ?>
 
