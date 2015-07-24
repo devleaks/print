@@ -24,9 +24,9 @@ if(in_array($country_code, $COUNTRY_CODES)) { // if first two characters are a v
 Customer:<?= $model->comptabilite == '' ? 'UNKNOWN' : $model->comptabilite ?>
 
 {
-      FirstName:            <?= $model->prenom ?>
+      FirstName:            <?= substr($model->prenom, 0, 32) ?>
 
-      LastName:             <?= $model->nom ?>
+      LastName:             <?= substr($model->nom, 0, 32) ?>
 
       Address:              <?= $model->adresse ?>
 
