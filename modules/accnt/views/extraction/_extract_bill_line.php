@@ -1,6 +1,10 @@
 <?php
+use app\models\Item;
 
-$amount = abs($model->price_htva + $model->extra_htva);
+$rebate_item = Item::findOne(['reference' => Item::TYPE_REBATE]);
+$factor = ($model->item_id == $rebate_item->id) ? -1 : 1;
+
+$amount = $factor * abs($model->price_htva + $model->extra_htva);
 
 ?>
 Line:
