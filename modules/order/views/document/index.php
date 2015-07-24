@@ -122,6 +122,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'value' => function ($model, $key, $index, $widget) {
 							return $model->created_at;
 				},
+				'format' => 'datetime',
+				'noWrap' => true,
 				'options' => ['class' => 'form-control'],
                 'filterType' => GridView::FILTER_DATE_RANGE,
                 'filterWidgetOptions' => [
@@ -156,6 +158,8 @@ $this->params['breadcrumbs'][] = $this->title;
 							return $model->updated_at;
 				},
 				'options' => ['class' => 'form-control'],
+				'format' => 'datetime',
+				'noWrap' => true,
                 'filterType' => GridView::FILTER_DATE_RANGE,
                 'filterWidgetOptions' => [
 	                'model'=>$searchModel,

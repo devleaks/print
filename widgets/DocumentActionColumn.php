@@ -309,10 +309,9 @@ class DocumentActionColumn extends Column {
 						'<li>'.Html::a(Yii::t('store', 'Labels'),				['/order/document/labels', 'id' => $id],								['target' => '_blank', 'title' => Yii::t('store', 'Print Packing Label')]).'</li>'.
 					'</ul></div>';
 		if($name == 'convert') {
-			$comptoir = Client::auComptoir();
 			$doc = Document::findOne($id);
-			if($doc->client_id == $comptoir->id)
-				return Html::a(Yii::t('store', 'Convert to sale'),  [$data['action'], 'id' => $id, 'ticket' => true], ['class' => $this->baseClass . ' btn-' . $data['color'], 'title' => Yii::t('store', 'Convert to sale')]);
+			if($doc->client->isComptoir())
+				return Html::a($this->getButton('convert'),  [$data['action'], 'id' => $id, 'ticket' => true], ['class' => $this->baseClass . ' btn-' . $data['color'], 'title' => Yii::t('store', 'Convert to sale')]);
 			else
 				return '<div class="btn-group"><button type="button" class="'.$this->baseClass.' btn-'.$data['color'].' dropdown-toggle" data-toggle="dropdown">'.
 				        	$this->getButton('convert'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
