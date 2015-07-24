@@ -8,15 +8,10 @@ $this->title = 'Labo JJ Micheli';
 <div class="admin-index">
 
     <div class="jumbotron" data-intro='Menu principal rapide vers les fonctions les plus utilisées' data-position='bottom'>
-        <h1>Bienvenue</h1>
-
-        <p class="lead">Vous pouvez enregistrer de nouvelles commandes.</p>
-        <p class="lead">Vous avez accès à toutes les fonctions d'administration et de gestion de l'application.</p>
-
         <p>
 			<a class="btn btn-lg btn-primary" href="<?= Url::to(['/order/document/create-bid']) ?>">Nouveau devis</a>
 			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create']) ?>">Nouvelle commande</a>
-			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create-ticket']) ?>">Vente Comptoir</a>
+			<a class="btn btn-lg btn-success" href="<?= Url::to(['/order/document/create-ticket']) ?>">Vente comptoir</a>
 			
 			<?= $this->render('_form', ['model' => new CaptureSearch()]); ?>
 		</p>

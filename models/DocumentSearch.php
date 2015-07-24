@@ -65,6 +65,19 @@ class DocumentSearch extends Document
             return $dataProvider;
         }
 
+		if($this->search) {
+			$query
+				->orWhere(['like', 'document.name', $this->search])
+				->orWhere(['like', 'document.sale', $this->search])
+				->orWhere(['like', 'document.reference', $this->search])
+				->orWhere(['like', 'document.reference_client', $this->search])
+				->orWhere(['like', 'document.note', $this->search])
+				->orWhere(['like', 'client.nom', $this->search])
+				->orWhere(['like', 'client.autre_nom', $this->search])
+				//->orderBy('updated_by desc')
+				;
+		}
+
         $query->andFilterWhere([
             'document.id' => $this->id,
             'document.parent_id' => $this->parent_id,
