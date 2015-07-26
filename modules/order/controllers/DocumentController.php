@@ -237,6 +237,8 @@ class DocumentController extends Controller
 				->orWhere(['like', 'document.sale', $searchModel->search])
 				->orWhere(['like', 'document.reference', $searchModel->search])
 				->orWhere(['like', 'document.reference_client', $searchModel->search])
+				->orWhere(['like', "lower(replace(document.name, '-', ''))", str_replace('-', '', strtolower($searchModel->search))])
+				->orWhere(['like', "replace(document.reference, '/', '')", $searchModel->search])
 				->orWhere(['like', 'document.note', $searchModel->search])
 				->orWhere(['like', 'client.nom', $searchModel->search])
 				->orWhere(['like', 'client.autre_nom', $searchModel->search])
