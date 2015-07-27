@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'label' => Yii::t('store', 'Created At'),
                 'attribute'=>'created_at_range',
 	            'value' => function ($model, $key, $index, $widget) {
-							return $model->created_at;
+							return new DateTime($model->created_at);
 				},
 				'format' => 'datetime',
 				'noWrap' => true,
@@ -155,7 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'label' => Yii::t('store', 'Updated At'),
                 'attribute'=>'updated_at_range',
 	            'value' => function ($model, $key, $index, $widget) {
-							return $model->updated_at;
+						return new DateTime($model->updated_at);
 				},
 				'options' => ['class' => 'form-control'],
 				'format' => 'datetime',
