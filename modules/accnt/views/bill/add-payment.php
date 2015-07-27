@@ -50,6 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	            	],
 					'options' => ['data-intro' => "Vous devez mentionner une date de versement."],
 				],
+	            'columnOptions' => ['colspan' => 2],
 			],
 	        'method' => [
 				'type' => Form::INPUT_DROPDOWN_LIST,

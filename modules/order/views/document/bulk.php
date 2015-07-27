@@ -102,12 +102,35 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			[
 	            'label' => Yii::t('store', 'Created At'),
-				'attribute' => 'created_at',
+                'attribute'=>'created_at_range',
+	            'value' => function ($model, $key, $index, $widget) {
+							return new DateTime($model->created_at);
+				},
 				'format' => 'datetime',
-				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->updated_at);
-				}
-			],
+				'options' => ['class' => 'form-control'],
+                'filterType' => GridView::FILTER_DATE_RANGE,
+                'filterWidgetOptions' => [
+	                'model'=>$searchModel,
+	                'attribute'=>'created_at',
+	                'presetDropdown'=>TRUE,                
+	                'convertFormat'=>true,                
+					'initRangeExpr' => true,
+					'presetDropdown' => false,
+					'pluginOptions'=>[                                          
+	                    'format'=>'Y-m-d',
+	                    'opens'=>'left',
+						'ranges' => [
+						    Yii::t('store', "Today") => ["moment().startOf('day')", "moment()"],
+					    	Yii::t('store', "This week") => ["moment().startOf('week')", "moment().endOf('week')"],
+						    Yii::t('store', "This month") => ["moment().startOf('month')", "moment().endOf('month')"],
+						],
+	                ],
+					'pluginEvents' => [
+						"apply.daterangepicker" => 'function() { $(".grid-view").yiiGridView("applyFilter"); }',
+						"cancel.daterangepicker" => 'function() { $("#documentsearch-created_at_range").val(""); $(".grid-view").yiiGridView("applyFilter"); }',
+					]
+				]
+            ],
 	        [
 	            'label' => Yii::t('store', 'Created By'),
 				'attribute' => 'created_by',

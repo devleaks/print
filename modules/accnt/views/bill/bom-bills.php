@@ -33,6 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	        [
 				'attribute' => 'name',
 	            'label' => Yii::t('store', 'Référence'),
+	            'value' => function ($model, $key, $index, $widget) {
+                    return Html::a($model->name, Url::to(['/order/document/view', 'id' => $model->id]));
+	            },
+				'format' => 'raw',
 			],
 	        [
 				'attribute' => 'client_name',

@@ -67,13 +67,15 @@ class DocumentSearch extends Document
 
 		if($this->search) {
 			$query
-				->orWhere(['like', 'document.name', $this->search])
-				->orWhere(['like', 'document.sale', $this->search])
-				->orWhere(['like', 'document.reference', $this->search])
-				->orWhere(['like', 'document.reference_client', $this->search])
-				->orWhere(['like', 'document.note', $this->search])
-				->orWhere(['like', 'client.nom', $this->search])
-				->orWhere(['like', 'client.autre_nom', $this->search])
+				->orWhere(['like', 'document.name', $searchModel->search])
+				->orWhere(['like', 'document.sale', $searchModel->search])
+				->orWhere(['like', 'document.reference', $searchModel->search])
+				->orWhere(['like', 'document.reference_client', $searchModel->search])
+				->orWhere(['like', "lower(replace(document.name, '-', ''))", str_replace('-', '', strtolower($searchModel->search))])
+				->orWhere(['like', "replace(document.reference, '/', '')", $searchModel->search])
+				->orWhere(['like', 'document.note', $searchModel->search])
+				->orWhere(['like', 'client.nom', $searchModel->search])
+				->orWhere(['like', 'client.autre_nom', $searchModel->search])
 				//->orderBy('updated_by desc')
 				;
 		}

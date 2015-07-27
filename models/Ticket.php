@@ -43,6 +43,7 @@ class Ticket extends Order
 	 */
 	public function convert($ticket = false) { // convert ORDER into BILL
 		$this->document_type = self::TYPE_ORDER;
+		$this->save();
 		return parent::convert($ticket);
 	}
 

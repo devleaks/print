@@ -79,7 +79,8 @@ class PDFDocument extends Model {
 	        // enhanced bootstrap css built by Krajee for mPDF formatting 
 	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
 	        // any css to be embedded if required
-			'cssInline' => $this->format == PDFDocument::FORMAT_A5 ? '.kv-wrap{padding:14px;}' .
+			'cssInline' => $this->format == PDFDocument::FORMAT_A5 ?
+				'.kv-wrap{padding:14px;}' .
 	        	'.kv-heading-1{font-size:13px}'.
                 '.kv-align-center{text-align:center;}' .
                 '.kv-align-left{text-align:left;}' .
@@ -90,7 +91,10 @@ class PDFDocument extends Model {
                 '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
                 '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
                 '.kv-table-caption{font-size:1.1em;padding:6px;border:1px solid #ddd;border-bottom:none;}' .
-                'table{font-size:0.8em;}'					: '.kv-wrap{padding:20px;}' .
+				'table.no-break tr td,table.no-break tr th{page-break-inside: avoid;}' .
+                'table{font-size:0.8em;}'
+				:
+				'.kv-wrap{padding:20px;}' .
 	        	'.kv-heading-1{font-size:18px}'.
                 '.kv-align-center{text-align:center;}' .
                 '.kv-align-left{text-align:left;}' .
@@ -101,6 +105,7 @@ class PDFDocument extends Model {
                 '.kv-page-summary{border-top:4px double #ddd;font-weight: bold;}' .
                 '.kv-table-footer{border-top:4px double #ddd;font-weight: bold;}' .
                 '.kv-table-caption{font-size:1.5em;padding:8px;border:1px solid #ddd;border-bottom:none;}' .
+				'table.no-break tr td,table.no-break tr th{page-break-inside: avoid;}' .
                 'table{font-size:0.8em;}'
 				,
 	         // set mPDF properties on the fly

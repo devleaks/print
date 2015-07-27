@@ -21,11 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
 		    <li><a href="<?= Url::to(['/order/document/refunds']) ?>"><?= Yii::t('store', 'Refunds')?></a></li>
 		</ul>
 		<ul>
-		    <li><a href="<?= Url::to(['/accnt/bill/boms']) ?>"><?= Yii::t('store', 'Bill all BOMs')?></a></li>
-		    <li><a href="<?= Url::to(['/accnt/bill']) ?>"><?= Yii::t('store', 'Unpaid Bills')?></a></li>
 		    <li><a href="<?= Url::to(['/order/document/bulk']) ?>"><?= Yii::t('store', 'Bill Orders')?></a></li>
+		    <li><a href="<?= Url::to(['/accnt/bill/boms']) ?>"><?= Yii::t('store', 'Bill all BOMs')?></a></li>
 		</ul>
 		<ul>
+		    <li><a href="<?= Url::to(['/accnt/bill']) ?>"><?= Yii::t('store', 'Unpaid Bills')?></a></li>
 		    <li><a href="<?= Url::to(['/accnt/account/create']) ?>"><?= Yii::t('store', 'Add payment with no sale')?></a></li>
 		    <li><a href="<?= Url::to(['/accnt/payment/credit-list']) ?>"><?= Yii::t('store', 'Reimburse client credit')?></a></li>
 		</ul>

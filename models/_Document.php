@@ -24,7 +24,6 @@ use Yii;
  * @property integer $bom_bool
  * @property string $note
  * @property string $lang
- * @property string $notified_at
  * @property string $created_at
  * @property integer $created_by
  * @property string $updated_at
@@ -33,13 +32,17 @@ use Yii;
  * @property string $legal
  * @property string $email
  * @property integer $credit_bool
+ * @property string $notified_at
+ * @property integer $bill_id
  *
  * @property Cash[] $cashes
+ * @property User $updatedBy
  * @property _Document $parent
  * @property _Document[] $documents
+ * @property _Document $bill
+ * @property _Document[] $documents0
  * @property Client $client
  * @property User $createdBy
- * @property User $updatedBy
  * @property DocumentLine[] $documentLines
  * @property Extraction[] $extractions
  * @property Extraction[] $extractions0
@@ -63,8 +66,8 @@ class _Document extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'sale', 'client_id', 'due_date'], 'required'],
-            [['sale', 'parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by', 'priority', 'credit_bool'], 'integer'],
-            [['due_date', 'notified_at', 'created_at', 'updated_at'], 'safe'],
+            [['sale', 'parent_id', 'client_id', 'vat_bool', 'bom_bool', 'created_by', 'updated_by', 'priority', 'credit_bool', 'bill_id'], 'integer'],
+            [['due_date', 'created_at', 'updated_at', 'notified_at'], 'safe'],
             [['price_htva', 'price_tvac', 'vat'], 'number'],
             [['document_type', 'name', 'status', 'lang'], 'string', 'max' => 20],
             [['reference', 'reference_client'], 'string', 'max' => 40],
@@ -96,7 +99,6 @@ class _Document extends \yii\db\ActiveRecord
             'bom_bool' => Yii::t('store', 'Bom Bool'),
             'note' => Yii::t('store', 'Note'),
             'lang' => Yii::t('store', 'Lang'),
-            'notified_at' => Yii::t('store', 'Notified At'),
             'created_at' => Yii::t('store', 'Created At'),
             'created_by' => Yii::t('store', 'Created By'),
             'updated_at' => Yii::t('store', 'Updated At'),
@@ -105,6 +107,8 @@ class _Document extends \yii\db\ActiveRecord
             'legal' => Yii::t('store', 'Legal'),
             'email' => Yii::t('store', 'Email'),
             'credit_bool' => Yii::t('store', 'Credit Bool'),
+            'notified_at' => Yii::t('store', 'Notified At'),
+            'bill_id' => Yii::t('store', 'Bill ID'),
         ];
     }
 
@@ -114,6 +118,14 @@ class _Document extends \yii\db\ActiveRecord
     public function getCashes()
     {
         return $this->hasMany(Cash::className(), ['document_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
     /**
@@ -135,6 +147,22 @@ class _Document extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getBill()
+    {
+        return $this->hasOne(_Document::className(), ['id' => 'bill_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDocuments0()
+    {
+        return $this->hasMany(_Document::className(), ['bill_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getClient()
     {
         return $this->hasOne(Client::className(), ['id' => 'client_id']);
@@ -146,14 +174,6 @@ class _Document extends \yii\db\ActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUpdatedBy()
-    {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 
     /**

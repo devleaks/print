@@ -321,13 +321,13 @@ class DocumentController extends Controller
 				$addDocumentLine = DocumentLineController::addFirstLine($model);
 				$model->updatePrice();
 				
-				$cancel = Html::a(Yii::t('store', 'Cancel'),
+				$cancel = '';/*@todo Html::a(Yii::t('store', 'Cancel'),
 								['/order/document/delete', 'id'=>$model->id],
 								[
 									'data-method' => 'post',
 									'title' => Yii::t('store', 'Delete {0}', Yii::t('store', $model->document_type)),
 									'data-confirm' => Yii::t('store', 'Delete {0}?', Yii::t('store', $model->document_type)),
-								]);
+								]);*/
 				Yii::$app->session->setFlash('success', Yii::t('store', 'Document added. {0}.', $cancel));
 				
 				return $this->redirect(['document-line/create', 'id' => $model->id]);
@@ -423,8 +423,7 @@ class DocumentController extends Controller
 			$ok = true;
 			if($model->bom_bool) {
 				if($model->document_type == Document::TYPE_BILL) { // remove pointer from BOM to this bill if any.
-					foreach(Document::find()->where(['parent_id' => $model->id])->each() as $bom) {
-						$bom->parent_id = null;
+					foreach(Document::find()->where(['bill_id' => $model->id])->each() as $bom) {
 						$bom->bill_id = null;
 						$bom->setStatus(Document::STATUS_TOPAY);
 						$bom->save();
@@ -594,13 +593,13 @@ class DocumentController extends Controller
 			}
 			$ticket = $model->document_type == Document::TYPE_TICKET ? 1 : 0;
 			$order = $model->convert($ticket);
-			$cancel = Html::a(Yii::t('store', 'Cancel'),
+			$cancel = '';/*@todo Html::a(Yii::t('store', 'Cancel'),
 							['/order/document/cancel-convert', 'id'=>$order->id, 'ticket' => $ticket],
 							[
 								'data-method' => 'post',
 								'title' => Yii::t('store', 'Cancel'),
 								'data-confirm' => Yii::t('store', 'Cancel?'),
-							]);
+							]);*/
 			Yii::$app->session->setFlash('success', Yii::t('store', 'Successful convertion. {0}.', $cancel));
 	        return $this->render('view', [
 	            'model' => $order,
@@ -628,13 +627,13 @@ class DocumentController extends Controller
 		}
 		$copy->save();
 
-		$cancel = Html::a(Yii::t('store', 'Cancel'),
+		$cancel = '';/*@todo Html::a(Yii::t('store', 'Cancel'),
 						['/order/document/delete', 'id'=>$copy->id],
 						[
 							'data-method' => 'post',
 							'title' => Yii::t('store', 'Cancel'),
 							'data-confirm' => Yii::t('store', 'Cancel?'),
-						]);
+						]);*/
 		$cancel = "";
 		Yii::$app->session->setFlash('success', Yii::t('store', 'Copied. {0}.', $cancel));
         return $this->render('view', [
