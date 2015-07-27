@@ -570,7 +570,8 @@ class DocumentController extends Controller
 		if($model->document_type == Document::TYPE_ORDER && $model->bom_bool) {
 			// all termnated and unbilled orders for same client
 			$query = Order::find()->andWhere(['bom_bool' => true, 'client_id' => $model->client_id])
-								  ->andWhere(['status' => [Document::STATUS_DONE, Document::STATUS_NOTIFY, Document::STATUS_TOPAY]]);
+								  //->andWhere(['status' => [Document::STATUS_DONE, Document::STATUS_NOTIFY, Document::STATUS_TOPAY, Document::STATUS_CLOSED]])
+								  ->andWhere(['bill_id' => null]);
 			$dataProvider = new ActiveDataProvider([
 				'query' => $query,
 			]);

@@ -3,6 +3,7 @@
 use app\models\CapturePayment;
 use app\models\Document;
 use app\models\Payment;
+use app\models\User;
 use kartik\icons\Icon;
 use kartik\widgets\SwitchInput;
 use yii\bootstrap\Modal;
@@ -68,7 +69,10 @@ $capture->submit = 1;
 		<?= $form->field($capture, 'total')->textInput(['readonly' => true]) ?>
 		<?= $form->field($capture, 'method')->dropDownList($payment_methods) ?>
 		<?php
-			if(in_array($model->document_type, [Document::TYPE_ORDER, Document::TYPE_TICKET]) && !$model->getWorks()->exists() && !$model->getPayments()->exists()) {
+			if(!User::hasRole(['compta'])
+				&& in_array($model->document_type, [Document::TYPE_ORDER, Document::TYPE_TICKET])
+				&& !$model->getWorks()->exists()
+				&& !$model->getPayments()->exists()) {
 				echo $form->field($capture, 'submit')->widget(SwitchInput::className(),
 					['pluginOptions' => ['onText' => Yii::t('store', 'Yes'), 'offText' =>  Yii::t('store', 'No')]
 				]);

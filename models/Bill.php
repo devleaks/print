@@ -134,6 +134,7 @@ class Bill extends Document {
 				$bom->setStatus(Document::STATUS_CLOSED);
 				Yii::trace('bom='.$bom->id, 'Bill::createFromBoms');
 				$bom->parent_id = $model->id; // inverse relation, should be children...
+				$bom->bill_id = $model->id;
 				$bom->save();
 			} // foreach BOM
 			$model->due_date = $last_date;
@@ -156,8 +157,10 @@ class Bill extends Document {
 		if($this->bom_bool) { // this bill comes from a list of BOM
 			$bom_sales = [];
 			$bom_sales[] = $this->sale; // payments made on bill
-			foreach(Order::find()->andWhere(['bom_bool' => true, 'parent_id' => $this->id])->each() as $bom)
+			foreach(Order::find()->andWhere(['bom_bool' => true, 'parent_id' => $this->id])->each() as $bom) {
+				Yii::trace('adding '.$bom->sale);
 				$bom_sales[] = $bom->sale; // build array os sales id from all boms in this bill
+			}
 			return Payment::find()->andWhere(['sale' => $bom_sales]); // find payments made for this list of sales
 		} else
         	return $this->hasMany(Payment::className(), ['sale' => 'sale']);

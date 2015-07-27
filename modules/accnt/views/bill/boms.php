@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-		'toolbar' => false,
+		'toolbar' => ['{toggleData}'],
 		'panel' => [
 	        'heading'=> '<h3 class="panel-title">'.Yii::t('store', 'Bills of Materials').'</h3>',
 	        'before'=> ' ',
