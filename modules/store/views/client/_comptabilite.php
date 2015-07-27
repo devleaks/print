@@ -22,7 +22,13 @@ $("#client-nom").change(function() {
 				console.log('JS_COMPTAUNIQ: error '+s);
 			},
 		});
-		$("#client-comptabilite").val(ident);
+		$("#client-comptabilite").val(ident.toUpperCase());
+	}
+});
+$("#client-comptabilite").blur(function() {
+	ident = $("#client-comptabilite").val();
+	if(ident != '') {
+		$("#client-comptabilite").val(ident.toUpperCase().substr(0,9));
 	}
 });
 <?php $this->endBlock(); ?>

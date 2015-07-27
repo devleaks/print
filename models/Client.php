@@ -105,7 +105,7 @@ class Client extends _Client
 				$change++;
 			$try = substr($try, 0, $maxlen - $change) . substr($codeAlphabet, $idx, $change);
 		}
-		return $try;
+		return strtoupper($try);
 	}
 
     /**
