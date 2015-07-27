@@ -382,7 +382,7 @@ class Document extends _Document
 			else {
 				$ol_price_htva = $ol->price_htva + ( isset($ol->extra_htva) ? $ol->extra_htva : 0 );
 				$this->price_htva += $ol_price_htva;
-				$this->price_tvac += $ol_price_htva * (1 + ($ol->vat / 100));
+				$this->price_tvac += round($ol_price_htva * (1 + ($ol->vat / 100)), 2);
 			}
 		}
 
@@ -402,12 +402,12 @@ class Document extends _Document
 						$rebate_line->save();
 						// re-ajust global order sums
 						$this->price_htva += $rebate_line->extra_htva;
-						$this->price_tvac += ( $rebate_line->extra_htva * 1.21 );
+						$this->price_tvac += round( $rebate_line->extra_htva * 1.21 , 2);
 					}
 				}
 			} else { // no recalculation, but still add it to order totals
 				$this->price_htva += $rebate_line->extra_htva;
-				$this->price_tvac += ( $rebate_line->extra_htva * 1.21 );
+				$this->price_tvac += round( $rebate_line->extra_htva * 1.21 , 2);
 			}
 		}
 
