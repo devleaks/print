@@ -91,12 +91,12 @@ class Bill extends Document {
 		$boms = Order::find()->andWhere(['bom_bool' => true, 'id' => $boms])->orderBy('created_at');
 		if($boms->exists()) {
 			Yii::trace('bill='.$this->id, 'Bill::createFromBoms');
-			if($boms->created_at < '2015-06-24') {
-				$boms->updatePrice();
-			}
 			$model = null;
 			$vat_bool = null;
 			foreach($boms->each() as $bom) {
+				if($bom->created_at < '2015-06-24') {
+					$bom->updatePrice();
+				}
 				$line = 1;
 				if(! $model) {
 					$model = new Bill();
