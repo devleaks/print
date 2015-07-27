@@ -409,7 +409,7 @@ class DocumentController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id) { //@todo: Put in transaction
 		$model = $this->findModel($id);
 		$cnt = $model->getDocuments()->count();
 		$cash_cnt = $model->getCashes()->count();
@@ -425,7 +425,8 @@ class DocumentController extends Controller
 				if($model->document_type == Document::TYPE_BILL) { // remove pointer from BOM to this bill if any.
 					foreach(Document::find()->where(['parent_id' => $model->id])->each() as $bom) {
 						$bom->parent_id = null;
-						$bom->setSTatus(Document::STATUS_TOPAY);
+						$bom->bill_id = null;
+						$bom->setStatus(Document::STATUS_TOPAY);
 						$bom->save();
 					}
 				} else if ($model->document_type == Document::TYPE_ORDER) {
