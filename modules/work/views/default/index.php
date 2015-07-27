@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
   		<div class="panel-body">
 			<div class="list-group">
-				<a href="<?= Url::to(['/work/work/']) ?>" class="list-group-item"><?= Work::getBadge(-2) ?><?= Yii::t('store', 'All Works')?></a>
+				<a href="<?= Url::to(['/work/work/', 'sort' => '-due_date']) ?>" class="list-group-item"><?= Work::getBadge(-2) ?><?= Yii::t('store', 'All Works')?></a>
 				<a href="<?= Url::to(['/work/work/list', 'id' => -1, 'sort' => '-due_date']) ?>" class="list-group-item"><?= Work::getBadge(-1) ?>Travaux en retard</a>
 				<a href="<?= Url::to(['/work/work/list', 'sort' => '-due_date']) ?>" class="list-group-item"><?= Work::getBadge(0) ?>Travaux pour aujourd'hui</a>
 				<a href="<?= Url::to(['/work/work/list', 'id' => 1, 'sort' => '-due_date']) ?>" class="list-group-item"><?= Work::getBadge(1) ?>Travaux pour demain</a>
