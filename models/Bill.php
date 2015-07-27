@@ -131,7 +131,7 @@ class Bill extends Document {
 				}
 				
 				$last_date = $bom->due_date;
-				$bom->setStatus(Document::STATUS_CLOSED);
+				//$bom->setStatus(Document::STATUS_CLOSED);
 				Yii::trace('bom='.$bom->id, 'Bill::createFromBoms');
 				$bom->parent_id = $model->id; // inverse relation, should be children...
 				$bom->bill_id = $model->id;
