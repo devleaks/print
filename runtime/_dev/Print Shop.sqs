@@ -3124,7 +3124,7 @@
         </location>
         <size>
             <width>256.00</width>
-            <height>560.00</height>
+            <height>580.00</height>
         </size>
         <zorder>12</zorder>
         <SQLField>
@@ -3191,8 +3191,22 @@
         <SQLField>
             <name><![CDATA[renfort_bool]]></name>
             <type><![CDATA[TINYINT(1)]]></type>
+            <forcedUnique><![CDATA[0]]></forcedUnique>
             <temporaryOriginalName><![CDATA[bool_montage]]></temporaryOriginalName>
             <uid><![CDATA[2C4396BA-931E-4E14-9176-911FE45BF84B]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[renfort_id]]></name>
+            <type><![CDATA[INTEGER]]></type>
+            <referencesField>id</referencesField>
+            <referencesTable>item</referencesTable>
+            <referencesField><![CDATA[id]]></referencesField>
+            <referencesTable><![CDATA[item]]></referencesTable>
+            <sourceCardinality>0</sourceCardinality>
+            <destinationCardinality>0</destinationCardinality>
+            <referencesFieldUID><![CDATA[9668DEC4-F8DF-42DC-B3DF-7B86CF07FE2A]]></referencesFieldUID>
+            <referencesTableUID><![CDATA[84C137A0-DC26-4DCF-9795-7742E98693F1]]></referencesTableUID>
+            <uid><![CDATA[AA060B58-F61F-4DF7-86CB-BA45821ACE71]]></uid>
         </SQLField>
         <SQLField>
             <name><![CDATA[price_renfort]]></name>
@@ -3704,10 +3718,10 @@ mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
         <snapToGrid><![CDATA[1]]></snapToGrid>
         <SourceSidebarWidth><![CDATA[276.000000]]></SourceSidebarWidth>
         <uid><![CDATA[204F0FA2-D1A0-4C5F-A0A0-8F4CDBC4862E]]></uid>
-        <windowHeight><![CDATA[971.000000]]></windowHeight>
-        <windowLocationX><![CDATA[0.000000]]></windowLocationX>
-        <windowLocationY><![CDATA[56.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{0, 36}]]></windowScrollOrigin>
+        <windowHeight><![CDATA[1026.000000]]></windowHeight>
+        <windowLocationX><![CDATA[493.000000]]></windowLocationX>
+        <windowLocationY><![CDATA[391.000000]]></windowLocationY>
+        <windowScrollOrigin><![CDATA[{179, 2}]]></windowScrollOrigin>
         <windowWidth><![CDATA[1680.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>

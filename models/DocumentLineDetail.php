@@ -102,12 +102,13 @@ class DocumentLineDetail extends _DocumentLineDetail
 		if(($item = $this->getChassis()->one()) != null)			
 			$item->createTasks($work, $order_line);
 
+		if(($item = $this->getRenfort()->one()) != null)			
+			$item->createTasks($work, $order_line);
+
 		if($this->corner_bool)
 			$this->addTasks($work, $order_line, 'YII-CoinsArrondis');
 		if($this->montage_bool)
 			$this->addTasks($work, $order_line, 'YII-Montage');
-		if($this->renfort_bool)
-			$this->addTasks($work, $order_line, 'Renfort');
 		if($this->filmuv_bool)
 			$this->addTasks($work, $order_line, 'UV');
 	}
@@ -182,8 +183,8 @@ class DocumentLineDetail extends _DocumentLineDetail
 		if($this->montage_bool)
 			$str .= $this->price2('Montage', $this->price_montage, $mode, $show_price);
 
-		if($this->renfort_bool)
-			$str .= $this->price2('Renforts', $this->price_renfort, $mode, $show_price);
+		if($this->renfort_id)
+			$str .= $this->price2($this->renfort->libelle_long, $this->price_renfort, $mode, $show_price);
 
 		if($this->filmuv_bool)
 			$str .= $this->price2('Film UV', $this->price_filmuv, $mode, $show_price);
@@ -204,7 +205,7 @@ class DocumentLineDetail extends _DocumentLineDetail
 
 
 	public function prepareRenfort() {
-		if(!$this->renfort_bool) return;
+		if(!$this->renfort_id) return;
 		$ol = $this->getOrderLine()->one();
 		
 		// These will eventually become Parameter(s)

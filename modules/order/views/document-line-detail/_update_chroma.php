@@ -69,8 +69,10 @@ use yii\helpers\Url;
 							'options' => ['readonly' => true]
 						],
 
-				        'renfort_bool' => [
-							'type' => Form::INPUT_CHECKBOX,
+				        'renfort_id' => [
+							'type' => Form::INPUT_DROPDOWN_LIST,
+							'items' => Item::getListForCategory(ItemCategory::RENFORT, true),
+							'options' => ['class' => 'form-control'],
 				            'columnOptions' => ['colspan' => 4],
 						],
 				        'price_renfort' => [

@@ -183,7 +183,7 @@ function getDimensions() {
 function needDimensions() {
 	del_error("NO_WORK_SIZE");
 	if( $("#documentline-item_id").val() == store_values.chroma
-	||  $("#documentlinedetail-renfort_bool:enabled").is(':checked')
+	||  !isNaN(parseInt($("#documentlinedetail-renfort_id:enabled").val()))
 	||  !isNaN(parseInt($("#documentlinedetail-frame_id:enabled").val())) 
 	||  !isNaN(parseInt($("#documentlinedetail-support_id:enabled").val())) 
 	) return getDimensions();
@@ -348,8 +348,9 @@ function price_frame() {
 		frame = getItemById(frame_id);
 		if (typeof(frame) !== 'undefined') {
 			if(w > store_values.param['RenfortMaxWidth'].value_int || h > store_values.param['RenfortMaxHeight'].value_int) { // force renfort, but it is free
-				$("#documentlinedetail-renfort_bool:enabled").prop('checked', 'checked');
-				$("#documentlinedetail-renfort_bool").prop('readonly', true);
+				standardRenfortItem = getItemByReference('Renfort');
+				$("#documentlinedetail-renfort_id:enabled").val(standardRenfortItem.id);
+				$("#documentlinedetail-renfort_id").prop('readonly', true);
 				$("#documentlinedetail-price_renfort:enabled").val(0);
 			}
 			var price = getComputedPrice(frame.id, w, h);
@@ -368,9 +369,10 @@ function price_frame() {
 
 /** renfort */
 function price_renfort() {
-	renfort = $("#documentlinedetail-renfort_bool:enabled").is(':checked');
+	renfort_id = parseInt($("#documentlinedetail-renfort_id:enabled").val());
+	
 	dim = getDimensions();
-	if(renfort && !dim) {
+	if(!isNaN(renfort_id) && !dim) {
 		$("#documentlinedetail-price_renfort:enabled").val('');
 		$("#documentlinedetail-price_renfort:enabled").trigger('change');
 		return;
@@ -382,17 +384,17 @@ function price_renfort() {
 	frame_id = parseInt($("#documentlinedetail-frame_id:enabled").val());
 	//console.log('price_renfort: has frame? frame_id is '+frame_id);
 	price = 0;
+	standardRenfortItem = getItemByReference('Renfort');
 	if(frame_id > 0 && (w > store_values.param['RenfortMaxWidth'].value_int || h > store_values.param['RenfortMaxHeight'].value_int)) { // force renfort, but it is free
-		$("#documentlinedetail-renfort_bool:enabled").prop('checked', 'checked');
-		$("#documentlinedetail-renfort_bool").prop('readonly', true);
+		$("#documentlinedetail-renfort_id:enabled").val(standardRenfortItem.id);
+		$("#documentlinedetail-renfort_id").prop('readonly', true);
 		$("#documentlinedetail-price_renfort:enabled").val(0);
 	} else {
-		$("#documentlinedetail-renfort_bool").prop('disabled', false);
-		renfort = $("#documentlinedetail-renfort_bool:enabled").is(':checked');
-		//console.log('price_renfort: place refort: '+renfort);
-		if(renfort) {
+		$("#documentlinedetail-renfort_id").prop('disabled', false);
+		if(!isNaN(renfort_id)) {
 			minus_inside = ($("#documentline-item_id").val() == store_values.chroma) ? 20 : 10; // renfort placed 10cm inside for ChromaLuxe, 5cm inside for other
-			renfortItem = getItemByReference('Renfort');
+			renfortItem = getItemById(renfort_id);
+			console.log('price_renfort: renfort_id is '+renfortItem.id);
 			var price = getComputedPrice(renfortItem.id, w - minus_inside, h - minus_inside); 
 			$("#documentlinedetail-price_renfort:enabled").val(price);
 		} else {
@@ -497,7 +499,7 @@ function enableMontage() {
 /** Option-level changes */
 
 /** ChromaLuxe */
-$("#documentlinedetail-renfort_bool").change(function() {
+$("#documentlinedetail-renfort_id").change(function() {
 	price_renfort();
 });
 
@@ -528,7 +530,7 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 	$('div.field-documentlinedetail-price_frame').toggle(false);
 	$('div.field-documentlinedetail-montage_bool').toggle(false);
 	$('div.field-documentlinedetail-price_montage').toggle(false);
-	$('div.field-documentlinedetail-renfort_bool').toggle(false);
+	$('div.field-documentlinedetail-renfort_id').toggle(false);
 	$('div.field-documentlinedetail-price_renfort').toggle(false);
 	$('div.field-documentlinedetail-chassis_id').toggle(false);
 	$('div.field-documentlinedetail-price_chassis').toggle(false);
@@ -571,7 +573,7 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$('div.field-documentlinedetail-price_frame').toggle(true);
 			$('div.field-documentlinedetail-montage_bool').toggle(true);
 			$('div.field-documentlinedetail-price_montage').toggle(true);
-			$('div.field-documentlinedetail-renfort_bool').toggle(true);
+			$('div.field-documentlinedetail-renfort_id').toggle(true);
 			$('div.field-documentlinedetail-price_renfort').toggle(true);
 			$('div.field-documentlinedetail-filmuv_bool').toggle(true);
 			$('div.field-documentlinedetail-price_filmuv').toggle(true);
@@ -590,7 +592,7 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$('div.field-documentlinedetail-price_frame').toggle(true);
 			$('div.field-documentlinedetail-montage_bool').toggle(true);
 			$('div.field-documentlinedetail-price_montage').toggle(true);
-			$('div.field-documentlinedetail-renfort_bool').toggle(true);
+			$('div.field-documentlinedetail-renfort_id').toggle(true);
 			$('div.field-documentlinedetail-price_renfort').toggle(true);
 			$('div.field-documentlinedetail-protection_id').toggle(true);
 			$('div.field-documentlinedetail-price_protection').toggle(true);
@@ -613,7 +615,7 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$('#documentlinedetail-price_frame:enabled').val('');
 			$('#documentlinedetail-montage_bool').prop('checked',false);
 			$('#documentlinedetail-price_montage:enabled').val('');
-			$('#documentlinedetail-renfort_bool').prop('checked',false);
+			$('#documentlinedetail-renfort_id').prop('checked',false);
 			$('#documentlinedetail-price_renfort:enabled').val('');
 			$('#documentlinedetail-protection_id:enabled').val('');
 			$('#documentlinedetail-price_protection:enabled').val('');
@@ -628,7 +630,7 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$('div.field-documentlinedetail-price_frame').toggle(true);
 			$('div.field-documentlinedetail-montage_bool').toggle(true);
 			$('div.field-documentlinedetail-price_montage').toggle(true);
-			$('div.field-documentlinedetail-renfort_bool').toggle(true);
+			$('div.field-documentlinedetail-renfort_id').toggle(true);
 			$('div.field-documentlinedetail-price_renfort').toggle(true);
 			$('div.field-documentlinedetail-protection_id').toggle(true);
 			$('div.field-documentlinedetail-price_protection').toggle(true);

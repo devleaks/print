@@ -220,9 +220,10 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 					'options' => ['readonly' => true, 'class' => 'form-control ItemChromaLuxe ItemTirage'],
 				],
 
-		        'renfort_bool' => [
-					'type' => Form::INPUT_CHECKBOX,
-					'options' => ['class' => 'ItemChromaLuxe ItemTirage'],
+		        'renfort_id' => [
+					'type' => Form::INPUT_DROPDOWN_LIST,
+					'items' => Item::getListForCategory(ItemCategory::RENFORT, true),
+					'options' => ['class' => 'form-control ItemChromaLuxe ItemTirage'],
 		            'columnOptions' => ['colspan' => 4],
 				],
 		        'price_renfort' => [

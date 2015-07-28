@@ -11,32 +11,34 @@ use Yii;
  * @property integer $document_line_id
  * @property string $note
  * @property integer $chroma_id
- * @property double $price_chroma
+ * @property string $price_chroma
  * @property integer $corner_bool
- * @property double $price_corner
+ * @property string $price_corner
  * @property integer $renfort_bool
- * @property double $price_renfort
+ * @property string $price_renfort
  * @property integer $frame_id
- * @property double $price_frame
+ * @property string $price_frame
  * @property integer $montage_bool
- * @property double $price_montage
+ * @property string $price_montage
  * @property integer $finish_id
  * @property integer $support_id
- * @property double $price_support
+ * @property string $price_support
  * @property integer $tirage_id
- * @property double $price_tirage
+ * @property string $price_tirage
  * @property integer $collage_id
- * @property double $price_collage
+ * @property string $price_collage
  * @property integer $protection_id
- * @property double $price_protection
+ * @property string $price_protection
  * @property integer $chassis_id
- * @property double $price_chassis
+ * @property string $price_chassis
  * @property integer $filmuv_bool
- * @property double $price_filmuv
- * @property double $tirage_factor
+ * @property string $price_filmuv
+ * @property string $tirage_factor
+ * @property integer $renfort_id
  *
  * @property Item $finish
  * @property Item $chroma
+ * @property Item $renfort
  * @property Item $frame
  * @property Item $chassis
  * @property Item $support
@@ -62,7 +64,7 @@ class _DocumentLineDetail extends \yii\db\ActiveRecord
     {
         return [
             [['document_line_id'], 'required'],
-            [['document_line_id', 'chroma_id', 'corner_bool', 'renfort_bool', 'frame_id', 'montage_bool', 'finish_id', 'support_id', 'tirage_id', 'collage_id', 'protection_id', 'chassis_id', 'filmuv_bool'], 'integer'],
+            [['document_line_id', 'chroma_id', 'corner_bool', 'renfort_bool', 'frame_id', 'montage_bool', 'finish_id', 'support_id', 'tirage_id', 'collage_id', 'protection_id', 'chassis_id', 'filmuv_bool', 'renfort_id'], 'integer'],
             [['price_chroma', 'price_corner', 'price_renfort', 'price_frame', 'price_montage', 'price_support', 'price_tirage', 'price_collage', 'price_protection', 'price_chassis', 'price_filmuv', 'tirage_factor'], 'number'],
             [['note'], 'string', 'max' => 160]
         ];
@@ -101,6 +103,7 @@ class _DocumentLineDetail extends \yii\db\ActiveRecord
             'filmuv_bool' => Yii::t('store', 'Filmuv Bool'),
             'price_filmuv' => Yii::t('store', 'Price Filmuv'),
             'tirage_factor' => Yii::t('store', 'Tirage Factor'),
+            'renfort_id' => Yii::t('store', 'Renfort'),
         ];
     }
 
@@ -118,6 +121,14 @@ class _DocumentLineDetail extends \yii\db\ActiveRecord
     public function getChroma()
     {
         return $this->hasOne(Item::className(), ['id' => 'chroma_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRenfort()
+    {
+        return $this->hasOne(Item::className(), ['id' => 'renfort_id']);
     }
 
     /**

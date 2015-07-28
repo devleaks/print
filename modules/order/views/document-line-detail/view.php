@@ -29,13 +29,13 @@ $this->title = Yii::t('store', 'Order Line Details');
             ],
             'price_corner',
             [
-                'attribute'=>'renfort_bool',
-				'value' => Yii::t('store', $model->renfort_bool ? 'Yes' : 'No'),
+                'attribute'=>'renfort_id',
+				'value' => $model->renfort ? $model->renfort->libelle_long : Yii::t('store', 'None'),
             ],
             'price_renfort',
             [
                 'label'=>Yii::t('store','Frame'),
-                'attribute'=>'renfort_bool',
+                'attribute'=>'frame_id',
                 'value'=> $model->frame ? $model->frame->libelle_long : 'None', //'frame.libelle_long',
             ],
             'price_frame',

@@ -42,9 +42,12 @@ class Ticket extends Order
      * Note: If we convert a sale ticket to a bill, we change its type to ORDER
 	 */
 	public function convert($ticket = false) { // convert ORDER into BILL
-		$this->document_type = self::TYPE_ORDER;
-		$this->save();
-		return parent::convert($ticket);
+		if(!$this->client->isComptoir()) {
+			$this->document_type = self::TYPE_ORDER;
+			$this->save();
+			return parent::convert($ticket);
+		}
+		return null;
 	}
 
 

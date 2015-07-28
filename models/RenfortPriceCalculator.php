@@ -8,17 +8,17 @@ use yii\base\Model;
 /**
  * This is the model class to compute dimension-based item prices.
  */
-class RenfortPriceCalculator extends PriceCalculator
-{
+class RenfortPriceCalculator extends PriceCalculator {
+
 	public $support;
 	public $frame;
 	public $inside = 0;
 	
 	public function init() {
-		if(!$this->item) return;
+		if(!$this->item)
+			return;
 		$this->inited = true;
 	}
-
 
 	function setSupport($s) {
 		$this->support = $s;
@@ -46,10 +46,12 @@ class RenfortPriceCalculator extends PriceCalculator
 		}
 
 		$x = ($w + $h - $this->inside) / 50;
-		$price = $this->getPrice('Renfort') * $x;
+		$price = $this->item->prix_de_vente * $x;
 //		Yii::trace('w='.$w.', h='.$h.', in='.$this->inside.', p='.(100*$x).' €='.$price, 'RenfortPriceCalculator::price');
 
-		$minPrice = $this->getPrice('Renfort_Min');
+		$minReference = $this->item->reference . self::MIN_PRICE;
+		$minPrice = $this->getPrice($minReference);
+		// Yii::trace('min price for '.$minReference.'='.$minPrice);
 		if($price < $minPrice) $price = $minPrice;
 
 		return round($price, 2);

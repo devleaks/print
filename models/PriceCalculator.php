@@ -15,6 +15,9 @@ class PriceCalculator extends Model
 	/** */
 	const SURFACE = 'S';
 	
+	const MIN_PRICE = '_Min';
+	
+	
 	/** Items that are loaded dynamically are cached in this array. */
 	protected $items;
 
@@ -22,7 +25,7 @@ class PriceCalculator extends Model
 	protected $inited = false;
 	
 
-	/** Base item. If minimum price is requested, the price of this item IS the minimum price. */
+	/** Base item. If minimum price is requested, the price of the min item has the same reference name with _Min added to it. */
 	public $item;
 
 	/** Type of computation: Perimeter or Surface based. Default to PERIMETER */
