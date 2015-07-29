@@ -5,7 +5,7 @@ use app\models\Parameter;
 ?>
 <div class="document-print-footer">
 	<br>
-	<table width="100%" class="table table-bordered no-break" style="text-align: center;">
+	<table width="100%" class="table table-bordered" style="text-align: center;page-break-inside:avoid;">
 	<tr>
 		<th width="15%" style="text-align: center;"><?= Yii::t('print', 'Due Date') ?></th>
 		<td width="15%" style="text-align: center;"><?= Yii::$app->formatter->asDate($model->due_date) ?></td>
@@ -42,7 +42,7 @@ use app\models\Parameter;
 		<br>
 	<?php endif; ?>
 
-	<table width="100%" class="table table-bordered no-break" style="text-align: center;">
+	<table width="100%" class="table table-bordered no-break" style="text-align: center;page-break-inside:avoid;">
 	<tr>
 			<th style="text-align: center;" width="33%"><?= Yii::t('print', 'Paid Today') ?></th>
 			<th style="text-align: center;" width="33%"><?= Yii::t('print', 'Advances') ?></th>

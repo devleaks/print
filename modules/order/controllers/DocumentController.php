@@ -414,8 +414,8 @@ class DocumentController extends Controller
 		$cnt = $model->getDocuments()->count();
 		$cash_cnt = $model->getCashes()->count();
 		$payment_cnt = $model->getPayments()->count();
-		Yii::trace('cnt='.$cnt.',payments='.$cash_cnt, 'DocumentController::actionDelete');
-		if ( ($cash_cnt > 0 || $model->soloOwnsPayments()) || $payment_cnt > 0 ) {
+		Yii::trace('cnt='.$cnt.',payments='.$payment_cnt.',sop='.($model->soloOwnsPayments()?'T':'F'), 'DocumentController::actionDelete');
+		if ( $cash_cnt > 0 || ($payment_cnt > 0 && $model->soloOwnsPayments()) ) {
 			Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because there are payment attached to it. You must delete payment(s) first.'));
 		} else if($cnt > 0 && !($model->document_type == Document::TYPE_BILL && $model->bom_bool)) {
 			Yii::$app->session->setFlash('error', Yii::t('store', 'This document cannot be deleted because a document depends on it.'));

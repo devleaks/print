@@ -6,7 +6,7 @@ use app\models\Document;
 <div class="document-print-header">
 	<table width="100%">
 	<tr>
-			<td style="text-align: center;"></td>
+			<td style="text-align: center;page-break-inside:avoid;"></td>
 			<td width="40%" style='font-size: 1.1em;'><?= $this->render('../common/client', ['model' => $model->client]) ?></td>
 	</tr>
 	</table>
@@ -14,7 +14,7 @@ use app\models\Document;
 	<br>
 	<br>
 	<br>
-	<table width="100%" class="table table-bordered" style="text-align: center;">
+	<table width="100%" class="table table-bordered" style="text-align: center;page-break-inside:avoid;">
 	<tr>
 			<th style="text-align: center;"><?= Yii::t('print', 'Date') ?></td>
 			<th style="text-align: center;"><?= Yii::t('print', 'Reference Client') ?></td>

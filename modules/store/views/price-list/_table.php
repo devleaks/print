@@ -18,7 +18,7 @@ foreach($model->getPriceListItems()->orderBy('position')->each() as $pli) {
 		if( $support = PriceListItem::find()
 				->andWhere(['price_list_id' => $pli->price_list_id, 'position' => $pli->position]) // same pos
 				->andWhere(['not', ['item_id' => $pli->item_id]])->one() ) // but not itself
-		$i->pc->setSupport($support->item);
+			$i->pc->inside = 0;//$i->pc->setSupport($support->item);
 	}
 	$items[] = $i;
 }
@@ -69,20 +69,24 @@ if(($n = count($items)) > 0) {
 		echo '<th class="text-center">'.$dim[0].'&times;'.$dim[1].'</th>';
 		$pos = null;
 		$prc = '';
+		$deb = '';
 		foreach($items as $item) {
+			$val = ($item->pc ? $item->pc->roundPrice($dim[0],$dim[1]) : 0);
 			if(!$pos) { // first
-				$prc = ($item->pc ? $item->pc->roundPrice($dim[0],$dim[1]) : 0);
+				$prc = $val;
 				$pos = $item->pos;
 			} else if ($pos == $item->pos) {
-				$prc += ($item->pc ? $item->pc->roundPrice($dim[0],$dim[1]) : 0);
+				$deb .= $val.'+';
+				$prc += $val;
 			} else {
-				echo '<td class="text-center">'.Yii::$app->formatter->asCurrency($prc).'</td>';//$h.'&times;'.$w
-				$prc = ($item->pc ? $item->pc->roundPrice($dim[0],$dim[1]) : 0);
+				echo '<td class="text-center">'.Yii::$app->formatter->asCurrency($prc).'</td>';
+				$prc = $val;
 				$pos = $item->pos;
+				$deb = $val.'+';
 			}
 		}
-		echo '<td class="text-center">'.Yii::$app->formatter->asDecimal($prc, 2).'</td>';//$h.'&times;'.$w
-		if ($stats) echo '<td class="text-center">'.'stats'.'</td>';//$h.'&times;'.$w
+		echo '<td class="text-center">'.Yii::$app->formatter->asDecimal($prc, 2).'</td>';
+		if ($stats) echo '<td class="text-center">'.'stats'.'</td>';
 		echo '</tr>';
 	}
 	if ($stats) { // quantity line
@@ -92,9 +96,9 @@ if(($n = count($items)) > 0) {
 		foreach($items as $item) {
 			$cnt = 1;
 			$total += $cnt;
-			echo '<td class="text-center">'.$cnt.'</td>';//$h.'&times;'.$w
+			echo '<td class="text-center">'.$cnt.'</td>';
 		}
-		echo '<th class="text-center">'.$total.'</th>';//$h.'&times;'.$w
+		echo '<th class="text-center">'.$total.'</th>';
 		echo '</tr>';
 	}
 ?>

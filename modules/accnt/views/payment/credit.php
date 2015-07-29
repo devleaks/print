@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		$captureForm = Form::widget([
 		    'model' => $capture,
 		    'form' => $form,
-		    'columns' => 5,
+		    'columns' => 6,
 		    'attributes' => [
 		        'date' => [
 					'type' => Form::INPUT_WIDGET,
@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		            	],
 						'options' => ['data-intro' => "Vous devez mentionner une date de versement."],
 					],
+		            'columnOptions' => ['colspan' => 2],
 				],
 		        'method' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
@@ -45,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 		        'note' => [
 					'type' => Form::INPUT_TEXT,
-		            'columnOptions' => ['colspan' => 4],
+		            'columnOptions' => ['colspan' => 3],
 				],
 			],
 		]);

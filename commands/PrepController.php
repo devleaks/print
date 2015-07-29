@@ -9,8 +9,10 @@ use Yii;
 class PrepController extends Controller {
 
     public function actionCleanBills() {
-	foreach(Bill::find()->each() as $bill) 
-		$bill->deleteCascade();
+	foreach(Bill::find()->each() as $bill) {
+		if(!$bill->soloOwnsPayments())
+			$bill->deleteCascade();
+	}
     }
 
 

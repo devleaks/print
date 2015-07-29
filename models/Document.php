@@ -436,6 +436,14 @@ class Document extends _Document
 				if($this->status != self::STATUS_TODO)
 					$this->status = $this->updatePaymentStatus();
 			}
+		} else if($newstatus == self::STATUS_CANCELLED) {
+			$sale = Sequence::nextval('sale');
+			foreach($this->getPayments()->each() as $payment) {
+				$payment->sale = $sale;
+				$payment->status = Payment::STATUS_OPEN;
+				$payment->save();
+			}
+			$this->status = $newstatus;
 		} else {
 			$this->status = $newstatus;
 		}

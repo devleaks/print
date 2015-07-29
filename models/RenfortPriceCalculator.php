@@ -44,7 +44,6 @@ class RenfortPriceCalculator extends PriceCalculator {
 			if($w > $maxWidth || $h > $maxHeight) // force renfort, but it is free
 				return 0;
 		}
-
 		$x = ($w + $h - $this->inside) / 50;
 		$price = $this->item->prix_de_vente * $x;
 //		Yii::trace('w='.$w.', h='.$h.', in='.$this->inside.', p='.(100*$x).' €='.$price, 'RenfortPriceCalculator::price');
