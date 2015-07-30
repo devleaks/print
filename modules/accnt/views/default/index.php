@@ -50,7 +50,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <br/>
 <br/>
 
-<h3><a name="dangerousops"></a><span style="color: red;">Opérations dangereuses</span></h3>
+<div class="panel panel-danger">
+	<div class="panel-heading">
+		<a name="dangerousops"></a><h3 class="panel-title">Opérations dangereuses</h3>
+		<span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span>
+	</div>
+	<div class="panel-body collapse">
 
 <div class="alert alert-danger" style="text-indent:-70px;padding-left:80px;">
 	<a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -60,10 +65,35 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 	<ul>
-	    <li><a href="<?= Url::to(['/accnt/account/list']) ?>"><?= Yii::t('store', 'Remove payment with no sale')?></a></li>
-	    <li><a href="<?= Url::to(['/order/document/index', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
-	    <li><a href="<?= Url::to(['/accnt/cash/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
+	    <li><a class="text-danger" href="<?= Url::to(['/accnt/account/list']) ?>"><?= Yii::t('store', 'Remove payment with no sale')?></a></li>
+	    <li><a class="text-danger" href="<?= Url::to(['/order/document/index', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Payments')?></a> - Manipulations directes</li>
+	    <li><a class="text-danger" href="<?= Url::to(['/accnt/cash/index', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Cash')?></a> - Manipulations directes</li>
 	</ul>
 
+	</div>
+</div>
 
 </div>
+<script type="text/javascript">
+<?php
+$this->beginBlock('JS_PANEL'); ?>
+jQuery(function ($) {
+    $('.panel-heading span.clickable').on("click", function (e) {
+        if ($(this).hasClass('panel-collapsed')) {
+            // expand the panel
+            $(this).parents('.panel').find('.panel-body').slideDown();
+            $(this).removeClass('panel-collapsed');
+            $(this).find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+        }
+        else {
+            // collapse the panel
+            $(this).parents('.panel').find('.panel-body').slideUp();
+            $(this).addClass('panel-collapsed');
+            $(this).find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+        }
+    });
+});
+<?php $this->endBlock(); ?>
+</script>
+<?php
+$this->registerJs($this->blocks['JS_PANEL'], yii\web\View::POS_END);

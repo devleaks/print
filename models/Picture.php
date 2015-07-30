@@ -25,13 +25,13 @@ class Picture extends _Picture
 	const PATH = 'pictures';
 
     /**
-     * Maximum size of images associated with ads
+     * Maximum size of images associated with document
      * @var integer
      */
     const maxsize   = 400; // px;
 
     /**
-     * Maximum size of thumbnail images associated with ads
+     * Maximum size of thumbnail images associated with document
      * @var integer
      */
     const thumbsize = 150; // px;
