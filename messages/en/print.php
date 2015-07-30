@@ -16,4 +16,6 @@
  *
  * NOTE: this file must be saved in UTF-8 encoding.
  */
-return [];
+return [
+	'STD_SIGNATURE' => "Please check your order, dimensions and options.",
+];
