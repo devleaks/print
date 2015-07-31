@@ -192,11 +192,20 @@ class Client extends _Client
 				$bal = $document->getBalance();
 				$color = ($bal <= 0) ? 'success' : 'warning';
 				//Yii::trace($document->document_type.':'.$document->name.'='.$bal, 'Client::getAccountLines');
+				$old_system = '';
+				if($document->getBalance() > 0) {
+					$old_system = ' '.Html::a('<span class="label label-oldsystem"><i class="glyphicon glyphicon-warning-sign"></span>',
+												Url::to(['/accnt/account/old-system', 'id' => $document->id]),
+												[
+													'title' => Yii::t('store', "Paiement par l'ancien système"),
+							                        'data-confirm' => Yii::t('store', "Confirmer le paiement par l'ancien système?")
+												]);
+				}
 				switch($document->document_type) {
 					case Document::TYPE_TICKET:
 					case Document::TYPE_BILL: // we always add bills and tickets, they should always get paid
 						$accountLines[] = new AccountLine([
-							'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
+							'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])).$old_system,
 							'amount' => - $document->getTotal(),
 							'date' => $document->created_at,
 							'ref' => $document->id,
@@ -206,7 +215,7 @@ class Client extends _Client
 					case Document::TYPE_ORDER:
 						if(! Order::findOne($document->id)->getBill()) { // if there is a bill for this order, we ignore the order, the bill will be added
 							$accountLines[] = new AccountLine([
-								'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])),
+								'note' => /*'B '.*/Html::a('<span class="label label-'.$color.'">'.$document->name.'</span>', Url::to(['/order/document/view', 'id' => $document->id])).$old_system,
 								'amount' => - $document->getTotal(),
 								'date' => $document->created_at,
 								'ref' => $document->id,
@@ -269,7 +278,7 @@ class Client extends _Client
 		foreach($this->getAccounts()->andWhere(['not',['id'=>$accounts_already_processed]])->each() as $account) {
 			//$reimburse = Html::a('<span class="label label-primary">'.Yii::t('store', 'Make credit note').'</span>', Url::to(['refund', 'id' => $account->id]), ['title' => Yii::t('store', 'Make credit note').'-'.$account->sale]);
 			//$reimburse = $this->refundPullDown($account->id);
-			$color = 'info';
+			$color = $account->payment_method == Payment::METHOD_OLDSYSTEM ? 'oldsystem' : 'info';
 			$note = ($account->note ? $account->note : '<span class="label label-'.$color.'">'.$account->payment_method.'</span>');
 			$accountLines[] = new AccountLine([
 				'note' => /*'P '.*/$note,

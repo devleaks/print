@@ -20,6 +20,7 @@ class Payment extends _Payment
 	const CLEAR = 'CLEAR';
 	
 	const METHOD_TRANSFER = 'TRANSFER';
+	const METHOD_OLDSYSTEM = 'OLDSYSTEM';
 
 	/** Document status */
 	const STATUS_PAID = 'PAID';	

@@ -289,5 +289,34 @@ order by 5 desc
 		Yii::$app->session->setFlash('error', Yii::t('store', 'Credit note not created.').'='.$ticket);
 		return $this->redirect(Yii::$app->request->referrer);
 	}
+	
+	public function actionOldSystem($id) {
+		if($model = Document::findDocument($id)) {
+			$balance = $model->getBalance();
+			$account = new Account([
+				'client_id' => $model->client_id,
+				'payment_method' => Payment::METHOD_OLDSYSTEM,
+				'payment_date' => date('Y-m-d'),
+				'amount' => $balance,
+				'status' => 'CREDIT',
+			]);
+			$account->save();
+			$account->refresh();
+			$payment = new Payment([
+				'sale' => $model->sale,
+				'client_id' => $model->client_id,
+				'payment_method' => Payment::METHOD_OLDSYSTEM,
+				'amount' => $balance,
+				'status' => Payment::STATUS_PAID,
+				'account_id' => $account->id,
+			]);
+			$payment->save();
+			$model->setStatus(Document::STATUS_TOPAY);
+			$model->save();
+            return $this->redirect(['/accnt/account/client', 'id' => $model->client_id]);
+		} else
+			throw new NotFoundHttpException('The requested page does not exist.');
+        
+	}
 
 }
