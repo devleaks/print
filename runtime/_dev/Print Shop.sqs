@@ -3718,10 +3718,10 @@ mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
         <snapToGrid><![CDATA[1]]></snapToGrid>
         <SourceSidebarWidth><![CDATA[276.000000]]></SourceSidebarWidth>
         <uid><![CDATA[204F0FA2-D1A0-4C5F-A0A0-8F4CDBC4862E]]></uid>
-        <windowHeight><![CDATA[1026.000000]]></windowHeight>
+        <windowHeight><![CDATA[1081.000000]]></windowHeight>
         <windowLocationX><![CDATA[493.000000]]></windowLocationX>
-        <windowLocationY><![CDATA[391.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{179, 2}]]></windowScrollOrigin>
+        <windowLocationY><![CDATA[336.000000]]></windowLocationY>
+        <windowScrollOrigin><![CDATA[{0, 2}]]></windowScrollOrigin>
         <windowWidth><![CDATA[1680.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>
