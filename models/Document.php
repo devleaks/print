@@ -347,13 +347,6 @@ class Document extends _Document
 		foreach($this->getPdfs()->each() as $pdf)
 			$pdf->deleteCascade();
 
-		/** Delete payments */
-
-		// if yes, we cannot delete the payment, they belong to the other doc with same sale id
-		if(!$this->soloOwnsPayments())
-			foreach($this->getPayments()->each() as $p)
-				$p->delete();
-
 		$this->delete();
 	}
 	
