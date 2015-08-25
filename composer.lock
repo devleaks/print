@@ -733,12 +733,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/isotope.git",
-                "reference": "feff43802bb689b3ab9d05855d8f3320640367a2"
+                "reference": "9dbe40d5ece551a87daed617f07dcf89f598aae2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/feff43802bb689b3ab9d05855d8f3320640367a2",
-                "reference": "feff43802bb689b3ab9d05855d8f3320640367a2",
+                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/9dbe40d5ece551a87daed617f07dcf89f598aae2",
+                "reference": "9dbe40d5ece551a87daed617f07dcf89f598aae2",
                 "shasum": ""
             },
             "require": {
@@ -749,14 +749,14 @@
                 "bower-asset/outlayer": "~1.4.1"
             },
             "require-dev": {
-                "bower-asset/doc-ready": "dev-1.x,|1.x",
-                "bower-asset/isotope-cells-by-column": "dev-1.x,|1.x",
-                "bower-asset/isotope-cells-by-row": "dev-1.x,|1.x",
-                "bower-asset/isotope-fit-columns": "dev-1.x,|1.x",
-                "bower-asset/isotope-horizontal": "dev-1.x,|1.x",
-                "bower-asset/isotope-masonry-horizontal": "dev-1.x,|1.x",
+                "bower-asset/doc-ready": "dev-1.x|1.x",
+                "bower-asset/isotope-cells-by-column": "dev-1.x|1.x",
+                "bower-asset/isotope-cells-by-row": "dev-1.x|1.x",
+                "bower-asset/isotope-fit-columns": "dev-1.x|1.x",
+                "bower-asset/isotope-horizontal": "dev-1.x|1.x",
+                "bower-asset/isotope-masonry-horizontal": "dev-1.x|1.x",
                 "bower-asset/jquery": ">=1.4.3,<2",
-                "bower-asset/jquery-bridget": "dev-1.1.x,|1.1.x",
+                "bower-asset/jquery-bridget": "dev-1.1.x|1.1.x",
                 "bower-asset/qunit": ">=1.15.0,<2.0.0"
             },
             "type": "bower-asset-library",
@@ -774,11 +774,11 @@
                     "changelog.md"
                 ],
                 "branch-alias": {
-                    "dev-master": "2.2.1-dev"
+                    "dev-master": "2.2.2-dev"
                 }
             },
             "description": "Filter and sort magical layouts",
-            "time": "2015-07-01 18:27:38"
+            "time": "2015-08-23 09:59:31"
         },
         {
             "name": "bower-asset/jquery",
@@ -903,16 +903,16 @@
         },
         {
             "name": "bower-asset/masonry",
-            "version": "v3.3.1",
+            "version": "v3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/masonry.git",
-                "reference": "1e9d69774f11d86fb82e93f034804918259bfe94"
+                "reference": "556d44869268c5e308676386aa30bf4bad4c0a5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/masonry/zipball/1e9d69774f11d86fb82e93f034804918259bfe94",
-                "reference": "1e9d69774f11d86fb82e93f034804918259bfe94",
+                "url": "https://api.github.com/repos/desandro/masonry/zipball/556d44869268c5e308676386aa30bf4bad4c0a5a",
+                "reference": "556d44869268c5e308676386aa30bf4bad4c0a5a",
                 "shasum": ""
             },
             "require": {
@@ -921,9 +921,9 @@
                 "bower-asset/outlayer": "~1.4.0"
             },
             "require-dev": {
-                "bower-asset/doc-ready": "dev-1.x,|1.x",
+                "bower-asset/doc-ready": "dev-1.x|1.x",
                 "bower-asset/jquery": ">=1.4.3,<2",
-                "bower-asset/jquery-bridget": "dev-1.1.x,|1.1.x",
+                "bower-asset/jquery-bridget": "dev-1.1.x|1.1.x",
                 "bower-asset/qunit": ">=1.12.0,<2.0.0"
             },
             "type": "bower-asset-library",
@@ -995,20 +995,20 @@
         },
         {
             "name": "bower-asset/outlayer",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/outlayer.git",
-                "reference": "03e374cbad2239bd83bb81af2ff27b175c2c76d3"
+                "reference": "2c7f1108a3d906df7ef3f03cda0a3d76791f186b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/outlayer/zipball/03e374cbad2239bd83bb81af2ff27b175c2c76d3",
-                "reference": "03e374cbad2239bd83bb81af2ff27b175c2c76d3",
+                "url": "https://api.github.com/repos/metafizzy/outlayer/zipball/2c7f1108a3d906df7ef3f03cda0a3d76791f186b",
+                "reference": "2c7f1108a3d906df7ef3f03cda0a3d76791f186b",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/doc-ready": "dev-1.0.x,|1.0.x",
+                "bower-asset/doc-ready": "dev-1.0.x|1.0.x",
                 "bower-asset/eventemitter": ">=4.2,<5",
                 "bower-asset/eventie": "~1.0.3",
                 "bower-asset/fizzy-ui-utils": "~1.0.1",
@@ -1018,7 +1018,7 @@
             },
             "require-dev": {
                 "bower-asset/jquery": ">=1.4.3,<2",
-                "bower-asset/jquery-bridget": "dev-1.x,|1.x",
+                "bower-asset/jquery-bridget": "dev-1.x|1.x",
                 "bower-asset/qunit": ">=1.12.0,<2.0.0"
             },
             "type": "bower-asset-library",
@@ -1050,28 +1050,28 @@
         },
         {
             "name": "bower-asset/packery",
-            "version": "v1.4.2",
+            "version": "v1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/packery.git",
-                "reference": "d0ef23479e804f8365a816afb9a198799c01b071"
+                "reference": "a64a5a86f5a468cc81b314fb238a62e2b0d275be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/packery/zipball/d0ef23479e804f8365a816afb9a198799c01b071",
-                "reference": "d0ef23479e804f8365a816afb9a198799c01b071",
+                "url": "https://api.github.com/repos/metafizzy/packery/zipball/a64a5a86f5a468cc81b314fb238a62e2b0d275be",
+                "reference": "a64a5a86f5a468cc81b314fb238a62e2b0d275be",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/classie": "dev-1.x,|1.x",
-                "bower-asset/get-size": "dev-1.2.x,|1.2.x",
-                "bower-asset/get-style-property": "dev-1.x,|1.x",
+                "bower-asset/classie": "dev-1.x|1.x",
+                "bower-asset/get-size": "dev-1.2.x|1.2.x",
+                "bower-asset/get-style-property": "dev-1.x|1.x",
                 "bower-asset/outlayer": "~1.4.1"
             },
             "require-dev": {
-                "bower-asset/draggabilly": "dev-1.x,|1.x",
+                "bower-asset/draggabilly": "dev-1.x|1.x",
                 "bower-asset/jquery": "~1",
-                "bower-asset/jquery-bridget": "dev-1.1.x,|1.1.x",
+                "bower-asset/jquery-bridget": "dev-1.1.x|1.1.x",
                 "bower-asset/jquery-ui-draggable": "*",
                 "bower-asset/qunit": ">=1.15.0,<2.0.0"
             },
@@ -1718,12 +1718,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fightbulc/moment.php.git",
-                "reference": "148cd494c4648e16b7e42eeaed6f1996565bd653"
+                "reference": "6b8cf913e92d0c4b872e476bf4d6eb48f390fdd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/148cd494c4648e16b7e42eeaed6f1996565bd653",
-                "reference": "148cd494c4648e16b7e42eeaed6f1996565bd653",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/6b8cf913e92d0c4b872e476bf4d6eb48f390fdd9",
+                "reference": "6b8cf913e92d0c4b872e476bf4d6eb48f390fdd9",
                 "shasum": ""
             },
             "require": {
@@ -1773,7 +1773,7 @@
                 "translation",
                 "validate"
             ],
-            "time": "2015-06-15 16:48:14"
+            "time": "2015-08-21 14:07:58"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -4450,16 +4450,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.5",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "ea8c13b9f5cd437bd7bf73cad8a3457a155f3727"
+                "reference": "f42b2eb80f61992438661b01d0d74c6738e2ff38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/ea8c13b9f5cd437bd7bf73cad8a3457a155f3727",
-                "reference": "ea8c13b9f5cd437bd7bf73cad8a3457a155f3727",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/f42b2eb80f61992438661b01d0d74c6738e2ff38",
+                "reference": "f42b2eb80f61992438661b01d0d74c6738e2ff38",
                 "shasum": ""
             },
             "require": {
@@ -4534,7 +4534,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2015-07-11 02:37:59"
+            "time": "2015-08-05 22:00:30"
         },
         {
             "name": "yiisoft/yii2-apidoc",
@@ -5093,16 +5093,16 @@
         },
         {
             "name": "yiisoft/yii2-debug",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "5c7081b2be71c61d3a50d978b31edc3e0b6f2f97"
+                "reference": "1b302e67521d46feb2413d9d96ca94ed82b39b0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/5c7081b2be71c61d3a50d978b31edc3e0b6f2f97",
-                "reference": "5c7081b2be71c61d3a50d978b31edc3e0b6f2f97",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/1b302e67521d46feb2413d9d96ca94ed82b39b0e",
+                "reference": "1b302e67521d46feb2413d9d96ca94ed82b39b0e",
                 "shasum": ""
             },
             "require": {
@@ -5136,7 +5136,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2015-05-10 22:08:56"
+            "time": "2015-08-06 16:14:06"
         },
         {
             "name": "yiisoft/yii2-faker",
