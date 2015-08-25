@@ -93,6 +93,7 @@ class Ticket extends Order
 				break;
 			case $this::STATUS_CLOSED:
 				$actions[] = '{label:closed}';
+				$actions[] = '{bill-ticket}';
 				break;
 		}
 		return $ret . implode(' ', $actions) . ' {view} {print}';//cannot get parent:: which is Order
