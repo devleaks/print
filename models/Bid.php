@@ -64,10 +64,12 @@ class Bid extends Document
 				$actions[] = '{cancel}';
 				break;
 			case $this::STATUS_CLOSED:
-				if( $order = $this->getDocuments()->where(['document_type' => Order::TYPE_ORDER])->one() )
+				if( $order = $this->getDocuments()->where(['document_type' => Order::TYPE_ORDER])->one() ) {
 					$actions[] = '{link:ordered}';
-				else
+				} else {
+					$actions[] = '{convert}';
 					$actions[] = '{label:closed}';
+				}
 				break;
 			case $this::STATUS_CANCELLED:
 				$actions[] = '{label:cancelled}';
