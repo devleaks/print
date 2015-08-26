@@ -331,23 +331,28 @@ class Document extends _Document
 				->andWhere(['!=', 'id', $this->id])->exists());
 		return false;
 	}
+
+
 	/**
 	 * deleteCascade all its dependent child elements and delete the document
 	 */
 	public function deleteCascade() {
-		/** Delete associated work */
-		foreach($this->getWorks()->each() as $w)
-			$w->deleteCascade();
+		if(! $this->soloOwnsPayments() ) {
+			/** Delete associated work */
+			foreach($this->getWorks()->each() as $w)
+				$w->deleteCascade();
 
-		/** Delete order lines */
-		foreach($this->getDocumentLines()->each() as $ol)
-			$ol->deleteCascade();
+			/** Delete order lines */
+			foreach($this->getDocumentLines()->each() as $ol)
+				$ol->deleteCascade();
 
-		/** Delete order lines */
-		foreach($this->getPdfs()->each() as $pdf)
-			$pdf->deleteCascade();
+			/** Delete order lines */
+			foreach($this->getPdfs()->each() as $pdf)
+				$pdf->deleteCascade();
 
-		$this->delete();
+			return $this->delete();
+		}
+		return false;
 	}
 	
 	/**
