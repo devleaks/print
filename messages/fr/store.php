@@ -432,6 +432,7 @@ return [
 	'Duplicate' => 'Copier',
 	'Copied. {0}.' => 'Copié. {0}.',
 	'You cannot convert a sale ticket with no client. {0}.' => 'Vous ne pouvez pas convertir un ticket de caisse en commande sans client. {0}.',
+	'Sales' => 'Ventes',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

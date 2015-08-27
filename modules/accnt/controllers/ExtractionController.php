@@ -155,6 +155,13 @@ class ExtractionController extends Controller
 							$baddocscli[$doc->client_id] = $doc; // bad doc because client is not valid, this only remember the LAST (if there are several) wrong document for the client
 						}
 					}
+					
+					// 2b. Adding clients created or updated in same timeframe
+					$lastUpdate = date('Y-m-01 00:00:00', strtotime('now - 90 days'));					
+					foreach(Client::find()->andWhere(['>', 'updated_at', $lastUpdate])->each() as $client) {
+						if(! in_array($client->id, $client_ids))
+							$client_ids[] = $client->id;
+					}
 
 					// 3. Export good docs
 			        $extraction = $this->renderPartial('_extract', [
