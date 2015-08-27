@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ab03af5cd1f71a78ede7896af9d53ce7",
+    "hash": "8ff380fd78971931f656ff6cdbe12469",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -900,6 +900,22 @@
                 "mask",
                 "plugins"
             ]
+        },
+        {
+            "name": "bower-asset/jquery.terminal",
+            "version": "0.8.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jcubic/jquery.terminal.git",
+                "reference": "8f5407975498807076a76b83424d295091cf9600"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jcubic/jquery.terminal/zipball/8f5407975498807076a76b83424d295091cf9600",
+                "reference": "8f5407975498807076a76b83424d295091cf9600",
+                "shasum": ""
+            },
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/masonry",
@@ -4338,6 +4354,50 @@
             "time": "2015-07-13 19:23:01"
         },
         {
+            "name": "samdark/yii2-webshell",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/samdark/yii2-webshell.git",
+                "reference": "b55c1d3ae1fb70138e52b2820b831e7c2d4c3116"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/samdark/yii2-webshell/zipball/b55c1d3ae1fb70138e52b2820b831e7c2d4c3116",
+                "reference": "b55c1d3ae1fb70138e52b2820b831e7c2d4c3116",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery.terminal": "~0.8.8",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "samdark\\webshell\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Makarov",
+                    "email": "sam@rmcreative.ru"
+                }
+            ],
+            "description": "A web shell that allows to run yii console commands and create your own commands.",
+            "keywords": [
+                "console",
+                "extension",
+                "shell",
+                "webshell",
+                "yii2"
+            ],
+            "time": "2015-08-26 09:27:42"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.1",
             "source": {
@@ -5252,7 +5312,8 @@
         "yurkinx/yii2-image": 20,
         "perminder-klair/yii2-dropzone": 20,
         "kartik-v/yii2-password": 20,
-        "fightbulc/moment": 20
+        "fightbulc/moment": 20,
+        "samdark/yii2-webshell": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

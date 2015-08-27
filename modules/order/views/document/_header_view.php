@@ -152,6 +152,10 @@ Icon::map($this);
 			            [
 			                'attribute'=>'email',
 			            ],
+			            [
+			                'attribute'=>'reference',
+							'options' => ['readonly' => true]
+			            ],
 			        ],
 			    ]) ?>
 				</div>
