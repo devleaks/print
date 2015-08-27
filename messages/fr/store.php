@@ -399,6 +399,7 @@ return [
 	'Refund amount cannot be larger than amount to reimburse.' => 'Le montant remboursé ne peut pas être supérieur au montant à rembourser.',
 	'Payment was not added' => "Le paiement n'a pas été enregistré",
 	'Change Client' => 'Changer le client',
+	'Change client' => 'Changer le client',
 	'Reimburse all credit' => 'Rembourser tous le crédit',
 	'Daily Summary for {0}' => 'Résumé quotidien pour le {0}',
 	'Details' => 'Détails',
