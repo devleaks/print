@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<h3>Listes</h3>
 		
 		<ul>
-		    <li><a href="<?= Url::to(['/store/client/']) ?>"><?= Yii::t('store', 'Customers')?></a>
+		    <li><a href="<?= Url::to(['/store/client/', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Customers')?></a>
 			<a href="<?= Url::to(['/store/client/new']) ?>"><span class="label label-primary"><i class="glyphicon glyphicon-plus"></i> <?= Yii::t('store', 'Add')?></span></a></li>
 		</ul>
 

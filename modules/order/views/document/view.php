@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Document;
+use app\models\User;
 use app\models\Work;
 use kartik\helpers\Html as KHtml;
 use yii\data\ActiveDataProvider;
@@ -28,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'query' => $model->getDocumentLines()
 			]),
 			'order' => $model,
-			'action_template' => '{view}'
+			'action_template' => User::hasRole(['admin', 'manager']) ? '{view} {delete}' : '{view}',
 	    ]);
 	?>
 

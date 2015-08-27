@@ -147,6 +147,9 @@ class DocumentLine extends _DocumentLine
 		foreach($this->getDocumentLineDetails()->each() as $old)
 			$old->deleteCascade();
 
+		foreach($this->getWorkLines()->each() as $old)
+			$old->deleteCascade();
+
 		$this->deletePictures();
 
 		$this->delete();
