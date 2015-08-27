@@ -153,6 +153,7 @@ Icon::map($this);
 			                'attribute'=>'email',
 			            ],
 			            [
+				            'label' => Yii::t('store', 'Communication'),
 			                'attribute'=>'reference',
 							'options' => ['readonly' => true]
 			            ],

@@ -57,7 +57,14 @@ $this->params['breadcrumbs'][] = $this->title;
 	        [
 				'attribute' => 'name',
 	            'label' => Yii::t('store', 'Référence'),
+				'noWrap' => true,
 			],
+            [
+	            'label' => Yii::t('store', 'Communication'),
+                'attribute'=>'reference',
+				'options' => ['readonly' => true],
+				'noWrap' => true,
+            ],
 	        [
 				'attribute' => 'client_name',
 	            'label' => Yii::t('store', 'Client'),
