@@ -434,6 +434,8 @@ return [
 	'Copied. {0}.' => 'Copié. {0}.',
 	'You cannot convert a sale ticket with no client. {0}.' => 'Vous ne pouvez pas convertir un ticket de caisse en commande sans client. {0}.',
 	'Sales' => 'Ventes',
+	'Sales (HTVA) by Due Date Month' => 'Ventes (HTVA) par mois de livraison',
+	'Billed (HTVA) by Month' => 'Facturé (HTVA) par mois',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

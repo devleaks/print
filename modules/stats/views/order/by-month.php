@@ -18,13 +18,22 @@ foreach($dataProvider->allModels as $m) {
 	$data1[$m['year']][$m['document_type']][$m['month']] = intval($m['total_amount']);
 }
 
+ksort($data1);
+
 $data = [];
 foreach($data1 as $k => $v)
 	foreach($v as $k1 => $v1) {
 		ksort($v1);
 		$v2 = [];
-		foreach($v1 as $d)
-			$v2[] = $d;
+		for($i=0;$i<12;$i++) {
+			if(isset($v1[$i])) {
+				$v2[$i] = $v1[$i];
+			} else {
+				$v2[$i] = 0;
+			}
+		}
+//		foreach($v1 as $d)
+//			$v2[] = $d;
 		$data[] = [
 			'name' => Yii::t('store', $k1).'-'.$k,
 			'stack' => $k,
@@ -33,7 +42,7 @@ foreach($data1 as $k => $v)
 }
 
 
-$this->title = Yii::t('store', 'CA Mensuel');
+$this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -41,7 +50,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-	<?php VarDumper::dumpAsString($data, 4, true) ?>
+	<?php  VarDumper::dumpAsString($data1, 4, true) ?>
+	<?php  '<hr/>'.VarDumper::dumpAsString($data, 4, true) ?>
 	
 	<?= Highcharts::widget([
 		'options' => [
