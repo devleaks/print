@@ -113,7 +113,11 @@ class BillController extends Controller
 	public function actionBoms() {
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere(['document.bom_bool' => true, 'document.status' => [Order::STATUS_DONE, Order::STATUS_TOPAY]]);
+		$dataProvider->query->andWhere([
+			'document.bom_bool' => true,
+			'document.bill_id' => null,
+			'document.status' => [Order::STATUS_DONE, Order::STATUS_TOPAY]
+		]);
 
         return $this->render('boms', [
             'searchModel' => $searchModel,
