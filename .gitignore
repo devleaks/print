@@ -18,6 +18,9 @@ Thumbs.db
 # composer vendor dir
 /vendor
 
+# Codeception testing
+/tests
+
 # composer itself is not needed
 composer.phar
 
