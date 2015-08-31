@@ -38,7 +38,7 @@ class PDFLetter extends PDFDocument {
      */
 	public function render() {
 	    $this->header  = Yii::$app->controller->renderPartial(self::COMMON_BASE.'header', ['language' => $this->language]);
-	    $this->footer  = Yii::$app->controller->renderPartial(self::COMMON_BASE.'footer', ['language' => $this->language]);
+	    $this->footer  = Yii::$app->controller->renderPartial(self::COMMON_BASE.'footer', ['language' => $this->language, 'title' => $this->title]);
 		return parent::render();
 	}
 
