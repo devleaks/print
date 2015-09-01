@@ -1163,16 +1163,16 @@
         },
         {
             "name": "bower-asset/unidragger",
-            "version": "v1.1.3",
+            "version": "v1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/unidragger.git",
-                "reference": "7647629725c21c0cd577fd88d64285edd23497a3"
+                "reference": "d904d2e3b383dc5777b00e50aa97137987116ae4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/unidragger/zipball/7647629725c21c0cd577fd88d64285edd23497a3",
-                "reference": "7647629725c21c0cd577fd88d64285edd23497a3",
+                "url": "https://api.github.com/repos/metafizzy/unidragger/zipball/d904d2e3b383dc5777b00e50aa97137987116ae4",
+                "reference": "d904d2e3b383dc5777b00e50aa97137987116ae4",
                 "shasum": ""
             },
             "require": {
@@ -2617,12 +2617,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-markdown.git",
-                "reference": "29091f6934804fa88a6a392071432b9821bafc9b"
+                "reference": "b839099e1f1b2e0a34c37f5776faaf5df51dde8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-markdown/zipball/29091f6934804fa88a6a392071432b9821bafc9b",
-                "reference": "29091f6934804fa88a6a392071432b9821bafc9b",
+                "url": "https://api.github.com/repos/kartik-v/yii2-markdown/zipball/b839099e1f1b2e0a34c37f5776faaf5df51dde8f",
+                "reference": "b839099e1f1b2e0a34c37f5776faaf5df51dde8f",
                 "shasum": ""
             },
             "require": {
@@ -2661,7 +2661,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-04-21 15:16:41"
+            "time": "2015-09-01 03:09:55"
         },
         {
             "name": "kartik-v/yii2-money",
@@ -4905,16 +4905,16 @@
         },
         {
             "name": "yurkinx/yii2-image",
-            "version": "v1.0",
+            "version": "v1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yurkinx/yii2-image.git",
-                "reference": "60a34e00acbeadac3084f79c3889b733e5b8eb3f"
+                "reference": "0d6d261bf9c2dc35e9ad8c5cc56793580b74eefd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yurkinx/yii2-image/zipball/60a34e00acbeadac3084f79c3889b733e5b8eb3f",
-                "reference": "60a34e00acbeadac3084f79c3889b733e5b8eb3f",
+                "url": "https://api.github.com/repos/yurkinx/yii2-image/zipball/0d6d261bf9c2dc35e9ad8c5cc56793580b74eefd",
+                "reference": "0d6d261bf9c2dc35e9ad8c5cc56793580b74eefd",
                 "shasum": ""
             },
             "require": {
@@ -4944,7 +4944,7 @@
                 "image",
                 "yii2"
             ],
-            "time": "2015-04-05 21:03:16"
+            "time": "2015-06-24 13:41:22"
         }
     ],
     "packages-dev": [
