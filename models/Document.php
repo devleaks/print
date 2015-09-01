@@ -365,6 +365,14 @@ class Document extends _Document
 	}
 
 	/**
+	 *
+	 * @return boolean
+	 */
+	public function hasPayments() {
+		return $this->getPayments()->exists();
+	}
+
+	/**
 	 * update price of an order by summing document line prices
 	 * set the value value of order-level rebate/supplement line if any.
 	 * update total order price.

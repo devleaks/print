@@ -7,6 +7,8 @@ use app\models\Event;
 use app\models\Order;
 use app\models\Document;
 use app\models\DocumentLine;
+
+use Yii;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
@@ -99,7 +101,7 @@ class OrderController extends Controller
 				'year' => 'year(due_date)',
 				'month' => 'month(due_date)',
 				'total_count' => 'count(id)',
-				'total_amount' => 'sum(if(vat_bool = 1, price_htva, price_tvac))'
+				'total_amount' => 'sum(price_htva)'
 			])
 			->groupBy('document_type,year,month');
 			
@@ -109,7 +111,7 @@ class OrderController extends Controller
 				'year' => 'year(due_date)',
 				'month' => 'month(due_date)',
 				'total_count' => 'count(id)',
-				'total_amount' => 'sum(if(vat_bool = 1, price_htva, price_tvac))'
+				'total_amount' => 'sum(price_htva)'
 			])
 			->andWhere(['document_type' => [Document::TYPE_ORDER, Document::TYPE_TICKET]])
 			->groupBy('document_type,year,month')
@@ -121,6 +123,52 @@ class OrderController extends Controller
 				'allModels' => $q
 			]),
 			'events' => Event::find(),
+			'title' => Yii::t('store', 'Sales (HTVA) by Due Date Month'),
+		]);
+	}
+
+
+	/**
+	 * select document_type,
+	       year(due_date) as year,
+	       month(due_date) as month,
+	       count(*) as total_count,
+	       sum(if(vat_bool = 1, price_htva, price_tvac)) as total_amount
+	  from document
+	 where document_type = 'ORDER'
+	 group by year, month
+	 */
+	public function actionBilled() {
+		$archive = new Query();
+		$archive->from('document_archive')
+				->select([
+				'document_type' => 'replace(document_type, "ORDER", "BILL")',
+				'year' => 'year(due_date)',
+				'month' => 'month(due_date)',
+				'total_count' => 'count(id)',
+				'total_amount' => 'sum(price_htva)'
+			])
+			->groupBy('document_type,year,month');
+			
+		$q = Document::find()
+			->select([
+				'document_type',
+				'year' => 'year(created_at)',
+				'month' => 'month(created_at)',
+				'total_count' => 'count(id)',
+				'total_amount' => 'sum(price_htva)'
+			])
+			->andWhere(['document_type' => [Document::TYPE_BILL, Document::TYPE_TICKET]])
+			->groupBy('document_type,year,month')
+			->union($archive)
+			->asArray()->all();
+
+        return $this->render('by-month',[
+			'dataProvider' => new ArrayDataProvider([
+				'allModels' => $q
+			]),
+			'events' => Event::find(),
+			'title' => Yii::t('store', 'Billed (HTVA) by Month'),
 		]);
 	}
 

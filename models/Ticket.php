@@ -42,11 +42,120 @@ class Ticket extends Order
      * Note: If we convert a sale ticket to a bill, we change its type to ORDER
 	 */
 	public function convert($ticket = false) { // convert ORDER into BILL
+		$transaction = Yii::$app->db->beginTransaction();
+
 		if(!$this->client->isComptoir()) {
-			$this->document_type = self::TYPE_ORDER;
-			$this->save();
-			return parent::convert($ticket);
+
+			if($this->hasPayments()) {
+				// re-create VC
+				$amount = $this->getPrepaid();
+				$comptoir = Client::auComptoir();
+				
+				// Create a copy of original for archive.
+				$ticket = $this->newCopy();
+				$ticket->id = null;
+				$ticket->sale = Sequence::nextval('sale');
+				$ticket->name .= '-FACTURE';
+				$ticket->setStatus(Document::STATUS_CLOSED);
+				$ticket->save();
+
+				$this->document_type = self::TYPE_ORDER;
+				$this->save();
+
+				// Create a reimbursement.
+				$reimbursment = new Refund([
+					'document_type' => Refund::TYPE_REFUND,
+					'client_id' => $this->client_id,
+					'name' => substr($this->created_at,0,4).'-'.Sequence::nextval('doc_number'),
+					'due_date' => $this->due_date,
+					'note' => 'Remboursement conversion VC->Facture',
+					'sale' =>  Sequence::nextval('sale'),
+					'status' => Refund::STATUS_TOPAY,
+					'reference' => $this->reference,
+				]);
+				$reimbursment->save();
+				$reimbursment->refresh();
+				$credit_item = Item::findOne(['reference' => Item::TYPE_REFUND]);
+				$model_line = new DocumentLine([
+					'document_id' => $reimbursment->id,
+					'item_id' => $credit_item->id,
+					'quantity' => 1,
+					'unit_price' => 0,
+					'vat' => $credit_item->taux_de_tva,
+					'due_date' => $this->due_date,
+					'extra_type' => DocumentLine::EXTRA_REBATE_AMOUNT,
+					'extra_htva' => -$amount,
+				]);
+				$model_line->save();
+				$reimbursment->updatePrice();
+				$reimbursment->save();
+
+				foreach($this->getPayments()->each() as $payment) {
+					// Reassign this payment to copy of vente comptoir
+					$payment->sale = $ticket->sale;
+					$payment->save();
+
+					// Create payment of original but now for real client
+					$cash = null;
+					if($payment->payment_method == Payment::CASH) {
+						$cash = new Cash([
+							'sale' => $ticket->sale,
+							'amount' => $payment->amount,
+							'payment_date' => $payment->payment_date,
+							'note' => 'Client transfer',
+						]);
+						$cash->save();
+						$cash->refresh();
+					}
+					$account = new Account([
+						'client_id' => $this->client_id,
+						'payment_method' => $payment->payment_method,
+						'payment_date' => $payment->payment_date,
+						'amount' => $payment->amount,
+						'status' => $payment->amount > 0 ? 'CREDIT' : 'DEBIT',
+						'cash_id' => $cash ? $cash->id : null,
+						'note' => 'Client transfer',
+					]);
+					$account->save();
+					$account->refresh();				
+					$this->addPayment($account, $payment->amount, $payment->payment_method, 'VC -> C/F');
+					
+					// Create reimbursement of client who paid the ticket (often Client Comptoir)
+					$cash = null;
+					if($payment->payment_method == Payment::CASH) {
+						$cash = new Cash([
+							'sale' => $ticket->sale,
+							'amount' => -$payment->amount,
+							'payment_date' => $payment->payment_date,
+							'note' => 'Client transfer',
+						]);
+						$cash->save();
+						$cash->refresh();
+					}
+					$account = new Account([
+						'client_id' => $payment->client_id,
+						'payment_method' => $payment->payment_method,
+						'payment_date' => $payment->payment_date,
+						'amount' => -$payment->amount,
+						'status' => $payment->amount > 0 ? 'CREDIT' : 'DEBIT',
+						'cash_id' => $cash ? $cash->id : null,
+						'note' => 'Client transfer',
+					]);
+					$account->save();
+					$account->refresh();
+					$reimbursment->addPayment($account, -$payment->amount, $payment->payment_method, 'VC -> C/F');					
+				}
+
+			} else {
+				$this->document_type = self::TYPE_ORDER;
+				$this->save();
+
+			}
+			$ret = parent::convert($ticket);
+			$transaction->commit();
+			return $ret;
 		}
+		$transaction->rollback();
 		return null;
 	}
 

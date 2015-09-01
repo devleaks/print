@@ -77,6 +77,7 @@ class PrintedDocument extends PDFLetter {
      */
 	public function render() {
 		Yii::trace('Image = '.($this->images?'T':'F'), 'PrintedDocument::render');
+		$this->title = $this->document ? Yii::t('print', ($this->document->document_type == Document::TYPE_ORDER && $this->document->bom_bool) ? Document::TYPE_BOM : $this->document->document_type).' '.$this->document->name : '';
 	 	$vb = $this->viewBase ? $this->viewBase : '@app/modules/store/prints/document/';
 	    $this->content = Yii::$app->controller->renderPartial($vb.'body', ['model' => $this->document, 'images' => $this->images ? $this->images_loc : false]);
 
