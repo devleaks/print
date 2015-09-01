@@ -436,6 +436,8 @@ return [
 	'Sales' => 'Ventes',
 	'Sales (HTVA) by Due Date Month' => 'Ventes (HTVA) par mois de livraison',
 	'Billed (HTVA) by Month' => 'Facturé (HTVA) par mois',
+	'Moving Average of Sales per Week' => 'Moyenne mobile des ventes par semaines',
+	'Item Categories' => 'Articles par catégories',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

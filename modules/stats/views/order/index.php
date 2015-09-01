@@ -23,12 +23,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
 			[
 				'attribute' => 'client_id',
+				'label' => Yii::t('store','Client'),
 			    'value' => function ($model, $key, $index, $widget) {
 					return Client::findOne($model['client_id'])->nom;
 				},
 			],
-            'tot_price:currency',
-            'tot_count',
+			[
+				'attribute' => 'tot_price',
+				'format' => 'currency',
+				'label' => Yii::t('store','Montant commandes'),
+				'hAlign' => GridView::ALIGN_RIGHT,
+			],
+			[
+				'attribute' => 'tot_count',
+				'format' => 'integer',
+				'label' => Yii::t('store','Nb. commandes'),
+				'hAlign' => GridView::ALIGN_CENTER,
+			],
         ],
     ]) ?>
 

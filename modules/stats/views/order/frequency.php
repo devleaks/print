@@ -23,18 +23,36 @@ $this->params['breadcrumbs'][] = $this->title;
 
 			[
 				'attribute' => 'client_id',
+				'label' => Yii::t('store','Client'),
 			    'value' => function ($model, $key, $index, $widget) {
 					return Client::findOne($model['client_id'])->nom;
 				},
 			],
-            'total_amount:currency',
-            'total_count',
-            'avg_amount_per_day:currency',
+			[
+				'attribute' => 'total_amount',
+				'format' => 'currency',
+				'label' => Yii::t('store','Montant commandes'),
+				'hAlign' => GridView::ALIGN_RIGHT,
+			],
+			[
+				'attribute' => 'total_count',
+				'format' => 'integer',
+				'label' => Yii::t('store','Nb. commandes'),
+				'hAlign' => GridView::ALIGN_CENTER,
+			],
+			[
+				'attribute' => 'avg_amount_per_day',
+				'format' => 'currency',
+				'label' => Yii::t('store','Montant moyen par jour'),
+				'hAlign' => GridView::ALIGN_RIGHT,
+			],
 			[
 				'attribute' => 'avg_day_between_order',
+				'label' => Yii::t('store','Nb. jours entre commandes'),
 			    'value' => function ($model, $key, $index, $widget) {
 					return round($model['avg_day_between_order'], 1);
 				},
+				'hAlign' => GridView::ALIGN_RIGHT,
 			],
         ],
     ]) ?>

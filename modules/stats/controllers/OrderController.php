@@ -129,6 +129,33 @@ class OrderController extends Controller
 
 
 	/**
+	 * SELECT	S1.due_date AS due_date,
+				AVG(S2.price_htva) AS avg_prev_week
+		  FROM document AS S1, document AS S2
+		 WHERE S2.due_date
+		BETWEEN (S1.due_date - INTERVAL 7 DAY)
+		   AND S1.due_date
+		 GROUP BY S1.due_date
+	 */
+	public function actionByWeek() {
+		$data = new Query();
+		$q = $data->from([
+				'd1' => 'document',
+				'd2' => 'document'
+			 ])->select([
+				'avg_date' => 'd1.due_date',
+				'avg_amount' => 'avg(d2.price_htva)',
+			 ])->andWhere('d2.due_date BETWEEN (d1.due_date - INTERVAL 7 DAY) AND d1.due_date')
+			 ->groupBy('d1.due_date')
+			 ->all();
+
+        return $this->render('by-week',[
+			'data' => $q,
+			'title' => Yii::t('store', 'Moving Average of Sales per Week'),
+		]);
+	}
+
+	/**
 	 * select document_type,
 	       year(due_date) as year,
 	       month(due_date) as month,
