@@ -84,6 +84,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			    <li><a href="<?= Url::to(['/order/document/bulk', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bulk Bill')?></a></li>
 		    	<li><a href="<?= Url::to(['/accnt']) ?>"><strong><?= Yii::t('store', 'Accounting')?></strong></a></li>
 			</ul>
+			<ul>
+			    <li><a href="<?= Url::to(['/accnt/pdf', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Documents to Print')?></a></li>
+			</ul>
 
 			<?php if(User::is('jjm')): ?>
 			<ul>

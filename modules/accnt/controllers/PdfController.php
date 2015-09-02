@@ -78,6 +78,40 @@ class PdfController extends Controller
         return $this->redirect(['index']);
     }
 
+	public function actionBulkAction() {
+		if(isset($_POST)) {
+			if(isset($_POST['selection'])) {
+				$selection = explode(',',$_POST['selection']);
+				if(count($selection) > 0) {
+					Yii::trace('selection: '.$_POST['selection'], 'PdfController::actionBulkAction');
+					$action = $_POST['action'];
+					if(in_array($action, [Pdf::ACTION_DELETE, Pdf::ACTION_PRINT])) {					
+						Yii::trace('action: '.$_POST['action'], 'PdfController::actionBulkAction');
+						$cmd = YII_ENV_DEV ? 'ls ' : 'lpr ';
+						foreach(Pdf::find()
+								->andWhere(['id' => $selection])
+								->each() as $pdf) {
+							if($action == Pdf::ACTION_DELETE) {
+								Yii::trace($pdf->id.' deleted', 'PdfController::actionBulkAction');
+								$pdf->delete();
+							} else if ($action == Pdf::ACTION_PRINT) {
+								$cmd .= $pdf->getFilepath().' ';								
+							}
+						}
+						if ($action == Pdf::ACTION_PRINT) {
+							system($cmd, $status);
+							Yii::$app->session->setFlash('success', Yii::t('store', '{0} files sent to printer.', count($selection)));
+							Yii::trace($cmd.': '.$status, 'PdfController::actionBulkAction');
+						}
+					}
+				}
+			}
+		}
+		return $this->redirect(['index', 'sort'=>'-sent_at']);
+	}
+
+
+
     /**
      * Finds the Pdf model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

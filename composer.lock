@@ -701,16 +701,16 @@
         },
         {
             "name": "bower-asset/intro.js",
-            "version": "v1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/usablica/intro.js.git",
-                "reference": "ea5466317ab75de6f46b0b39bae7a29c2aa18d68"
+                "reference": "5b162a5ed21145032b6f2fd62dc07f84a3a060e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/usablica/intro.js/zipball/ea5466317ab75de6f46b0b39bae7a29c2aa18d68",
-                "reference": "ea5466317ab75de6f46b0b39bae7a29c2aa18d68",
+                "url": "https://api.github.com/repos/usablica/intro.js/zipball/5b162a5ed21145032b6f2fd62dc07f84a3a060e9",
+                "reference": "5b162a5ed21145032b6f2fd62dc07f84a3a060e9",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -1163,16 +1163,16 @@
         },
         {
             "name": "bower-asset/unidragger",
-            "version": "v1.1.4",
+            "version": "v1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/unidragger.git",
-                "reference": "d904d2e3b383dc5777b00e50aa97137987116ae4"
+                "reference": "deeffde86dc40f74fe8c5d8000507098fb369631"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/unidragger/zipball/d904d2e3b383dc5777b00e50aa97137987116ae4",
-                "reference": "d904d2e3b383dc5777b00e50aa97137987116ae4",
+                "url": "https://api.github.com/repos/metafizzy/unidragger/zipball/deeffde86dc40f74fe8c5d8000507098fb369631",
+                "reference": "deeffde86dc40f74fe8c5d8000507098fb369631",
                 "shasum": ""
             },
             "require": {
@@ -2617,12 +2617,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-markdown.git",
-                "reference": "b839099e1f1b2e0a34c37f5776faaf5df51dde8f"
+                "reference": "f6c78178c8385a4898fc6b0d8160253d401e1675"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-markdown/zipball/b839099e1f1b2e0a34c37f5776faaf5df51dde8f",
-                "reference": "b839099e1f1b2e0a34c37f5776faaf5df51dde8f",
+                "url": "https://api.github.com/repos/kartik-v/yii2-markdown/zipball/f6c78178c8385a4898fc6b0d8160253d401e1675",
+                "reference": "f6c78178c8385a4898fc6b0d8160253d401e1675",
                 "shasum": ""
             },
             "require": {
@@ -2661,7 +2661,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-09-01 03:09:55"
+            "time": "2015-09-01 17:20:30"
         },
         {
             "name": "kartik-v/yii2-money",

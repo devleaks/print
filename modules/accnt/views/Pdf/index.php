@@ -6,6 +6,7 @@ use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use kartik\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PdfSearch */
@@ -17,11 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pdf-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= GridView::widget([
+		'options' => ['id' => 'action-gridview'],
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+		'panel' => [
+	        'heading'=> '<h3 class="panel-title">'.Yii::t('store', $this->title).'</h3>',
+	        'before'=> ' ',
+	        'after'=> Html::button(Yii::t('store', 'Print'), ['class' => 'btn btn-primary actionButton', 'data-action' => Pdf::ACTION_PRINT]).' '.
+					  Html::button(Yii::t('store', 'Delete'), ['class' => 'btn btn-danger actionButton', 'data-action' => Pdf::ACTION_DELETE]),
+	    ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -61,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				}
 			],
             [
-				'class' => 'yii\grid\ActionColumn',
+				'class' => 'kartik\grid\ActionColumn',
 				'template' => '{view} {delete}',
 	            'buttons' => [
 	                'view' => function ($url, $model) {
@@ -78,7 +84,33 @@ $this->params['breadcrumbs'][] = $this->title;
 	                },
 	            ]
 			],
+			[
+				'class' => 'kartik\grid\CheckboxColumn',
+            ]
         ],
     ]); ?>
 
+	<div class="pull-right">
+		
+	<?php $form = ActiveForm::begin(['id' => 'store-action', 'action' => Url::to(['bulk-action'])]) ?>
+
+    <?= Html::hiddenInput('action') ?>
+    <?= Html::hiddenInput('selection') ?>
+
+    <?php ActiveForm::end(); ?>
+
 </div>
+<script type="text/javascript">
+<?php $this->beginBlock('JS_SUBMIT_ACTION') ?>
+$('.actionButton').click(function() {
+	status = $(this).data('action');
+	selected = $('#action-gridview').yiiGridView('getSelectedRows');
+	$('input[name="action"]').val(status);
+	$('input[name="selection"]').val(selected);
+	$('#store-action').submit();
+});
+<?php $this->endBlock(); ?>
+</script>
+</div>
+<?php
+$this->registerJs($this->blocks['JS_SUBMIT_ACTION'], yii\web\View::POS_END);

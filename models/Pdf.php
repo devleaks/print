@@ -13,6 +13,11 @@ use yii\helpers\Url;
  */
 class Pdf extends _Pdf
 {
+	/** Bulk action ID */
+	const ACTION_DELETE = 'DELETE';
+	/** Bulk action ID */
+	const ACTION_PRINT = 'PRINT';
+	
     /**
      * @inheritdoc
      */
