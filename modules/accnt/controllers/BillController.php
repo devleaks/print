@@ -43,7 +43,7 @@ class BillController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'compta', 'employee'],
+	                    'roles' => ['admin', 'manager', 'compta', 'employee'],
 	                ],
 	            ],
 	        ],

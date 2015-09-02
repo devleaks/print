@@ -16,6 +16,9 @@ use yii\helpers\Url;
  */
 class PdfController extends Controller
 {
+	// see http://www.it.uu.se/datordrift/maskinpark/skrivare/cups/ for options
+	public $print_command = 'lpr -o media=A4 -o sides=two-sided-long-edge';
+
     public function behaviors()
     {
         return [
@@ -87,7 +90,6 @@ class PdfController extends Controller
 					$action = $_POST['action'];
 					if(in_array($action, [Pdf::ACTION_DELETE, Pdf::ACTION_PRINT])) {					
 						Yii::trace('action: '.$_POST['action'], 'PdfController::actionBulkAction');
-						$cmd = YII_ENV_DEV ? 'ls ' : 'lpr ';
 						foreach(Pdf::find()
 								->andWhere(['id' => $selection])
 								->each() as $pdf) {
@@ -95,14 +97,13 @@ class PdfController extends Controller
 								Yii::trace($pdf->id.' deleted', 'PdfController::actionBulkAction');
 								$pdf->delete();
 							} else if ($action == Pdf::ACTION_PRINT) {
-								$cmd .= $pdf->getFilepath().' ';								
+								$cmd = YII_ENV_DEV ? 'ls ' : $print_command;
+								$cmd .= ' '.$pdf->getFilepath();								
+								system($cmd, $status);
+								Yii::trace($cmd.': '.$status, 'PdfController::actionBulkAction');
 							}
 						}
-						if ($action == Pdf::ACTION_PRINT) {
-							system($cmd, $status);
-							Yii::$app->session->setFlash('success', Yii::t('store', '{0} files sent to printer.', count($selection)));
-							Yii::trace($cmd.': '.$status, 'PdfController::actionBulkAction');
-						}
+						Yii::$app->session->setFlash('success', Yii::t('store', '{0} files {1}.', [count($selection), $action == Pdf::ACTION_PRINT ? 'printed' : 'deleted']));
 					}
 				}
 			}
