@@ -103,7 +103,7 @@ class PdfController extends Controller
 								Yii::trace($cmd.': '.$status, 'PdfController::actionBulkAction');
 							}
 						}
-						Yii::$app->session->setFlash('success', Yii::t('store', '{0} files {1}.', [count($selection), $action == Pdf::ACTION_PRINT ? 'printed' : 'deleted']));
+						Yii::$app->session->setFlash('success', Yii::t('store', '{0} files {1}.', [count($selection), $action == Pdf::ACTION_PRINT ? Yii::t('store', 'printed') : Yii::t('store', 'deleted')]));
 					}
 				}
 			}

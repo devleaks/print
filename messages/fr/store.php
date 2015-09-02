@@ -438,6 +438,11 @@ return [
 	'Billed (HTVA) by Month' => 'Facturé (HTVA) par mois',
 	'Moving Average of Sales per Week' => 'Moyenne mobile des ventes par semaines',
 	'Item Categories' => 'Articles par catégories',
+	'{0} bill(s) created. {1}.' => '{0} facture(s) créée(s). {1}',
+	'Print them' => 'Les imprimer',
+	'{0} files {1}.' => '{0} fichier(s) {1}.',
+	'printed' => 'imprimé(s)',
+	'deleted' => 'supprimé(s)',
 	
 	/* attempt to resubmit work if order modified */
 	'Work has started on this order.' => 'Le travail sur cette commande a déjà commencé.',

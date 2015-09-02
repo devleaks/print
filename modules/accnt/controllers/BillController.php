@@ -2,24 +2,27 @@
 
 namespace app\modules\accnt\controllers;
 
-use Yii;
 use app\components\PdfDocumentGenerator;
 use app\components\RuntimeDirectoryManager;
 use app\models\Account;
 use app\models\Attachment;
 use app\models\Bill;
 use app\models\BillSearch;
-use app\models\Cash;
 use app\models\CaptureBalance;
+use app\models\Cash;
 use app\models\Client;
 use app\models\Order;
 use app\models\OrderSearch;
 use app\models\Payment;
 use app\models\PrintedDocument;
 use app\models\Sequence;
+
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -146,6 +149,7 @@ class BillController extends Controller
 			        $dataProvider = new ArrayDataProvider([
 						'allModels' => $bills,
 					]);
+					Yii::$app->session->setFlash('success', Yii::t('store', '{0} bill(s) created. {1}.', [count($bills), Html::a(Yii::t('store', 'Print them'), Url::to(['/accnt/pdf', 'sort' => '-created_at']))]));					
 			        return $this->render('bom-bills', [
 			            'dataProvider' => $dataProvider,
 			        ]);

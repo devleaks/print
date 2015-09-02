@@ -146,6 +146,13 @@ class Bill extends Document {
 				$model->send();
 			}
 			$model->save();
+			
+			$pdf = new PrintedDocument([
+				'document'	=> $model,
+				'save' => true,
+			]);
+			$pdf->render();
+			
 			return $model;
 		}	
 		return null;
