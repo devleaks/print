@@ -2,11 +2,12 @@
 
 namespace app\modules\stats\controllers;
 
+use app\models\Bill;
 use app\models\Client;
-use app\models\Event;
-use app\models\Order;
 use app\models\Document;
 use app\models\DocumentLine;
+use app\models\Event;
+use app\models\Order;
 
 use Yii;
 use yii\web\Controller;
@@ -304,6 +305,29 @@ class OrderController extends Controller
 			])
 		]);
 		
+	}
+	
+	
+	public function actionSales($type, $date) {
+		$year  = substr($date, 0, 4);
+		$month = substr($date, 5, 2);
+		$date_from = $year.'-'.str_pad($month, 2, '0', STR_PAD_LEFT).'-01';
+		$date_to = date("Y-m-t", strtotime($date_from));
+		if($type == Document::TYPE_BILL) {
+			$q = Bill::find()
+				->andWhere(['between', 'created_at', $date_from, $date_to]);
+		} else {
+			$q = Document::find()
+				->andWhere(['document_type' => $type])
+				->andWhere(['between', 'due_date', $date_from, $date_to]);
+		}
+		
+        return $this->render('sales',[
+			'dataProvider' => new ActiveDataProvider([
+				'query' => $q
+			]),
+			'searchModel' => null
+		]);
 	}
 	
 }

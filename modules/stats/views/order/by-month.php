@@ -1,17 +1,22 @@
 <?php
 
+use kartik\helpers\Enum;
+
 use miloschuman\highcharts\Highcharts;
 use miloschuman\highcharts\HighchartsAsset;
-use yii\grid\GridView;
+
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\helpers\VarDumper;
-use kartik\helpers\Enum;
+use yii\web\JsExpression;
 
 HighchartsAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParameterSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$curr_year = date('Y');
+
 $data1 = [];
 foreach($dataProvider->allModels as $m) {
 	if(!isset($data1[$m['year']][$m['document_type']])) $data[$m['year']][$m['document_type']] = [];
@@ -25,11 +30,11 @@ foreach($data1 as $k => $v)
 	foreach($v as $k1 => $v1) {
 		ksort($v1);
 		$v2 = [];
-		for($i=0;$i<12;$i++) {
+		for($i=1;$i<=12;$i++) {
 			if(isset($v1[$i])) {
-				$v2[$i] = $v1[$i];
+				$v2[$i-1] = ['y' => $v1[$i], 'url' => Url::to(['sales', 'type'=> $k1, 'date'=>$k.'-'.str_pad($i, 2, '0', STR_PAD_LEFT)])];
 			} else {
-				$v2[$i] = 0;
+				$v2[$i-1] = 0;
 			}
 		}
 //		foreach($v1 as $d)
@@ -91,7 +96,15 @@ $this->params['breadcrumbs'][] = $this->title;
 		            ],
 					'column' => [
 		                'stacking' => 'normal'
-					]
+					],
+					'series'=> [
+		                'cursor'=> 'pointer',
+		                'point'=> [
+		                    'events'=> [
+		                        'click'=> new JsExpression('function () { location.href = this.options.url; }')
+		                    ]
+		                ]
+		            ]
 		        ],
 		        'legend' => [
 		            'layout' => 'vertical',
