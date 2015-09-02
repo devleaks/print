@@ -97,7 +97,7 @@ class PdfController extends Controller
 								Yii::trace($pdf->id.' deleted', 'PdfController::actionBulkAction');
 								$pdf->delete();
 							} else if ($action == Pdf::ACTION_PRINT) {
-								$cmd = YII_ENV_DEV ? 'ls ' : $print_command;
+								$cmd = YII_ENV_DEV ? 'ls ' : $this->print_command;
 								$cmd .= ' '.$pdf->getFilepath();								
 								system($cmd, $status);
 								Yii::trace($cmd.': '.$status, 'PdfController::actionBulkAction');
