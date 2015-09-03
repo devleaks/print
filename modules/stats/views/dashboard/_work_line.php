@@ -19,8 +19,10 @@ $(function() {
 		        chart: {
 		            plotBackgroundColor: null,
 		            plotBorderWidth: 0,
-		            plotShadow: false
-		        },
+		            plotShadow: false,
+					style: {
+						fontFamily: 'Helvetica Neue'
+					}		        },
 				title: {
 					text: "<?= Yii::t('store', $title) ?>"
 				},

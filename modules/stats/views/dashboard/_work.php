@@ -4,7 +4,7 @@ use yii\helpers\Url;
 ?>
 <div class="dashboard-work">
 
-<h4><?= Yii::t('store', 'Work') ?></h4>
+<h4><?= Yii::t('store', 'Works') ?></h4>
 
 <div class="row">
 	<div class="col-lg-3">

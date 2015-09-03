@@ -20,7 +20,10 @@ $(function() {
 	        $('#lately').highcharts({
 
 			        chart: {
-			            type: 'column'
+			            type: 'column',
+						style: {
+							fontFamily: 'Helvetica Neue'
+						}
 			        },
 
 			        title: {
