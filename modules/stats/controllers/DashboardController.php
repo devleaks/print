@@ -41,15 +41,15 @@ class DashboardController extends Controller
 
     public function actionIndex()
     {
-		$last_week = new Moment();
-//		$last_week->subtractWeeks(1);
+		$moment = new Moment();
+		//$moment->subtractWeeks(2);
 		$q = new Query();
 		$docs = $q->from('document')
 			->select([
 				'document_type',
 				'status',
 				'total_count' => 'count(id)'])
-			->andWhere(['>', 'due_date', $last_week->format('Y-m-d')])
+			->andWhere(['>=', 'due_date', $moment->format('Y-m-d')])
 			->groupBy('status,document_type')
 			;
 		$documents = [];
@@ -63,7 +63,7 @@ class DashboardController extends Controller
 			->andWhere(['not', ['status' => Work::STATUS_DONE]])
 			->andWhere(['<', 'due_date', date('Y-m-d')]);
 
-		Yii::trace('Moment:'.$last_week->format('Y-m-d'));
+		Yii::trace('Moment:'.$moment->format('Y-m-d'));
         return $this->render('index', [
 			'documents' => $documents,
 			'works' => $works
@@ -175,10 +175,12 @@ group by (wl.status)
 					->select([
 							'total_count' => 'sum(document_line.quantity)',
 							'status' => 'work_line.status',
-						])
+							'status_order' => 'ELT(FIELD(work_line.status,"TODO", "BUSY", "WARN", "DONE"),1,2,3,4)'
+						])// Wow.
 					->andWhere('work_line.document_line_id = document_line.id')
 					->andWhere(['work_id' => $work])
-					->groupBy('work_line.status');
+					->groupBy('work_line.status')
+					->orderBy('status_order');
 						
 		return $work_lines;		
 	}
