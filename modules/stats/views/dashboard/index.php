@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="row">
 	<div class="col-lg-6">
-		<?= $this->render('_today', ['documents' => $documents]) ?>
+		<?= $this->render('_today', ['documents' => $documents, 'works' => $works]) ?>
 	</div>
 	<div class="col-lg-6">
 		<?= $this->render('_lately') ?>
@@ -17,12 +17,13 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <div class="row">
-	<div class="col-lg-8">
+	<div class="col-lg-12">
 		<?= $this->render('_work') ?>
 	</div>
-	<div class="col-lg-4">
+<!--	<div class="col-lg-4">
 		<?= $this->render('_misc') ?>
 	</div>
+-->
 </div>
 
 </div>

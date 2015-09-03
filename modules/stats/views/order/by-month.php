@@ -37,8 +37,6 @@ foreach($data1 as $k => $v)
 				$v2[$i-1] = 0;
 			}
 		}
-//		foreach($v1 as $d)
-//			$v2[] = $d;
 		$data[] = [
 			'name' => Yii::t('store', $k1).'-'.$k,
 			'stack' => $k,

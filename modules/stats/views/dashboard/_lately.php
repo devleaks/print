@@ -54,6 +54,16 @@ $(function() {
 			        plotOptions: {
 			            column: {
 			                stacking: 'normal'
+			            },
+						series: {
+			                cursor: 'pointer',
+			                point: {
+			                    events: {
+			                        click: function() {
+			                            window.open(this.options.url);
+			                        }
+			                    }
+			                }
 			            }
 			        },
 

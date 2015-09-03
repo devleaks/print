@@ -31,4 +31,6 @@ use app\models\Document;
 	?>
 </table>
 
+Travaux non terminés: <?= $works->count() ?>.
+
 </div>

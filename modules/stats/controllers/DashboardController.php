@@ -2,14 +2,18 @@
 
 namespace app\modules\stats\controllers;
 
-use Yii;
 use app\models\Bootstrap;
 use app\models\Work;
 use app\models\WorkLine;
 use app\models\Document;
+
+use Moment\Moment;
+
+use Yii;
 use yii\web\Controller;
 use yii\db\Query;
-use Moment\Moment;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 class DashboardController extends Controller
 {
@@ -38,7 +42,7 @@ class DashboardController extends Controller
     public function actionIndex()
     {
 		$last_week = new Moment();
-		$last_week->subtractWeeks(1);
+//		$last_week->subtractWeeks(1);
 		$q = new Query();
 		$docs = $q->from('document')
 			->select([
@@ -54,16 +58,16 @@ class DashboardController extends Controller
 				$documents[$d['document_type']] = [];
 			$documents[$d['document_type']][$d['status']] = $d['total_count'];
 		}
+		
+		$works = Work::find()
+			->andWhere(['not', ['status' => Work::STATUS_DONE]])
+			->andWhere(['<', 'due_date', date('Y-m-d')]);
 
 		Yii::trace('Moment:'.$last_week->format('Y-m-d'));
         return $this->render('index', [
-			'documents' => $documents
+			'documents' => $documents,
+			'works' => $works
 		]);
-    }
-
-    public function actionTest()
-    {
-        return $this->render('test');
     }
 
 	/**
@@ -101,19 +105,19 @@ class DashboardController extends Controller
 				'year' => 'year(due_date)',
 				'month' => 'month(due_date)',
 				'total_count' => 'count(id)',
-				'total_amount' => 'sum(if(vat_bool = 1, price_htva, price_tvac))'
+				'total_amount' => 'sum(price_htva)'
 			])
 			->groupBy('document_type,year,month');
 
 		$q = Document::find()
 			->select([
 				'document_type',
-				'year' => 'year(due_date)',
-				'month' => 'month(due_date)',
+				'year' => 'year(created_at)',
+				'month' => 'month(created_at)',
 				'total_count' => 'count(id)',
-				'total_amount' => 'sum(if(vat_bool = 1, price_htva, price_tvac))'
+				'total_amount' => 'sum(price_htva)'
 			])
-			->andWhere(['document_type' => [Document::TYPE_ORDER, Document::TYPE_TICKET]])
+			->andWhere(['document_type' => [Document::TYPE_BILL, Document::TYPE_TICKET]])
 			->groupBy('document_type,year,month')
 			->union($archive)
 			->asArray()->all();
@@ -123,14 +127,20 @@ class DashboardController extends Controller
 			if(!isset($data1[$m['year']][$m['document_type']])) $data[$m['year']][$m['document_type']] = [];
 			$data1[$m['year']][$m['document_type']][$m['month']] = intval($m['total_amount']);
 		}
-
+		ksort($data1);
+		
 		$data = [];
 		foreach($data1 as $k => $v)
 			foreach($v as $k1 => $v1) {
 				ksort($v1);
 				$v2 = [];
-				foreach($v1 as $d)
-					$v2[] = $d;
+				for($i=1;$i<=12;$i++) {
+					if(isset($v1[$i])) {
+						$v2[$i-1] = ['y' => $v1[$i], 'url' => Url::to(['order/sales', 'type'=> $k1, 'date'=>$k.'-'.str_pad($i, 2, '0', STR_PAD_LEFT)])];
+					} else {
+						$v2[$i-1] = 0;
+					}
+				}
 				$data[] = [
 					'name' => Yii::t('store', $k1).'-'.$k,
 					'stack' => $k,
@@ -190,3 +200,17 @@ group by (wl.status)
 	
 	
 }
+/* Query Pool
+
+select d.id, d.created_at, min(wl.updated_at), max(wl.updated_at), datediff(min(wl.updated_at),d.created_at), datediff(max(wl.updated_at),d.created_at)
+from document d,
+work w,
+work_line wl
+where d.id = w.document_id
+and wl.work_id = w.id
+group by d.id
+
+
+
+
+*/

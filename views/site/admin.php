@@ -88,6 +88,7 @@ $this->title = 'Labo JJ Micheli';
 				<p data-intro='Menu rapide vers actions les plus courantes'>
 					&raquo; <a href="<?= Url::to(['/order/document/', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'All documents')?></a>
 					&raquo; <a href="<?= Url::to(['/stats/']) ?>"><?= Yii::t('store', "Stats")?></a>
+					&raquo; <a href="<?= Url::to(['/stats/dashboard']) ?>"><?= Yii::t('store', "Dashboard")?></a>
 				</p>
             </div>
 			<?php endif; ?>

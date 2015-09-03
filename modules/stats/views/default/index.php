@@ -41,12 +41,12 @@ $this->params['breadcrumbs'][] = $this->title;
 			<h3>Travaux & Tâches</h3>
 
 				<ul>
-					<li>Durée moyenne entre commande et début de réalisation</li>
-					<li>Durée moyenne entre commande et fin de réalisation</li>
 					<li><a href="<?= Url::to(['/stats/work/']) ?>"><?= Yii::t('store', 'Durée moyenne entre début et fin de réalisation')?></a></li>
 					<li><a href="<?= Url::to(['/stats/work/lines']) ?>"><?= Yii::t('store', 'Durée moyenne entre début et fin de tâche')?></a></li>
+<!--				<li>Durée moyenne entre commande et début de réalisation</li>
+					<li>Durée moyenne entre commande et fin de réalisation</li>
 					<li>Durée moyenne par tâche</li>
-				</ul>		
+-->				</ul>		
 		</div>
 
 		<div class="col-lg-6">
