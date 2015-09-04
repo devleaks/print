@@ -121,6 +121,8 @@ class Client extends _Client
 		$addr .= '<br><abbr title="Phone"><i class="glyphicon glyphicon-phone"></i></abbr>'.' '.($this->gsm ? $this->gsm : Yii::t('store', 'No mobile phone.').' '.Yii::t('store', 'No SMS.'));
 		$addr .= '<br><abbr title="Email"><i class="glyphicon glyphicon-envelope"></i></abbr>'.' '.($this->email ? Html::mailto($this->email) : Yii::t('store', 'No email.'));
 		$addr .= '<br><br><abbr title="VAT"><i class="glyphicon glyphicon-briefcase"></i></abbr>'.' '.($this->numero_tva ? $this->numero_tva : Yii::t('store', 'No VAT.'));
+		if($this->commentaires)
+			$addr .= '<br><br><abbr title="Note"><i class="glyphicon glyphicon-paperclip"></i></abbr>'.' '.$this->commentaires;
 		$addr .= '</address>';
 //		return KHtml::well($addr, KHtml::SIZE_TINY);
 		return KHtml::panel([

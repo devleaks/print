@@ -89,6 +89,9 @@ Html::a('<i class="glyphicon glyphicon-book"></i>',
 				'attribute' => 'numero_tva',
 				'visible' => $client->numero_tva,
 			],
+            [
+                'attribute'=>'commentaires',
+            ],
         ],
     ]) ?>
 </div>
