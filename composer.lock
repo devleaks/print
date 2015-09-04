@@ -733,12 +733,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/isotope.git",
-                "reference": "9dbe40d5ece551a87daed617f07dcf89f598aae2"
+                "reference": "730014a7a20d5daa4099204de33076b1a2a8178f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/9dbe40d5ece551a87daed617f07dcf89f598aae2",
-                "reference": "9dbe40d5ece551a87daed617f07dcf89f598aae2",
+                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/730014a7a20d5daa4099204de33076b1a2a8178f",
+                "reference": "730014a7a20d5daa4099204de33076b1a2a8178f",
                 "shasum": ""
             },
             "require": {
@@ -778,7 +778,7 @@
                 }
             },
             "description": "Filter and sort magical layouts",
-            "time": "2015-08-23 09:59:31"
+            "time": "2015-09-03 14:26:46"
         },
         {
             "name": "bower-asset/jquery",
@@ -4460,7 +4460,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thomaspark/bootswatch/zipball/ceefe110c1f64b9ebca41215d02c6e50e45d9e19",
+                "url": "https://api.github.com/repos/thomaspark/bootswatch/zipball/913f54b9483b99fa12c7feccfa18ee5cc0206043",
                 "reference": "57a25bd6da65fcc034c2029c0390272830572b93",
                 "shasum": ""
             },
