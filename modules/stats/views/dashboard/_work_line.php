@@ -22,7 +22,8 @@ $(function() {
 		            plotShadow: false,
 					style: {
 						fontFamily: 'Helvetica Neue'
-					}		        },
+					}
+		        },
 				title: {
 					text: "<?= Yii::t('store', $title) ?>"
 				},
