@@ -22,7 +22,7 @@ class RenfortPriceCalculator extends PriceCalculator {
 
 	function setSupport($s) {
 		$this->support = $s;
-		$this->inside = $this->support? ($this->support->reference == Item::TYPE_CHROMALUXE ? 40 : 20) : 20;
+		$this->inside = 0; // $this->support? ($this->support->reference == Item::TYPE_CHROMALUXE ? 40 : 20) : 20;
 	}
 
 	function setFrame($f) {
