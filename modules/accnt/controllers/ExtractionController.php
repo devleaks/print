@@ -80,8 +80,16 @@ class ExtractionController extends Controller
     {
 		if($model->extraction_method == CaptureExtraction::METHOD_DATE) {
 			$dates = explode(' - ', $model->date_range);
-			$date_from = trim($dates[0]).' 00:00:00';
-			$date_to = date('Y-m-d 00:00:00', strtotime('+ 1 day', strtotime(trim($dates[1]))));
+			$date_from = '';
+			$date_to = '';
+			if(count($dates) == 2) {
+				$date_from = trim($dates[0]).' 00:00:00';
+				$date_to = date('Y-m-d 00:00:00', strtotime('+ 1 day', strtotime(trim($dates[1]))));
+			} else {
+				$date_from = substr($dates[0], 0, 10).' 00:00:00';
+				$date_to = substr($dates[0], 0, 10).' 23:59:59';
+				Yii::$app->session->setFlash('warning', Yii::t('store', 'There was no " - " separator between dates. I assume on date "{0}" only.', $date_from) );
+			}
 			Yii::trace('From '.$date_from.' to '.$date_to, 'ExtractionController::actionView');
 			$docs = ($model->extraction_type) ?
 					Bill::find()

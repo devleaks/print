@@ -40,7 +40,7 @@ Customer:<?= $model->comptabilite == '' ? 'UNKNOWN' : $model->comptabilite ?>
 
       Title:                <?= $model->titre ?>
 
-      Company:              <?= $model->autre_nom ?>
+      Company:              <?= substr($model->autre_nom, 0, 32) ?>
 
       PhoneBusiness:        <?= $model->bureau ?>
 
