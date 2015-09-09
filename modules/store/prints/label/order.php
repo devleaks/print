@@ -34,6 +34,11 @@ if($model->client->auComptoir()) {
 	<tr>
 			<td colspan="2" style="font-size: 2em; text-align:left;">Total: <?= $model->getDocumentLines()->count(); ?></td>
 	</tr>
+	<?php if ($model->note): ?>
+	<tr>
+			<td colspan="2" style="font-size: 1em; text-align:left;">Note: <?= $model->note; ?></td>
+	</tr>
+	<?php endif; ?>
 	</table>
 
 </div>
