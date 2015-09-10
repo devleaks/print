@@ -392,7 +392,7 @@ function price_renfort() {
 	} else {
 		$("#documentlinedetail-renfort_id").prop('disabled', false);
 		if(!isNaN(renfort_id)) {
-			minus_inside = ($("#documentline-item_id").val() == store_values.chroma) ? 20 : 10; // renfort placed 10cm inside for ChromaLuxe, 5cm inside for other
+			minus_inside = 0; // ($("#documentline-item_id").val() == store_values.chroma) ? 20 : 10; // renfort placed 10cm inside for ChromaLuxe, 5cm inside for other
 			renfortItem = getItemById(renfort_id);
 			console.log('price_renfort: renfort_id is '+renfortItem.id);
 			var price = getComputedPrice(renfortItem.id, w - minus_inside, h - minus_inside); 
