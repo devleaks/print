@@ -315,7 +315,7 @@ class OrderController extends Controller
 		$date_to = date("Y-m-t", strtotime($date_from));
 		if($type == Document::TYPE_BILL) {
 			$q = Bill::find()
-				->andWhere(['between', 'created_at', $date_from, $date_to]);
+				->andWhere(['month(created_at)' => $month]);
 		} else {
 			$q = Document::find()
 				->andWhere(['document_type' => $type])
