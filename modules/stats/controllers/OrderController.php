@@ -319,7 +319,7 @@ class OrderController extends Controller
 		} else {
 			$q = Document::find()
 				->andWhere(['document_type' => $type])
-				->andWhere(['between', 'due_date', $date_from, $date_to]);
+				->andWhere(['month(created_at)' => $month]);
 		}
 		
         return $this->render('sales',[
