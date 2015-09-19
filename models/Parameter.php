@@ -68,7 +68,7 @@ class Parameter extends _Parameter
 
 	public static function getMLText($domain, $name, $lang = null) {
 		$language = $lang ? $lang : Yii::$app->language;
-		$p = self::find()->where(['domain' => $domain, 'name' => $name, 'lang' => $lang])->one();
+		$p = self::find()->where(['domain' => $domain, 'name' => $name, 'lang' => $language])->one();
 
 		$p_fr  = self::find()->where(['domain' => $domain, 'name' => $name, 'lang' => 'fr'])->one();
 		$p_any = self::find()->where(['domain' => $domain, 'name' => $name])->one();

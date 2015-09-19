@@ -1,6 +1,7 @@
 <?php
 
 use app\models\CaptureEmail;
+use app\models\Parameter;
 use kartik\detail\DetailView;
 use kartik\widgets\SwitchInput;
 use yii\bootstrap\Modal;
@@ -20,7 +21,12 @@ $capture->email = $model->getNotificationEmail();
 
 $lang_before = Yii::$app->language;
 Yii::$app->language = isset($model->client->lang) ? $model->client->lang : 'fr';
-$capture->body = Yii::t('print', 'STD_SIGNATURE');
+$sign = Parameter::getMLText('communication', 'signature');
+if($sign != '') {
+	$capture->body = $sign;
+} else {
+	$capture->body = Yii::t('print', 'STD_SIGNATURE');
+}
 Yii::$app->language = $lang_before;
 ?>
 

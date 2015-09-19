@@ -130,7 +130,7 @@ return [
 	'Unpaid Bills' => 'Niet betaalde facturen',
 	'Please read attached document(s).' => 'Gelieve hierbij gevoegde dokumenten te lezen. Dank U.',
 
-	'STD_SIGNATURE' => "Kunt u, alstublieft, controle meting en afwerkingsopties.",
+	'STD_SIGNATURE' => "Kunt u, alstublieft, controle meting en afwerkingsopties. Vermeld uw ordernummer in alle communicatie en betalingen. Dank U.",
 
 	/** Letters: Headings, subjects, date, place & Footers */
 	'Brussels, {0}' => 'Brussel, {0}',

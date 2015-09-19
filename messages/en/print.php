@@ -17,5 +17,5 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-	'STD_SIGNATURE' => "Please check your order, dimensions and options.",
+	'STD_SIGNATURE' => "Please check your order, dimensions and options. Please mention your order number on all communications and when paying by bank transfer. Thank You.",
 ];
