@@ -39,7 +39,7 @@ class _Parameter extends \yii\db\ActiveRecord
             [['value_date', 'created_at', 'updated_at'], 'safe'],
             [['domain', 'lang'], 'string', 'max' => 20],
             [['name'], 'string', 'max' => 40],
-            [['value_text'], 'string', 'max' => 160]
+            [['value_text'], 'string', 'max' => 255]
         ];
     }
 

@@ -2892,7 +2892,7 @@
         </SQLField>
         <SQLField>
             <name><![CDATA[value_text]]></name>
-            <type><![CDATA[VARCHAR(160)]]></type>
+            <type><![CDATA[VARCHAR(255)]]></type>
             <temporaryOriginalName><![CDATA[name_1]]></temporaryOriginalName>
             <uid><![CDATA[BFF09667-40DC-4701-99B7-17AF557E9B24]]></uid>
         </SQLField>
@@ -3718,10 +3718,10 @@ mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
         <snapToGrid><![CDATA[1]]></snapToGrid>
         <SourceSidebarWidth><![CDATA[276.000000]]></SourceSidebarWidth>
         <uid><![CDATA[204F0FA2-D1A0-4C5F-A0A0-8F4CDBC4862E]]></uid>
-        <windowHeight><![CDATA[1081.000000]]></windowHeight>
+        <windowHeight><![CDATA[1136.000000]]></windowHeight>
         <windowLocationX><![CDATA[493.000000]]></windowLocationX>
-        <windowLocationY><![CDATA[336.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{0, 2}]]></windowScrollOrigin>
+        <windowLocationY><![CDATA[281.000000]]></windowLocationY>
+        <windowScrollOrigin><![CDATA[{1, 611}]]></windowScrollOrigin>
         <windowWidth><![CDATA[1680.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>
