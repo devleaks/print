@@ -110,6 +110,21 @@ class DocumentController extends Controller
     }
 
     /**
+     * Lists all Order models from Website Order.
+     * @return mixed
+     */
+    public function actionWebsite() {
+        $searchModel = new DocumentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere(['like', 'name', '-W-']);
+
+        return $this->render('website', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
      * Lists all Order models.
      * @return mixed
      */
