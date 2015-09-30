@@ -8,11 +8,7 @@ use Yii;
  * This is the model class for table "website_order".
  *
  * @property integer $id
- * @property string $rawjson
- * @property string $status
- * @property string $created_at
- * @property string $updated_at
- * @property integer $order_date
+ * @property string $order_date
  * @property string $name
  * @property string $company
  * @property string $address
@@ -22,6 +18,12 @@ use Yii;
  * @property string $email
  * @property string $promocode
  * @property string $comment
+ * @property string $rawjson
+ * @property string $status
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $order_name
+ * @property string $clientcode
  *
  * @property WebsiteOrderLine[] $websiteOrderLines
  */
@@ -41,13 +43,14 @@ class _WebsiteOrder extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['rawjson', 'order_name'], 'required'],
             [['rawjson'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['order_date'], 'integer'],
-            [['status'], 'string', 'max' => 20],
-            [['name', 'company', 'city', 'email'], 'string', 'max' => 80],
+            [['order_date', 'vat', 'phone', 'promocode', 'clientcode'], 'string', 'max' => 40],
+            [['name', 'company', 'city', 'email', 'order_name'], 'string', 'max' => 80],
             [['address', 'comment'], 'string', 'max' => 160],
-            [['vat', 'phone', 'promocode'], 'string', 'max' => 40]
+            [['status'], 'string', 'max' => 20],
+            [['order_name'], 'unique']
         ];
     }
 
@@ -58,10 +61,6 @@ class _WebsiteOrder extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('store', 'ID'),
-            'rawjson' => Yii::t('store', 'Rawjson'),
-            'status' => Yii::t('store', 'Status'),
-            'created_at' => Yii::t('store', 'Created At'),
-            'updated_at' => Yii::t('store', 'Updated At'),
             'order_date' => Yii::t('store', 'Order Date'),
             'name' => Yii::t('store', 'Name'),
             'company' => Yii::t('store', 'Company'),
@@ -72,6 +71,12 @@ class _WebsiteOrder extends \yii\db\ActiveRecord
             'email' => Yii::t('store', 'Email'),
             'promocode' => Yii::t('store', 'Promocode'),
             'comment' => Yii::t('store', 'Comment'),
+            'rawjson' => Yii::t('store', 'Rawjson'),
+            'status' => Yii::t('store', 'Status'),
+            'created_at' => Yii::t('store', 'Created At'),
+            'updated_at' => Yii::t('store', 'Updated At'),
+            'order_name' => Yii::t('store', 'Order Name'),
+            'clientcode' => Yii::t('store', 'Clientcode'),
         ];
     }
 

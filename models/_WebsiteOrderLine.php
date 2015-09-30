@@ -9,15 +9,15 @@ use Yii;
  *
  * @property integer $id
  * @property integer $website_order_id
- * @property string $status
- * @property string $created_at
- * @property string $updated_at
  * @property string $filename
  * @property string $finish
  * @property integer $profile_bool
- * @property integer $quantitiy
  * @property string $format
  * @property string $comment
+ * @property string $status
+ * @property string $created_at
+ * @property string $updated_at
+ * @property integer $quantity
  *
  * @property WebsiteOrder $websiteOrder
  */
@@ -38,10 +38,10 @@ class _WebsiteOrderLine extends \yii\db\ActiveRecord
     {
         return [
             [['website_order_id'], 'required'],
-            [['website_order_id', 'profile_bool', 'quantitiy'], 'integer'],
+            [['website_order_id', 'profile_bool', 'quantity'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['status', 'finish', 'format'], 'string', 'max' => 20],
             [['filename'], 'string', 'max' => 80],
+            [['finish', 'format', 'status'], 'string', 'max' => 20],
             [['comment'], 'string', 'max' => 160]
         ];
     }
@@ -54,15 +54,15 @@ class _WebsiteOrderLine extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('store', 'ID'),
             'website_order_id' => Yii::t('store', 'Website Order ID'),
-            'status' => Yii::t('store', 'Status'),
-            'created_at' => Yii::t('store', 'Created At'),
-            'updated_at' => Yii::t('store', 'Updated At'),
             'filename' => Yii::t('store', 'Filename'),
             'finish' => Yii::t('store', 'Finish'),
             'profile_bool' => Yii::t('store', 'Profile Bool'),
-            'quantitiy' => Yii::t('store', 'Quantitiy'),
             'format' => Yii::t('store', 'Format'),
             'comment' => Yii::t('store', 'Comment'),
+            'status' => Yii::t('store', 'Status'),
+            'created_at' => Yii::t('store', 'Created At'),
+            'updated_at' => Yii::t('store', 'Updated At'),
+            'quantity' => Yii::t('store', 'Quantity'),
         ];
     }
 
