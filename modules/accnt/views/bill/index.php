@@ -58,10 +58,13 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 	            'label' => Yii::t('store', 'Amount'),
 				'attribute' => 'price_tvac',
-				'format' => 'currency',
+				'format' => 'raw',
 				'hAlign' => GridView::ALIGN_RIGHT,
 				'noWrap' => true,
 				'pageSummary' => true,
+	            'value' => function ($model, $key, $index, $widget) {
+							return $model->getAmount(true);
+				},
 			],
 			[
 	            'label' => Yii::t('store', 'Prepaid'),
