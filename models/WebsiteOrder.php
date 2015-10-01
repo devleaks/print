@@ -74,6 +74,7 @@ class WebsiteOrder extends _WebsiteOrder
 		$transaction = Yii::$app->db->beginTransaction();
 
 		$this->order_date = $weborder->date;
+		$this->order_id = $weborder->order_id;
 		$this->name = $weborder->name;
 		$this->company = $weborder->company;
 		$this->address = $weborder->address;

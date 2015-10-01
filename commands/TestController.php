@@ -3,6 +3,7 @@
 namespace app\commands;
 
 use app\models\Order;
+use app\models\Document;
 use yii\console\Controller;
 use Yii;
 
@@ -55,4 +56,13 @@ class TestController extends Controller {
 			}
 		}
 	}
+	
+	public function actionList() {
+		foreach(Document::find()->andWhere(['not', ['status' => [Document::STATUS_TODO]]])->andWhere(['not', ['document_type' => [Document::TYPE_BID]]])->each() as $model) {
+			if($model->getBalance() == 0 && $model->status != Document::STATUS_CLOSED)
+				echo 'Model '.$model->name.', ';
+		}
+    }
+
+    
 }

@@ -10,7 +10,7 @@ use yii\db\ActiveRecord;
  */
 class WebsiteOrderLine extends _WebsiteOrderLine
 {
-	const PROMOCODE = 'PM001-';
+	const PROMOCODE = 'PROMO-';
 
     /**
      * @inheritdoc
@@ -31,17 +31,27 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 
 
 	protected function getChromaType() {
-		$str = strtolower($this->finish);
-		if(in_array($str, ['mat', 'mate', 'matte'])) {
-			return Item::findOne(['reference' => 'ChromaWHITEMAT']);
-		} else {
-			return Item::findOne(['reference' => 'ChromaWHITEGLOSSY']);
+		switch(strtolower($this->finish)) {
+			case 'zilver mat': return Item::findOne(['reference' => 'ChromaCLEARMAT']); break;
+			case 'glanzend': return Item::findOne(['reference' => 'ChromaWHITEGLOSSY']); break;
+			case 'mat': return Item::findOne(['reference' => 'ChromaWHITEMAT']); break;			
+			return null;
+		}
+	}
+	protected function getProfileType() {
+		switch(strtolower($this->finish)) {
+			case 'ja': return Item::findOne(['reference' => 'Renfort']); break;
+			case 'pro': return Item::findOne(['reference' => 'RenfortPro']); break;
+			default: return null; break;			
 		}
 	}
 /*
-INSERT INTO `item` (`id`, `yii_category`, `comptabilite`, `reference`, `libelle_court`, `libelle_long`, `categorie`, `prix_de_vente`, `taux_de_tva`, `status`, `type_travaux_photos`, `type_numerique`, `fournisseur`, `reference_fournisseur`, `conditionnement`, `prix_d_achat_de_reference`, `client`, `quantite`, `date_initiale`, `date_finale`, `suivi_de_stock`, `reassort_possible`, `seuil_de_commande`, `site_internet`, `creation`, `mise_a_jour`, `en_cours`, `stock`, `commentaires`, `identification`, `created_at`, `updated_at`)
+INSERT INTO `item` (`yii_category`, `comptabilite`, `reference`, `libelle_court`, `libelle_long`, `categorie`, `prix_de_vente`, `taux_de_tva`, `status`, `type_travaux_photos`, `type_numerique`, `fournisseur`, `reference_fournisseur`, `conditionnement`, `prix_d_achat_de_reference`, `client`, `quantite`, `date_initiale`, `date_finale`, `suivi_de_stock`, `reassort_possible`, `seuil_de_commande`, `site_internet`, `creation`, `mise_a_jour`, `en_cours`, `stock`, `commentaires`, `identification`, `created_at`, `updated_at`)
 VALUES
-	(1050, 'Promo', '700200', 'PM001-40x60', 'ChromaLuxe 40x60 Promo', 'CL40x60PROMO', 'ChromaLuxe', 45.00, 21.00, 'ACTIVE', 'Divers', 'Divers', 'Divers ', '-', '1', '0', 'Prix de vente ordinaire ', 1, '2000-01-01', '2099-12-31', 'Faux', 'Faux', '0', 'Faux', '2013-07-10', '2013-07-10', 'Vrai', '0', '', NULL, NULL, NULL);
+	('Promo', '700200', 'PROMO-40x60', 'ChromaLuxe 40x60 Promo', 'CL40x60PROMO', 'ChromaLuxe', 60.00, 21.00, 'ACTIVE', 'Divers', 'Divers', 'Divers ', '-', '1', '0', 'Prix de vente ordinaire ', 1, '2000-01-01', '2099-12-31', 'Faux', 'Faux', '0', 'Faux', '2013-07-10', '2013-07-10', 'Vrai', '0', '', NULL, NULL, NULL);
+INSERT INTO `item` (`yii_category`, `comptabilite`, `reference`, `libelle_court`, `libelle_long`, `categorie`, `prix_de_vente`, `taux_de_tva`, `status`, `type_travaux_photos`, `type_numerique`, `fournisseur`, `reference_fournisseur`, `conditionnement`, `prix_d_achat_de_reference`, `client`, `quantite`, `date_initiale`, `date_finale`, `suivi_de_stock`, `reassort_possible`, `seuil_de_commande`, `site_internet`, `creation`, `mise_a_jour`, `en_cours`, `stock`, `commentaires`, `identification`, `created_at`, `updated_at`)
+	VALUES
+		('Promo', '700200', 'PROMO-50x50', 'ChromaLuxe 50x50 Promo', 'CL50x50PROMO', 'ChromaLuxe', 60.00, 21.00, 'ACTIVE', 'Divers', 'Divers', 'Divers ', '-', '1', '0', 'Prix de vente ordinaire ', 1, '2000-01-01', '2099-12-31', 'Faux', 'Faux', '0', 'Faux', '2013-07-10', '2013-07-10', 'Vrai', '0', '', NULL, NULL, NULL);
 */
 	public function createOrderLine($order) {
 		$ok = true;
@@ -50,6 +60,10 @@ VALUES
 			$main_item = Item::findOne(['reference' => self::PROMOCODE.$this->format]);
 		} else {
 			$main_item = Item::findOne(['reference' => Item::TYPE_CHROMALUXE]);
+		}
+		if(!$main_item) {
+			echo 'Could not find item.';
+			exit(1);
 		}
 		$sizes = explode('x', strtolower($this->format));
 		
@@ -71,7 +85,11 @@ VALUES
 		
 		$detail = new DocumentLineDetail();
 		$detail->document_line_id = $dl->id;
-		
+
+		/** ChromaLuxe details */
+		$finish_item = $this->getChromaType();
+		$detail->chroma_id = $finish_item->id;
+
 		$total_price = 0;
 		if($main_item->reference == Item::TYPE_CHROMALUXE) {
 			$pc = new ChromaLuxePriceCalculator();
@@ -79,8 +97,9 @@ VALUES
 			$total_price += $detail->price_chroma;
 		}
 
-		if($this->profile_bool) {
-			$renfort_item = Item::findOne(['reference' => 'Renfort']);
+		/** Profile details */
+		if(in_array(strtolower($this->profile_bool), ['ja','pro'])) {
+			$renfort_item = $this->getProfileType();
 			$detail->renfort_id = $renfort_item->id;
 			if($main_item->reference == Item::TYPE_CHROMALUXE) {
 				$pc = new RenfortPriceCalculator(['item'=>$renfort_item]);
@@ -98,10 +117,6 @@ VALUES
 				$ok = false;
 			}
 		}
-		
-		$finish_item = $this->getChromaType();
-		$detail->chroma_id = $finish_item->id;
-
 		
 		if(!$detail->save()) {
 			Yii::trace(print_r($detail->errors, true), 'WebsiteOrderLine::createOrderLine');
