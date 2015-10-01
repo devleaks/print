@@ -114,14 +114,19 @@ $apphomedir = Yii::getAlias('@app');
 			/** Search field */
 			$form = ActiveForm::begin(['action' => Url::to(['/order/document/search'])]);
 			$model = new CaptureSearch();
-			echo $form->field($model, 'search')->textInput(['maxlength' => 40, 'class' => 'input-sm pull-right', 'style' => 'margin-top: 10px;'])->label('');
+			echo $form->field($model, 'search'/*, [
+			    'addon' => [
+					'append' => [
+						'content' => '<i class="glyphicon glyphicon-search"></i>'					]
+				]
+			]*/)->textInput(['maxlength' => 40, 'class' => 'input-sm pull-right', 'style' => 'margin-top: 10px;'])->label('');
 			ActiveForm::end();
 
 
             NavBar::end();
         ?>
 
-        <div class="container-fluid" style="margin-top: 60px;">
+        <div class="container">
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 				'options' => [
@@ -135,7 +140,7 @@ $apphomedir = Yii::getAlias('@app');
     </div>
 
     <footer class="footer">
-        <div class="container-fluid">
+        <div class="container">
             <p class="pull-left">&copy; Labo JJ Micheli <?= date('Y') ?>
 				<small><?php echo ' — Version '.`cd $apphomedir ; git describe --tags`;
 					if(YII_DEBUG) {

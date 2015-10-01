@@ -119,7 +119,7 @@ class BillController extends Controller
 		$dataProvider->query->andWhere([
 			'document.bom_bool' => true,
 			'document.bill_id' => null,
-			'document.status' => [Order::STATUS_DONE, Order::STATUS_TOPAY]
+//			'document.status' => [Order::STATUS_DONE, Order::STATUS_TOPAY]
 		]);
 
         return $this->render('boms', [
