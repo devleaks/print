@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			[
 	            'label' => Yii::t('store', 'Amount'),
-				'attribute' => 'price_tvac',
+				'attribute' => 'total_amount',
 				'format' => 'raw',
 				'hAlign' => GridView::ALIGN_RIGHT,
 				'noWrap' => true,
@@ -68,6 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			[
 	            'label' => Yii::t('store', 'Prepaid'),
+				'attribute' => 'total_prepaid',
 				'format' => 'currency',
 	            'value' => function ($model, $key, $index, $widget) {
 							return $model->getPrepaid();
@@ -78,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			[
 	            'label' => Yii::t('store', 'Solde'),
-				'attribute' => 'price_tvac',
+				'attribute' => 'total_solde',
 	            'value' => function ($model, $key, $index, $widget) {
 							return $model->getBalance();
 				},
