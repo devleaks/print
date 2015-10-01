@@ -3,6 +3,7 @@
 use app\models\CapturePayment;
 use app\models\Document;
 use app\models\Payment;
+use app\models\History;
 use app\models\User;
 use kartik\icons\Icon;
 use kartik\widgets\SwitchInput;
@@ -29,6 +30,7 @@ $capture->submit = 1;
 
 $capture->click = uniqid();
 $_SESSION['captureclick'] = $capture->click;
+History::record($capture, 'SET', $capture->click, false, null);
 
 ?>
 

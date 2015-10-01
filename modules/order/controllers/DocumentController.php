@@ -20,6 +20,7 @@ use app\models\CreditSearch;
 use app\models\Document;
 use app\models\DocumentLine;
 use app\models\DocumentSearch;
+use app\models\History;
 use app\models\Item;
 use app\models\Order;
 use app\models\OrderSearch;
@@ -723,9 +724,20 @@ class DocumentController extends Controller
 	public function actionPay() {
 		$capturePayment = new CapturePayment();
 		
-		if($capturePayment->load(Yii::$app->request->post())) {
-			if ($capturePayment->validate() && ($capturePayment->click == $_SESSION['captureclick'])) {
-				unset($_SESSION['captureclick']);
+		if($capturePayment->load(Yii::$app->request->post())) { // if some data is posted:
+			
+			// Check for double submit
+			if(!isset($_SESSION['captureclick']) || ($_POST['CapturePayment']['click'] != $_SESSION['captureclick'])) {
+				History::record($capturePayment, 'ERR', $capturePayment->click, false, null);
+				Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem capturing payment: {0}.',
+			 		' (may be form double submit?):'.VarDumper::dumpAsString($capturePayment->errors, 4, true)));
+				return $this->redirect(Yii::$app->request->referrer);
+			}
+			unset($_SESSION['captureclick']);
+			History::record($capturePayment, 'UNSET', $capturePayment->click, false, null);
+
+			// resume normal processing
+			if ($capturePayment->validate()) {
 				
 				$capturePayment->amount = str_replace(',', '.', $capturePayment->amount);
 				$capturePayment->total  = str_replace(',', '.', $capturePayment->total);
@@ -805,7 +817,7 @@ class DocumentController extends Controller
 
 			} else { // report capture errors
 				Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem capturing payment: {0}.',
-				 		' (may be form double submit?):'.VarDumper::dumpAsString($capturePayment->errors, 4, true)));
+				 		VarDumper::dumpAsString($capturePayment->errors, 4, true)));
 			}
 			return $this->redirect(Yii::$app->request->referrer);
 		} else {

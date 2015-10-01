@@ -57,7 +57,7 @@ class TestController extends Controller {
 		}
 	}
 	
-	public function actionList() {
+	public function actionFixPaymentStatus() {
 		foreach(Document::find()->andWhere(['not', ['status' => [Document::STATUS_TODO]]])->andWhere(['not', ['document_type' => [Document::TYPE_BID]]])->each() as $model) {
 			if($model->getBalance() == 0 && $model->status != Document::STATUS_CLOSED) {
 				echo 'Updating model '.$model->name.'... ';
