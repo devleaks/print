@@ -49,11 +49,14 @@ $dataProvider->pagination = false;
 			],
 			[
 	            'label' => Yii::t('store', 'Amount'),
-				'attribute' => 'price_tvac',
-				'format' => 'currency',
+				'attribute' => 'total_amount',
+				'format' => 'raw',
 				'hAlign' => GridView::ALIGN_RIGHT,
 				'noWrap' => true,
 				'pageSummary' => true,
+	            'value' => function ($model, $key, $index, $widget) {
+							return $model->getAmount(true);
+				},
 			],
 			[
 				'attribute' => 'due_date',

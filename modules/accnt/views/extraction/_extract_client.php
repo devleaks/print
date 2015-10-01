@@ -4,6 +4,10 @@ use app\components\VATValidator;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
+
+// @todo remove quotes from names strings
+
+
 $COUNTRY_CODES = ['AT','BE','BR','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','EL','HU','IS','IE','IT','LV','LT','LU','MT','NL','NO','PL','PT','RO','RU','RS','SK','SI','ZA','ES','SE','CH','GB','VE'];
 
 $has_vat = $model->assujetti_tva ? false : ($model->numero_tva && !in_array(strtolower($model->numero_tva), ['non assujetti', 'inconnu']));

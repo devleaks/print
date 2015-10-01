@@ -26,6 +26,10 @@ $capture->amount = number_format($model->getBalance(), 2, ',', '');
 //$capture->method = Payment::CASH;
 $capture->use_credit = false;
 $capture->submit = 1;
+
+$capture->click = uniqid();
+$_SESSION['captureclick'] = $capture->click;
+
 ?>
 
 <?php Modal::begin([
@@ -59,6 +63,7 @@ $capture->submit = 1;
 
 	<?php $form = ActiveForm::begin(['action' => Url::to(['/order/document/pay'])]); ?>
 		<?= Html::activeHiddenInput($capture, 'id') ?>
+		<?= Html::activeHiddenInput($capture, 'click') ?>
 		<?php /** Experimental */
 			if(defined('YII_DEVLEAKS') && in_array($model->document_type, [Document::TYPE_REFUND])) {
 				echo $form->field($capture, 'use_credit')->checkbox();

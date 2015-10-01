@@ -11,13 +11,13 @@ use Yii;
  * @property integer $website_order_id
  * @property string $filename
  * @property string $finish
- * @property integer $profile_bool
+ * @property string $profile_bool
+ * @property integer $quantity
  * @property string $format
  * @property string $comment
  * @property string $status
  * @property string $created_at
  * @property string $updated_at
- * @property integer $quantity
  *
  * @property WebsiteOrder $websiteOrder
  */
@@ -38,10 +38,10 @@ class _WebsiteOrderLine extends \yii\db\ActiveRecord
     {
         return [
             [['website_order_id'], 'required'],
-            [['website_order_id', 'profile_bool', 'quantity'], 'integer'],
+            [['website_order_id', 'quantity'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['filename'], 'string', 'max' => 80],
-            [['finish', 'format', 'status'], 'string', 'max' => 20],
+            [['finish', 'profile_bool', 'format', 'status'], 'string', 'max' => 20],
             [['comment'], 'string', 'max' => 160]
         ];
     }
@@ -57,12 +57,12 @@ class _WebsiteOrderLine extends \yii\db\ActiveRecord
             'filename' => Yii::t('store', 'Filename'),
             'finish' => Yii::t('store', 'Finish'),
             'profile_bool' => Yii::t('store', 'Profile Bool'),
+            'quantity' => Yii::t('store', 'Quantity'),
             'format' => Yii::t('store', 'Format'),
             'comment' => Yii::t('store', 'Comment'),
             'status' => Yii::t('store', 'Status'),
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
-            'quantity' => Yii::t('store', 'Quantity'),
         ];
     }
 

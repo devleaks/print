@@ -724,8 +724,9 @@ class DocumentController extends Controller
 		$capturePayment = new CapturePayment();
 		
 		if($capturePayment->load(Yii::$app->request->post())) {
-			if ($capturePayment->validate()) {
-
+			if ($capturePayment->validate() && ($capturePayment->click == $_SESSION['captureclick'])) {
+				unset($_SESSION['captureclick']);
+				
 				$capturePayment->amount = str_replace(',', '.', $capturePayment->amount);
 				$capturePayment->total  = str_replace(',', '.', $capturePayment->total);
 				
@@ -804,11 +805,9 @@ class DocumentController extends Controller
 
 			} else { // report capture errors
 				Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem capturing payment: {0}.',
-				 		VarDumper::dumpAsString($capture->errors, 4, true)));
+				 		' (may be form double submit?):'.VarDumper::dumpAsString($capturePayment->errors, 4, true)));
 			}
-	        return $this->render('view', [
-	            'model' => $model,
-	        ]);
+			return $this->redirect(Yii::$app->request->referrer);
 		} else {
 			Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem reading payment capture.'));
 			return $this->redirect(Yii::$app->request->referrer);

@@ -84,7 +84,7 @@ class WebsiteOrder extends _WebsiteOrder
 		$this->email = $weborder->email;
 		$this->clientcode = $weborder->client;
 		$this->promocode = $weborder->promocode;
-		$this->comment = $weborder->comments;
+		$this->comment = substr($weborder->comments.'// (website#'.$weborder->order_id.')', 0, 160);
 
 		$lines_ok = true;
 				
@@ -93,7 +93,7 @@ class WebsiteOrder extends _WebsiteOrder
 				'website_order_id' => $this->id,
 				'filename' => $product->filename,
 				'finish' => $product->finish,
-				'profile_bool' => in_array(strtolower($product->profile), ['yes','true','oui','ja']) ? 1 : 0,
+				'profile_bool' => $product->profile,
 				'quantity' => $product->quantity,
 				'format' => $product->format,
 				'comment' => $product->comments,

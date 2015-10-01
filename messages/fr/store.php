@@ -508,6 +508,7 @@ return [
 	'Bills for Transfer' => 'Factures à transférer',
 	'Web Orders' => 'Commandes via le site web',
 	'Web Transfers' => 'Transferts du site web',
+	'There was a problem capturing payment: {0}.' => "Il y a eu un problème d'enregistrement du paiement: {0}.",
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',
