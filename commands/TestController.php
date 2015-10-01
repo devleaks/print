@@ -4,6 +4,9 @@ namespace app\commands;
 
 use app\models\Order;
 use app\models\Document;
+use app\models\Account;
+use app\models\Payment;
+
 use yii\console\Controller;
 use Yii;
 
@@ -56,22 +59,76 @@ class TestController extends Controller {
 			}
 		}
 	}
-	
+	/**
+	const STATUS_CREATED = 'CREATED';	
+	const STATUS_OPEN = 'OPEN';
+	const STATUS_TODO = 'TODO';
+	const STATUS_BUSY = 'BUSY';
+	const STATUS_DONE = 'DONE';
+	const STATUS_NOTIFY = 'NOTIFY';
+	const STATUS_TOPAY = 'TOPAY';
+	const STATUS_CANCELLED = 'CANCELLED';
+	const STATUS_CLOSED = 'CLOSED';
+	const STATUS_WARN = 'WARN';
+	*/
 	public function actionFixPaymentStatus() {
-		foreach(Document::find()->andWhere(['not', ['status' => [Document::STATUS_TODO, Document::STATUS_CREATED]]])->andWhere(['not', ['document_type' => [Document::TYPE_BID]]])->each() as $model) {
-			if($model->getBalance() == 0 && $model->status != Document::STATUS_CLOSED) {
-				$transaction = Yii::$app->db->beginTransaction();
-				echo 'Updating model '.$model->name.'('.$model->status.'-';
-				if($work = $model->getWorks()->one()) {
-					echo '>work='.$work->status.'-';
-				}
-				$model->setStatus(Document::STATUS_TOPAY);
-				echo '>'.$model->status.')
+		foreach(Document::find()->andWhere(['status' => [Document::STATUS_DONE, Document::STATUS_TOPAY]])
+								->andWhere(['not', ['document_type' => [Document::TYPE_BID]]])
+								->each() as $doc) {
+			if($model = Document::findDocument($doc->id)) {
+				if($model->getBalance() == 0 && $model->status != Document::STATUS_CLOSED) {
+					$transaction = Yii::$app->db->beginTransaction();
+					echo 'Updating '.$model->document_type.' '.$model->name.' €'.$model->getBalance().' ('.$model->status.'-';
+					if($work = $model->getWorks()->one()) {
+						echo '>work='.$work->status.'-';
+					}
+					$model->setStatus(Document::STATUS_TOPAY);
+					echo '>'.$model->status.')
 ';
-				$transaction->rollback();
+					$transaction->commit();
+				}
 			}
 		}
     }
 
+
+	function actionClearOldPayments() {
+		foreach(Document::find()->andWhere(['<', 'document.created_at', '2015-08-01 00:00:00'])
+								->andWhere(['status' => [Document::STATUS_DONE, Document::STATUS_TOPAY, Document::STATUS_CLOSED]])
+								->andWhere(['not', ['document_type' => [Document::TYPE_BID]]])
+								->each() as $model) {
+			if(($balance = $model->getBalance()) > 0) {
+				echo 'Updating '.$model->document_type.' '.$model->name.' €'.$model->getBalance().' DATE='.$model->created_at.' ('.$model->status.'-';
+				$transaction = Yii::$app->db->beginTransaction();
+				$account = new Account([
+					'client_id' => $model->client_id,
+					'payment_method' => Payment::METHOD_OLDSYSTEM,
+					'payment_date' => date('Y-m-d'),
+					'amount' => $balance,
+					'status' => 'CREDIT',
+				]);
+				$account->save();
+				$account->refresh();
+				$payment = new Payment([
+					'sale' => $model->sale,
+					'client_id' => $model->client_id,
+					'payment_method' => Payment::METHOD_OLDSYSTEM,
+					'amount' => $balance,
+					'status' => Payment::STATUS_PAID,
+					'account_id' => $account->id,
+				]);
+				$payment->save();
+				echo '>PAYMENT='.$balance.'-';
+				$model->setStatus(Document::STATUS_TOPAY);
+				$model->save();
+				echo '>'.$model->status.')
+';
+				$transaction->commit();
+			} else {
+				echo '>OK!
+';
+			}
+		}
+	}
     
 }

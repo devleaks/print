@@ -120,7 +120,7 @@ class BillController extends Controller
 			'document.bom_bool' => true,
 			'document.bill_id' => null,
 //			'document.status' => [Order::STATUS_DONE, Order::STATUS_TOPAY]
-		]);
+		])->andWhere(['>=', 'document.created_at', '2015-08-01 00:00:00']);
 
         return $this->render('boms', [
             'searchModel' => $searchModel,

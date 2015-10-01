@@ -29,14 +29,14 @@ class MailController extends Controller {
     public function actionNotified() {
 		foreach(Order::find()->andWhere(['status' => Order::STATUS_NOTIFY])->andWhere(['not',['notified_at' => null]])->each() as $model) {
 			$transaction = Yii::$app->db->beginTransaction();
-			echo 'Updating model '.$model->name.'('.$model->status.'-';
+			echo 'Updating '.$model->document_type.' '.$model->name.' €'.$model->getBalance().' ('.$model->status.'-';
 			if($work = $model->getWorks()->one()) {
 				echo '>work='.$work->status.'-';
 			}
 			$model->setStatus(Order::STATUS_TOPAY);
 			echo '>'.$model->status.')
 ';
-			$transaction->rollback();
+			$transaction->commit();
 		}
     }
 
