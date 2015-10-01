@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\components\EuVATValidator;
+
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -17,6 +19,8 @@ class WebsiteOrder extends _WebsiteOrder
 	/** Order created from parsed json */
 	const STATUS_CLOSED = 'CLOSED';
 
+	const STATUS_WARN = 'WARN';
+	const STATUS_CANCELLED = 'CANCEL';
 
     /**
      * @inheritdoc
@@ -34,6 +38,32 @@ class WebsiteOrder extends _WebsiteOrder
                 ],
         ];
     }
+
+	public static function getStatuses() {
+		return [
+			self::STATUS_CREATED => Yii::t('store', self::STATUS_CREATED),
+			self::STATUS_OPEN => Yii::t('store', self::STATUS_OPEN),
+			self::STATUS_WARN => Yii::t('store', self::STATUS_WARN),
+			self::STATUS_CLOSED => Yii::t('store', self::STATUS_CLOSED),
+			self::STATUS_CANCELLED => Yii::t('store', self::STATUS_CANCELLED),
+		];
+	}
+
+	/**
+	 * Generates colored labels for Document. Color depends on document status.
+	 *
+	 * @return string HTML fragment
+	 */
+	public function getStatusLabel() {
+		$colors = [
+			self::STATUS_CANCELLED => 'warning',
+			self::STATUS_CLOSED => 'success',
+			self::STATUS_CREATED => 'success',
+			self::STATUS_OPEN => 'primary',
+			self::STATUS_WARN => 'warning',
+		];
+		return '<span class="label label-'.$colors[$this->status].'">'.Yii::t('store', $this->status).'</span>';
+	}
 
 	public function parse_json() {
 		if($this->status != self::STATUS_CREATED)
@@ -82,12 +112,36 @@ class WebsiteOrder extends _WebsiteOrder
 		}
 	}
 
-	protected function findClient() {
-		if($client = Client::find()->filterWhere(['numero_tva' => $this->vat])->one())
-			return $client;
+	protected function findIfOnlyOne($conditions) {
+		if(Client::find()->andWhere($conditions)->count() == 1) {
+			Yii::trace('Client match on '.print_r($conditions, true), 'WebsiteOrder::findIfOnlyOne');
+			return Client::find()->andWhere($conditions)->one();
+		}
+		Yii::trace('Client **NO** match on '.print_r($conditions, true), 'WebsiteOrder::findIfOnlyOne');
+		return null;
+	}
 
-		if($client = Client::find()->filterWhere(['reference_interne' => $this->clientcode])->one())
+	protected function findClient() {
+		$clean_vat = EuVATValidator::cleanVAT($this->vat);
+		
+		if($clean_vat) {			
+			if($client = $this->findIfOnlyOne(['numero_tva' => $clean_vat]))
+				return $client;
+		}
+
+		if($client = $this->findIfOnlyOne(['upper(reference_interne)' => strtoupper($this->clientcode)]))
 			return $client;
+		
+		if($client = $this->findIfOnlyOne(['upper(autre_nom)' => strtoupper($this->company)]))
+			return $client;
+		
+		$name_parts = explode(' ', $this->name);
+		foreach($name_parts as $str) {
+			if(strlen($str) > 3) {
+				if($client = $this->findIfOnlyOne(['upper(nom)' => strtoupper($str)]))
+					return $client;
+			}
+		}
 			
 		return null;
 	}
@@ -96,7 +150,7 @@ class WebsiteOrder extends _WebsiteOrder
 		$client = new Client([
 			'nom' => $this->name,
 			'autre_nom' => $this->company,
-			'numero_tva' => $this->vat,
+			'numero_tva' => EuVATValidator::cleanVAT($this->vat),
 			'adresse' => $this->address,
 			'localite' => $this->city,
 			'email' => $this->email,
@@ -124,8 +178,9 @@ class WebsiteOrder extends _WebsiteOrder
 		$transaction = Yii::$app->db->beginTransaction();
 
 		$client = $this->getClient();
+		echo 'Client id='.$client->id;
 		$sale = Sequence::nextval('sale');
-		$user = User::findOne(['username' => 'comptoir']);
+		//$user = User::findOne(['username' => 'comptoir']);
 		$order = new Document([
 			'document_type' => Document::TYPE_ORDER,
 			'client_id' => $client->id,
@@ -134,8 +189,6 @@ class WebsiteOrder extends _WebsiteOrder
 			'reference' => Document::commStruct(date('y')*10000000 +$sale),
 			'note' => $this->comment,
 			'name' => substr($this->created_at,0,4).'-W-'.Sequence::nextval('doc_number'),
-			'created_by' => $user->id,
-			'updated_by' => $user->id,
 			'status' => Document::STATUS_CREATED,
 		]);
 		$order->save();
@@ -155,6 +208,8 @@ class WebsiteOrder extends _WebsiteOrder
 		$this->status = self::STATUS_CLOSED;
 
 		if($order->save() && $this->save()) {
+			$this->document_id = $order->id;
+			$this->save();
 			$transaction->commit();
 		} else {
 			$transaction->rollback();

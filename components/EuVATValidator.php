@@ -2,6 +2,7 @@
 
 namespace app\components;
 
+use Yii;
 /**
 * 
 * Class to verify EU VAT numbers validity
@@ -262,5 +263,28 @@ class EuVATValidator
 	public function cleanVatNumber($vatNumberFull)
 	{
 		return strtoupper(preg_replace('/\s+/', '', $vatNumberFull));
-	}	
+	}
+	
+	public static function cleanVAT($vat_in) {
+		$COUNTRY_CODES = ['AT','BE','BR','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','EL','HU','IS','IE','IT','LV','LT','LU','MT','NL','NO','PL','PT','RO','RU','RS','SK','SI','ZA','ES','SE','CH','GB','VE'];
+		$MIN_LENGTH = 6;
+		
+		$vat_clean = preg_replace('/[^a-zA-Z0-9]/', '', $vat_in);
+
+		$country_code = (strlen($vat_in) > $MIN_LENGTH) ? strtoupper(substr($vat_clean, 0, 2)) : null;
+		$vat_number = null;
+
+		if(in_array($country_code, $COUNTRY_CODES)) { // if first two characters are a valid country code
+			$vat_number = substr($vat_clean, 2);
+		} else {
+			$country_code = 'BE'; // country code is not valid, defaults to Belgium. VAT number is probably a simple VAT number without country prefix.
+			$vat_number = $vat_clean;
+		}
+		$vat_out = $country_code . $vat_number;
+		
+		Yii::trace($vat_in.'=>'.$vat_out, 'EuVATValidator::cleanVAT');
+
+		return strlen($vat_out) > $MIN_LENGTH ? $vat_out : null;
+	}
+		
 }

@@ -8,7 +8,7 @@ use yii\console\Controller;
 use Yii;
 
 class WebsiteController extends Controller {
-	protected $url = 'http://labojjmicheli.be/bin/';
+	protected $url = 'http://www.labojjmicheli.be/nl/plugins/';
 	protected $newOrders = false;
 	
 	const DIRECTORY_EMPTY = 'none';
@@ -32,14 +32,14 @@ class WebsiteController extends Controller {
 	
     protected function check_date($date) {
 		Yii::trace('Checking '.$date, 'WebsiteController::check_date');
-		$base_url = YII_ENV == 'dev' ? 'http://mac-de-pierre.local:8080/print/test/' : $this->url;
-		$list_url = $base_url . 'list?d=' . $date;
+		$base_url = /*YII_ENV == 'dev'*/ false ? 'http://imac.local:8080/print/test/' : $this->url;
+		$list_url = $base_url . 'get_order.php?date=' . $date;
 		$filenames_str = $this->get_data($list_url);
 		if($filenames_str != self::DIRECTORY_EMPTY) {
 			$filenames = explode(';', $filenames_str);
 			foreach($filenames as $filename) {
 				if(! WebsiteOrder::findOne(['order_name' => $filename])) {					
-					$file_url = $base_url . 'get?f=' . $filename;
+					$file_url = $base_url . 'get_order.php?file=' . $filename;
 					$json     = $this->get_data($file_url);
 					if($json != self::NO_SUCH_FILE) {
 						$wso = new WebsiteOrder([
@@ -56,12 +56,16 @@ class WebsiteController extends Controller {
 	}
 
     public function actionFetchOrders($date) {
-		for($i = 7; $i > 0; $i--) {
-			$day = date('Y-m-d', strtotime('now - '.$i.' days'));
+		for($i = 7; $i >= 0; $i--) {
+			$day = date('d-m-Y', strtotime('now - '.$i.' days'));
 			$this->check_date($day);
 		}
-		if($this->newOrders)
+		if($this->newOrders) {
+			foreach(WebsiteOrder::find()->andWhere(['status' => WebsiteOrder::STATUS_CREATED])->each() as $wso) {
+				$wso->parse_json();
+			}
 			$this->makeOrders();
+		}
 	}
 
 	/**

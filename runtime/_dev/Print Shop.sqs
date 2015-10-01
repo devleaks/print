@@ -2045,7 +2045,7 @@
         <schema><![CDATA[]]></schema>
         <location>
             <x>1280.00</x>
-            <y>896.00</y>
+            <y>960.00</y>
         </location>
         <size>
             <width>256.00</width>
@@ -2129,7 +2129,7 @@
         <schema><![CDATA[]]></schema>
         <location>
             <x>1280.00</x>
-            <y>640.00</y>
+            <y>704.00</y>
         </location>
         <size>
             <width>256.00</width>
@@ -2526,7 +2526,7 @@
         </location>
         <size>
             <width>256.00</width>
-            <height>384.00</height>
+            <height>512.00</height>
         </size>
         <zorder>31</zorder>
         <SQLField>
@@ -2540,8 +2540,27 @@
             <unsigned><![CDATA[0]]></unsigned>
         </SQLField>
         <SQLField>
+            <name><![CDATA[document_id]]></name>
+            <type><![CDATA[INTEGER]]></type>
+            <referencesField>id</referencesField>
+            <referencesTable>document</referencesTable>
+            <deleteAction>2</deleteAction>
+            <updateAction>2</updateAction>
+            <referencesField><![CDATA[id]]></referencesField>
+            <referencesTable><![CDATA[document]]></referencesTable>
+            <sourceCardinality>0</sourceCardinality>
+            <destinationCardinality>0</destinationCardinality>
+            <referencesFieldUID><![CDATA[B3E04379-CAA0-40D3-ACA4-0EA9C1939EAC]]></referencesFieldUID>
+            <referencesTableUID><![CDATA[4BE70314-43DC-43D8-A112-015A48E2E565]]></referencesTableUID>
+            <foreignKeyName><![CDATA[cash_ibfk_2]]></foreignKeyName>
+            <indexed><![CDATA[1]]></indexed>
+            <indexedKeyName><![CDATA[document_id_idxfk_3]]></indexedKeyName>
+            <uid><![CDATA[677BB1C3-A687-4920-B6A0-4A9E6C6CED5E]]></uid>
+        </SQLField>
+        <SQLField>
             <name><![CDATA[order_name]]></name>
             <type><![CDATA[VARCHAR(80)]]></type>
+            <forcedUnique><![CDATA[0]]></forcedUnique>
             <notNull><![CDATA[1]]></notNull>
             <uid><![CDATA[701D9F8F-C845-44CB-9330-96F161F13E67]]></uid>
             <unique><![CDATA[1]]></unique>
@@ -2606,6 +2625,12 @@
             <type><![CDATA[TEXT]]></type>
             <notNull><![CDATA[1]]></notNull>
             <uid><![CDATA[471F577B-120C-431F-8387-EE127DE488DB]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[convert_errors]]></name>
+            <type><![CDATA[TEXT]]></type>
+            <notNull><![CDATA[0]]></notNull>
+            <uid><![CDATA[4E534C8D-1642-4DF1-8983-5CC5B6C03E67]]></uid>
         </SQLField>
         <SQLField>
             <name><![CDATA[status]]></name>
@@ -3907,7 +3932,7 @@ bU1hcmdpboaShKOeqKEehpKEmZkPTlNTY2FsaW5nRmFjdG9yhpKEo56ooQGGkoSZ
 mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
 ]]></encodedPrintInfo>
         <autoSizeTablesOption><![CDATA[0]]></autoSizeTablesOption>
-        <documentScaleFactor><![CDATA[1]]></documentScaleFactor>
+        <documentScaleFactor><![CDATA[0.75]]></documentScaleFactor>
         <exportDialect><![CDATA[mysql]]></exportDialect>
         <fileversion><![CDATA[3.1]]></fileversion>
         <generator><![CDATA[com.malcolmhardie.sqleditor]]></generator>
@@ -3920,11 +3945,11 @@ mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
         <snapToGrid><![CDATA[1]]></snapToGrid>
         <SourceSidebarWidth><![CDATA[276.000000]]></SourceSidebarWidth>
         <uid><![CDATA[204F0FA2-D1A0-4C5F-A0A0-8F4CDBC4862E]]></uid>
-        <windowHeight><![CDATA[971.000000]]></windowHeight>
-        <windowLocationX><![CDATA[0.000000]]></windowLocationX>
-        <windowLocationY><![CDATA[56.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{344, 1618}]]></windowScrollOrigin>
-        <windowWidth><![CDATA[1680.000000]]></windowWidth>
+        <windowHeight><![CDATA[1183.000000]]></windowHeight>
+        <windowLocationX><![CDATA[745.000000]]></windowLocationX>
+        <windowLocationY><![CDATA[170.000000]]></windowLocationY>
+        <windowScrollOrigin><![CDATA[{0, 1348}]]></windowScrollOrigin>
+        <windowWidth><![CDATA[1746.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>
     <containerName><![CDATA[model controller orginal container]]></containerName>

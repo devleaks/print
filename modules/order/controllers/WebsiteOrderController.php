@@ -1,0 +1,50 @@
+<?php
+
+namespace app\modules\order\controllers;
+
+
+use Yii;
+use yii\web\Controller;
+
+use app\models\WebsiteOrderSearch;
+
+class WebsiteOrderController extends Controller
+{
+    public function behaviors()
+    {
+        return [
+	        'access' => [
+	            'class' => 'yii\filters\AccessControl',
+	            'ruleConfig' => [
+	                'class' => 'app\components\AccessRule'
+	            ],
+	            'rules' => [
+	                [
+	                    'allow' => false,
+	                    'roles' => ['?']
+               		],
+					[
+	                    'allow' => true,
+	                    'roles' => ['admin', 'manager', 'frontdesk', 'employee', 'compta'],
+	                ],
+	            ],
+	        ],
+        ];
+    }
+
+    /**
+     * Lists all WebOrder models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+        $searchModel = new WebsiteOrderSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+}
