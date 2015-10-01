@@ -14,7 +14,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\DocumentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('store', 'Web Orders');
+$this->title = Yii::t('store', 'Web Transfers');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => [User::hasRole(['manager', 'admin']) ? '/store' : '/order', 'sort' => '-updated_at']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,12 +29,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'kartik\grid\SerialColumn'],
 
 	        [
+				'attribute' => 'order_date',
+			],
+	        [
 				'attribute' => 'name',
 				'noWrap' => true,
 			],
 	        [
 				'attribute' => 'company',
 				'noWrap' => true,
+			],
+	        [
+                'label'=>Yii::t('store','Référence Commande Web'),
+				'attribute' => 'order_id',
 			],
             [
                 'attribute'=>'document_id',

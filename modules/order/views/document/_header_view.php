@@ -3,6 +3,7 @@
 use app\models\Document;
 use app\models\Parameter;
 use app\models\User;
+use app\models\WebsiteOrder;
 use app\widgets\DocumentActionColumn;
 
 use kartik\detail\DetailView;
@@ -22,6 +23,9 @@ use yii\widgets\ActiveField;
 /* @var $form yii\widgets\ActiveForm */
 
 Icon::map($this);
+
+$wo = WebsiteOrder::findOne(['document_id' => $model->id]);
+$website_order_link = $wo ? Html::a(($wo->order_id ? $wo->order_id : $wo->id. ' <i class="glyphicon glyphicon-link"></i>'), Url::to(['/order/website-order/view', 'id' => $wo->id])) : null;
 
 ?>
 
@@ -156,6 +160,13 @@ Icon::map($this);
 				            'label' => Yii::t('store', 'Communication'),
 			                'attribute'=>'reference',
 							'options' => ['readonly' => true]
+			            ],
+			            [
+				            'label' => Yii::t('store', 'Web Transfer'),
+							'options' => ['readonly' => true],
+							'format' => 'raw',
+							'visible' => $website_order_link != null,
+			                'value'=> $website_order_link,
 			            ],
 			        ],
 			    ]) ?>

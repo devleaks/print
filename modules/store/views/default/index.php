@@ -44,6 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			    <li><a href="<?= Url::to(['/work/work', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'All works')?></a></li>
 		</ul>
 
+		<ul>
+		    	<li><a href="<?= Url::to(['/order/document/website', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Web Orders')?></a></li>
+			    <li><a href="<?= Url::to(['/order/website-order', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Transferts du site web')?></a></li>
+		</ul>
+
 	</div>
 </div>
 

@@ -26,6 +26,7 @@ use Yii;
  * @property string $clientcode
  * @property string $convert_errors
  * @property integer $document_id
+ * @property string $order_id
  *
  * @property Document $document
  * @property WebsiteOrderLine[] $websiteOrderLines
@@ -51,7 +52,7 @@ class _WebsiteOrder extends \yii\db\ActiveRecord
             [['created_at', 'updated_at'], 'safe'],
             [['document_id'], 'integer'],
             [['status'], 'string', 'max' => 20],
-            [['order_date', 'vat', 'phone', 'promocode', 'clientcode'], 'string', 'max' => 40],
+            [['order_date', 'vat', 'phone', 'promocode', 'clientcode', 'order_id'], 'string', 'max' => 40],
             [['name', 'company', 'city', 'email', 'order_name'], 'string', 'max' => 80],
             [['address', 'comment'], 'string', 'max' => 160],
             [['order_name'], 'unique']
@@ -83,6 +84,7 @@ class _WebsiteOrder extends \yii\db\ActiveRecord
             'clientcode' => Yii::t('store', 'Clientcode'),
             'convert_errors' => Yii::t('store', 'Convert Errors'),
             'document_id' => Yii::t('store', 'Document ID'),
+            'order_id' => Yii::t('store', 'Order ID'),
         ];
     }
 

@@ -2558,6 +2558,11 @@
             <uid><![CDATA[677BB1C3-A687-4920-B6A0-4A9E6C6CED5E]]></uid>
         </SQLField>
         <SQLField>
+            <name><![CDATA[order_id]]></name>
+            <type><![CDATA[VARCHAR(40)]]></type>
+            <uid><![CDATA[57B5B535-FF63-4D4A-81C4-3F90A478D9A2]]></uid>
+        </SQLField>
+        <SQLField>
             <name><![CDATA[order_name]]></name>
             <type><![CDATA[VARCHAR(80)]]></type>
             <forcedUnique><![CDATA[0]]></forcedUnique>
@@ -3945,10 +3950,10 @@ mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
         <snapToGrid><![CDATA[1]]></snapToGrid>
         <SourceSidebarWidth><![CDATA[276.000000]]></SourceSidebarWidth>
         <uid><![CDATA[204F0FA2-D1A0-4C5F-A0A0-8F4CDBC4862E]]></uid>
-        <windowHeight><![CDATA[1183.000000]]></windowHeight>
+        <windowHeight><![CDATA[1238.000000]]></windowHeight>
         <windowLocationX><![CDATA[745.000000]]></windowLocationX>
-        <windowLocationY><![CDATA[170.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{0, 1348}]]></windowScrollOrigin>
+        <windowLocationY><![CDATA[115.000000]]></windowLocationY>
+        <windowScrollOrigin><![CDATA[{2, 1059}]]></windowScrollOrigin>
         <windowWidth><![CDATA[1746.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>

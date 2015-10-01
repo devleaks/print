@@ -507,6 +507,7 @@ return [
 	'There was no " - " separator between dates. I assume on date "{0}" only.' => "Il n'y a pas de séparateur de dates ' - '. J'utilise donc la date '{0}'.",
 	'Bills for Transfer' => 'Factures à transférer',
 	'Web Orders' => 'Commandes via le site web',
+	'Web Transfers' => 'Transferts du site web',
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',
