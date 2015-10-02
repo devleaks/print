@@ -32,7 +32,7 @@ use yii\helpers\Url;
 				'attribute' => 'finish',
 			],
 	        [
-				'attribute' => 'profile_bool',
+				'attribute' => 'profile',
 			],
 	        [
 				'attribute' => 'quantity',

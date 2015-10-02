@@ -147,6 +147,10 @@ $website_order_link = $wo ? Html::a(($wo->order_id ? $wo->order_id : $wo->id. ' 
 			            ],
 			            [
 			                'attribute'=>'reference_client',
+				            'label' => $website_order_link ? Yii::t('store', 'Web Transfer') : Yii::t('store', 'Reference Client'),
+							'options' => ['readonly' => true],
+							'format' => 'raw',
+			                'value'=> $website_order_link ? $website_order_link : $model->reference_client,
 			            ],
 			            [
 			                'attribute'=>'note',
@@ -160,13 +164,6 @@ $website_order_link = $wo ? Html::a(($wo->order_id ? $wo->order_id : $wo->id. ' 
 				            'label' => Yii::t('store', 'Communication'),
 			                'attribute'=>'reference',
 							'options' => ['readonly' => true]
-			            ],
-			            [
-				            'label' => Yii::t('store', 'Web Transfer'),
-							'options' => ['readonly' => true],
-							'format' => 'raw',
-							'visible' => $website_order_link != null,
-			                'value'=> $website_order_link,
 			            ],
 			        ],
 			    ]) ?>

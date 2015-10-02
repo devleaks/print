@@ -1767,7 +1767,7 @@
             <uid><![CDATA[A7CE2889-9301-498A-828E-75C968910208]]></uid>
         </SQLField>
         <SQLField>
-            <name><![CDATA[profile_bool]]></name>
+            <name><![CDATA[profile]]></name>
             <type><![CDATA[VARCHAR(20)]]></type>
             <uid><![CDATA[DF430395-17BE-412B-AD73-07010A51EEB3]]></uid>
         </SQLField>
@@ -2609,6 +2609,11 @@
             <name><![CDATA[email]]></name>
             <type><![CDATA[VARCHAR(80)]]></type>
             <uid><![CDATA[5A5BDD36-31D0-4D34-9BA7-C0CC59119BAE]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[delivery]]></name>
+            <type><![CDATA[VARCHAR(40)]]></type>
+            <uid><![CDATA[1E3816FF-668B-498F-9A22-735F64041918]]></uid>
         </SQLField>
         <SQLField>
             <name><![CDATA[promocode]]></name>
@@ -3950,11 +3955,11 @@ mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
         <snapToGrid><![CDATA[1]]></snapToGrid>
         <SourceSidebarWidth><![CDATA[276.000000]]></SourceSidebarWidth>
         <uid><![CDATA[204F0FA2-D1A0-4C5F-A0A0-8F4CDBC4862E]]></uid>
-        <windowHeight><![CDATA[1293.000000]]></windowHeight>
-        <windowLocationX><![CDATA[745.000000]]></windowLocationX>
-        <windowLocationY><![CDATA[77.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{0, 1062}]]></windowScrollOrigin>
-        <windowWidth><![CDATA[1746.000000]]></windowWidth>
+        <windowHeight><![CDATA[971.000000]]></windowHeight>
+        <windowLocationX><![CDATA[0.000000]]></windowLocationX>
+        <windowLocationY><![CDATA[56.000000]]></windowLocationY>
+        <windowScrollOrigin><![CDATA[{51, 1077}]]></windowScrollOrigin>
+        <windowWidth><![CDATA[1680.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>
     <containerName><![CDATA[model controller orginal container]]></containerName>

@@ -39,20 +39,14 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 		}
 	}
 	protected function getProfileType() {
-		switch(strtolower($this->profile_bool)) {
+		switch(strtolower($this->profile)) {
 			case 'ja': return Item::findOne(['reference' => 'Renfort']); break;
 			case 'pro': return Item::findOne(['reference' => 'RenfortPro']); break;
 			default: return null; break;			
 		}
 	}
-/*
-INSERT INTO `item` (`yii_category`, `comptabilite`, `reference`, `libelle_court`, `libelle_long`, `categorie`, `prix_de_vente`, `taux_de_tva`, `status`, `type_travaux_photos`, `type_numerique`, `fournisseur`, `reference_fournisseur`, `conditionnement`, `prix_d_achat_de_reference`, `client`, `quantite`, `date_initiale`, `date_finale`, `suivi_de_stock`, `reassort_possible`, `seuil_de_commande`, `site_internet`, `creation`, `mise_a_jour`, `en_cours`, `stock`, `commentaires`, `identification`, `created_at`, `updated_at`)
-VALUES
-	('Promo', '700200', 'PROMO-40x60', 'ChromaLuxe 40x60 Promo', 'CL40x60PROMO', 'ChromaLuxe', 60.00, 21.00, 'ACTIVE', 'Divers', 'Divers', 'Divers ', '-', '1', '0', 'Prix de vente ordinaire ', 1, '2000-01-01', '2099-12-31', 'Faux', 'Faux', '0', 'Faux', '2013-07-10', '2013-07-10', 'Vrai', '0', '', NULL, NULL, NULL);
-INSERT INTO `item` (`yii_category`, `comptabilite`, `reference`, `libelle_court`, `libelle_long`, `categorie`, `prix_de_vente`, `taux_de_tva`, `status`, `type_travaux_photos`, `type_numerique`, `fournisseur`, `reference_fournisseur`, `conditionnement`, `prix_d_achat_de_reference`, `client`, `quantite`, `date_initiale`, `date_finale`, `suivi_de_stock`, `reassort_possible`, `seuil_de_commande`, `site_internet`, `creation`, `mise_a_jour`, `en_cours`, `stock`, `commentaires`, `identification`, `created_at`, `updated_at`)
-	VALUES
-		('Promo', '700200', 'PROMO-50x50', 'ChromaLuxe 50x50 Promo', 'CL50x50PROMO', 'ChromaLuxe', 60.00, 21.00, 'ACTIVE', 'Divers', 'Divers', 'Divers ', '-', '1', '0', 'Prix de vente ordinaire ', 1, '2000-01-01', '2099-12-31', 'Faux', 'Faux', '0', 'Faux', '2013-07-10', '2013-07-10', 'Vrai', '0', '', NULL, NULL, NULL);
-*/
+
+
 	public function createOrderLine($order) {
 		$ok = true;
 		$main_item = null;
@@ -98,8 +92,7 @@ INSERT INTO `item` (`yii_category`, `comptabilite`, `reference`, `libelle_court`
 		}
 
 		/** Profile details */
-		if(in_array(strtolower($this->profile_bool), ['ja','pro'])) {
-			$renfort_item = $this->getProfileType();
+		if($renfort_item = $this->getProfileType()) {
 			$detail->renfort_id = $renfort_item->id;
 			if($main_item->reference == Item::TYPE_CHROMALUXE) {
 				$pc = new RenfortPriceCalculator(['item'=>$renfort_item]);

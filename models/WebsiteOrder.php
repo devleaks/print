@@ -84,7 +84,8 @@ class WebsiteOrder extends _WebsiteOrder
 		$this->email = $weborder->email;
 		$this->clientcode = $weborder->client;
 		$this->promocode = $weborder->promocode;
-		$this->comment = substr($weborder->comments.'// (website#'.$weborder->order_id.')', 0, 160);
+		$this->delivery = null; // $weborder->delivery;
+		$this->comment = $weborder->comments;
 
 		$lines_ok = true;
 				
@@ -93,7 +94,7 @@ class WebsiteOrder extends _WebsiteOrder
 				'website_order_id' => $this->id,
 				'filename' => $product->filename,
 				'finish' => $product->finish,
-				'profile_bool' => $product->profile,
+				'profile' => $product->profile,
 				'quantity' => $product->quantity,
 				'format' => $product->format,
 				'comment' => $product->comments,
@@ -103,7 +104,7 @@ class WebsiteOrder extends _WebsiteOrder
 				Yii::trace(print_r($wol->errors, true), 'WebsiteOrder::parse_json');
 			}
 		}
-
+		
 		$this->status = WebsiteOrder::STATUS_OPEN;
 		if($lines_ok && $this->save())
 			$transaction->commit();
@@ -188,6 +189,7 @@ class WebsiteOrder extends _WebsiteOrder
 			'due_date' => date('Y-m-d', strtotime('now + 7 days')),
 			'sale' => $sale,
 			'reference' => Document::commStruct(date('y')*10000000 +$sale),
+			'reference_client' => $this->order_id,
 			'note' => $this->comment,
 			'name' => substr($this->created_at,0,4).'-W-'.Sequence::nextval('doc_number'),
 			'status' => Document::STATUS_CREATED,
@@ -200,6 +202,24 @@ class WebsiteOrder extends _WebsiteOrder
 		foreach($this->getWebsiteOrderLines()->each() as $wol) {
 			if($lines_ok) {
 				$lines_ok = $wol->createOrderLine($order);
+			}
+		}
+		
+		if($this->delivery) {
+			if($shipping = Item::findOne('PROMO-SHIPPING')) {
+				$dl = new DocumentLine([
+					'document_id' => $order->id,
+					'item_id' => $shipping->id,
+					'quantity' => 1,
+					'unit_price' => $shipping->prix_de_vente,
+					'vat' => $shipping->taux_de_tva,
+					'due_date' => $order->due_date,
+				]);
+				$dl->updatePrice();
+				if(!$dl->save()) {
+					Yii::trace(print_r($dl->errors, true), 'WebsiteOrder::createOrder');
+					$ok = false;
+				}				
 			}
 		}
 
