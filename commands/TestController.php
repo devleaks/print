@@ -91,12 +91,18 @@ class TestController extends Controller {
 		}
     }
 
+/*
+INSERT INTO `document` (`document_type`, `name`, `sale`, `status`, `reference`, `reference_client`, `parent_id`, `client_id`, `due_date`, `price_htva`, `price_tvac`, `vat`, `vat_bool`, `bom_bool`, `note`, `lang`, `created_at`, `created_by`, `updated_at`, `updated_by`, `priority`, `legal`, `email`, `credit_bool`, `notified_at`, `bill_id`)
+VALUES
+	('BILL', '2015-ANCIENSYSTEME', 100000, 'CLOSED', '015/0000/00000', '', NULL, 713, '2015-07-31 00:00:00', 0.00, 0.00, NULL, 0, 0, 'Facture fictive pour tous les bons de livraisons créés avant le 1er août 2015', NULL, '2015-07-31 23:59:59', 15, '2015-10-02 06:59:25', 15, 100, '', '', NULL, NULL, NULL);
+*/
 
 	function actionClearOldPayments() {
 		foreach(Document::find()->andWhere(['<', 'document.created_at', '2015-08-01 00:00:00'])
 								->andWhere(['status' => [Document::STATUS_DONE, Document::STATUS_TOPAY, Document::STATUS_CLOSED]])
 								->andWhere(['not', ['document_type' => [Document::TYPE_BID]]])
-								->each() as $model) {
+								->each() as $doc) {
+			$model = Document::findDocument($doc->id);
 			if(($balance = $model->getBalance()) > 0) {
 				echo 'Updating '.$model->document_type.' '.$model->name.' €'.$model->getBalance().' DATE='.$model->created_at.' ('.$model->status.'-';
 				$transaction = Yii::$app->db->beginTransaction();
@@ -123,6 +129,10 @@ class TestController extends Controller {
 				$model->save();
 				echo '>'.$model->status.')
 ';
+				if($model->document_type == Document::TYPE_ORDER && $model->bom_bool) {
+					$bill = Bill::findOne(['name' => '2015-ANCIENSYSTEME']);
+					$model->bill_id = $bill->id;
+				}
 				$transaction->commit();
 			} else {
 				echo '>OK!

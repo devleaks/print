@@ -89,7 +89,10 @@ class Client extends _Client
 	public function sanitizeName() {
 		return preg_replace('/[^a-z0-9\.]/', '', strtolower($this->nom));
 	}
-	
+
+	public static function sanitizePopsy($str, $maxlen = 80) {
+		return preg_replace('/["]/', ' ', preg_replace("/[']/", ' ', substr($str, 0, $maxlen)));
+	}
 	
 	public static function getUniqueIdentifier( $name ) {
 		$maxlen = 9;

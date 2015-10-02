@@ -1,4 +1,5 @@
 <?php
+use app\models\Client;
 use app\models\Parameter;
 use app\components\VATValidator;
 
@@ -28,11 +29,11 @@ if(in_array($country_code, $COUNTRY_CODES)) { // if first two characters are a v
 Customer:<?= $model->comptabilite == '' ? 'UNKNOWN' : $model->comptabilite ?>
 
 {
-      FirstName:            <?= substr($model->prenom, 0, 32) ?>
+      FirstName:            <?= Client::sanitizePopsy($model->prenom, 32) ?>
 
-      LastName:             <?= substr($model->nom, 0, 32) ?>
+      LastName:             <?= Client::sanitizePopsy($model->nom, 32) ?>
 
-      Address:              <?= $model->adresse ?>
+      Address:              <?= Client::sanitizePopsy($model->adresse) ?>
 
       ZipCode:              <?= $model->code_postal ?>
 
@@ -44,7 +45,7 @@ Customer:<?= $model->comptabilite == '' ? 'UNKNOWN' : $model->comptabilite ?>
 
       Title:                <?= $model->titre ?>
 
-      Company:              <?= substr($model->autre_nom, 0, 32) ?>
+      Company:              <?= Client::sanitizePopsy($model->autre_nom, 32) ?>
 
       PhoneBusiness:        <?= $model->bureau ?>
 
