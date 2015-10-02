@@ -2,6 +2,7 @@
 
 namespace app\commands;
 
+use app\models\Bill;
 use app\models\Order;
 use app\models\Document;
 use app\models\Account;
