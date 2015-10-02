@@ -59,14 +59,17 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 			echo 'Could not find item.';
 			exit(1);
 		}
-		$sizes = explode('x', strtolower($this->format));
+		//$sizes = explode('x', strtolower($this->format));
+		$sizes = [];
+		$ctl = preg_match('/[^\d]*(\d+)[^\d]+(\d+)/', $this->format, $sizes);
+		Yii::trace('Parsing "'.$this->format.'" into '.print_r($sizes, true), 'WebsiteOrderLine::createOrderLine');
 		
 		$dl = new DocumentLine([
 			'document_id' => $order->id,
 			'item_id' => $main_item->id,
 			'quantity' => $this->quantity,
-			'work_width' => $sizes[0],
-			'work_height' => $sizes[1],
+			'work_width' => $sizes[1],
+			'work_height' => $sizes[2],
 			'unit_price' => $main_item->prix_de_vente,
 			'vat' => $main_item->taux_de_tva,
 			'due_date' => $order->due_date,

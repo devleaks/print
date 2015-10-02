@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 /* @var $this yii\web\View */
 /* @var $model app\models\Parameter */
 
-$this->title = $model->id;
+$this->title = $model->order_id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Web Transfers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

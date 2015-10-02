@@ -190,8 +190,8 @@
         <name><![CDATA[work_line]]></name>
         <schema><![CDATA[]]></schema>
         <location>
-            <x>961.00</x>
-            <y>830.00</y>
+            <x>960.00</x>
+            <y>896.00</y>
         </location>
         <size>
             <width>256.00</width>
@@ -593,7 +593,7 @@
         <schema><![CDATA[]]></schema>
         <location>
             <x>960.00</x>
-            <y>1216.00</y>
+            <y>1280.00</y>
         </location>
         <size>
             <width>192.00</width>
@@ -878,7 +878,7 @@
         <tableType><![CDATA[InnoDB]]></tableType>
         <location>
             <x>960.00</x>
-            <y>1408.00</y>
+            <y>1472.00</y>
         </location>
         <size>
             <width>256.00</width>
@@ -1424,12 +1424,12 @@
         <schema><![CDATA[]]></schema>
         <tableType><![CDATA[InnoDB]]></tableType>
         <location>
-            <x>961.00</x>
-            <y>62.00</y>
+            <x>960.00</x>
+            <y>64.00</y>
         </location>
         <size>
-            <width>256.00</width>
-            <height>704.00</height>
+            <width>320.00</width>
+            <height>768.00</height>
         </size>
         <zorder>11</zorder>
         <SQLField>
@@ -1603,6 +1603,21 @@
             <type><![CDATA[DATETIME]]></type>
             <temporaryOriginalName><![CDATA[limit_0]]></temporaryOriginalName>
             <uid><![CDATA[8AAE9EC4-A3F0-4B27-818E-FA771F77AA4B]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[prix_a]]></name>
+            <type><![CDATA[DECIMAL(10,2)]]></type>
+            <uid><![CDATA[12D30F5C-610B-4777-8C1F-AD6DB7DAEDCB]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[prix_b]]></name>
+            <type><![CDATA[DECIMAL(10,2)]]></type>
+            <uid><![CDATA[091B22B7-202B-49CE-B424-C1978042DAD0]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[prix_min]]></name>
+            <type><![CDATA[DECIMAL(10,2)]]></type>
+            <uid><![CDATA[5529183E-F79F-44EC-95F5-83C322C60591]]></uid>
         </SQLField>
         <labelWindowIndex><![CDATA[25]]></labelWindowIndex>
         <temporaryOriginalName><![CDATA[jjm_item]]></temporaryOriginalName>
@@ -3958,7 +3973,7 @@ mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
         <windowHeight><![CDATA[971.000000]]></windowHeight>
         <windowLocationX><![CDATA[0.000000]]></windowLocationX>
         <windowLocationY><![CDATA[56.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{51, 1077}]]></windowScrollOrigin>
+        <windowScrollOrigin><![CDATA[{74, 254}]]></windowScrollOrigin>
         <windowWidth><![CDATA[1680.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>
