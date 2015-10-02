@@ -33,9 +33,6 @@ use yii\helpers\Url;
 			],
 	        [
 				'attribute' => 'profile_bool',
-	            'value' => function ($model, $key, $index, $widget) {
-						return $model->profile_bool ? Yii::t('store', 'Yes') : Yii::t('store', 'No');
-				},
 			],
 	        [
 				'attribute' => 'quantity',

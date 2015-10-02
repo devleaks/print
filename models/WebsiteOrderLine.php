@@ -39,7 +39,7 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 		}
 	}
 	protected function getProfileType() {
-		switch(strtolower($this->finish)) {
+		switch(strtolower($this->profile_bool)) {
 			case 'ja': return Item::findOne(['reference' => 'Renfort']); break;
 			case 'pro': return Item::findOne(['reference' => 'RenfortPro']); break;
 			default: return null; break;			
