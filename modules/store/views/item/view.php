@@ -42,6 +42,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'fournisseur',
             'reference_fournisseur',
             'yii_category',
+            'prix_a',
+            'prix_b',
             'status',
             'created_at',
             'updated_at',

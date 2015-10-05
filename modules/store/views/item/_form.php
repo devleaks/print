@@ -70,6 +70,16 @@ $model->status = $model->status == $model::STATUS_ACTIVE;
 					'items' => ItemCategory::getCategories(),
 		            'columnOptions' => ['colspan' => 2],
 				],
+		        'prix_a' => [
+					'label' => Html::label(Yii::t('store', 'Prix « A x »')),
+					'type' => Form::INPUT_TEXT,
+		            'columnOptions' => ['colspan' => 2],
+				],
+		        'prix_b' => [
+					'label' => Html::label(Yii::t('store', 'Prix « + B »')),
+					'type' => Form::INPUT_TEXT,
+		            'columnOptions' => ['colspan' => 2],
+				],
 		        'status' => [
 					'label' => Html::label(Yii::t('store', 'Status')).'<br>',
 					'type' => Form::INPUT_WIDGET,
