@@ -10,14 +10,9 @@ use yii\base\Model;
  */
 class LinearRegressionPriceCalculator extends PriceCalculator
 {
-	public $reg_a;
-	public $reg_b;
-
 	public function init() {
 		if(!$this->item) return;
-		$this->reg_a = Item::findOne(['reference' => $this->item->reference.'_A']);
-		$this->reg_b = Item::findOne(['reference' => $this->item->reference.'_B']);
-		if($this->reg_a && $this->reg_b) $this->inited = true;		
+		$this->inited = true;		
 	}
 
 
@@ -33,7 +28,7 @@ class LinearRegressionPriceCalculator extends PriceCalculator
 		$x = ($this->type == self::PERIMETER) ? ($w + $h) / 50 : $w * $h / 10000;
 
 
-		$price = ($this->reg_a ? $this->reg_a->prix_de_vente : 0) * $x + ($this->reg_b ? $this->reg_b->prix_de_vente : 0);
+		$price = ($this->item->prix_a ? $this->item->prix_a : 0) * $x + ($this->item->prix_b ? $this->item->prix_b : 0);
 
 		if($w < 60 && $h < 60)
 			Yii::trace($w.'x'.$h.'='.$x.'=>'.$price, 'now');

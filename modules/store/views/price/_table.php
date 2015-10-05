@@ -57,11 +57,11 @@ if(is_a($priceCalculator, RenfortPriceCalculator::className())) $priceCalculator
 	<div class="row">
 	
 		<div class="col-lg-2">
-			<?= Html::label($priceCalculator->reg_b->reference) ?>
+			<?= Html::label($priceCalculator->item->reference . ' +B') ?>
 			<?= TouchSpin::widget([
 						'name' => 'reg_b',
 						'pluginOptions' => [
-							'initval' => $priceCalculator->reg_b ? $priceCalculator->reg_b->prix_de_vente : 0,
+							'initval' => $priceCalculator->item->prix_b ? $priceCalculator->item->prix_b : 0,
 							'verticalbuttons' => true,
 							'min' => 0,
 							'max' => 200,
@@ -74,11 +74,11 @@ if(is_a($priceCalculator, RenfortPriceCalculator::className())) $priceCalculator
 		</div>
 
 		<div class="col-lg-2">
-			<?= Html::label($priceCalculator->reg_a->reference) ?>
+			<?= Html::label($priceCalculator->item->reference . ' Ax') ?>
 			<?= TouchSpin::widget([
 						'name' => 'reg_a',
 						'pluginOptions' => [
-							'initval' => $priceCalculator->reg_a->prix_de_vente,
+							'initval' => $priceCalculator->item->prix_a,
 							'verticalbuttons' => true,
 							'min' => 0,
 							'max' => 200,
