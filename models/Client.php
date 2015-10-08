@@ -198,7 +198,7 @@ class Client extends _Client
 				$color = ($bal <= 0) ? 'success' : 'warning';
 				//Yii::trace($document->document_type.':'.$document->name.'='.$bal, 'Client::getAccountLines');
 				$old_system = '';
-				if($document->getBalance() > 0) {
+				if($document->getBalance() > 0 && $document->created_at < '2015-08-01 00:00:00') {
 					$old_system = ' '.Html::a('<span class="label label-oldsystem"><i class="glyphicon glyphicon-warning-sign"></span>',
 												Url::to(['/accnt/account/old-system', 'id' => $document->id]),
 												[
