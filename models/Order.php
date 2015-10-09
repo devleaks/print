@@ -5,6 +5,9 @@ namespace app\models;
 use Yii;
 use app\models\Sequence;
 
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+
 /**
  * This is the model class for table "order".
  */
@@ -130,12 +133,15 @@ class Order extends Document
      * Send email to client if close to due date. Do not send if far from due date; do not send if client has no email. Do not change status of order.
 	 * Note: There are a couple of Yii::t() inside a language change. Make sure strings are available in other languages.
 	 */
-	public function notify($batch = false) {
+	public function notify($options) {
+		$batch = ArrayHelper::getValue($options, 'batch', false);
+		$force = ArrayHelper::getValue($options, 'force', false);
 		$sent = false;
 		$sendmail = isset(Yii::$app->params['sendmail']) ? Yii::$app->params['sendmail'] : true;
-		if($this->closeToDueDate()) {
-			if($this->notified_at) { // if already notified, do not send again
-				if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'Client has already be notified on {0}.', Yii::$app->formatter->asDateTime($this->notified_at)));
+		if($this->closeToDueDate() || $force) {
+			if($this->notified_at && ($force != 'hard')) { // if already notified, do not send again
+				$send_again = Html::a(Yii::t('store', 'Send again'), ['document/sent3', 'id' => $this->id]);
+				if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'Client has already be notified on {0}. {1}.', [Yii::$app->formatter->asDateTime($this->notified_at), $send_again]));
 				else Yii::trace('Order '.$this->name.' notified on '.$this->notified_at.'.', 'Order::notify');
 			} else {
 				if(($email = $this->getNotificationEmail()) != '') {
@@ -185,7 +191,7 @@ class Order extends Document
 		// 1. notify client of completion
 		if(Parameter::isTrue('application', 'auto_notify_completion')) {
 			if(($email = $this->getNotificationEmail()) != '') {
-				if($this->notify(true)) {
+				if($this->notify(['batch' => true])) {
 					$this->setStatus(Order::STATUS_TOPAY);
 				} else {
 					$this->setStatus(self::STATUS_NOTIFY);

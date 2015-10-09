@@ -85,7 +85,9 @@ SCRIPT;
 				],
 		        'vat_virgule' => [
 					'type' => Form::INPUT_TEXT,
-					'options' => ['readonly' => true]
+				//	'options' => ['readonly' => true]
+				//	'type' => Form::INPUT_DROPDOWN_LIST,
+				//	'items' => array_merge(["0" => "0 %", "6" => '6 %', '21' => '21 %']),
 				],
 		        'price_htva' => [
 					'type' => Form::INPUT_TEXT,

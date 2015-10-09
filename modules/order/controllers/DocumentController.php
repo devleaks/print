@@ -838,7 +838,19 @@ class DocumentController extends Controller
 		$model = $this->findModel($id);
 		$sent = false;
 		if($model->document_type == Document::TYPE_ORDER)
-			$sent = $model->notify();
+			$sent = $model->notify(['force' => 'soft']);
+		if($sent)
+			$model->setStatus(Document::STATUS_TOPAY);
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+	}
+
+	public function actionSent3($id) {
+		$model = $this->findModel($id);
+		$sent = false;
+		if($model->document_type == Document::TYPE_ORDER)
+			$sent = $model->notify(['force' => 'hard']);
 		if($sent)
 			$model->setStatus(Document::STATUS_TOPAY);
         return $this->render('view', [
