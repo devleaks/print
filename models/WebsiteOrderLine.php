@@ -10,7 +10,9 @@ use yii\db\ActiveRecord;
  */
 class WebsiteOrderLine extends _WebsiteOrderLine
 {
-	const PROMOCODE = 'PROMO-';
+	const SHIPCODE = 'SHIP-';
+	const PROMOCODE = 'PROMOCERA15-';
+	const PROMOCODE_SH = '-SH';
 
     /**
      * @inheritdoc
@@ -30,14 +32,14 @@ class WebsiteOrderLine extends _WebsiteOrderLine
     }
 
 
-	protected function getChromaType() {
-		switch(strtolower($this->finish)) {
-			case 'zilver mat': return Item::findOne(['reference' => 'ChromaCLEARMAT']); break;
-			case 'glanzend': return Item::findOne(['reference' => 'ChromaWHITEGLOSSY']); break;
-			case 'mat': return Item::findOne(['reference' => 'ChromaWHITEMAT']); break;			
-			return null;
-		}
+	public function getFormat() {
+		return min($this->width, $this->height).'x'.max($this->width, $this->height);	
 	}
+
+	protected function getChromaType() {
+		return Item::findOne(['reference' => 'Chroma'.$this->finish]);
+	}
+	
 	protected function getProfileType() {
 		switch(strtolower($this->profile)) {
 			case 'ja': return Item::findOne(['reference' => 'Renfort']); break;
@@ -46,78 +48,95 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 		}
 	}
 
-
-	public function createOrderLine($order) {
+	public function createOrderLine($order, $weborder) {
 		$ok = true;
+		$format = $this->getFormat();
+		$unit_price = 0;
 		$main_item = null;
-		if(in_array($this->format, ['40x60', '50x50'])){
-			$main_item = Item::findOne(['reference' => self::PROMOCODE.$this->format]);
+
+		// 1. DOCUMENT LINE
+		/** 1.1 Main Item */
+		if( $weborder->order_type == WebsiteOrder::TYPE_CERA
+		 && $weborder->isFormatOk($format)
+		 && $weborder->isPromo()
+			) {
+			$item_ref = self::PROMOCODE.$format;
+			if($main_item = Item::findOne(['reference' => $item_ref])) {
+				$unit_price += $main_item->prix_de_vente;
+			}
 		} else {
-			$main_item = Item::findOne(['reference' => Item::TYPE_CHROMALUXE]);
+			if($main_item = Item::findOne(['reference' => Item::TYPE_CHROMALUXE])) {
+				$pc = new ChromaLuxePriceCalculator();
+				$price_chroma = $pc->price($this->width, $this->height);
+				$unit_price += $price_chroma;
+			}
 		}
 		if(!$main_item) {
-			echo 'Could not find item.';
-			exit(1);
+			Yii::trace('Could not find main item.', 'WebsiteOrderLine::createOrderLine');
+			return false;
 		}
-		//$sizes = explode('x', strtolower($this->format));
-		$sizes = [];
-		$ctl = preg_match('/[^\d]*(\d+)[^\d]+(\d+)/', $this->format, $sizes);
-		Yii::trace('Parsing "'.$this->format.'" into '.print_r($sizes, true), 'WebsiteOrderLine::createOrderLine');
 		
 		$dl = new DocumentLine([
 			'document_id' => $order->id,
 			'item_id' => $main_item->id,
 			'quantity' => $this->quantity,
-			'work_width' => $sizes[1],
-			'work_height' => $sizes[2],
-			'unit_price' => $main_item->prix_de_vente,
+			'work_width' => $this->width,
+			'work_height' => $this->height,
 			'vat' => $main_item->taux_de_tva,
 			'due_date' => $order->due_date,
 		]);
+		
+		/** 1.2 Rebate */
+		if($weborder->order_type == WebsiteOrder::TYPE_NORMAL) {
+			$dl->extra_type = DocumentLine::EXTRA_REBATE_PERCENTAGE;
+			$dl->extra_amount = 10; // 10%		
+		}
+		
 		$dl->updatePrice();
 		if(!$dl->save()) {
 			Yii::trace(print_r($dl->errors, true), 'WebsiteOrderLine::createOrderLine');
 			$ok = false;
 		}
 		
+		// 2. DOCUMENT LINE DETAIL
 		$detail = new DocumentLineDetail();
 		$detail->document_line_id = $dl->id;
 
-		/** ChromaLuxe details */
-		$finish_item = $this->getChromaType();
-		$detail->chroma_id = $finish_item->id;
-
-		$total_price = 0;
-		if($main_item->reference == Item::TYPE_CHROMALUXE) {
-			$pc = new ChromaLuxePriceCalculator();
-			$detail->price_chroma = $pc->price($dl->work_width, $dl->work_height);
-			$total_price += $detail->price_chroma;
+		/** 2.1 ChromaLuxe details */
+		if($finish_item = $this->getChromaType()) {
+			$detail->chroma_id = $finish_item->id;
+		} else {
+			Yii::trace('could not find CL finish', 'WebsiteOrderLine::createOrderLine');
+			$ok = false;
 		}
 
-		/** Profile details */
+		/** 2.2 Profile details */
 		if($renfort_item = $this->getProfileType()) {
 			$detail->renfort_id = $renfort_item->id;
-			if($main_item->reference == Item::TYPE_CHROMALUXE) {
+			// Do we have to add the price?
+			if($weborder->order_type == WebsiteOrder::TYPE_CERA && $main_item->reference == 'RenfortPro') {
 				$pc = new RenfortPriceCalculator(['item'=>$renfort_item]);
 				$detail->price_renfort = $pc->price($dl->work_width, $dl->work_height);
-				echo 'Prix:'.$detail->price_renfort;
-				$total_price += $detail->price_renfort;
-			}
+				$unit_price += $detail->price_renfort;
+			} else {
+				$pc = new RenfortPriceCalculator(['item'=>$renfort_item]);
+				$detail->price_renfort = $pc->price($dl->work_width, $dl->work_height);
+				$unit_price += $detail->price_renfort;
+			}			
 		}
-		
-		if($total_price != 0) {
-			$dl->unit_price = $total_price;
-			$dl->updatePrice();
-			if(!$dl->save()) {
-				Yii::trace(print_r($dl->errors, true), 'WebsiteOrderLine::createOrderLine');
-				$ok = false;
-			}
-		}
-		
 		if(!$detail->save()) {
 			Yii::trace(print_r($detail->errors, true), 'WebsiteOrderLine::createOrderLine');
 			$ok = false;
+		}		
+
+		/** 1.3 Final price, given order type and options */
+		$dl->unit_price = $unit_price;
+		$dl->updatePrice();
+		if(!$dl->save()) {
+			Yii::trace(print_r($dl->errors, true), 'WebsiteOrderLine::createOrderLine');
+			$ok = false;
 		}
+		
 		return $ok;
 	}
 

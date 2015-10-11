@@ -21,6 +21,11 @@ class WebsiteOrder extends _WebsiteOrder
 
 	const STATUS_WARN = 'WARN';
 	const STATUS_CANCELLED = 'CANCEL';
+	
+	
+	const TYPE_CERA = 'CERA';
+	const TYPE_NORMAL = 'NORMAL';
+	const SHIP = 'ship';
 
     /**
      * @inheritdoc
@@ -69,22 +74,31 @@ class WebsiteOrder extends _WebsiteOrder
 		if($this->status != self::STATUS_CREATED)
 			return;
 
-		$weborder = json_decode($this->rawjson);
+		if(!$weborder = json_decode($this->rawjson)) {
+			$this->errors[] = 'Cannot decode JSON.';
+			return false;
+		}		
 
 		$transaction = Yii::$app->db->beginTransaction();
-
+		
+		if(in_array(strtoupper($weborder->type), [self::TYPE_CERA, self::TYPE_NORMAL])) {
+			$this->order_type = strtoupper($weborder->type);
+		} else {
+			$this->errors[] = 'Wrong order type "'.$weborder->type.'".';
+		}
 		$this->order_date = $weborder->date;
 		$this->order_id = $weborder->order_id;
 		$this->name = $weborder->name;
 		$this->company = $weborder->company;
 		$this->address = $weborder->address;
+		$this->postcode = $weborder->postcode;
 		$this->city = $weborder->city;
 		$this->vat = $weborder->vat;
 		$this->phone = $weborder->phone;
 		$this->email = $weborder->email;
 		$this->clientcode = $weborder->client;
 		$this->promocode = $weborder->promocode;
-		$this->delivery = null; // $weborder->delivery;
+		$this->delivery = strtoupper($weborder->delivery);
 		$this->comment = $weborder->comments;
 
 		$lines_ok = true;
@@ -97,6 +111,8 @@ class WebsiteOrder extends _WebsiteOrder
 				'profile' => $product->profile,
 				'quantity' => $product->quantity,
 				'format' => $product->format,
+				'width' => $product->width,
+				'height' => $product->height,
 				'comment' => $product->comments,
 			]);
 			if($lines_ok) {
@@ -112,6 +128,14 @@ class WebsiteOrder extends _WebsiteOrder
 			Yii::trace(print_r($this->errors, true), 'WebsiteOrder::parse_json');
 			$transaction->rollback();
 		}
+	}
+
+	public function isPromo() {
+		return in_array(strtolower($this->promocode), ['cera', '1cera15', '1cera2015']);
+	}
+	
+	public function isFormatOk($format) {
+		return in_array($format, ['40x60','50x50','60x90','80x120','100x100','50x100']);
 	}
 
 	protected function findIfOnlyOne($conditions) {
@@ -172,41 +196,125 @@ class WebsiteOrder extends _WebsiteOrder
 		}
 		return $client;
 	}
+	
+	protected function getShippingItem($dimensions) {
+		$highest = null;
+		if( $this->order_type == WebsiteOrder::TYPE_CERA
+		 && $this->isPromo()
+			) {
+			foreach($dimensions as $key => $count) {
+				$item_ref = WebsiteOrderLine::PROMOCODE.$key.WebsiteOrderLine::PROMOCODE_SH;
+				if($shipping = Item::findOne(['reference' => $item_ref])) {
+					if($highest == null) {
+						$highest = $shipping;
+					} else {
+						if($highest->prix_de_vente < $shipping->prix_de_vente) {
+							$highest = $shipping;
+						}
+					}
+				}
+			}
+		} else {
+			$largest = null;
+			foreach($dimensions as $dim => $count) {
+				// Yii::trace('NORMAL: testing='.$dim, 'WebsiteOrder::getShippingItem');
+				if(!$largest) {
+					$largest = explode('x', $dim);
+				} else {
+					$d = explode('x', $dim);
+					if($d[0] > $largest[0]) {
+						$largest[0] = $d[0];
+					}
+					if($d[1] > $largest[1]) {
+						$largest[1] = $d[1];
+					}
+				}
+			}
+			// $largest contains largest dimensions
+			Yii::trace('NORMAL: largest='.print_r($largest, true), 'WebsiteOrder::getShippingItem');
+			
+			// Dimensions have to be sorted by smallest width first and smallest height first.
+			$standard_dimensions = ['20x30','30x30','30x45','40x40','40x50','40x60','50x50','50x60','50x75','60x60','60x90','70x70','75x75','70x100'];
+			$fit = null;
+			foreach($standard_dimensions as $dim) {
+				$d = explode('x', $dim);
+				if(($d[0] >= $largest[0]) && (($d[1] >= $largest[1]))) {
+					Yii::trace('NORMAL: fit='.$dim, 'WebsiteOrder::getShippingItem');
+					$item_ref = WebsiteOrderLine::SHIPCODE.$dim;
+					if(!$highest) {
+						$highest = Item::findOne(['reference' => $item_ref]);
+					} else {
+						$new_ship = Item::findOne(['reference' => $item_ref]);
+						if($new_ship->prix_de_vente < $highest->prix_de_vente) {
+							$highest = $new_ship;
+							Yii::trace('NORMAL: '.$dim.' cheaper', 'WebsiteOrder::getShippingItem');
+						} else {
+							Yii::trace('NORMAL: '.$dim.' not cheaper', 'WebsiteOrder::getShippingItem');
+						}
+					}
+				}
+			}
+		}
+		return $highest;
+	}
+	
+	protected function getComment() {
+		$str = $this->promocode ? 'Promo '.$this->promocode.'. ' : '';
+		$str .= $this->clientcode ? 'NVB Kl. '.$this->clientcode.'. ' : '';
+		$str .= $this->comment;
+		return substr($str, 0, 160);
+	}
 
 	public function createOrder() {
+		$delay = Parameter::getIntegerValue('website', 'order_delay', 10);
+		
 		if($this->status != self::STATUS_OPEN)
 			return;
 
 		$transaction = Yii::$app->db->beginTransaction();
+		$ok = true;
 
+		// 1. ORDER
 		$client = $this->getClient();
-		echo 'Client id='.$client->id;
+		Yii::trace('Client id='.$client->id, 'WebsiteOrder::createOrder');
 		$sale = Sequence::nextval('sale');
-		//$user = User::findOne(['username' => 'comptoir']);
 		$order = new Document([
 			'document_type' => Document::TYPE_ORDER,
 			'client_id' => $client->id,
-			'due_date' => date('Y-m-d', strtotime('now + 7 days')),
+			'due_date' => date('Y-m-d', strtotime('now + '.$delay.' days')),
 			'sale' => $sale,
 			'reference' => Document::commStruct(date('y')*10000000 +$sale),
 			'reference_client' => $this->order_id,
-			'note' => $this->comment,
+			'note' => $this->getComment(),
 			'name' => substr($this->created_at,0,4).'-W-'.Sequence::nextval('doc_number'),
 			'status' => Document::STATUS_CREATED,
 		]);
-		$order->save();
+		$ok = $order->save();
 		$order->refresh();
+		echo 'Check 1:'.($ok?'Y':'N').'
+';
 		Yii::trace(print_r($order->errors, true), 'WebsiteOrder::createOrder');
-		
-		$lines_ok = true;
+
+		// 2. ORDER LINES
+		$dimensions = [];
 		foreach($this->getWebsiteOrderLines()->each() as $wol) {
-			if($lines_ok) {
-				$lines_ok = $wol->createOrderLine($order);
+			if($ok) {
+				$dim = $wol->getFormat();
+				$dimensions[$dim] = isset($dimensions[$dim]) ? $dimensions[$dim] + 1 : 1;
+				$ok = $wol->createOrderLine($order, $this);
+				if(!$ok) {
+					$this->addError('id', 'Problem building order line '.$wol->id);
+				}
 			}
 		}
+		echo 'Check 2:'.($ok?'Y':'N').'
+';
 		
+		
+		// 3. SHIPPING (if any)
+		$shipping = null;
 		if($this->delivery) {
-			if($shipping = Item::findOne('PROMO-SHIPPING')) {
+			if($shipping = $this->getShippingItem($dimensions)) {
 				$dl = new DocumentLine([
 					'document_id' => $order->id,
 					'item_id' => $shipping->id,
@@ -223,17 +331,32 @@ class WebsiteOrder extends _WebsiteOrder
 			}
 		}
 
-		$order->updatePrice();
-		$order->status = Document::STATUS_OPEN;
+		echo 'Check 3:'.($ok?'Y':'N').'
+';
 
+		echo 'OT:'.$this->order_type;
+
+		$order->updatePrice();
+		
+		// if shipping required but could not estimate price, put in status WARN
+		$order->status = ($this->delivery && !$shipping) ? Document::STATUS_WARN : Document::STATUS_OPEN;
+
+		// 4. This WEB ORDER REQUEST is processed, we have an ORDER in the system
 		$this->status = self::STATUS_CLOSED;
 
-		if($order->save() && $this->save()) {
+		if($ok && $order->save() && $this->save()) {
 			$this->document_id = $order->id;
 			$this->save();
 			$transaction->commit();
 		} else {
 			$transaction->rollback();
+			$order = null;
+			// we try this:
+			echo 'Errors: '.print_r($this->errors, true);
+			$this->convert_errors = print_r($this->errors, true);
+			if(!$this->save()) {
+				echo 'Errors2: '.print_r($this->errors, true);
+			}
 		}
 		
 		return $order;

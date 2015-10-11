@@ -2,6 +2,7 @@
 
 namespace app\commands;
 
+use app\models\Document;
 use app\models\WebsiteOrder;
 
 use yii\console\Controller;
@@ -32,14 +33,14 @@ class WebsiteController extends Controller {
 	
     protected function check_date($date) {
 		Yii::trace('Checking '.$date, 'WebsiteController::check_date');
-		$base_url = /*YII_ENV == 'dev'*/ false ? 'http://imac.local:8080/print/test/' : $this->url;
-		$list_url = $base_url . 'get_order.php?date=' . $date;
+		$base_url = YII_ENV == 'dev' ? 'http://imac.local:8080/print/test/get-order' : $this->url.'get_order.php';
+		$list_url = $base_url . '?date=' . $date;
 		$filenames_str = $this->get_data($list_url);
 		if($filenames_str != self::DIRECTORY_EMPTY) {
 			$filenames = explode(';', $filenames_str);
 			foreach($filenames as $filename) {
 				if(! WebsiteOrder::findOne(['order_name' => $filename])) {					
-					$file_url = $base_url . 'get_order.php?file=' . $filename;
+					$file_url = $base_url . '?file=' . $filename;
 					$json     = $this->get_data($file_url);
 					if($json != self::NO_SUCH_FILE) {
 						$wso = new WebsiteOrder([
@@ -56,7 +57,7 @@ class WebsiteController extends Controller {
 	}
 
     public function actionFetchOrders($date) {
-		for($i = 7; $i >= 0; $i--) {
+		for($i = (YII_ENV == 'dev' ? 0 : 7); $i >= 0; $i--) {
 			$day = date('d-m-Y', strtotime('now - '.$i.' days'));
 			$this->check_date($day);
 		}
@@ -82,7 +83,7 @@ class WebsiteController extends Controller {
 		}
 	}
 	
-	public function actionParseJson() {
+	public function actionParseOrders() {
 		foreach(WebsiteOrder::find()->andWhere(['status' => WebsiteOrder::STATUS_CREATED])->each() as $wso) {
 			$wso->parse_json();
 		}
@@ -91,5 +92,19 @@ class WebsiteController extends Controller {
 	public function actionMakeOrders() {
 		$this->makeOrders();
     }
+
+	public function actionReset() {
+		$docs = [];
+		foreach(WebsiteOrder::find()->each() as $wso) {
+			if($wso->document_id)
+				$docs[] = $wso->document_id;
+			foreach($wso->getWebsiteOrderLines()->each() as $wsol)
+				$wsol->delete();
+			$wso->delete();
+		}
+		foreach(Document::find()->andWhere(['id' => $docs])->each() as $doc) {
+			$doc->deleteCascade();
+		}
+	}
 
 }

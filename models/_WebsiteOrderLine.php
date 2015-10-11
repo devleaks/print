@@ -18,6 +18,8 @@ use Yii;
  * @property string $status
  * @property string $created_at
  * @property string $updated_at
+ * @property integer $height
+ * @property integer $width
  *
  * @property WebsiteOrder $websiteOrder
  */
@@ -38,7 +40,7 @@ class _WebsiteOrderLine extends \yii\db\ActiveRecord
     {
         return [
             [['website_order_id'], 'required'],
-            [['website_order_id', 'quantity'], 'integer'],
+            [['website_order_id', 'quantity', 'height', 'width'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['filename'], 'string', 'max' => 80],
             [['finish', 'profile', 'format', 'status'], 'string', 'max' => 20],
@@ -63,6 +65,8 @@ class _WebsiteOrderLine extends \yii\db\ActiveRecord
             'status' => Yii::t('store', 'Status'),
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
+            'height' => Yii::t('store', 'Height'),
+            'width' => Yii::t('store', 'Width'),
         ];
     }
 

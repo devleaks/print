@@ -28,6 +28,9 @@ use Yii;
  * @property string $status
  * @property string $created_at
  * @property string $updated_at
+ * @property string $postcode
+ * @property string $country
+ * @property string $order_type
  *
  * @property Document $document
  * @property WebsiteOrderLine[] $websiteOrderLines
@@ -52,10 +55,10 @@ class _WebsiteOrder extends \yii\db\ActiveRecord
             [['order_name', 'rawjson'], 'required'],
             [['rawjson', 'convert_errors'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['order_id', 'order_date', 'vat', 'phone', 'delivery', 'promocode', 'clientcode'], 'string', 'max' => 40],
+            [['order_id', 'order_date', 'vat', 'phone', 'delivery', 'promocode', 'clientcode', 'country'], 'string', 'max' => 40],
             [['order_name', 'name', 'company', 'city', 'email'], 'string', 'max' => 80],
             [['address', 'comment'], 'string', 'max' => 160],
-            [['status'], 'string', 'max' => 20],
+            [['status', 'postcode', 'order_type'], 'string', 'max' => 20],
             [['order_name'], 'unique']
         ];
     }
@@ -87,6 +90,9 @@ class _WebsiteOrder extends \yii\db\ActiveRecord
             'status' => Yii::t('store', 'Status'),
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
+            'postcode' => Yii::t('store', 'Postcode'),
+            'country' => Yii::t('store', 'Country'),
+            'order_type' => Yii::t('store', 'Order Type'),
         ];
     }
 
