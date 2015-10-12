@@ -20,6 +20,8 @@ use Yii;
  * @property string $pays
  * @property string $langue
  * @property string $numero_tva
+ * @property string $numero_tva_norm
+ * @property string $non_assujetti_tva
  * @property string $lang
  * @property string $email
  * @property string $site_web
@@ -28,6 +30,8 @@ use Yii;
  * @property string $gsm
  * @property string $fax_prive
  * @property string $fax_bureau
+ * @property string $comm_pref
+ * @property string $comm_format
  * @property string $pc
  * @property string $autre
  * @property string $remise
@@ -57,9 +61,6 @@ use Yii;
  * @property string $status
  * @property string $created_at
  * @property string $updated_at
- * @property string $comm_pref
- * @property string $comm_format
- * @property string $assujetti_tva
  *
  * @property Account[] $accounts
  * @property Document[] $documents
@@ -84,8 +85,8 @@ class _Client extends \yii\db\ActiveRecord
         return [
             [['comptabilite', 'nom'], 'required'],
             [['mise_a_jour', 'created_at', 'updated_at'], 'safe'],
-            [['reference_interne', 'comptabilite', 'titre', 'nom', 'prenom', 'autre_nom', 'adresse', 'code_postal', 'localite', 'pays', 'langue', 'numero_tva', 'email', 'site_web', 'domicile', 'bureau', 'gsm', 'fax_prive', 'fax_bureau', 'pc', 'autre', 'remise', 'escompte', 'delais_de_paiement', 'mentions', 'exemplaires', 'limite_de_credit', 'formule', 'type', 'execution', 'support', 'format', 'mailing', 'outlook', 'categorie_de_client', 'operation', 'categorie_de_prix_de_vente', 'reference_1', 'date_limite_1', 'reference_2', 'date_limite_2', 'reference_3', 'date_limite_3'], 'string', 'max' => 80],
-            [['lang', 'status', 'comm_pref', 'comm_format', 'assujetti_tva'], 'string', 'max' => 20],
+            [['reference_interne', 'comptabilite', 'titre', 'nom', 'prenom', 'autre_nom', 'adresse', 'code_postal', 'localite', 'pays', 'langue', 'numero_tva', 'numero_tva_norm', 'email', 'site_web', 'domicile', 'bureau', 'gsm', 'fax_prive', 'fax_bureau', 'pc', 'autre', 'remise', 'escompte', 'delais_de_paiement', 'mentions', 'exemplaires', 'limite_de_credit', 'formule', 'type', 'execution', 'support', 'format', 'mailing', 'outlook', 'categorie_de_client', 'operation', 'categorie_de_prix_de_vente', 'reference_1', 'date_limite_1', 'reference_2', 'date_limite_2', 'reference_3', 'date_limite_3'], 'string', 'max' => 80],
+            [['non_assujetti_tva', 'lang', 'comm_pref', 'comm_format', 'status'], 'string', 'max' => 20],
             [['commentaires'], 'string', 'max' => 255],
             [['comptabilite'], 'unique']
         ];
@@ -110,6 +111,8 @@ class _Client extends \yii\db\ActiveRecord
             'pays' => Yii::t('store', 'Pays'),
             'langue' => Yii::t('store', 'Langue'),
             'numero_tva' => Yii::t('store', 'Numero Tva'),
+            'numero_tva_norm' => Yii::t('store', 'Numero Tva Norm'),
+            'non_assujetti_tva' => Yii::t('store', 'Non Assujetti Tva'),
             'lang' => Yii::t('store', 'Lang'),
             'email' => Yii::t('store', 'Email'),
             'site_web' => Yii::t('store', 'Site Web'),
@@ -118,6 +121,8 @@ class _Client extends \yii\db\ActiveRecord
             'gsm' => Yii::t('store', 'Gsm'),
             'fax_prive' => Yii::t('store', 'Fax Prive'),
             'fax_bureau' => Yii::t('store', 'Fax Bureau'),
+            'comm_pref' => Yii::t('store', 'Comm Pref'),
+            'comm_format' => Yii::t('store', 'Comm Format'),
             'pc' => Yii::t('store', 'Pc'),
             'autre' => Yii::t('store', 'Autre'),
             'remise' => Yii::t('store', 'Remise'),
@@ -147,9 +152,6 @@ class _Client extends \yii\db\ActiveRecord
             'status' => Yii::t('store', 'Status'),
             'created_at' => Yii::t('store', 'Created At'),
             'updated_at' => Yii::t('store', 'Updated At'),
-            'comm_pref' => Yii::t('store', 'Comm Pref'),
-            'comm_format' => Yii::t('store', 'Comm Format'),
-            'assujetti_tva' => Yii::t('store', 'Assujetti Tva'),
         ];
     }
 

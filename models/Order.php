@@ -283,6 +283,7 @@ class Order extends Document
 				break;
 			case $this::STATUS_WARN:
 				$actions[] = '{warn}';
+				$actions[] = '{edit}';
 			case $this::STATUS_TODO:
 			case $this::STATUS_BUSY:
 				$actions[] = ($this->getBill() ? '{link:billed}' : '{cancel} {bill}');

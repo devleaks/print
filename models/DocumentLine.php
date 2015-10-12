@@ -223,11 +223,11 @@ class DocumentLine extends _DocumentLine
 						$this->extra_htva = round( - $item_price * $percent, 2 ); // always a rebate
 					} else { // rebate on entire DL amount
 						$amount = strpos($this->extra_type, "PERCENT") > -1 ? $this->price_htva * ($this->extra_amount/100) : $this->extra_amount;
-						Yii::trace('amount='.$amount, 'DocumentLine::updatePrice');
+						//Yii::trace('amount='.$amount, 'DocumentLine::updatePrice');
 						$asigne = strpos($this->extra_type, "SUPPLEMENT_") > -1 ? 1 : -1;
 						$this->extra_htva = round( $asigne * $amount, 2 );
 					}
-					Yii::trace('htva='.$this->extra_htva, 'DocumentLine::updatePrice');
+					//Yii::trace('htva='.$this->extra_htva, 'DocumentLine::updatePrice');
 				}
 			}
 		} // else, ignore global rebate line

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use yii\data\ActiveDataProvider;
+use yii\helpers\VarDumper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Parameter */
@@ -30,7 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'promocode',
             'comment',
             'clientcode',
-            'convert_errors',
+            [
+                'attribute'=>'convert_errors',
+                'value'=> VarDumper::dumpAsString($model->convert_errors, 4, true), // '<span class="rednote">'.$model->convert_errors.'</span>',
+				'format' => 'raw',
+            ],
             'status',
         ],
     ]) ?>

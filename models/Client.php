@@ -2,8 +2,10 @@
 
 namespace app\models;
 
-use Yii;
+use app\components\EuVATValidator;
 use app\components\VATValidator;
+
+use Yii;
 use kartik\helpers\Html as KHtml;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
@@ -360,5 +362,19 @@ class Client extends _Client
 			]);
 		}
 		return $creditLines;
+	}
+	
+	public function normalizeTva() {
+		if(strtolower($this->numero_tva) == 'non assujetti' || $this->numero_tva == '') {
+			$this->non_assujetti_tva = '1';
+			$this->numero_tva_norm = null;
+		} else if(strtolower($this->numero_tva) == 'inconnu' || strtolower(str_replace(' ','', $this->numero_tva)) == 'be') { // 'BE', ' BE', 'BE '...
+				$this->non_assujetti_tva = null;
+				$this->numero_tva_norm = null;
+		} else {
+			$this->numero_tva_norm = EuVATValidator::cleanVAT($this->numero_tva);
+			if($this->numero_tva_norm)
+				$this->non_assujetti_tva = null;
+		}
 	}
 }

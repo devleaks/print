@@ -13,6 +13,10 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 	const SHIPCODE = 'SHIP-';
 	const PROMOCODE = 'PROMOCERA15-';
 	const PROMOCODE_SH = '-SH';
+	
+	const RENFORT = 'Renfort';
+	const RENFORT_PRO = 'RenfortPro';
+	
 
     /**
      * @inheritdoc
@@ -41,11 +45,7 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 	}
 	
 	protected function getProfileType() {
-		switch(strtolower($this->profile)) {
-			case 'ja': return Item::findOne(['reference' => 'Renfort']); break;
-			case 'pro': return Item::findOne(['reference' => 'RenfortPro']); break;
-			default: return null; break;			
-		}
+		return $this->profile ? Item::findOne(['reference' => $this->profile]) : null;
 	}
 
 	public function createOrderLine($order, $weborder) {
@@ -56,6 +56,8 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 
 		// 1. DOCUMENT LINE
 		/** 1.1 Main Item */
+		$rebate = false;
+		
 		if( $weborder->order_type == WebsiteOrder::TYPE_CERA
 		 && $weborder->isFormatOk($format)
 		 && $weborder->isPromo()
@@ -69,6 +71,7 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 				$pc = new ChromaLuxePriceCalculator();
 				$price_chroma = $pc->price($this->width, $this->height);
 				$unit_price += $price_chroma;
+				$rebate = true;
 			}
 		}
 		if(!$main_item) {
@@ -87,7 +90,7 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 		]);
 		
 		/** 1.2 Rebate */
-		if($weborder->order_type == WebsiteOrder::TYPE_NORMAL) {
+		if($rebate && $weborder->isNVBOk()) {
 			$dl->extra_type = DocumentLine::EXTRA_REBATE_PERCENTAGE;
 			$dl->extra_amount = 10; // 10%		
 		}
@@ -114,7 +117,9 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 		if($renfort_item = $this->getProfileType()) {
 			$detail->renfort_id = $renfort_item->id;
 			// Do we have to add the price?
-			if($weborder->order_type == WebsiteOrder::TYPE_CERA && $main_item->reference == 'RenfortPro') {
+			if($weborder->order_type == WebsiteOrder::TYPE_CERA && $this->profile == self::RENFORT) {
+				$detail->price_renfort = 0;
+			} else if($weborder->order_type == WebsiteOrder::TYPE_CERA && $this->profile == self::RENFORT_PRO) {
 				$pc = new RenfortPriceCalculator(['item'=>$renfort_item]);
 				$detail->price_renfort = $pc->price($dl->work_width, $dl->work_height);
 				$unit_price += $detail->price_renfort;

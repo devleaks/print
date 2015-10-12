@@ -27,15 +27,15 @@ class TestController extends Controller
 				'city' => "City",
 				'postcode' => "1000",
 				'vat' => "BE0428759497",
-				'client' => "NVB123456789",
+				'client' => "NVB123456",
 				'phone' => "+32-2-123 45 67",
 				'email' => "labojjmicheli@gmail.com",
 				'comments' => "Customer comment. In het vlaams.",		// length limit 160 chars
-				'promocode' => "wrong",
-				'delivery' => "ship",
+				'promocode' => "cera",
+				'delivery' => "send",
 				'products' => [							//product objects
 					[
-						'filename' => "mypic.jpg",		// limit on length 80 chars
+						'filename' => "pic1.jpg",		// limit on length 80 chars
 						'format' => "40x60",			// [40x60|50x50]
 						'width' => "40",
 						'height' => "60",
@@ -45,15 +45,25 @@ class TestController extends Controller
 						'comments' => "Comments about this product"	// length limit 160 chars
 					],
 					[
-						'filename' => "myotherpic.jpg",
-						'format' => "30x170",
+						'filename' => "pic2.jpg",
+						'format' => "30x110",
 						'width' => "30",
-						'height' => "170",
+						'height' => "110",
 						'quantity' => 2,
 						'finish' => "WHITEMAT",
 						'profile' => "no",
 						'comments' => "Keep it square"
-					]
+					],
+					[
+						'filename' => "pic3.jpg",
+						'format' => "40x60",
+						'width' => "40",
+						'height' => "60",
+						'quantity' => 4,
+						'finish' => "WHITEGLOSSY",
+						'profile' => "RENFORTPRO",
+						'comments' => "Comments about this product"
+					],
 				]
 			]);
 		}

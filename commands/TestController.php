@@ -3,10 +3,12 @@
 namespace app\commands;
 
 use app\models\Bill;
+use app\models\Client;
 use app\models\Order;
 use app\models\Document;
 use app\models\Account;
 use app\models\Payment;
+
 
 use yii\console\Controller;
 use Yii;
@@ -139,6 +141,22 @@ VALUES
 				echo '>OK!
 ';
 			}
+		}
+	}
+	
+	public function actionNormalizeTva() {
+		foreach(Client::find()
+//				->andWhere(['not', ['numero_tva' => null]])
+//				->andWhere(['not', ['numero_tva' => 'Non assujetti']])
+//				->andWhere(['numero_tva_norm' => null])
+				->each() as $client) {
+
+			$client->normalizeTva();
+			$client->detachBehavior('timestamp');
+			if(!$client->save(false)) {
+				if(count($client->errors) > 0) Yii::trace(print_r($client->errors, true), 'Test::actionNormalizeTva');
+			}
+
 		}
 	}
     

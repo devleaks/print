@@ -2249,7 +2249,7 @@
         </location>
         <size>
             <width>256.00</width>
-            <height>1088.00</height>
+            <height>1100.00</height>
         </size>
         <zorder>10</zorder>
         <SQLField>
@@ -2320,7 +2320,12 @@
             <uid><![CDATA[0A5B5709-484B-4BEF-8A67-B6C33A06E629]]></uid>
         </SQLField>
         <SQLField>
-            <name><![CDATA[assujetti_tva]]></name>
+            <name><![CDATA[numero_tva_norm]]></name>
+            <type><![CDATA[VARCHAR(80)]]></type>
+            <uid><![CDATA[BE8B6F5D-ECCA-4FCA-8CF4-A11B38290E90]]></uid>
+        </SQLField>
+        <SQLField>
+            <name><![CDATA[non_assujetti_tva]]></name>
             <type><![CDATA[VARCHAR(20)]]></type>
             <temporaryOriginalName><![CDATA[name_1]]></temporaryOriginalName>
             <uid><![CDATA[E183E99F-4E98-4ADF-A46E-0563B90AF3C5]]></uid>
@@ -3995,10 +4000,10 @@ mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
         <snapToGrid><![CDATA[1]]></snapToGrid>
         <SourceSidebarWidth><![CDATA[276.000000]]></SourceSidebarWidth>
         <uid><![CDATA[204F0FA2-D1A0-4C5F-A0A0-8F4CDBC4862E]]></uid>
-        <windowHeight><![CDATA[1081.000000]]></windowHeight>
+        <windowHeight><![CDATA[1191.000000]]></windowHeight>
         <windowLocationX><![CDATA[218.000000]]></windowLocationX>
-        <windowLocationY><![CDATA[210.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{98, 1145}]]></windowScrollOrigin>
+        <windowLocationY><![CDATA[100.000000]]></windowLocationY>
+        <windowScrollOrigin><![CDATA[{0, 451}]]></windowScrollOrigin>
         <windowWidth><![CDATA[1680.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>
