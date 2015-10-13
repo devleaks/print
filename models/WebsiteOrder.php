@@ -95,6 +95,11 @@ class WebsiteOrder extends _WebsiteOrder
 			$this->order_type = strtoupper($weborder->type);
 		} else {
 			$this->warnings[] = 'Wrong order type "'.$weborder->type.'".';
+			$this->convert_errors = print_r($this->warnings, true);
+			if(!$this->save(false))
+				Yii::trace(print_r($this->errors, true), 'WebsiteOrder::parse_json');
+			$transaction->commit();
+			return false;
 		}
 
 		// $this->warnings[] = 'Test entry.';
@@ -120,6 +125,15 @@ class WebsiteOrder extends _WebsiteOrder
 		$this->promocode = $weborder->promocode;
 		$this->delivery = $delivery;
 		$this->comment = $weborder->comments;
+		
+		if($this->order_type == self::TYPE_CERA && !$this->isPromo()) {
+			$this->warnings[] = 'Order of type CERA but wrong promo code "'.$this->promocode.'".';
+			$this->convert_errors = print_r($this->warnings, true);
+			if(!$this->save(false))
+				Yii::trace(print_r($this->errors, true), 'WebsiteOrder::parse_json');
+			$transaction->commit();
+			return false;
+		}
 
 		$ok = true;
 				

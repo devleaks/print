@@ -56,9 +56,9 @@ class TestController extends Controller
 					],
 					[
 						'filename' => "pic3.jpg",
-						'format' => "40x60",
-						'width' => "40",
-						'height' => "60",
+						'format' => "50x50",
+						'width' => "50",
+						'height' => "50",
 						'quantity' => 4,
 						'finish' => "WHITEGLOSSY",
 						'profile' => "RENFORTPRO",
