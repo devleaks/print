@@ -84,17 +84,62 @@ class WebsiteOrder extends _WebsiteOrder
 		if($this->status != self::STATUS_CREATED)
 			return;
 
+/* Example of JSON file:
+
+{
+	"date":"14-10-2015",
+	"order_type":"NORMAL",
+	"order_id":"151000004",
+	"name":"COENE",
+	"company":"",
+	"address":"Avenue des Alliés 16",
+	"city":"Waterloo",
+	"zipcode":"1410",
+	"vat":"",
+	"client":"",
+	"language":"nl",
+	"phone":"0476",
+	"email":"contact@e-telier.be",
+	"delivery":"PICKUP",
+	"comments":"",
+	"promocode":"",
+	"products":[
+		{
+			"filename": "Test 1 - 35x46 - 3 - Zilver mat - Pro",
+			"format": "35x46",
+			"quantity": 3,
+			"finish": "CLEARMAT",
+			"profile": "RENFORTPRO",
+			"comments": "Test 1 - 35x46 - 3 - Zilver mat - Pro"
+		},
+		{
+			"filename": "Test 2 - 50x50 - 2 - Mat - Ja",
+			"format": "50x50",
+			"quantity": 2,
+			"finish": "WHITEMAT",
+			"profile": "RENFORT", "comments": "Test 2 - 50x50 - 2 - Mat - Ja"
+		}
+	]
+}
+
+*/
+
+		$transaction = Yii::$app->db->beginTransaction();
+
 		if(!$weborder = json_decode($this->rawjson)) {
 			$this->warnings[] = 'Fatal error: Cannot decode JSON.';
+			$this->convert_errors = print_r($this->warnings, true);
+			$this->status = self::STATUS_WARN;
+			if(!$this->save(false))
+				Yii::trace(print_r($this->errors, true), 'WebsiteOrder::parse_json');
+			$transaction->commit();
 			return false;
 		}		
 
-		$transaction = Yii::$app->db->beginTransaction();
-		
-		if(in_array(strtoupper($weborder->type), [self::TYPE_CERA, self::TYPE_NORMAL])) {
-			$this->order_type = strtoupper($weborder->type);
+		if(in_array(strtoupper($weborder->order_type), [self::TYPE_CERA, self::TYPE_NORMAL])) {
+			$this->order_type = strtoupper($weborder->order_type);
 		} else {
-			$this->warnings[] = 'Wrong order type "'.$weborder->type.'".';
+			$this->warnings[] = 'Wrong order type "'.$weborder->order_type.'".';
 			$this->convert_errors = print_r($this->warnings, true);
 			if(!$this->save(false))
 				Yii::trace(print_r($this->errors, true), 'WebsiteOrder::parse_json');
@@ -116,7 +161,7 @@ class WebsiteOrder extends _WebsiteOrder
 		$this->name = $weborder->name;
 		$this->company = $weborder->company;
 		$this->address = $weborder->address;
-		$this->postcode = $weborder->postcode;
+		$this->postcode = $weborder->zipcode;
 		$this->city = $weborder->city;
 		$this->vat = $weborder->vat;
 		$this->phone = $weborder->phone;
@@ -148,6 +193,12 @@ class WebsiteOrder extends _WebsiteOrder
 			if(in_array(strtoupper($product->finish), ['WHITEGLOSSY','WHITEMAT','CLEARMAT'])) {
 				$finish = strtoupper($product->finish);
 			}
+			$sizes = [];
+			$ctl = preg_match('/[^\d]*(\d+)[^\d]+(\d+)/', $product->format, $sizes);
+			$width = min($sizes[1], $sizes[2]);
+			$height = max($sizes[1], $sizes[2]);
+			echo print_r($sizes, true);
+			
 			$wol = new WebsiteOrderLine([
 				'website_order_id' => $this->id,
 				'filename' => $product->filename,
@@ -155,8 +206,8 @@ class WebsiteOrder extends _WebsiteOrder
 				'profile' => $profile,
 				'quantity' => $product->quantity,
 				'format' => $product->format,
-				'width' => min($product->width, $product->height),
-				'height' => max($product->width, $product->height),
+				'width' => $width,
+				'height' => $height,
 				'comment' => $product->comments,
 			]);
 			if($ok) {
@@ -321,7 +372,7 @@ class WebsiteOrder extends _WebsiteOrder
 			$str .= $this->clientcode ? 'Kl nr. '.$this->clientcode.'. ' : '';
 		}
 		$str .= $this->comment;
-		return substr($str, 0, 160);
+		return $str ? substr($str, 0, 160) :  '';
 	}
 
 	public function createOrder() {

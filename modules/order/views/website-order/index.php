@@ -73,9 +73,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				'noWrap' => true,
 				'buttons' => [
 	                'process' => function ($url, $model) {
-						$url = Url::to(['change-client', 'id' => $model->id]);
-	                    return Html::a('<i class="glyphicon glyphicon-user"></i>', $url, [
-	                        'title' => Yii::t('store', 'Change Client'),
+						$url = Url::to(['process', 'id' => $model->id]);
+	                    return Html::a('<i class="glyphicon glyphicon-cog"></i>', $url, [
+	                        'title' => Yii::t('store', 'Process'),
 	                    ]);
 	                },
 				],

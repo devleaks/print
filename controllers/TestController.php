@@ -25,7 +25,7 @@ class TestController extends Controller
 				'company' => "Labo JJ Micheli",
 				'address' => "Street Adress and 34",
 				'city' => "City",
-				'postcode' => "1000",
+				'zipcode' => "1000",
 				'vat' => "BE0428759497",
 				'client' => "NVB123456",
 				'phone' => "+32-2-123 45 67",

@@ -15,6 +15,8 @@ class WebsiteController extends Controller {
 	const DIRECTORY_EMPTY = 'none';
 	const NO_SUCH_FILE = 'no_such_file';
 	
+	protected $dev = false;
+	
 	/**
 	 *  Fetch website orders and save them if they do not exists.
 	 *
@@ -26,18 +28,23 @@ class WebsiteController extends Controller {
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-		$data = curl_exec($ch);
+		// curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');
+		$data_raw = curl_exec($ch);
+		$data = mb_convert_encoding(curl_exec($ch), 'UTF-8', 'ISO-8859-1');
+		// $data = utf8_decode(data_raw);
+		// $data = mb_convert_encoding($data_raw, 'ISO-8859-1', 'auto');
+		
 		curl_close($ch);
 		return $data;
 	}
 	
     protected function check_date($date) {
 		Yii::trace('Checking '.$date, 'WebsiteController::check_date');
-		$base_url = YII_ENV == 'dev' ? 'http://imac.local:8080/print/test/get-order' : $this->url.'get_order.php';
+		$base_url = $this->dev ? 'http://imac.local:8080/print/test/get-order' : $this->url.'get_order.php';
 		$list_url = $base_url . '?date=' . $date;
 		$filenames_str = $this->get_data($list_url);
 		if($filenames_str != self::DIRECTORY_EMPTY) {
-			$filenames = explode(';', $filenames_str);
+			$filenames = explode(',', $filenames_str);
 			foreach($filenames as $filename) {
 				if(! WebsiteOrder::findOne(['order_name' => $filename])) {					
 					$file_url = $base_url . '?file=' . $filename;
@@ -50,6 +57,8 @@ class WebsiteController extends Controller {
 						]);
 						if($wso->save())
 							$this->newOrders = true;
+						else
+							Yii::trace('WSO: '.print_r($wso->errors, true), 'WebsiteController::check_date');
 					}
 				}
 			}
@@ -57,7 +66,7 @@ class WebsiteController extends Controller {
 	}
 
     public function actionFetchOrders($date) {
-		for($i = (YII_ENV == 'dev' ? 0 : 7); $i >= 0; $i--) {
+		for($i = ($this->dev ? 0 : 7); $i >= 0; $i--) {
 			$day = date('d-m-Y', strtotime('now - '.$i.' days'));
 			$this->check_date($day);
 		}

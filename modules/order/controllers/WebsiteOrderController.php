@@ -75,4 +75,13 @@ class WebsiteOrderController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+	public function actionProcess($id) {
+		$model = $this->findModel($id);
+		$model->parse_json();
+		$model->createOrder();
+		return $this->render('view', [
+            'model' => $model,
+        ]);				
+	}
 }
