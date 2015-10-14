@@ -1443,7 +1443,7 @@
         </SQLField>
         <SQLField>
             <name><![CDATA[reference]]></name>
-            <type><![CDATA[VARCHAR(20)]]></type>
+            <type><![CDATA[VARCHAR(40)]]></type>
             <forcedUnique><![CDATA[0]]></forcedUnique>
             <uid><![CDATA[5B52E60A-E833-4E4D-B049-8DD2D0BF4826]]></uid>
             <unique><![CDATA[1]]></unique>
@@ -4000,10 +4000,10 @@ mQtOU1BhcGVyTmFtZYaShJmZBmlzby1hNIaGhg==
         <snapToGrid><![CDATA[1]]></snapToGrid>
         <SourceSidebarWidth><![CDATA[276.000000]]></SourceSidebarWidth>
         <uid><![CDATA[204F0FA2-D1A0-4C5F-A0A0-8F4CDBC4862E]]></uid>
-        <windowHeight><![CDATA[1191.000000]]></windowHeight>
-        <windowLocationX><![CDATA[218.000000]]></windowLocationX>
-        <windowLocationY><![CDATA[100.000000]]></windowLocationY>
-        <windowScrollOrigin><![CDATA[{0, 451}]]></windowScrollOrigin>
+        <windowHeight><![CDATA[1246.000000]]></windowHeight>
+        <windowLocationX><![CDATA[109.000000]]></windowLocationX>
+        <windowLocationY><![CDATA[162.000000]]></windowLocationY>
+        <windowScrollOrigin><![CDATA[{2, 2}]]></windowScrollOrigin>
         <windowWidth><![CDATA[1680.000000]]></windowWidth>
     </SQLDocumentInfo>
     <AllowsIndexRenamingOnInsert><![CDATA[1]]></AllowsIndexRenamingOnInsert>

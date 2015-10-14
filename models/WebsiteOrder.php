@@ -378,7 +378,7 @@ class WebsiteOrder extends _WebsiteOrder
 	public function createOrder() {
 		$delay = Parameter::getIntegerValue('website', 'order_delay', 10);
 		
-		if($this->status != self::STATUS_OPEN)
+		if(Document::findOne($this->document_id))
 			return;
 
 		$transaction = Yii::$app->db->beginTransaction();

@@ -1,5 +1,7 @@
 <?php
 use app\models\User;
+use app\models\Document;
+use app\models\WebsiteOrder;
 use yii\helpers\Url;
 
 $this->title = Yii::t('store', 'Management');
@@ -45,7 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		</ul>
 
 		<ul>
-		    	<li><a href="<?= Url::to(['/order/document/website', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Web Orders')?></a></li>
+		    	<li><a href="<?= Url::to(['/order/document/website', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Web Orders')?></a> 
+					<span class="badge alert-success"><i class="glyphicon glyphicon-warning-sign"></i> 
+						<?= Document::find()->andWhere(['id' => WebsiteOrder::find()->select('document_id'), 'status' => Document::STATUS_OPEN])->count()?></span>
+				</li>
 			    <li><a href="<?= Url::to(['/order/website-order', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Transferts du site web')?></a></li>
 		</ul>
 
