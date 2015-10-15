@@ -130,7 +130,14 @@ return [
 	'Unpaid Bills' => 'Niet betaalde facturen',
 	'Please read attached document(s).' => 'Gelieve hierbij gevoegde dokumenten te lezen. Dank U.',
 
-	'STD_SIGNATURE' => "Kunt u, alstublieft, controle meting en afwerkingsopties. Vermeld uw ordernummer in alle communicatie en betalingen. Dank U.",
+	/** Severine De Meulemeester 15-OCT-2015 */
+	'STD_SIGNATURE' => "Beste,
+
+	We bedanken u voor uw bestelling en bezorgen u in bijlage de daarbij behorende bestelbon.
+	Mogen we u vragen om alle gegevens nogmaals te checken op persoonlijke gegevens, formaat, afwerking en verzending? 
+	Gelieve bij eventuele vragen of wijzigingen het ordernummer te vermelden in uw communicatie.
+
+	Vriendelijke groeten,",
 
 	/** Letters: Headings, subjects, date, place & Footers */
 	'Brussels, {0}' => 'Brussel, {0}',
