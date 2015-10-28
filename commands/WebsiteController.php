@@ -38,7 +38,8 @@ class WebsiteController extends Controller {
 		return $data;
 	}
 	
-    protected function check_date($date) {
+    protected function check_date($d = null) {
+		$date = $d ? $d : date('d-m-Y');
 		Yii::trace('Checking '.$date, 'WebsiteController::check_date');
 		$base_url = $this->dev ? 'http://imac.local:8080/print/test/get-order' : $this->url.'get_order.php';
 		$list_url = $base_url . '?date=' . $date;
