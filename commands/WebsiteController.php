@@ -38,8 +38,7 @@ class WebsiteController extends Controller {
 		return $data;
 	}
 	
-    protected function check_date($d = null) {
-		$date = $d ? $d : date('d-m-Y');
+    protected function check_date($date) {
 		Yii::trace('Checking '.$date, 'WebsiteController::check_date');
 		$base_url = $this->dev ? 'http://imac.local:8080/print/test/get-order' : $this->url.'get_order.php';
 		$list_url = $base_url . '?date=' . $date;
@@ -66,7 +65,8 @@ class WebsiteController extends Controller {
 		}
 	}
 
-    public function actionFetchOrders($date) {
+    public function actionFetchOrders($d = null) {
+		$date = $d ? $d : date('d-m-Y');
 		for($i = ($this->dev ? 0 : 7); $i >= 0; $i--) {
 			$day = date('d-m-Y', strtotime('now - '.$i.' days'));
 			$this->check_date($day);
