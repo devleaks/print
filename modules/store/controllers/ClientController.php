@@ -84,6 +84,7 @@ class ClientController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			$model->nom = mb_strtoupper($model->nom, 'UTF-8'); // on creation only, we force uppercase
+			$model->normalizeTva();
 			$model->save();
 			// Checks for duplicates
 			$model->refresh();
@@ -122,6 +123,8 @@ class ClientController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$model->normalizeTva();
+			$model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -140,6 +143,8 @@ class ClientController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$model->normalizeTva();
+			$model->save();
 			Yii::$app->session->setFlash('info', Yii::t('store', 'Client updated').'.');
         }
 		return $this->redirect(Yii::$app->request->referrer);
@@ -159,6 +164,7 @@ class ClientController extends Controller
 				$model->reference_interne = 'YII-'.$model->id;
 			}*/
 			$model->nom = mb_strtoupper($model->nom, 'UTF-8'); // on creation only, we force uppercase
+			$model->normalizeTva();
 			$model->save();
 
 			// Checks for duplicates
@@ -209,6 +215,8 @@ class ClientController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$model->normalizeTva();
+			$model->save();
             return $this->redirect(Url::to(['/order/document/create', 'id' => $model->id, 'type' => $type]));
         } else {
             return $this->render('maj', [
