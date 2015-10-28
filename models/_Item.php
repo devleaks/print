@@ -79,8 +79,8 @@ class _Item extends \yii\db\ActiveRecord
             [['prix_de_vente', 'taux_de_tva', 'prix_a', 'prix_b', 'prix_min'], 'number'],
             [['quantite'], 'integer'],
             [['date_initiale', 'date_finale', 'creation', 'mise_a_jour', 'created_at', 'updated_at'], 'safe'],
-            [['yii_category', 'comptabilite', 'reference', 'categorie', 'status', 'type_travaux_photos', 'type_numerique', 'fournisseur', 'reference_fournisseur', 'conditionnement', 'prix_d_achat_de_reference', 'suivi_de_stock', 'reassort_possible', 'seuil_de_commande', 'en_cours', 'stock', 'identification'], 'string', 'max' => 20],
-            [['libelle_court', 'client'], 'string', 'max' => 40],
+            [['yii_category', 'comptabilite', 'categorie', 'status', 'type_travaux_photos', 'type_numerique', 'fournisseur', 'reference_fournisseur', 'conditionnement', 'prix_d_achat_de_reference', 'suivi_de_stock', 'reassort_possible', 'seuil_de_commande', 'en_cours', 'stock', 'identification'], 'string', 'max' => 20],
+            [['reference', 'libelle_court', 'client'], 'string', 'max' => 40],
             [['libelle_long', 'site_internet', 'commentaires'], 'string', 'max' => 80],
             [['reference'], 'unique']
         ];
