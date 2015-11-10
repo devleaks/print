@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'vat',
             'phone',
             'email',
+            'delivery',
             'promocode',
             'comment',
             'clientcode',

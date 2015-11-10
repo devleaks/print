@@ -77,11 +77,16 @@ class WebsiteOrderController extends Controller
     }
 
 	public function actionProcess($id) {
-		$model = $this->findModel($id);
-		$model->parse_json();
-		$model->createOrder();
-		return $this->render('view', [
-            'model' => $model,
-        ]);				
+		if($model = $this->findModel($id)) {
+			if($model->status == WebsiteOrder::STATUS_CREATED) {
+				$model->parse_json();
+				$model->createOrder();
+			} else {
+				$model->createOrder();
+			}
+			return $this->render('view', [
+	            'model' => $model,
+	        ]);	
+		}
 	}
 }

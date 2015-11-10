@@ -1164,16 +1164,16 @@
         },
         {
             "name": "bower-asset/unidragger",
-            "version": "v1.1.5",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/unidragger.git",
-                "reference": "deeffde86dc40f74fe8c5d8000507098fb369631"
+                "reference": "320eb8d5120d42adc0ee30deeef2addc9fd1ffa3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/unidragger/zipball/deeffde86dc40f74fe8c5d8000507098fb369631",
-                "reference": "deeffde86dc40f74fe8c5d8000507098fb369631",
+                "url": "https://api.github.com/repos/metafizzy/unidragger/zipball/320eb8d5120d42adc0ee30deeef2addc9fd1ffa3",
+                "reference": "320eb8d5120d42adc0ee30deeef2addc9fd1ffa3",
                 "shasum": ""
             },
             "require": {
@@ -1244,16 +1244,16 @@
         },
         {
             "name": "bower-asset/yii2-pjax",
-            "version": "v2.0.4",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/jquery-pjax.git",
-                "reference": "3f20897307cca046fca5323b318475ae9dac0ca0"
+                "reference": "6818718408086db6bdcf33649cecb86b6b4f9b67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/3f20897307cca046fca5323b318475ae9dac0ca0",
-                "reference": "3f20897307cca046fca5323b318475ae9dac0ca0",
+                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/6818718408086db6bdcf33649cecb86b6b4f9b67",
+                "reference": "6818718408086db6bdcf33649cecb86b6b4f9b67",
                 "shasum": ""
             },
             "require": {
@@ -2767,12 +2767,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-password.git",
-                "reference": "1a7cd21deef0568ae633831e006cfab5ea8b49ff"
+                "reference": "899b57d391b0b4330eba0fdb8b22369ebfdfc29b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/1a7cd21deef0568ae633831e006cfab5ea8b49ff",
-                "reference": "1a7cd21deef0568ae633831e006cfab5ea8b49ff",
+                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/899b57d391b0b4330eba0fdb8b22369ebfdfc29b",
+                "reference": "899b57d391b0b4330eba0fdb8b22369ebfdfc29b",
                 "shasum": ""
             },
             "require": {
@@ -2810,7 +2810,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-09-12 20:19:04"
+            "time": "2015-11-03 12:13:29"
         },
         {
             "name": "kartik-v/yii2-slider",
@@ -3105,16 +3105,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-datetimepicker",
-            "version": "v1.4.0",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-datetimepicker.git",
-                "reference": "3e59cc0f074df3b883c045395c6814506e4db7c6"
+                "reference": "2ad71f7a8f4fdd03b999c4f50257f42b2c1b74fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/3e59cc0f074df3b883c045395c6814506e4db7c6",
-                "reference": "3e59cc0f074df3b883c045395c6814506e4db7c6",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/2ad71f7a8f4fdd03b999c4f50257f42b2c1b74fe",
+                "reference": "2ad71f7a8f4fdd03b999c4f50257f42b2c1b74fe",
                 "shasum": ""
             },
             "require": {
@@ -3128,7 +3128,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD 3-Clause"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -3150,7 +3150,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-01-25 16:36:55"
+            "time": "2015-11-04 18:46:05"
         },
         {
             "name": "kartik-v/yii2-widget-depdrop",
@@ -4132,13 +4132,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/perminder-klair/yii2-dropzone.git",
-                "reference": "36de5a44fc89d9674bc6247a157ef785b291ec10"
+                "reference": "41e8145d940cc9955011138a9f16ad80e9831423"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/perminder-klair/yii2-dropzone/zipball/36de5a44fc89d9674bc6247a157ef785b291ec10",
-                "reference": "36de5a44fc89d9674bc6247a157ef785b291ec10",
+                "url": "https://api.github.com/repos/perminder-klair/yii2-dropzone/zipball/41e8145d940cc9955011138a9f16ad80e9831423",
+                "reference": "41e8145d940cc9955011138a9f16ad80e9831423",
                 "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "2.0.*"
             },
             "type": "yii2-extension",
             "autoload": {
@@ -4163,7 +4166,7 @@
                 "upload",
                 "yii2"
             ],
-            "time": "2014-11-20 21:15:18"
+            "time": "2015-11-09 11:28:44"
         },
         {
             "name": "phpdocumentor/reflection",

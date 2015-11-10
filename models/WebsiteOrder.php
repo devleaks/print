@@ -29,6 +29,8 @@ class WebsiteOrder extends _WebsiteOrder
 	/** Shipment keyword */
 	const SHIP = 'ship';
 	
+	const DELIVERY_PICKUP = 'PICKUP';
+	const DELIVERY_SEND = 'SEND';
 	
 	public $warnings;
 
@@ -125,8 +127,10 @@ class WebsiteOrder extends _WebsiteOrder
 */
 
 		$transaction = Yii::$app->db->beginTransaction();
+		
+		$clean_json = preg_replace("/[\n\r]/","",$this->rawjson);
 
-		if(!$weborder = json_decode($this->rawjson)) {
+		if(!$weborder = json_decode($clean_json)) {
 			$this->warnings[] = 'Fatal error: Cannot decode JSON.';
 			$this->convert_errors = print_r($this->warnings, true);
 			$this->status = self::STATUS_WARN;
@@ -150,7 +154,7 @@ class WebsiteOrder extends _WebsiteOrder
 		// $this->warnings[] = 'Test entry.';
 
 		$delivery = null;
-		if(in_array(strtoupper($weborder->delivery), ['PICKUP','SEND'])) {
+		if(in_array(strtoupper($weborder->delivery), [self::DELIVERY_PICKUP,self::DELIVERY_SEND])) {
 			$delivery = strtoupper($weborder->delivery);
 		} else {
 			$this->warnings[] = 'Wrong order delivery "'.$weborder->delivery.'".';
@@ -430,7 +434,7 @@ class WebsiteOrder extends _WebsiteOrder
 		
 		// 3. SHIPPING (if any)
 		$shipping = null;
-		if($this->delivery) {
+		if($this->delivery == self::DELIVERY_SEND) {
 			if($shipping = $this->getShippingItem($dimensions)) {
 				$dl = new DocumentLine([
 					'document_id' => $order->id,
@@ -451,7 +455,7 @@ class WebsiteOrder extends _WebsiteOrder
 		$order->updatePrice();
 		
 		// if shipping required but could not estimate price, put in status WARN
-		$order->status = ($this->delivery && !$shipping) ? Document::STATUS_WARN : Document::STATUS_OPEN;
+		$order->status = (($this->delivery == self::DELIVERY_SEND) && !$shipping) ? Document::STATUS_WARN : Document::STATUS_OPEN;
 
 		// 4. This WEB ORDER REQUEST is processed, we have an ORDER in the system
 		if(count($this->warnings) > 0) {
