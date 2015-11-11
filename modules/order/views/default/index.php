@@ -6,6 +6,10 @@ use app\models\WebsiteOrder;
 
 $this->title = Yii::t('store', 'Orders');
 $this->params['breadcrumbs'][] = $this->title;
+
+$opens = Document::find()->andWhere(['id' => WebsiteOrder::find()->select('document_id'), 'status' => Document::STATUS_OPEN])->count();
+$errors = WebsiteOrder::find()->andWhere(['status' => [WebsiteOrder::STATUS_WARN]])->count();
+
 ?>
 <div class="order-default-index">
     <h1><?= Yii::t('store', 'Orders') ?></h1>
@@ -47,11 +51,16 @@ $this->params['breadcrumbs'][] = $this->title;
 		</ul>
 
 		<ul>
-		    	<li><a href="<?= Url::to(['/order/document/website', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Web Orders')?></a>
-					<span class="badge alert-success"><i class="glyphicon glyphicon-warning-sign"></i> 
-						<?= Document::find()->andWhere(['id' => WebsiteOrder::find()->select('document_id'), 'status' => Document::STATUS_OPEN])->count()?></span>
-				</li>
-			    <li><a href="<?= Url::to(['/order/website-order', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Transferts du site web')?></a></li>
+	    	<li><a href="<?= Url::to(['/order/document/website', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Web Orders')?></a>
+				<?php if($opens > 0): ?>
+				<span class="badge alert-success"><i class="glyphicon glyphicon-warning-sign"></i><?= $opens ?></span>
+				<?php endif; ?>
+			</li>
+		    <li><a href="<?= Url::to(['/order/website-order', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Transferts du site web')?></a>
+				<?php if($errors > 0): ?>
+				<span class="badge alert-warning"><i class="glyphicon glyphicon-warning-sign"></i><?= $errors ?></span>
+				<?php endif; ?>
+			</li>
 		</ul>
 
 	</div>

@@ -338,6 +338,14 @@ class Document extends _Document
 	 */
 	public function deleteCascade() {
 		if(! $this->soloOwnsPayments() ) {
+
+			/** Detach from website order if any */
+			if($wso = WebsiteOrder::findOne(['document_id' => $this->id])) {
+				$wso->document_id = null;
+				$wso->status = WebsiteOrder::STATUS_OPEN;
+				$wso->save();
+			}			
+			
 			/** Delete associated work */
 			foreach($this->getWorks()->each() as $w)
 				$w->deleteCascade();
