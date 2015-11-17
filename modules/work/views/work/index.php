@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>Yii::t('store','Order Created By'),
 	            'filter' => User::getList(),
 	            'value'=> function ($model, $key, $index, $widget) {
-					return $model->work->document->createdBy ? $model->work->document->createdBy->username : '';
+					return $model->document->createdBy ? $model->document->createdBy->username : '';
 				},
             	'format' => 'raw',
 				'hAlign' => GridView::ALIGN_CENTER,
