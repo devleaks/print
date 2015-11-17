@@ -74,7 +74,7 @@ if($task->name == 'Commande Encadrement') {
 			[
                 'label'=>Yii::t('store','Created By'),
 	            'value'=> function ($model, $key, $index, $widget) {
-					return $model->work->document->createdBy->username ;
+					return $model->work->document->createdBy ? $model->work->document->createdBy->username : '';
 				},
             	'format' => 'raw',
 				'hAlign' => GridView::ALIGN_CENTER,

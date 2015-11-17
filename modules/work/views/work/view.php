@@ -50,11 +50,11 @@ $can_view = User::hasRole(['manager', 'admin']);
 //            'document_id',
             [
                 'attribute'=>'created_at',
-				'value' => Yii::$app->formatter->asDateTime($model->created_at).' '.Yii::t('store', 'by').' '.$model->createdBy->username,
+				'value' => Yii::$app->formatter->asDateTime($model->created_at).' '.Yii::t('store', 'by').' '.($model->createdBy ? $model->createdBy->username : ''),
             ],
             [
                 'attribute'=>'updated_at',
-				'value' => Yii::$app->formatter->asDateTime($model->updated_at).' '.Yii::t('store', 'by').' '.$model->updatedBy->username,
+				'value' => Yii::$app->formatter->asDateTime($model->updated_at).' '.Yii::t('store', 'by').' '.($model->updatedBy ? $model->updatedBy->username : ''),
             ],
             [
                 'attribute'=>'due_date',

@@ -2,8 +2,15 @@
 use yii\helpers\Url;
 use app\models\Backup;
 use app\models\CaptureSearch;
+use app\models\Document;
+use app\models\WebsiteOrder;
+
 /* @var $this yii\web\View */
 $this->title = 'Labo JJ Micheli';
+
+$opens = Document::find()->andWhere(['id' => WebsiteOrder::find()->select('document_id'), 'status' => Document::STATUS_OPEN])->count();
+$errors = WebsiteOrder::find()->andWhere(['status' => [WebsiteOrder::STATUS_WARN]])->count();
+
 ?>
 <div class="admin-index">
 
@@ -30,6 +37,10 @@ $this->title = 'Labo JJ Micheli';
 					&raquo; <a href="<?= Url::to(['/order/document/bids', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bids')?></a>
 					&raquo; <a href="<?= Url::to(['/order/document/orders', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Orders')?></a>
 					&raquo; <a href="<?= Url::to(['/order/document/bills', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bills')?></a>
+					<?php if($opens > 0): ?>
+					&raquo; <a href="<?= Url::to(['/order/document/website', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'New Web Orders')?></a>
+					<span class="badge alert-success"><i class="glyphicon glyphicon-warning-sign"></i><?= $opens ?></span>
+					<?php endif; ?>
 				</p>
             </div>
             <div class="col-lg-6">
