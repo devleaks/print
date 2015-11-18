@@ -143,6 +143,10 @@ $model->vat_check = 1;
 					'type' => Form::INPUT_TEXT,
 		            'columnOptions' => ['colspan' => 2],
 				],
+		        'reference_interne' => [
+					'type' => Form::INPUT_TEXT,
+		            'columnOptions' => ['colspan' => 2],
+				],
 		        'commentaires' => [
 					'type' => Form::INPUT_TEXTAREA,
 		            'columnOptions' => ['colspan' => 6],
@@ -158,8 +162,6 @@ $model->vat_check = 1;
 				</div>
 				<div class="panel-body">
 			
-
-    <?= $form->field($model, 'reference_interne')->textInput(['maxlength' => 80]) ?>
 
     <?= $form->field($model, 'pc')->textInput(['maxlength' => 80]) ?>
 

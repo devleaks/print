@@ -62,6 +62,22 @@ class ClientController extends Controller
     }
 
     /**
+     * Lists all Client models with email address.
+     * @return mixed
+     */
+    public function actionMailing()
+    {
+        $searchModel = new ClientSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere(['not', ['email' => '']]);
+
+        return $this->render('mailing', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
      * Displays a single Client model.
      * @param integer $id
      * @return mixed

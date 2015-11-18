@@ -19,7 +19,7 @@ class ClientSearch extends Client
     {
         return [
             [['id'], 'integer'],
-            [['reference_interne', 'titre', 'nom', 'prenom', 'autre_nom', 'adresse', 'code_postal', 'localite', 'pays', 'langue', 'numero_tva', 'email', 'site_web', 'domicile', 'bureau', 'gsm', 'fax_prive', 'fax_bureau', 'pc', 'autre', 'remise', 'escompte', 'delais_de_paiement', 'mentions', 'exemplaires', 'limite_de_credit', 'formule', 'type', 'execution', 'support', 'format', 'mise_a_jour', 'mailing', 'outlook', 'categorie_de_client', 'comptabilite', 'operation', 'categorie_de_prix_de_vente', 'reference_1', 'date_limite_1', 'reference_2', 'date_limite_2', 'reference_3', 'date_limite_3', 'commentaires'], 'safe'],
+            [['reference_interne', 'titre', 'nom', 'prenom', 'autre_nom', 'adresse', 'code_postal', 'localite', 'pays', 'lang', 'langue', 'numero_tva', 'email', 'site_web', 'domicile', 'bureau', 'gsm', 'fax_prive', 'fax_bureau', 'pc', 'autre', 'remise', 'escompte', 'delais_de_paiement', 'mentions', 'exemplaires', 'limite_de_credit', 'formule', 'type', 'execution', 'support', 'format', 'mise_a_jour', 'mailing', 'outlook', 'categorie_de_client', 'comptabilite', 'operation', 'categorie_de_prix_de_vente', 'reference_1', 'date_limite_1', 'reference_2', 'date_limite_2', 'reference_3', 'date_limite_3', 'commentaires'], 'safe'],
         ];
     }
 
@@ -64,6 +64,7 @@ class ClientSearch extends Client
             ->andFilterWhere(['like', 'code_postal', $this->code_postal])
             ->andFilterWhere(['like', 'localite', $this->localite])
             ->andFilterWhere(['like', 'pays', $this->pays])
+            ->andFilterWhere(['like', 'lang', $this->lang])
             ->andFilterWhere(['like', 'langue', $this->langue])
             ->andFilterWhere(['like', 'numero_tva', $this->numero_tva])
             ->andFilterWhere(['like', 'email', $this->email])

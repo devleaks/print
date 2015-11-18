@@ -53,9 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'fax_bureau',
             'pc',
             'autre',
+            'reference_interne',
             'commentaires',
 /*
-            'reference_interne',
             'remise',
             'escompte',
             'delais_de_paiement',

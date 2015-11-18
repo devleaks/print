@@ -142,6 +142,10 @@ $model->vat_check = 1;
 					'type' => Form::INPUT_TEXT,
 		            'columnOptions' => ['colspan' => 2],
 				],
+		        'reference_interne' => [
+					'type' => Form::INPUT_TEXT,
+		            'columnOptions' => ['colspan' => 2],
+				],
 		        'commentaires' => [
 					'type' => Form::INPUT_TEXTAREA,
 		            'columnOptions' => ['colspan' => 6],
