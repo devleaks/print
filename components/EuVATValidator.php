@@ -53,6 +53,7 @@ class EuVATValidator
 		
 		// Verify response
 		// You can parse the xml and get more info but we are only looking for the string we need
+		Yii::trace('result='.$result, 'EuVATValidator::sendCheckRequest');
 		if (strpos($result, "<valid>true</valid>"))
 		{
 			return true;

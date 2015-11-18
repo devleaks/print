@@ -1436,16 +1436,16 @@
         },
         {
             "name": "components/flag-icon-css",
-            "version": "0.8.4",
+            "version": "0.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lipis/flag-icon-css.git",
-                "reference": "ee0f8d5bdfdcd75b2fe1db21e4486b18c250b227"
+                "reference": "d590670d79de70237f09b67f473cb20a3b52352b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/ee0f8d5bdfdcd75b2fe1db21e4486b18c250b227",
-                "reference": "ee0f8d5bdfdcd75b2fe1db21e4486b18c250b227",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/d590670d79de70237f09b67f473cb20a3b52352b",
+                "reference": "d590670d79de70237f09b67f473cb20a3b52352b",
                 "shasum": ""
             },
             "type": "component",
@@ -1470,7 +1470,7 @@
                 }
             ],
             "description": "CSS for vector based country flags",
-            "time": "2015-10-27 15:07:00"
+            "time": "2015-11-15 18:25:09"
         },
         {
             "name": "dektrium/yii2-user",
@@ -1734,12 +1734,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fightbulc/moment.php.git",
-                "reference": "96b4f6712e7b5f98f036ea3c4088bb30da9f41f5"
+                "reference": "6059526414e30966c4cfd3bc970c735770b0d30e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/96b4f6712e7b5f98f036ea3c4088bb30da9f41f5",
-                "reference": "96b4f6712e7b5f98f036ea3c4088bb30da9f41f5",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/6059526414e30966c4cfd3bc970c735770b0d30e",
+                "reference": "6059526414e30966c4cfd3bc970c735770b0d30e",
                 "shasum": ""
             },
             "require": {
@@ -1789,7 +1789,7 @@
                 "translation",
                 "validate"
             ],
-            "time": "2015-10-06 05:36:32"
+            "time": "2015-11-11 13:30:34"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -2767,12 +2767,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-password.git",
-                "reference": "899b57d391b0b4330eba0fdb8b22369ebfdfc29b"
+                "reference": "6b84710023f07380812f3f23d6275347caa99bd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/899b57d391b0b4330eba0fdb8b22369ebfdfc29b",
-                "reference": "899b57d391b0b4330eba0fdb8b22369ebfdfc29b",
+                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/6b84710023f07380812f3f23d6275347caa99bd7",
+                "reference": "6b84710023f07380812f3f23d6275347caa99bd7",
                 "shasum": ""
             },
             "require": {
@@ -2810,7 +2810,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-11-03 12:13:29"
+            "time": "2015-11-15 16:16:56"
         },
         {
             "name": "kartik-v/yii2-slider",

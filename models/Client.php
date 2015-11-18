@@ -17,6 +17,8 @@ use yii\helpers\Url;
 class Client extends _Client
 {
 	const COMPTOIR = 'CCC';
+	
+	public $vat_check = 0;
 
     /**
      * @inheritdoc
@@ -42,7 +44,8 @@ class Client extends _Client
     public function rules()
     {
         return array_merge(parent::rules(), [
-//			[['numero_tva'], VATValidator::className()],
+			[['numero_tva', 'assujetti_tva', 'vat_check'], 'safe'],
+			[['numero_tva'], VATValidator::className()],
         	[['email'], 'email'],
 		]);
 	}
@@ -56,6 +59,7 @@ class Client extends _Client
         return array_merge(parent::attributeLabels(), [
             'numero_tva' => Yii::t('store', 'Numero TVA'),
             'assujetti_tva' => Yii::t('store', 'NON Assujetti à la TVA'),
+            'vat_check' => Yii::t('store', 'Vérifier no. TVA'),
         ]);
     }
 	
@@ -103,7 +107,7 @@ class Client extends _Client
 		$codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		$max = strlen($codeAlphabet);
 
-		$try = substr(preg_replace('/[^A-Z0-9\.]/', '', strtoupper($name)), 0, $maxlen);
+		$try = substr(preg_replace('/[^A-Z0-9]/', '', strtoupper($name)), 0, $maxlen);
 		while(Client::find()->where(['comptabilite' => $try])->exists()) {
 			$idx = $cnt % $max;
 			if($idx == 0)

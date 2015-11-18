@@ -10,6 +10,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\Client */
 /* @var $form yii\widgets\ActiveForm */
+$model->vat_check = 1;
 ?>
 
 <div class="client-form">
@@ -70,13 +71,26 @@ use yii\helpers\Url;
 					'type' => Form::INPUT_TEXT,
 		            'columnOptions' => ['colspan' => 1],
 				],
+			]
+		])
+	?>
+
+	<?= Form::widget([
+			'model' => $model,
+			'form' => $form,
+			'columns' => 6,
+			'attributes' => [
 		        'assujetti_tva' => [
 					'type' => Form::INPUT_CHECKBOX,
 		            'columnOptions' => ['colspan' => 1],
 				],
 		        'numero_tva' => [
 					'type' => Form::INPUT_TEXT,
-		            'columnOptions' => ['colspan' => 4],
+		            'columnOptions' => ['colspan' => 2],
+				],
+		        'vat_check' => [
+					'type' => Form::INPUT_CHECKBOX,
+		            'columnOptions' => ['colspan' => 1],
 				],
 		        'lang' => [
 					'type' => Form::INPUT_DROPDOWN_LIST,
