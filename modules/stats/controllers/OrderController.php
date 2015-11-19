@@ -5,6 +5,7 @@ namespace app\modules\stats\controllers;
 use app\models\Bill;
 use app\models\Client;
 use app\models\Document;
+use app\models\DocumentSearch;
 use app\models\DocumentLine;
 use app\models\Event;
 use app\models\Order;
@@ -352,6 +353,23 @@ class OrderController extends Controller
 				'allModels' => $q
 			]),
 			'title' => Yii::t('store', 'Sales by language'),
+		]);
+	}
+	
+	public function actionNvb() {
+        $searchModel = new DocumentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+		$dataProvider->query
+			->joinWith('client')
+			->andWhere(['document_type' => [Document::TYPE_ORDER, Document::TYPE_TICKET]])
+			->andWhere(['not', ['client.reference_interne' => null]])
+			->andWhere(['not', ['client.reference_interne' => '']])
+		;
+
+	    return $this->render('nvb',[
+			'dataProvider' => $dataProvider,
+			'searchModel' => $searchModel
 		]);
 	}
 	

@@ -298,9 +298,14 @@ class WebsiteOrder extends _WebsiteOrder
 	}
 	
 	protected function getClient() {
-		$client = null;
-		if(! $client = $this->findClient()) {
+		$client = $this->findClient();
+		if(! $client ) {
 			$client = $this->createClient();
+		} else { // check and update nvb
+			if($client->reference_interne != $this->clientcode) {
+				$client->reference_interne = $this->clientcode;
+				$client->save();
+			}
 		}
 		return $client;
 	}
@@ -378,6 +383,13 @@ class WebsiteOrder extends _WebsiteOrder
 		$str .= $this->comment;
 		return $str ? substr($str, 0, 160) :  '';
 	}
+	
+	protected function setUser($model) {
+		$admin = User::findOne(['username' => 'admin']);
+		$model->created_by = $admin->id;
+		$model->updated_by = $admin->id;
+		$model->detachBehavior('userstamp'); // so that created_by/updated_by don't get updated
+	}
 
 	public function createOrder() {
 		$delay = Parameter::getIntegerValue('website', 'order_delay', 10);
@@ -411,6 +423,7 @@ class WebsiteOrder extends _WebsiteOrder
 			'name' => substr($this->created_at,0,4).'-W-'.Sequence::nextval('doc_number'),
 			'status' => Document::STATUS_CREATED,
 		]);
+		$this->setUser($order);
 		$ok = $order->save();
 		$order->refresh();
 		if(count($order->errors) > 0) Yii::trace(print_r($order->errors, true), 'WebsiteOrder::createOrder');

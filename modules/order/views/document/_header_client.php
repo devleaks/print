@@ -90,6 +90,9 @@ Html::a('<i class="glyphicon glyphicon-book"></i>',
 				'visible' => $client->numero_tva,
 			],
             [
+                'attribute'=>'reference_interne',
+            ],
+            [
                 'attribute'=>'commentaires',
             ],
         ],

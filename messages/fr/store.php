@@ -512,6 +512,9 @@ return [
 	'Send again' => 'Envoyer à nouveau',
 	'Client has already be notified on {0}. {1}.' => 'Le client a déjà été averti le {0}. {1}.',
 	'New Web Orders' => 'Site web',
+	'Sales for NVB' => 'Ventes pour NVB',
+	'Sales by language' => 'Ventes par langue',
+	'This year' => 'Cette année',
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',
