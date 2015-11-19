@@ -331,7 +331,48 @@ class OrderController extends Controller
 	}
 	
 	public function actionByLang() {
-		return;
+		$year = date('Y-m-d H:i:s', strtotime('now - 365 days'));
+		$q = Document::find()
+			->joinWith('client')
+			->select([
+				'year' => 'year(due_date)',
+				'month' => 'month(due_date)',
+				'total_count' => 'count(document.id)',
+				'total_amount' => 'sum(price_htva)',
+				'client_lang' => 'client.lang',
+				'client_id',
+			])
+			->andWhere(['document_type' => [Document::TYPE_ORDER, Document::TYPE_TICKET]])
+			->andWhere(['>', 'document.created_at', $year])
+			->groupBy('year,month,client_lang')
+			->asArray()->all();
+
+        return $this->render('by-lang',[
+			'dataProvider' => new ArrayDataProvider([
+				'allModels' => $q
+			]),
+			'title' => Yii::t('store', 'Sales by language'),
+		]);
+	}
+	
+	public function actionSales2($lang, $date) {
+		$year  = substr($date, 0, 4);
+		$month = substr($date, 5, 2);
+		$date_from = $year.'-'.str_pad($month, 2, '0', STR_PAD_LEFT).'-01';
+		$date_to = date("Y-m-t", strtotime($date_from));
+		$q = Document::find()
+			->andWhere(['document_type' => [Document::TYPE_ORDER, Document::TYPE_TICKET]])
+			->andWhere(['month(document.due_date)' => $month])
+			->joinWith('client')
+			->andWhere(['client.lang' => $lang])
+		;
+		
+        return $this->render('sales',[
+			'dataProvider' => new ActiveDataProvider([
+				'query' => $q
+			]),
+			'searchModel' => null
+		]);
 	}
 	
 }
