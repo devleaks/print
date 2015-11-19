@@ -330,4 +330,8 @@ class OrderController extends Controller
 		]);
 	}
 	
+	public function actionByLang() {
+		return;
+	}
+	
 }

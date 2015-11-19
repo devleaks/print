@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Document;
 use app\models\Payment;
 use kartik\grid\GridView;
 use yii\helpers\Html;
@@ -28,7 +29,7 @@ $dataProvider->sort->attributes  = null;
             //'id',
 	        [
 				'attribute' => 'order_name',
-	            'label' => Yii::t('store', 'Order'),
+	            'label' => Yii::t('store', 'Client'),
 	            'value' => function ($model, $key, $index, $widget) {
 						if($client = $model->client)
                     		return $client->nom;
@@ -36,6 +37,17 @@ $dataProvider->sort->attributes  = null;
 							return '';
 	            },
 	            'format' => 'raw',
+	        ],
+	        [
+				'attribute' => 'order',
+	            'label' => Yii::t('store', 'Order'),
+	            'value' => function ($model, $key, $index, $widget) {
+							if($payment = Payment::findOne(['account_id' => $model->id])) {
+								if($doc = Document::find()->andWhere(['sale' => $payment->sale])->orderBy('created_at desc')->one())
+									return $doc->name;
+							}
+                    		return '';
+	            },
 	        ],
 			[
 				'attribute' => 'created_at',

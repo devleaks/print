@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Account;
+use app\models\Cash;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PaymentSearch */
@@ -14,6 +15,7 @@ use app\models\Account;
 	<thead>
 	<tr>
 		<th style="text-align: center;"><?= Yii::t('store', 'Transaction') ?></th>
+		<th style="text-align: center;"><?= Yii::t('store', 'Order') ?></th>
 		<th style="text-align: center;"><?= Yii::t('store', 'Date') ?></th>
 		<th style="text-align: center;"><?= Yii::t('store', 'Amount') ?></th>
 		<th style="text-align: center;"><?= Yii::t('store', 'Solde') ?></th>
@@ -39,6 +41,12 @@ use app\models\Account;
 				echo $model->note;
 			}
 		?></td>
+		<td><?php
+			if($cash = Cash::findOne($model->ref)) {
+				if($doc = $cash->document)
+					echo $doc->name;
+			}
+		?></td>
 		<td style="text-align: center;"><?= $model->date ?></td>
 		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($model->amount) ?></td>
 		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($model->solde) ?></td>
@@ -48,7 +56,7 @@ use app\models\Account;
 	</tbody>
 	<tfoot>
 	<tr>
-		<th colspan="2"></th>
+		<th colspan="3"></th>
 		<th style="text-align: right;"><?= Yii::$app->formatter->asCurrency($tot_amount) ?></th>
 		<th style="text-align: right;"><?= Yii::$app->formatter->asCurrency($solde) ?></th>
 	</tr>

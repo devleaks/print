@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Cash;
+use app\models\Document;
 use app\models\Account;
 use kartik\grid\GridView;
 use yii\helpers\Html;
@@ -26,6 +28,17 @@ use yii\helpers\Url;
             ['class' => 'kartik\grid\SerialColumn'],
 
             //'id',
+	        [
+				'attribute' => 'order',
+	            'label' => Yii::t('store', 'Order'),
+	            'value' => function ($model, $key, $index, $widget) {
+							if($cash = Cash::findOne($model->ref)) {
+								if($doc = $cash->document)
+									return $doc->name;
+							}
+                    		return '';
+	            },
+	        ],
 	        [
 				'attribute' => 'note',
 	            'label' => Yii::t('store', 'Transaction'),
