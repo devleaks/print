@@ -53,6 +53,14 @@ $this->params['breadcrumbs'][] = $this->title;
 							return $str;
 				}
 			],
+	        [
+				'attribute' => 'client_nvb',
+	            'label' => Yii::t('store', 'NVB'),
+				'format' => 'raw',
+	            'value' => function ($model, $key, $index, $widget) {
+							return $model->client->reference_interne;
+				}
+			],
 			[
 	            'label' => Yii::t('store', 'Amount'),
 				'attribute' => 'price_tvac',

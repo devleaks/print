@@ -23,6 +23,9 @@ use app\models\Document;
 			<th style="text-align: center;"><?= Yii::t('print', 'Order') ?></td>
 	</tr>
 	<tr>
+			<?php // see http://www.yiiframework.com/forum/index.php/topic/62050-the-message-file-for-category-yii-does-not-exist/
+			if(Yii::$app->language == 'en')	Yii::$app->language = 'en-US';
+			?>
 			<td><?= Yii::$app->formatter->asDate($model->created_at, 'short') ?></td>
 			<td><?= $model->reference_client ?></td>
 			<td><?= $model->client->numero_tva ?></td>
