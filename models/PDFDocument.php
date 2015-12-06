@@ -7,8 +7,8 @@ namespace app\models;
 
 use Yii;
 use app\components\RuntimeDirectoryManager;
-use app\models\Pdf as PMAPdf;
-use kartik\mpdf\Pdf;
+use app\models\Pdf;
+use kartik\mpdf\Pdf as MPdf;
 use yii\base\Model;
 
 class PDFDocument extends Model {
@@ -68,7 +68,7 @@ class PDFDocument extends Model {
 	protected function getPdfData() {
 		$pdfData = [
 	        // set to use core fonts only
-	        'mode' => Pdf::MODE_CORE, 
+	        'mode' => MPdf::MODE_CORE, 
 	        // A4 paper format
 	        'format' => $this->format, 
 	        // portrait orientation
@@ -135,12 +135,12 @@ class PDFDocument extends Model {
 		//Yii::trace('save?='.$this->save, 'PDFDocument::getPdfData');		
 		if($this->save) {
 			$this->generateFilename();
-			$pdfData['destination'] = Pdf::DEST_FILE;
+			$pdfData['destination'] = MPdf::DEST_FILE;
 			$fn = RuntimeDirectoryManager::getDocumentRoot().$this->filename;
 			$pdfData['filename'] = $fn;
 			Yii::trace('pdfDate[filename]='.$fn, 'PDFDocument::getPdfData');		
 		} else {
-			$pdfData['destination'] = Pdf::DEST_BROWSER;
+			$pdfData['destination'] = MPdf::DEST_BROWSER;
 		}
 		return $pdfData;
 	}
@@ -162,7 +162,7 @@ class PDFDocument extends Model {
 		//Yii::trace('fn='.$this->filename, 'PDFDocument::save');
 		if($this->filename) {
 			$this->deletePrevious();
-			$pdf = new PMAPdf([
+			$pdf = new Pdf([
 				'document_type' => $this->destination,
 				'filename' => $this->filename,
 			]);
@@ -171,11 +171,11 @@ class PDFDocument extends Model {
 	}
 
 	public function getFile() {
-		return PMAPdf::findOne(['filename' => $this->filename]);
+		return Pdf::findOne(['filename' => $this->filename]);
 	}
 
 	public function deletePrevious() {
-		if( $existing = PMAPdf::findOne(['filename' => $this->filename]) )
+		if( $existing = Pdf::findOne(['filename' => $this->filename]) )
 			$existing->delete();	
 	}
 
@@ -183,7 +183,7 @@ class PDFDocument extends Model {
 	 *	Renders document
 	 */	
 	public function render() {
-    	$this->PDF = new Pdf($this->getPdfData());
+    	$this->PDF = new MPdf($this->getPdfData());
 		Yii::trace('rendering'.$this->PDF->filename, 'PDFDocument::render');
 		$pdf = $this->PDF->render();
 		$this->rendered = true;
