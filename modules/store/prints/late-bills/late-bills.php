@@ -23,10 +23,10 @@
 		<td><?= Yii::$app->formatter->asDate($model->due_date) ?></td>
 		<td><?= Yii::$app->formatter->asDate($model->created_at) ?></td>
 		<td><?= Yii::$app->formatter->asDate(date('Y-m-d', strtotime("+ 1 month", strtotime($model->created_at)))) ?></td>
-		<td><?= Yii::$app->formatter->asCurrency($model->price_tvac) ?></td>
+		<td><?= Yii::$app->formatter->asCurrency($model->getAmount()) ?></td>
 		<td><?= Yii::$app->formatter->asCurrency($model->getPrepaid()) ?></td>
-		<td><?= Yii::$app->formatter->asCurrency($model->price_tvac - $model->getPrepaid()) ?></td>
-		<?php $tot_amount += ($model->price_tvac - $model->getPrepaid()); ?>
+		<td><?= Yii::$app->formatter->asCurrency($model->getAmount() - $model->getPrepaid()) ?></td>
+		<?php $tot_amount += ($model->getAmount() - $model->getPrepaid()); ?>
 	</tr>
 <?php endforeach; ?>
 ?>
