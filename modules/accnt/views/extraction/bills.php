@@ -55,7 +55,7 @@ $dataProvider->pagination = false;
 				'noWrap' => true,
 				'pageSummary' => true,
 	            'value' => function ($model, $key, $index, $widget) {
-							return $model->getAmount(true);
+							return $model->getAmount(false);
 				},
 			],
 			[
