@@ -50,7 +50,7 @@ $dataProvider->pagination = false;
 			[
 	            'label' => Yii::t('store', 'Amount'),
 				'attribute' => 'total_amount',
-				'format' => 'raw',
+				'format' => 'currency',
 				'hAlign' => GridView::ALIGN_RIGHT,
 				'noWrap' => true,
 				'pageSummary' => true,

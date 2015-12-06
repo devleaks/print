@@ -58,12 +58,12 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 	            'label' => Yii::t('store', 'Amount'),
 				'attribute' => 'total_amount',
-				'format' => 'raw',
+				'format' => 'currency',
 				'hAlign' => GridView::ALIGN_RIGHT,
 				'noWrap' => true,
 				'pageSummary' => true,
 	            'value' => function ($model, $key, $index, $widget) {
-							return $model->getAmount(true);
+							return $model->getAmount();
 				},
 			],
 			[
@@ -107,6 +107,21 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format' => 'raw',
 				'hAlign' => GridView::ALIGN_CENTER,
 			],
+			[
+	            'label' => Yii::t('store', 'Recall'),
+				'value' => function ($model, $key, $index, $widget) {
+					if ($model->client->getPdfs()->exists()) {
+						$s = '';
+						foreach($model->client->getPdfs()->each() as $pdf) {
+							$s .= Yii::t('store', $pdf->document_type).' ('.Yii::$app->formatter->asDate($pdf->sent_at, 'short').')<br/>';
+						}
+						return trim($s, '<br/>');
+					}
+					return '';
+				},
+				'format' => 'raw',
+				'hAlign' => GridView::ALIGN_CENTER,
+			],
 	        [
 	            'label' => Yii::t('store', 'Status'),
 	            'attribute' => 'status',
@@ -140,7 +155,15 @@ $this->params['breadcrumbs'][] = $this->title;
     			Html::submitButton('<i class="glyphicon glyphicon-ok"></i> '.Yii::t('store', 'Add Payment'),
 							['class' => 'btn btn-primary actionButton', 'data-action' => Bill::ACTION_PAYMENT_RECEIVED]).' '.
     			Html::submitButton('<i class="glyphicon glyphicon-envelope"></i> '.Yii::t('store', 'Send Reminder'),
-							['class' => 'btn btn-warning actionButton', 'data-action' => Bill::ACTION_SEND_REMINDER])?>
+							['class' => 'btn btn-warning actionButton', 'data-action' => Bill::ACTION_SEND_REMINDER]).' '.
+								Html::dropDownList('doctype', null, [
+									'none' => Yii::t('store', 'Automatic'),
+									'LATE_BILL_COVER0' => Yii::t('store', 'LATE_BILL_COVER0'),
+									'LATE_BILL_COVER1' => Yii::t('store', 'LATE_BILL_COVER1'),
+									'LATE_BILL_COVER2' => Yii::t('store', 'LATE_BILL_COVER2'),
+									'LATE_BILL_COVER3' => Yii::t('store', 'LATE_BILL_COVER3'),
+								], ['class' => 'form-control'])
+	?>
 
     <?php ActiveForm::end(); ?>
 

@@ -22,7 +22,7 @@ class PdfDocumentGenerator {
 	 *	@param Attachment[] $docs Array of Attachment containing PDF of above bills.
 	 *	@param boolean $send Whether to send document to client after generation, and if client email is available.
 	 */
-	public function lateBills($client_id, $bills, $docs, $send = false) {
+	public function lateBills($client_id, $bills, $docs, $send = false, $exttype = null) {
 		$subjects = [
 			Yii::t('store', 'Unpaid Bills'),
 			Yii::t('store', 'Late Unpaid Bills'),
@@ -31,8 +31,13 @@ class PdfDocumentGenerator {
 		];
 
 		// number of months late, 0..3(max)
-		$days = floor( (time() - strtotime($bills[0]->created_at)) / (60*60*24) );
-		$type = floor($days / 30);
+		$type = 0;
+		if($exttype === null) {
+			$days = floor( (time() - strtotime($bills[0]->created_at)) / (60*60*24) );
+			$type = floor($days / 30);
+		} else {
+			$type = intval($exttype);
+		}
 		if($type > 3) $type = 3;
 
 		// table for standard cover letter

@@ -655,6 +655,7 @@ return [
 	'Late Unpaid Bills' => 'Factures impayées',
 
 
+	'Recall' => 'Rappel',
 	'LATE_BILL_COVER0' => 'Duplicatat',
 	'LATE_BILL_COVER1' => 'Rappel',
 	'LATE_BILL_COVER2' => 'Deuxième Rappel',

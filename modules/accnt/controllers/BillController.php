@@ -21,6 +21,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -287,9 +288,14 @@ class BillController extends Controller
 										$docs = [];
 										$client_id = $bill->client_id;
 									}
-
-									$days = floor( (time() - strtotime($bill->created_at)) / (60*60*24) );
-									$type = floor($days / 30);
+									$doctype = ArrayHelper::getValue($_POST, 'doctype', 'none');
+									$type = 0;
+									if($doctype == 'none') {
+										$days = floor( (time() - strtotime($bill->created_at)) / (60*60*24) );
+										$type = floor($days / 30);
+									} else {
+										$type = intval(substr($doctype, -1));
+									}
 									if($type > 3) $type = 3;
 									$pdf = new PrintedDocument([
 										'document'		=> $bill,
@@ -303,7 +309,7 @@ class BillController extends Controller
 								}
 								// generate cover for last
 								if($client_id != -1) {
-									$clg->lateBills($client_id, $bills, $docs, true);
+									$clg->lateBills($client_id, $bills, $docs, true, $type);
 								}
 
 								Yii::$app->session->setFlash('warning', Yii::t('store', 'Reminders sent and/or ready to print.'));
