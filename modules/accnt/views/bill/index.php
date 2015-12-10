@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'noWrap' => true,
 				'pageSummary' => true,
 	            'value' => function ($model, $key, $index, $widget) {
-							return $model->getAmount();
+					return $model->getAmount();
 				},
 			],
 			[
