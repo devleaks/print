@@ -11,7 +11,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $detail->tirage_factor_virgule = str_replace('.',',',$detail->tirage_factor);
-
+/**/
 ?>
 <div class="document-line-update-options-tirage">
 
@@ -158,7 +158,7 @@ $detail->tirage_factor_virgule = str_replace('.',',',$detail->tirage_factor);
 <script type="text/javascript">
 <?php
 $this->beginBlock('JS_INIT'); ?>
--item_id").trigger('change');
+$("#documentline-item_id").trigger('change');
 <?php $this->endBlock(); ?>
 </script>
 <?php
