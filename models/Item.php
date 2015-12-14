@@ -162,8 +162,16 @@ class Item extends _Item
 	 * @return boolean whether price needs special calculation
 	 */	
 	public function hasPriceComputation() {
-		//return in_array($this->categorie, ['ChromaLuxe', 'Cadre', 'Montage', 'ChromaSupport', 'Support']);
-		return in_array($this->yii_category, ['ChromaLuxe', 'Tirage', 'Cadre', 'Montage', 'Canvas', 'Support', 'Protection']);
+		return in_array($this->yii_category, [
+				ItemCategory::CHROMALUXE,
+				ItemCategory::TIRAGE,
+				ItemCategory::SUPPORT,
+				ItemCategory::MONTAGE,
+				ItemCategory::RENFORT,
+				ItemCategory::FRAME,
+				ItemCategory::UV,
+				ItemCategory::PROTECTION
+		]);
 	}
 
 

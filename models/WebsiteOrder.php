@@ -201,7 +201,7 @@ class WebsiteOrder extends _WebsiteOrder
 			$ctl = preg_match('/[^\d]*(\d+)[^\d]+(\d+)/', $product->format, $sizes);
 			$width = min($sizes[1], $sizes[2]);
 			$height = max($sizes[1], $sizes[2]);
-			echo print_r($sizes, true);
+			// echo print_r($sizes, true);
 			
 			$wol = new WebsiteOrderLine([
 				'website_order_id' => $this->id,
