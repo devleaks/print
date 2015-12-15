@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		    <li><a href="<?= Url::to(['/accnt/pdf', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Documents to Print')?></a></li>
 		</ul>
 		<ul>
+		    <li><a href="<?= Url::to(['/work']) ?>"><?= Yii::t('store', 'Works')?></a></li>
 		    <li><a href="<?= Url::to(['/store/client', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Clients')?></a></li>
 		    <li><a href="<?= Url::to(['/accnt/default/control']) ?>"><?= Yii::t('store', 'Checks')?></a></li>
 		</ul>

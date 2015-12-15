@@ -24,7 +24,7 @@ class DefaultController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager', 'employee', 'worker'],
+	                    'roles' => ['admin', 'manager', 'employee', 'worker', 'compta'],
 	                ],
 	            ],
 	        ],

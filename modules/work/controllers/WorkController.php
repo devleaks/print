@@ -35,7 +35,7 @@ class WorkController extends Controller
                		],
 					[
 	                    'allow' => true,
-	                    'roles' => ['admin', 'manager', 'frontdesk', 'employee', 'worker'],
+	                    'roles' => ['admin', 'manager', 'frontdesk', 'employee', 'worker', 'compta'],
 	                ],
 	            ],
 	        ],
