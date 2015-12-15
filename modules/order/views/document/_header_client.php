@@ -93,6 +93,10 @@ Html::a('<i class="glyphicon glyphicon-book"></i>',
                 'attribute'=>'reference_interne',
             ],
             [
+                'attribute'=>'comptabilite',
+				'displayOnly' => true,
+            ],
+            [
                 'attribute'=>'commentaires',
             ],
         ],
