@@ -259,14 +259,20 @@ class WebsiteOrder extends _WebsiteOrder
 				return $client;
 		}
 
-		if($client = $this->findIfOnlyOne(['lower(email)' => strtolower($this->email)]))
-			return $client;
+		if(strlen($this->email) > 5) {
+			if($client = $this->findIfOnlyOne(['lower(email)' => strtolower($this->email)]))
+				return $client;
+		}
 		
-		if($client = $this->findIfOnlyOne(['lower(reference_interne)' => strtolower($this->clientcode)]))
-			return $client;
+		if(strlen($this->clientcode) > 3) {
+			if($client = $this->findIfOnlyOne(['lower(reference_interne)' => strtolower($this->clientcode)]))
+				return $client;
+		}
 		
-		if($client = $this->findIfOnlyOne(['lower(autre_nom)' => strtolower($this->company)]))
-			return $client;
+		if(strlen($this->company) > 3) {
+			if($client = $this->findIfOnlyOne(['lower(autre_nom)' => strtolower($this->company)]))
+				return $client;
+		}
 		
 		$name_parts = explode(' ', $this->name);
 		foreach($name_parts as $str) {
