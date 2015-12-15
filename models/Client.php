@@ -190,7 +190,6 @@ class Client extends _Client
 					->select('sale')
 					->andWhere(['client_id' => $this->id])
 					->andWhere(['not', ['status' => [
-						Document::STATUS_OPEN,  
 						Document::STATUS_CANCELLED,  
 					]]])
 					->distinct();
