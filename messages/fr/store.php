@@ -631,6 +631,7 @@ return [
 	'Updated At' => 'Mise à jour',
 	'VAT Rate' => 'Taux',
 	'VAT' => 'TVA',
+	'There are {0} OPEN bills.' => "Il y a {0} facture(s) dans l'état OUVERTE(S)", 
 	
 	
 	

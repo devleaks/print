@@ -122,6 +122,10 @@ class ExtractionController extends Controller
 					Credit::find()->andWhere(['name' => $docs])
 					;
 		}
+		$warning = clone $docs;
+		if(($count = $warning->andWhere(['status' => Document::STATUS_OPEN])->count()) > 0) {
+			Yii::$app->session->setFlash('warning', Yii::t('store', 'There are {0} OPEN bills.', $count));
+		}
         return $this->render('bills', [
             'dataProvider' => new ActiveDataProvider(['query'=>$docs]),
         ]);
