@@ -91,15 +91,14 @@ class ExtractionController extends Controller
 				Yii::$app->session->setFlash('warning', Yii::t('store', 'There was no " - " separator between dates. I assume on date "{0}" only.', $date_from) );
 			}
 			Yii::trace('From '.$date_from.' to '.$date_to, 'ExtractionController::actionView');
-			$docs = ($model->extraction_type) ?
-					Bill::find()
+			$docs = Bill::find()
 						->andWhere(['>=','created_at',$date_from])
 						->andWhere(['<','created_at',$date_to])
-					:
+					->union(
 					Credit::find()
 						->andWhere(['>=','created_at',$date_from])
 						->andWhere(['<','created_at',$date_to])	
-					;
+					);
 		} else { // Extraction::TYPE_REFN
 			$docfrom = Document::findDocument($model->document_from);
 			$docto   = Document::findDocument($model->document_to);
@@ -116,15 +115,14 @@ class ExtractionController extends Controller
 			Yii::trace('From '.$numfrom.' to '.$numto, 'ExtractionController::actionView');
 			for($i = $numfrom; $i <= $numto; $i++)
 				$docs[] = $docyear.'-'.$i;			
-			$docs = ($model->extraction_type) ?
-					Bill::find()->andWhere(['name' => $docs])
-					:
+			$docs = Bill::find()->andWhere(['name' => $docs])
+					->union(
 					Credit::find()->andWhere(['name' => $docs])
-					;
+					);
 		}
 		$warning = clone $docs;
 		if(($count = $warning->andWhere(['status' => Document::STATUS_OPEN])->count()) > 0) {
-			Yii::$app->session->setFlash('warning', Yii::t('store', 'There are {0} OPEN bills.', $count));
+			Yii::$app->session->setFlash('warning', Yii::t('store', 'There are {0} OPEN bill(s)/credit note(s).', $count));
 		}
         return $this->render('bills', [
             'dataProvider' => new ActiveDataProvider(['query'=>$docs]),

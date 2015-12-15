@@ -36,18 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<div class="row">
 		
-	<div class="col-lg-4">
-	<?= $form->field($model, 'extraction_type')->widget(SwitchInput::classname(), [
-			'pluginOptions' => [
-        		'size' => 'large',
-				'onText' => Yii::t('store', CaptureExtraction::TYPE_BILL),
-				'offText' =>  Yii::t('store', CaptureExtraction::TYPE_CREDIT),
-				'onColor' => 'success',
-				'offColor' => 'primary',
-				'state' => $model->extraction_type
-	]]) ?>
-	</div>
-	
 	<div class="col-lg-8">
 	<?= Tabs::widget([
 		'items' => [
