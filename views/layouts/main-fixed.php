@@ -88,9 +88,9 @@ $apphomedir = Yii::getAlias('@app');
 				$help_menu = [];
 				// $help_menu[] = ['label' => 'Chardin',		'url' => "javascript:do_chardinjs();"];
 				$help_menu[] = ['label' => 'Intro',			'url' => "javascript:do_introjs();"];
-				$help_menu[] = ['label' => 'Documentation',	'url' => ['/site/help']];
+				$help_menu[] = ['label' => 'Documentation',	'url' => ['/help/guide-README.html']];
 
-			$menu[] = ['label' => Yii::t('store', 'Help'), 'items' => $help_menu/*'url' => ['/site/help']*/];
+			$menu[] = ['label' => Yii::t('store', 'Help'), 'items' => $help_menu/*'url' => ['/help/guide-README.html']*/];
 
 
 				$user_menu = [];

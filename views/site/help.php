@@ -10,7 +10,7 @@ $this->title = Yii::t('store', 'Help');
 $docdir = Yii::getAlias('@app').'/docs/';
 
 if(isset($file)) {
-	$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['/site/help']];
+	$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['/help/guide-README.html']];
 	if($file) {
 		$fn = $docdir.$file.'.md';
 		if(file_exists($fn))
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = isset($file) ? $file : $this->title;
 			foreach(new DirectoryIterator($docdir) as $file) {
 				if(strrpos($file, '.md') == (strlen($file)-3)) {
 					$fn = str_replace('.md', '', $file);
-					echo '<li>'.Html::a($fn, Url::to(['/site/help', 'f' => $fn])).'</li>'; // ;
+					echo '<li>'.Html::a($fn, Url::to(['/help/guide-README.html', 'f' => $fn])).'</li>'; // ;
 				}
 			}
 	?>
