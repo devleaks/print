@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use kartik\detail\DetailView;
 use yii\data\ActiveDataProvider;
 use yii\helpers\VarDumper;
@@ -38,6 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'format' => 'raw',
             ],
             'status',
+            [
+                'attribute'=>'document_id',
+                'label'=>Yii::t('store','Order'),
+	            'value' => $model->document ? Html::a($model->document->name, Url::to(['/order/document/view', 'id' => $model->document_id])) : '',
+				'format' => 'raw',
+            ],
         ],
     ]) ?>
 
