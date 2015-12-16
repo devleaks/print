@@ -79,7 +79,7 @@ class TestController extends Controller {
 								->andWhere(['not', ['document_type' => [Document::TYPE_BID]]])
 								->each() as $doc) {
 			if($model = Document::findDocument($doc->id)) {
-				if($model->getBalance() == 0 && $model->status != Document::STATUS_CLOSED) {
+				if($model->isPaid() && $model->status != Document::STATUS_CLOSED) {
 					$transaction = Yii::$app->db->beginTransaction();
 					echo 'Updating '.$model->document_type.' '.$model->name.' €'.$model->getBalance().' ('.$model->status.'-';
 					if($work = $model->getWorks()->one()) {
