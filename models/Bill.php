@@ -60,7 +60,7 @@ class Bill extends Document {
 		$sales = [];
 		$sales[] = $this->sale;
 		if($this->bom_bool) {
-			foreach(Order::find()->andWhere(['bom_bool' => true, 'parent_id' => $this->id])->each() as $order) {
+			foreach(Order::find()->andWhere(['bom_bool' => true, 'bill_id' => $this->id])->each() as $order) {
 				$sales[] = $order->sale;				
 			}
 		} else {
@@ -68,6 +68,7 @@ class Bill extends Document {
 				$sales[] = $order->sale;				
 			}
 		}
+		Yii::trace('sales='.print_r($sales, true), 'Bill::getPrepaid');
 
 		if($today) {
 			$date_from = date('Y-m-d 00:00:00', strtotime('today'));
@@ -166,7 +167,7 @@ class Bill extends Document {
 		if($this->bom_bool) { // this bill comes from a list of BOM
 			$bom_sales = [];
 			$bom_sales[] = $this->sale; // payments made on bill
-			foreach(Order::find()->andWhere(['bom_bool' => true, 'bill_id' => $this->id])->each() as $bom) {
+			foreach($this->getBoms()->each() as $bom) {
 				Yii::trace('adding '.$bom->sale);
 				$bom_sales[] = $bom->sale; // build array os sales id from all boms in this bill
 			}
@@ -175,6 +176,68 @@ class Bill extends Document {
         	return $this->hasMany(Payment::className(), ['sale' => 'sale']);
     }
 
+
+    /**
+     * @return \yii\db\ActiveQuery
+	 */
+	public function getBoms() {
+		return Order::find()->andWhere(['bom_bool' => true, 'bill_id' => $this->id]);
+	}
+
+    /**
+     * @inheritdoc
+	 *
+	 * IMPORTANT: Calls to this method should be framed in a transacation
+	 *
+	 * If bill is a sum of BOMs, no money get into the bill but is rather split onto all BOMs.
+	 *
+	 */
+	public function addPayment($account, $amount_gross, $method, $note = null) {
+		if(!$this->bom_bool) // for regular bills, we use regular payment addition
+			return parent::addPayment($account, $amount_gross, $method, $note);
+		
+		$available = $account->amount;
+		$more_needed = 0;
+		Yii::trace('available='.$available, 'Bill::addPayment');
+		foreach($this->getBoms()->each() as $bom) {
+			if($bom->isPaid()) {
+				Yii::trace('already paid: '.$bom->id, 'Bill::addPayment');
+			} else {
+				if($available > Bill::PAYMENT_LIMIT) {
+					$needed = $bom->getBalance();
+					Yii::trace('needed='.$needed.' for '.$bom->id, 'Bill::addPayment');
+					if($needed <= $available) {
+						$bom->addPayment($account, $needed, $account->payment_method);
+						$available -= $needed;
+						Yii::trace('found sufficient, available left ='.$available, 'Bill::addPayment');
+					} else {
+						$bom->addPayment($account, $available, $account->payment_method);
+						$more_needed = $needed - $available;
+						$available = 0;
+						Yii::trace('amount NOT sufficient, missing='.$more_needed, 'Bill::addPayment');
+					}
+				} else {
+					$more_needed += $bom->getBalance();
+				}
+			}
+		}
+		Yii::trace('Bottomline: missing='.$more_needed.', available='.$available, 'Bill::addPayment');
+		$available = round($available, 2);
+		if($available > 0) { // extra money left, add a credit line
+			$remaining = new Payment([
+				'sale' => Sequence::nextval('sale'), // its a new sale transaction...
+				'client_id' => $this->client_id,
+				'payment_method' => $account->payment_method,
+				'amount' => $available,
+				'status' => Payment::STATUS_OPEN,
+				'account_id' => $account->id,
+			]);
+			$remaining->save();
+			Yii::$app->session->setFlash('info',
+				Yii::t('store', 'Payment amount for bill exceeds amount to pay all BOMs: {0}€ credited and available.', $available));
+		}
+		return true;
+	}
 
     /**
      * @inheritdoc
