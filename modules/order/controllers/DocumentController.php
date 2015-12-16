@@ -562,6 +562,16 @@ class DocumentController extends Controller
 		*/
 	}
 
+	public function actionBoms($id) {
+		$model = $this->findModel($id);
+        return $this->render('index-sums', [
+            'searchModel' => null,
+            'dataProvider' => new ActiveDataProvider([
+				'query' => $model->getBoms(),
+			]),
+        ]);
+	}
+
 	public function actionReceive($id) {
 		$model = $this->findModel($id);
 		if($model->document_type == Document::TYPE_TICKET) {			
