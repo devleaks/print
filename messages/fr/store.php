@@ -515,6 +515,10 @@ return [
 	'Sales for NVB' => 'Ventes pour NVB',
 	'Sales by language' => 'Ventes par langue',
 	'This year' => 'Cette année',
+	'There are {0} OPEN bill(s)/credit note(s).' => "Il y a {0} facture(s) ou note(s) de crédit dans l'état OUVERTE(S)",
+	'Payment amount for bill exceeds amount to pay all BOMs: {0}€ credited and available.' => "Le paiement pour la facture excède le montant dû pour tous les bons de livraisons. {0}€ ont été crédités et sont disponibles.",	
+	
+	
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
 	'Item not found.' => 'Article introuvable.',
@@ -631,8 +635,6 @@ return [
 	'Updated At' => 'Mise à jour',
 	'VAT Rate' => 'Taux',
 	'VAT' => 'TVA',
-	'There are {0} OPEN bill(s)/credit note(s).' => "Il y a {0} facture(s) ou note(s) de crédit dans l'état OUVERTE(S)", 
-	
 	
 	
 	
