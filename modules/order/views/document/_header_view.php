@@ -59,14 +59,13 @@ $website_order_link = $wo ? Html::a(($wo->order_id ? $wo->order_id : $wo->id. ' 
 					],
 					'labelColOptions' => ['style' => 'width: 30%'],
 			        'attributes' => [
-			            //'id',
-			            //'client_id',
 			            [
 			                'attribute'=>'parent_id',
 			                'label'=>Yii::t('store','Related'),
- 			                'value'=> $model->parent_id ? Html::a($model->parent->name, Url::to(['/order/document/view', 'id' => $model->parent_id])) : ''
-							//.Html::activeHiddenInput($model, 'id')
-							,
+ 			                'value'=> $model->parent_id ? Html::a($model->parent->name, Url::to(['/order/document/view', 'id' => $model->parent_id])) : 
+								(($model->bom_bool && $model->document_type == Document::TYPE_BILL) ?
+								 Html::a('<span class="label label-info">'.Yii::t('store', 'Boms').'</span>',
+									Url::to(['/order/document/boms', 'id' => $model->id])) : ''),
 							'format' => 'raw',
 							'options' => ['readonly' => true]
 			            ],
