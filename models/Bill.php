@@ -68,7 +68,7 @@ class Bill extends Document {
 				$sales[] = $order->sale;				
 			}
 		}
-		Yii::trace('sales='.print_r($sales, true), 'Bill::getPrepaid');
+		//Yii::trace('sales='.print_r($sales, true), 'Bill::getPrepaid');
 
 		if($today) {
 			$date_from = date('Y-m-d 00:00:00', strtotime('today'));
