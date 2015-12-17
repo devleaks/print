@@ -87,7 +87,7 @@ class WebsiteOrderLine extends _WebsiteOrderLine
 			'work_height' => $this->height,
 			'vat' => $main_item->taux_de_tva,
 			'due_date' => $order->due_date,
-			'note' => $this->comment,
+			'note' => substr(($this->filename ? Yii::t('store', 'File: {0}. ',$this->filename) : '') . $this->comment, 0, 160),
 		]);
 		
 		/** 1.2 Rebate */
