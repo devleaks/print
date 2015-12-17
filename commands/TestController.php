@@ -86,9 +86,13 @@ class TestController extends Controller {
 						echo '>work='.$work->status.'-';
 					}
 					$model->setStatus(Document::STATUS_TOPAY);
-					echo '>'.$model->status.')
+					$model->save(false);
+					echo print_r($model->errors, true);
+					echo '>'.$model->id.':'.$model->status.')
 ';
 					$transaction->commit();
+					echo '>'.$model->id.':'.$model->status.')
+					';
 				}
 			}
 		}
@@ -101,6 +105,8 @@ VALUES
 */
 
 	function actionClearOldPayments() {
+		return;
+		// left for documentation DO NOT EXECUTE
 		foreach(Document::find()->andWhere(['<', 'document.created_at', '2015-08-01 00:00:00'])
 								->andWhere(['status' => [Document::STATUS_DONE, Document::STATUS_TOPAY, Document::STATUS_CLOSED]])
 								->andWhere(['not', ['document_type' => [Document::TYPE_BID]]])

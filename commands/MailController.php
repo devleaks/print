@@ -15,13 +15,15 @@ class MailController extends Controller {
 	 *
 	 */
     public function actionSend() {
-		foreach(Order::find()->andWhere(['status' => Order::STATUS_NOTIFY])->andWhere(['notified_at' => null])->each() as $model) {
+		foreach(Order::find()->andWhere(['status' => [Order::STATUS_NOTIFY,Order::STATUS_TOPAY]])->andWhere(['notified_at' => null])->each() as $model) {
 			//echo 'Trying...'.$model->name;
 			Yii::trace('Trying...'.$model->name, 'MailController::actionSend');
-			if($model->notify(['batch' => true])) {
+			if($model->notify(['batch' => true, 'simulate' => true])) {
 				echo 'Mail sent for '.$model->name.' to '.$model->getNotificationEmail().".\n";
 				$model->setStatus(Order::STATUS_TOPAY);
-				$model->save();
+				$model->save(false);
+				echo 'Error: '.print_r($model->errors, true).'
+';
 			} // else echo '. ';
 		}
     }
