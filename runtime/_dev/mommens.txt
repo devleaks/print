@@ -1,0 +1,6 @@
+Problème:
+
+5-10: Procédure ferme factures/commandes impayées via ancien système. Ferme 3 BL mommens.
+
+30-10: Paye facture résultant de BL. 3 des BL mommens  on été fermés par proc. ci-dessus (et ne devaient donc plus être payés.)
+
