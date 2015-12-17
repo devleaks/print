@@ -157,6 +157,10 @@ class Item extends _Item
 			$wl->save();
 		}
 	}
+	
+	public function hasTask() {
+		return $this->getTasks()->exists();
+	}
 
 	/**
 	 * @return boolean whether price needs special calculation

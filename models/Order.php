@@ -136,8 +136,11 @@ class Order extends Document
 	public function notify($options) {
 		$batch = ArrayHelper::getValue($options, 'batch', false);
 		$force = ArrayHelper::getValue($options, 'force', false);
+		$simulate = ArrayHelper::getValue($options, 'simulate', false);
 		$sent = false;
 		$sendmail = isset(Yii::$app->params['sendmail']) ? Yii::$app->params['sendmail'] : true;
+		if($simulate)
+			$sendmail = false;
 		if($this->closeToDueDate() || $force) {
 			if($this->notified_at && ($force != 'hard')) { // if already notified, do not send again
 				$send_again = Html::a(Yii::t('store', 'Send again'), ['document/sent3', 'id' => $this->id]);
@@ -210,6 +213,26 @@ class Order extends Document
 		}
 	}
 	
+	/**
+	 *  Checks whether order has existing work or potential work
+	 */
+	public function hasWork($start = false) {
+		if($this->getWorks()->exists()) { // has work and already created
+			return true;
+		}
+
+		$todo = false;
+		foreach($this->getDocumentLines()->each() as $dl) {
+			$todo |= $dl->hasTask();
+		}
+
+		if($todo && $start) { // has work and request to create it so we do it
+			$work = $this->createWork();
+		}
+
+		return $todo; // return if there is something todo.
+	}
+	
     /**
 	 * createWork create work to complete the order, loops and create tasks for each order line
 	 *
@@ -220,7 +243,7 @@ class Order extends Document
      */
 	public function createWork($defaultWork = false) {
 		if( $existing_work = $this->getWorks()->one() ) {
-			$this->setStatus(Order::STATUS_TODO);
+			$existing_work->setStatus(); // this will update this order' status according to the work' status.
 			return $existing_work;
 		}
 

@@ -113,6 +113,42 @@ class DocumentLineDetail extends _DocumentLineDetail
 			$this->addTasks($work, $order_line, 'UV');
 	}
 	
+    /**
+	 * createTask create work to complete the order line details
+	 * since the documentlinedetail may consist of one or more items, it will create tasks associated with each item.
+	 *
+	 * @param Work $work Work model for DocumentLine
+	 *
+	 * @param DocumentLine $order_line DocumentLine model to which this DocumentLineDetail is attached to.
+     */
+	public function hasTask() {
+		$todo = false;
+		
+		if(($item = $this->getChroma()->one()) != null)
+			$todo |= $item->hasTask();
+		if(($item = $this->getFinish()->one()) != null)
+			$todo |= $item->hasTask();
+		if(($item = $this->getSupport()->one()) != null)
+			$todo |= $item->hasTask();
+		if(($item = $this->getCollage()->one()) != null)
+			$todo |= $item->hasTask();
+		if(($item = $this->getProtection()->one()) != null)
+			$todo |= $item->hasTask();
+		if(($item = $this->getFrame()->one()) != null)			
+			$todo |= $item->hasTask();
+		if(($item = $this->getChassis()->one()) != null)			
+			$todo |= $item->hasTask();
+
+		if(($item = $this->getRenfort()->one()) != null)			
+			$todo |= $item->hasTask();
+
+		$todo |= $this->corner_bool;
+		$todo |= $this->montage_bool;
+		$todo |= $this->filmuv_bool;
+		
+		return $todo;
+	}
+
 	/**
 	 * Builds a string with all enabled options and price.
 	 *

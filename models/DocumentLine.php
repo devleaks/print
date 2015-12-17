@@ -176,7 +176,7 @@ class DocumentLine extends _DocumentLine
 	}
 
     /**
-	 * createWork create work to complete the order line, loops and create tasks for order line detail if any
+	 * createTask create task to complete the order line, loops and create tasks for order line detail if any
 	 *
      * @param $work Work model to attach WorkLine models to.
 	 *
@@ -187,6 +187,22 @@ class DocumentLine extends _DocumentLine
 		foreach($this->getDocumentLineDetails()->each() as $old) {	// there should only be one...
 			$old->createTask($work, $this);
 		}
+	}
+
+
+    /**
+	 * createTask create task to complete the order line, loops and create tasks for order line detail if any
+	 *
+     * @param $work Work model to attach WorkLine models to.
+	 *
+     * @return app\models\Work
+     */
+	public function hasTask() {
+		$todo = false;
+		foreach($this->getDocumentLineDetails()->each() as $old) {	// there should only be one...
+			$todo |= $old->hasTask();
+		}
+		return $todo || $this->item->hasTasks();
 	}
 
 
