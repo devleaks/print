@@ -698,6 +698,10 @@ return [
 	'LATE_BILL_COVER3::CALL_ACTION' => "Si vous estimez qu’un problème quelconque vous empêche de vous acquitter de cette dette, veuillez prendre contact avec notre service comptable au plus tôt au n°&nbsp;de tel 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85.",
 	'LATE_BILL_COVER3::GREETINGS' => "(*) Voir annexe(s) jointe(s).</p><p>Pour Labo JJ. Micheli,",
 
+
+	'ACCOUNT_SLIP' => 'Résumé client',
+	'DAILY_REPORT' => 'Résumé quotidien',
+
 	
 	/** Document Types and Statuses */
 	'ACREDIT' => 'Crédit',

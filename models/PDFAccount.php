@@ -32,4 +32,21 @@ class PDFAccount extends PDFLetter {
 		Yii::trace('filename='.$this->filename, 'PDFLetter::generateFilename');
 	}
 
+    /**
+     * @inheritdoc
+     */
+	public function save() {
+		//Yii::trace('fn='.$this->filename, 'PDFAccount::save');
+		if($this->filename) {
+			$this->deletePrevious();
+			$pdf = new Pdf([
+				'document_type' => $this->destination,
+				'filename' => $this->filename,
+				'client_id' => $this->client->id,
+			]);
+			return $pdf->save();
+		}
+		return false;
+	}
+
 }
