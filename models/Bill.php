@@ -223,7 +223,7 @@ class Bill extends Document {
 		}
 		Yii::trace('Bottomline: missing='.$more_needed.', available='.$available, 'Bill::addPayment');
 		$available = round($available, 2);
-		if($available > 0) { // extra money left, add a credit line
+		if($available > Bill::PAYMENT_LIMIT) { // extra money left, add a credit line
 			$remaining = new Payment([
 				'sale' => Sequence::nextval('sale'), // its a new sale transaction...
 				'client_id' => $this->client_id,

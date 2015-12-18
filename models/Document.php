@@ -535,23 +535,26 @@ class Document extends _Document
 						'account_id' => $account ? $account->id : null,
 						'note' => $note,
 					]);
+
 					// 2. record an extra payment in status OPEN
 					$surplus = $amount - $due;
-					$extra = new Payment([
-						'sale' => Sequence::nextval('sale'),
-						'client_id' => $this->client_id,
-						'payment_method' => $method,
-						'amount' => $surplus,
-						'note' => Yii::t('store', 'Extra payment for {0}',$this->name),
-						'status' => Payment::STATUS_OPEN,
-						'cash_id' => $account->cash_id,
-						'account_id' => $account ? $account->id : null,
-					]);
+					if($surplus > self::PAYMENT_LIMIT){
+						$extra = new Payment([
+							'sale' => Sequence::nextval('sale'),
+							'client_id' => $this->client_id,
+							'payment_method' => $method,
+							'amount' => $surplus,
+							'note' => Yii::t('store', 'Extra payment for {0}',$this->name),
+							'status' => Payment::STATUS_OPEN,
+							'cash_id' => $account->cash_id,
+							'account_id' => $account ? $account->id : null,
+						]);
+						if($method == Payment::CASH)
+							Yii::$app->session->setFlash('info', Yii::t('store', 'You must reimburse {0}€.', $surplus));
+						else
+							Yii::$app->session->setFlash('info', Yii::t('store', 'Bill paid. Customer left with {0}€ credit.', $surplus));
+					}
 
-					if($method == Payment::CASH)
-						Yii::$app->session->setFlash('info', Yii::t('store', 'You must reimburse {0}€.', $surplus));
-					else
-						Yii::$app->session->setFlash('info', Yii::t('store', 'Bill paid. Customer left with {0}€ credit.', $surplus));
 				}
 				Yii::$app->session->setFlash('success', Yii::t('store', 'Payment recorded.'));
 			}
@@ -802,7 +805,8 @@ class Document extends _Document
 	 * @return number Amount due.
 	 */
 	public function getBalance() {
-		return round($this->getTotal() - $this->getPrepaid(), 2);
+		$balance = round($this->getTotal() - $this->getPrepaid(), 2);
+		return abs($balance) > self::PAYMENT_LIMIT ? $balance : 0;
 	}
 	
 
