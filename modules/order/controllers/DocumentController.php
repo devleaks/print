@@ -739,8 +739,8 @@ class DocumentController extends Controller
 			// Check for double submit
 			if(!isset($_SESSION['captureclick']) || ($_POST['CapturePayment']['click'] != $_SESSION['captureclick'])) {
 				History::record($capturePayment, 'ERR', $capturePayment->click, false, null);
-				Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem capturing payment: {0}.',
-			 		' (may be form double submit?):'.VarDumper::dumpAsString($capturePayment->errors, 4, true)));
+				Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem capturing payment: {0}',
+			 		(count($capturePayment->errors) > 0) ? VarDumper::dumpAsString($capturePayment->errors, 4, true) : Yii::t('store', 'may be form double submit?') ));
 				return $this->redirect(Yii::$app->request->referrer);
 			}
 			unset($_SESSION['captureclick']);

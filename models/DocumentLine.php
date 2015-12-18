@@ -307,7 +307,7 @@ class DocumentLine extends _DocumentLine
 
 		if($detail = $this->getDetail()) {
 			if($show_price && $this->isTirage(true))
-				$str .= ' <small>('.$detail->price_tirage.'<span style="font-size: 0.8em;">€</span>)</small>';
+				$str .= $detail->price_tirage ? ' <small>('.$detail->price_tirage.'<span style="font-size: 0.8em;">€</span>)</small>' : '';
 
 			$str .= $detail->getDescriptionHTML($show_price); // $str .= ' ('.$detail->getDescription($show_price).')';
 		}

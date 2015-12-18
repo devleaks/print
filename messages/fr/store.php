@@ -508,7 +508,7 @@ return [
 	'Bills for Transfer' => 'Factures à transférer',
 	'Web Orders' => 'Commandes via le site web',
 	'Web Transfers' => 'Transferts du site web',
-	'There was a problem capturing payment: {0}.' => "Il y a eu un problème d'enregistrement du paiement: {0}.",
+	'There was a problem capturing payment: {0}' => "Il y a eu un problème d'enregistrement du paiement: {0}",
 	'Send again' => 'Envoyer à nouveau',
 	'Client has already be notified on {0}. {1}.' => 'Le client a déjà été averti le {0}. {1}.',
 	'New Web Orders' => 'Site web',
@@ -701,6 +701,7 @@ return [
 
 	'ACCOUNT_SLIP' => 'Résumé client',
 	'DAILY_REPORT' => 'Résumé quotidien',
+	'may be form double submit?' => 'Peut-être une double soumission du formulaire?',
 
 	
 	/** Document Types and Statuses */
