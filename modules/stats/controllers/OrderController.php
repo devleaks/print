@@ -4,6 +4,7 @@ namespace app\modules\stats\controllers;
 
 use app\models\Bill;
 use app\models\Client;
+use app\models\ClientNvb;
 use app\models\Document;
 use app\models\_DocumentSearch;
 use app\models\DocumentSearch;
@@ -386,13 +387,28 @@ class OrderController extends Controller
 			])
 			->andWhere(['document_type' => [Document::TYPE_ORDER, Document::TYPE_TICKET]])
 			->andWhere(['not', ['document.status' => Document::STATUS_CANCELLED]])
-			->andWhere(['document.id' => WebsiteOrder::find()->select('document_id')])
+			->andWhere(['or',
+				['document.id' => WebsiteOrder::find()->select('document_id')],
+				['document.client_id' => ClientNVB::find()->select('no_nvb')]
+				])
 			//->andWhere(['not', ['client.reference_interne' => null]])
 			//->andWhere(['not', ['client.reference_interne' => '']])
 			->groupBy('year,month')
 			->asArray()->all();
 		;
-
+/*		$q = Document::find()
+			->select([
+				'year' => 'year(document.created_at)',
+				'month' => 'month(document.created_at)',
+				'total_amount' => 'sum(document.price_htva)',
+			])
+			->andWhere(['document_type' => [Document::TYPE_ORDER, Document::TYPE_TICKET]])
+			->andWhere(['not', ['document.status' => Document::STATUS_CANCELLED]])
+			->andWhere(['document.client_id' => ClientNVB::find()->select('no_nvb')])
+			->groupBy('year,month')
+			->asArray()->all();
+		;
+*/
 	    return $this->render('nvb-by-month',[
 			'dataProvider' => new ArrayDataProvider([
 				'allModels' => $q

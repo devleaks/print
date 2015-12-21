@@ -24,7 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
 		'panel'=>[
-	        'type'=>GridView::TYPE_PRIMARY,
 	        'heading'=>$this->title,
 	    ],
 		'toolbar'=> [
@@ -135,7 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'initRangeExpr' => true,
 					'presetDropdown' => false,
 					'pluginOptions'=>[                                          
-	                    'format'=>'Y-m-d',
+	                    'locale'=>['format'=>'Y-m-d'], // 'format'=>'Y-m-d',
 	                    'opens'=>'left',
 						'ranges' => [
 						    Yii::t('store', "Today") => ["moment().startOf('day')", "moment()"],
