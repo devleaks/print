@@ -5,10 +5,12 @@ namespace app\modules\stats\controllers;
 use app\models\Bill;
 use app\models\Client;
 use app\models\Document;
+use app\models\_DocumentSearch;
 use app\models\DocumentSearch;
 use app\models\DocumentLine;
 use app\models\Event;
 use app\models\Order;
+use app\models\WebsiteOrder;
 
 use Yii;
 use yii\web\Controller;
@@ -363,13 +365,38 @@ class OrderController extends Controller
 		$dataProvider->query
 			->joinWith('client')
 			->andWhere(['document_type' => [Document::TYPE_ORDER, Document::TYPE_TICKET]])
-			->andWhere(['not', ['client.reference_interne' => null]])
-			->andWhere(['not', ['client.reference_interne' => '']])
+			->andWhere(['not', ['document.status' => Document::STATUS_CANCELLED]])
+			->andWhere(['document.id' => WebsiteOrder::find()->select('document_id')])
+			//->andWhere(['not', ['client.reference_interne' => null]])
+			//->andWhere(['not', ['client.reference_interne' => '']])
 		;
 
 	    return $this->render('nvb',[
 			'dataProvider' => $dataProvider,
 			'searchModel' => $searchModel
+		]);
+	}
+	
+	public function actionNvbByMonth() {
+		$q = Document::find()
+			->select([
+				'year' => 'year(document.created_at)',
+				'month' => 'month(document.created_at)',
+				'total_amount' => 'sum(document.price_htva)',
+			])
+			->andWhere(['document_type' => [Document::TYPE_ORDER, Document::TYPE_TICKET]])
+			->andWhere(['not', ['document.status' => Document::STATUS_CANCELLED]])
+			->andWhere(['document.id' => WebsiteOrder::find()->select('document_id')])
+			//->andWhere(['not', ['client.reference_interne' => null]])
+			//->andWhere(['not', ['client.reference_interne' => '']])
+			->groupBy('year,month')
+			->asArray()->all();
+		;
+
+	    return $this->render('nvb-by-month',[
+			'dataProvider' => new ArrayDataProvider([
+				'allModels' => $q
+			]),
 		]);
 	}
 	

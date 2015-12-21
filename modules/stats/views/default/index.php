@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					<li><a href="<?= Url::to(['/stats/order/']) ?>"><?= Yii::t('store', 'Commandes par clients (nombres, montants, moyennes)')?></a></li>
 					<li><a href="<?= Url::to(['/stats/order/frequency']) ?>"><?= Yii::t('store', 'Commandes par clients (fréquence, périodicité)')?></a></li>
 					<li><a href="<?= Url::to(['/stats/order/nvb']) ?>"><?= Yii::t('store', 'Commandes par clients NVB')?></a></li>
+					<li><a href="<?= Url::to(['/stats/order/nvb-by-month']) ?>"><?= Yii::t('store', 'Commandes par clients NVB par mois')?></a></li>
 				</ul>
 		</div>
 	</div>
