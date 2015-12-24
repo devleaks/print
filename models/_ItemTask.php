@@ -35,7 +35,7 @@ class _ItemTask extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['item_id', 'task_id'], 'required'],
+            [['item_id', 'task_id', 'position'], 'required'],
             [['item_id', 'task_id', 'position'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['note'], 'string', 'max' => 160],
