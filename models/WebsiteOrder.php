@@ -164,7 +164,7 @@ class WebsiteOrder extends _WebsiteOrder
 		$this->order_id = $weborder->order_id;
 		$this->name = $weborder->name;
 		$this->company = $weborder->company;
-		$this->address = $weborder->address;
+		$this->address = substr($weborder->address, 0, 160);
 		$this->postcode = $weborder->zipcode;
 		$this->city = $weborder->city;
 		$this->vat = $weborder->vat;
@@ -173,7 +173,7 @@ class WebsiteOrder extends _WebsiteOrder
 		$this->clientcode = $weborder->client;
 		$this->promocode = $weborder->promocode;
 		$this->delivery = $delivery;
-		$this->comment = $weborder->comments;
+		$this->comment = substr($weborder->comments, 0, 160);
 		
 		if($this->order_type == self::TYPE_CERA && !$this->isPromo()) {
 			$this->warnings[] = 'Order of type CERA but wrong promo code "'.$this->promocode.'".';
@@ -212,7 +212,7 @@ class WebsiteOrder extends _WebsiteOrder
 				'format' => $product->format,
 				'width' => $width,
 				'height' => $height,
-				'comment' => $product->comments,
+				'comment' => substr($product->comments, 0, 160),
 			]);
 			if($ok) {
 				$ok = $wol->save();
