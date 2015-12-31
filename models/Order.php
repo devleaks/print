@@ -100,6 +100,40 @@ class Order extends Document
 	}
 
 
+	/**
+	 * @inheritdoc
+	 */
+	public function getPrepaid($today = false) { // @ TODO
+		if($today) {
+			$date_from = date('Y-m-d 00:00:00', strtotime('today'));
+			$date_to = str_replace($date_from, '00:00:00', '23:59:59');
+			$ret = Payment::find()->andWhere(['sale' => $this->sale])
+							->andWhere(['>=','created_at',$date_from])
+							->andWhere(['<=','created_at',$date_to])
+							->sum('amount');	
+		} else {
+			$ret = Payment::find()->where(['sale' => $this->sale])->sum('amount');
+		}
+		Yii::trace('this sale '.$this->sale."=".$ret, 'Order::getPrepaid');
+			
+		if($this->bom_bool && $this->bill) {
+			$ret2 = $this->bill->getPrepaid($today);
+			Yii::trace('enclosing bill '.$this->bill->id."=".$ret2, 'Order::getPrepaid');
+			$due = $this->getAmount();
+			if($ret2 >= $due) {	// assume bill is paid?
+				Yii::trace('enclosing bill covers amount due ('.$due.'), ASSUME order is paid', 'Order::getPrepaid');
+				return $due;
+			} else {
+				Yii::trace('enclosing bill does not covers amount due ('.$due.'), ASSUME order is NOT paid', 'Order::getPrepaid');
+			} // else return what is on this order only
+		} else {
+			Yii::trace('no enclosing bill sale', 'Order::getPrepaid');
+		}
+		Yii::trace('total this order='.$ret, 'Order::getPrepaid');
+
+		return $ret ? $ret : 0;
+	}
+
 	protected function updatePaymentStatus() {
 		if($bill = $this->getBill()) // If the order has already a bill, the bill contains the payment status
 			return $bill->updatePaymentStatus();
