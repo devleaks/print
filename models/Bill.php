@@ -91,7 +91,6 @@ class Bill extends Document {
 			return null;
 		$boms = Order::find()->andWhere(['bom_bool' => true, 'id' => $boms])->orderBy('created_at');
 		if($boms->exists()) {
-			Yii::trace('bill='.$this->id, 'Bill::createFromBoms');
 			$model = null;
 			$vat_bool = null;
 			foreach($boms->each() as $bom) {
@@ -108,7 +107,7 @@ class Bill extends Document {
 					$model->vat_bool = $bom->vat_bool; // we assume all BOMs have same vat_bool.
 					$model->due_date = $bom->due_date;
 					// Note: BOM gets temporary number, bill gets next number available.
-					$model->name = substr($bom->due_date,0,4).'-'.str_pad(Sequence::nextval('bill_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT);
+					$model->name = date('Y').'-'.str_pad(Sequence::nextval('bill_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT);
 					//$model->note = $bom->name;
 					$model->status = self::STATUS_OPEN;
 					$model->sale = Sequence::nextval('sale');

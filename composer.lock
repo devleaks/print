@@ -1977,16 +1977,16 @@
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
-            "version": "v3.5.5",
+            "version": "v3.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-star-rating.git",
-                "reference": "0f729ea50a69224b643e2d9c955b9183e387f03a"
+                "reference": "3c9b6d685c23acccec1c85df4bf4e02b536714ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/0f729ea50a69224b643e2d9c955b9183e387f03a",
-                "reference": "0f729ea50a69224b643e2d9c955b9183e387f03a",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/3c9b6d685c23acccec1c85df4bf4e02b536714ea",
+                "reference": "3c9b6d685c23acccec1c85df4bf4e02b536714ea",
                 "shasum": ""
             },
             "type": "library",
@@ -2014,7 +2014,7 @@
                 "jquery",
                 "star"
             ],
-            "time": "2015-11-22 17:08:34"
+            "time": "2015-12-29 05:44:07"
         },
         {
             "name": "kartik-v/dependent-dropdown",
@@ -3055,16 +3055,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-datepicker",
-            "version": "v1.3.5",
+            "version": "v1.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-datepicker.git",
-                "reference": "47c47a8542b80c79a13dab63afccf83b0649b859"
+                "reference": "8e80915be1a9364387ceab36f2e7b19360352600"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/47c47a8542b80c79a13dab63afccf83b0649b859",
-                "reference": "47c47a8542b80c79a13dab63afccf83b0649b859",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/8e80915be1a9364387ceab36f2e7b19360352600",
+                "reference": "8e80915be1a9364387ceab36f2e7b19360352600",
                 "shasum": ""
             },
             "require": {
@@ -3100,7 +3100,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-12-28 05:04:19"
+            "time": "2015-12-29 11:07:49"
         },
         {
             "name": "kartik-v/yii2-widget-datetimepicker",
