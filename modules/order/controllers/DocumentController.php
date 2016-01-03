@@ -296,7 +296,7 @@ class DocumentController extends Controller
 						break;
 					default:
 						$o = Parameter::getTextValue('application', $model->bom_bool ? 'BOM' : $model->document_type, '-');
-						$model->name = substr($now,0,4).$o.Sequence::nextval('doc_number');
+						$model->name = substr($now,0,4).$o.str_pad(Sequence::nextval('doc_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT);
 						break;
 				}
 			}
