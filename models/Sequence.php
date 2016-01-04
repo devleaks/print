@@ -41,7 +41,7 @@ class Sequence extends \yii\db\ActiveRecord
 	 */
 	public function reset() {
 		$curyear = date('Y'); // YYYY
-		if($this->sequence_year != $curyear) { // reset
+		if($this->sequence_year != $curyear && $this->sequence_cycle) { // reset
 			$this->sequence_cur_value = $this->sequence_min_value;
 			$this->sequence_year = $curyear;
 			$this->save();
