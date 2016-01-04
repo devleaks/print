@@ -1,11 +1,17 @@
 <?php
+$year = null;
+if($model = $models->one()) {
+	$year = substr($model->name, 2, 2);
+} else {
+	$year = date('y');
+}
 ?>
 |     Popsy file
 
 CreateKeyCustomer:Y
 IgnoreAnalClosed:Y
 DossierSelect:001
-AcctingSelect:<?= date('y') ?>
+AcctingSelect:<?= $year ?>
 
 <?= $this->render('_extract_clients' , ['model' => $clients]) ?>
 
