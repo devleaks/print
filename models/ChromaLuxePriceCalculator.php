@@ -12,7 +12,6 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 {
 	protected $w_max;
 	protected $h_max;
-	protected $min_price;
 	
 	public $surfaces;
 	public $prices;
@@ -32,7 +31,6 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 			$this->surfaces[$size] = Parameter::findOne(['domain' => 'formule', 'name' => 'ChromaLuxe'.$size]);
 		}
 
-		$this->min_price = $this->getPrice('Chroma_Min');
 		$this->inited = true;		
 	}
 
@@ -46,8 +44,9 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 		$s = $w * $h;
 
 		if( $item = $this->prices[$this->getSize($s)] ) {
+			Yii::trace('category '.$this->getSize($s), 'ChromaLuxePriceCalculator::price');
 			$price = ceil($item->prix_de_vente * $s / ($this->w_max * $this->h_max));
-			return $price < $this->min_price ? $this->min_price : $price;
+			return $price < $this->item->prix_min ? $this->item->prix_min : $price;
 		}
 		
 		return 0; // error
@@ -59,6 +58,7 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 		$max = count($this->sizes);
 		while( ($i < $max) && ($s < $this->surfaces[$this->sizes[$max-$i-1]]->value_number) )
 			$i++; 
+		Yii::trace('index '.$i, 'ChromaLuxePriceCalculator::getSize');
 		return $this->sizes[($i > 0 ? $max-$i : $max - 1)];
 	}
 	

@@ -289,7 +289,7 @@ class DocumentController extends Controller
 				$now = date('Y-m-d', strtotime('now'));
 				switch($model->document_type) {
 					case Document::TYPE_BILL:
-						$model->name = substr($now,0,4).'-'.str_pad(Sequence::nextval('bill_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT);
+						$model->name = Bill::getNextBillNumber();
 						break;
 					case Document::TYPE_CREDIT:
 						$model->name = substr($now,0,4).'-'.str_pad(Sequence::nextval('credit_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT);
@@ -641,7 +641,7 @@ class DocumentController extends Controller
 		$now = date('Y-m-d', strtotime('now'));
 		switch($copy->document_type) {
 			case Document::TYPE_BILL:
-				$copy->name = substr($now,0,4).'-'.str_pad(Sequence::nextval('bill_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT);
+				$copy->name = Bill::getNextBillNumber();
 				break;
 			case Document::TYPE_CREDIT:
 				$copy->name = substr($now,0,4).'-'.str_pad(Sequence::nextval('credit_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT);

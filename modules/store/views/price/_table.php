@@ -234,7 +234,7 @@ chroma =  {
 	w_max: <?= $w_max ?>,
 	h_max: <?= $h_max ?>,
 	s_max: <?= $h_max * $w_max ?>,
-	min_price: <?= Item::findOne(['reference'=>'Chroma_Min'])->prix_de_vente ?>
+	min_price: <?= Item::findOne(['reference'=>Item::TYPE_CHROMALUXE])->prix_min ?>
 }
 
 function getSize(s) {
