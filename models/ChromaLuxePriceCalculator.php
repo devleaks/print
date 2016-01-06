@@ -21,8 +21,9 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 	public function init() {
 		$this->item = Item::findOne(['reference' => Item::TYPE_CHROMALUXE]);
 		$this->type = self::SURFACE;
-		$this->w_max = Parameter::getIntegerValue('chroma_device', 'width');
-		$this->h_max = Parameter::getIntegerValue('chroma_device', 'height');
+		
+		$this->w_max = Parameter::getIntegerValue('formule', 'SublimationMaxWidth');
+		$this->h_max = Parameter::getIntegerValue('formule', 'SublimationMaxHeight');
 
 		$this->prices = [];
 		$this->surfaces = [];
@@ -38,6 +39,10 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 	public function price($w, $h) {
 		if(!$this->inited) return 0;
 
+		// used to compute ratio to original device price
+		$dev_w_max = Parameter::getIntegerValue('chroma_device', 'width');
+		$dev_h_max = Parameter::getIntegerValue('chroma_device', 'height');
+
 		$maxlen = min($this->w_max, $this->h_max);
 		if($w > $maxlen && $h > $maxlen) return;
 
@@ -45,7 +50,7 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 
 		if( $item = $this->prices[$this->getSize($s)] ) {
 			Yii::trace('category '.$this->getSize($s), 'ChromaLuxePriceCalculator::price');
-			$price = ceil($item->prix_de_vente * $s / ($this->w_max * $this->h_max));
+			$price = ceil($item->prix_de_vente * $s / ($dev_w_max * $dev_h_max));
 			return $price < $this->item->prix_min ? $this->item->prix_min : $price;
 		}
 		
@@ -58,7 +63,7 @@ class ChromaLuxePriceCalculator extends PriceCalculator
 		$max = count($this->sizes);
 		while( ($i < $max) && ($s < $this->surfaces[$this->sizes[$max-$i-1]]->value_number) )
 			$i++; 
-		Yii::trace('index '.$i, 'ChromaLuxePriceCalculator::getSize');
+		Yii::trace('surface='.$s.', index '.$i.' returing '.$this->sizes[($i > 0 ? $max-$i : $max - 1)], 'ChromaLuxePriceCalculator::getSize');
 		return $this->sizes[($i > 0 ? $max-$i : $max - 1)];
 	}
 	
