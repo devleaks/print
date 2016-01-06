@@ -7,7 +7,17 @@ use app\models\WebsiteOrder;
 
 use yii\console\Controller;
 use Yii;
-
+/**
+'log' => [
+    'traceLevel' => YII_DEBUG ? 3 : 0,
+    'targets' => [
+        [
+            'class' => 'pahanini\log\ConsoleTarget',
+            'levels' => ['error', 'warning', 'trace'],
+        ],
+    ],
+],
+**/
 class WebsiteController extends Controller {
 	protected $url = 'http://www.labojjmicheli.be/nl/plugins/';
 	protected $newOrders = false;
