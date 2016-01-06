@@ -82,7 +82,7 @@ class Pdf extends _Pdf
 		if($this->document_type == 'DOCUMENT' && $this->document_id)
 			return Yii::t('store', $this->document->document_type);
 		else
-			return Yii::t('store', $this->document_type);;
+			return Yii::t('store', $this->document_type);
 	}
 	
 

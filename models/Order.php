@@ -191,7 +191,7 @@ class Order extends Document
 							    ->setFrom( Yii::$app->params['fromEmail'] )
 							    ->setTo( $destinataire )
 								->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
-							    ->setSubject(Yii::t('store', $this->document_type).' '.$this->name)
+							    ->setSubject(Yii::t('print', $this->document_type).' '.$this->name)
 							    ->send();
 						$sent = true;
 						$this->notified_at = date('Y-m-d H:i:s');
