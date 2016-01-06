@@ -17,12 +17,18 @@ class WebsiteController extends Controller {
 	
 	protected $dev = false;
 	
+	protected function locdebug($str, $loc) {
+		Yii::trace($str, $loc);
+		/*echo $loc.': '.$str.'
+';*/
+	}
+	
 	/**
 	 *  Fetch website orders and save them if they do not exists.
 	 *
 	 */
 	protected function get_data($url) {
-		Yii::trace('Trying '.$url, 'WebsiteController::get_data');
+		$this->locdebug('Trying '.$url, 'WebsiteController::get_data');
 		$ch = curl_init();
 		$timeout = 5;
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -39,7 +45,7 @@ class WebsiteController extends Controller {
 	}
 	
     protected function check_date($date) {
-		Yii::trace('Checking '.$date, 'WebsiteController::check_date');
+		$this->locdebug('Checking '.$date, 'WebsiteController::check_date');
 		$base_url = $this->dev ? 'http://imac.local:8080/print/test/get-order' : $this->url.'get_order.php';
 		$list_url = $base_url . '?date=' . $date;
 		$filenames_str = $this->get_data($list_url);
@@ -58,7 +64,7 @@ class WebsiteController extends Controller {
 						if($wso->save())
 							$this->newOrders = true;
 						else
-							Yii::trace('WSO: '.print_r($wso->errors, true), 'WebsiteController::check_date');
+							$this->locdebug('WSO: '.print_r($wso->errors, true), 'WebsiteController::check_date');
 					}
 				}
 			}
@@ -86,9 +92,9 @@ class WebsiteController extends Controller {
     protected function makeOrders() {
 		foreach(WebsiteOrder::find()->andWhere(['status' => WebsiteOrder::STATUS_OPEN])->each() as $wso) {
 			if($order = $wso->createOrder()) {
-				Yii::trace('Order '.$order->id.' created from file '.$wso->order_name, 'WebsiteController::actionMakeOrders');
+				$this->locdebug('Order '.$order->id.' created from file '.$wso->order_name, 'WebsiteController::actionMakeOrders');
 			} else {
-				Yii::trace('ERROR Creating order for file '.$wso->order_name, 'WebsiteController::actionMakeOrders');
+				$this->locdebug('ERROR Creating order for file '.$wso->order_name, 'WebsiteController::actionMakeOrders');
 			}
 		}
 	}
