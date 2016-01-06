@@ -173,7 +173,8 @@ class WebsiteOrder extends _WebsiteOrder
 		$this->clientcode = $weborder->client;
 		$this->promocode = $weborder->promocode;
 		$this->delivery = $delivery;
-		$this->comment = substr($weborder->comments, 0, 160);
+		$tmp = substr($weborder->comments, 0, 160);
+		$this->comment = $tmp ? $tmp : '';
 		
 		if($this->order_type == self::TYPE_CERA && !$this->isPromo()) {
 			$this->warnings[] = 'Order of type CERA but wrong promo code "'.$this->promocode.'".';
@@ -203,6 +204,8 @@ class WebsiteOrder extends _WebsiteOrder
 			$height = max($sizes[1], $sizes[2]);
 			// echo print_r($sizes, true);
 			
+			$tmp = substr($product->comments, 0, 160);
+
 			$wol = new WebsiteOrderLine([
 				'website_order_id' => $this->id,
 				'filename' => $product->filename,
@@ -212,7 +215,7 @@ class WebsiteOrder extends _WebsiteOrder
 				'format' => $product->format,
 				'width' => $width,
 				'height' => $height,
-				'comment' => substr($product->comments, 0, 160),
+				'comment' => $tmp ? $tmp : '',
 			]);
 			if($ok) {
 				$ok = $wol->save();
