@@ -159,8 +159,8 @@ class DocumentActionColumn extends Column {
 			// bill
 			'send'	=> [
 				'icon' => 'play',
-				'label' => 'Send',
-				'title' => 'Send',
+				'label' => 'Close',
+				'title' => 'Close',
 				'color' => 'primary',
 				'action' => '/order/document/sent',
 			],

@@ -96,16 +96,16 @@
         },
         {
             "name": "2amigos/yii2-gallery-widget",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/2amigos/yii2-gallery-widget.git",
-                "reference": "77b82b4a4d33a5cb9013220ff843de75984e7e82"
+                "reference": "77ae3c5e19b027f5c2f2147ce8c14a7a916ad6fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/2amigos/yii2-gallery-widget/zipball/77b82b4a4d33a5cb9013220ff843de75984e7e82",
-                "reference": "77b82b4a4d33a5cb9013220ff843de75984e7e82",
+                "url": "https://api.github.com/repos/2amigos/yii2-gallery-widget/zipball/77ae3c5e19b027f5c2f2147ce8c14a7a916ad6fc",
+                "reference": "77ae3c5e19b027f5c2f2147ce8c14a7a916ad6fc",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,8 @@
                 "yiisoft/yii2": "~2.0.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0"
+                "phpunit/phpunit": "~4.0",
+                "scrutinizer/ocular": "~1.1"
             },
             "type": "yii2-extension",
             "extra": {
@@ -140,11 +141,6 @@
                     "email": "hola@2amigos.us",
                     "homepage": "http://2amigos.us",
                     "role": "Developer"
-                },
-                {
-                    "name": "Alexander Kochetov",
-                    "email": "creocoder@gmail.com",
-                    "role": "Developer"
                 }
             ],
             "description": "Blueimp gallery widget for the Yii framework",
@@ -157,7 +153,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2015-04-12 22:21:58"
+            "time": "2016-01-04 06:27:31"
         },
         {
             "name": "2amigos/yii2-grid-view-library",
@@ -1734,12 +1730,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fightbulc/moment.php.git",
-                "reference": "6059526414e30966c4cfd3bc970c735770b0d30e"
+                "reference": "0b368843c964b5a2ec7218d32de5ad9bfc774829"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/6059526414e30966c4cfd3bc970c735770b0d30e",
-                "reference": "6059526414e30966c4cfd3bc970c735770b0d30e",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/0b368843c964b5a2ec7218d32de5ad9bfc774829",
+                "reference": "0b368843c964b5a2ec7218d32de5ad9bfc774829",
                 "shasum": ""
             },
             "require": {
@@ -1789,7 +1785,7 @@
                 "translation",
                 "validate"
             ],
-            "time": "2015-11-11 13:30:34"
+            "time": "2016-01-05 09:47:19"
         },
         {
             "name": "fortawesome/font-awesome",
