@@ -489,7 +489,8 @@ class Document extends _Document
 		$due = round($this->getBalance(), 2);
 		$cash = null;
 		
-		$client_id = ($this->document_type == self::TYPE_TICKET || $this->document_type == self::TYPE_REFUND) ? Client::auComptoir()->id : $this->client_id;
+		// $client_id = ($this->document_type == self::TYPE_TICKET || $this->document_type == self::TYPE_REFUND) ? Client::auComptoir()->id : $this->client_id;
+		$client_id = $this->client_id;
 		
 		if (!in_array($method, [Payment::USE_CREDIT,Payment::CLEAR])) {
 
