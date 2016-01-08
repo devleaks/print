@@ -220,10 +220,15 @@ class DocumentController extends Controller
     public function actionChangeClient($id) {
 		$model = $this->findModel($id);
 		
+		$transaction = Yii::$app->db->beginTransaction();
 		if($model->bom_bool) {
+			$transaction->rollback();
 			Yii::$app->session->setFlash('warning', Yii::t('store', 'You cannot change the client of a Bill of Material or of a bill of BoM.'));
 			return $this->redirect(Yii::$app->request->referrer);
 		} else if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			// we need to change the money as well
+			$model->changePayments();
+			$transaction->commit();
 			Yii::$app->session->setFlash('success', Yii::t('store', '{document} updated.', ['document' => Yii::t('store', $model->document_type)]));
         }
         return $this->render('change-client', [

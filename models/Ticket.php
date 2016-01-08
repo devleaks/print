@@ -49,24 +49,23 @@ class Ticket extends Order
 			if($this->hasPayments()) {
 				// re-create VC
 				$amount = $this->getPrepaid();
-				$comptoir = Client::auComptoir();
 				
 				// Create a copy of original for archive.
 				$ticket = $this->newCopy();
 				$ticket->id = null;
 				$ticket->sale = Sequence::nextval('sale');
 				$ticket->name .= '-FACTURE';
-				$ticket->setStatus(Document::STATUS_CLOSED);
+				$ticket->setStatus(Document::STATUS_CANCELLED);
 				$ticket->save();
 
 				$this->document_type = self::TYPE_ORDER;
 				$this->save();
-
+				
 				// Create a reimbursement.
 				$reimbursment = new Refund([
 					'document_type' => Refund::TYPE_REFUND,
 					'client_id' => $this->client_id,
-					'name' => substr($this->created_at,0,4).'-'.Sequence::nextval('doc_number'),
+					'name' => substr($this->created_at,0,4).'-'.str_pad(Sequence::nextval('doc_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT),
 					'due_date' => $this->due_date,
 					'note' => 'Remboursement conversion VC->Facture',
 					'sale' =>  Sequence::nextval('sale'),
@@ -91,6 +90,11 @@ class Ticket extends Order
 				$reimbursment->save();
 
 				foreach($this->getPayments()->each() as $payment) {
+					$orig_date = date('Y-m-d H:i:s');
+					if($account = $payment->getAccount()->one()) {
+						$orig_date = $account->payment_date;
+						Yii::trace('account id='.$account->id.' on '.$orig_date, 'Ticket::convert');
+					}
 					// Reassign this payment to copy of vente comptoir
 					$payment->sale = $ticket->sale;
 					$payment->save();
@@ -101,7 +105,7 @@ class Ticket extends Order
 						$cash = new Cash([
 							'sale' => $ticket->sale,
 							'amount' => $payment->amount,
-							'payment_date' => $payment->payment_date,
+							'payment_date' => $orig_date,
 							'note' => 'Client transfer',
 						]);
 						$cash->save();
@@ -110,7 +114,7 @@ class Ticket extends Order
 					$account = new Account([
 						'client_id' => $this->client_id,
 						'payment_method' => $payment->payment_method,
-						'payment_date' => $payment->payment_date,
+						'payment_date' => $orig_date,
 						'amount' => $payment->amount,
 						'status' => $payment->amount > 0 ? 'CREDIT' : 'DEBIT',
 						'cash_id' => $cash ? $cash->id : null,
@@ -126,7 +130,7 @@ class Ticket extends Order
 						$cash = new Cash([
 							'sale' => $ticket->sale,
 							'amount' => -$payment->amount,
-							'payment_date' => $payment->payment_date,
+							'payment_date' => $orig_date,
 							'note' => 'Client transfer',
 						]);
 						$cash->save();
@@ -135,7 +139,7 @@ class Ticket extends Order
 					$account = new Account([
 						'client_id' => $payment->client_id,
 						'payment_method' => $payment->payment_method,
-						'payment_date' => $payment->payment_date,
+						'payment_date' => $orig_date,
 						'amount' => -$payment->amount,
 						'status' => $payment->amount > 0 ? 'CREDIT' : 'DEBIT',
 						'cash_id' => $cash ? $cash->id : null,

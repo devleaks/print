@@ -489,6 +489,8 @@ class Document extends _Document
 		$due = round($this->getBalance(), 2);
 		$cash = null;
 		
+		$client_id = ($this->document_type == self::TYPE_TICKET || $this->document_type == self::TYPE_REFUND) ? Client::auComptoir()->id : $this->client_id;
+		
 		if (!in_array($method, [Payment::USE_CREDIT,Payment::CLEAR])) {
 
 			if($due < 0) { // refund
@@ -497,7 +499,7 @@ class Document extends _Document
 				if($amount >= $due) {
 					$payment = new Payment([
 						'sale' => $this->sale,
-						'client_id' => $this->client_id,
+						'client_id' => $client_id,
 						'payment_method' => $method,
 						'amount' => $amount,
 						'status' => Payment::STATUS_PAID,
@@ -515,7 +517,7 @@ class Document extends _Document
 				if($amount <= $due) {
 					$payment = new Payment([
 						'sale' => $this->sale,
-						'client_id' => $this->client_id,
+						'client_id' => $client_id,
 						'payment_method' => $method,
 						'amount' => $amount,
 						'status' => Payment::STATUS_PAID,
@@ -527,7 +529,7 @@ class Document extends _Document
 					// 1. record the payment
 					$payment = new Payment([
 						'sale' => $this->sale,
-						'client_id' => $this->client_id,
+						'client_id' => $client_id,
 						'payment_method' => $method,
 						'amount' => $due,
 						'status' => Payment::STATUS_PAID,
@@ -541,7 +543,7 @@ class Document extends _Document
 					if($surplus > self::PAYMENT_LIMIT){
 						$extra = new Payment([
 							'sale' => Sequence::nextval('sale'),
-							'client_id' => $this->client_id,
+							'client_id' => $client_id,
 							'payment_method' => $method,
 							'amount' => $surplus,
 							'note' => Yii::t('store', 'Extra payment for {0}',$this->name),
@@ -564,7 +566,7 @@ class Document extends _Document
 
 				$payment = new Payment([
 					'sale' => $this->sale,
-					'client_id' => $this->client_id,
+					'client_id' => $client_id,
 					'payment_method' => $method,
 					'amount' => $amount,
 					'status' => Payment::STATUS_PAID,
@@ -606,7 +608,7 @@ class Document extends _Document
 						}
 						$payment = new Payment([
 							'sale' => $this->sale,
-							'client_id' => $this->client_id,
+							'client_id' => $client_id,
 							'payment_method' => $method,
 							'amount' => $credit_used,
 							'status' => Payment::STATUS_PAID,
@@ -798,6 +800,21 @@ class Document extends _Document
 			Yii::$app->session->setFlash('danger', Yii::t('store', 'Payment not found.'));
 	}
 
+
+	/**
+	 * Change Paiments set the payment owner of all payments of this order to the client of this order
+	 * Call to this function should be protected by a transaction.
+	 */
+	public function changePayments() {
+		foreach($this->getPayments()->each() as $payment) {
+			$payment->client_id = $this->client_id;
+			if($account = $payment->getAccount()->one()) {
+				$account->client_id = $this->client_id;
+				$account->save();
+			}
+			$payment->save();
+		}
+	}
 
 	/**
 	 * Returns amount due.
