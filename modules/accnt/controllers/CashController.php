@@ -93,6 +93,7 @@ class CashController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 			$mode = ($model->mode == $model::DEBIT) ? -1 : 1;
 			$model->amount = round($mode * str_replace(',','.',$model->amount_virgule), 2);
+			$model->payment_date = date('Y-m-d H:i:s');
 			$model->save();
             return $this->redirect(['list']);
         } else {
