@@ -234,20 +234,20 @@ class Work extends _Work
 	public function checkStatus() {
 		$created_at = $this->getCreatedBy()->one();
 		$this->blab(Yii::t('store', 'Work created on {0} by {1}.',
-			[Yii::$app->formatter->asDateTime($this->created_at), ($created_at ? $created_at->username : '?')]));
+			[$this->asDateTime($this->created_at), ($created_at ? $created_at->username : '?')]));
 		if($wl = $this->getWorkLines()->andWhere(['not', ['status' => self::STATUS_TODO]])->orderBy('updated_at desc')->one()) {
 			$updated_at = $this->getUpdatedBy()->one();
 			$this->blab(Yii::t('store', 'Work started on {0} by {1} with task <q>{2}</q>.',
-				[Yii::$app->formatter->asDateTime($wl->updated_at), ($updated_at ? $updated_at->username : '?'), $wl->task->name]));
+				[$this->asDateTime($wl->updated_at), ($updated_at ? $updated_at->username : '?'), $wl->task->name]));
 		}
 		if($this->status == self::STATUS_DONE) {
 			$this->blab(Yii::t('store', 'Work completed on {0} by {1}.',
-				[Yii::$app->formatter->asDateTime($this->updated_at), ($updated_at ? $updated_at->username : '?')]));
+				[$this->asDateTime($this->updated_at), ($updated_at ? $updated_at->username : '?')]));
 		} else {
 			if($wl = $this->getWorkLines()->andWhere(['status' => self::STATUS_DONE])->orderBy('position desc,updated_at asc')->one()) {
 				$updated_at = $this->getUpdatedBy()->one();
 				$this->blab(Yii::t('store', 'Last task completed was <q>{2}</q> on {0} by {1}.',
-					[Yii::$app->formatter->asDateTime($wl->updated_at), ($updated_at ? $updated_at->username : '?'), $wl->task->name]));
+					[$this->asDateTime($wl->updated_at), ($updated_at ? $updated_at->username : '?'), $wl->task->name]));
 			}
 		}
 		if($this->status == self::STATUS_TODO) {

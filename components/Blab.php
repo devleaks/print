@@ -2,6 +2,8 @@
 
 namespace app\components;
 
+use Yii;
+
 /**
  *	Constant behavior/trait to print strings.
  */
@@ -29,4 +31,9 @@ trait Blab {
 		return $str;
 	}
 
+	protected function asDateTime($date) {
+		Yii::$app->formatter->datetimeFormat = 'php:D j M Y G:i';
+		return str_replace(':', 'h', Yii::$app->formatter->asDateTime(new \DateTime($date)));
+	}
+	
 }

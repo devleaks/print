@@ -1170,6 +1170,7 @@ class Document extends _Document
 		$query = Document::parseDateRange('document.due_date',   $this->duedate_range, $query);
 	}
 	
+	
 	/**
 	 * Explains status of document. If guessed status differs from current status, offers a link to change current status to guessed.
 	 */
@@ -1198,7 +1199,7 @@ class Document extends _Document
 		$doc_type = strtolower($doc_type);
 		
 		$created_at = $this->getCreatedBy()->one();
-		$this->blab(Yii::t('store', '{2} created on {0} by {1}.', [Yii::$app->formatter->asDateTime($this->created_at), ($created_at ? $created_at->username : '?'), $doc_type]));
+		$this->blab(Yii::t('store', '{2} created on {0} by {1}.', [$this->asDateTime($this->created_at), ($created_at ? $created_at->username : '?'), $doc_type]));
 		
 		if($this->status == self::STATUS_CREATED) {
 			$this->blab(Yii::t('store', '{0} has no order line.', Yii::t('store', $doc_type)));
@@ -1240,7 +1241,7 @@ class Document extends _Document
 		if($work_completed) {
 			if($email = $this->getNotificationEmail()) {
 				if($this->notified_at) {
-					$this->blab(Yii::t('store', 'Client was notified on {0}.', Yii::$app->formatter->asDateTime($this->notified_at)));
+					$this->blab(Yii::t('store', 'Client was notified on {0}.', $this->asDateTime($this->notified_at)));
 					$notify_completed = true;
 				} else {
 					$this->blab(Yii::t('store', 'Client has not been notified yet.'));
@@ -1277,7 +1278,7 @@ class Document extends _Document
 		
 		if($this->document_type == self::TYPE_ORDER) {
 			if($bill = $this->getBill()) {
-				$this->blab(Yii::t('store', '{0} was billed on {1}.', [$doc_type, Yii::$app->formatter->asDateTime($bill->created_at)]));
+				$this->blab(Yii::t('store', '{0} was billed on {1}.', [$doc_type, $this->asDateTime($bill->created_at)]));
 				$newstatus = self::STATUS_CLOSED;
 			} else {
 				$this->blab(Yii::t('store', '{0} has not been billed yet.', $doc_type));
@@ -1290,11 +1291,11 @@ class Document extends _Document
 			if($email = $this->getNotificationEmail()) {
 
 				if($this->notified_at) {
-					$this->blab(Yii::t('store', 'Client was notified on {0}.', Yii::$app->formatter->asDateTime($this->notified_at)));
+					$this->blab(Yii::t('store', 'Client was notified on {0}.', $this->asDateTime($this->notified_at)));
 					// FURTHER DOCS
 					if($this->document_type == self::TYPE_ORDER) {
 						if($bill = $this->getBill()) {
-							$this->blab(Yii::t('store', 'Order billed on {0}.', Yii::$app->formatter->asDateTime($bill->created_at)));
+							$this->blab(Yii::t('store', 'Order billed on {0}.', $this->asDateTime($bill->created_at)));
 						} else {
 							$this->blab(Yii::t('store', 'Order not billed yet.'));
 						}
