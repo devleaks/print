@@ -2,9 +2,10 @@
 use app\models\Item;
 
 $rebate_item = Item::findOne(['reference' => Item::TYPE_REBATE]);
-$factor = ($model->item_id == $rebate_item->id) ? -1 : ($model->price_htva < 0 ? -1 : 1);
+$amount = $model->price_htva + $model->extra_htva;
+$abs_amount = abs($amount);
+$factor = ($model->item_id == $rebate_item->id) ? -1 : ($amount < 0 ? -1 : 1);
 
-$amount = abs($model->price_htva + $model->extra_htva);
 
 ?>
 Line:
@@ -17,12 +18,12 @@ Line:
       Comment:
       FlagDC:               <?= $factor < 0 ? 'D' : 'C' ?>
 
-      AmountCrcy:           <?= $amount ?>
+      AmountCrcy:           <?= $abs_amount ?>
 
-      AmountCrcyDoc:        <?= $amount ?>
+      AmountCrcyDoc:        <?= $abs_amount ?>
 
-      AmountCrcyBase:       <?= $amount ?>
+      AmountCrcyBase:       <?= $abs_amount ?>
 
-      AmountVATCrcyDoc:     <?= $order->vat_bool ? 0 : round($amount * ($model->vat / 100), 2) ?>
+      AmountVATCrcyDoc:     <?= $order->vat_bool ? 0 : round($abs_amount * ($model->vat / 100), 2) ?>
 
 }
