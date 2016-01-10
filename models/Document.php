@@ -1170,13 +1170,33 @@ class Document extends _Document
 		$query = Document::parseDateRange('document.due_date',   $this->duedate_range, $query);
 	}
 	
+	/**
+	 * Explains status of document. If guessed status differs from current status, offers a link to change current status to guessed.
+	 */
 	public function checkStatus() {
+		$control_level = Parameter::getIntegerValue('application', 'control_level', 1);
+		$newstatus = $this->guessStatus();
+		
+		if($control_level > 0 && $this->status != $newstatus) {
+			$this->blab(Html::a(Yii::t('store', 'Fix status to {0}', Yii::t('store', $newstatus)),
+								['fix-status', 'id' => $this->id, 'status' => $newstatus]).'.');
+		}
+		
+		return $this->blabOut();
+	}
+
+	/**
+	 * Tries to guess document status from document situation. May be wrong, especially when "annex" and related documents are involved.
+	 */
+	public function guessStatus() {
 		$control_level = Parameter::getIntegerValue('application', 'control_level', 1);
 		$newstatus = self::STATUS_CREATED;
 		if($this->document_type == self::TYPE_ORDER)
 			$doc_type = $this->bom_bool ? Yii::t('store', self::TYPE_BOM) : Yii::t('store', $this->document_type);
 		else
 			$doc_type = Yii::t('store', $this->document_type);
+		$doc_type = strtolower($doc_type);
+		
 		$created_at = $this->getCreatedBy()->one();
 		$this->blab(Yii::t('store', '{2} created on {0} by {1}.', [Yii::$app->formatter->asDateTime($this->created_at), ($created_at ? $created_at->username : '?'), $doc_type]));
 		
@@ -1194,7 +1214,7 @@ class Document extends _Document
 				Document::TYPE_TICKET => 'Submit Work',
 				Document::TYPE_REFUND => 'To Refund',
 			];
-			$this->blab(Yii::t('store', '{0} is not filled. You have to press «{1}» to start fulfilling {0}.', [Yii::t('store', $doc_type), Yii::t('store', $start_order[$this->document_type])]));
+			$this->blab(Yii::t('store', '{0} is not filled. You have to press <q>{1}</q> to start fulfilling {0}.', [Yii::t('store', $doc_type), Yii::t('store', $start_order[$this->document_type])]));
 			return $this->blabOut();
 		}
 		
@@ -1223,10 +1243,14 @@ class Document extends _Document
 					$this->blab(Yii::t('store', 'Client was notified on {0}.', Yii::$app->formatter->asDateTime($this->notified_at)));
 					$notify_completed = true;
 				} else {
-					$this->blab(Yii::t('store', 'Client has not been notified yet. Due date is {0}.', Yii::$app->formatter->asDate($this->due_date)));
-					$days = Parameter::getIntegerValue('application', 'min_days', Order::DEFAULT_MINIMUM_DAYS);
-					$date_notif = date('Y-m-d', strtotime($this->due_date.' - '.$days.' days'));
-					$this->blab(Yii::t('store', 'Client will be notified on this address &lt;{1}&gt; on {0}.', [Yii::$app->formatter->asDate($date_notif), $email]));
+					$this->blab(Yii::t('store', 'Client has not been notified yet.'));
+					if($this->due_date > date("Y-m-d-H-i-s")) {
+						$this->blab(Yii::t('store', 'Due date is {0}.', Yii::$app->formatter->asDate($this->due_date)));
+						$days = Parameter::getIntegerValue('application', 'min_days', Order::DEFAULT_MINIMUM_DAYS);
+						$date_notif = date('Y-m-d', strtotime($this->due_date.' - '.$days.' days'));
+						$this->blab(Yii::t('store', 'Client will be notified on {0} at this address &lt;{1}&gt;.',
+							[Yii::$app->formatter->asDate($date_notif), $email]));
+					}
 					$newstatus = self::STATUS_NOTIFY;
 				}
 			} else {
@@ -1288,13 +1312,9 @@ class Document extends _Document
 			}
 		}
 		
-		$this->blab(Yii::t('store', 'Current status is «{0}».', Yii::t('store', $this->status)));
+		$this->blab(Yii::t('store', 'Current status is <q>{0}</q>.', Yii::t('store', $this->status)));
 
-		if($control_level > 0 && $this->status != $newstatus) {
-			$this->blab(Html::a(Yii::t('store', 'Fix status to {0}', Yii::t('store', $newstatus)), ['fix-status', 'id' => $this->id, 'status' => $newstatus]).'.');
-		}
-		
-		return $this->blabOut();
+		return $newstatus;
 	}
 
 }

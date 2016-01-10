@@ -237,7 +237,7 @@ class Work extends _Work
 			[Yii::$app->formatter->asDateTime($this->created_at), ($created_at ? $created_at->username : '?')]));
 		if($wl = $this->getWorkLines()->andWhere(['not', ['status' => self::STATUS_TODO]])->orderBy('updated_at desc')->one()) {
 			$updated_at = $this->getUpdatedBy()->one();
-			$this->blab(Yii::t('store', 'Work started on {0} by {1} with task «{2}».',
+			$this->blab(Yii::t('store', 'Work started on {0} by {1} with task <q>{2}</q>.',
 				[Yii::$app->formatter->asDateTime($wl->updated_at), ($updated_at ? $updated_at->username : '?'), $wl->task->name]));
 		}
 		if($this->status == self::STATUS_DONE) {
@@ -246,14 +246,14 @@ class Work extends _Work
 		} else {
 			if($wl = $this->getWorkLines()->andWhere(['status' => self::STATUS_DONE])->orderBy('position desc,updated_at asc')->one()) {
 				$updated_at = $this->getUpdatedBy()->one();
-				$this->blab(Yii::t('store', 'Last task completed was «{2}» on {0} by {1}.',
+				$this->blab(Yii::t('store', 'Last task completed was <q>{2}</q> on {0} by {1}.',
 					[Yii::$app->formatter->asDateTime($wl->updated_at), ($updated_at ? $updated_at->username : '?'), $wl->task->name]));
 			}
 		}
 		if($this->status == self::STATUS_TODO) {
 			$this->blab(Yii::t('store', 'Work has not started yet.'));
 		} else {
-			$this->blab(Yii::t('store', 'Work status is «{0}».', Yii::t('store', $this->status)));
+			$this->blab(Yii::t('store', 'Work status is <q>{0}</q>.', Yii::t('store', $this->status)));
 		}
 		return $this->blabOut();
 	}

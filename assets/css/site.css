@@ -92,3 +92,7 @@ a.desc:after {
 .label-oldsystem {
 	background-color: #f0f;
 }
+
+q { font-style: italic; }
+q:before { content: open-quote; }
+q:after { content: close-quote; }

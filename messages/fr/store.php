@@ -534,20 +534,21 @@ return [
 	/** check status procedures */
 	// basic
 	'{2} created on {0} by {1}.' => "Le/la {2} a été créé(e) le {0} par {1}.",
-	'Current status is «{0}».' => "L'état actuel est «{0}».",
+	'Current status is <q>{0}</q>.' => "L'état actuel est <q>{0}</q>.",
 	'{0} has no order line.' => "{0} n'a pas de ligne de commande.",
-	'{0} is not filled. You have to press «{1}» to start fulfilling {0}.' => "Le/la {0} n'est pas remplie. Presser «{1}» pour la démarrer.",
+	'{0} is not filled. You have to press <q>{1}</q> to start fulfilling {0}.' => "Le/la {0} n'est pas remplie. Presser <q>{1}</q> pour la démarrer.",
 	// work
 	'There is no work associated with this {0}.' => "Il n'y a pas de travail associé à ce/cette {0}.",
 	'{0} needs to be marked as {1} to progress.' => "Le/la {0} doit être marquée comme {1} pour progresser.",
 	'Work has not started yet.' => "Le travail n'a pas encore commencé.",
 	// notification
 	'Client was notified on {0}.' => "Le client a été averti le {0}.",
-	'Client has not been notified yet. Due date is {0}.' => "Le client n'a pas encore été averti; la date de livraison est le {0}.",
+	'Client has not been notified yet.' => "Le client n'a pas encore été averti.",
+	'Due date is {0}.' => "La date de livraison est le {0}.",
 	'Client will not be notified by email (no address).' => "Le client ne sera pas averti par email (pas d'adresse email).",
 	'Client will be notified on this address &lt;{1}&gt; on {0}.' => "Le client sera averti le {0} à cette adresse &lt;{1}&gt;.",
 	// payment
-	'Total for {1} is {0}.' => "Total pour la {1}: {0}.",
+	'Total for {1} is {0}.' => "Total pour le/la {1}: {0}.",
 	'Payment received: {0}.' => "Paiement reçu: {0}.",
 	'{0} is paid.' => 'Le/la {0} est payée.',
 	'Amount due: {0}.' => "Dû: {0}.",	
@@ -567,10 +568,10 @@ return [
 
 	// work
 	'Work created on {0} by {1}.' => "Le travail a été soumis le {0} par {1}.",
-	'Work started on {0} by {1} with task «{2}».' => "Le travail a été commencé le {0} par {1} avec la tâche «{2}».",
+	'Work started on {0} by {1} with task <q>{2}</q>.' => "Le travail a été commencé le {0} par {1} avec la tâche <q>{2}</q>.",
 	'Work completed on {0} by {1}.' => "Le travail a été terminé le {0} par {1}.",
-	'Last task completed was «{2}» on {0} by {1}.' => "La dernière tâche accomplie est «{2}» le {0} par {1}.",
-	'Work status is «{0}».' => "L'état du travail est «{0}».",
+	'Last task completed was <q>{2}</q> on {0} by {1}.' => "La dernière tâche accomplie est <q>{2}</q> le {0} par {1}.",
+	'Work status is <q>{0}</q>.' => "L'état du travail est <q>{0}</q>.",
 	
 	/** roles */
 	'admin'	=> 'Superviseur',
