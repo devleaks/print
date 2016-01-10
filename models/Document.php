@@ -1223,7 +1223,10 @@ class Document extends _Document
 					$this->blab(Yii::t('store', 'Client was notified on {0}.', Yii::$app->formatter->asDateTime($this->notified_at)));
 					$notify_completed = true;
 				} else {
-					$this->blab(Yii::t('store', 'Client has not been notified yet. Due date is {0}.', [Yii::$app->formatter->asDate($this->due_date), Yii::$app->formatter->asDate($this->due_date)]));
+					$this->blab(Yii::t('store', 'Client has not been notified yet. Due date is {0}.', Yii::$app->formatter->asDate($this->due_date)));
+					$days = Parameter::getIntegerValue('application', 'min_days', Order::DEFAULT_MINIMUM_DAYS);
+					$date_notif = date('Y-m-d', strtotime($this->due_date.' - '.$days.' days'));
+					$this->blab(Yii::t('store', 'Client will be notified on this address &lt;{1}&gt; on {0}.', [Yii::$app->formatter->asDate($date_notif), $email]));
 					$newstatus = self::STATUS_NOTIFY;
 				}
 			} else {
@@ -1288,7 +1291,7 @@ class Document extends _Document
 		$this->blab(Yii::t('store', 'Current status is «{0}».', Yii::t('store', $this->status)));
 
 		if($control_level > 0 && $this->status != $newstatus) {
-			$this->blab(Html::a(Yii::t('store', 'Fix status to {0}', $newstatus), ['fix-status', 'id' => $this->id, 'status' => $newstatus]).'.');
+			$this->blab(Html::a(Yii::t('store', 'Fix status to {0}', Yii::t('store', $newstatus)), ['fix-status', 'id' => $this->id, 'status' => $newstatus]).'.');
 		}
 		
 		return $this->blabOut();

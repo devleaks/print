@@ -540,10 +540,12 @@ return [
 	// work
 	'There is no work associated with this {0}.' => "Il n'y a pas de travail associé à ce/cette {0}.",
 	'{0} needs to be marked as {1} to progress.' => "Le/la {0} doit être marquée comme {1} pour progresser.",
+	'Work has not started yet.' => "Le travail n'a pas encore commencé.",
 	// notification
 	'Client was notified on {0}.' => "Le client a été averti le {0}.",
 	'Client has not been notified yet. Due date is {0}.' => "Le client n'a pas encore été averti; la date de livraison est le {0}.",
 	'Client will not be notified by email (no address).' => "Le client ne sera pas averti par email (pas d'adresse email).",
+	'Client will be notified on this address &lt;{1}&gt; on {0}.' => "Le client sera averti le {0} à cette adresse &lt;{1}&gt;.",
 	// payment
 	'Total for {1} is {0}.' => "Total pour la {1}: {0}.",
 	'Payment received: {0}.' => "Paiement reçu: {0}.",
