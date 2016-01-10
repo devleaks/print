@@ -617,7 +617,7 @@ class DocumentController extends Controller
 								[
 									'title' => Yii::t('store', 'Change client for this order.'),
 								]);
-				Yii::$app->session->setFlash('error', Yii::t('store', 'You cannot convert a sale ticket with no client. {0}.', $change_client));
+				Yii::$app->session->setFlash('danger', Yii::t('store', 'You cannot convert a sale ticket with no client. {0}.', $change_client));
 		        return $this->render('view', [
 		            'model' => $model,
 		        ]);

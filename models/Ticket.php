@@ -48,7 +48,7 @@ class Ticket extends Order
 
 			if($this->hasPayments()) {
 				// re-create VC
-				$amount = $this->getPrepaid();
+				$amount = $this->getAmount();
 				
 				// Create a copy of original for archive.
 				$ticket = $this->newCopy();
@@ -61,11 +61,12 @@ class Ticket extends Order
 				$this->document_type = self::TYPE_ORDER;
 				$this->save();
 				
-				// Create a reimbursement.
+				// Create a reimbursement that will cancel the ticket
+				$o = Parameter::getTextValue('application', Refund::TYPE_REFUND, '-');
 				$reimbursment = new Refund([
 					'document_type' => Refund::TYPE_REFUND,
 					'client_id' => $this->client_id,
-					'name' => substr($this->created_at,0,4).'-'.str_pad(Sequence::nextval('doc_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT),
+					'name' => substr($this->created_at,0,4).$o.str_pad(Sequence::nextval('doc_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT),
 					'due_date' => $this->due_date,
 					'note' => 'Remboursement conversion VC->Facture',
 					'sale' =>  Sequence::nextval('sale'),
@@ -89,73 +90,28 @@ class Ticket extends Order
 				$reimbursment->updatePrice();
 				$reimbursment->save();
 
-				foreach($this->getPayments()->each() as $payment) {
-					$orig_date = date('Y-m-d H:i:s');
-					if($account = $payment->getAccount()->one()) {
-						$orig_date = $account->payment_date;
-						Yii::trace('account id='.$account->id.' on '.$orig_date, 'Ticket::convert');
-					}
-					// Reassign this payment to copy of vente comptoir
-					$payment->sale = $ticket->sale;
-					$payment->save();
-
-					// Create payment of original but now for real client
-					$cash = null;
-					if($payment->payment_method == Payment::CASH) {
-						$cash = new Cash([
-							'sale' => $ticket->sale,
-							'amount' => $payment->amount,
-							'payment_date' => $orig_date,
-							'note' => 'Client transfer',
-						]);
-						$cash->save();
-						$cash->refresh();
-					}
-					$account = new Account([
-						'client_id' => $this->client_id,
-						'payment_method' => $payment->payment_method,
-						'payment_date' => $orig_date,
-						'amount' => $payment->amount,
-						'status' => $payment->amount > 0 ? 'CREDIT' : 'DEBIT',
-						'cash_id' => $cash ? $cash->id : null,
-						'note' => 'Client transfer',
-					]);
-					$account->save();
-					$account->refresh();				
-					$this->addPayment($account, $payment->amount, $payment->payment_method, 'VC -> C/F');
-					
-					// Create reimbursement of client who paid the ticket (often Client Comptoir)
-					$cash = null;
-					if($payment->payment_method == Payment::CASH) {
-						$cash = new Cash([
-							'sale' => $ticket->sale,
-							'amount' => -$payment->amount,
-							'payment_date' => $orig_date,
-							'note' => 'Client transfer',
-						]);
-						$cash->save();
-						$cash->refresh();
-					}
-					$account = new Account([
-						'client_id' => $payment->client_id,
-						'payment_method' => $payment->payment_method,
-						'payment_date' => $orig_date,
-						'amount' => -$payment->amount,
-						'status' => $payment->amount > 0 ? 'CREDIT' : 'DEBIT',
-						'cash_id' => $cash ? $cash->id : null,
-						'note' => 'Client transfer',
-					]);
-					$account->save();
-					$account->refresh();
-					$reimbursment->addPayment($account, -$payment->amount, $payment->payment_method, 'VC -> C/F');					
-				}
+				$account = new Account([
+					'client_id' => $this->client_id,
+					'payment_method' => Payment::USE_CREDIT,
+					'payment_date' => date('Y-m-d H:i:s'),
+					'amount' => $amount,
+					'status' => $amount > 0 ? 'CREDIT' : 'DEBIT',
+					'cash_id' => null,
+					'note' => 'Client transfer',
+				]);
+				// it uses credit, so the money is already in the system, so DO NOT save new Account
+				// (Account object only used to add payment but NOT SAVED).
+				$ticket->addPayment($account, $amount, Payment::USE_CREDIT, 'VC -> C/F');
+				$ticket->status = Document::STATUS_CLOSED;
+				$ticket->save();
 
 			} else {
 				$this->document_type = self::TYPE_ORDER;
 				$this->save();
 
 			}
-			$ret = parent::convert($ticket);
+
+			$ret = parent::convert($this);
 			$transaction->commit();
 			return $ret;
 		}
