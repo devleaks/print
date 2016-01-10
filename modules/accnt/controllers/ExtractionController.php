@@ -121,12 +121,18 @@ class ExtractionController extends Controller
 					);
 		}
 		$warning = clone $docs;
-		if(($count = $warning->andWhere(['status' => Document::STATUS_OPEN])->count()) > 0) {
-			$warning2 = clone $docs;
+		$count = 0;
+		foreach($warning->each() as $doc) {
+			if($doc->status == Document::STATUS_OPEN) $count++;
+		}
+		if($count > 0) {
+			$warning = clone $docs;
 			$msg = '';
-			foreach($warning2->andWhere(['status' => Document::STATUS_OPEN])->each() as $doc) {
-				$msg .= $doc->name.', ';
+			foreach($warning->each() as $doc) {
+				if($doc->status == Document::STATUS_OPEN) $msg .= $doc->name.', ';
 			}
+			if($msg)
+				$msg = rtrim($msg, ', ');
 			Yii::$app->session->setFlash('warning', Yii::t('store', 'There are {0} OPEN bill(s)/credit note(s): {1}.', [$count, $msg]));
 		}
         return $this->render('bills', [
