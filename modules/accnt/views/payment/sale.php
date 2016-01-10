@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Parameter;
 use app\models\Payment;
 use kartik\grid\GridView;
 use yii\helpers\Html;
@@ -9,14 +10,14 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\PaymentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+$template = Parameter::isTrue('application', 'allow_direct_payment_update') ? '{view} {update} {delete}' : '{view} {delete}';
+
 $this->title = Yii::t('store', 'Payments for {0}', $model->name);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/order/document/view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
-/*
-<h1><?= Html::encode($this->title) ?> <?= Html::a(Yii::t('store', 'Create Payment'), ['create'], ['class' => 'btn btn-success']) ?></h1>
-*/
 ?>
+
 <div class="payment-index">
 
     <?= GridView::widget([
@@ -87,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
 				'class' => 'kartik\grid\ActionColumn',
-				'template' => '{view} {delete}'
+				'template' => $template
 			],
         ],
 	    'showPageSummary' => true,
