@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\components\Blab;
+
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
@@ -12,6 +14,7 @@ use yii\helpers\Html;
  */
 class Document extends _Document
 {
+	use Blab;
 	const TYPE = 'DOCUMENT';
 
 	/** Order "type" */
@@ -71,6 +74,7 @@ class Document extends _Document
 	public $created_at_range;
 	public $updated_at_range;
 	public $duedate_range;
+	protected $blab;
 
 	public $client_name;
 
@@ -211,6 +215,10 @@ class Document extends _Document
 	}
 		
 
+	public static function isValidStatus($status) {
+		return in_array($status, array_keys(self::getStatuses()));
+	}
+	
 	/**
 	 * returns associative array of status, status localized display for all possible status values
 	 *
@@ -439,7 +447,22 @@ class Document extends _Document
 	 * Update status and reports to parent Work model
 	 */
 	public function setStatus($newstatus) {
-		if($newstatus == self::STATUS_TOPAY) { // if this is a request to set the status to 'TOPAY'
+		if(!$this->isValidStatus($newstatus))
+			return;
+		Yii::trace('Entering current status = '.$this->status.', request to set '.$newstatus.'.', 'Document::setStatus');
+		if($newstatus == self::STATUS_DONE) {
+			Yii::trace('Request to set DONE.', 'Document::setStatus');
+			if($this->getNotificationEmail() != '') {
+				Yii::trace('has email, set to NOTIFY.', 'Document::setStatus');
+				$this->status = self::STATUS_NOTIFY;
+			} else {
+				$this->status = $newstatus;
+				$s = $this->updatePaymentStatus();
+				Yii::trace('has no email, set to '.$s.'.', 'Document::setStatus');
+				$this->status = $s;
+			}
+		} else if($newstatus == self::STATUS_TOPAY) { // if this is a request to set the status to 'TOPAY'
+			Yii::trace('Request to set TOPAY.', 'Document::setStatus');
 			if($work = $this->getWorks()->one()) {
 				if($work->status == Work::STATUS_DONE) { // if work exists and is completed
 					$this->status = $this->updatePaymentStatus();
@@ -451,6 +474,7 @@ class Document extends _Document
 					$this->status = $this->updatePaymentStatus();
 			}
 		} else if($newstatus == self::STATUS_CANCELLED) {
+			Yii::trace('Request to cancel.', 'Document::setStatus');
 			$sale = Sequence::nextval('sale');
 			foreach($this->getPayments()->each() as $payment) {
 				$payment->sale = $sale;
@@ -459,10 +483,13 @@ class Document extends _Document
 			}
 			$this->status = $newstatus;
 		} else {
+			Yii::trace('Not special request.', 'Document::setStatus');
 			$this->status = $newstatus;
 		}
 		$this->save();
+		Yii::trace('Saved status = '.$this->status.'.', 'Document::setStatus');
 		$this->statusUpdated();
+		Yii::trace('After statusUpdated = '.$this->status.'.', 'Document::setStatus');
 	}
 
 
@@ -1141,6 +1168,130 @@ class Document extends _Document
 		$query = Document::parseDateRange('document.created_at', $this->created_at_range, $query);
 		$query = Document::parseDateRange('document.updated_at', $this->updated_at_range, $query);
 		$query = Document::parseDateRange('document.due_date',   $this->duedate_range, $query);
+	}
+	
+	public function checkStatus() {
+		$control_level = Parameter::getIntegerValue('application', 'control_level', 1);
+		$newstatus = self::STATUS_CREATED;
+		if($this->document_type == self::TYPE_ORDER)
+			$doc_type = $this->bom_bool ? Yii::t('store', self::TYPE_BOM) : Yii::t('store', $this->document_type);
+		else
+			$doc_type = Yii::t('store', $this->document_type);
+		$created_at = $this->getCreatedBy()->one();
+		$this->blab(Yii::t('store', '{2} created on {0} by {1}.', [Yii::$app->formatter->asDateTime($this->created_at), ($created_at ? $created_at->username : '?'), $doc_type]));
+		
+		if($this->status == self::STATUS_CREATED) {
+			$this->blab(Yii::t('store', '{0} has no order line.', Yii::t('store', $doc_type)));
+			return $this->blabOut();
+		}
+		
+		if($this->status == self::STATUS_OPEN) {
+			$start_order = [
+				Document::TYPE_BID => 'Convert to Order',
+				Document::TYPE_ORDER => 'Submit Work',
+				Document::TYPE_BILL => 'Close',
+				Document::TYPE_CREDIT => 'To Refund',
+				Document::TYPE_TICKET => 'Submit Work',
+				Document::TYPE_REFUND => 'To Refund',
+			];
+			$this->blab(Yii::t('store', '{0} is not filled. You have to press «{1}» to start fulfilling {0}.', [Yii::t('store', $doc_type), Yii::t('store', $start_order[$this->document_type])]));
+			return $this->blabOut();
+		}
+		
+		// WORK
+		$work_completed = false;
+		$work = $this->getWorks()->one();
+		if($work) {
+			$this->blab($work->checkStatus());
+			$newstatus = $work->status;
+			$work_completed = $work->status == Work::STATUS_DONE;
+		} else {
+			$newstatus = Work::STATUS_TODO;
+			$this->blab(Yii::t('store', 'There is no work associated with this {0}.', $doc_type));
+			if($this->status != Work::STATUS_TODO) {
+				$work_completed = true;
+				$newstatus = Work::STATUS_DONE;
+			} else {
+				$this->blab(Yii::t('store', '{0} needs to be marked as {1} to progress.', [$doc_type, self::STATUS_DONE]));
+			}
+		}
+		
+		$notify_completed = false;
+		if($work_completed) {
+			if($email = $this->getNotificationEmail()) {
+				if($this->notified_at) {
+					$this->blab(Yii::t('store', 'Client was notified on {0}.', Yii::$app->formatter->asDateTime($this->notified_at)));
+					$notify_completed = true;
+				} else {
+					$this->blab(Yii::t('store', 'Client has not been notified yet. Due date is {0}.', [Yii::$app->formatter->asDate($this->due_date), Yii::$app->formatter->asDate($this->due_date)]));
+					$newstatus = self::STATUS_NOTIFY;
+				}
+			} else {
+				$this->blab(Yii::t('store', 'Client will not be notified by email (no address).'));
+				$notify_completed = true;
+			}
+		}
+
+		if($notify_completed) {
+			$newstatus = self::STATUS_TOPAY;
+			// PAYMENT
+			$total = $this->getAmount();
+			$paid = $this->getPrepaid();
+			$due = $total - $paid;
+			$this->blab(Yii::t('store', 'Total for {1} is {0}.', [Yii::$app->formatter->asCurrency($total), $doc_type]));
+			$this->blab(Yii::t('store', 'Payment received: {0}.', Yii::$app->formatter->asCurrency($paid)));
+			if($this->isPaid()) {
+				$this->blab(Yii::t('store', '{0} is paid.', $doc_type));
+				$newstatus = self::STATUS_CLOSED;
+			} else {
+				$this->blab(Yii::t('store', 'Amount due: {0}.', Yii::$app->formatter->asCurrency($total	 - $paid)));
+			}
+		}
+		
+		if($this->document_type == self::TYPE_ORDER) {
+			if($bill = $this->getBill()) {
+				$this->blab(Yii::t('store', '{0} was billed on {1}.', [$doc_type, Yii::$app->formatter->asDateTime($bill->created_at)]));
+				$newstatus = self::STATUS_CLOSED;
+			} else {
+				$this->blab(Yii::t('store', '{0} has not been billed yet.', $doc_type));
+			}
+		}
+		
+		// Controls
+		if($control_level > 1) {
+			$this->blab('<hr/>');
+			if($email = $this->getNotificationEmail()) {
+
+				if($this->notified_at) {
+					$this->blab(Yii::t('store', 'Client was notified on {0}.', Yii::$app->formatter->asDateTime($this->notified_at)));
+					// FURTHER DOCS
+					if($this->document_type == self::TYPE_ORDER) {
+						if($bill = $this->getBill()) {
+							$this->blab(Yii::t('store', 'Order billed on {0}.', Yii::$app->formatter->asDateTime($bill->created_at)));
+						} else {
+							$this->blab(Yii::t('store', 'Order not billed yet.'));
+						}
+					}
+				} else {
+					$this->blab(Yii::t('store', 'Client has not been notified yet.', Yii::$app->formatter->asDate($this->due_date)));
+					$this->blab(Yii::t('store', 'Due date is {0}.', Yii::$app->formatter->asDate($this->due_date)));
+					$days = Parameter::getIntegerValue('application', 'min_days', Order::DEFAULT_MINIMUM_DAYS);
+					$date_notif = date('Y-m-d', strtotime($this->due_date.' - '.$days.' days'));
+					$this->blab(Yii::t('store', 'Will be notified on this address &lt;{1}&gt; on {0}.', [Yii::$app->formatter->asDate($date_notif), $email]));
+				}
+
+			} else {
+				$this->blab(Yii::t('store', 'Client will not be notified by email (no address).'));
+			}
+		}
+		
+		$this->blab(Yii::t('store', 'Current status is «{0}».', Yii::t('store', $this->status)));
+
+		if($control_level > 0 && $this->status != $newstatus) {
+			$this->blab(Html::a(Yii::t('store', 'Fix status to {0}', $newstatus), ['fix-status', 'id' => $this->id, 'status' => $newstatus]).'.');
+		}
+		
+		return $this->blabOut();
 	}
 
 }

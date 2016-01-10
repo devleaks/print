@@ -2,11 +2,14 @@
 
 namespace app\models;
 
+use app\components\Blab;
+
+use kartik\icons\Icon;
+
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use kartik\icons\Icon;
 
 /**
  * This is the model class for table "work".
@@ -14,6 +17,8 @@ use kartik\icons\Icon;
  */
 class Work extends _Work
 {
+	use Blab;
+	
 	/** */
 	const STATUS_TODO = 'TODO';
 	/** */
@@ -224,5 +229,28 @@ class Work extends _Work
 	
 	public static function isValidStatus($status) {
 		return in_array($status, array_keys(self::getStatuses()));
+	}
+	
+	public function checkStatus() {
+		$created_at = $this->getCreatedBy()->one();
+		$this->blab(Yii::t('store', 'Work created on {0} by {1}.',
+			[Yii::$app->formatter->asDateTime($this->created_at), ($created_at ? $created_at->username : '?')]));
+		if($wl = $this->getWorkLines()->orderBy('updated_at desc')->one()) {
+			$updated_at = $this->getUpdatedBy()->one();
+			$this->blab(Yii::t('store', 'Work started on {0} by {1} with task «{2}».',
+				[Yii::$app->formatter->asDateTime($wl->updated_at), ($updated_at ? $updated_at->username : '?'), $wl->task->name]));
+		}
+		if($this->status == self::STATUS_DONE) {
+			$this->blab(Yii::t('store', 'Work completed on {0} by {1}.',
+				[Yii::$app->formatter->asDateTime($this->updated_at), ($updated_at ? $updated_at->username : '?')]));
+		} else {
+			if($wl = $this->getWorkLines()->andWhere(['status' => self::STATUS_DONE])->orderBy('position desc,updated_at asc')->one()) {
+				$updated_at = $this->getUpdatedBy()->one();
+				$this->blab(Yii::t('store', 'Last task completed was «{2}» on {0} by {1}.',
+					[Yii::$app->formatter->asDateTime($wl->updated_at), ($updated_at ? $updated_at->username : '?'), $wl->task->name]));
+			}
+		}
+		$this->blab(Yii::t('store', 'Work status is «{0}».', Yii::t('store', $this->status)));
+		return $this->blabOut();
 	}
 }

@@ -138,7 +138,7 @@ $website_order_link = $wo ? Html::a(($wo->order_id ? $wo->order_id : $wo->id. ' 
 			            [
 			                'attribute'=>'status',
 			                'label'=> Yii::t('store','Status'),
-			                'value'=> $model->getStatusLabel(true),
+			                'value'=> Html::a($model->getStatusLabel(true), ['document/status', 'id' => $model->id]),
 							'format' => 'raw',
 							'type' => DetailView::INPUT_DROPDOWN_LIST,
 							'items' => [''=>''] + Document::getStatuses(),

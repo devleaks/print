@@ -21,6 +21,7 @@ class Ticket extends Order
 	 * @inheritdoc
 	 */
 	protected function statusUpdated() {
+		Yii::trace($this->status, 'Ticket::statusUpdated');
 		if($this->status == self::STATUS_DONE) {
 			$this->status = $this->updatePaymentStatus();
 			$this->save();
@@ -152,10 +153,13 @@ class Ticket extends Order
 				} else
 					$actions[] = '{terminate}';
 				break;
+			case $this::STATUS_NOTIFY:
+				if(!$this->notified_at && $this->getNotificationEmail())
+					$actions[] = '{notify}';
 			case $this::STATUS_DONE:
 			case $this::STATUS_TOPAY:
 				$actions[] = '{bill-ticket}';
-				$actions[] = '{receive}';
+//				$actions[] = '{receive}';
 				break;
 			case $this::STATUS_CANCELLED:
 				$actions[] = '{label:cancelled}';

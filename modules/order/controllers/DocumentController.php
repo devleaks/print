@@ -550,21 +550,7 @@ class DocumentController extends Controller
 	
 	public function actionTerminate($id) {
 		$model = $this->findModel($id);
-		if($model->document_type == Document::TYPE_TICKET) {			
-			$solde = $model->getBalance();
-			return $this->actionUpdateStatus($model->id, $model->isPaid() ? Document::STATUS_DONE : Document::STATUS_TOPAY);
-		}
-		else
-			return $this->actionUpdateStatus($id, Document::STATUS_DONE);
-		/*
-		$model = $this->findModel($id);
-		if($work = $model->getWorks()->one())
-			$work->terminate(); // should only be one, at most
-		$model->refresh();
-        return $this->render('view', [
-            'model' => $model,
-        ]);
-		*/
+		return $this->actionUpdateStatus($id, Document::STATUS_DONE);
 	}
 
 	public function actionBoms($id) {
@@ -852,7 +838,7 @@ class DocumentController extends Controller
 	public function actionSent2($id) {
 		$model = $this->findModel($id);
 		$sent = false;
-		if($model->document_type == Document::TYPE_ORDER)
+		if(in_array($model->document_type, [Document::TYPE_ORDER, Document::TYPE_TICKET]))
 			$sent = $model->notify(['force' => 'soft']);
 		if($sent)
 			$model->setStatus(Document::STATUS_TOPAY);
@@ -931,6 +917,26 @@ class DocumentController extends Controller
 		return $this->actionPdf($id, $format);
 	}
 
+
+	public function actionStatus($id) {
+		$model = $this->findModel($id);
+		Yii::$app->session->setFlash('info', $model->checkStatus());		
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+	}
+
+	public function actionFixStatus($id, $status) {
+		$model = $this->findModel($id);
+		if($model->isValidStatus($status)) {
+			$model->status = $status;
+			$model->save();
+		}
+		Yii::$app->session->setFlash('info', $model->checkStatus());		
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+	}
 
 	public function actionLabels($id) {
 		$model = $this->findModel($id);

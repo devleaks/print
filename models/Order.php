@@ -13,6 +13,7 @@ use yii\helpers\Html;
  */
 class Order extends Document
 {
+	const DEFAULT_MINIMUM_DAYS = 2;
     /**
      * @inheritdoc
 	 */
@@ -114,11 +115,10 @@ class Order extends Document
      * Checks whether due_date is either past, or not too far in future.
 	 */
 	public function closeToDueDate() {
-		$DEFAULT_MIN_DAYS = 2;
 		$closeToDueDate = true;
 		$now = date('Y-m-d H:i:s');
 		if($this->due_date > $now) {
-			if($date_limit = Parameter::getIntegerValue('application', 'min_days', $DEFAULT_MIN_DAYS)) {
+			if($date_limit = Parameter::getIntegerValue('application', 'min_days', self::DEFAULT_MINIMUM_DAYS)) {
 				$diff = strtotime($this->due_date) - time(); // in secs.
 				$diff = ceil($diff / (24 * 60 * 60));
 				$closeToDueDate = ($diff <= $date_limit); // If we are finished too early, we do NOT notify the person right away.
@@ -182,6 +182,7 @@ class Order extends Document
 			if(!$batch) Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has not been notified.').' '.Yii::t('store', 'Due date too far.'));
 			else Yii::trace('Due date too far for '.$this->name, 'Order::notify');
 		}
+		Yii::trace('Notify exists '.($sent ? 'true' : 'false').'.', 'Order::notify');
 		return $sent;
 	}
 
