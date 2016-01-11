@@ -450,41 +450,48 @@ class Document extends _Document
 		if(!$this->isValidStatus($newstatus))
 			return;
 		Yii::trace('Entering current status = '.$this->status.', request to set '.$newstatus.'.', 'Document::setStatus');
-		if($newstatus == self::STATUS_DONE) {
-			Yii::trace('Request to set DONE.', 'Document::setStatus');
-			if($this->getNotificationEmail() != '') {
-				Yii::trace('has email, set to NOTIFY.', 'Document::setStatus');
-				$this->status = self::STATUS_NOTIFY;
-			} else {
-				$this->status = $newstatus;
-				$s = $this->updatePaymentStatus();
-				Yii::trace('has no email, set to '.$s.'.', 'Document::setStatus');
-				$this->status = $s;
-			}
-		} else if($newstatus == self::STATUS_TOPAY) { // if this is a request to set the status to 'TOPAY'
-			Yii::trace('Request to set TOPAY.', 'Document::setStatus');
-			if($work = $this->getWorks()->one()) {
-				if($work->status == Work::STATUS_DONE) { // if work exists and is completed
-					$this->status = $this->updatePaymentStatus();
-				} else { // document takes status of its associated work
-					$this->status = $work->status;
+
+		switch($newstatus) {
+			case self::STATUS_DONE:
+				Yii::trace('Request to set DONE.', 'Document::setStatus');
+				if($this->getNotificationEmail() != '') {
+					Yii::trace('has email, set to NOTIFY.', 'Document::setStatus');
+					$this->status = self::STATUS_NOTIFY;
+				} else {
+					$this->status = $newstatus;
+					$s = $this->updatePaymentStatus();
+					Yii::trace('has no email, set to '.$s.'.', 'Document::setStatus');
+					$this->status = $s;
 				}
-			} else { // there is no work. If document in "TODO" status, we leave it as TODO.
-				if($this->status != self::STATUS_TODO)
-					$this->status = $this->updatePaymentStatus();
-			}
-		} else if($newstatus == self::STATUS_CANCELLED) {
-			Yii::trace('Request to cancel.', 'Document::setStatus');
-			$sale = Sequence::nextval('sale');
-			foreach($this->getPayments()->each() as $payment) {
-				$payment->sale = $sale;
-				$payment->status = Payment::STATUS_OPEN;
-				$payment->save();
-			}
-			$this->status = $newstatus;
-		} else {
-			Yii::trace('Not special request.', 'Document::setStatus');
-			$this->status = $newstatus;
+				break;
+			case self::STATUS_TOPAY: 
+				Yii::trace('Request to set TOPAY.', 'Document::setStatus');
+				if($work = $this->getWorks()->one()) {
+					if($work->status == Work::STATUS_DONE) { // if work exists and is completed
+						$this->status = $this->updatePaymentStatus();
+					} else { // document takes status of its associated work
+						$this->status = $work->status;
+					}
+				} else { // there is no work. If document in "TODO" status, we leave it as TODO.
+					if($this->status != self::STATUS_TODO) {
+						$this->status = $this->updatePaymentStatus();
+					}
+				}
+				break;
+			case self::STATUS_CANCELLED:
+				Yii::trace('Request to cancel.', 'Document::setStatus');
+				$sale = Sequence::nextval('sale');
+				foreach($this->getPayments()->each() as $payment) {
+					$payment->sale = $sale;
+					$payment->status = Payment::STATUS_OPEN;
+					$payment->save();
+				}
+				$this->status = $newstatus;
+				break;
+			default:
+				Yii::trace('Not special request.', 'Document::setStatus');
+				$this->status = $newstatus;
+				break;
 		}
 		$this->save();
 		Yii::trace('Saved status = '.$this->status.'.', 'Document::setStatus');
