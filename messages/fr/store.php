@@ -555,7 +555,7 @@ return [
 	// billing
 	'{0} was billed on {1}.' => "Le/la {0} a été facturée le {1}.",
 	'{0} has not been billed yet.'=> "Le/la {0} n'a pas encore été facturé(e).",
-
+	'Bill status is {0}.' => "L'état de la facture est <q>{0}</q>.",
 	// contrôle
 	'Client was notified on {0}.' => "Le client a été averti le {0}.",
 	'Order billed on {0}.' => "La commande a été facturée le {0}.",
@@ -565,6 +565,7 @@ return [
 	'Will be notified on this address &lt;{1}&gt; on {0}.' => "Le client sera averti à cette addresse &lt;{1}&gt; on {0}.",
 
 	'Fix status to {0}' => "Forcer l'état à {0}",
+	'Are you sure you want to set status of this {0} to {1}?' => "Etes-vous sûr de vouloir changer l'état du/de la {0} à {1}?",
 
 	// work
 	'Work created on {0} by {1}.' => "Le travail a été soumis le {0} par {1}.",

@@ -1181,15 +1181,32 @@ class Document extends _Document
 	/**
 	 * Explains status of document. If guessed status differs from current status, offers a link to change current status to guessed.
 	 */
+	protected function getLocalizedDoctype($lower = false) {
+		if($this->document_type == self::TYPE_ORDER)
+			$doc_type = $this->bom_bool ? Yii::t('store', self::TYPE_BOM) : Yii::t('store', $this->document_type);
+		else
+			$doc_type = Yii::t('store', $this->document_type);
+		return $lower ? strtolower($doc_type) : $doc_type;
+	}
 	public function checkStatus() {
 		$control_level = Parameter::getIntegerValue('application', 'control_level', 1);
 		$newstatus = $this->guessStatus();
+		$doctype = $this->getLocalizedDoctype(true);
 		
 		if($control_level > 0 && $this->status != $newstatus) {
 			$this->blab(Html::a(Yii::t('store', 'Fix status to {0}', Yii::t('store', $newstatus)),
-								['fix-status', 'id' => $this->id, 'status' => $newstatus]).'.');
+								[
+									'fix-status',
+									'id' => $this->id,
+									'status' => $newstatus
+								],[
+									'title' => Yii::t('store', 'Fix status'),
+					        		'data-confirm' => Yii::t('store', 'Are you sure you want to set status of this {0} to {1}?', [
+															$doctype,
+															Yii::t('store', $newstatus)
+														]),
+								]));
 		}
-		
 		return $this->blabOut();
 	}
 
@@ -1199,11 +1216,7 @@ class Document extends _Document
 	public function guessStatus() {
 		$control_level = Parameter::getIntegerValue('application', 'control_level', 1);
 		$newstatus = self::STATUS_CREATED;
-		if($this->document_type == self::TYPE_ORDER)
-			$doc_type = $this->bom_bool ? Yii::t('store', self::TYPE_BOM) : Yii::t('store', $this->document_type);
-		else
-			$doc_type = Yii::t('store', $this->document_type);
-		$doc_type = strtolower($doc_type);
+		$doc_type = $this->getLocalizedDoctype(true);
 		
 		$created_at = $this->getCreatedBy()->one();
 		$this->blab(Yii::t('store', '{2} created on {0} by {1}.', [$this->asDateTime($this->created_at), ($created_at ? $created_at->username : '?'), $doc_type]));
@@ -1285,8 +1298,11 @@ class Document extends _Document
 		
 		if($this->document_type == self::TYPE_ORDER) {
 			if($bill = $this->getBill()) {
-				$this->blab(Yii::t('store', '{0} was billed on {1}.', [$doc_type, $this->asDateTime($bill->created_at)]));
-				$newstatus = self::STATUS_CLOSED;
+				$this->blab(Yii::t('store', '{0} was billed on {1}.', [$doc_type, $this->asDateTime($bill->created_at)]).' '.
+							Yii::t('store', 'Bill status is {0}.', Yii::t('store', $bill->status)));
+				if(in_array($newstatus, [self::STATUS_DONE,self::STATUS_TOPAY]) && in_array($bill->status, [self::STATUS_TOPAY,self::STATUS_CLOSED])) {
+					$newstatus = self::STATUS_CLOSED; // we can close this one since TOPAY status carried by bill
+				}
 			} else {
 				$this->blab(Yii::t('store', '{0} has not been billed yet.', $doc_type));
 			}
