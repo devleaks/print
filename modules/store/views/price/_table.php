@@ -19,8 +19,8 @@ $model = $priceCalculator->item;
 $this->title = Yii::t('store', 'Price List').' '.$model->libelle_long;
 
 if($model->reference == Item::TYPE_CHROMALUXE) {
-	$w_max = Parameter::getIntegerValue('chroma_device', 'width');
-	$h_max = Parameter::getIntegerValue('chroma_device', 'height');
+	$w_max = Parameter::getIntegerValue('formule', 'SublimationMaxWidth');
+	$h_max = Parameter::getIntegerValue('formule', 'SublimationMaxHeight');
 	$max = max($w_max, $h_max);
 	$min_w = 10;
 	$max_w = $max;
