@@ -550,10 +550,10 @@ return [
 	// payment
 	'Total for {1} is {0}.' => "Total pour le/la {1}: {0}.",
 	'Payment received: {0}.' => "Paiement reçu: {0}.",
-	'{0} is paid.' => 'Le/la {0} est payée.',
+	'{0} is paid.' => 'Le/la {0} est payé(e).',
 	'Amount due: {0}.' => "Dû: {0}.",	
 	// billing
-	'{0} was billed on {1}.' => "Le/la {0} a été facturée le {1}.",
+	'{0} was billed on {1}.' => "Le/la {0} a été facturé(e) le {1}.",
 	'{0} has not been billed yet.'=> "Le/la {0} n'a pas encore été facturé(e).",
 	'Bill status is {0}.' => "L'état de la facture est <q>{0}</q>.",
 	// contrôle

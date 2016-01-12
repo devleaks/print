@@ -206,15 +206,16 @@ class Bill extends Document {
 		$more_needed = 0;
 		Yii::trace('available='.$available, 'Bill::addPayment');
 		foreach($this->getBoms()->each() as $bom) {
-			if($bom->isPaid()) {
-				Yii::trace('already paid: '.$bom->id, 'Bill::addPayment');
-			} else {
+			if(! $bom->isPaid()) {
 				if($available > Bill::PAYMENT_LIMIT) {
 					$needed = $bom->getBalance();
 					Yii::trace('needed='.$needed.' for '.$bom->id, 'Bill::addPayment');
-					if($needed <= $available) {
+					if($needed <= ($available + Bill::PAYMENT_LIMIT)) {
 						$bom->addPayment($account, $needed, $account->payment_method);
 						$available -= $needed;
+						if(abs($available) < Bill::PAYMENT_LIMIT) {
+							$available = 0;
+						}
 						Yii::trace('found sufficient, available left ='.$available, 'Bill::addPayment');
 					} else {
 						$bom->addPayment($account, $available, $account->payment_method);
@@ -225,6 +226,8 @@ class Bill extends Document {
 				} else {
 					$more_needed += $bom->getBalance();
 				}
+			} else {
+				Yii::trace('already paid: '.$bom->id, 'Bill::addPayment');
 			}
 		}
 		Yii::trace('Bottomline: missing='.$more_needed.', available='.$available, 'Bill::addPayment');

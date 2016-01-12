@@ -102,12 +102,14 @@ class Order extends Document
 
 
 	protected function updatePaymentStatus() {
-		if($bill = $this->getBill()) // If the order has already a bill, the bill contains the payment status
-			return $bill->updatePaymentStatus();
-		else { //if(!$this->isBusy() && ($this->status != self::STATUS_NOTIFY)) { // order with no bill
-			return $this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY;
-		} // otherwise, we leave the status as it is
-		return $this->status;
+		if($bill = $this->getBill()) {// If the order has already a bill, the bill contains the payment status
+			$bill_payment_status = $bill->updatePaymentStatus();
+			if($bill_payment_status == self::STATUS_CLOSED)  {
+				return $bill_payment_status;
+			}
+		}
+		// if bill isn't paid, may be this BOM is paid?
+		return $this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY;
 	}
 
 

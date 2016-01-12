@@ -1,4 +1,5 @@
 <?php
+use app\models\Document;
 use app\models\Item;
 
 $rebate_item = Item::findOne(['reference' => Item::TYPE_REBATE]);
@@ -15,7 +16,7 @@ Line:
       VATCode:              <?= $order->vat_bool ? 0 : number_format($model->vat, 0) ?>
 
       Comment:
-      FlagDC:               <?= $factor < 0 ? 'D' : 'C' ?>
+      FlagDC:               <?= ( ($factor < 0) || ($model->document->document_type == Document::TYPE_CREDIT && $amount == 0) ) ? 'D' : 'C' ?>
 
       AmountCrcy:           <?= $abs_amount ?>
 

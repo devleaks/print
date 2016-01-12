@@ -156,8 +156,13 @@ class BackupController extends Controller
 		$model = $this->findModel($id);
 		$fn = Yii::getAlias('@runtime') . '/backup/' . $model->filename;
 		
-		if(Backup::restore($fn))
+		if(Backup::restore($fn)) {
 			Yii::$app->session->setFlash('success', Yii::t('store', 'Backup restored.'));
+	        $model = new Backup();
+			if($model->doBackup() && $model->save()) {
+				Yii::$app->session->setFlash('info', Yii::t('store', 'Backup completed.'));
+			}
+		}
 		else
 			Yii::$app->session->setFlash('danger', Yii::t('store', 'Backup not restored.'));
 		

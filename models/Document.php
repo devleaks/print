@@ -473,7 +473,7 @@ class Document extends _Document
 						$this->status = $work->status;
 					}
 				} else { // there is no work. If document in "TODO" status, we leave it as TODO.
-					if($this->status != self::STATUS_TODO) {
+					if(!in_array($this->status,[self::STATUS_TODO, self::STATUS_OPEN, self::STATUS_CREATED])) {
 						$this->status = $this->updatePaymentStatus();
 					}
 				}
