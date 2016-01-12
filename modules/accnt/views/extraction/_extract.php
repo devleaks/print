@@ -5,8 +5,10 @@ if($model = $models->one()) {
 } else {
 	$year = date('y');
 }
+$ver = `git describe --tags`;
+
 ?>
-|     Popsy file
+|     Popsy file Rel. <?= $ver ?>
 
 CreateKeyCustomer:Y
 IgnoreAnalClosed:Y
