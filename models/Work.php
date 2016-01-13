@@ -28,7 +28,7 @@ class Work extends _Work
 	/** */
 	const STATUS_WARN = 'WARN';
 	/** */
-	const STATUS_CANCELLED = 'Cancelled';
+	const STATUS_CANCELLED = 'CANCELLED';
 
     /**
      * @inheritdoc
