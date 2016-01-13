@@ -55,6 +55,10 @@ class DocumentLineController extends Controller
         ];
     }
 
+	protected function feedback($type, $message, $cancel = null) {
+		Yii::$app->session->setFlash($type, ($cancel !== null && $cancel != '') ? Yii::t('store', $message.' {0}.', $cancel) : Yii::t('store', $message));
+	}
+
     /**
      * Lists all DocumentLine models.
      * @return mixed
@@ -222,7 +226,7 @@ class DocumentLineController extends Controller
 									'title' => Yii::t('store', 'Delete order line'),
 									'data-confirm' => Yii::t('store', 'Delete order line?'),
 								]);*/
-				Yii::$app->session->setFlash('success', Yii::t('store', 'Line added. {0}.', $cancel));
+				$this->feedback('success', 'Line added.', $cancel);
 			}
 			$newDocumentLine = new DocumentLine();
 			$newDocumentLine->document_id = $order->id;

@@ -82,6 +82,10 @@ class DocumentController extends Controller
         ];
     }
 
+	protected function feedback($type, $message, $cancel = null) {
+		Yii::$app->session->setFlash($type, ($cancel !== null && $cancel != '') ? Yii::t('store', $message.' {0}.', $cancel) : Yii::t('store', $message));
+	}
+
     /**
      * Lists all Order models.
      * @return mixed
@@ -291,19 +295,7 @@ class DocumentController extends Controller
 			if(!isset($model->document_type)) $model->document_type = $type;
 
 			if(!isset($model->name)) {
-				$now = date('Y-m-d', strtotime('now'));
-				switch($model->document_type) {
-					case Document::TYPE_BILL:
-						$model->name = Bill::getNextBillNumber();
-						break;
-					case Document::TYPE_CREDIT:
-						$model->name = substr($now,0,4).'-'.str_pad(Sequence::nextval('credit_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT);
-						break;
-					default:
-						$o = Parameter::getTextValue('application', $model->bom_bool ? 'BOM' : $model->document_type, '-');
-						$model->name = substr($now,0,4).$o.str_pad(Sequence::nextval('doc_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT);
-						break;
-				}
+				$model->name = Document::generateName($model->document_type);
 			}
 			// temporaily set reference
 			$model->sale = Sequence::nextval('sale'); // Document::commStruct($model->name);//$model->name;
@@ -349,7 +341,7 @@ class DocumentController extends Controller
 									'title' => Yii::t('store', 'Delete {0}', Yii::t('store', $model->document_type)),
 									'data-confirm' => Yii::t('store', 'Delete {0}?', Yii::t('store', $model->document_type)),
 								]);*/
-				Yii::$app->session->setFlash('success', Yii::t('store', 'Document added. {0}.', $cancel));
+				$this->feedback('success', 'Document added.', $cancel);
 				
 				return $this->redirect(['document-line/create', 'id' => $model->id]);
 			}
@@ -617,7 +609,7 @@ class DocumentController extends Controller
 								'title' => Yii::t('store', 'Cancel'),
 								'data-confirm' => Yii::t('store', 'Cancel?'),
 							]);*/
-			Yii::$app->session->setFlash('success', Yii::t('store', 'Successful convertion. {0}.', $cancel));
+			$this->feedback('success', 'Successful convertion.', $cancel);
 	        return $this->render('view', [
 	            'model' => $order,
 	        ]);
@@ -627,21 +619,9 @@ class DocumentController extends Controller
 
 	public function actionCopy($id) {
 		$model = $this->findModel($id);
-		$copy  = $model->deepCopy();
 
-		$now = date('Y-m-d', strtotime('now'));
-		switch($copy->document_type) {
-			case Document::TYPE_BILL:
-				$copy->name = Bill::getNextBillNumber();
-				break;
-			case Document::TYPE_CREDIT:
-				$copy->name = substr($now,0,4).'-'.str_pad(Sequence::nextval('credit_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT);
-				break;
-			default:
-				$o = Parameter::getTextValue('application', $copy->bom_bool ? 'BOM' : $copy->document_type, '-');
-				$copy->name = substr($now,0,4).$o.Sequence::nextval('doc_number');
-				break;
-		}
+		$copy  = $model->deepCopy();
+		$copy->name = Document::generateName($copy->document_type);
 		$copy->save();
 
 		$cancel = '';/*@todo Html::a(Yii::t('store', 'Cancel'),
@@ -651,8 +631,7 @@ class DocumentController extends Controller
 							'title' => Yii::t('store', 'Cancel'),
 							'data-confirm' => Yii::t('store', 'Cancel?'),
 						]);*/
-		$cancel = "";
-		Yii::$app->session->setFlash('success', Yii::t('store', 'Copied. {0}.', $cancel));
+		$this->feedback('success', 'Copied.', $cancel);
         return $this->render('view', [
             'model' => $copy,
         ]);
@@ -706,7 +685,7 @@ class DocumentController extends Controller
 								'title' => Yii::t('store', 'Delete work order'),
 								'data-confirm' => Yii::t('store', 'Delete work order?'),
 							]);
-			Yii::$app->session->setFlash('success', Yii::t('store', 'Work submitted. {0}.', $cancel));
+			$this->feedback('success', 'Work submitted.', $cancel);
         	return $this->redirect(['/work/work/view', 'id' => $work->id, 'sort' => 'position']);
 		} else {
 			Yii::$app->session->setFlash('info', Yii::t('store', 'There is no work for this order.'));
