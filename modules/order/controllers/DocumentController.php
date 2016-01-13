@@ -34,6 +34,8 @@ use app\models\RefundSearch;
 use app\models\Sequence;
 use app\models\Ticket;
 use app\models\TicketSearch;
+use app\models\WebsiteOrder;
+
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\filters\VerbFilter;
@@ -121,7 +123,7 @@ class DocumentController extends Controller
     public function actionWebsite() {
         $searchModel = new DocumentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere(['like', 'name', '-W-']);
+		$dataProvider->query->andWhere(['document.id' => WebsiteOrder::find()->select('document_id')]);
 
         return $this->render('website', [
             'searchModel' => $searchModel,
