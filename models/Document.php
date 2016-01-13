@@ -459,7 +459,7 @@ class Document extends _Document
 					$this->status = self::STATUS_NOTIFY;
 				} else {
 					$this->status = $newstatus;
-					$s = $this->updatePaymentStatus();
+					$s = $this->getPaymentStatus();
 					Yii::trace('has no email, set to '.$s.'.', 'Document::setStatus');
 					$this->status = $s;
 				}
@@ -468,13 +468,13 @@ class Document extends _Document
 				Yii::trace('Request to set TOPAY.', 'Document::setStatus');
 				if($work = $this->getWorks()->one()) {
 					if($work->status == Work::STATUS_DONE) { // if work exists and is completed
-						$this->status = $this->updatePaymentStatus();
+						$this->status = $this->getPaymentStatus();
 					} else { // document takes status of its associated work
 						$this->status = $work->status;
 					}
 				} else { // there is no work. If document in "TODO" status, we leave it as TODO.
 					if(!in_array($this->status,[self::STATUS_TODO, self::STATUS_OPEN, self::STATUS_CREATED])) {
-						$this->status = $this->updatePaymentStatus();
+						$this->status = $this->getPaymentStatus();
 					}
 				}
 				break;
@@ -889,10 +889,11 @@ class Document extends _Document
 	public static function updateSalePayments($sale) {
 		
 	}	
+
 	/**
-	 * Update payment status of document and triggers proper actions.
+	 * Function that only look at payment status and return either TOPAY or CLOSED depending on saldo
 	 */
-	protected function updatePaymentStatus() {
+	protected function getPaymentStatus() {
 		if(!$this->isBusy()) {
 			return $this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY;
 		} // otherwise, we leave the status as it is
@@ -904,6 +905,13 @@ class Document extends _Document
 		return $this->status == self::STATUS_TODO
 		 	|| $this->status == self::STATUS_BUSY
 		 	|| $this->status == self::STATUS_WARN;
+	}
+	
+	
+	public function isBeforePayment() {
+		return $this->status != self::STATUS_TOPAY
+		 	&& $this->status != self::STATUS_CLOSED
+		;
 	}
 	
 	

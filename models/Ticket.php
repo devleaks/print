@@ -23,7 +23,7 @@ class Ticket extends Order
 	protected function statusUpdated() {
 		Yii::trace($this->status, 'Ticket::statusUpdated');
 		if($this->status == self::STATUS_DONE) {
-			$this->status = $this->updatePaymentStatus();
+			$this->status = $this->getPaymentStatus();
 			$this->save();
 		}
 	}
@@ -31,7 +31,7 @@ class Ticket extends Order
 	/**
 	 * @inheritdoc
 	 */
-	protected function updatePaymentStatus() {
+	protected function getPaymentStatus() {
 		if(!$this->isBusy()) {
 			return $this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY;
 		} // otherwise, we leave the status as it is

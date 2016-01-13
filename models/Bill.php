@@ -52,7 +52,7 @@ class Bill extends Document {
 	/**
 	 * @inheritdoc
 	 */
-	protected function updatePaymentStatus() {
+	protected function getPaymentStatus() {
 		return $this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY;
 	}
 
@@ -148,7 +148,7 @@ class Bill extends Document {
 			} // foreach BOM
 			$model->due_date = $last_date;
 			$model->updatePrice(false);	// do NOT update REBATE lines
-			$model->status = $model->updatePaymentStatus();
+			$model->status = $model->getPaymentStatus();
 			if($model->status == self::STATUS_TOPAY && Parameter::isTrue('application', 'auto_send_bill')) { // auto send bill if necessary
 				$model->send();
 			}

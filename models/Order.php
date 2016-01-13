@@ -101,10 +101,13 @@ class Order extends Document
 	}
 
 
-	protected function updatePaymentStatus() {
-		if($bill = $this->getBill()) {// If the order has already a bill, the bill contains the payment status
-			$bill_payment_status = $bill->updatePaymentStatus();
-			if($bill_payment_status == self::STATUS_CLOSED)  {
+	/**
+	 * @inheritdoc
+	 */
+	protected function getPaymentStatus() {
+		if($bill = $this->getBill()) {// If the order has a bill, we first look at the bill's payment status
+			$bill_payment_status = $bill->getPaymentStatus();
+			if($bill_payment_status == self::STATUS_CLOSED)  { // if the bill is closed (paid)
 				return $bill_payment_status;
 			}
 		}
