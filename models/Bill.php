@@ -84,13 +84,6 @@ class Bill extends Document {
 	}
 	
 	/**
-	 * 
-	 */
-	public static function getNextBillNumber() {
-		return date('Y').'-'.str_pad(Sequence::nextval('bill_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT);
-	}
-
-	/**
 	 *
 	 */
 	public function createFromBoms($boms) {
@@ -114,7 +107,7 @@ class Bill extends Document {
 					$model->vat_bool = $bom->vat_bool; // we assume all BOMs have same vat_bool.
 					$model->due_date = $bom->due_date;
 					// Note: BOM gets temporary number, bill gets next number available.
-					$model->name = Bill::getNextBillNumber();
+					$model->name = Document::generateName(Document::TYPE_BILL);
 					//$model->note = $bom->name;
 					$model->status = self::STATUS_OPEN;
 					$model->sale = Sequence::nextval('sale');

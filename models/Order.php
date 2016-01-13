@@ -53,7 +53,7 @@ class Order extends Document
 
 		$copy = $this->deepCopy(self::TYPE_BILL);
 		$copy->parent_id = $this->id;	
-		$copy->name = Bill::getNextBillNumber();
+		$copy->name = Bill::generateName(Document::TYPE_BILL);
 		$copy->updatePrice();
 		$copy->setStatus(self::STATUS_TOPAY);
 		$copy->save();

@@ -258,7 +258,7 @@ class PaymentController extends Controller
 						'document_type' => Refund::TYPE_REFUND,
 						'sale' => $newSale,
 						'client_id' => $payment->client_id,
-						'name' => substr($payment->created_at,0,4).$o.str_pad(Sequence::nextval('doc_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT),
+						'name' => Document::generateName(Document::TYPE_REFUND),
 						'due_date' => date('Y-m-d H:i:s'),
 						'note' => $payment->note, // $payment->payment_method.'-'.$payment->sale.'. '.
 						'reference' => $newReference,

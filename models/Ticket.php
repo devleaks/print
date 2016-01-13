@@ -28,16 +28,6 @@ class Ticket extends Order
 		}
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getPaymentStatus() {
-		if(!$this->isBusy()) {
-			return $this->isPaid() ? self::STATUS_CLOSED : self::STATUS_TOPAY;
-		} // otherwise, we leave the status as it is
-		return $this->status;
-	}
-
     /**
      * @inheritdoc
      * Note: If we convert a sale ticket to a bill, we change its type to ORDER
@@ -67,7 +57,7 @@ class Ticket extends Order
 				$reimbursment = new Refund([
 					'document_type' => Refund::TYPE_REFUND,
 					'client_id' => $this->client_id,
-					'name' => substr($this->created_at,0,4).$o.str_pad(Sequence::nextval('doc_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT),
+					'name' => Document::generateName(Document::TYPE_REFUND),
 					'due_date' => $this->due_date,
 					'note' => 'Remboursement conversion VC->Facture',
 					'sale' =>  Sequence::nextval('sale'),

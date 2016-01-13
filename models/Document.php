@@ -32,6 +32,8 @@ class Document extends _Document
 	const TYPE_TICKET = 'TICKET';
 	/** Ticket de caisse */
 	const TYPE_REFUND = 'REFUND';
+	/** Bon de livraison, is a virtual type: an order with bom_bool=true */
+	const TYPE_WEB = 'WEB';
 	
 	
 	/** */
@@ -70,6 +72,8 @@ class Document extends _Document
 	const PAYMENT_LIMIT = 0.01;
 
 
+	const NAME_NUMBER_LENGTH = 4;
+	
 	/** Variables added for search models (DocumentSearch, BillSearch, etc.) */
 	public $created_at_range;
 	public $updated_at_range;
@@ -321,6 +325,28 @@ class Document extends _Document
 		];
 	}
 	
+	/**
+	 * INSERT INTO `parameter` (`domain`, `name`,`value_text`)	VALUES ('application', 'WEB', '-W-');
+	 */
+	public static function generateName($document_type, $date = null) {
+		$year = $date ? $date : date('Y', strtotime('now'));
+		switch($document_type) {
+			case Document::TYPE_BILL:
+				$sequence_name = 'bill_number'; // force
+				$separator = '-';
+				break;
+			case Document::TYPE_CREDIT:
+				$sequence_name = 'credit_number'; // force
+				$separator = '-';
+				break;
+			default:
+				$sequence_name = 'doc_number'; // force
+				$separator = Parameter::getTextValue('application', $document_type, '-');
+				break;
+		}
+		return substr($year,0,4).$separator.str_pad(Sequence::nextval($sequence_name), self::NAME_NUMBER_LENGTH, "0", STR_PAD_LEFT);
+	}
+	
 	
 	public function getRelatedReference() {
 		return $this->parent ? $this->parent->name : '';
@@ -371,6 +397,13 @@ class Document extends _Document
 		return false;
 	}
 	
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function isWebOrder() {
+		return WebsiteOrder::findOne(['document_id' => $this->id]) != null;
+	}
 	/**
 	 *
 	 * @return boolean

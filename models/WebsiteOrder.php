@@ -429,7 +429,7 @@ class WebsiteOrder extends _WebsiteOrder
 			'reference_client' => $this->order_id,
 			'email' => $this->email,
 			'note' => $this->getComment(),
-			'name' => substr($this->created_at,0,4).'-W-'.str_pad(Sequence::nextval('doc_number'), Bill::BILL_NUMBER_LENGTH, "0", STR_PAD_LEFT),
+			'name' => Document::generateName(Document::TYPE_WEB),
 			'status' => Document::STATUS_CREATED,
 		]);
 		$this->setUser($order);
