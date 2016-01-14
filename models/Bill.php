@@ -195,7 +195,7 @@ class Bill extends Document {
 		if(!$this->bom_bool) // for regular bills, we use regular payment addition
 			return parent::addPayment($account, $amount_gross, $method, $note);
 		
-		$available = $account->amount;
+		$amount = round($amount_gross, 2);
 		$more_needed = 0;
 		Yii::trace('available='.$available, 'Bill::addPayment');
 		foreach($this->getBoms()->each() as $bom) {
@@ -204,14 +204,14 @@ class Bill extends Document {
 					$needed = $bom->getBalance();
 					Yii::trace('needed='.$needed.' for '.$bom->id, 'Bill::addPayment');
 					if($needed <= ($available + Bill::PAYMENT_LIMIT)) {
-						$bom->addPayment($account, $needed, $account->payment_method);
+						$bom->addPayment($account, $needed, $method, $note);
 						$available -= $needed;
 						if(abs($available) < Bill::PAYMENT_LIMIT) {
 							$available = 0;
 						}
 						Yii::trace('found sufficient, available left ='.$available, 'Bill::addPayment');
 					} else {
-						$bom->addPayment($account, $available, $account->payment_method);
+						$bom->addPayment($account, $available, $method, $note);
 						$more_needed = $needed - $available;
 						$available = 0;
 						Yii::trace('amount NOT sufficient, missing='.$more_needed, 'Bill::addPayment');
@@ -229,10 +229,10 @@ class Bill extends Document {
 			$remaining = new Payment([
 				'sale' => Sequence::nextval('sale'), // its a new sale transaction...
 				'client_id' => $this->client_id,
-				'payment_method' => $account->payment_method,
+				'payment_method' => $method,
 				'amount' => $available,
 				'status' => Payment::STATUS_OPEN,
-				'account_id' => $account->id,
+				'account_id' => $account ? $account->id : null,
 			]);
 			$remaining->save();
 			Yii::$app->session->setFlash('info',
