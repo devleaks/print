@@ -387,104 +387,26 @@
             "type": "bower-asset-library"
         },
         {
-            "name": "bower-asset/classie",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/desandro/classie.git",
-                "reference": "54ae6e1428964fd09f6dff9b09c03a598d5bcd6b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/desandro/classie/zipball/54ae6e1428964fd09f6dff9b09c03a598d5bcd6b",
-                "reference": "54ae6e1428964fd09f6dff9b09c03a598d5bcd6b",
-                "shasum": ""
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "classie.js",
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "node_modules",
-                    "bower_components",
-                    "test",
-                    "tests",
-                    "component.json"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "class helper",
-            "keywords": [
-                "class"
-            ]
-        },
-        {
-            "name": "bower-asset/doc-ready",
-            "version": "v1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/desandro/doc-ready.git",
-                "reference": "0558a528a3131f4df6bbe0ae5406b9c7eb1bf63b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/desandro/doc-ready/zipball/0558a528a3131f4df6bbe0ae5406b9c7eb1bf63b",
-                "reference": "0558a528a3131f4df6bbe0ae5406b9c7eb1bf63b",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/eventie": ">=1,<2.0"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "doc-ready.js",
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "node_modules",
-                    "bower_components",
-                    "test",
-                    "tests",
-                    "examples",
-                    "package.json",
-                    "component.json",
-                    "index.html"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Let's get this party started... on document ready",
-            "keywords": [
-                "DOM",
-                "document",
-                "ready"
-            ]
-        },
-        {
             "name": "bower-asset/draggabilly",
-            "version": "v1.2.4",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/draggabilly.git",
-                "reference": "ed35f65b40b8983d100c66d5caf16dba3bbd0afd"
+                "reference": "082a68aef38f13e2e6c9098aa6ccc0b429cc9e8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/draggabilly/zipball/ed35f65b40b8983d100c66d5caf16dba3bbd0afd",
-                "reference": "ed35f65b40b8983d100c66d5caf16dba3bbd0afd",
+                "url": "https://api.github.com/repos/desandro/draggabilly/zipball/082a68aef38f13e2e6c9098aa6ccc0b429cc9e8c",
+                "reference": "082a68aef38f13e2e6c9098aa6ccc0b429cc9e8c",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/classie": "~1.0.1",
-                "bower-asset/get-size": "~1.2.2",
-                "bower-asset/get-style-property": "~1.0.4",
-                "bower-asset/unidragger": "~1.1.0"
+                "bower-asset/get-size": "~2.0.2",
+                "bower-asset/unidragger": "~2.1.0"
             },
             "require-dev": {
-                "bower-asset/jquery-bridget": "~1.1.0",
-                "bower-asset/qunit": "~1.17.1"
+                "bower-asset/jquery-bridget": "~2.0.0",
+                "bower-asset/qunit": "~1.20"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -495,7 +417,6 @@
                     "bower_components",
                     "test",
                     "tests",
-                    "changelog.md",
                     "contributing.md",
                     "Gruntfile.js",
                     "gulpfile.js",
@@ -513,88 +434,60 @@
             ]
         },
         {
-            "name": "bower-asset/eventEmitter",
-            "version": "v4.2.11",
+            "name": "bower-asset/ev-emitter",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Wolfy87/EventEmitter.git",
-                "reference": "4e1bee26addc8eb16d36d77906e5d64554fc3d16"
+                "url": "https://github.com/metafizzy/ev-emitter.git",
+                "reference": "a590dbd7be3ebe98a0bc8635938f666e2e8f13f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Wolfy87/EventEmitter/zipball/4e1bee26addc8eb16d36d77906e5d64554fc3d16",
-                "reference": "4e1bee26addc8eb16d36d77906e5d64554fc3d16",
+                "url": "https://api.github.com/repos/metafizzy/ev-emitter/zipball/a590dbd7be3ebe98a0bc8635938f666e2e8f13f7",
+                "reference": "a590dbd7be3ebe98a0bc8635938f666e2e8f13f7",
                 "shasum": ""
             },
             "type": "bower-asset-library",
             "extra": {
-                "bower-asset-main": [
-                    "./EventEmitter.js"
-                ],
+                "bower-asset-main": "ev-emitter.js",
                 "bower-asset-ignore": [
-                    "docs",
-                    "tests",
-                    "tools",
-                    ".gitignore",
-                    "package.json"
-                ]
-            },
-            "description": "Event based JavaScript for the browser",
-            "keywords": [
-                "events",
-                "structure"
-            ]
-        },
-        {
-            "name": "bower-asset/eventie",
-            "version": "v1.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/desandro/eventie.git",
-                "reference": "7eb7bdc93d214d611f2c3acde80cf9f3f4fea4d7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/desandro/eventie/zipball/7eb7bdc93d214d611f2c3acde80cf9f3f4fea4d7",
-                "reference": "7eb7bdc93d214d611f2c3acde80cf9f3f4fea4d7",
-                "shasum": ""
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "eventie.js",
-                "bower-asset-ignore": [
-                    "component.json",
-                    "test.html",
                     "**/.*",
                     "node_modules",
-                    "bower_components"
+                    "bower_components",
+                    "test",
+                    "tests",
+                    "sandbox"
                 ]
             },
             "license": [
                 "MIT"
             ],
-            "description": "event binding helper",
+            "description": "lil' event emitter",
             "keywords": [
-                "event"
+                "emitter",
+                "event",
+                "pubsub"
             ]
         },
         {
             "name": "bower-asset/fizzy-ui-utils",
-            "version": "v1.0.1",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/fizzy-ui-utils.git",
-                "reference": "72dc1353bbc1646ee160e6a9dcb946eb0b66fe67"
+                "reference": "8802a5211ede0895f87a9355c46d4b9214585499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/fizzy-ui-utils/zipball/72dc1353bbc1646ee160e6a9dcb946eb0b66fe67",
-                "reference": "72dc1353bbc1646ee160e6a9dcb946eb0b66fe67",
+                "url": "https://api.github.com/repos/metafizzy/fizzy-ui-utils/zipball/8802a5211ede0895f87a9355c46d4b9214585499",
+                "reference": "8802a5211ede0895f87a9355c46d4b9214585499",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/doc-ready": "~1.0.4",
-                "bower-asset/matches-selector": "~1.0.2"
+                "bower-asset/matches-selector": "~2.0.0"
+            },
+            "require-dev": {
+                "bower-asset/qunit": "~1.20.0"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -619,23 +512,20 @@
         },
         {
             "name": "bower-asset/get-size",
-            "version": "v1.2.2",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/get-size.git",
-                "reference": "5a48e611656779cfa6ee801c83dc3067ed723855"
+                "reference": "2d64a97712adcaeaa9c3a415559934df20bf8009"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/get-size/zipball/5a48e611656779cfa6ee801c83dc3067ed723855",
-                "reference": "5a48e611656779cfa6ee801c83dc3067ed723855",
+                "url": "https://api.github.com/repos/desandro/get-size/zipball/2d64a97712adcaeaa9c3a415559934df20bf8009",
+                "reference": "2d64a97712adcaeaa9c3a415559934df20bf8009",
                 "shasum": ""
             },
-            "require": {
-                "bower-asset/get-style-property": "dev-1.x|1.x"
-            },
             "require-dev": {
-                "bower-asset/qunit": ">=1.10,<1.11"
+                "bower-asset/qunit": "~1.10"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -644,11 +534,11 @@
                     "test/",
                     "**/.*",
                     "package.json",
-                    "component.json",
                     "node_modules",
                     "bower_components",
                     "test",
-                    "tests"
+                    "tests",
+                    "sandbox.html"
                 ]
             },
             "license": [
@@ -660,40 +550,6 @@
                 "height",
                 "size",
                 "width"
-            ]
-        },
-        {
-            "name": "bower-asset/get-style-property",
-            "version": "v1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/desandro/get-style-property.git",
-                "reference": "a5a74ad48d96c7d5ddcf652e9fa5d4283af37823"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/desandro/get-style-property/zipball/a5a74ad48d96c7d5ddcf652e9fa5d4283af37823",
-                "reference": "a5a74ad48d96c7d5ddcf652e9fa5d4283af37823",
-                "shasum": ""
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "get-style-property.js",
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "node_modules",
-                    "bower_components",
-                    "test",
-                    "tests"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "quick & dirty CSS property testing",
-            "keywords": [
-                "CSS",
-                "DOM"
             ]
         },
         {
@@ -726,56 +582,20 @@
         },
         {
             "name": "bower-asset/isotope",
-            "version": "dev-master",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/isotope.git",
-                "reference": "92d926b2b893b28985d400289a6067726239e793"
+                "reference": "3a34110d18ebd928a6c0c2bfff32e7335456b2f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/92d926b2b893b28985d400289a6067726239e793",
-                "reference": "92d926b2b893b28985d400289a6067726239e793",
+                "url": "https://api.github.com/repos/metafizzy/isotope/zipball/3a34110d18ebd928a6c0c2bfff32e7335456b2f6",
+                "reference": "3a34110d18ebd928a6c0c2bfff32e7335456b2f6",
                 "shasum": ""
             },
-            "require": {
-                "bower-asset/fizzy-ui-utils": "~1.0.1",
-                "bower-asset/get-size": "~1.2.2",
-                "bower-asset/masonry": "~3.3.0",
-                "bower-asset/matches-selector": "~1.0.2",
-                "bower-asset/outlayer": "~1.4.1"
-            },
-            "require-dev": {
-                "bower-asset/doc-ready": "dev-1.x|1.x",
-                "bower-asset/isotope-cells-by-column": "dev-1.x|1.x",
-                "bower-asset/isotope-cells-by-row": "dev-1.x|1.x",
-                "bower-asset/isotope-fit-columns": "dev-1.x|1.x",
-                "bower-asset/isotope-horizontal": "dev-1.x|1.x",
-                "bower-asset/isotope-masonry-horizontal": "dev-1.x|1.x",
-                "bower-asset/jquery": ">=1.4.3,<2",
-                "bower-asset/jquery-bridget": "dev-1.1.x|1.1.x",
-                "bower-asset/qunit": ">=1.15.0,<2.0.0"
-            },
             "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "js/isotope.js",
-                "bower-asset-ignore": [
-                    "test/",
-                    "examples/",
-                    "sandbox/",
-                    "**/.*",
-                    "Gruntfile.js",
-                    "package.json",
-                    "notes.md",
-                    "CONTRIBUTING.mdown",
-                    "changelog.md"
-                ],
-                "branch-alias": {
-                    "dev-master": "2.2.2-dev"
-                }
-            },
-            "description": "Filter and sort magical layouts",
-            "time": "2015-10-12 12:08:49"
+            "time": "2014-03-11 12:06:49"
         },
         {
             "name": "bower-asset/jquery",
@@ -916,43 +736,40 @@
         },
         {
             "name": "bower-asset/masonry",
-            "version": "v3.3.2",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/masonry.git",
-                "reference": "556d44869268c5e308676386aa30bf4bad4c0a5a"
+                "reference": "22e9953eaa0726f9ee019937be448d33d80ff92b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/masonry/zipball/556d44869268c5e308676386aa30bf4bad4c0a5a",
-                "reference": "556d44869268c5e308676386aa30bf4bad4c0a5a",
+                "url": "https://api.github.com/repos/desandro/masonry/zipball/22e9953eaa0726f9ee019937be448d33d80ff92b",
+                "reference": "22e9953eaa0726f9ee019937be448d33d80ff92b",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/fizzy-ui-utils": "~1.0.1",
-                "bower-asset/get-size": "~1.2.2",
-                "bower-asset/outlayer": "~1.4.0"
+                "bower-asset/get-size": "~2.0.2",
+                "bower-asset/outlayer": "~2.0.0"
             },
             "require-dev": {
-                "bower-asset/doc-ready": "dev-1.x|1.x",
-                "bower-asset/jquery": ">=1.4.3,<2",
-                "bower-asset/jquery-bridget": "dev-1.1.x|1.1.x",
+                "bower-asset/jquery": ">=1.4.3,<4",
+                "bower-asset/jquery-bridget": "~2.0.0",
                 "bower-asset/qunit": ">=1.12.0,<2.0.0"
             },
             "type": "bower-asset-library",
             "extra": {
                 "bower-asset-main": "masonry.js",
                 "bower-asset-ignore": [
-                    "examples/",
-                    "test/",
-                    "CONTRIBUTING.mdown",
-                    "Gruntfile.js",
-                    "package.json",
                     "**/.*",
                     "node_modules",
                     "bower_components",
                     "test",
-                    "tests"
+                    "tests",
+                    "sandbox/",
+                    "CONTRIBUTING.mdown",
+                    "gulpfile.js",
+                    "package.json"
                 ]
             },
             "license": [
@@ -967,16 +784,16 @@
         },
         {
             "name": "bower-asset/matches-selector",
-            "version": "v1.0.3",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/matches-selector.git",
-                "reference": "082376f4bbe7ff8c5c6bb258ec43259c9a80a7c3"
+                "reference": "94f06d14dc2defafe8b6d6be4d9b999269d70abc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/matches-selector/zipball/082376f4bbe7ff8c5c6bb258ec43259c9a80a7c3",
-                "reference": "082376f4bbe7ff8c5c6bb258ec43259c9a80a7c3",
+                "url": "https://api.github.com/repos/desandro/matches-selector/zipball/94f06d14dc2defafe8b6d6be4d9b999269d70abc",
+                "reference": "94f06d14dc2defafe8b6d6be4d9b999269d70abc",
                 "shasum": ""
             },
             "require-dev": {
@@ -992,7 +809,6 @@
                     "test",
                     "tests",
                     "tests.*",
-                    "component.json",
                     "package.json"
                 ]
             },
@@ -1008,31 +824,27 @@
         },
         {
             "name": "bower-asset/outlayer",
-            "version": "v1.4.2",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/outlayer.git",
-                "reference": "2c7f1108a3d906df7ef3f03cda0a3d76791f186b"
+                "reference": "809c1f5c0aaf3e5d55e7f69a87dd34d215a37d9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/outlayer/zipball/2c7f1108a3d906df7ef3f03cda0a3d76791f186b",
-                "reference": "2c7f1108a3d906df7ef3f03cda0a3d76791f186b",
+                "url": "https://api.github.com/repos/metafizzy/outlayer/zipball/809c1f5c0aaf3e5d55e7f69a87dd34d215a37d9d",
+                "reference": "809c1f5c0aaf3e5d55e7f69a87dd34d215a37d9d",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/doc-ready": "dev-1.0.x|1.0.x",
-                "bower-asset/eventemitter": ">=4.2,<5",
-                "bower-asset/eventie": "~1.0.3",
-                "bower-asset/fizzy-ui-utils": "~1.0.1",
-                "bower-asset/get-size": "~1.2.2",
-                "bower-asset/get-style-property": "~1.0.4",
-                "bower-asset/matches-selector": "~1.0.2"
+                "bower-asset/ev-emitter": "~1.0.0",
+                "bower-asset/fizzy-ui-utils": "~2.0.0",
+                "bower-asset/get-size": "~2.0.2"
             },
             "require-dev": {
-                "bower-asset/jquery": ">=1.4.3,<2",
-                "bower-asset/jquery-bridget": "dev-1.x|1.x",
-                "bower-asset/qunit": ">=1.12.0,<2.0.0"
+                "bower-asset/jquery": ">=1.4.3,<4",
+                "bower-asset/jquery-bridget": "dev-2.x|2.x",
+                "bower-asset/qunit": ">=1.17.0,<2.0.0"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -1040,7 +852,7 @@
                 "bower-asset-ignore": [
                     "test/",
                     "docs/",
-                    "examples",
+                    "sandbox/",
                     ".*",
                     "notes.md",
                     "**/.*",
@@ -1063,28 +875,26 @@
         },
         {
             "name": "bower-asset/packery",
-            "version": "v1.4.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/packery.git",
-                "reference": "a64a5a86f5a468cc81b314fb238a62e2b0d275be"
+                "reference": "afc4deb136a8db66d8ccf83a0d3265a86bc3132d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/packery/zipball/a64a5a86f5a468cc81b314fb238a62e2b0d275be",
-                "reference": "a64a5a86f5a468cc81b314fb238a62e2b0d275be",
+                "url": "https://api.github.com/repos/metafizzy/packery/zipball/afc4deb136a8db66d8ccf83a0d3265a86bc3132d",
+                "reference": "afc4deb136a8db66d8ccf83a0d3265a86bc3132d",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/classie": "dev-1.x|1.x",
-                "bower-asset/get-size": "dev-1.2.x|1.2.x",
-                "bower-asset/get-style-property": "dev-1.x|1.x",
-                "bower-asset/outlayer": "~1.4.1"
+                "bower-asset/get-size": "~2.0.2",
+                "bower-asset/outlayer": "~2.0.0"
             },
             "require-dev": {
-                "bower-asset/draggabilly": "dev-1.x|1.x",
-                "bower-asset/jquery": "~1",
-                "bower-asset/jquery-bridget": "dev-1.1.x|1.1.x",
+                "bower-asset/draggabilly": ">=2.1.0,<3",
+                "bower-asset/jquery": ">=2,<4",
+                "bower-asset/jquery-bridget": "~2.0.0",
                 "bower-asset/jquery-ui-draggable": "*",
                 "bower-asset/qunit": ">=1.15.0,<2.0.0"
             },
@@ -1097,10 +907,12 @@
                     "examples/",
                     "contributing.md",
                     "package.json",
-                    "Gruntfile.js"
+                    "Gruntfile.js",
+                    "sandbox/"
                 ]
             },
-            "description": "bin-packing layout library"
+            "description": "Gapless, draggable layout library",
+            "time": "2016-01-21 03:52:01"
         },
         {
             "name": "bower-asset/punycode",
@@ -1160,21 +972,20 @@
         },
         {
             "name": "bower-asset/unidragger",
-            "version": "v1.1.6",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/unidragger.git",
-                "reference": "320eb8d5120d42adc0ee30deeef2addc9fd1ffa3"
+                "reference": "1355784657023f2a0a4a5c5e6a2bcd8a9ef2629f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/unidragger/zipball/320eb8d5120d42adc0ee30deeef2addc9fd1ffa3",
-                "reference": "320eb8d5120d42adc0ee30deeef2addc9fd1ffa3",
+                "url": "https://api.github.com/repos/metafizzy/unidragger/zipball/1355784657023f2a0a4a5c5e6a2bcd8a9ef2629f",
+                "reference": "1355784657023f2a0a4a5c5e6a2bcd8a9ef2629f",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/eventie": "~1.0.6",
-                "bower-asset/unipointer": "~1.1.0"
+                "bower-asset/unipointer": "~2.1.0"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -1200,21 +1011,20 @@
         },
         {
             "name": "bower-asset/unipointer",
-            "version": "v1.1.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/unipointer.git",
-                "reference": "a3e1cb65c5d90ea28fec05ad6879c3b3f73d27ca"
+                "reference": "d73186583470cd4bdfce0870e9c9057cb60de392"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/unipointer/zipball/a3e1cb65c5d90ea28fec05ad6879c3b3f73d27ca",
-                "reference": "a3e1cb65c5d90ea28fec05ad6879c3b3f73d27ca",
+                "url": "https://api.github.com/repos/metafizzy/unipointer/zipball/d73186583470cd4bdfce0870e9c9057cb60de392",
+                "reference": "d73186583470cd4bdfce0870e9c9057cb60de392",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/eventemitter": "~4.2.11",
-                "bower-asset/eventie": ">=1.0.0,<2.0.0"
+                "bower-asset/ev-emitter": "~1.0.1"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -3994,16 +3804,16 @@
         },
         {
             "name": "miloschuman/yii2-highcharts-widget",
-            "version": "v4.1.10",
+            "version": "v4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/miloschuman/yii2-highcharts.git",
-                "reference": "9a11361c16f79022906f1db3d6c22092cd07bf4e"
+                "reference": "a62c1259ff97bc5ada0960ed50b9ddc00c9745b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/miloschuman/yii2-highcharts/zipball/9a11361c16f79022906f1db3d6c22092cd07bf4e",
-                "reference": "9a11361c16f79022906f1db3d6c22092cd07bf4e",
+                "url": "https://api.github.com/repos/miloschuman/yii2-highcharts/zipball/a62c1259ff97bc5ada0960ed50b9ddc00c9745b1",
+                "reference": "a62c1259ff97bc5ada0960ed50b9ddc00c9745b1",
                 "shasum": ""
             },
             "require": {
@@ -4035,7 +3845,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-12-14 18:02:44"
+            "time": "2016-01-13 16:39:49"
         },
         {
             "name": "nikic/php-parser",
@@ -4306,20 +4116,20 @@
         },
         {
             "name": "raoul2000/yii2-bootswatch-asset",
-            "version": "1.2.5",
+            "version": "1.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/raoul2000/yii2-bootswatch-asset.git",
-                "reference": "81cf84e58803a33cf9730441e9f4e456b61f0ba2"
+                "reference": "4e97f6987210e1464a672898239a646756de1cc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raoul2000/yii2-bootswatch-asset/zipball/81cf84e58803a33cf9730441e9f4e456b61f0ba2",
-                "reference": "81cf84e58803a33cf9730441e9f4e456b61f0ba2",
+                "url": "https://api.github.com/repos/raoul2000/yii2-bootswatch-asset/zipball/4e97f6987210e1464a672898239a646756de1cc4",
+                "reference": "4e97f6987210e1464a672898239a646756de1cc4",
                 "shasum": ""
             },
             "require": {
-                "thomaspark/bootswatch": "3.3.5+2",
+                "thomaspark/bootswatch": "3.3.6+1",
                 "yiisoft/yii2": "*"
             },
             "type": "yii2-extension",
@@ -4350,7 +4160,7 @@
                 "theme",
                 "yii2"
             ],
-            "time": "2015-07-13 19:23:01"
+            "time": "2016-01-14 20:23:51"
         },
         {
             "name": "samdark/yii2-webshell",
@@ -4451,16 +4261,16 @@
         },
         {
             "name": "thomaspark/bootswatch",
-            "version": "v3.3.5",
+            "version": "v3.3.6+1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thomaspark/bootswatch.git",
-                "reference": "57a25bd6da65fcc034c2029c0390272830572b93"
+                "reference": "7820b744da10884c2613de7a905ab2d93028661d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thomaspark/bootswatch/zipball/ceb6bc5d80af9c7905b54ac4146339e6b1c68490",
-                "reference": "57a25bd6da65fcc034c2029c0390272830572b93",
+                "url": "https://api.github.com/repos/thomaspark/bootswatch/zipball/7820b744da10884c2613de7a905ab2d93028661d",
+                "reference": "7820b744da10884c2613de7a905ab2d93028661d",
                 "shasum": ""
             },
             "suggest": {
@@ -4505,7 +4315,7 @@
                 }
             ],
             "description": "Themes for Bootstrap",
-            "time": "2015-06-17 01:58:15"
+            "time": "2015-12-28 02:22:12"
         },
         {
             "name": "yiisoft/yii2",
