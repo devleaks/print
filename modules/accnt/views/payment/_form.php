@@ -3,6 +3,7 @@
 use app\models\Payment;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
+use kartik\widgets\DateTimePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
@@ -40,6 +41,11 @@ SCRIPT;
 ?>
 
 <div class="payment-form">
+	
+	<div class="alert alert-danger">
+		Vous modifiez directement des paiements.
+		Toute mauvaise manipulation peut entraîner des erreurs dans la comptabilité.
+	</div>
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -66,7 +72,7 @@ SCRIPT;
 		    	}
 		     }',
 		]
-	])
+	])->label(Yii::t('store', 'Client'))
 	?>
 
 	<?= $form->field($model, 'sale')->widget(Select2::classname(), [
@@ -91,8 +97,18 @@ SCRIPT;
 		    	}
 		     }',
 		]
-	])
+	])->label(Yii::t('store', 'Sale'))
 	?>
+	
+
+	<?= $form->field($model, 'created_at')->widget(DateTimePicker::classname(), [
+		'pluginOptions' => [
+            'format' => 'yyyy-mm-dd hh:ii',
+            'todayHighlight' => true
+        	],
+		]);
+	?>
+    
 
     <?= $form->field($model, 'amount')->textInput() ?>
 

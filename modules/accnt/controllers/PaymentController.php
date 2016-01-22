@@ -8,6 +8,7 @@ use app\models\Cash;
 use app\models\CaptureRefund;
 use app\models\Document;
 use app\models\DocumentLine;
+use app\models\History;
 use app\models\Item;
 use app\models\Parameter;
 use app\models\Payment;
@@ -150,6 +151,7 @@ class PaymentController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			History::record($model, 'EDITED', 'Payment modified.', true, null);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

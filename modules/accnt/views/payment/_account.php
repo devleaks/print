@@ -1,15 +1,32 @@
 <?php
 
+use app\models\Parameter;
 use app\models\Payment;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
+$buttons = Html::a(Yii::t('store', 'Delete all payments'), ['delete', 'id' => $model->id], [
+    'class' => 'btn btn-danger',
+    'data' => [
+        'confirm' => Yii::t('store', 'Are you sure you want to delete this item?'),
+        'method' => 'post',
+    ],
+]);
+
+if(Parameter::isTrue('application', 'allow_direct_payment_update')) {
+	$buttons =  Html::a(Yii::t('store', 'Edit account line'), ['update', 'id' => $model->id], [
+	    'class' => 'btn btn-danger',
+	]).' '.$buttons;
+}
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PaymentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 ?>
+
 <div class="payment-index">
 
     <?= GridView::widget([
@@ -17,7 +34,9 @@ use yii\helpers\Url;
 		'toolbar' => false,
 		'panel' => [
 	        'heading'=> '<h3 class="panel-title">'.Yii::t('store', 'Payments').'</h3>',
-			'footer' => Html::a(Yii::t('store', 'Delete all payments'), ['delete', 'id' => $model->id], [
+			'footer' => Html::a(Yii::t('store', 'Edit account line'), ['update', 'id' => $model->id], [
+	            'class' => 'btn btn-danger',
+	        ]).' '.Html::a(Yii::t('store', 'Delete all payments'), ['delete', 'id' => $model->id], [
 	            'class' => 'btn btn-danger',
 	            'data' => [
 	                'confirm' => Yii::t('store', 'Are you sure you want to delete this item?'),

@@ -488,6 +488,8 @@ return [
   	'Print cuts' => 'Imprimer les découpes',
   	'Save cuts' => 'Converver les découpes',
     'across multiple sales' => 'sur plusieurs ventes',
+	'Sales' => 'Ventes',
+	'Sale' => 'Vente',
 
 	/* Statistics */
 	"Bank Transactions" => 'Transactions bancaires',

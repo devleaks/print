@@ -10,6 +10,7 @@ use app\models\CaptureAccountNoSale;
 use app\models\Client;
 use app\models\Credit;
 use app\models\Document;
+use app\models\History;
 use app\models\Order;
 use app\models\PDFAccount;
 use app\models\Payment;
@@ -141,6 +142,7 @@ class AccountController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			History::record($model, 'EDITED', 'Account modified.', true, null);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

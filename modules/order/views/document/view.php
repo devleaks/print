@@ -6,7 +6,6 @@ use app\models\Work;
 use kartik\helpers\Html as KHtml;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */

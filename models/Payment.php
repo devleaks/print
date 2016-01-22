@@ -92,5 +92,13 @@ class Payment extends _Payment
 		}
 		return false;
 	}
+	
+	/**
+	 * Returns money operation's date
+	 */
+	public function getPaymentDate() {
+		return $this->created_at;
+		// return $this->account ? $this->account->payment_date : $this->created_at;
+	}
 
 }

@@ -1540,12 +1540,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fightbulc/moment.php.git",
-                "reference": "0b368843c964b5a2ec7218d32de5ad9bfc774829"
+                "reference": "06efc6f85f0f31be3c9a0773873d516cd8b3078c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/0b368843c964b5a2ec7218d32de5ad9bfc774829",
-                "reference": "0b368843c964b5a2ec7218d32de5ad9bfc774829",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/06efc6f85f0f31be3c9a0773873d516cd8b3078c",
+                "reference": "06efc6f85f0f31be3c9a0773873d516cd8b3078c",
                 "shasum": ""
             },
             "require": {
@@ -1595,7 +1595,7 @@
                 "translation",
                 "validate"
             ],
-            "time": "2016-01-05 09:47:19"
+            "time": "2016-01-21 14:20:59"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -1735,19 +1735,24 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.2.8",
+            "version": "v4.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "6ba4295298ee3abe26171b4e2078c27a2f3b35b0"
+                "reference": "728f6a94cc2a6ea5350b8733835cf444516e40e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/6ba4295298ee3abe26171b4e2078c27a2f3b35b0",
-                "reference": "6ba4295298ee3abe26171b4e2078c27a2f3b35b0",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/728f6a94cc2a6ea5350b8733835cf444516e40e1",
+                "reference": "728f6a94cc2a6ea5350b8733835cf444516e40e1",
                 "shasum": ""
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "kartik\\plugins\\fileinput\\": ""
@@ -1779,23 +1784,28 @@
                 "progress",
                 "upload"
             ],
-            "time": "2015-11-18 17:56:04"
+            "time": "2016-01-21 19:35:12"
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
-            "version": "v3.5.6",
+            "version": "v3.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-star-rating.git",
-                "reference": "3c9b6d685c23acccec1c85df4bf4e02b536714ea"
+                "reference": "83d9f4ca10b0e74c66b94aeadf7681e6ab90059a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/3c9b6d685c23acccec1c85df4bf4e02b536714ea",
-                "reference": "3c9b6d685c23acccec1c85df4bf4e02b536714ea",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/83d9f4ca10b0e74c66b94aeadf7681e6ab90059a",
+                "reference": "83d9f4ca10b0e74c66b94aeadf7681e6ab90059a",
                 "shasum": ""
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.5.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "kartik\\plugins\\rating\\": ""
@@ -1820,7 +1830,7 @@
                 "jquery",
                 "star"
             ],
-            "time": "2015-12-29 05:44:07"
+            "time": "2016-01-21 19:25:04"
         },
         {
             "name": "kartik-v/dependent-dropdown",

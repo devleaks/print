@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use kartik\detail\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Payment */
@@ -30,14 +30,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'sale',
-            'client_id',
+            [
+                'label'=>Yii::t('store','Client'),
+                'attribute'=>'client_id',
+                'value'=> $model->client->nom, //'chroma.libelle_long',
+            ],
             'amount',
             'payment_method',
             'status',
-            'created_at',
-            'created_by',
-            'updated_at',
-            'updated_by',
+            [
+                'attribute'=>'created_at',
+				'value' => Yii::$app->formatter->asDateTime($model->created_at).' '.Yii::t('store', 'by').' '.($model->createdBy ? $model->createdBy->username : ''),
+            ],
+            [
+                'attribute'=>'updated_at',
+				'value' => Yii::$app->formatter->asDateTime($model->updated_at).' '.Yii::t('store', 'by').' '.($model->updatedBy ? $model->updatedBy->username : ''),
+            ],
         ],
     ]) ?>
 

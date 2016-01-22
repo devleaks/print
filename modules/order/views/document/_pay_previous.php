@@ -25,7 +25,7 @@ $dataProvider = new ActiveDataProvider([
 				'attribute' => 'created_at',
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->created_at);
+					return new DateTime($model->getPaymentDate());
 				},
 				'noWrap' => true,
 			],

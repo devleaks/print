@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'kartik\grid\SerialColumn'],
 
             'client.nom',
-            'amount',
+            'amount:currency',
             'payment_date',
             'payment_method',
             'note',
