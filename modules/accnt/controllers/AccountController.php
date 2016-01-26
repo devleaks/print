@@ -8,6 +8,7 @@ use app\models\Account;
 use app\models\AccountSearch;
 use app\models\CaptureAccountNoSale;
 use app\models\Client;
+use app\models\Cash;
 use app\models\Credit;
 use app\models\Document;
 use app\models\Order;

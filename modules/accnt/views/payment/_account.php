@@ -53,7 +53,7 @@ use yii\helpers\Url;
 				'attribute' => 'created_at',
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->created_at);
+					return $model->account ? new DateTime($model->account->payment_date) : new DateTime($model->created_at);
 				},
 				'noWrap' => true,
 			],
