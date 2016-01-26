@@ -141,6 +141,12 @@ class AccountController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			if($model->payment_method == Payment::CASH) {
+				if($cash = Cash::findOne($model->cash_id)) {
+					$cash->payment_date = $model->payment_date;
+					$cash->save();
+				}
+			}
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
