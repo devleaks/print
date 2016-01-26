@@ -37,7 +37,7 @@ use app\models\Payment;
 					echo $doc->name;
 			}
 		?></td>
-		<td style="text-align: center;"><?= ($model->account ? new DateTime($model->account->payment_date) : $model->created_at) ?></td>
+		<td style="text-align: center;"><?= Yii::$app->formatter->asDate($model->payment_date) ?></td>
 		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($model->amount) ?></td>
 		<?php $tot_amount += $model->amount; ?>
 	</tr>

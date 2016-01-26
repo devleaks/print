@@ -50,11 +50,11 @@ $dataProvider->sort->attributes  = null;
 	            },
 	        ],
 			[
-				'attribute' => 'created_at',
+				'attribute' => 'payment_date',
             	'label' => Yii::t('store', 'Payment Date'),
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
-					return $model->account ? new DateTime($model->account->payment_date) : $model->created_at;
+					return $model->payment_date;
 				},
 				'noWrap' => true,
 			],
