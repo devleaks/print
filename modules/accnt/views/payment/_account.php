@@ -17,13 +17,16 @@ use yii\helpers\Url;
 		'toolbar' => false,
 		'panel' => [
 	        'heading'=> '<h3 class="panel-title">'.Yii::t('store', 'Payments').'</h3>',
-			'footer' => Html::a(Yii::t('store', 'Delete all payments'), ['delete', 'id' => $model->id], [
+			'footer' => Html::a(Yii::t('store', 'Modify'), ['update', 'id' => $model->id], [
 	            'class' => 'btn btn-danger',
-	            'data' => [
-	                'confirm' => Yii::t('store', 'Are you sure you want to delete this item?'),
-	                'method' => 'post',
-	            ],
-	        ])
+	        ]). ' ' .
+				Html::a(Yii::t('store', 'Delete all payments'), ['delete', 'id' => $model->id], [
+		            'class' => 'btn btn-danger',
+		            'data' => [
+		                'confirm' => Yii::t('store', 'Are you sure you want to delete this item?'),
+		                'method' => 'post',
+		            ],
+		        ])	
 	    ],
 		'panelHeadingTemplate' => '{heading}',
         'columns' => [

@@ -140,6 +140,7 @@ class SummaryController extends Controller
 	}
 
 	protected function doDetail($searchModel, $print = '') {
+		$ref_column = 'payment_date';
 		$output = '';
 		if($searchModel->created_at != '') {
 			$day_start = $searchModel->created_at. ' 00:00:00';
@@ -149,8 +150,8 @@ class SummaryController extends Controller
 				if($payment_method != Payment::CASH) {
 					$dataProvider = new ActiveDataProvider([
 						'query' => Account::find()
-									->andWhere(['>=','created_at',$day_start])
-									->andWhere(['<=','created_at',$day_end])
+									->andWhere(['>=',$ref_column,$day_start])
+									->andWhere(['<=',$ref_column,$day_end])
 									->andWhere(['payment_method' => $payment_method])
 					]);
 					$output .= $this->renderPartial('_detail'.$print, ['dataProvider' => $dataProvider, 'method' => $payment_method, 'label' => $payment_label]);

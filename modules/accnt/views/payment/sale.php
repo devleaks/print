@@ -10,7 +10,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\PaymentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$template = Parameter::isTrue('application', 'allow_direct_payment_update') ? '{view} {update} {delete}' : '{view} {delete}';
+$template = Parameter::isTrue('application', 'allow_direct_payment_update') ? '{view} {update} {delete} {account}' : '{view} {delete}';
 
 $this->title = Yii::t('store', 'Payments for {0}', $model->name);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
@@ -88,7 +88,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
 				'class' => 'kartik\grid\ActionColumn',
-				'template' => $template
+				'template' => $template,
+	            'buttons' => [
+	                'account' => function ($url, $model) {
+	                    return $model->account ?
+								Html::a('Compte',
+									Url::to(['/accnt/account/view', 'id' => $model->account_id]),
+									[
+			                        	'title' => Yii::t('store', 'Account'),
+			                    	])
+								:
+								''
+								;
+	                },
+	            ],
 			],
         ],
 	    'showPageSummary' => true,
