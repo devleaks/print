@@ -86,12 +86,17 @@ $this->params['breadcrumbs'][] = $this->title;
 				'template' => $template,
 	            'buttons' => [
 	                'account' => function ($url, $model) {
-						$url = Url::to(['account/view', 'id' => $model->account_id]);
-	                    return Html::a('Account', $url, [
-	                        'title' => Yii::t('store', 'Account'),
-	                    ]);
+	                    return $model->account ?
+								Html::a('Compte',
+									Url::to(['/accnt/account/view', 'id' => $model->account_id]),
+									[
+			                        	'title' => Yii::t('store', 'Account'),
+			                    	])
+								:
+								''
+								;
 	                },
-				],
+	            ],
 			],
         ],
 	    'showPageSummary' => true,

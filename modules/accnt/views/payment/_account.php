@@ -34,15 +34,7 @@ if(Parameter::isTrue('application', 'allow_direct_payment_update')) {
 		'toolbar' => false,
 		'panel' => [
 	        'heading'=> '<h3 class="panel-title">'.Yii::t('store', 'Payments').'</h3>',
-			'footer' => Html::a(Yii::t('store', 'Edit account line'), ['update', 'id' => $model->id], [
-	            'class' => 'btn btn-danger',
-	        ]).' '.Html::a(Yii::t('store', 'Delete all payments'), ['delete', 'id' => $model->id], [
-	            'class' => 'btn btn-danger',
-	            'data' => [
-	                'confirm' => Yii::t('store', 'Are you sure you want to delete this item?'),
-	                'method' => 'post',
-	            ],
-	        ])
+			'footer' => $buttons,
 	    ],
 		'panelHeadingTemplate' => '{heading}',
         'columns' => [
@@ -67,9 +59,10 @@ if(Parameter::isTrue('application', 'allow_direct_payment_update')) {
 	        ],
 			[
 				'attribute' => 'created_at',
+            	'label' => Yii::t('store', 'Payment Date'),
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->created_at);
+					return $model->account ? new DateTime($model->account->payment_date) : new DateTime($model->created_at);
 				},
 				'noWrap' => true,
 			],

@@ -8,6 +8,7 @@ use app\models\Account;
 use app\models\AccountSearch;
 use app\models\CaptureAccountNoSale;
 use app\models\Client;
+use app\models\Cash;
 use app\models\Credit;
 use app\models\Document;
 use app\models\History;
@@ -143,6 +144,12 @@ class AccountController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			History::record($model, 'EDITED', 'Account modified.', true, null);
+			if($model->payment_method == Payment::CASH) {
+				if($cash = Cash::findOne($model->cash_id)) {
+					$cash->payment_date = $model->payment_date;
+					$cash->save();
+				}
+			}
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
