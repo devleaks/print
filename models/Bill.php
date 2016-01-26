@@ -196,6 +196,7 @@ class Bill extends Document {
 			return parent::addPayment($account, $amount_gross, $method, $note);
 		
 		$amount = round($amount_gross, 2);
+		$available = $amount;
 		$more_needed = 0;
 		Yii::trace('available='.$available, 'Bill::addPayment');
 		foreach($this->getBoms()->each() as $bom) {
