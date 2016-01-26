@@ -52,6 +52,7 @@ class SummaryController extends Controller
 
 
 	protected function doSummary($searchModel, $print = '') {
+		$ref_column = 'payment_date';
 		$cash_amount = 0;
 		$cash_count  = 0;
 		$cashLines = [];
@@ -61,12 +62,12 @@ class SummaryController extends Controller
 		if($searchModel->created_at != '') {
 			$day_start = $searchModel->created_at. ' 00:00:00';
 			$day_end   = $searchModel->created_at. ' 23:59:59';
-			$cash_start = Cash::find()->andWhere(['<','created_at',$day_start])->sum('amount');
+			$cash_start = Cash::find()->andWhere(['<',$ref_column,$day_start])->sum('amount');
 			$solde = $cash_start;
 
 			foreach(Cash::find()
-				->andWhere(['>=','created_at',$day_start])
-				->andWhere(['<=','created_at',$day_end])->each() as $cash) {
+				->andWhere(['>=',$ref_column,$day_start])
+				->andWhere(['<=',$ref_column,$day_end])->each() as $cash) {
 				$solde += $cash->amount;
 				$cashLines[] = new AccountLine([
 					'note' => $cash->note,
@@ -98,8 +99,8 @@ class SummaryController extends Controller
 		if($searchModel->created_at != '') {
 			$day_start = $searchModel->created_at. ' 00:00:00';
 			$day_end   = $searchModel->created_at. ' 23:59:59';
-			$query->andWhere(['>=','created_at',$day_start])
-				  ->andWhere(['<=','created_at',$day_end]);
+			$query->andWhere(['>=',$ref_column,$day_start])
+				  ->andWhere(['<=',$ref_column,$day_end]);
 		}
 
 		$q = new Query(); // dummy query in case no data found
@@ -120,8 +121,8 @@ class SummaryController extends Controller
 
 		if($searchModel->created_at != '') { //?
 			$dataProvider->query
-				->andWhere(['>=','created_at',$day_start])
-				->andWhere(['<=','created_at',$day_end]);
+				->andWhere(['>=',$ref_column,$day_start])
+				->andWhere(['<=',$ref_column,$day_end]);
 		}
 
 		return 	$this->renderPartial('_summary'.$print, [
