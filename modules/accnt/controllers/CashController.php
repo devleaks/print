@@ -40,7 +40,7 @@ class CashController extends Controller
 			
 		$day_start = $searchModel->payment_date. ' 00:00:00';
 		$day_end   = $searchModel->payment_date. ' 23:59:59';
-		$created_at = $searchModel->created_at;
+		$payment_date = $searchModel->payment_date;
 		$searchModel->payment_date = null;
       		$dataProvider = $searchModel->search($searchModel->attributes);
 		$dataProvider->query
