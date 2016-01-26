@@ -3,6 +3,7 @@
 use app\models\Payment;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\Select2;
+use kartik\widgets\DateTimePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
