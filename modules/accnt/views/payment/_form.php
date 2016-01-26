@@ -98,6 +98,13 @@ SCRIPT;
 
 	<?= $form->field($model, 'payment_method')->dropDownList(Payment::getPaymentMethods()) ?>
 
+    <?= $form->field($model, 'created_at')->widget(DateTimePicker::className(), [
+			'pluginOptions' => [
+                'format' => 'yyyy-mm-dd h:i',
+                'todayHighlight' => true
+            	],
+	]) ?>
+
 	<?= $form->field($model, 'status')->dropDownList([Payment::STATUS_PAID => Yii::t('store', Payment::STATUS_PAID), Payment::STATUS_OPEN => Yii::t('store', Payment::STATUS_OPEN)]) ?>
 
     <div class="form-group">
