@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="col-lg-6">
 		<ul>
 	        <li><a href="<?= Url::to(['/accnt/cash/list']) ?>"><?= Yii::t('store', 'Cash')?></a></li>
-		    <li><a href="<?= Url::to(['/accnt/payment/index-by-type']) ?>"><?= Yii::t('store', 'Daily Summary')?></a></li>
+		    <li><a href="<?= Url::to(['/accnt/summary']) ?>"><?= Yii::t('store', 'Daily Summary')?></a></li>
 		</ul>
 		<ul>
 		    <li><a href="<?= Url::to(['/order/document/bills', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bills')?></a></li>

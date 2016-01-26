@@ -18,7 +18,7 @@ use yii\helpers\Html;
     ]); ?>
 
     <div class="col-lg-4">
-    <?= $form->field($model, 'created_at')->widget(
+    <?= $form->field($model, 'payment_date')->widget(
 			DatePicker::classname(), [
 				'pluginOptions' => [
 				'autoclose'=>true,

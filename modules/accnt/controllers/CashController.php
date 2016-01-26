@@ -35,18 +35,18 @@ class CashController extends Controller
         $searchModel = new CashSearch();
        	$searchModel->load(Yii::$app->request->queryParams);
 
-		if(empty($searchModel->created_at))
-			$searchModel->created_at = date('Y-m-d');
+		if(empty($searchModel->payment_date))
+			$searchModel->payment_date = date('Y-m-d');
 			
-		$day_start = $searchModel->created_at. ' 00:00:00';
-		$day_end   = $searchModel->created_at. ' 23:59:59';
-		$created_at = $searchModel->created_at;
-		$searchModel->created_at = null;
+		$day_start = $searchModel->payment_date. ' 00:00:00';
+		$day_end   = $searchModel->payment_date. ' 23:59:59';
+		$payment_date = $searchModel->payment_date;
+		$searchModel->payment_date = null;
       		$dataProvider = $searchModel->search($searchModel->attributes);
 		$dataProvider->query
-			->andWhere(['>=','created_at',$day_start])
-			->andWhere(['<=','created_at',$day_end]);
-		$searchModel->created_at = $created_at;
+			->andWhere(['>=','payment_date',$day_start])
+			->andWhere(['<=','payment_date',$day_end]);
+		$searchModel->payment_date = $payment_date;
 
         return $this->render('list', [
             'searchModel' => $searchModel,

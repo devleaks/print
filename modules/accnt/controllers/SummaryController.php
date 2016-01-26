@@ -52,26 +52,27 @@ class SummaryController extends Controller
 
 
 	protected function doSummary($searchModel, $print = '') {
+		$ref_column = 'payment_date';
 		$cash_amount = 0;
 		$cash_count  = 0;
 		$cashLines = [];
 		$cash_start = 0;
 		$solde = $cash_start;
 
-		if($searchModel->created_at != '') {
-			$day_start = $searchModel->created_at. ' 00:00:00';
-			$day_end   = $searchModel->created_at. ' 23:59:59';
-			$cash_start = Cash::find()->andWhere(['<','created_at',$day_start])->sum('amount');
+		if($searchModel->payment_date != '') {
+			$day_start = $searchModel->payment_date. ' 00:00:00';
+			$day_end   = $searchModel->payment_date. ' 23:59:59';
+			$cash_start = Cash::find()->andWhere(['<',$ref_column,$day_start])->sum('amount');
 			$solde = $cash_start;
 
 			foreach(Cash::find()
-				->andWhere(['>=','created_at',$day_start])
-				->andWhere(['<=','created_at',$day_end])->each() as $cash) {
+				->andWhere(['>=',$ref_column,$day_start])
+				->andWhere(['<=',$ref_column,$day_end])->each() as $cash) {
 				$solde += $cash->amount;
 				$cashLines[] = new AccountLine([
 					'note' => $cash->note,
 					'amount' => $cash->amount,
-					'date' => $cash->created_at,
+					'date' => $cash->payment_date,
 					'ref' => $cash->sale ? $cash->id : null,
 					'solde' => $solde,
 				]);
@@ -84,7 +85,7 @@ class SummaryController extends Controller
 				$cashLines[] = new AccountLine([
 					'note' => $cash->note,
 					'amount' => $cash->amount,
-					'date' => $cash->created_at,
+					'date' => $cash->payment_date,
 					'ref' => $cash->sale ? $cash->id : null,
 					'solde' => $solde,
 				]);
@@ -95,11 +96,11 @@ class SummaryController extends Controller
 		
 		$query = new Query();
 		$query->from('account');
-		if($searchModel->created_at != '') {
-			$day_start = $searchModel->created_at. ' 00:00:00';
-			$day_end   = $searchModel->created_at. ' 23:59:59';
-			$query->andWhere(['>=','created_at',$day_start])
-				  ->andWhere(['<=','created_at',$day_end]);
+		if($searchModel->payment_date != '') {
+			$day_start = $searchModel->payment_date. ' 00:00:00';
+			$day_end   = $searchModel->payment_date. ' 23:59:59';
+			$query->andWhere(['>=',$ref_column,$day_start])
+				  ->andWhere(['<=',$ref_column,$day_end]);
 		}
 
 		$q = new Query(); // dummy query in case no data found
@@ -118,10 +119,10 @@ class SummaryController extends Controller
 							 ->union($q)
 		]);
 
-		if($searchModel->created_at != '') { //?
+		if($searchModel->payment_date != '') { //?
 			$dataProvider->query
-				->andWhere(['>=','created_at',$day_start])
-				->andWhere(['<=','created_at',$day_end]);
+				->andWhere(['>=',$ref_column,$day_start])
+				->andWhere(['<=',$ref_column,$day_end]);
 		}
 
 		return 	$this->renderPartial('_summary'.$print, [
@@ -139,17 +140,18 @@ class SummaryController extends Controller
 	}
 
 	protected function doDetail($searchModel, $print = '') {
+		$ref_column = 'payment_date';
 		$output = '';
-		if($searchModel->created_at != '') {
-			$day_start = $searchModel->created_at. ' 00:00:00';
-			$day_end   = $searchModel->created_at. ' 23:59:59';
+		if($searchModel->payment_date != '') {
+			$day_start = $searchModel->payment_date. ' 00:00:00';
+			$day_end   = $searchModel->payment_date. ' 23:59:59';
 
 			foreach(Payment::getPaymentMethods() as $payment_method => $payment_label) {
 				if($payment_method != Payment::CASH) {
 					$dataProvider = new ActiveDataProvider([
 						'query' => Account::find()
-									->andWhere(['>=','created_at',$day_start])
-									->andWhere(['<=','created_at',$day_end])
+									->andWhere(['>=',$ref_column,$day_start])
+									->andWhere(['<=',$ref_column,$day_end])
 									->andWhere(['payment_method' => $payment_method])
 					]);
 					$output .= $this->renderPartial('_detail'.$print, ['dataProvider' => $dataProvider, 'method' => $payment_method, 'label' => $payment_label]);
@@ -183,7 +185,7 @@ class SummaryController extends Controller
 			$capture->date = date('Y-m-d', strtotime('now'));
 
         $searchModel = new AccountSearch();
-		$searchModel->created_at = $capture->date;
+		$searchModel->payment_date = $capture->date;
 
 		if($capture->action == self::ACTION_PRINT) {
 			$pdf = new PDFLetter([
@@ -219,7 +221,7 @@ class SummaryController extends Controller
         $capture->date = $d ? $d : date('Y-m-d', strtotime('now'));
 
         $searchModel = new AccountSearch();
-		$searchModel->created_at = $capture->date;
+		$searchModel->payment_date = $capture->date;
 		
 		$pdf = new PDFLetter([
 			'content'		=> $this->renderPartial('index', [
