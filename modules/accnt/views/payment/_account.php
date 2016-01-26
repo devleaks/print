@@ -51,6 +51,7 @@ use yii\helpers\Url;
 	        ],
 			[
 				'attribute' => 'created_at',
+            	'label' => Yii::t('store', 'Payment Date'),
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
 					return $model->account ? new DateTime($model->account->payment_date) : new DateTime($model->created_at);

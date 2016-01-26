@@ -33,11 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 			[
-				'attribute' => 'created_at',
+				'attribute' => 'payment_date',
 				'format' => 'datetime',
 //				'filterType' => GridView::FILTER_DATE,
 				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->created_at);
+					return new DateTime($model->payment_date);
 				},
 				'noWrap' => true,
 			],
