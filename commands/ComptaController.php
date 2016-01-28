@@ -129,7 +129,7 @@ class ComptaController extends Controller {
 		$dirname = RuntimeDirectoryManager::getDirectory(RuntimeDirectoryManager::DAILY_REPORT);
 		$filename = $dirname.'daily-'.$yesterday.'.pdf';
 		$day_start = $yesterday. ' 00:00:00';
-		$day_end   = $yesterday. ' 23:59:59';
+		$day_end   = date('Y-m-d H:i:s', strtotime($yesterday.' + 1 day'));
 
 		$content = '';
 
@@ -138,7 +138,7 @@ class ComptaController extends Controller {
 		  $query->select(['payment_method, count(id) as tot_count, sum(amount) as tot_amount'])
 				->from('payment')
 				->andWhere(['>=','created_at',$day_start])
-				->andWhere(['<=','created_at',$day_end])
+				->andWhere(['<','created_at',$day_end])
 				->groupBy(['payment_method'])
 		;
 		$content .= $this->renderPartial($viewBase.'_summary_pdf', ['totals' => $query]);
@@ -147,7 +147,7 @@ class ComptaController extends Controller {
 		foreach(Payment::getPaymentMethods() as $payment_method => $payment_label) {
 			$query = Payment::find()
 						->andWhere(['>=','created_at',$day_start])
-						->andWhere(['<=','created_at',$day_end])
+						->andWhere(['<','created_at',$day_end])
 						->andWhere(['payment_method' => $payment_method]);
 			$content .= $this->renderPartial($viewBase.'_detail_pdf', ['query' => $query, 'method' => $payment_label]);
 		}

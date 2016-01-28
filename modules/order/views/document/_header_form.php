@@ -16,7 +16,8 @@ use yii\web\JsExpression;
 // url to submit search terms and get result back
 $url = Url::to(['client-list']);
 $docty = $model->document_type;
-if(!isset($model->due_date) || $model->due_date == '') $model->due_date = date('Y-m-d');
+
+// if(!isset($model->due_date) || $model->due_date == '') $model->due_date = date('Y-m-d');
 
 // Script to initialize the selection based on the value of the select2 element
 $initScript = <<< SCRIPT

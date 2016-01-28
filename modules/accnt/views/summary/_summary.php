@@ -18,7 +18,7 @@ use yii\helpers\Url;
         'dataProvider' => $dataProvider,
 		'toolbar' => false,
 		'panel' => [
-	        'heading'=> '<h3 class="panel-title"><a name="TOP"></a>'.Yii::t('store', 'Payments').' – '.Yii::$app->formatter->asDate($searchModel->created_at, 'long').'</h3>',
+	        'heading'=> '<h3 class="panel-title"><a name="TOP"></a>'.Yii::t('store', 'Payments').' – '.Yii::$app->formatter->asDate($searchModel->payment_date, 'long').'</h3>',
 	        'before'=> ' ',
 	        'after'=> false,
 			'footer' => false,

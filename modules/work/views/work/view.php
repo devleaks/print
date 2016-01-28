@@ -10,7 +10,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\Work */
 
-$this->title = $model->document->name;
+$this->title = $model->document->name . ($model->document->client ? ' — ' .$model->document->client->nom : '');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Works'), 'url' => ['/work']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'All Works'), 'url' => ['index', 'sort' => '-updated_at']];
 if(isset($order_line)) {
@@ -41,6 +41,12 @@ $can_view = User::hasRole(['manager', 'admin']);
                 'value'=>$can_view ? Html::a($model->getDocument()->one()->name, Url::to(['/order/document/view', 'id' => $model->document_id])) : $model->getDocument()->one()->name,
 				'format' => 'raw',
             ],
+            [
+                'label'=>Yii::t('store','Client'),
+                'attribute'=>'document_id',
+                'value'=> $model->document->client ? $model->document->client->nom : '',
+				'format' => 'raw',
+			],
             [
                 'label'=>Yii::t('store','Note'),
                 'attribute'=>'document_id',

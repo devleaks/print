@@ -135,7 +135,7 @@ return [
 
 	We bedanken u voor uw bestelling en bezorgen u in bijlage de daarbij behorende bestelbon.
 	Mogen we u vragen om alle gegevens nogmaals te checken op persoonlijke gegevens, formaat, afwerking en verzending? 
-	Gelieve bij eventuele vragen of wijzigingen het ordernummer te vermelden in uw communicatie.
+	Gelieve bij eventuele vragen of wijzigingen het bestelnummer te vermelden in uw communicatie.
 
 	Vriendelijke groeten,",
 

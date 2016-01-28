@@ -490,6 +490,7 @@ return [
     'across multiple sales' => 'sur plusieurs ventes',
 	'Sales' => 'Ventes',
 	'Sale' => 'Vente',
+	'Update {modelClass} ' => 'Mise à jour {modelClass}: ',
 
 	/* Statistics */
 	"Bank Transactions" => 'Transactions bancaires',
@@ -524,7 +525,9 @@ return [
 	'This year' => 'Cette année',
 	'There are {0} OPEN bill(s)/credit note(s).' => "Il y a {0} facture(s) ou note(s) de crédit dans l'état OUVERTE(S)",
 	'Payment amount for bill exceeds amount to pay all BOMs: {0}€ credited and available.' => "Le paiement pour la facture excède le montant dû pour tous les bons de livraisons. {0}€ ont été crédités et sont disponibles.",	
-	
+	'CASH' => 'Espèces',
+	'Payment Method: {0}. Cannot be changed here.' => 'Méthode de paiment: {0}. Ne peut pas être modifiée ici.',
+	'Accounts' => 'Comptes',
 	
 
 	/** error messages for item.js (JavaScript), loaded from _js_load_data view */
@@ -647,7 +650,7 @@ return [
 	'Htva' => 'Hors TVA',
 	'Total' => 'Total',
 	
-	'Account' => 'Compte',
+	'Account' => 'Versement',
 	'Bill Date' => 'Facturation',
 	'Bill Sent' => 'Facturé',
 	'Due Date' => 'Livraison',

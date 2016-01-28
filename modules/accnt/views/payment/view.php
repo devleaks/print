@@ -1,13 +1,19 @@
 <?php
 
+use app\models\Document;
+
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Payment */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Payments'), 'url' => ['index']];
+if($doc = Document::findBySale($model->sale)) {
+	$this->title = Yii::t('store', 'Payment {0} for {1}', [$model->id, $doc->name]);
+	$this->params['breadcrumbs'][] = ['label' => $doc->name, 'url' => ['/order/document/view', 'id' => $doc->id]];
+} else {
+	$this->title = $model->id;
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="payment-view">

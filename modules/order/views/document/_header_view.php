@@ -37,7 +37,7 @@ $website_order_link = $wo ? Html::a(($wo->order_id ? $wo->order_id : $wo->id. ' 
 				<div class="panel-heading">
 					<h3 class="panel-title"><?= Yii::t('store',
 												   ($model->document_type == Document::TYPE_ORDER && $model->bom_bool) ? Document::TYPE_BOM : $model->document_type
-												  ) . ' # ' . $model->name	?></h3>
+												  ) . ' # ' . $model->name	. ($model->client ? ' — ' .$model->client->nom : '') ?></h3>
 					<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
 				</div>
 				<div class="panel-body">

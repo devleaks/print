@@ -387,6 +387,46 @@
             "type": "bower-asset-library"
         },
         {
+            "name": "bower-asset/desandro-matches-selector",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/desandro/matches-selector.git",
+                "reference": "94f06d14dc2defafe8b6d6be4d9b999269d70abc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/desandro/matches-selector/zipball/94f06d14dc2defafe8b6d6be4d9b999269d70abc",
+                "reference": "94f06d14dc2defafe8b6d6be4d9b999269d70abc",
+                "shasum": ""
+            },
+            "require-dev": {
+                "bower-asset/qunit": "dev-1.x|1.x"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "matches-selector.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests",
+                    "tests.*",
+                    "package.json"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "matches/matchesSelector helper",
+            "keywords": [
+                "DOM",
+                "matches",
+                "matchesSelector"
+            ]
+        },
+        {
             "name": "bower-asset/draggabilly",
             "version": "v2.1.0",
             "source": {
@@ -471,20 +511,20 @@
         },
         {
             "name": "bower-asset/fizzy-ui-utils",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/fizzy-ui-utils.git",
-                "reference": "8802a5211ede0895f87a9355c46d4b9214585499"
+                "reference": "2d0c0d4533fc9062f42720f946768eb1f2009596"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/fizzy-ui-utils/zipball/8802a5211ede0895f87a9355c46d4b9214585499",
-                "reference": "8802a5211ede0895f87a9355c46d4b9214585499",
+                "url": "https://api.github.com/repos/metafizzy/fizzy-ui-utils/zipball/2d0c0d4533fc9062f42720f946768eb1f2009596",
+                "reference": "2d0c0d4533fc9062f42720f946768eb1f2009596",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/matches-selector": "~2.0.0"
+                "bower-asset/desandro-matches-selector": "~2.0.0"
             },
             "require-dev": {
                 "bower-asset/qunit": "~1.20.0"
@@ -780,46 +820,6 @@
                 "layout",
                 "masonry",
                 "outlayer"
-            ]
-        },
-        {
-            "name": "bower-asset/matches-selector",
-            "version": "v2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/desandro/matches-selector.git",
-                "reference": "94f06d14dc2defafe8b6d6be4d9b999269d70abc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/desandro/matches-selector/zipball/94f06d14dc2defafe8b6d6be4d9b999269d70abc",
-                "reference": "94f06d14dc2defafe8b6d6be4d9b999269d70abc",
-                "shasum": ""
-            },
-            "require-dev": {
-                "bower-asset/qunit": "dev-1.x|1.x"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "matches-selector.js",
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "node_modules",
-                    "bower_components",
-                    "test",
-                    "tests",
-                    "tests.*",
-                    "package.json"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "matches/matchesSelector helper",
-            "keywords": [
-                "DOM",
-                "matches",
-                "matchesSelector"
             ]
         },
         {
@@ -1242,16 +1242,16 @@
         },
         {
             "name": "components/flag-icon-css",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lipis/flag-icon-css.git",
-                "reference": "14afe4126a8df88950ce6621dcb95b9ac4ccaddd"
+                "reference": "ede2e178eb15c428682548021ab3764548f8bfb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/14afe4126a8df88950ce6621dcb95b9ac4ccaddd",
-                "reference": "14afe4126a8df88950ce6621dcb95b9ac4ccaddd",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/ede2e178eb15c428682548021ab3764548f8bfb9",
+                "reference": "ede2e178eb15c428682548021ab3764548f8bfb9",
                 "shasum": ""
             },
             "type": "component",
@@ -1276,7 +1276,7 @@
                 }
             ],
             "description": "CSS for vector based country flags",
-            "time": "2015-12-25 23:03:03"
+            "time": "2016-01-22 14:19:38"
         },
         {
             "name": "dektrium/yii2-user",
@@ -1540,12 +1540,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fightbulc/moment.php.git",
-                "reference": "06efc6f85f0f31be3c9a0773873d516cd8b3078c"
+                "reference": "d741ab4e696b03272d8fbd1d7c73c1630e8d21d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/06efc6f85f0f31be3c9a0773873d516cd8b3078c",
-                "reference": "06efc6f85f0f31be3c9a0773873d516cd8b3078c",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/d741ab4e696b03272d8fbd1d7c73c1630e8d21d3",
+                "reference": "d741ab4e696b03272d8fbd1d7c73c1630e8d21d3",
                 "shasum": ""
             },
             "require": {
@@ -1595,7 +1595,7 @@
                 "translation",
                 "validate"
             ],
-            "time": "2016-01-21 14:20:59"
+            "time": "2016-01-23 10:17:10"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -1735,16 +1735,16 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.2.9",
+            "version": "v4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "728f6a94cc2a6ea5350b8733835cf444516e40e1"
+                "reference": "cde72929649da55470e0a81a5e85921f80f28f29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/728f6a94cc2a6ea5350b8733835cf444516e40e1",
-                "reference": "728f6a94cc2a6ea5350b8733835cf444516e40e1",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/cde72929649da55470e0a81a5e85921f80f28f29",
+                "reference": "cde72929649da55470e0a81a5e85921f80f28f29",
                 "shasum": ""
             },
             "type": "library",
@@ -1784,7 +1784,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2016-01-21 19:35:12"
+            "time": "2016-01-25 16:55:20"
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
@@ -2197,22 +2197,27 @@
         },
         {
             "name": "kartik-v/yii2-grid",
-            "version": "v3.0.9",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "8783693da04c51acfa1040b8843836993ad2f195"
+                "reference": "8cf8bb9ef3e9dc94933c54fcffdc91471de40ecf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/8783693da04c51acfa1040b8843836993ad2f195",
-                "reference": "8783693da04c51acfa1040b8843836993ad2f195",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/8cf8bb9ef3e9dc94933c54fcffdc91471de40ecf",
+                "reference": "8cf8bb9ef3e9dc94933c54fcffdc91471de40ecf",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/yii2-krajee-base": "~1.7"
             },
             "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "kartik\\grid\\": ""
@@ -2237,7 +2242,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-01-10 12:22:13"
+            "time": "2016-01-14 07:03:28"
         },
         {
             "name": "kartik-v/yii2-helpers",
@@ -2822,22 +2827,27 @@
         },
         {
             "name": "kartik-v/yii2-widget-colorinput",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-colorinput.git",
-                "reference": "b84ed3db199c71b71f3b1f0fe57b1b893a7d82c3"
+                "reference": "3f6e847ef72cf6e27e4d3b4870b00b8f80d51752"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-colorinput/zipball/b84ed3db199c71b71f3b1f0fe57b1b893a7d82c3",
-                "reference": "b84ed3db199c71b71f3b1f0fe57b1b893a7d82c3",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-colorinput/zipball/3f6e847ef72cf6e27e4d3b4870b00b8f80d51752",
+                "reference": "3f6e847ef72cf6e27e4d3b4870b00b8f80d51752",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/yii2-krajee-base": "*"
             },
             "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "kartik\\color\\": ""
@@ -2867,7 +2877,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-12-27 16:47:58"
+            "time": "2016-01-14 11:15:49"
         },
         {
             "name": "kartik-v/yii2-widget-datepicker",

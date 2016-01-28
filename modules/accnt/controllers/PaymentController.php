@@ -98,16 +98,6 @@ class PaymentController extends Controller
     public function actionIndexByType()
     {
         return $this->redirect(['summary/index']);
-
-		// never reached
-        $searchModel = new PaymentSearch();
-        $searchModel->load(Yii::$app->request->queryParams);
-		if($searchModel->created_at == '')
-			$searchModel->created_at = date('Y-m-d', strtotime('now'));
-		
-        return $this->render('index-by-type', [
-            'searchModel' => $searchModel,
-        ]);
     }
 
     /**

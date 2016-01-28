@@ -57,17 +57,22 @@ class Payment extends _Payment
 	 *
 	 * @return array()
 	 */
-	public static function getPaymentMethods() {
-		return ArrayHelper::map(Parameter::find()->where(['domain'=>'payment'])->orderBy('value_int')->asArray()->all(), 'name', 'value_text');
+	public static function getPaymentMethods($exclude_cash = false) {
+		return $exclude_cash ?
+			ArrayHelper::map(Parameter::find()->where(['domain'=>'payment'])->andWhere(['not', ['name' => Payment::CASH]])->orderBy('value_int')->asArray()->all(), 'name', 'value_text')
+			:
+			ArrayHelper::map(Parameter::find()->where(['domain'=>'payment'])->orderBy('value_int')->asArray()->all(), 'name', 'value_text')
+			;
 	}
 	
 	public function getPaymentMethod() {
-		if($this->payment_method == Payment::CLEAR)
+		$method = $this->account ? $this->account->payment_method : $this->payment_method;
+		if($method == Payment::CLEAR)
 			return Yii::t('store', 'Credit Clearance');
-		elseif($this->payment_method == Payment::USE_CREDIT)
+		elseif($method == Payment::USE_CREDIT)
 			return Yii::t('store', 'Credit Used');
-		$p = Parameter::findOne(['domain'=>'payment', 'name' => $this->payment_method]);
-		return $p ? $p->value_text : null;
+		$p = Parameter::findOne(['domain'=>'payment', 'name' => $method]);
+		return $p ? $p->value_text : $this->payment_method.'?';
 	}
 	
 	public function getStatusLabel() {

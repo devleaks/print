@@ -14,7 +14,6 @@ $template = Parameter::isTrue('application', 'allow_direct_payment_update') ? '{
 
 $this->title = Yii::t('store', 'Payments for {0}', $model->name);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['/order/document/view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -87,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'buttons' => [
 	                'account' => function ($url, $model) {
 	                    return $model->account ?
-								Html::a('Compte',
+								Html::a(Yii::t('store', 'Account'),
 									Url::to(['/accnt/account/view', 'id' => $model->account_id]),
 									[
 			                        	'title' => Yii::t('store', 'Account'),

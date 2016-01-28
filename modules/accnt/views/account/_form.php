@@ -18,7 +18,7 @@ use kartik\widgets\DateTimePicker;
 
     <?= $form->field($model, 'payment_date')->widget(DateTimePicker::className(), [
 			'pluginOptions' => [
-                'format' => 'yyyy-mm-dd h:i',
+                'format' => 'yyyy-mm-dd hh:ii',
                 'todayHighlight' => true
             	],
 				'options' => ['data-intro' => "Vous devez mentionner une date de livraison pour la commande. Si la date de livraison n'a pas d'importance, entrez la date du jour."],

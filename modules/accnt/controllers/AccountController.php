@@ -100,6 +100,7 @@ class AccountController extends Controller
 					'sale' => $sale,
 					'amount' => $amount,
 					'payment_date' => $capture->date ? $capture->date : date('Y-m-d'),
+					'note' => $capture->note,
 				]);
 				$cash->save();
 				$cash->refresh();
@@ -111,6 +112,7 @@ class AccountController extends Controller
 				'amount' => $amount,
 				'status' => $amount > 0 ? 'CREDIT' : 'DEBIT',
 				'cash_id' => $cash ? $cash->id : null,
+				'note' => $capture->note,
 			]);
 			$account->save();
 			$account->refresh();
@@ -122,6 +124,7 @@ class AccountController extends Controller
 				'status' => Payment::STATUS_OPEN,
 				'account_id' => $account->id,
 				'cash_id' => $cash ? $cash->id : null,
+				'note' => $capture->note,
 			]);
 			$payment->save();
             return $this->redirect(['/accnt/account/client', 'id' => $capture->client_id]);
