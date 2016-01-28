@@ -300,7 +300,7 @@ class DocumentController extends Controller
 				$model->name = Document::generateName($model->document_type);
 			}
 			// temporaily set reference
-			$model->sale = Sequence::nextval('sale'); // Document::commStruct($model->name);//$model->name;
+			$model->sale = Document::nextSale(); // Document::commStruct($model->name);//$model->name;
 			$model->reference = Document::commStruct(date('y')*10000000 + $model->sale);//$model->name;
 			if(!$model->priority) $model->priority = 100; // test
 			if ($model->save()) {
@@ -739,7 +739,7 @@ class DocumentController extends Controller
 											'data-confirm' => Yii::t('store', 'Delete work order?'),
 										]);
 					}
-					$feedback = $work ? Yii::t('store', 'Work submitted ({0})', $cancel) : Yii::t('store', 'No work to submit');
+					$feedback = $work ? Yii::t('store', 'Work submitted. {0}.', $cancel) : Yii::t('store', 'No work to submit');
 				}
 
 				// deal with payment in a single transaction: Everything OK or fail.
@@ -851,8 +851,8 @@ class DocumentController extends Controller
 		if($captureEmail->load(Yii::$app->request->post())) {
 			$model = $this->findModel($captureEmail->id);
 
-			if($captureEmail->save) {
-				$client = Client::findOne($model->client_id);
+			$client = Client::findOne($model->client_id);
+			if($client && $captureEmail->save) {
 				$client->email = $captureEmail->email;
 				$client->save();
 			}
@@ -863,7 +863,10 @@ class DocumentController extends Controller
 					'save' => true,
 					'images' => true,
 				]);
-				$pdf->send(Yii::t('store', $model->document_type).' '.$model->name, $captureEmail->body, $captureEmail->email);
+				$lang_before = Yii::$app->language;
+				Yii::$app->language = $client ? ($client->lang ? $client->lang : $lang_before) : $lang_before;
+				$pdf->send(Yii::t('print', $model->document_type).' '.$model->name, $captureEmail->body, $captureEmail->email);
+				Yii::$app->language = $lang_before;
 				Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
 			} else {
 				Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has no email address.'));

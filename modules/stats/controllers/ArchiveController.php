@@ -68,7 +68,7 @@ class ArchiveController extends Controller
 			'id' => null,
 			'document_type' => Document::TYPE_ORDER,
 			'name' => null,
-			'sale' => Sequence::nextval('sale'),
+			'sale' => Document::nextSale(),
 			'client_id' => DocumentArchive::CLIENT,
 			'due_date' => null,
 			'price_htva' => null,

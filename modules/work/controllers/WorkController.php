@@ -144,9 +144,11 @@ class WorkController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteCascade();
+        $work = $this->findModel($id);
+		$doc_id = $work->document_id;
+		$work->deleteCascade();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/order/document/view', 'id' => $doc_id]);
     }
 
     /**

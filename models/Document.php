@@ -176,6 +176,10 @@ class Document extends _Document
 		return (strlen($src)+strlen($sep)+strlen($to)) < $max ? ($to ? $to.$sep.$src : $src) : $to ;
 	}
 	
+	public function appendNote($str) {
+		$this->note = substr($this->note.' '. $str, 0, 160);
+	}
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -347,7 +351,14 @@ class Document extends _Document
 		return substr($year,0,4).$separator.str_pad(Sequence::nextval($sequence_name), self::NAME_NUMBER_LENGTH, "0", STR_PAD_LEFT);
 	}
 	
+	/**
+	 * Fetches next sale number from sequence
+	 */
+	public static function nextSale() {
+		return Sequence::nextval('sale');
+	}
 	
+
 	public function getRelatedReference() {
 		return $this->parent ? $this->parent->name : '';
 	}
@@ -513,7 +524,7 @@ class Document extends _Document
 				break;
 			case self::STATUS_CANCELLED:
 				Yii::trace('Request to cancel.', 'Document::setStatus');
-				$sale = Sequence::nextval('sale');
+				$sale = Document::nextSale();
 				foreach($this->getPayments()->each() as $payment) {
 					$payment->sale = $sale;
 					$payment->status = Payment::STATUS_OPEN;
@@ -610,7 +621,7 @@ class Document extends _Document
 					$surplus = $amount - $due;
 					if($surplus > self::PAYMENT_LIMIT){
 						$extra = new Payment([
-							'sale' => Sequence::nextval('sale'),
+							'sale' => Document::nextSale(),
 							'client_id' => $client_id,
 							'payment_method' => $method,
 							'amount' => $surplus,
@@ -796,7 +807,7 @@ class Document extends _Document
 					// OPEN TRANSACTION
 					if(empty($payment->account_id)) { // we must restore the previous credit
 						$credit = new Payment([
-							'sale' => Sequence::nextval('sale'),
+							'sale' => Document::nextSale(),
 							'client_id' => $payment->client_id,
 							'payment_method' => Payment::USE_CREDIT,
 							'amount' => $payment->amount,

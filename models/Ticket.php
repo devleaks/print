@@ -44,10 +44,12 @@ class Ticket extends Order
 				// Create a copy of original for archive.
 				$ticket = $this->newCopy();
 				$ticket->id = null;
-				$ticket->sale = Sequence::nextval('sale');
+				$ticket->sale = Document::nextSale();
 				$ticket->name .= '-FACTURE';
 				$ticket->setStatus(Document::STATUS_CANCELLED);
+				$ticket->appendNote('Annulé conversion VC->Commande '.$this->name);
 				$ticket->save();
+				$ticket->refresh();
 
 				$this->document_type = self::TYPE_ORDER;
 				$this->save();
@@ -56,11 +58,12 @@ class Ticket extends Order
 				$o = Parameter::getTextValue('application', Refund::TYPE_REFUND, '-');
 				$reimbursment = new Refund([
 					'document_type' => Refund::TYPE_REFUND,
+					'parent_id' => $ticket->id,
 					'client_id' => $this->client_id,
 					'name' => Document::generateName(Document::TYPE_REFUND),
 					'due_date' => $this->due_date,
 					'note' => 'Remboursement conversion VC->Facture',
-					'sale' =>  Sequence::nextval('sale'),
+					'sale' =>  Document::nextSale(),
 					'status' => Refund::STATUS_TOPAY,
 					'reference' => $this->reference,
 				]);

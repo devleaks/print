@@ -419,7 +419,7 @@ class WebsiteOrder extends _WebsiteOrder
 			$client->save(false);
 		}
 		
-		$sale = Sequence::nextval('sale');
+		$sale = Document::nextSale();
 		$order = new Document([
 			'document_type' => Document::TYPE_ORDER,
 			'client_id' => $client->id,

@@ -243,7 +243,7 @@ class PaymentController extends Controller
 				}
 				if($ok) {
 					// 1. Create refund document
-					$newSale = Sequence::nextval('sale');
+					$newSale = Document::nextSale();
 					$newReference = Document::commStruct(date('y')*10000000 + $newSale);
 					$o = Parameter::getTextValue('application', Refund::TYPE_REFUND, '-');
 					$credit = new Refund([

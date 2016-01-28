@@ -93,7 +93,7 @@ class AccountController extends Controller
 
         if ($capture->load(Yii::$app->request->post()) && $capture->validate()) {
 			$amount = str_replace(',','.',$capture->amount);
-			$sale = Sequence::nextval('sale');
+			$sale = Document::nextSale();
 			$cash = null;
 			if($capture->method == Payment::CASH) {
 				$cash = new Cash([
@@ -249,14 +249,14 @@ order by 5 desc
 	 */
 	public function actionRefund($id, $ticket = 0) {
 		if($payment = Payment::findOne($id)) {
-			$newSale = Sequence::nextval('sale');
+			$newSale = Document::nextSale();
 			$newReference = Document::commStruct(date('y')*10000000 + $newSale);
 			$credit = null;
 			if($ticket == 1) {
 				$credit = new Refund([
 					'document_type' => Refund::TYPE_REFUND,
 					'client_id' => $payment->client_id,
-					'name' => substr($payment->created_at,0,4).'-'.Sequence::nextval('doc_number'),
+					'name' => Document::generateName(Document::TYPE_REFUND),
 					'due_date' => date('Y-m-d H:i:s'),
 					'note' => $payment->payment_method.'-'.$payment->sale.'. '.$payment->note,
 					'sale' => $newSale,
@@ -268,7 +268,7 @@ order by 5 desc
 				$credit = new Credit([
 					'document_type' => Credit::TYPE_CREDIT,
 					'client_id' => $payment->client_id,
-					'name' => substr($payment->created_at,0,4).'-'.Sequence::nextval('credit_number'),
+					'name' => Document::generateName(Document::TYPE_CREDIT),
 					'due_date' => date('Y-m-d H:i:s'),
 					'note' => $payment->payment_method.'-'.$payment->sale.'. '.$payment->note,
 					'sale' => $newSale,

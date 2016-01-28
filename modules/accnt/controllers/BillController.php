@@ -9,6 +9,7 @@ use app\models\Attachment;
 use app\models\Bill;
 use app\models\BillSearch;
 use app\models\CaptureBalance;
+use app\models\Document;
 use app\models\Cash;
 use app\models\Client;
 use app\models\Order;
@@ -222,7 +223,7 @@ class BillController extends Controller
 						$available = round($available, 2);
 						if($available > 0) { // extra money left, add a credit line
 							$remaining = new Payment([
-								'sale' => Sequence::nextval('sale'), // its a new sale transaction...
+								'sale' => Document::nextSale(), // its a new sale transaction...
 								'client_id' => $capture->client_id,
 								'payment_method' => $capture->method,
 								'amount' => $available,

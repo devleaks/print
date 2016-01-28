@@ -110,7 +110,7 @@ class Bill extends Document {
 					$model->name = Document::generateName(Document::TYPE_BILL);
 					//$model->note = $bom->name;
 					$model->status = self::STATUS_OPEN;
-					$model->sale = Sequence::nextval('sale');
+					$model->sale = Document::nextSale();
 					$model->reference = $model->commStruct(date('y')*10000000 + $model->sale);
 					$model->save();
 					$vat_bool = $bom->vat_bool;
@@ -228,7 +228,7 @@ class Bill extends Document {
 		$available = round($available, 2);
 		if($available > Bill::PAYMENT_LIMIT) { // extra money left, add a credit line
 			$remaining = new Payment([
-				'sale' => Sequence::nextval('sale'), // its a new sale transaction...
+				'sale' => Document::nextSale(), // its a new sale transaction...
 				'client_id' => $this->client_id,
 				'payment_method' => $method,
 				'amount' => $available,
