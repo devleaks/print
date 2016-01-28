@@ -14,7 +14,13 @@ use kartik\widgets\DateTimePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-	<?= $form->field($model, 'payment_method')->dropDownList(Payment::getPaymentMethods()) ?>
+	<?php if($model->payment_method == Payment::CASH): ?>
+		<p>
+		<?= Yii::t('store', 'Payment Method: {0}. Cannot be changed here.', Yii::t('store', $model->payment_method)) ?>
+		</p>
+	<?php else: ?>
+		<?= $form->field($model, 'payment_method')->dropDownList(Payment::getPaymentMethods(true)) ?>
+	<?php endif; ?>
 
     <?= $form->field($model, 'payment_date')->widget(DateTimePicker::className(), [
 			'pluginOptions' => [

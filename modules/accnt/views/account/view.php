@@ -1,14 +1,23 @@
 <?php
 
+use app\models\Document;
+
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\data\ActiveDataProvider;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Account */
-
-$this->title = Yii::t('store', 'Account');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounts'), 'url' => ['index']];
+$docs = [];
+$id = false;
+foreach($model->getDocuments()->each() as $doc) {
+	$docs[] = $doc->name;
+	$id = $doc->id;
+}
+if($id)
+	$this->params['breadcrumbs'][] = ['label' => implode($docs, ','), 'url' => ['/accnt/payment/sale', 'id' => $id]];
+$this->title = Yii::t('store', 'Account {0} for {1}', [$model->id, implode($docs, ',')]);
+// $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Accounts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="account-view">

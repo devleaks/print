@@ -8,6 +8,7 @@ use app\models\CashSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ArrayDataProvider;
 
 /**
  * CashController implements the CRUD actions for Cash model.
@@ -66,6 +67,42 @@ class CashController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lists all Pdf models.
+     * @return mixed
+     */
+    public function actionMonthly()
+    {
+        $searchModel = new CashSearch();
+       	$searchModel->load(Yii::$app->request->queryParams);
+
+		if(empty($searchModel->payment_date))
+			$searchModel->payment_date = date('Y-m');
+			
+		$s = explode('-', $searchModel->payment_date);
+		$balance = [];
+		$first_of_month = $searchModel->payment_date.'-01';
+		$curr = Cash::find()->andWhere(['<','payment_date',$first_of_month])->sum('amount');;
+		for($i = 1; $i <= cal_days_in_month(CAL_GREGORIAN, $s[1], $s[0]); $i++) {
+			$day = date('Y-m-d', strtotime($first_of_month.'+'.($i-1).' day'));
+			$next_day = date('Y-m-d', strtotime($first_of_month.'+'.($i).' day'));
+			$solde = Cash::find()->andWhere(['<','payment_date',$next_day])->sum('amount');
+			$balance[] = [
+				'date'  => $day,
+				'solde' => $solde,
+				'delta' => $solde - $curr
+			];
+			$curr = $solde;
+		}
+		
+        return $this->render('monthly', [
+	        'searchModel' => $searchModel,
+            'dataProvider' => new ArrayDataProvider([
+				'allModels' => $balance
+			]),
         ]);
     }
 

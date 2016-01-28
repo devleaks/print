@@ -310,7 +310,7 @@ return [
 	'Paiement received?' => 'Paiement reçu?',
 	'Parameters' => 'Paramètres',
 	'Pay' => 'Payer',
-	'Payment Date' => 'Paiement',
+	'Payment Date' => 'Date du paiement',
 	'Payment Method' => 'Mode de paiement',
 	'Payment Received' => 'Paiement reçu',
 	'Payment added' => 'Paiement ajouté',
@@ -491,6 +491,11 @@ return [
 	'Sales' => 'Ventes',
 	'Sale' => 'Vente',
 	'Update {modelClass} ' => 'Mise à jour {modelClass}: ',
+	'Edit account line' => 'Modifier le versement',
+	'Account {0}' => 'Versement {0}',
+	'End of Day' => 'Fin de la journée',
+	'Day' => 'Jour',
+	'Monthly Cash Summary' => 'Résumé mensuel de la caisse',
 
 	/* Statistics */
 	"Bank Transactions" => 'Transactions bancaires',

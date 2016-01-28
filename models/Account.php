@@ -40,5 +40,14 @@ class Account extends _Account
 		else
 			$this->delete();
 	}
+	
+	/**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDocuments()
+    {
+        return $this->hasMany(Document::className(), ['sale' => 'sale'])->viaTable('payment', ['account_id' => 'id']);
+    }
+    
 
 }

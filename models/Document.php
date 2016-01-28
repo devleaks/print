@@ -760,7 +760,7 @@ class Document extends _Document
 				if($account = Account::findOne($payment->account_id)) {
 					if($payment->payment_method == Payment::CASH) {
 						if($cash = Cash::findOne($payment->cash_id)) {
-							$cash_date = $cash->created_at;
+							$cash_date = $cash->payment_date;
 							$payment->delete();
 							if(! $cash->getPayments()->exists()) { // are there other payments that depends on this cash? If not, we delete cash as well.
 								$cash->delete();

@@ -22,7 +22,8 @@ $dataProvider = new ActiveDataProvider([
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
 			[
-				'attribute' => 'created_at',
+                'label'=> Yii::t('store','Payment Date'),
+				'attribute' => 'payment_date',
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
 					return new DateTime($model->getPaymentDate());

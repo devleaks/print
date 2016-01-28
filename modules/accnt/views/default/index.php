@@ -14,6 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<ul>
 	        <li><a href="<?= Url::to(['/accnt/cash/list']) ?>"><?= Yii::t('store', 'Cash')?></a></li>
 		    <li><a href="<?= Url::to(['/accnt/summary']) ?>"><?= Yii::t('store', 'Daily Summary')?></a></li>
+		    <li><a href="<?= Url::to(['/accnt/cash/monthly']) ?>"><?= Yii::t('store', 'Monthly Cash Summary')?></a></li>
 		</ul>
 		<ul>
 		    <li><a href="<?= Url::to(['/order/document/bills', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Bills')?></a></li>

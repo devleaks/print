@@ -12,22 +12,23 @@ use yii\helpers\Html;
 <div class="payment-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index-by-type'],
+        'action' => ['monthly'],
         'method' => 'get',
 		'layout' => 'horizontal',
     ]); ?>
 
-        <div class="col-lg-4">
-    <?= $form->field($model, 'payment_date')->widget(DatePicker::classname(), [
-					'pluginOptions' => [
-					'autoclose'=>true,
-					'format' => 'yyyy-mm-dd'
+    <div class="col-lg-4">
+    <?= $form->field($model, 'payment_date')->widget(
+			DatePicker::classname(), [
+				'pluginOptions' => [
+				'autoclose'=>true,
+				'format' => 'yyyy-mm'
 		]]) ?>
-        </div>
+    </div>
 
-        <div class="col-lg-2">
+    <div class="col-lg-1">
     <?= Html::submitButton(Yii::t('store', 'Search'), ['class' => 'btn btn-primary']) ?>
-        </div>
+    </div>
 
     <?php ActiveForm::end(); ?>
 

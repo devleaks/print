@@ -10,7 +10,7 @@ use kartik\detail\DetailView;
 
 if($doc = Document::findBySale($model->sale)) {
 	$this->title = Yii::t('store', 'Payment {0} for {1}', [$model->id, $doc->name]);
-	$this->params['breadcrumbs'][] = ['label' => $doc->name, 'url' => ['/order/document/view', 'id' => $doc->id]];
+	$this->params['breadcrumbs'][] = ['label' => $doc->name, 'url' => ['/accnt/payment/sale', 'id' => $doc->id]];
 } else {
 	$this->title = $model->id;
 }
