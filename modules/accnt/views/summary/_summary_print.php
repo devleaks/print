@@ -15,7 +15,7 @@ use yii\db\Query;
 ?>
 <div class="daily-summary-summary">
 	
-	<h3><?= Yii::t('store', 'Daily Summary for {0}', Yii::$app->formatter->asDate($searchModel->created_at)) ?></h3>
+	<h3><?= Yii::t('store', 'Daily Summary for {0}', Yii::$app->formatter->asDate($searchModel->payment_date)) ?></h3>
 	
 <table width="100%" class="table table-bordered">
 	<thead>
