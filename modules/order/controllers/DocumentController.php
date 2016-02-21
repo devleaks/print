@@ -138,6 +138,8 @@ class DocumentController extends Controller
     public function actionBulk() {
         $searchModel = new DocumentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere(['not', ['document.status' => Document::STATUS_CANCELLED]]);
+		$dataProvider->query->andWhere(['document.document_type' => Document::TYPE_ORDER]);
 
         return $this->render('bulk', [
             'searchModel' => $searchModel,

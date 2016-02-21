@@ -58,6 +58,7 @@ class ItemCategory {
 	const UV = 'UV';
 
 	/** */
+	const NONE = '';
 	const SPECIAL = 'SPECIAL';
 	
 	
@@ -68,6 +69,7 @@ class ItemCategory {
 	 */
 	public static function getCategories() {
 		return [
+			self::NONE => Yii::t('store', self::NONE),
 			self::SPECIAL => Yii::t('store', self::SPECIAL),
 			self::CHROMALUXE => Yii::t('store', self::CHROMALUXE),
 			self::CHROMALUXE_PARAM => Yii::t('store', self::CHROMALUXE_PARAM),

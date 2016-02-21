@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-	        [
+/*	        [
 				'attribute' => 'document_type',
 	            'label' => Yii::t('store', 'Type'),
 				'filter' => Document::getDocumentTypes(),
@@ -55,10 +55,10 @@ $this->params['breadcrumbs'][] = $this->title;
 							return Yii::t('store', $model->document_type);
 				}
 			],
-	        [
+*/	        [
 				'attribute' => 'bill_exists',
-	            'label' => Yii::t('store', 'Bill'),
-				'filter' => ['' => '', 'Y' => Yii::t('store', 'Yes'), 'N' => Yii::t('store', 'No') ],
+	            'label' => Yii::t('store', 'Billed ?'),
+				'filter' => ['' => Yii::t('store', 'All'), 'Y' => Yii::t('store', 'Yes'), 'N' => Yii::t('store', 'No') ],
 	            'value' => function ($model, $key, $index, $widget) {
 							return Yii::t('store', $model->document_type);
 				}

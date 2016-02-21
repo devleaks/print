@@ -300,11 +300,13 @@ class Document extends _Document
 	 */
 	public static function getDocumentTypes() {
 		return [
+			self::TYPE_TICKET => Yii::t('store', self::TYPE_TICKET),
 			self::TYPE_BID => Yii::t('store', self::TYPE_BID),
 			self::TYPE_ORDER => Yii::t('store', self::TYPE_ORDER),
+			self::TYPE_BOM => Yii::t('store', self::TYPE_BOM),
 			self::TYPE_BILL => Yii::t('store', self::TYPE_BILL),
 			self::TYPE_CREDIT => Yii::t('store', self::TYPE_CREDIT),
-			self::TYPE_TICKET => Yii::t('store', self::TYPE_TICKET),
+			self::TYPE_REFUND => Yii::t('store', self::TYPE_REFUND),
 		];
 	}
 	
@@ -517,7 +519,12 @@ class Document extends _Document
 						$this->status = $work->status;
 					}
 				} else { // there is no work. If document in "TODO" status, we leave it as TODO.
-					if(!in_array($this->status,[self::STATUS_TODO, self::STATUS_OPEN, self::STATUS_CREATED])) {
+					$list = $this->document_type == Document::TYPE_REFUND ?
+						[self::STATUS_CREATED]
+						:
+						[self::STATUS_TODO, self::STATUS_OPEN, self::STATUS_CREATED]
+						;
+					if(!in_array($this->status,$list)) {
 						$this->status = $this->getPaymentStatus();
 					}
 				}
@@ -665,7 +672,6 @@ class Document extends _Document
 					$total_available += $available;
 					$add_payment = false;
 					if($needed > 0) {
-						$comment = Yii::t('store', 'Payment of {0} {1}.', [Yii::t('store', $this->document_type),$this->name]);
 						Yii::trace('Available='.$available.' with '.$credit_line->ref, 'Document::addPayment');
 						if($needed <= $available) { // no problem, we widthdraw from credit note
 							Yii::trace('Found='.$needed, 'Document::addPayment');
@@ -677,7 +683,8 @@ class Document extends _Document
 							$needed -= $available;
 						}
 						Yii::trace('...still need='.$needed, 'Document::addPayment');
-						$add_payment = $credit_line->useAmount($this, $credit_used, $comment);
+						$add_payment = $credit_line->useAmount($this, $credit_used,
+								Yii::t('store', 'Payment of {0} {1}.', [Yii::t('store', $this->document_type),$this->name]));
 					}
 					if($add_payment) {
 						$account_id = null;

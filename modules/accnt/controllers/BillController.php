@@ -205,11 +205,11 @@ class BillController extends Controller
 								$needed = $b->getBalance();
 								Yii::trace('needed='.$needed.' for '.$b->id, 'BillController::actionAddPayment');
 								if($needed <= $available) {
-									$b->addPayment($account_entered, $needed, $capture->method);
+									$b->addPayment($account_entered, $needed, $capture->method, $capture->note);
 									$available -= $needed;
 									Yii::trace('found, available='.$available, 'BillController::actionAddPayment');
 								} else {
-									$b->addPayment($account_entered, $available, $capture->method);
+									$b->addPayment($account_entered, $available, $capture->method, $capture->note);
 									$more_needed = $needed - $available;
 									$available = 0;
 									Yii::trace('NOT found, missing='.$more_needed, 'BillController::actionAddPayment');
@@ -227,6 +227,7 @@ class BillController extends Controller
 								'client_id' => $capture->client_id,
 								'payment_method' => $capture->method,
 								'amount' => $available,
+								'note' => $capture->note,
 								'status' => Payment::STATUS_OPEN,
 								'account_id' => $account_entered->id,
 							]);

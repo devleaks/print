@@ -38,12 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
 		    <li><a href="<?= Url::to(['/accnt/pdf', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Documents to Print')?></a></li>
 		</ul>
 		<ul>
-		    <li><a href="<?= Url::to(['/work']) ?>"><?= Yii::t('store', 'Works')?></a></li>
+		    <li><i class="glyphicon glyphicon-warning-sign text-danger"></i> <a href="<?= Url::to(['/order/document/', 'sort' => '-updated_at']) ?>"><strong><?= Yii::t('store', 'Manage all documents')?></strong></a></li>
 		    <li><a href="<?= Url::to(['/store/client', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Clients')?></a></li>
 		    <li><a href="<?= Url::to(['/accnt/default/control']) ?>"><?= Yii::t('store', 'Checks')?></a></li>
 		</ul>
 		<ul>
 		    <li><a href="<?= Url::to(['/accnt/bank']) ?>"><?= Yii::t('store', 'Bank Slips')?></a></li>
+			<li><a href="<?= Url::to(['/stats/archive/']) ?>"><?= Yii::t('store', 'Bilans mensuels passés') ?></a></li>
 		</ul>
 	</div>
 </div>

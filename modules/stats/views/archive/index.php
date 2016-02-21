@@ -1,5 +1,7 @@
 <?php
 
+use app\models\User;
+
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -8,7 +10,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('store', 'Document Archives');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
+$this->params['breadcrumbs'][] = User::getRole() == 'compta' ? ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']] : ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="document-archive-index">
@@ -26,26 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'due_date:date',
             'price_htva:currency',
             'price_tvac:currency',
-            // 'status',
-            // 'id',
-            // 'sale',
-            // 'reference',
-            // 'reference_client',
-            // 'parent_id',
-            // 'client_id',
-            // 'vat',
-            // 'vat_bool',
-            // 'bom_bool',
-            // 'note',
-            // 'lang',
-            // 'created_at',
-            // 'created_by',
-            // 'updated_at',
-            // 'updated_by',
-            // 'priority',
-            // 'legal',
-            // 'email:email',
-            // 'credit_bool',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

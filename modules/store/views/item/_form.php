@@ -71,7 +71,7 @@ $model->status = $model->status == $model::STATUS_ACTIVE;
 		            'columnOptions' => ['colspan' => 2],
 				],
 		        'prix_a' => [
-					'label' => Html::label(Yii::t('store', 'Prix « A x »')),
+					'label' => Html::label(Yii::t('store', 'Prix « A &times <i>x</i> »')),
 					'type' => Form::INPUT_TEXT,
 		            'columnOptions' => ['colspan' => 2],
 				],
