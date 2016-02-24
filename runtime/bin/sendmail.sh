@@ -4,9 +4,9 @@ dir=`dirname $0`
 BASEDIR=/Applications/mampstack/apps/prod
 cd $YIIDIR
 
-if [ -f ${YIIDIR}/runtime/bin/test-curl.sh ]
+if [ -f ${YIIDIR}/runtime/bin/test-net.sh ]
 then
-	${YIIDIR}/runtime/bin/test-curl.sh
+	${YIIDIR}/runtime/bin/test-net.sh
 	if [ $? -eq 0 ]
 	then
 		$YIIDIR/yii mail/send
