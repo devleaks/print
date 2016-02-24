@@ -639,16 +639,16 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jquery/jquery-dist.git",
-                "reference": "6fc01e29bdad0964f62ef56d01297039cdcadbe5"
+                "reference": "788eaba2f83e7b7445c7a83a50c81c0704423874"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/6fc01e29bdad0964f62ef56d01297039cdcadbe5",
-                "reference": "6fc01e29bdad0964f62ef56d01297039cdcadbe5",
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/788eaba2f83e7b7445c7a83a50c81c0704423874",
+                "reference": "788eaba2f83e7b7445c7a83a50c81c0704423874",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -3620,16 +3620,16 @@
         },
         {
             "name": "mdmsoft/yii2-ar-behaviors",
-            "version": "1.2",
+            "version": "1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mdmsoft/yii2-ar-behaviors.git",
-                "reference": "14ac297d5ac18594dcf09cd5b3bb20ff3d786ff2"
+                "reference": "95542f822433dd7c59b139a1dad4c698c41c30f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mdmsoft/yii2-ar-behaviors/zipball/14ac297d5ac18594dcf09cd5b3bb20ff3d786ff2",
-                "reference": "14ac297d5ac18594dcf09cd5b3bb20ff3d786ff2",
+                "url": "https://api.github.com/repos/mdmsoft/yii2-ar-behaviors/zipball/95542f822433dd7c59b139a1dad4c698c41c30f7",
+                "reference": "95542f822433dd7c59b139a1dad4c698c41c30f7",
                 "shasum": ""
             },
             "require": {
@@ -3664,7 +3664,7 @@
                 "query scope",
                 "yii2"
             ],
-            "time": "2016-02-04 11:34:09"
+            "time": "2016-02-22 02:51:54"
         },
         {
             "name": "michelf/php-markdown",

@@ -210,7 +210,11 @@ $("#adjust-price-button").click(function(){
 
 $(".adjust-reg").change(function() {
 	reg_a = parseFloat($("input[name='reg_a']").val());
+	if(isNaN(reg_a))
+		reg_a = $("input[name='reg_a']").val();
 	reg_b = parseFloat($("input[name='reg_b']").val());
+	if(isNaN(reg_b))
+		reg_b = $("input[name='reg_b']").val();
 	$(".adjust").each(function() {
 		x = parseFloat($(this).data('xval'));
 <?php if($exhibit): ?>
