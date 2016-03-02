@@ -849,6 +849,7 @@ class DocumentController extends Controller
 
 
 	public function actionSend() {
+		$send_with_image = Parameter::isTrue('application', 'send_bill_with_image');
 		$captureEmail = new CaptureEmail();
 		
 		if($captureEmail->load(Yii::$app->request->post())) {
@@ -864,7 +865,7 @@ class DocumentController extends Controller
 				$pdf = new PrintedDocument([
 					'document' => $model,
 					'save' => true,
-					'images' => true,
+					'images' => $send_with_image,
 				]);
 				$lang_before = Yii::$app->language;
 				Yii::$app->language = $client ? ($client->lang ? $client->lang : $lang_before) : $lang_before;
