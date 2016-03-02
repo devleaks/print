@@ -236,6 +236,7 @@ class DocumentController extends Controller
 		} else if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			// we need to change the money as well
 			$model->changePayments();
+			$model->changeClientOfOtherDocs();
 			$transaction->commit();
 			Yii::$app->session->setFlash('success', Yii::t('store', '{document} updated.', ['document' => Yii::t('store', $model->document_type)]));
         }

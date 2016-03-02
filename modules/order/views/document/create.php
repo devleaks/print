@@ -11,8 +11,13 @@ $this->title = Yii::t('store', 'Create '.ucfirst(strtolower($model->document_typ
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Management'), 'url' => ['/store']];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', ucfirst(strtolower($model->document_type).'s')), 'url' => [strtolower($model->document_type).'s']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Last Orders'), 'template' => "<li><span class='last-orders label label-info'>{link}</span></li>\n",];
 ?>
 <div class="order-create">
+	
+	<div class="last-order-list" style='display:none'>
+	<?= $this->render('recent') ?>
+	</div>
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -45,3 +50,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php ActiveForm::end(); ?>
 
 </div>
+<script type="text/javascript">
+<?php $this->beginBlock('JS_LAST_ORDERS') ?>
+$('.last-orders').click(function () {
+	console.log('click');
+	$('.last-order-list').toggle();
+});
+<?php $this->endBlock(); ?>
+</script>
+
+<?php
+$this->registerJs($this->blocks['JS_LAST_ORDERS'], yii\web\View::POS_END);

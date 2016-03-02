@@ -496,6 +496,8 @@ return [
 	'End of Day' => 'Fin de la journée',
 	'Day' => 'Jour',
 	'Monthly Cash Summary' => 'Résumé mensuel de la caisse',
+	'Last Orders' => 'Commandes Récentes',
+	'Billed ?' => 'Facturé ?',
 
 	/* Statistics */
 	"Bank Transactions" => 'Transactions bancaires',

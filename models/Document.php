@@ -903,6 +903,19 @@ class Document extends _Document
 	}
 
 	/**
+	 * Change Paiments set the payment owner of all payments of this order to the client of this order
+	 * Call to this function should be protected by a transaction.
+	 */
+	public function changeClientOfOtherDocs() {
+		foreach(Document::find()->andWhere(['sale' => $this->sale])->andWhere(['not', ['id' => $this->id]])->each() as $doc) {
+			$doc->client_id = $this->client_id;
+			$doc->save();
+			Yii::trace('save '.$doc->id.': '.print_r($doc->errors, 'true'), 'Document::changeOtherDocs');
+			$doc->changePayments();
+		}
+	}
+
+	/**
 	 * Returns amount due.
 	 *
 	 * @return number Amount due.
