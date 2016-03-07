@@ -1031,16 +1031,16 @@
         },
         {
             "name": "bower-asset/yii2-pjax",
-            "version": "v2.0.5",
+            "version": "v2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/jquery-pjax.git",
-                "reference": "6818718408086db6bdcf33649cecb86b6b4f9b67"
+                "reference": "60728da6ade5879e807a49ce59ef9a72039b8978"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/6818718408086db6bdcf33649cecb86b6b4f9b67",
-                "reference": "6818718408086db6bdcf33649cecb86b6b4f9b67",
+                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/60728da6ade5879e807a49ce59ef9a72039b8978",
+                "reference": "60728da6ade5879e807a49ce59ef9a72039b8978",
                 "shasum": ""
             },
             "require": {
@@ -1053,6 +1053,7 @@
                     ".travis.yml",
                     "Gemfile",
                     "Gemfile.lock",
+                    "CONTRIBUTING.md",
                     "vendor/",
                     "script/",
                     "test/"
@@ -4177,17 +4178,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/samdark/yii2-webshell.git",
-                "reference": "b55c1d3ae1fb70138e52b2820b831e7c2d4c3116"
+                "reference": "2508d8780fb0552f82f5271eb56c955761aa87cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/samdark/yii2-webshell/zipball/b55c1d3ae1fb70138e52b2820b831e7c2d4c3116",
-                "reference": "b55c1d3ae1fb70138e52b2820b831e7c2d4c3116",
+                "url": "https://api.github.com/repos/samdark/yii2-webshell/zipball/2508d8780fb0552f82f5271eb56c955761aa87cc",
+                "reference": "2508d8780fb0552f82f5271eb56c955761aa87cc",
                 "shasum": ""
             },
             "require": {
                 "bower-asset/jquery.terminal": "~0.8.8",
-                "yiisoft/yii2": "*"
+                "yiisoft/yii2": "~2.0.0"
             },
             "type": "yii2-extension",
             "autoload": {
@@ -4213,7 +4214,7 @@
                 "webshell",
                 "yii2"
             ],
-            "time": "2015-08-26 09:27:42"
+            "time": "2016-03-04 01:01:20"
         },
         {
             "name": "swiftmailer/swiftmailer",
