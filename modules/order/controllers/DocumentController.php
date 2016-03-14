@@ -816,14 +816,17 @@ class DocumentController extends Controller
 	}
 
 	public function actionSent($id) {
-		return $this->actionUpdateStatus($id, Document::STATUS_TOPAY);
+		return $this->actionUpdateStatus($id, Document::STATUS_DONE);
 	}
 
 	public function actionSent2($id) {
 		$model = $this->findModel($id);
-		$sent = false;
-		if(in_array($model->document_type, [Document::TYPE_ORDER, Document::TYPE_TICKET]))
+		$sent = true;
+		if(in_array($model->document_type, [Document::TYPE_ORDER, Document::TYPE_TICKET])) {
 			$sent = $model->notify(['force' => 'soft']);
+		} else {
+			Yii::$app->session->setFlash('info', Yii::t('store', 'No notification sent. Use {0} to send document manually.', Yii::t('store', 'Send')));
+		}
 		if($sent)
 			$model->setStatus(Document::STATUS_TOPAY);
         return $this->render('view', [

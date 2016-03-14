@@ -500,32 +500,43 @@ class Document extends _Document
 		switch($newstatus) {
 			case self::STATUS_DONE:
 				Yii::trace('Request to set DONE.', 'Document::setStatus');
-				if($this->getNotificationEmail() != '') {
+				$list = [Document::TYPE_ORDER, Document::TYPE_TICKET];
+				if(in_array($this->document_type, $list) && $this->getNotificationEmail() != '') {
 					Yii::trace('has email, set to NOTIFY.', 'Document::setStatus');
 					$this->status = self::STATUS_NOTIFY;
-				} else {
+				} else { // skip notification
 					$this->status = $newstatus;
 					$s = $this->getPaymentStatus();
-					Yii::trace('has no email, set to '.$s.'.', 'Document::setStatus');
 					$this->status = $s;
+					if(in_array($this->document_type, $list)) {
+						Yii::trace('Document '.$this->document_type.' not force notification ('.implode(',', $list).').', 'Document::setStatus');
+					} else {
+						Yii::trace('No email, set to '.$s.'.', 'Document::setStatus');
+					}
 				}
 				break;
 			case self::STATUS_TOPAY: 
 				Yii::trace('Request to set TOPAY.', 'Document::setStatus');
 				if($work = $this->getWorks()->one()) {
 					if($work->status == Work::STATUS_DONE) { // if work exists and is completed
+						Yii::trace('Work is completed.', 'Document::setStatus');
 						$this->status = $this->getPaymentStatus();
 					} else { // document takes status of its associated work
+						Yii::trace('Work status '.$work->status.'.', 'Document::setStatus');
 						$this->status = $work->status;
 					}
 				} else { // there is no work. If document in "TODO" status, we leave it as TODO.
+					Yii::trace('Document '.$this->id.' has no work.', 'Document::setStatus');
 					$list = $this->document_type == Document::TYPE_REFUND ?
-						[self::STATUS_CREATED]
-						:
-						[self::STATUS_TODO, self::STATUS_OPEN, self::STATUS_CREATED]
-						;
+								[self::STATUS_CREATED]
+								:
+								[self::STATUS_TODO, self::STATUS_OPEN, self::STATUS_CREATED]
+								;
 					if(!in_array($this->status,$list)) {
 						$this->status = $this->getPaymentStatus();
+						Yii::trace('Document payment status '.$this->status.'.', 'Document::setStatus');
+					} else {
+						Yii::trace('Document cannot be touched '.$this->status.' is in ('.implode(',', $list).').', 'Document::setStatus');
 					}
 				}
 				break;
@@ -1295,7 +1306,7 @@ class Document extends _Document
 		
 		if($this->status == self::STATUS_CREATED) {
 			$this->blab(Yii::t('store', '{0} has no order line.', Yii::t('store', $doc_type)));
-			return $this->blabOut();
+			return self::STATUS_CREATED;
 		}
 		
 		if($this->status == self::STATUS_OPEN) {
@@ -1308,7 +1319,7 @@ class Document extends _Document
 				Document::TYPE_REFUND => 'To Refund',
 			];
 			$this->blab(Yii::t('store', '{0} is not filled. You have to press <q>{1}</q> to start fulfilling {0}.', [Yii::t('store', $doc_type), Yii::t('store', $start_order[$this->document_type])]));
-			return $this->blabOut();
+			return self::STATUS_OPEN;
 		}
 		
 		// WORK

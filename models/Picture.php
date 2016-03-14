@@ -70,9 +70,15 @@ class Picture extends _Picture
 	 */
     public function getThumbnailUrl()
     {
-        $url = $this->getUrl();
-        $pos = strrpos($url, '.');
-        return ($pos !== false) ? substr_replace($url, '_t', $pos, strlen($url)) . substr($url, $pos) : $url;
+		$thumbPath = $this->getThumbpath();
+		Yii::trace($thumbPath, 'Picture::getThumbnailUrl');
+		if(file_exists($thumbPath)) {
+	        $url = $this->getUrl();
+	        $pos = strrpos($url, '.');
+	        return ($pos !== false) ? substr_replace($url, '_t', $pos, strlen($url)) . substr($url, $pos) : $url;
+		} else {
+			return Yii::getAlias('@web').'/assets/i/thumbnail.png';
+		}
     }
 
 	/**

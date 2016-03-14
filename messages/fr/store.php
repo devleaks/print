@@ -498,6 +498,7 @@ return [
 	'Monthly Cash Summary' => 'Résumé mensuel de la caisse',
 	'Last Orders' => 'Commandes Récentes',
 	'Billed ?' => 'Facturé ?',
+	'No notification sent. Use {0} to send document manually.' => "Avertissement non envoyé automatiquement pour ce type de document. Utiliser {0} pour faire un envoi manuel.",
 
 	/* Statistics */
 	"Bank Transactions" => 'Transactions bancaires',

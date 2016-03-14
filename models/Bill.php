@@ -259,6 +259,9 @@ class Bill extends Document {
 			case $this::STATUS_OPEN:
 				$actions[] = '{send}';
 				break;
+				case $this::STATUS_NOTIFY:
+					$actions[] = '{notify}';
+					break;
 			case $this::STATUS_CLOSED:
 				$actions[] = '{label:closed}';
 				break;
