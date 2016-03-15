@@ -12,7 +12,7 @@ function arrondir_sup(i) {
 
 /** Items */
 function getComputedPrice(id, w, h) {
-	console.log('getComputedPrice: fetching '+id);
+	//console.log('getComputedPrice: fetching '+id);
 
 	price = null;
 	$.ajax({
@@ -28,10 +28,10 @@ function getComputedPrice(id, w, h) {
 		success: function(data) {
 			//console.log(data);
 			price = data.price;
-			console.log('success: p='+price);
+			//console.log('success: p='+price);
 		},
 		error: function(data) {
-			console.log('getComputedPrice: error: no '+data.error_msg);
+			//console.log('getComputedPrice: error: no '+data.error_msg);
 			//console.log(data);
 			add_error("ITEM_NOT_FOUND");
 		},
@@ -44,7 +44,7 @@ function getItemById(id, silence) {
 	verbose = (typeof silence === "undefined");
 	if(store_values.item[id] != undefined)
 		return store_values.item[id];
-	console.log('Not found: '+id);
+	//console.log('Not found: '+id);
 	if(verbose) add_error("ITEM_NOT_FOUND");
 	return null;
 }
@@ -53,7 +53,7 @@ function getItemByReference(ref) {
 	//console.log('getItemByReference: fetching '+ref);
 	if(store_values.item[store_values.item_ref[ref]] != undefined)
 		return store_values.item[store_values.item_ref[ref]];
-	console.log('Not found: '+ref);
+	//console.log('Not found: '+ref);
 	add_error("ITEM_NOT_FOUND");
 	return null;
 }
@@ -272,7 +272,7 @@ $("#documentline-extra_amount, #documentline-extra_type").change( function() {
 		if(extra_type == 'REBATE_FIRST' || extra_type == 'REBATE_ACCESS') {
 			percent = parseFloat($("#documentline-extra_amount").val()/100);
 			item_price = (extra_type == 'REBATE_FIRST') ? getMainPrice() : getAccessoryPrice();
-			console.log('item for rebate='+item_price)
+			//console.log('item for rebate='+item_price)
 			amount = arrondir2( - item_price * percent);
 			$("#documentline-extra_htva").val(amount);
 			$("#documentline-final_htva").val(arrondir2(parseFloat($("#documentline-price_htva").val()) + amount));
@@ -394,7 +394,7 @@ function price_renfort() {
 		if(!isNaN(renfort_id)) {
 			minus_inside = 0; // ($("#documentline-item_id").val() == store_values.chroma) ? 20 : 10; // renfort placed 10cm inside for ChromaLuxe, 5cm inside for other
 			renfortItem = getItemById(renfort_id);
-			console.log('price_renfort: renfort_id is '+renfortItem.id);
+			//console.log('price_renfort: renfort_id is '+renfortItem.id);
 			var price = getComputedPrice(renfortItem.id, w - minus_inside, h - minus_inside); 
 			$("#documentlinedetail-price_renfort:enabled").val(price);
 		} else {
@@ -834,11 +834,14 @@ $(".order-option").click(function () {
  */
 $('#documentline-form').submit(function(e) {
 	has_error = $("#store-missing-data").is(":visible");
-	console.log('has error? '+ has_error);
+	// console.log('has error? '+ has_error);
 	if( has_error )
 		e.preventDefault();
-	else
-        return;
+	else {
+		console.log('locking');
+		$('#prevent-double').attr('disabled', true);
+		return;
+	}
 });
 
 $('#documentline-form').on("keyup keypress", function(e) {

@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Last Orders'), 'te
 	<?php endif; ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('store', 'Add Item'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(Yii::t('store', 'Add Item'), ['class' => 'btn btn-primary', 'id' => 'prevent-double']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Last Orders'), 'te
 <script type="text/javascript">
 <?php $this->beginBlock('JS_LAST_ORDERS') ?>
 $('.last-orders').click(function () {
-	console.log('click');
+	//console.log('click');
 	$('.last-order-list').toggle();
 });
 <?php $this->endBlock(); ?>
