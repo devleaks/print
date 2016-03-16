@@ -9,6 +9,7 @@ use app\models\Document;
 use app\models\DocumentLine;
 use app\models\DocumentLineDetail;
 use app\models\DocumentLineSearch;
+use app\models\History;
 use app\models\Picture;
 use app\models\PDFLabel;
 use app\models\Work;
@@ -183,6 +184,19 @@ class DocumentLineController extends Controller
 			$model->document_id = $order->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+			// Check for double submit
+			/*
+			if(!isset($_SESSION['captureclick']) || ($_POST['DocumentLine']['captureclick'] != $_SESSION['captureclick'])) {
+				History::record($model, 'ERR', $model->captureclick, false, null);
+				Yii::$app->session->setFlash('danger', Yii::t('store', 'There was a problem adding order line: {0}',
+			 		(count($model->errors) > 0) ? VarDumper::dumpAsString($model->errors, 4, true) : Yii::t('store', 'may be form double submit?') ));
+				return $this->redirect(Yii::$app->request->referrer);
+			}
+			unset($_SESSION['captureclick']);
+			History::record($model, 'UNSET', $model->captureclick, false, null);
+			*/
+
 			if($model->item->reference === Item::TYPE_REBATE && $order_has_rebate_before) {
 				Yii::$app->session->setFlash('info', Yii::t('store', 'You can only have one rebate line per order.'));
 				$model->delete();

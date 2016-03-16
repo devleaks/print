@@ -1,5 +1,6 @@
 <?php
 
+use app\models\History;
 use app\models\DocumentLine;
 use app\models\DocumentLineSearch;
 use yii\data\ActiveDataProvider;
@@ -30,6 +31,12 @@ use yii\grid\GridView;
 		if(!isset($orderLine)) {
 		 	$orderLine = new DocumentLine();
 			$orderLine->document_id = $order->id;
+			// add form submit protection
+			/*
+			$orderLine->captureclick = uniqid();
+			$_SESSION['captureclick'] = $orderLine->captureclick;
+			History::record($orderLine, 'SET', $orderLine->captureclick, false, null);
+			*/
 		}
 
 		echo $this->render('_add', [

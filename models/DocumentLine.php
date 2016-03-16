@@ -63,6 +63,8 @@ class DocumentLine extends _DocumentLine
 
 	public $work_width_virgule;
 	public $work_height_virgule;
+	
+	public $captureclick;
 
     /**
      * @inheritdoc
