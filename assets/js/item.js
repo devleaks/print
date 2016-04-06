@@ -837,11 +837,11 @@ $('#documentline-form').submit(function(e) {
 	// console.log('has error? '+ has_error);
 	if( has_error )
 		e.preventDefault();
-	else {
+/*	else {
 		console.log('locking');
 		$('#prevent-double').attr('disabled', true);
 		return;
-	}
+	}*/
 });
 
 $('#documentline-form').on("keyup keypress", function(e) {

@@ -12,11 +12,10 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
 /* @var $form yii\widgets\ActiveForm */
-$unpaid = Bill::find()->andWhere(['!=','document.status',Bill::STATUS_CLOSED])
-					  ->andWhere(['client_id' => $client->id])->exists();
+$unpaid = false; //Bill::find()->andWhere(['!=','document.status',Bill::STATUS_CLOSED])->andWhere(['client_id' => $client->id])->exists();
 $unpaid_color = $unpaid ? 'warning' : 'primary';
 
-$bottomLine = $client->getBottomLine();
+$bottomLine = 0; // $client->getBottomLine();
 
 $client_color = $bottomLine < -0.04 ? 'warning' : 'primary';
 

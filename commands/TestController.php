@@ -166,4 +166,31 @@ VALUES
 		}
 	}
     
+		public function actionCheckTotal() {
+			$limit = 1;
+			$transaction = Yii::$app->db->beginTransaction();
+			foreach(Document::find()
+	//				->andWhere(['not', ['numero_tva' => null]])
+	//				->andWhere(['not', ['numero_tva' => 'Non assujetti']])
+	//				->andWhere(['numero_tva_norm' => null])
+					->each() as $doc) {
+
+				$o_htva = $doc->price_htva;
+				$o_tvac = $doc->price_tvac;
+				$doc->updatePrice();
+				$diff = ((abs($o_htva - $doc->price_htva)>$limit)||(abs($o_tvac - $doc->price_tvac) > $limit));
+				if($diff) {
+					$diff_txt =  ' HTVA: '.($o_htva - $doc->price_htva);
+					$diff_txt .= ' TVAC: '.($o_tvac - $doc->price_tvac);
+				}
+				echo $doc->name.": "
+					.($diff ? '*' : ' ')
+					.' HTVA: '.$o_htva.' vs '.$doc->price_htva
+					.' TVAC: '.$o_tvac.' vs '.$doc->price_tvac
+					.($diff ? '>>>> '.$diff_txt : '')
+					.PHP_EOL;
+			}
+			$transaction->rollback();
+		}
+
 }
