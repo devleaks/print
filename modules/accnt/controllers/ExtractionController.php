@@ -109,12 +109,12 @@ class ExtractionController extends Controller
                 	'model' => $model,
             	]);
 			}
-			$numfrom = $docfrom->getNumberPart();
-			$numto   = $docto->getNumberPart();
+			$numfrom = intval($docfrom->getNumberPart());
+			$numto   = intval($docto->getNumberPart());
 			$docs= [];
 			Yii::trace('From '.$numfrom.' to '.$numto, 'ExtractionController::actionView');
 			for($i = $numfrom; $i <= $numto; $i++)
-				$docs[] = $docyear.'-'.$i;			
+				$docs[] = $docyear.'-'.str_pad($i, Document::NAME_NUMBER_LENGTH, "0", STR_PAD_LEFT);
 			$docs = Bill::find()->andWhere(['name' => $docs])
 					->union(
 					Credit::find()->andWhere(['name' => $docs])
