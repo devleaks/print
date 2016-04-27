@@ -594,7 +594,7 @@ class DocumentController extends Controller
 				'capture' => new CaptureSelection()
 	        ]);
 		} else {
-			if($model->client->isComptoir()) {
+			if($model->document_type != Document::TYPE_BID && $model->client->isComptoir()) {
 				$change_client = Html::a(Yii::t('store', 'Change client'),
 								['/order/document/change-client', 'id'=>$model->id],
 								[
@@ -605,15 +605,8 @@ class DocumentController extends Controller
 		            'model' => $model,
 		        ]);
 			}
-			$ticket = $model->document_type == Document::TYPE_TICKET ? 1 : 0;
 			$order = $model->convert($ticket);
-			$cancel = '';/*@todo Html::a(Yii::t('store', 'Cancel'),
-							['/order/document/cancel-convert', 'id'=>$order->id, 'ticket' => $ticket],
-							[
-								'data-method' => 'post',
-								'title' => Yii::t('store', 'Cancel'),
-								'data-confirm' => Yii::t('store', 'Cancel?'),
-							]);*/
+			$cancel = '';
 			$this->feedback('success', 'Successful convertion.', $cancel);
 	        return $this->render('view', [
 	            'model' => $order,

@@ -192,7 +192,7 @@ return [
 	'Domicile' => 'Tel. Domicile',
 	'Done' => 'Terminé',
 	'Due date too far.' => 'Date de livraison dans le futur trop éloigné.',
-	'Duplicate' => 'Copier',
+	'Copy' => 'Dupliquer',
 	'Email' => 'Adresse eMail',
 	'Emitted' => 'Préparé',
 	'End order work and bill' => "Terminer des commandes et les facturer",

@@ -55,10 +55,10 @@ class Bid extends Document
 	 */
 	public function getActions($show_work = false) {
 		$actions = [];
-		$actions[] = '{copy}';
 		switch($this->status) {
 			case $this::STATUS_TOPAY:
 			case $this::STATUS_OPEN:
+				$actions[] = '{copy}';
 				$actions[] = '{edit}';
 				$actions[] = '{convert}';
 				$actions[] = '{cancel}';
@@ -66,12 +66,16 @@ class Bid extends Document
 			case $this::STATUS_CLOSED:
 				if( $order = $this->getDocuments()->where(['document_type' => Order::TYPE_ORDER])->one() ) {
 					$actions[] = '{link:ordered}';
+				} else if( $order = $this->getDocuments()->where(['document_type' => Order::TYPE_TICKET])->one() ) {
+						$actions[] = '{link:ordered}';
 				} else {
+					$actions[] = '{copy}';
 					$actions[] = '{convert}';
 					$actions[] = '{label:closed}';
 				}
 				break;
 			case $this::STATUS_CANCELLED:
+				$actions[] = '{copy}';
 				$actions[] = '{label:cancelled}';
 				break;
 		}

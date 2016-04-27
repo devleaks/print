@@ -80,8 +80,8 @@ class DocumentActionColumn extends Column {
 			],
 			'copy'	=> [
 				'icon' => 'copy',
-				'label' => 'Duplicate',
-				'title' => 'Duplicate',
+				'label' => 'Copy',
+				'title' => 'Copy',
 				'color' => 'primary',
 				'action' => '/order/document/copy',
 			],
@@ -203,10 +203,9 @@ class DocumentActionColumn extends Column {
 		if(!$this->label) $this->label = Yii::t('store', 'Actions');
 
         $this->parseFormat();
+		$this->initDefaultButtons();
 
         parent::init();
-
-		$this->initDefaultButtons();
     }
 
 	/**
@@ -310,14 +309,18 @@ class DocumentActionColumn extends Column {
 					'</ul></div>';
 		if($name == 'convert') {
 			$doc = Document::findOne($id);
-			if($doc->client->isComptoir())
-				return Html::a($this->getButton('convert'),  [$data['action'], 'id' => $id, 'ticket' => true], ['class' => $this->baseClass . ' btn-' . $data['color'], 'title' => Yii::t('store', 'Convert to sale')]);
-			else
+			if($doc->client->isComptoir()) {
+				return Html::a(Yii::t('store', 'Convert to sale'),
+							   [$data['action'], 'id' => $id, 'ticket' => true],
+							   ['class' => $this->baseClass . ' btn-' . $data['color'], 'title' => Yii::t('store', 'Convert to sale')]
+					   );
+			} else {
 				return '<div class="btn-group"><button type="button" class="'.$this->baseClass.' btn-'.$data['color'].' dropdown-toggle" data-toggle="dropdown">'.
 				        	$this->getButton('convert'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
 							'<li>'.Html::a(Yii::t('store', 'Convert to order'), [$data['action'], 'id' => $id], ['title' => Yii::t('store', 'Convert to order')]).'</li>'.
 							'<li>'.Html::a(Yii::t('store', 'Convert to sale'),  [$data['action'], 'id' => $id, 'ticket' => true], ['title' => Yii::t('store', 'Convert to sale')]).'</li>'.
 						'</ul></div>';
+			}
 		}
 		return '';
 	}
@@ -330,18 +333,16 @@ class DocumentActionColumn extends Column {
     {
 		foreach(array_keys($this->documentButtons) as $action) {
 	        if (!isset($this->buttons[$action])) {
-				//Yii::trace($action, 'DocumentActionColumn::ACTION');
+				//Yii::trace($action, 'DocumentActionColumn::initDefaultButtons');
 				switch($action) {
-					case 'convert';
+					case 'convert':
 					case 'print':
 			            $this->buttons[$action] = function ($url, $model, $key, $name) {
-							//Yii::trace($url, 'DocumentActionColumn::ACTION');
 							return $this->getDropdown($url, $name);
 			            };
 						break;
 					default:
 			            $this->buttons[$action] = function ($url, $model, $key, $name) {
-							//Yii::trace($url, 'DocumentActionColumn::ACTION');
 							return $this->getAnchor($url, $name);
 			            };
 						break;
