@@ -103,8 +103,8 @@ class OrderController extends Controller
 		$archive->from('document_archive')
 				->select([
 				'document_type',
-				'year' => 'year(due_date)',
-				'month' => 'month(due_date)',
+				'year' => 'year(created_at)',
+				'month' => 'month(created_at)',
 				'total_count' => 'count(id)',
 				'total_amount' => 'sum(price_htva)'
 			])
@@ -113,8 +113,8 @@ class OrderController extends Controller
 		$q = Document::find()
 			->select([
 				'document_type',
-				'year' => 'year(due_date)',
-				'month' => 'month(due_date)',
+				'year' => 'year(created_at)',
+				'month' => 'month(created_at)',
 				'total_count' => 'count(id)',
 				'total_amount' => 'sum(price_htva)'
 			])
