@@ -1,6 +1,9 @@
-delete from cash;
+delete from website_order_line;
+delete from website_order;
 delete from extraction;
 delete from payment;
+delete from account;
+delete from cash;
 delete from picture;
 delete from pdf;
 delete from work_line;
