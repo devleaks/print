@@ -310,10 +310,11 @@ class DocumentActionColumn extends Column {
 		if($name == 'convert') {
 			$doc = Document::findOne($id);
 			if($doc->client->isComptoir()) {
-				return Html::a(Yii::t('store', 'Convert to sale'),
+				return Html::a(str_replace('{icon}', '<i class="glyphicon glyphicon-'.$data['icon'].'"></i> ', str_replace(
+										   '{text}', Yii::t('store', 'Convert to sale'), $this->buttonTemplate)),
 							   [$data['action'], 'id' => $id, 'ticket' => true],
 							   ['class' => $this->baseClass . ' btn-' . $data['color'], 'title' => Yii::t('store', 'Convert to sale')]
-					   );
+				);
 			} else {
 				return '<div class="btn-group"><button type="button" class="'.$this->baseClass.' btn-'.$data['color'].' dropdown-toggle" data-toggle="dropdown">'.
 				        	$this->getButton('convert'). ' <span class="caret"></span></button><ul class="dropdown-menu" role="menu">'.
