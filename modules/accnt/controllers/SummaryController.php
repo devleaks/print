@@ -73,7 +73,7 @@ class SummaryController extends Controller
 					'note' => $cash->note,
 					'amount' => $cash->amount,
 					'date' => $cash->payment_date,
-					'ref' => $cash->sale ? $cash->id : null,
+					'ref' => $cash->id,
 					'solde' => $solde,
 				]);
 				$cash_amount += $cash->amount;
@@ -86,7 +86,7 @@ class SummaryController extends Controller
 					'note' => $cash->note,
 					'amount' => $cash->amount,
 					'date' => $cash->payment_date,
-					'ref' => $cash->sale ? $cash->id : null,
+					'ref' => $cash->id,
 					'solde' => $solde,
 				]);
 				$cash_amount += $cash->amount;

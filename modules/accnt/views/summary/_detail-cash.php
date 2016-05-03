@@ -32,11 +32,15 @@ use yii\helpers\Url;
 				'attribute' => 'order',
 	            'label' => Yii::t('store', 'Order'),
 	            'value' => function ($model, $key, $index, $widget) {
-							if($cash = Cash::findOne($model->ref)) {
-								if($doc = $cash->document)
-									return $doc->name;
+							if($account = Account::findOne(['cash_id' => $model->ref])) {
+								$str = '';
+								foreach($account->getPayments()->each() as $payment) {
+									if($doc = Document::find()->andWhere(['sale' => $payment->sale])->orderBy('created_at desc')->one()) {
+										$str .= $doc->name.',';
+									}
+								}
 							}
-                    		return '';
+                    		return rtrim($str,',');
 	            },
 	        ],
 	        [
