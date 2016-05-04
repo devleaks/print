@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Account;
 use app\models\Document;
 use app\models\Payment;
 
@@ -32,10 +33,10 @@ use app\models\Payment;
 				echo '';
 		?></td>
 		<td><?php
-			if($payment = Payment::findOne(['account_id' => $model->id])) {
-				if($doc = Document::find()->andWhere(['sale' => $payment->sale])->orderBy('created_at desc')->one())
-					echo $doc->name;
-			}
+			if($account = Account::findOne($model->id)) {
+				return $account->whatFor();
+			} else
+    			return '';
 		?></td>
 		<td style="text-align: center;"><?= Yii::$app->formatter->asDate($model->payment_date) ?></td>
 		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($model->amount) ?></td>
