@@ -75,5 +75,24 @@ class Cash extends _Cash
 			$account->delete();
 		parent::delete();
 	}
+	
+	/**
+	 * What was Cash money used for?
+	 *
+	 * @return string
+	 */
+	public function whatFor() {
+		$str = '';
+		if($account = Account::findOne(['cash_id' => $this->id])) {
+			$str = '';
+			foreach($account->getPayments()->each() as $payment) {
+				if($doc = Document::find()->andWhere(['sale' => $payment->sale])->orderBy('created_at desc')->one()) {
+					$str .= $doc->name.',';
+				}
+			}
+		}
+		return rtrim($str,',');
+	}
+	
 
 }

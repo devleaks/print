@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Account;
 use app\models\Document;
 use app\models\Payment;
 use kartik\grid\GridView;
@@ -42,11 +43,10 @@ $dataProvider->sort->attributes  = null;
 				'attribute' => 'order',
 	            'label' => Yii::t('store', 'Order'),
 	            'value' => function ($model, $key, $index, $widget) {
-							if($payment = Payment::findOne(['account_id' => $model->id])) {
-								if($doc = Document::find()->andWhere(['sale' => $payment->sale])->orderBy('created_at desc')->one())
-									return $doc->name;
-							}
-                    		return '';
+							if($account = Account::findOne($model->id)) {
+								return $account->whatFor();
+							} else
+                    			return '';
 	            },
 	        ],
 			[

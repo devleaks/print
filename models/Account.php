@@ -49,5 +49,18 @@ class Account extends _Account
         return $this->hasMany(Document::className(), ['sale' => 'sale'])->viaTable('payment', ['account_id' => 'id']);
     }
     
-
+	/**
+	 * What was Account money used for?
+	 *
+	 * @return string
+	 */
+	public function whatFor() {
+		$str = '';
+		foreach($this->getPayments()->each() as $payment) {
+			if($doc = Document::find()->andWhere(['sale' => $payment->sale])->orderBy('created_at desc')->one()) {
+				$str .= $doc->name.',';
+			}
+		}
+		return rtrim($str,',');
+	}
 }

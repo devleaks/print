@@ -43,8 +43,9 @@ use app\models\Cash;
 		?></td>
 		<td><?php
 			if($cash = Cash::findOne($model->ref)) {
-				if($doc = $cash->document)
-					echo $doc->name;
+				echo $cash->whatFor();
+			} else {
+				echo '';
 			}
 		?></td>
 		<td style="text-align: center;"><?= $model->date ?></td>
