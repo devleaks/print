@@ -445,9 +445,15 @@ class Document extends _Document
 		$rebate_line = null;
 
 		foreach($this->getDocumentLines()->each() as $ol) { // gross +/- extra
-			if($ol->item->reference === Item::TYPE_REBATE)  // global rebate line
-				$rebate_line = $ol;
-			else {
+			if($do_global_rebate && $ol->item->reference === Item::TYPE_REBATE) {
+				// global rebate line: We do not count it now, but we remember there is one
+				if($rebate_line !== null) {
+					Yii::trace('Multiple rebate line for doc id '.$this->id, 'Document::updatePrice');
+				} else {
+					$rebate_line = $ol;
+				}
+			} else {
+				// no recalculation of rebate line, but still add it to order totals
 				$ol_price_htva = $ol->price_htva + ( isset($ol->extra_htva) ? $ol->extra_htva : 0 );
 				$this->price_htva += $ol_price_htva;
 				$this->price_tvac += round($ol_price_htva * (1 + ($ol->vat / 100)), 2);
@@ -455,27 +461,22 @@ class Document extends _Document
 		}
 
 		// apply global rebate or supplement
-		if($rebate_line != null) {
-			if ($do_global_rebate) {
-				//Yii::trace('Has rebate line '.$rebate_line->id, 'Document::updatePrice');
-				if(isset($rebate_line->extra_type) && ($rebate_line->extra_type != '')) {
-					//Yii::trace('Has rebate type '.$rebate_line->extra_type, 'Document::updatePrice');
-					if(isset($rebate_line->extra_amount) && ($rebate_line->extra_amount > 0)) {
-						//Yii::trace('Has rebate amount '.$rebate_line->extra_amount, 'Document::updatePrice');
-						$amount = strpos($rebate_line->extra_type, "PERCENT") > -1 ? $this->price_htva * ($rebate_line->extra_amount/100) : $rebate_line->extra_amount;
-						$asigne = strpos($rebate_line->extra_type, "SUPPLEMENT_") > -1 ? 1 : -1;
-						$rebate_line->price_htva = 0;											// global rebate HTVA is in EXTRA, not in line price
-						$rebate_line->extra_htva = round( $asigne * $amount, 2 );				// global rebate HTVA
-						$rebate_line->price_tvac = round( $rebate_line->price_htva * 1.21 );	// global rebate TVAC
-						$rebate_line->save();
-						// re-ajust global order sums
-						$this->price_htva += $rebate_line->extra_htva;
-						$this->price_tvac += round( $rebate_line->extra_htva * 1.21 , 2);
-					}
+		if($do_global_rebate && $rebate_line != null) {
+			//Yii::trace('Has rebate line '.$rebate_line->id, 'Document::updatePrice');
+			if(isset($rebate_line->extra_type) && ($rebate_line->extra_type != '')) {
+				//Yii::trace('Has rebate type '.$rebate_line->extra_type, 'Document::updatePrice');
+				if(isset($rebate_line->extra_amount) && ($rebate_line->extra_amount > 0)) {
+					//Yii::trace('Has rebate amount '.$rebate_line->extra_amount, 'Document::updatePrice');
+					$amount = strpos($rebate_line->extra_type, "PERCENT") > -1 ? $this->price_htva * ($rebate_line->extra_amount/100) : $rebate_line->extra_amount;
+					$asigne = strpos($rebate_line->extra_type, "SUPPLEMENT_") > -1 ? 1 : -1;
+					$rebate_line->price_htva = 0;											// global rebate HTVA is in EXTRA, not in line price
+					$rebate_line->extra_htva = round( $asigne * $amount, 2 );				// global rebate HTVA
+					$rebate_line->price_tvac = round( $rebate_line->price_htva * 1.21 );	// global rebate TVAC
+					$rebate_line->save();
+					// re-ajust global order sums
+					$this->price_htva += $rebate_line->extra_htva;
+					$this->price_tvac += round( $rebate_line->extra_htva * 1.21 , 2);
 				}
-			} else { // no recalculation, but still add it to order totals
-				$this->price_htva += $rebate_line->extra_htva;
-				$this->price_tvac += round( $rebate_line->extra_htva * 1.21 , 2);
 			}
 		}
 
