@@ -34,9 +34,9 @@ use app\models\Payment;
 		?></td>
 		<td><?php
 			if($account = Account::findOne($model->id)) {
-				return $account->whatFor();
+				echo $account->whatFor();
 			} else
-    			return '';
+    			echo '';
 		?></td>
 		<td style="text-align: center;"><?= Yii::$app->formatter->asDate($model->payment_date) ?></td>
 		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($model->amount) ?></td>

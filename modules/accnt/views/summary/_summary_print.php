@@ -30,7 +30,7 @@ use yii\db\Query;
 	$tot_amount = 0;
 	foreach($dataProvider->query->each() as $model): ?>
 	<tr>
-		<td><?= $model['payment_method'] ?></td>
+		<td><?= Parameter::getTextValue('payment', $model['payment_method']) ?></td>
 		<td style="text-align: right;"><?= Yii::$app->formatter->asCurrency($model['payment_method'] == Payment::CASH ? $cash_amount : $model['tot_amount']) ?></td>
 		<td style="text-align: center;"><?= $model['payment_method'] == Payment::CASH ? $cash_count : $model['tot_count'] ?></td>
 		<?php $tot_amount += $model['payment_method'] == Payment::CASH ? $cash_amount : $model['tot_amount']; ?>

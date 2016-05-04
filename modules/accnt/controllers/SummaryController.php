@@ -114,7 +114,7 @@ class SummaryController extends Controller
 			'query' => $query->select(['payment_method',
 								'tot_count' => 'count(id)',
 								'tot_amount' => 'sum(amount)'])
-			                 ->where(['not', ['payment_method' => Payment::CASH]])
+			                 ->where(['not', ['payment_method' => [Payment::CASH, Payment::METHOD_OLDSYSTEM]]])
 							 ->groupBy(['payment_method'])
 							 ->union($q)
 		]);
@@ -147,7 +147,7 @@ class SummaryController extends Controller
 			$day_end   = $searchModel->payment_date. ' 23:59:59';
 
 			foreach(Payment::getPaymentMethods() as $payment_method => $payment_label) {
-				if($payment_method != Payment::CASH) {
+				if($payment_method != Payment::CASH && $payment_method != Payment::METHOD_OLDSYSTEM) {
 					$dataProvider = new ActiveDataProvider([
 						'query' => Account::find()
 									->andWhere(['>=',$ref_column,$day_start])
@@ -159,7 +159,7 @@ class SummaryController extends Controller
 			}
 		} else {			
 			foreach(Payment::getPaymentMethods() as $payment_method => $payment_label) {
-				if($payment_method != Payment::CASH) {
+				if($payment_method != Payment::CASH && $payment_method != Payment::METHOD_OLDSYSTEM) {
 					$dataProvider = new ActiveDataProvider([
 						'query' => Account::find()
 									->andWhere(['payment_method' => $payment_method])
