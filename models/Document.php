@@ -443,6 +443,11 @@ class Document extends _Document
 		$this->price_htva = 0;
 		$this->price_tvac = 0;
 		$rebate_line = null;
+		
+		if($this->document_type == self::TYPE_BILL && $this->bom_bool) {
+			Yii::trace('Bill for BOMs; force do_global_rebate to false for '.$this->id, 'Document::updatePrice');
+			$do_global_rebate = false;
+		}
 
 		foreach($this->getDocumentLines()->each() as $ol) { // gross +/- extra
 			if($do_global_rebate && $ol->item->reference === Item::TYPE_REBATE) {
@@ -486,7 +491,7 @@ class Document extends _Document
 		// $this->price_tvac = round( round($this->price_tvac * 2, 1) / 2, 2);
 		$this->price_tvac = round( $this->price_tvac , 2);
 
-		$this->save();
+		return $this->save();
 	}
 
 

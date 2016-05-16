@@ -27,6 +27,15 @@ class Bill extends Document {
         $query->andWhere(['document_type' => self::TYPE_BILL]);
     }
 
+
+	public function updatePrice($do_global_rebate = true) {
+		if($do_global_rebate && $this->bom_bool) {
+			Yii::trace('Bill for BOMs; force do_global_rebate to false for '.$this->id, 'Bill::updatePrice');
+			return parent::updatePrice(false);
+		}
+		return parent::updatePrice($do_global_rebate);
+	}
+
 	public function getRelatedReference() {
 		if($this->bom_bool) {
 			$str = '';
