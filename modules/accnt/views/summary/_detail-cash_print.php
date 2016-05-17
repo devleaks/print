@@ -36,7 +36,7 @@ use app\models\Cash;
 				if($account = Account::findOne(['cash_id' => $model->ref]))
             		echo $account->client->nom;
 				else
-					echo '';
+					echo $model->note;
 			} else {
 				echo $model->note;
 			}

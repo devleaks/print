@@ -46,7 +46,7 @@ use yii\helpers\Url;
 							if($account = Account::findOne(['cash_id' => $model->ref]))
 	                    		return $account->client->nom;
 							else
-								return '';
+								return $model->note;
 						}
 						return $model->note;
 	            },
