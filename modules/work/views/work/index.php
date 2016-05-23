@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Client;
+use app\models\Document;
 use app\models\User;
 use app\models\Work;
 use kartik\helpers\Html;
@@ -30,9 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'order_name',
 				'label' => Yii::t('store', 'Order'),
 	            'value' => function ($model, $key, $index, $widget) {
-                    return User::hasRole(['manager', 'admin']) ? 
-							Html::a($model->document->name, Url::to(['/order/document/view', 'id' => $model->document_id]))
-							 : $model->document->name;
+					if($doc = Document::findOne($model->document_id)) {
+	                    return User::hasRole(['manager', 'admin']) ? 
+								Html::a($doc->name, Url::to(['/order/document/view', 'id' => $model->document_id]))
+								 : $doc->name;
+					} else {
+						return '';
+					}
 	            },
 	            'format' => 'raw',
 				'noWrap' => true,
@@ -42,7 +48,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>Yii::t('store','Order Created By'),
 	            'filter' => User::getList(),
 	            'value'=> function ($model, $key, $index, $widget) {
-					return $model->document->createdBy ? $model->document->createdBy->username : '';
+					if($doc = Document::findOne($model->document_id)) {
+						return $doc->createdBy ? $doc->createdBy->username : '';
+					} else {
+						return '';
+					}
 				},
             	'format' => 'raw',
 				'hAlign' => GridView::ALIGN_CENTER,
@@ -51,7 +61,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'client_name',
 				'label' => Yii::t('store', 'Client'),
 	            'value' => function ($model, $key, $index, $widget) {
-                    return $model->document->client->nom;
+					if($doc = Document::findOne($model->document_id)) {
+						if($cli = Client::findOne($doc->client_id)) {
+		                    return $cli->nom;
+						}
+					}
+					return '';
 	            },
 	            'format' => 'raw',
 	        ],
