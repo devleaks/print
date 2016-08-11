@@ -27,4 +27,4 @@ www.labojjmicheli.be</p>
 
 <p>BNP Paribas Fortis<br/>
 IBAN: BE55 2100 3814 9344 - BIC: GEBABEBB<br/>
-TVA: BE 428 746 631</p>
+TVA: BE 0428 746 631</p>
