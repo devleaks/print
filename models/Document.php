@@ -385,6 +385,16 @@ class Document extends _Document
 	 */
 	public function deleteCascade() {
 		if(! $this->soloOwnsPayments() ) {
+			
+			/** frees BOM if attached to bills */
+			if($this->document_type == Document::TYPE_BILL && $this->bom_bool) {
+				foreach($this->getBoms()->each() as $bom) {
+					Yii::trace('cleaning '.$bom->id);
+					$bom->bill_id = null;
+					if($bom->save())
+						Yii::trace('cleaned '.$bom->id);
+				}
+			}
 
 			/** Detach from website order if any */
 			if($wso = WebsiteOrder::findOne(['document_id' => $this->id])) {

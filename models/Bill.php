@@ -98,7 +98,7 @@ class Bill extends Document {
 	public function createFromBoms($boms) {
 		if(!count($boms) > 0)
 			return null;
-		$boms = Order::find()->andWhere(['bom_bool' => true, 'id' => $boms])->orderBy('created_at');
+		$boms = Order::find()->andWhere(['bom_bool' => true, 'id' => $boms, 'bill_id' => null])->orderBy('created_at');
 		if($boms->exists()) {
 			$model = null;
 			$vat_bool = null;
