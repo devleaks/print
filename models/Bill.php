@@ -236,15 +236,17 @@ class Bill extends Document {
 		Yii::trace('Bottomline: missing='.$more_needed.', available='.$available, 'Bill::addPayment');
 		$available = round($available, 2);
 		if($available > Bill::PAYMENT_LIMIT) { // extra money left, add a credit line
-			$remaining = new Payment([
-				'sale' => Document::nextSale(), // its a new sale transaction...
-				'client_id' => $this->client_id,
-				'payment_method' => $method,
-				'amount' => $available,
-				'status' => Payment::STATUS_OPEN,
-				'account_id' => $account ? $account->id : null,
-			]);
-			$remaining->save();
+			if( !in_array($method, [Payment::USE_CREDIT,Payment::CLEAR]) ) {
+				$remaining = new Payment([
+					'sale' => Document::nextSale(), // its a new sale transaction...
+					'client_id' => $this->client_id,
+					'payment_method' => $method,
+					'amount' => $available,
+					'status' => Payment::STATUS_OPEN,
+					'account_id' => $account ? $account->id : null,
+				]);
+				$remaining->save();
+			}
 			Yii::$app->session->setFlash('info',
 				Yii::t('store', 'Payment amount for bill exceeds amount to pay all BOMs: {0}€ credited and available.', $available));
 		}
