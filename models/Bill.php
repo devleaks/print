@@ -258,7 +258,7 @@ class Bill extends Document {
 	 */
 	public function canModify() {
 		/** once a bill has been emitted, it cannot be changed. */
-		return ($this->status == Document::STATUS_OPEN || $this->status == Document::STATUS_CREATED);
+		return ($this->status == Document::STATUS_OPEN || $this->status == Document::STATUS_CREATED) || User::hasRole(['admin', 'manager', 'compta']);
 	}
 
     /**
