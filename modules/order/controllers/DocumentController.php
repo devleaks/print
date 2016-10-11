@@ -117,6 +117,20 @@ class DocumentController extends Controller
     }
 
     /**
+     * Lists all Order models.
+     * @return mixed
+     */
+    public function actionSum() {
+        $searchModel = new DocumentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index-sum', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
      * Lists all Order models from Website Order.
      * @return mixed
      */

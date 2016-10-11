@@ -48,6 +48,17 @@ $dataProvider->pagination = false;
 				}
 			],
 			[
+	            'label' => Yii::t('store', 'Amount EVAT'),
+				'attribute' => 'total_amount',
+				'format' => 'currency',
+				'hAlign' => GridView::ALIGN_RIGHT,
+				'noWrap' => true,
+				'pageSummary' => true,
+	            'value' => function ($model, $key, $index, $widget) {
+							return $model->price_htva;
+				},
+			],
+			[
 	            'label' => Yii::t('store', 'Amount'),
 				'attribute' => 'total_amount',
 				'format' => 'currency',

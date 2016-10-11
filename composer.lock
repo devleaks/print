@@ -1274,16 +1274,16 @@
         },
         {
             "name": "components/flag-icon-css",
-            "version": "2.4.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lipis/flag-icon-css.git",
-                "reference": "f34e695eed7df4a1fd8035a0a89d287c4355dcc5"
+                "reference": "8a8b0eb53106d9d49c800d6abe106ba0ffd7604f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/f34e695eed7df4a1fd8035a0a89d287c4355dcc5",
-                "reference": "f34e695eed7df4a1fd8035a0a89d287c4355dcc5",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/8a8b0eb53106d9d49c800d6abe106ba0ffd7604f",
+                "reference": "8a8b0eb53106d9d49c800d6abe106ba0ffd7604f",
                 "shasum": ""
             },
             "type": "component",
@@ -1308,7 +1308,7 @@
                 }
             ],
             "description": "CSS for vector based country flags",
-            "time": "2016-08-14 16:10:21"
+            "time": "2016-10-03 14:43:33"
         },
         {
             "name": "dektrium/yii2-user",
@@ -1567,12 +1567,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fightbulc/moment.php.git",
-                "reference": "41335e6c761d27a4255e3377beb316b12a74d769"
+                "reference": "b8e50ad6d3db387b3f143a6ff6a314ef92e17ab7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/41335e6c761d27a4255e3377beb316b12a74d769",
-                "reference": "41335e6c761d27a4255e3377beb316b12a74d769",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/b8e50ad6d3db387b3f143a6ff6a314ef92e17ab7",
+                "reference": "b8e50ad6d3db387b3f143a6ff6a314ef92e17ab7",
                 "shasum": ""
             },
             "require": {
@@ -1622,7 +1622,7 @@
                 "translation",
                 "validate"
             ],
-            "time": "2016-09-13 14:20:19"
+            "time": "2016-09-28 06:17:33"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -1762,16 +1762,16 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.3.4",
+            "version": "v4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "abde5a9611d4939b951fdd00f70a9fec935c7b6b"
+                "reference": "6e1a8ca5ca04d4927540ccf18bbfc3253286bd0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/abde5a9611d4939b951fdd00f70a9fec935c7b6b",
-                "reference": "abde5a9611d4939b951fdd00f70a9fec935c7b6b",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/6e1a8ca5ca04d4927540ccf18bbfc3253286bd0c",
+                "reference": "6e1a8ca5ca04d4927540ccf18bbfc3253286bd0c",
                 "shasum": ""
             },
             "type": "library",
@@ -1811,7 +1811,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2016-08-07 07:50:42"
+            "time": "2016-09-20 05:47:41"
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
@@ -2489,12 +2489,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-markdown.git",
-                "reference": "f4ecb0078805f453104e5f46749ab31bc05463d8"
+                "reference": "447eeac3b9c7618ea58580597d37a865ce30b429"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-markdown/zipball/f4ecb0078805f453104e5f46749ab31bc05463d8",
-                "reference": "f4ecb0078805f453104e5f46749ab31bc05463d8",
+                "url": "https://api.github.com/repos/kartik-v/yii2-markdown/zipball/447eeac3b9c7618ea58580597d37a865ce30b429",
+                "reference": "447eeac3b9c7618ea58580597d37a865ce30b429",
                 "shasum": ""
             },
             "require": {
@@ -2533,7 +2533,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2016-06-06 16:29:06"
+            "time": "2016-09-28 02:52:40"
         },
         {
             "name": "kartik-v/yii2-money",
@@ -3811,16 +3811,16 @@
         },
         {
             "name": "michelf/php-smartypants",
-            "version": "1.6.0-beta1",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelf/php-smartypants.git",
-                "reference": "171a3a2552f33340bf3636bdb4b05eb4e406fbda"
+                "reference": "674badae316a957173c67dd3184e21cb6807d7fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-smartypants/zipball/171a3a2552f33340bf3636bdb4b05eb4e406fbda",
-                "reference": "171a3a2552f33340bf3636bdb4b05eb4e406fbda",
+                "url": "https://api.github.com/repos/michelf/php-smartypants/zipball/674badae316a957173c67dd3184e21cb6807d7fb",
+                "reference": "674badae316a957173c67dd3184e21cb6807d7fb",
                 "shasum": ""
             },
             "require": {
@@ -3845,16 +3845,16 @@
                 {
                     "name": "Michel Fortin",
                     "email": "michel.fortin@michelf.ca",
-                    "homepage": "http://michelf.ca/",
+                    "homepage": "https://michelf.ca/",
                     "role": "Developer"
                 },
                 {
                     "name": "John Gruber",
-                    "homepage": "http://daringfireball.net/"
+                    "homepage": "https://daringfireball.net/"
                 }
             ],
             "description": "PHP SmartyPants",
-            "homepage": "http://michelf.ca/projects/php-smartypants/",
+            "homepage": "https://michelf.ca/projects/php-smartypants/",
             "keywords": [
                 "dashes",
                 "quotes",
@@ -3862,7 +3862,7 @@
                 "typographer",
                 "typography"
             ],
-            "time": "2013-07-31 18:13:10"
+            "time": "2016-10-10 18:14:08"
         },
         {
             "name": "mikevanriel/text-to-latex",
@@ -3905,16 +3905,16 @@
         },
         {
             "name": "miloschuman/yii2-highcharts-widget",
-            "version": "v4.2.6",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/miloschuman/yii2-highcharts.git",
-                "reference": "1188761f085d191b270ffefacd788c77f8796ca0"
+                "reference": "44fbbc7883112b812e7e3cc2ef807ffb075c0584"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/miloschuman/yii2-highcharts/zipball/1188761f085d191b270ffefacd788c77f8796ca0",
-                "reference": "1188761f085d191b270ffefacd788c77f8796ca0",
+                "url": "https://api.github.com/repos/miloschuman/yii2-highcharts/zipball/44fbbc7883112b812e7e3cc2ef807ffb075c0584",
+                "reference": "44fbbc7883112b812e7e3cc2ef807ffb075c0584",
                 "shasum": ""
             },
             "require": {
@@ -3949,7 +3949,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-08-07 15:32:52"
+            "time": "2016-10-03 14:06:06"
         },
         {
             "name": "mpdf/mpdf",
@@ -4233,22 +4233,30 @@
         },
         {
             "name": "psr/log",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=5.3.0"
+            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
-                "psr-0": {
-                    "Psr\\Log\\": ""
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4262,12 +4270,13 @@
                 }
             ],
             "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
             "keywords": [
                 "log",
                 "psr",
                 "psr-3"
             ],
-            "time": "2012-12-21 11:40:51"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "raoul2000/yii2-bootswatch-asset",
