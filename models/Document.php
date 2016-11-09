@@ -183,6 +183,14 @@ class Document extends _Document
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getAccountLines()
+    {
+        return $this->hasMany(DocumentAccountLine::className(), ['document_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getPayments()
     {
         return $this->hasMany(Payment::className(), ['sale' => 'sale']);

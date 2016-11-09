@@ -1,6 +1,12 @@
 <?php
 use app\models\Parameter;
 
+// switch will be removed when transition is over
+if(Parameter::isTrue('application', 'new_accounting')) {
+	echo $this->render('_extract_2017' , ['models' => $models, 'clients' => $clients]);
+	return;
+}
+
 $year = null;
 if($model = $models->one()) {
 	$year = substr($model->name, 2, 2);

@@ -67,7 +67,6 @@
         "samdark/yii2-webshell": "dev-master"
   },
     "require-dev": {
-		"yiisoft/yii2-codeception": "*",
 		"yiisoft/yii2-debug": "*",
 		"yiisoft/yii2-gii": "*",
 		"yiisoft/yii2-faker": "*",

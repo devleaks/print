@@ -97,7 +97,7 @@ class Client extends _Client
 	}
 
 	public static function sanitizePopsy($str, $maxlen = 80) {
-		return preg_replace('/["]/', ' ', preg_replace("/[']/", ' ', substr($str, 0, $maxlen)));
+		return trim(preg_replace('/["]/', ' ', preg_replace("/[']/", ' ', substr($str, 0, $maxlen))));
 	}
 	
 	public static function getUniqueIdentifier( $name ) {

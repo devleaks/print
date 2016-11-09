@@ -9,6 +9,7 @@ use app\models\CaptureExtraction;
 use app\models\Client;
 use app\models\Credit;
 use app\models\Document;
+use app\models\Parameter;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
@@ -189,6 +190,14 @@ class ExtractionController extends Controller
 			            'clients' => Client::find()->where(['id' => $client_ids]),
 			            'models' => Document::find()->where(['id' => $gooddocs]),
 			        ]);
+			        $extraction_clients = $this->renderPartial('_extract', [
+			            'clients' => Client::find()->where(['id' => $client_ids]),
+			            'models' => null,
+			        ]);
+			        $extraction_bills = $this->renderPartial('_extract', [
+			            'clients' => null,
+			            'models' => Document::find()->where(['id' => $gooddocs]),
+			        ]);
 
 					// 4. Report bad clients and bad docs
 					$badreport = $this->renderPartial('_bad', [
@@ -198,12 +207,24 @@ class ExtractionController extends Controller
 			        ]);
 
 					$dirname  = RuntimeDirectoryManager::getDocumentRoot();
-					$filename = RuntimeDirectoryManager::getFilename(RuntimeDirectoryManager::EXTRACTION, 'popsi');
+					$prefix = Parameter::getTextValue('compta','filename','compta');
+					$filename = RuntimeDirectoryManager::getFilename(RuntimeDirectoryManager::EXTRACTION, $prefix);
 					$data = mb_convert_encoding($extraction, 'ISO-8859-1', 'auto');
 					file_put_contents($dirname.$filename, $data);
-
 					$link = Html::a($filename, Url::to(['download', 'file' => $filename]));					
-					Yii::$app->session->setFlash('success', Yii::t('store', 'Extracted in {file}.', ['file' => $link]));
+
+					$filename = RuntimeDirectoryManager::getFilename(RuntimeDirectoryManager::EXTRACTION, $prefix.'_clients');
+					$data = mb_convert_encoding($extraction_clients, 'ISO-8859-1', 'auto');
+					file_put_contents($dirname.$filename, $data);
+					$link_clients = Html::a($filename, Url::to(['download', 'file' => $filename]));					
+
+					$filename = RuntimeDirectoryManager::getFilename(RuntimeDirectoryManager::EXTRACTION, $prefix.'_bills');
+					$data = mb_convert_encoding($extraction_bills, 'ISO-8859-1', 'auto');
+					file_put_contents($dirname.$filename, $data);
+					$link_bills = Html::a($filename, Url::to(['download', 'file' => $filename]));					
+
+					Yii::$app->session->setFlash('success', Yii::t('store', 'Extracted in {file} (everything), {clients} (clients only), and {bills} (bills only).',
+							['file' => $link, 'clients' => $link_clients, 'bills' => $link_bills]));
 			        return $this->renderContent($badreport . '<pre>'.$extraction.'</pre>');
 				}
 			}
