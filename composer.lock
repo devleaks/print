@@ -3811,27 +3811,22 @@
         },
         {
             "name": "michelf/php-smartypants",
-            "version": "1.7.1",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelf/php-smartypants.git",
-                "reference": "07021d340f6c08e2c49c442eed3986c4b8d44c52"
+                "reference": "d1b0848f26ff6e2260da2eb75ea9175d84c53878"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-smartypants/zipball/07021d340f6c08e2c49c442eed3986c4b8d44c52",
-                "reference": "07021d340f6c08e2c49c442eed3986c4b8d44c52",
+                "url": "https://api.github.com/repos/michelf/php-smartypants/zipball/d1b0848f26ff6e2260da2eb75ea9175d84c53878",
+                "reference": "d1b0848f26ff6e2260da2eb75ea9175d84c53878",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-lib": "1.6.x-dev"
-                }
-            },
             "autoload": {
                 "psr-0": {
                     "Michelf": ""
@@ -3862,7 +3857,7 @@
                 "typographer",
                 "typography"
             ],
-            "time": "2016-10-16 21:08:01"
+            "time": "2016-11-13 21:14:11"
         },
         {
             "name": "mikevanriel/text-to-latex",

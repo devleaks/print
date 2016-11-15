@@ -248,6 +248,7 @@ class DocumentLine extends _DocumentLine
 					//Yii::trace('htva='.$this->extra_htva, 'DocumentLine::updatePrice');
 				}
 			}
+			// update document_line set price_tvac = (if(isnull(price_htva),0,price_htva) + if(isnull(extra_htva),0,extra_htva)) * (1 + (if(isnull(vat), 0, vat) / 100))
 			$this->price_tvac = ($this->price_htva + $this->extra_htva) * (1 + ($this->vat / 100));
 		} // else, ignore global rebate line
 	}
