@@ -231,7 +231,7 @@ class DocumentLine extends _DocumentLine
 			$this->vat = $item->taux_de_tva;
 			// this line regular amount without rebate/supplement
 			$this->price_htva = $this->quantity * $this->unit_price;
-			$this->price_tvac = $this->price_htva * (1 + ($this->vat / 100));
+			// $this->price_tvac = $this->price_htva * (1 + ($this->vat / 100));
 			// extra amount (signed)
 			if(isset($this->extra_type) && ($this->extra_type != '')) {
 				if(isset($this->extra_amount) && ($this->extra_amount > 0)) {
@@ -248,6 +248,7 @@ class DocumentLine extends _DocumentLine
 					//Yii::trace('htva='.$this->extra_htva, 'DocumentLine::updatePrice');
 				}
 			}
+			$this->price_tvac = ($this->price_htva + $this->extra_htva) * (1 + ($this->vat / 100));
 		} // else, ignore global rebate line
 	}
 
