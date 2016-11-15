@@ -3,7 +3,7 @@
 /*
 DOCTYPE,DBKCODE,DBKTYPE,DOCNUMBER,DOCORDER,OPCODE,ACCOUNTGL,ACCOUNTRP,BOOKYEAR,PERIOD,DATE,DATEDOC,DUEDATE,COMMENT,COMMENTEXT,AMOUNT,AMOUNTEUR,VATBASE,VATCODE,CURRAMOUNT,CURRCODE,CUREURBASE,VATTAX,VATIMPUT,CURRATE,REMINDLEV,MATCHNO,OLDDATE,ISMATCHED,ISLOCKED,ISIMPORTED,ISPOSITIVE,ISTEMP,MEMOTYPE,ISDOC,DOCSTATUS,DICFROM,CODAKEY,WOW,QUANTITY,DISCDATE,DISCAMOUNT,DATESTAMP,TIMESTAMP,USERNAME
 
-1      ,VENTES ,      2,  1602907,     001,      ,   400000,      107,       4,    06,2020061016,2020061016,20160610,,       ,,145.22,137,,,,,8.22,,,,,,,,,,,,,,,
+1      ,VENTES ,      2,  1602907,     001,      ,   400000,      107,       4,    06,2020061016,2020061016,20160610,,       ,      ,145.22   ,137    ,       ,          ,         ,         ,  8.22,        , ,      ,         ,       ,       ,         ,        ,          ,          ,      ,        ,     ,         ,
 3,VENTES,2,1602907,002,,700100,107,4,06,2020061016,2020061016,20160610,107,,,-137,,,,,,,211200,,,,,,,,,,,,,,
 3,VENTES,2,1602907,VAT,FIXED,451000,107,4,06,2020061016,2020061016,20160610,107,,,-8.22,137,211200,,,,,,,,,,,,,,,,,,,
 1,VENTES,2,1602908,001,,400000,920,4,06,2020061016,2020061016,20160610,,,,91.9,86.7,,,,,5.2,,,,,,,,,,,,,,,
@@ -29,4 +29,4 @@ DOCTYPE,DBKCODE,DBKTYPE,DOCNUMBER,DOCORDER,OPCODE,ACCOUNTGL,ACCOUNTRP,BOOKYEAR,P
 
 */
 ?>
-1,VENTES,2,<?= $model->document->name ?>,<?= $model->position ?>,,<?= $model->comptabilite ?>,ACCOUNTRP,<?= substr($model->document->name, 0, 4) ?>,<?= date('m', strtotime($model->document->created_at)) ?>,DATE,<?= date('Ymd', strtotime($model->document->created_at)) ?>,<?= date('Ymd', strtotime("+ 1 month", strtotime($model->document->created_at))) ?>,,,AMOUNT,<?= $model->total_price_htva + $model->total_extra_htva ?>,VATBASE,VATCODE,CURRAMOUNT,CURRCODE,CUREURBASE,VATTAX,VATIMPUT,CURRATE,,,,,,,,,,,,,,,,,,,,
+1,VENTES,2,<?= $model->document->name ?>,<?= $model->position ?>,,<?= $model->comptabilite ?>,,<?= substr($model->document->name, 0, 4) ?>,<?= date('m', strtotime($model->document->created_at)) ?>,DATE,<?= date('Ymd', strtotime($model->document->created_at)) ?>,<?= date('Ymd', strtotime("+ 1 month", strtotime($model->document->created_at))) ?>,,,,<?= $model->total_price_htva + $model->total_extra_htva ?>,,,,,,<?= $model->total_vat ?>,,,,,,,,,,,,,,,,,,,,,,

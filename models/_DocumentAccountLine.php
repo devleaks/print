@@ -31,7 +31,7 @@ class _DocumentAccountLine extends \yii\db\ActiveRecord
         return [
             [['document_id'], 'required'],
             [['document_id'], 'integer'],
-            [['vat', 'total_price_htva', 'total_extra_htva'], 'number'],
+            [['taux_de_tva', 'total_vat', 'total_price_htva', 'total_extra_htva'], 'number'],
             [['comptabilite'], 'string', 'max' => 20],
         ];
     }
@@ -42,11 +42,12 @@ class _DocumentAccountLine extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'document_id' => Yii::t('store', 'Document ID'),
-            'comptabilite' => Yii::t('store', 'Comptabilite'),
-            'vat' => Yii::t('store', 'Vat'),
-            'total_price_htva' => Yii::t('store', 'Total Price Htva'),
-            'total_extra_htva' => Yii::t('store', 'Total Extra Htva'),
+            'document_id' => Yii::t('store', 'Document'),
+            'comptabilite' => Yii::t('store', 'Accounting'),
+            'taux_de_tva' => Yii::t('store', 'VAT Rate'),
+            'total_vat' => Yii::t('store', 'Total VAT'),
+            'total_price_htva' => Yii::t('store', 'Total Price HTVA'),
+            'total_extra_htva' => Yii::t('store', 'Total Extra HTVA'),
         ];
     }
 }
