@@ -29,4 +29,4 @@ DOCTYPE,DBKCODE,DBKTYPE,DOCNUMBER,DOCORDER,OPCODE,ACCOUNTGL,ACCOUNTRP,BOOKYEAR,P
 
 */
 ?>
-1,VENTES,2,<?= $order->name ?>,<?= $model->position ?>,,<?= $model->comptabilite ?>,,<?= substr($order->name, 0, 4) ?>,<?= date('m', strtotime($order->created_at)) ?>,DATE,<?= date('Ymd', strtotime($order->created_at)) ?>,<?= date('Ymd', strtotime("+ 1 month", strtotime($order->created_at))) ?>,,,,<?= $model->total_price_htva + $model->total_extra_htva ?>,,,,,,<?= $model->total_vat ?>,,,,,,,,,,,,,,,,,,,,,,
+1,VENTES,2,<?= $order->name ?>,<?= $model->position ?>,,<?= $model->comptabilite ?>,,<?= substr($order->name, 0, 4) ?>,<?= date('m', strtotime($order->created_at)) ?>,<?= date('m', strtotime($order->due_date)) ?>,<?= date('Ymd', strtotime($order->created_at)) ?>,<?= date('Ymd', strtotime("+ 1 month", strtotime($order->created_at))) ?>,,,,<?= $model->total_price_htva + $model->total_extra_htva ?>,,,,,,<?= $model->total_vat ?>,,,,,,,,,,,,,,,,,,,,,,

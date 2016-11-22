@@ -24,14 +24,21 @@ select dl.document_id as document_id,
 	$total = 0;
 	$total_vat = 0;
 	$count = 0;
+	$vat_lines = [];
 	foreach($order->getAccountLines()->orderBy('comptabilite,taux_de_tva')->each() as $al) {
 //	foreach($model->each() as $al) {
 		$al->position = ++$count;
 		echo $this->render('_extract_bill_line_2017' , ['model' => $al, 'order' => $order]);
 		$total += ($al->total_price_htva + $al->total_extra_htva);
+		$vat_rate = number_format($al->taux_de_tva, 2); // normalize VAT rate format: 21.50, 7.60, etc.
+		if(isset($vat_lines[$vat_rate])) {
+			$vat_lines[$vat_rate] += $al->total_vat;
+		} else {
+			$vat_lines[$vat_rate] = $al->total_vat;
+		}
 		$total_vat += $al->total_vat;
 	}
-	echo $this->render('_extract_bill_line_vat_2017' , ['order' => $order]);
+	echo $this->render('_extract_bill_line_vat_2017' , ['vat_lines' => $vat_lines, 'order' => $order]);
 	if($total != $order->price_htva) {
 		Yii::$app->session->addFlash('warning', Yii::t('store', 'Checksum error: {0} HTVA differs: {1} vs. {2}.', [$order->name, $total, $order->price_htva]));
 	}

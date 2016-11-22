@@ -12,5 +12,8 @@ if($order->vat_bool || $vat == 0) // no VAT line
 	return;
 	
 // Yii::$app->session->addFlash('info', Yii::t('store', '{0} OK.', $order->name));
+foreach($vat_lines as $vat_rate => $vat_amount) {
+	echo '3,VENTES,2,'.$order->name.',VAT,FIXED,451000,769,4,'.date('m', strtotime($order->created_at)).','.date('m', strtotime($order->due_date)).','.date('Ymd', strtotime($order->created_at)).','.date('Ymd', strtotime("+ 1 month", strtotime($order->created_at))).',769,,,'.$vat_amount.','.$vat_rate.',211400,,,,,,,,,,,,,,,,,,,';
+}
 ?>
-3,VENTES,2,<?= $order->name ?>,VAT,FIXED,1010101,769,4,<?= date('m', strtotime($order->created_at)) ?>,DATE,<?= date('Ymd', strtotime($order->created_at)) ?>,<?= date('Ymd', strtotime("+ 1 month", strtotime($order->created_at))) ?>,769,,,<?= $vat ?>,63.6,211400,,,,,,,,,,,,,,,,,,,
+
