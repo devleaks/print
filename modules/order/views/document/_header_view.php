@@ -65,7 +65,10 @@ $website_order_link = $wo ? Html::a(($wo->order_id ? $wo->order_id : $wo->id. ' 
  			                'value'=> $model->parent_id ? Html::a($model->parent->name, Url::to(['/order/document/view', 'id' => $model->parent_id])) : 
 								(($model->bom_bool && $model->document_type == Document::TYPE_BILL) ?
 								 Html::a('<span class="label label-info">'.Yii::t('store', 'Boms').'</span>',
-									Url::to(['/order/document/boms', 'id' => $model->id])) : ''),
+									Url::to(['/order/document/boms', 'id' => $model->id])) :
+									(($model->bom_bool && $model->document_type == Document::TYPE_ORDER && $model->bill_id) ?
+									 Html::a('<span class="label label-info">'.Yii::t('store', 'Bill').'</span>',
+										Url::to(['/order/document/view', 'id' => $model->bill_id])) : '')),
 							'format' => 'raw',
 							'options' => ['readonly' => true]
 			            ],
