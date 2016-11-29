@@ -18,6 +18,13 @@ select dl.document_id as document_id,
           i.comptabilite,
           dl.vat
 
+CREATE ALGORITHM=UNDEFINED DEFINER=`yii2print`@`%` SQL SECURITY DEFINER VIEW `document_account_line`
+AS SELECT
+   `dl`.`document_id` AS `document_id`,
+   `i`.`comptabilite` AS `comptabilite`,
+   `dl`.`vat` AS `taux_de_tva`,sum(if(isnull(`dl`.`price_htva`),0,`dl`.`price_htva`)) AS `total_price_htva`,sum(if(isnull(`dl`.`extra_htva`),0,`dl`.`extra_htva`)) AS `total_extra_htva`,(sum(if(isnull(`dl`.`price_htva`),0,`dl`.`price_htva`)) + sum(if(isnull(`dl`.`extra_htva`),0,`dl`.`extra_htva`))) AS `total_htva`,if(isnull(`dl`.`vat`),0,sum(round(((if(isnull(`dl`.`extra_htva`),0,`dl`.`extra_htva`) + if(isnull(`dl`.`price_htva`),0,`dl`.`price_htva`)) * (`dl`.`vat` / 100)),2))) AS `total_vat`,if(isnull(`dl`.`vat`),0,round(((sum(if(isnull(`dl`.`price_htva`),0,`dl`.`price_htva`)) + sum(if(isnull(`dl`.`extra_htva`),0,`dl`.`extra_htva`))) * (`dl`.`vat` / 100)),2)) AS `total_vat_ctrl`
+FROM (`document_line` `dl` join `item` `i`) where (`dl`.`item_id` = `i`.`id`) group by `dl`.`document_id`,`i`.`comptabilite`,`dl`.`vat`;
+
 */
 ?>
 <?php

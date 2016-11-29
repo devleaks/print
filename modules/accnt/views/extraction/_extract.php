@@ -7,11 +7,9 @@ if(Parameter::isTrue('application', 'new_accounting')) {
 	return;
 }
 
-$year = null;
-if($model = $models->one()) {
+$year = date('y');
+if(($models != null) && ($model = $models->one())) {
 	$year = substr($model->name, 2, 2);
-} else {
-	$year = date('y');
 }
 $ver = Parameter::isTrue('popsy', 'extract_version') ? ' Rel. '.`git describe --tags` : '
 ';
@@ -23,6 +21,6 @@ IgnoreAnalClosed:Y
 DossierSelect:001
 AcctingSelect:<?= $year ?>
 
-<?= $this->render('_extract_clients' , ['model' => $clients]) ?>
+<?php if($clients != null) echo $this->render('_extract_clients' , ['model' => $clients]) ?>
 
-<?= $this->render('_extract_bills' , ['model' => $models]) ?>
+<?php if($models != null)  echo $this->render('_extract_bills' , ['model' => $models]) ?>
