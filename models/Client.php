@@ -100,6 +100,10 @@ class Client extends _Client
 		return trim(preg_replace('/["]/', ' ', preg_replace("/[']/", ' ', substr($str, 0, $maxlen))));
 	}
 	
+	public static function sanitizeWinbooks($str, $maxlen = 80) {
+		return trim(preg_replace('!\s+!', ' ', preg_replace('/[,]/', ' ', substr($str, 0, $maxlen))));
+	}
+	
 	public static function getUniqueIdentifier( $name ) {
 		$maxlen = 9;
 		$change = 0;

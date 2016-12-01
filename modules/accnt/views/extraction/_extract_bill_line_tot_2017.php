@@ -33,9 +33,9 @@ $record['DOCTYPE'] = 1;
 $record['DBKCODE'] = 'VENTE';
 $record['DBKTYPE'] = 2;
 $record['DOCNUMBER'] = $order->name;
-$record['DOCORDER'] = str_pad($model->position, 3, '0', STR_PAD_LEFT);
+$record['DOCORDER'] = '001';
 $record['OPCODE'] = '';
-$record['ACCOUNTGL'] = $model->comptabilite.'0';
+$record['ACCOUNTGL'] = '450000';
 $record['ACCOUNTRP'] = '';
 $record['BOOKYEAR'] = substr($order->name, 0, 4);
 $record['PERIOD'] = date('m', strtotime($order->created_at));
@@ -45,14 +45,14 @@ $record['DUEDATE'] = date('Ymd', strtotime("+ 1 month", strtotime($order->create
 $record['COMMENT'] = '';
 $record['COMMENTEXT'] = '';
 $record['AMOUNT'] = '';
-$record['AMOUNTEUR'] = $model->total_price_htva + $model->total_extra_htva;
+$record['AMOUNTEUR'] = $order->price_tvac;
 $record['VATBASE'] = '';
 $record['VATCODE'] = '';
 $record['CURRAMOUNT'] = '';
 $record['CURRCODE'] = '';
 $record['CUREURBASE'] = '';
 $record['VATTAX'] = '';
-$record['VATIMPUT'] = $model->total_vat;
+$record['VATIMPUT'] = $order->price_tvac - $order->price_htva;
 $record['CURRATE'] = '';
 $record['REMINDLEV'] = '';
 $record['MATCHNO'] = '';
@@ -75,5 +75,5 @@ $record['DATESTAMP'] = '';
 $record['TIMESTAMP'] = '';
 $record['USERNAME'] = '';
 
+echo implode(',', $record)."\r\n";
 ?>
-<?= implode(',', $record)."\r\n" ?>

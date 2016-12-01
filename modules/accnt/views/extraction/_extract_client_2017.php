@@ -20,6 +20,11 @@ if(in_array($country_code, $COUNTRY_CODES)) { // if first two characters are a v
 } else {
 	$country_code = 'BE'; // country code is not valid, defaults to Belgium. VAT number is probably a simple VAT number without country prefix.
 }
+
+if($country_code == 'BE' && $has_vat) { // format XXXX.XXX.XXX for Belgium
+	$vat_clean = substr($model->numero_tva_norm, 2, 4).'.'.substr($model->numero_tva_norm, 6, 3).'.'.substr($model->numero_tva_norm, 9, 3);
+}
+
 /*
 NUMBER,TYPE,NAME1,NAME2,CIVNAME1,CIVNAME2,ADRESS1,ADRESS2,VATCAT,COUNTRY,VATNUMBER,PAYCODE,TELNUMBER,FAXNUMBER,BNKACCNT,ZIPCODE,CITY,DEFLTPOST,LANG,CATEGORY,CENTRAL,VATCODE,CURRENCY,LASTREMLEV,LASTREMDAT,TOTDEB1,TOTCRE1,TOTDEBTMP1,TOTCRETMP1,TOTDEB2,TOTCRE2,TOTDEBTMP2,TOTCRETMP2,ISLOCKED,MEMOTYPE,ISDOC,F28150,WBMODIFIED,WOW,DISCPRCT,DISCTIME,EMAIL,REG28150,PAYLOCKED,TOAPPROVE,EREMINDERS,IBANAUTO,BICAUTO,STATUS281,SECNAME281,FIRNAME281,NUM281,ZON1,INVISIBLE,INTRASTAT,DATESTAMP,TIMESTAMP,USERNAME
 
@@ -31,5 +36,68 @@ NUMBER,TYPE,NAME1,NAME2,CIVNAME1,CIVNAME2,ADRESS1,ADRESS2,VATCAT,COUNTRY,VATNUMB
 0006,1,NE PLUS UTI A LA VRAIE BELLE EPOQUE,,,,3-5 RUE DU PROGRES,,1,BE,0822.488.239,,02-201.90.79,,,BE-1210,St-Josse-ten-Noode,,,,,,,,,,,,,,,,,,,,0,T,,,,NULL,,,
 
 */
+
+$record['NUMBER'] = $model->comptabilite;
+$record['TYPE'] = 1;
+$record['NAME1'] = Client::sanitizeWinbooks($model->nom.' '.$model->prenom, 40);
+$record['NAME2'] = Client::sanitizeWinbooks($model->autre_nom, 40);
+$record['CIVNAME1'] = $model->titre;
+$record['CIVNAME2'] = '';
+$record['ADRESS1'] = Client::sanitizeWinbooks($model->adresse, 40);
+$record['ADRESS2'] = '';
+$record['VATCAT'] = ($has_vat ? 1 : 3);
+$record['COUNTRY'] = Parameter::getName('pays', $model->pays);
+$record['VATNUMBER'] = ($has_vat ? $vat_clean : '');
+$record['PAYCODE'] = '';
+$record['TELNUMBER'] = $model->bureau;
+$record['FAXNUMBER'] = $model->fax_bureau;
+$record['BNKACCNT'] = '';
+$record['ZIPCODE'] = $model->code_postal;
+$record['CITY'] = Client::sanitizeWinbooks($model->localite);
+$record['DEFLTPOST'] = '';
+$record['LANG'] = strtoupper($model->lang);
+$record['CATEGORY'] = '';
+$record['CENTRAL'] = '';
+$record['VATCODE'] = '';
+$record['CURRENCY'] = '';
+$record['LASTREMLEV'] = '';
+$record['LASTREMDAT'] = '';
+$record['TOTDEB1'] = '';
+$record['TOTCRE1'] = '';
+$record['TOTDEBTMP1'] = '';
+$record['TOTCRETMP1'] = '';
+$record['TOTDEB2'] = '';
+$record['TOTCRE2'] = '';
+$record['TOTDEBTMP2'] = '';
+$record['TOTCRETMP2'] = '';
+$record['ISLOCKED'] = '';
+$record['MEMOTYPE'] = '';
+$record['ISDOC'] = '';
+$record['F28150'] = '';
+$record['WBMODIFIED'] = '';
+$record['WOW'] = '';
+$record['DISCPRCT'] = '';
+$record['DISCTIME'] = '';
+$record['EMAIL'] = '';
+$record['REG28150'] = '';
+$record['PAYLOCKED'] = '';
+$record['TOAPPROVE'] = '';
+$record['EREMINDERS'] = '';
+$record['IBANAUTO'] = '';
+$record['BICAUTO'] = '';
+$record['STATUS281'] = '';
+$record['SECNAME281'] = '0';
+$record['FIRNAME281'] = 'T';
+$record['NUM281'] = '';
+$record['ZON1'] = '';
+$record['INVISIBLE'] = '';
+$record['INTRASTAT'] = 'NULL';
+$record['DATESTAMP'] = '';
+$record['TIMESTAMP'] = '';
+$record['USERNAME'] = '';
+
+// $rec = array_map(Client::sanitizeWinbooks, $record);
+
+echo implode(',', $record)."\r\n"
+
 ?>
-<?= $model->id ?>,1,<?= Client::sanitizePopsy($model->nom.' '.$model->prenom, 40) ?>,<?= Client::sanitizePopsy($model->autre_nom, 40) ?>,<?= $model->titre ?>,,<?= ($has_vat ? 1 : 3) ?>,<?= Parameter::getName('pays', $model->pays) ?>,<?= $vat_clean ?>,,<?= $model->bureau ?>,<?= $model->fax_bureau ?>,,<?= $model->code_postal ?>,<?= $model->localite ?>,,<?= strtoupper($model->lang) ?>,,,,,,,,,,,,,,,,,,0,T,,,,NULL,,,
