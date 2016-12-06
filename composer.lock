@@ -1601,12 +1601,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fightbulc/moment.php.git",
-                "reference": "de8e0892fa889ae2770b52064f5b2da1b19036ae"
+                "reference": "15b936e94929b8d774d0c35c1b6a5184703dfa8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/de8e0892fa889ae2770b52064f5b2da1b19036ae",
-                "reference": "de8e0892fa889ae2770b52064f5b2da1b19036ae",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/15b936e94929b8d774d0c35c1b6a5184703dfa8d",
+                "reference": "15b936e94929b8d774d0c35c1b6a5184703dfa8d",
                 "shasum": ""
             },
             "require": {
@@ -1656,7 +1656,7 @@
                 "translation",
                 "validate"
             ],
-            "time": "2016-11-05 20:36:51"
+            "time": "2016-12-05 09:36:24"
         },
         {
             "name": "fortawesome/font-awesome",
