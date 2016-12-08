@@ -23,7 +23,8 @@ $this->title = 'Labo JJ Micheli @Work';
                 <p><a class="btn btn-primary" href="<?=Yii::$app->homeUrl?>accnt/">Comptabilité &raquo;</a></p>
 				<p>
 					&raquo; <a href="<?= Url::to(['/accnt/payment/index-by-type']) ?>"><?= Yii::t('store', 'Daily Summary')?>
-					&raquo; <a href="<?= Url::to(['/accnt/extraction']) ?>"><?= Yii::t('store', 'Monthly Extraction')?></a>
+					&raquo; <a href="<?= Url::to(['/accnt/extraction']) ?>"><?= Yii::t('store', 'Monthly Extraction')?>
+					<?= '( '.Html::a(Parameter::isTrue('application', 'new_accounting') ? 'Winbook' : 'Popsy', Url::to(['/accnt/extraction/sam'])).' )' ?></a>
 					&raquo; <a href="<?= Url::to(['/accnt/pdf', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Documents')?></a></li>
 					&raquo; <a href="<?= Url::to(['/accnt/cash']) ?>"><?= Yii::t('store', 'Cash')?></a></li>
 				</p>

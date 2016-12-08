@@ -72,6 +72,21 @@ class ExtractionController extends Controller
     }
 
 
+	public function actionSam() {
+		if($model = Parameter::findOne(['domain' => 'application', 'name' => 'new_accounting'])) {
+			$model->value_int = $model->value_int ? 0 : 1;
+		} else {
+			$model = new Parameter();
+			$model->domain = 'application';
+			$model->name = 'new_accounting';
+			$model->lang = 'fr';
+			$model->value_int = 1;
+		}
+		$model->save();
+		return $this->redirect(['/accnt']);
+	}
+
+
     /**
      * Displays a single Extraction model.
      * @param integer $id

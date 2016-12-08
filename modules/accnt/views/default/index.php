@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Parameter;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = Yii::t('store', 'Accounting');
@@ -35,7 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<div class="col-lg-6">
 		<ul>
-		    <li><a href="<?= Url::to(['/accnt/extraction']) ?>"><?= Yii::t('store', 'Monthly Extraction')?></a><?= Parameter::isTrue('application', 'new_accounting') ? ' ' .Yii::t('store', 'New') : '' ?></li>
+		    <li><a href="<?= Url::to(['/accnt/extraction']) ?>"><?= Yii::t('store', 'Monthly Extraction')?></a>
+		<?= '( '.Html::a(Parameter::isTrue('application', 'new_accounting') ? 'Winbook' : 'Popsy', Url::to(['/accnt/extraction/sam'])).' )' ?></li>
 		    <li><a href="<?= Url::to(['/accnt/pdf', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Documents to Print')?></a></li>
 		</ul>
 		<ul>
