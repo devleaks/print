@@ -1,4 +1,3 @@
-USE yii2print;
 create or replace view document_account_line
 as
 select dl.document_id as document_id,

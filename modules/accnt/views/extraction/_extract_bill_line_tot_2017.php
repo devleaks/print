@@ -1,4 +1,5 @@
 <?php
+use app\models\Document;
 /*
 DOCTYPE,DBKCODE,DBKTYPE,DOCNUMBER,DOCORDER,OPCODE,ACCOUNTGL,ACCOUNTRP,BOOKYEAR,PERIOD,DATE,DATEDOC,DUEDATE,COMMENT,COMMENTEXT,AMOUNT,AMOUNTEUR,VATBASE,VATCODE,CURRAMOUNT,CURRCODE,CUREURBASE,VATTAX,VATIMPUT,CURRATE,REMINDLEV,MATCHNO,OLDDATE,ISMATCHED,ISLOCKED,ISIMPORTED,ISPOSITIVE,ISTEMP,MEMOTYPE,ISDOC,DOCSTATUS,DICFROM,CODAKEY,WOW,QUANTITY,DISCDATE,DISCAMOUNT,DATESTAMP,TIMESTAMP,USERNAME
 
@@ -31,29 +32,29 @@ $vat = $order->price_tvac - $order->price_htva;
 $no_vat = ($order->vat_bool || $vat == 0);
 
 $record['DOCTYPE'] = 1;
-$record['DBKCODE'] = 'VENTE';
-$record['DBKTYPE'] = 2;
-$record['DOCNUMBER'] = $order->name;
+$record['DBKCODE'] = $order->document_type == Document::TYPE_BILL ? 'FV1' : ($order->document_type == Document::TYPE_CREDIT ? 'NV1' : '???');
+$record['DBKTYPE'] = $order->document_type == Document::TYPE_BILL ? 2 : ($order->document_type == Document::TYPE_CREDIT ? 3 : '???');
+$record['DOCNUMBER'] = str_replace('-', '', $order->name);
 $record['DOCORDER'] = '001';
 $record['OPCODE'] = '';
-$record['ACCOUNTGL'] = '400000';
-$record['ACCOUNTRP'] = '';
-$record['BOOKYEAR'] = substr($order->name, 0, 4);
+$record['ACCOUNTGL'] = '4000000';
+$record['ACCOUNTRP'] = $order->client->comptabilite;
+$record['BOOKYEAR'] = substr($order->name, 0, 4) - 2014;
 $record['PERIOD'] = date('m', strtotime($order->created_at));
-$record['DATE'] = date('m', strtotime($order->due_date));
+$record['DATE'] = date('Ymd', strtotime($order->due_date));
 $record['DATEDOC'] = date('Ymd', strtotime($order->created_at));
 $record['DUEDATE'] = date('Ymd', strtotime("+ 1 month", strtotime($order->created_at)));
 $record['COMMENT'] = '';
 $record['COMMENTEXT'] = '';
 $record['AMOUNT'] = '';
 $record['AMOUNTEUR'] = ($no_vat ? $order->price_htva : $order->price_tvac);
-$record['VATBASE'] = '';
+$record['VATBASE'] = $order->price_htva;
 $record['VATCODE'] = '';
 $record['CURRAMOUNT'] = '';
 $record['CURRCODE'] = '';
 $record['CUREURBASE'] = '';
-$record['VATTAX'] = '';
-$record['VATIMPUT'] = ($no_vat ? '' : $order->price_tvac - $order->price_htva);
+$record['VATTAX'] = ($no_vat ? 0 : $order->price_tvac - $order->price_htva);
+$record['VATIMPUT'] = '';
 $record['CURRATE'] = '';
 $record['REMINDLEV'] = '';
 $record['MATCHNO'] = '';

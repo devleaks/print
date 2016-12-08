@@ -70,15 +70,11 @@ $dataProvider->pagination = false;
 				},
 			],
 			[
-				'attribute' => 'due_date',
-				'format' => 'date',
-			],
-			[
-	            'label' => Yii::t('store', 'Last Update'),
-				'attribute' => 'updated_at',
+	            'label' => Yii::t('store', 'Created At'),
+				'attribute' => 'created_at',
 				'format' => 'datetime',
 				'value' => function ($model, $key, $index, $widget) {
-					return new DateTime($model->updated_at);
+					return new DateTime($model->created_at);
 				}
 			],
 	        [

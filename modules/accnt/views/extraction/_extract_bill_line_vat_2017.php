@@ -1,4 +1,5 @@
 <?php
+use app\models\Document;
 /*
 DOCTYPE,DBKCODE,DBKTYPE,DOCNUMBER,DOCORDER,OPCODE,ACCOUNTGL,ACCOUNTRP,BOOKYEAR,PERIOD,DATE,DATEDOC,DUEDATE,COMMENT,COMMENTEXT,AMOUNT,AMOUNTEUR,VATBASE,VATCODE,CURRAMOUNT,CURRCODE,CUREURBASE,VATTAX,VATIMPUT,CURRATE,REMINDLEV,MATCHNO,OLDDATE,ISMATCHED,ISLOCKED,ISIMPORTED,ISPOSITIVE,ISTEMP,MEMOTYPE,ISDOC,DOCSTATUS,DICFROM,CODAKEY,WOW,QUANTITY,DISCDATE,DISCAMOUNT,DATESTAMP,TIMESTAMP,USERNAME
 
@@ -29,49 +30,53 @@ DOCTYPE,DBKCODE,DBKTYPE,DOCNUMBER,DOCORDER,OPCODE,ACCOUNTGL,ACCOUNTRP,BOOKYEAR,P
 */
 
 $vat = $order->price_tvac - $order->price_htva;
+/*
 if($order->vat_bool || $vat == 0) // no VAT line
 	return;
+*/
 
 // will be in a table later...
 $VAT_ACCOUNT_NUMBERS = [];
-$VAT_ACCOUNT_NUMBERS['21.00'] = '211200';
-$VAT_ACCOUNT_NUMBERS['6.00'] = '211400';
-	
+$VAT_ACCOUNT_NUMBERS['21.00'] = '211400';
+$VAT_ACCOUNT_NUMBERS['6.00'] = '211200';
+$VAT_ACCOUNT_NUMBERS['0.00'] = '221000'; // '211000';
+
 // Yii::$app->session->addFlash('info', Yii::t('store', '{0} OK.', $order->name));
 foreach($vat_lines as $vat_rate => $vat_amount) {
 	$vat_rate_account = '';
 	if(isset($VAT_ACCOUNT_NUMBERS[$vat_rate])) {
-		$vat_rate_account = $VAT_ACCOUNT_NUMBERS[$vat_rate];		
+		$vat_rate_account = $VAT_ACCOUNT_NUMBERS[$vat_rate];
+		$vat_base_amount = $vat_amount_lines[$vat_rate];
 	} else {
 		Yii::$app->session->addFlash('warning', Yii::t('store', 'No VAT account number for rate {0}.', [$vat_rate]));
 	}
-	
+
 	$record['DOCTYPE'] = 3;
-	$record['DBKCODE'] = 'VENTE';
-	$record['DBKTYPE'] = 2;
-	$record['DOCNUMBER'] = $order->name;
+	$record['DBKCODE'] = $order->document_type == Document::TYPE_BILL ? 'FV1' : ($order->document_type == Document::TYPE_CREDIT ? 'NV1' : '???');
+	$record['DBKTYPE'] = $order->document_type == Document::TYPE_BILL ? 2 : ($order->document_type == Document::TYPE_CREDIT ? 3 : '???');
+	$record['DOCNUMBER'] = str_replace('-', '', $order->name);
 	$record['DOCORDER'] = 'VAT';
 	$record['OPCODE'] = 'FIXED';
-	$record['ACCOUNTGL'] = '451000'; // $VAT_ACCOUNT_NUMBERS[$vat_rate];
+	$record['ACCOUNTGL'] = '4510000';
 	$record['ACCOUNTRP'] = '';
-	$record['BOOKYEAR'] = substr($order->name, 0, 4);
+	$record['BOOKYEAR'] = substr($order->name, 0, 4) - 2014;
 	$record['PERIOD'] = date('m', strtotime($order->created_at));
-	$record['DATE'] = date('m', strtotime($order->due_date));
+	$record['DATE'] = date('Ymd', strtotime($order->due_date));
 	$record['DATEDOC'] = date('Ymd', strtotime($order->created_at));
 	$record['DUEDATE'] = date('Ymd', strtotime("+ 1 month", strtotime($order->created_at)));
-	$record['COMMENT'] = '';
+	$record['COMMENT'] = $order->client->comptabilite;
 	$record['COMMENTEXT'] = '';
 	$record['AMOUNT'] = '';
-	$record['AMOUNTEUR'] = '';
-	$record['VATBASE'] = '';
-	$record['VATCODE'] = '';
+	$record['AMOUNTEUR'] = - $vat_amount;
+	$record['VATBASE'] = abs($vat_base_amount);
+	$record['VATCODE'] = $vat_rate_account;
 	$record['CURRAMOUNT'] = '';
 	$record['CURRCODE'] = '';
 	$record['CUREURBASE'] = '';
 	$record['VATTAX'] = '';
-	$record['VATIMPUT'] = $vat_amount;
-	$record['CURRATE'] = $vat_rate;
-	$record['REMINDLEV'] = $vat_rate_account;
+	$record['VATIMPUT'] = '';
+	$record['CURRATE'] = '';
+	$record['REMINDLEV'] = '';
 	$record['MATCHNO'] = '';
 	$record['OLDDATE'] = '';
 	$record['ISMATCHED'] = '';

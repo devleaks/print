@@ -34,27 +34,37 @@ FROM (`document_line` `dl` join `item` `i`) where (`dl`.`item_id` = `i`.`id`) gr
 	$total_vat = 0;
 	$count = 1;
 	$vat_lines = [];
+	$vat_amount_lines = [];
 
 	// debit line from customer
 	echo $this->render('_extract_bill_line_tot_2017' , ['order' => $order]);
 
+	$vat = $order->price_tvac - $order->price_htva;
+	$no_vat = ($order->vat_bool || $vat == 0);
+
 	// credit lines into accounts one, per (comptabilite,taux_de_tva)
 	foreach($order->getAccountLines()->orderBy('comptabilite,taux_de_tva')->each() as $al) {
-//	foreach($model->each() as $al) {
 		$al->position = ++$count;
 		echo $this->render('_extract_bill_line_2017' , ['model' => $al, 'order' => $order]);
 		$total += ($al->total_price_htva + $al->total_extra_htva);
-		$vat_rate = number_format($al->taux_de_tva, 2); // normalize VAT rate format: 21.50, 7.60, etc.
-		if(isset($vat_lines[$vat_rate])) {
-			$vat_lines[$vat_rate] += $al->total_vat;
+		if($no_vat) {
+			$vat_lines['0.00'] = 0;
+			$vat_amount_lines['0.00'] = $order->price_htva;
 		} else {
-			$vat_lines[$vat_rate] = $al->total_vat;
+			$vat_rate = number_format($al->taux_de_tva, 2); // normalize VAT rate format: 21.50, 7.60, etc.
+			if(isset($vat_lines[$vat_rate])) {
+				$vat_lines[$vat_rate] += $al->total_vat;
+				$vat_amount_lines[$vat_rate] += ($al->total_price_htva + $al->total_extra_htva);
+			} else {
+				$vat_lines[$vat_rate] = $al->total_vat;
+				$vat_amount_lines[$vat_rate] = ($al->total_price_htva + $al->total_extra_htva);
+			}
+			$total_vat += $al->total_vat;
 		}
-		$total_vat += $al->total_vat;
 	}
 
 	// credit lines into vat accounts, one per (comptabilite,taux_de_tva)
-	echo $this->render('_extract_bill_line_vat_2017' , ['vat_lines' => $vat_lines, 'order' => $order]);
+	echo $this->render('_extract_bill_line_vat_2017' , ['vat_lines' => $vat_lines, 'vat_amount_lines' => $vat_amount_lines, 'order' => $order]);
 
 	// control roundings. Add a line to adjust for rounding if necessary
 	$ctrl = round(floatval($total - $order->price_htva), 3);
@@ -63,7 +73,7 @@ FROM (`document_line` `dl` join `item` `i`) where (`dl`.`item_id` = `i`.`id`) gr
 			[$order->name, $total, $order->price_htva]));
 		//@todo ADD LINE FOR DIFFERENCE
 	}
-	
+
 	$ctrl = round(floatval($total_vat - $order->price_tvac + $order->price_htva), 3);
 	if($ctrl > $warning_threshold) {
 		Yii::$app->session->addFlash('warning', Yii::t('store', 'Checksum error: {0} VAT differs: {1} vs. {2} ({3}).',
