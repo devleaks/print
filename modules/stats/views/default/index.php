@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					<li><a href="<?= Url::to(['/stats/order/by-day']) ?>"><?= Yii::t('store', 'Commandes par jour')?></a></li>
 					<li><a href="<?= Url::to(['/stats/order/by-month']) ?>"><?= Yii::t('store', 'Commandes par mois (HTVA)')?></a></li>
 					<li><a href="<?= Url::to(['/stats/order/billed']) ?>"><?= Yii::t('store', 'Facturé par mois (HTVA)')?></a></li>
+					<li><a href="<?= Url::to(['/stats/order/ca']) ?>"><?= Yii::t('store', "Chriffre d'affaire (factures-notes de crédit / comptoir-remboursements, HTVA)")?></a></li>
 					<li><a href="<?= Url::to(['/stats/order/by-week']) ?>"><?= Yii::t('store', 'Moyenne mobile par semaine (HTVA)')?></a></li>
 					<li><a href="<?= Url::to(['/stats/order/by-lang']) ?>"><?= Yii::t('store', 'Commandes par langue (HTVA)')?></a></li>
 				</ul>

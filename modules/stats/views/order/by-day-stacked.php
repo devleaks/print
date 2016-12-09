@@ -18,8 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="parameter-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
 	<?= Highcharts::widget([
 		'options' => [
 			'chart' => [

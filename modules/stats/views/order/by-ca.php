@@ -15,33 +15,22 @@ HighchartsAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParameterSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$curr_year = date('Y');
 
 $data1 = [];
 foreach($dataProvider->allModels as $m) {
-	if(!isset($data1[$m['year']][$m['document_type']])) $data[$m['year']][$m['document_type']] = [];
-	$data1[$m['year']][$m['document_type']][$m['month']] = intval($m['total_amount']);
+	if(!isset($data1[$m['year']][$m['month']])) $data1[$m['year']][$m['month']] = 0;
+	$data1[$m['year']][$m['month']] += intval($m['total_amount']);
 }
 
 ksort($data1);
 
 $data = [];
-foreach($data1 as $k => $v)
-	foreach($v as $k1 => $v1) {
-		ksort($v1);
-		$v2 = [];
-		for($i=1;$i<=12;$i++) {
-			if(isset($v1[$i])) {
-				$v2[$i-1] = ['y' => $v1[$i], 'url' => Url::to(['sales', 'type'=> $k1, 'date'=>$k.'-'.str_pad($i, 2, '0', STR_PAD_LEFT)])];
-			} else {
-				$v2[$i-1] = 0;
-			}
-		}
-		$data[] = [
-			'name' => Yii::t('store', $k1).'-'.$k,
-			'stack' => $k,
-			'data' => $v2
-		];
+foreach($data1 as $y => $am) {
+	ksort($am);
+	$data[] = [
+		'name' => $y,
+		'data' => array_values($am)
+	];
 }
 
 
@@ -57,13 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?= Highcharts::widget([
 		'options' => [
 		        'chart' => [
-		            'type' => 'column'
+		            'type' => 'line'
 		        ],
 		        'title' => [
 		            'text' => $this->title
-		        ],
-		        'subtitle' => [
-		            'text' => $this->title = Yii::t('store', 'Commandes et Ventes Comptoir'),
 		        ],
 		        'xAxis' => [
 		            'categories' => array_values(Enum::monthList()),
@@ -72,7 +58,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		            ]
 		        ],
 		        'yAxis' => [
-		            'min' => 0,
 		            'title' => [
 		                'text' => '€',
 		                'align' => 'high'
@@ -85,33 +70,12 @@ $this->params['breadcrumbs'][] = $this->title;
 		            'valueSuffix' => '€'
 		        ],
 		        'plotOptions' => [
-		            'bar' => [
+			        'line' => [
 		                'dataLabels' => [
 		                    'enabled' => true
-		                ]
-		            ],
-					'column' => [
-		                'stacking' => 'normal'
-					],
-					'series'=> [
-		                'cursor'=> 'pointer',
-		                'point'=> [
-		                    'events'=> [
-		                        'click'=> new JsExpression('function () { location.href = this.options.url; }')
-		                    ]
-		                ]
-		            ]
-		        ],
-		        'legend' => [
-		            'layout' => 'vertical',
-		            'align' => 'right',
-		            'verticalAlign' => 'top',
-		            'x' => -40,
-		            'y' => 100,
-		            'floating' => true,
-		            'borderWidth' => 1,
-		            'backgroundColor' => '#FFFFFF',
-		            'shadow' => true
+		                ],
+		                'enableMouseTracking' => false
+		            ]	    
 		        ],
 		        'credits' => [
 		            'enabled' => false

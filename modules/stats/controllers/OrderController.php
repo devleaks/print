@@ -205,6 +205,29 @@ class OrderController extends Controller
 	}
 
 
+	public function actionCa() {
+		$q = Document::find()
+			->select([
+				'document_type',
+				'year' => 'year(created_at)',
+				'month' => 'month(created_at)',
+				'total_count' => 'count(id)',
+				'total_amount' => 'sum(price_htva)'
+			])
+			->andWhere(['document_type' => [Document::TYPE_BILL, Document::TYPE_TICKET, Document::TYPE_CREDIT, Document::TYPE_REFUND]])
+			->groupBy('document_type,year,month')
+			->asArray()->all();
+
+        return $this->render('by-ca',[
+			'dataProvider' => new ArrayDataProvider([
+				'allModels' => $q
+			]),
+			'events' => Event::find(),
+			'title' => Yii::t('store', "Chiffre d'affaire (HTVA) par mois"),
+		]);
+	}
+
+
 	/**
 	 *
 	 */
