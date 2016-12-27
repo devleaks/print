@@ -186,7 +186,7 @@ class PaymentController extends Controller
 
     protected function findDocument($id)
     {
-        if (($model = Document::findOne($id)) !== null) {
+        if (($model = Document::findDocument($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
