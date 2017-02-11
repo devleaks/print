@@ -214,11 +214,12 @@ order by 5 desc
         	throw new NotFoundHttpException('The requested page does not exist.');
 
 		$accountLines = $client->getAccountLines();
+		$accountLines = array_reverse($accountLines); // 'bottomLine' => !empty($accountLines) ? end($accountLines)->account : 0,
 
         return $this->render('client', [
             'dataProvider' => new ArrayDataProvider(['allModels' => $accountLines]),
 			'client' => $client,
-			'bottomLine' => !empty($accountLines) ? end($accountLines)->account : 0,
+			'bottomLine' => !empty($accountLines) ? (array_values($accountLines)[0])->account : 0,
         ]);
 	}
 	

@@ -577,11 +577,13 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 			$('div.field-documentlinedetail-price_renfort').toggle(true);
 			$('div.field-documentlinedetail-filmuv_bool').toggle(true);
 			$('div.field-documentlinedetail-price_filmuv').toggle(true);
+			$('div.field-documentlinedetail-protection_id').toggle(true);
+			$('div.field-documentlinedetail-price_protection').toggle(true);
 
 			$('#documentlinedetail-chassis_id').val('');
 			$('#documentlinedetail-price_chassis:enabled').val('');
-			$('#documentlinedetail-protection_id').val('');
-			$('#documentlinedetail-price_protection:enabled').val('');
+			//$('#documentlinedetail-protection_id').val('');
+			//$('#documentlinedetail-price_protection:enabled').val('');
 			break;
 		case 'Papier Fine Art':
 			$("#store-form-shared").toggle(true);

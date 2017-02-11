@@ -1,5 +1,8 @@
 <?php
+use yii\helpers\Html;
 use yii\helpers\Url;
+use app\models\Parameter;
+
 /* @var $this yii\web\View */
 $this->title = 'Labo JJ Micheli @Work';
 ?>

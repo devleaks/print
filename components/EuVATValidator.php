@@ -9,6 +9,8 @@ use Yii;
 * Original code by Edouard THIVET (ed@suikatech.com) for Suikatech.com
 * License : GPLv3
 * 
+*
+* Note: Local VAT for checks: BE0428746631 (Labo JJ Micheli)
 **/
 
 class EuVATValidator

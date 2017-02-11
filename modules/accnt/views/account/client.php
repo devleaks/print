@@ -25,6 +25,19 @@ $dataProvider->pagination = false;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
 	    'showPageSummary' => true,
+		'afterHeader' => [
+			[
+				'columns' => [
+					['content' => null],
+					['content' => null],
+					['content' => null],
+					['content' => null],
+					['content' => null],
+					['content' => Yii::$app->formatter->asCurrency($bottomLine), 'options' => ['class' => 'kv-align-right kv-nowrap']]
+				],
+				'options' => ['class' => 'kv-page-summary warning']
+			]
+		],
         'columns' => [
             ['class' => 'kartik\grid\SerialColumn'],
 //			'ref',
@@ -68,7 +81,7 @@ $dataProvider->pagination = false;
 				'format' => 'currency',
 				'hAlign' => GridView::ALIGN_RIGHT,
 				'noWrap' => true,
-				'pageSummary' => Yii::$app->formatter->asCurrency($bottomLine),
+				'pageSummary' => null,
 			],
 //            [
 //				'class' => 'kartik\grid\ActionColumn',

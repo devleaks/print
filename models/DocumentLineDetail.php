@@ -186,6 +186,7 @@ class DocumentLineDetail extends _DocumentLineDetail
 				case 'ChromaWHITEMAT': $color = 'info'; break;
 				case 'ChromaCLEARGLOSSY': $color = 'success'; break;
 				case 'ChromaCLEARMAT': $color = 'danger'; break;
+				case 'ChromaSEMIMAT': $color = 'warning'; break;
 				default:
 				case 'ChromaWHITEGLOSSY': $color = 'default'; break;
 			}

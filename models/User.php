@@ -27,6 +27,9 @@ use yii\helpers\ArrayHelper;
  * @property Token[] $tokens
  * @property Work[] $works
  * @property WorkLine[] $workLines
+ *
+ * php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations
+ *
  */
 class User extends \yii\db\ActiveRecord
 {
