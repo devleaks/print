@@ -219,7 +219,7 @@ order by 5 desc
         return $this->render('client', [
             'dataProvider' => new ArrayDataProvider(['allModels' => $accountLines]),
 			'client' => $client,
-			'bottomLine' => !empty($accountLines) ? (array_values($accountLines)[0])->account : 0,
+			'bottomLine' => !empty($accountLines) ? (array_values($accountLines)[0])['account'] : 0,
         ]);
 	}
 	
