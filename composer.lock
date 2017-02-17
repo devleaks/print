@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "32ed1ba394496d366c45dc3b53fc139f",
+    "content-hash": "310583d018b65fe2df71bfb7662342c2",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -768,16 +768,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.3.4",
+            "version": "3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/Inputmask.git",
-                "reference": "8a882bc471ba4077c4f8ecbe3d9d61c7558f3ef2"
+                "reference": "5a72c563b502b8e05958a524cdfffafe9987be38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/8a882bc471ba4077c4f8ecbe3d9d61c7558f3ef2",
-                "reference": "8a882bc471ba4077c4f8ecbe3d9d61c7558f3ef2",
+                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/5a72c563b502b8e05958a524cdfffafe9987be38",
+                "reference": "5a72c563b502b8e05958a524cdfffafe9987be38",
                 "shasum": ""
             },
             "require": {
@@ -786,14 +786,7 @@
             "type": "bower-asset-library",
             "extra": {
                 "bower-asset-main": [
-                    "./dist/inputmask/inputmask.dependencyLib",
-                    "./dist/inputmask/inputmask",
-                    "./dist/inputmask/inputmask.extensions",
-                    "./dist/inputmask/inputmask.date.extensions",
-                    "./dist/inputmask/inputmask.numeric.extensions",
-                    "./dist/inputmask/inputmask.phone.extensions",
-                    "./dist/inputmask/inputmask.regex.extensions",
-                    "./dist/inputmask/jquery.inputmask"
+                    "./dist/inputmask/inputmask.js"
                 ],
                 "bower-asset-ignore": [
                     "**/*",
@@ -1559,23 +1552,20 @@
         },
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.9.0",
+            "version": "v4.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "a1c09b09e398687deeb8e309a6305def4b43439b"
+                "reference": "d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/a1c09b09e398687deeb8e309a6305def4b43439b",
-                "reference": "a1c09b09e398687deeb8e309a6305def4b43439b",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2",
+                "reference": "d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
-            },
-            "require-dev": {
-                "simpletest/simpletest": "^1.1"
             },
             "type": "library",
             "autoload": {
@@ -1602,7 +1592,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2017-01-13T12:31:37+00:00"
+            "time": "2016-07-16T12:58:58+00:00"
         },
         {
             "name": "fightbulc/moment",
@@ -4612,16 +4602,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.5",
+            "version": "v5.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "cd142238a339459b10da3d8234220963f392540c"
+                "reference": "81fdccfaf8bdc5d5d7a1ef6bb3a61bbb1a6c4a3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/cd142238a339459b10da3d8234220963f392540c",
-                "reference": "cd142238a339459b10da3d8234220963f392540c",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/81fdccfaf8bdc5d5d7a1ef6bb3a61bbb1a6c4a3e",
+                "reference": "81fdccfaf8bdc5d5d7a1ef6bb3a61bbb1a6c4a3e",
                 "shasum": ""
             },
             "require": {
@@ -4662,7 +4652,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2016-12-29T10:02:40+00:00"
+            "time": "2017-02-13T07:52:53+00:00"
         },
         {
             "name": "thomaspark/bootswatch",
@@ -4928,16 +4918,16 @@
         },
         {
             "name": "yiisoft/yii2-authclient",
-            "version": "2.1.1",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-authclient.git",
-                "reference": "5ed7ebfda270d87197f7640b2a9c046297080cac"
+                "reference": "9929acc03d61d96e6eabbb5e31b02d6f9faab10d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/5ed7ebfda270d87197f7640b2a9c046297080cac",
-                "reference": "5ed7ebfda270d87197f7640b2a9c046297080cac",
+                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/9929acc03d61d96e6eabbb5e31b02d6f9faab10d",
+                "reference": "9929acc03d61d96e6eabbb5e31b02d6f9faab10d",
                 "shasum": ""
             },
             "require": {
@@ -4972,7 +4962,7 @@
                 "oauth",
                 "yii2"
             ],
-            "time": "2016-08-29T09:21:09+00:00"
+            "time": "2017-02-15T14:34:51+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -5076,16 +5066,16 @@
         },
         {
             "name": "yiisoft/yii2-httpclient",
-            "version": "2.0.2",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-httpclient.git",
-                "reference": "2cc58c318da3c7c71bda1cc26bd3ec5a3ac26284"
+                "reference": "113e4e361730f62c1bf50fbd6f09898776d404b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-httpclient/zipball/2cc58c318da3c7c71bda1cc26bd3ec5a3ac26284",
-                "reference": "2cc58c318da3c7c71bda1cc26bd3ec5a3ac26284",
+                "url": "https://api.github.com/repos/yiisoft/yii2-httpclient/zipball/113e4e361730f62c1bf50fbd6f09898776d404b1",
+                "reference": "113e4e361730f62c1bf50fbd6f09898776d404b1",
                 "shasum": ""
             },
             "require": {
@@ -5119,7 +5109,7 @@
                 "httpclient",
                 "yii2"
             ],
-            "time": "2016-10-31T11:29:06+00:00"
+            "time": "2017-02-15T14:28:10+00:00"
         },
         {
             "name": "yiisoft/yii2-jui",
@@ -5342,57 +5332,6 @@
             "time": "2016-04-29T12:21:54+00:00"
         },
         {
-            "name": "jamband/yii2-schemadump",
-            "version": "v0.10.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jamband/yii2-schemadump.git",
-                "reference": "9ad5d93a30e9c8b2ef5051e439e71a7966a94b82"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jamband/yii2-schemadump/zipball/9ad5d93a30e9c8b2ef5051e439e71a7966a94b82",
-                "reference": "9ad5d93a30e9c8b2ef5051e439e71a7966a94b82",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.6.0",
-                "yiisoft/yii2": "~2.0.9"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.7"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "jamband\\schemadump\\": "src",
-                    "jamband\\schemadump\\tests\\": "tests"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tomoki Morita",
-                    "email": "tmsongbooks215@gmail.com",
-                    "homepage": "http://jamband.github.io/"
-                }
-            ],
-            "description": "Generate the schema from an existing database",
-            "homepage": "https://github.com/jamband/yii2-schemadump",
-            "keywords": [
-                "command",
-                "database",
-                "extension",
-                "generator",
-                "migration",
-                "yii2"
-            ],
-            "time": "2017-01-28T09:06:19+00:00"
-        },
-        {
             "name": "phpspec/php-diff",
             "version": "v1.1.0",
             "source": {
@@ -5581,18 +5520,18 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "fightbulc/moment": 20,
         "kartik-v/yii2-builder": 20,
         "kartik-v/yii2-datecontrol": 20,
         "kartik-v/yii2-icons": 20,
         "kartik-v/yii2-markdown": 20,
         "kartik-v/yii2-mpdf": 20,
-        "kartik-v/yii2-widgets": 20,
-        "yurkinx/yii2-image": 20,
-        "perminder-klair/yii2-dropzone": 20,
         "kartik-v/yii2-password": 20,
-        "fightbulc/moment": 20,
+        "kartik-v/yii2-widgets": 20,
+        "nirvana-msu/yii2-infinite-scroll": 20,
+        "perminder-klair/yii2-dropzone": 20,
         "samdark/yii2-webshell": 20,
-        "nirvana-msu/yii2-infinite-scroll": 20
+        "yurkinx/yii2-image": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
