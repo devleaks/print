@@ -2,6 +2,7 @@
 use app\models\Client;
 use app\models\Parameter;
 use app\components\VATValidator;
+use yii\helpers\Json;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
@@ -12,17 +13,23 @@ $has_vat = $model->assujetti_tva ? false : ($model->numero_tva && !in_array(strt
 
 $vat_clean = preg_replace('/[^a-zA-Z0-9]/', '', $model->numero_tva);
 
-$country_code = $has_vat ? substr($vat_clean, 0, 2) : null;
 $vat_number = null;
-
+$country_code = $has_vat ? substr($vat_clean, 0, 2) : null;
 if(in_array($country_code, $COUNTRY_CODES)) { // if first two characters are a valid country code
 	$vat_number = substr($vat_clean, 2);
 } else {
 	$country_code = 'BE'; // country code is not valid, defaults to Belgium. VAT number is probably a simple VAT number without country prefix.
+	$vat_number = $vat_clean;
 }
 
 if($country_code == 'BE' && $has_vat) { // format XXXX.XXX.XXX for Belgium
-	$vat_clean = substr($model->numero_tva_norm, 2, 4).'.'.substr($model->numero_tva_norm, 6, 3).'.'.substr($model->numero_tva_norm, 9, 3);
+	if(! ($model->numero_tva_norm)) {
+		$model->numero_tva_norm = EuVATValidator::cleanVAT($this->numero_tva);
+		Yii::$app->session->addFlash('warning', Yii::t('store', 'VAT Number '.$model->numero_tva.'for client '.$model->name.' has not been validated.'));
+	}
+	$vat_clean2 = substr($vat_number, 2, 4).'.'.substr($vat_number, 6, 3).'.'.substr($vat_number, 9, 3);
+	$vat_clean  = substr($model->numero_tva_norm, 2, 4).'.'.substr($model->numero_tva_norm, 6, 3).'.'.substr($model->numero_tva_norm, 9, 3);
+	Yii::trace($vat_clean.' vs '.$vat_clean2, 'extraction::_extract_client_2017');
 }
 
 /*
