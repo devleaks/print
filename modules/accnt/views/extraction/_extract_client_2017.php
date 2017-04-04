@@ -24,8 +24,8 @@ if(in_array($country_code, $COUNTRY_CODES)) { // if first two characters are a v
 
 if($country_code == 'BE' && $has_vat) { // format XXXX.XXX.XXX for Belgium
 	if(! ($model->numero_tva_norm)) {
-		$model->numero_tva_norm = EuVATValidator::cleanVAT($this->numero_tva);
-		Yii::$app->session->addFlash('warning', Yii::t('store', 'VAT Number '.$model->numero_tva.'for client '.$model->name.' has not been validated.'));
+		$model->numero_tva_norm = EuVATValidator::cleanVAT($model->numero_tva);
+		Yii::$app->session->addFlash('warning', Yii::t('store', 'VAT Number '.$model->numero_tva.'for client '.$model->nom.' has not been validated.'));
 	}
 	$vat_clean2 = substr($vat_number, 2, 4).'.'.substr($vat_number, 6, 3).'.'.substr($vat_number, 9, 3);
 	$vat_clean  = substr($model->numero_tva_norm, 2, 4).'.'.substr($model->numero_tva_norm, 6, 3).'.'.substr($model->numero_tva_norm, 9, 3);
