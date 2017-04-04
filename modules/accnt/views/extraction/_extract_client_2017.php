@@ -2,7 +2,7 @@
 use app\models\Client;
 use app\models\Parameter;
 use app\components\VATValidator;
-use yii\helpers\Json;
+use app\components\EuVATValidator;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
