@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "310583d018b65fe2df71bfb7662342c2",
+    "content-hash": "b71a60bb6bec2d7aac328aa31d2a0cbd",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -322,16 +322,16 @@
         },
         {
             "name": "bower-asset/bootstrap3-dialog",
-            "version": "v1.35.3",
+            "version": "v1.35.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nakupanda/bootstrap3-dialog.git",
-                "reference": "4aa9d536516957e01c39afd1b5e8bdd88976ef7b"
+                "reference": "3dd11d586f78de75356af418907ec6e3b347377c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nakupanda/bootstrap3-dialog/zipball/4aa9d536516957e01c39afd1b5e8bdd88976ef7b",
-                "reference": "4aa9d536516957e01c39afd1b5e8bdd88976ef7b",
+                "url": "https://api.github.com/repos/nakupanda/bootstrap3-dialog/zipball/3dd11d586f78de75356af418907ec6e3b347377c",
+                "reference": "3dd11d586f78de75356af418907ec6e3b347377c",
                 "shasum": ""
             },
             "require": {
@@ -371,6 +371,42 @@
                 "mobile-first",
                 "responsive",
                 "web"
+            ]
+        },
+        {
+            "name": "bower-asset/bower-jquery-sparkline",
+            "version": "2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicolabortignon/bower-jquery-sparkline.git",
+                "reference": "ece667486f45045a8aebccc6de247d0a09a99183"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nicolabortignon/bower-jquery-sparkline/zipball/ece667486f45045a8aebccc6de247d0a09a99183",
+                "reference": "ece667486f45045a8aebccc6de247d0a09a99183",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "./dist/jquery.sparkline.retina.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A plugin for the jQuery javascript library to generate small sparkline charts directly in the browser.",
+            "keywords": [
+                "chart",
+                "graph",
+                "jquery",
+                "sparkline"
             ]
         },
         {
@@ -514,16 +550,16 @@
         },
         {
             "name": "bower-asset/fizzy-ui-utils",
-            "version": "v2.0.3",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/fizzy-ui-utils.git",
-                "reference": "e9f2d4eab08c8cc19db3cae946e5d99df614070f"
+                "reference": "56445300f00ae9656da804af7143d451af2f8fee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/fizzy-ui-utils/zipball/e9f2d4eab08c8cc19db3cae946e5d99df614070f",
-                "reference": "e9f2d4eab08c8cc19db3cae946e5d99df614070f",
+                "url": "https://api.github.com/repos/metafizzy/fizzy-ui-utils/zipball/56445300f00ae9656da804af7143d451af2f8fee",
+                "reference": "56445300f00ae9656da804af7143d451af2f8fee",
                 "shasum": ""
             },
             "require": {
@@ -597,16 +633,16 @@
         },
         {
             "name": "bower-asset/intro.js",
-            "version": "v2.4.0",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/usablica/intro.js.git",
-                "reference": "10166968522f018fc196b618b49c5bb28d5a5f56"
+                "reference": "4571f2c5d8d97091a3a7eb2b9986377b141990cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/usablica/intro.js/zipball/10166968522f018fc196b618b49c5bb28d5a5f56",
-                "reference": "10166968522f018fc196b618b49c5bb28d5a5f56",
+                "url": "https://api.github.com/repos/usablica/intro.js/zipball/4571f2c5d8d97091a3a7eb2b9986377b141990cb",
+                "reference": "4571f2c5d8d97091a3a7eb2b9986377b141990cb",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -1552,20 +1588,23 @@
         },
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.8.0",
+            "version": "v4.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2"
+                "reference": "6d50e5282afdfdfc3e0ff6d192aff56c5629b3d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2",
-                "reference": "d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/6d50e5282afdfdfc3e0ff6d192aff56c5629b3d4",
+                "reference": "6d50e5282afdfdfc3e0ff6d192aff56c5629b3d4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
+            },
+            "require-dev": {
+                "simpletest/simpletest": "^1.1"
             },
             "type": "library",
             "autoload": {
@@ -1592,7 +1631,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2016-07-16T12:58:58+00:00"
+            "time": "2017-03-13T06:30:53+00:00"
         },
         {
             "name": "fightbulc/moment",
@@ -1600,12 +1639,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fightbulc/moment.php.git",
-                "reference": "68f3ddad3feca6d7aae5a333724401355661afbb"
+                "reference": "84b18d6a6f367cbf69c41e2c12050f9d3fd33db8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/68f3ddad3feca6d7aae5a333724401355661afbb",
-                "reference": "68f3ddad3feca6d7aae5a333724401355661afbb",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/84b18d6a6f367cbf69c41e2c12050f9d3fd33db8",
+                "reference": "84b18d6a6f367cbf69c41e2c12050f9d3fd33db8",
                 "shasum": ""
             },
             "require": {
@@ -1655,7 +1694,7 @@
                 "translation",
                 "validate"
             ],
-            "time": "2017-01-19 07:57:28"
+            "time": "2017-02-27 11:58:40"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -1795,16 +1834,16 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.3.7",
+            "version": "v4.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "5977b3cbf2f0010b54ebad6b7e52d1ad62d19c3e"
+                "reference": "4aec9b00de25b4b3cca1f11ffbaa823c67c33590"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/5977b3cbf2f0010b54ebad6b7e52d1ad62d19c3e",
-                "reference": "5977b3cbf2f0010b54ebad6b7e52d1ad62d19c3e",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/4aec9b00de25b4b3cca1f11ffbaa823c67c33590",
+                "reference": "4aec9b00de25b4b3cca1f11ffbaa823c67c33590",
                 "shasum": ""
             },
             "type": "library",
@@ -1844,7 +1883,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2017-02-12T02:31:28+00:00"
+            "time": "2017-04-02T18:38:08+00:00"
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
@@ -2395,12 +2434,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-icons.git",
-                "reference": "98e17132717d1c8d9e09e108ed57091a878e7de5"
+                "reference": "70996442500c143966f4ef83d1e9a49dd3665cc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/98e17132717d1c8d9e09e108ed57091a878e7de5",
-                "reference": "98e17132717d1c8d9e09e108ed57091a878e7de5",
+                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/70996442500c143966f4ef83d1e9a49dd3665cc1",
+                "reference": "70996442500c143966f4ef83d1e9a49dd3665cc1",
                 "shasum": ""
             },
             "require": {
@@ -2435,20 +2474,20 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2016-04-27 19:13:25"
+            "time": "2017-02-24 18:03:31"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
-            "version": "v1.8.7",
+            "version": "v1.8.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-krajee-base.git",
-                "reference": "8f558809e6093c8f4f4599b7b9fd64b366b22a60"
+                "reference": "2479241c03c87995cfc528ae7b297f5ae9e733cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/8f558809e6093c8f4f4599b7b9fd64b366b22a60",
-                "reference": "8f558809e6093c8f4f4599b7b9fd64b366b22a60",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/2479241c03c87995cfc528ae7b297f5ae9e733cb",
+                "reference": "2479241c03c87995cfc528ae7b297f5ae9e733cb",
                 "shasum": ""
             },
             "require": {
@@ -2486,7 +2525,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-09-04T09:25:29+00:00"
+            "time": "2017-02-22T05:58:53+00:00"
         },
         {
             "name": "kartik-v/yii2-label-inplace",
@@ -2696,12 +2735,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-password.git",
-                "reference": "fb5634389a1eaa87c3f321761add3fd46ce7677b"
+                "reference": "c474624af81e15d5eb96f933cfa7208335e46d6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/fb5634389a1eaa87c3f321761add3fd46ce7677b",
-                "reference": "fb5634389a1eaa87c3f321761add3fd46ce7677b",
+                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/c474624af81e15d5eb96f933cfa7208335e46d6e",
+                "reference": "c474624af81e15d5eb96f933cfa7208335e46d6e",
                 "shasum": ""
             },
             "require": {
@@ -2739,7 +2778,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2016-05-15 19:25:37"
+            "time": "2017-03-23 05:07:19"
         },
         {
             "name": "kartik-v/yii2-slider",
@@ -3815,6 +3854,54 @@
                 "yii2"
             ],
             "time": "2016-07-06T19:56:33+00:00"
+        },
+        {
+            "name": "machour/yii2-sparkline",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/machour/yii2-sparkline.git",
+                "reference": "a6e7c0fd04668f21c8e2f1609b5f71f469668d01"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/machour/yii2-sparkline/zipball/a6e7c0fd04668f21c8e2f1609b5f71f469668d01",
+                "reference": "a6e7c0fd04668f21c8e2f1609b5f71f469668d01",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/bower-jquery-sparkline": "^2.1@dev",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "machour\\sparkline\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mehdi Achour",
+                    "email": "machour@gmail.com"
+                }
+            ],
+            "description": "Yii2 jQuery Sparkline widget",
+            "keywords": [
+                "charts",
+                "extension",
+                "sparkline",
+                "yii2"
+            ],
+            "time": "2015-11-15T20:01:59+00:00"
         },
         {
             "name": "mdmsoft/yii2-ar-behaviors",
@@ -5371,20 +5458,20 @@
         },
         {
             "name": "yiisoft/yii2-debug",
-            "version": "2.0.7",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "a74a2433ad1dfda30a253a92f6db52c131807432"
+                "reference": "647be6c9d48dc2f3c2e2f33b9eba0a4ca78abde9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/a74a2433ad1dfda30a253a92f6db52c131807432",
-                "reference": "a74a2433ad1dfda30a253a92f6db52c131807432",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/647be6c9d48dc2f3c2e2f33b9eba0a4ca78abde9",
+                "reference": "647be6c9d48dc2f3c2e2f33b9eba0a4ca78abde9",
                 "shasum": ""
             },
             "require": {
-                "yiisoft/yii2": "~2.0.4",
+                "yiisoft/yii2": "~2.0.11",
                 "yiisoft/yii2-bootstrap": "~2.0.0"
             },
             "type": "yii2-extension",
@@ -5414,7 +5501,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2016-11-24T09:42:29+00:00"
+            "time": "2017-02-21T10:30:50+00:00"
         },
         {
             "name": "yiisoft/yii2-faker",
