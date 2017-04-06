@@ -161,25 +161,25 @@ style="background-color: rgb(248,248,248); padding: 10px; border: 1px dotted #aa
 		        'free_item_price_htva' => [
 					'type' => Form::INPUT_WIDGET,
 					'widgetClass'=> MaskedInput::className(),
-					'options' => ['clientOptions' => [
+					'options' => [
+						'clientOptions' => [
 					        'alias' =>  'decimal',
 							'radixPoint' => ",",
-					        'groupSeparator' => '',
 					        'autoGroup' => false
 						],
-						'class' => 'form-control '. 'ItemDivers',
+						'class' => 'form-control ItemDivers',
 					],	
 				],
 		        'free_item_vat' => [
 					'type' => Form::INPUT_WIDGET,
 					'widgetClass'=> MaskedInput::className(),
-					'options' => ['clientOptions' => [
+					'options' => [
+						'clientOptions' => [
 					        'alias' =>  'decimal',
 							'radixPoint' => ",",
-					        'groupSeparator' => '',
 					        'autoGroup' => false
 						], 
-						'class' => 'form-control '. 'ItemDivers',
+						'class' => 'form-control ItemDivers',
 					],	
 					'fieldConfig' => ['addon' => ['append' => ['content'=>'%']]],
 				],

@@ -22,6 +22,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
 			[
+			    'class'=>'kartik\grid\ExpandRowColumn',
+			    'width'=>'50px',
+			    'value'=>function ($model, $key, $index, $column) {
+			        return GridView::ROW_COLLAPSED;
+			    },
+			    'detail'=>function ($model, $key, $index, $column) {
+			        return Yii::$app->controller->renderPartial('_client_per_year', ['model'=>$model]);
+			    },
+			    'headerOptions'=>['class'=>'kartik-sheet-style'],
+			    'expandOneOnly'=>true
+			],
+
+			[
 				'attribute' => 'client_id',
 				'label' => Yii::t('store','Client'),
 			    'value' => function ($model, $key, $index, $widget) {
