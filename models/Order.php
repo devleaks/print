@@ -337,5 +337,33 @@ class Order extends Document
 		}
 		return $ret . implode(' ', $actions) . ' ' . parent::getActions();
 	}
+	
+	// First attempt at little sparkline
+	public static function getTotalSparkline($q, $y, $m)
+	{
+		foreach($q as $r) {
+			if($r['date_year'] == $y && $r['date_month'] == $m)
+				return $r['total'];
+		}
+		return 0;
+	}
+
+	public static function getSparkline($client_id, $date_from, $date_to)
+	{
+		$q = Order::find()
+			->select(['date_year' => 'year(created_at)', 'date_month' => 'month(created_at)', 'total' => 'sum(price_htva)'])
+			->andWhere(['client_id' => $client_id])
+			->andWhere(['between', 'created_at', $date_from, $date_to])
+			->groupBy('year(created_at),month(created_at)')
+			->orderBy('year(created_at),month(created_at)')
+			->asArray()->all();
+		$r = [];
+		for($y = substr($date_from, 0, 4); $y <= substr($date_to, 0, 4); $y++) {
+			for($m = 1; $m <= 12; $m++) {
+				$r[] = Order::getTotalSparkline($q, $y, $m);
+			}
+		}
+		return $r;
+	}
 }
 
