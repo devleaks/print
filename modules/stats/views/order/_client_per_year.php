@@ -84,7 +84,7 @@ $dp2 = new ArrayDataProvider([
         ],
     ]) ?>
 
-	<h3>Année Partielle (1er janvier - <?= strftime('%e %B')?>)</h3>
+	<h3>Année Partielle (1er janvier - <?php setlocale(LC_TIME, 'fr_FR'); echo strftime('%e %B') ?>)</h3>
 
     <?= GridView::widget([
         'dataProvider' => $dp2,

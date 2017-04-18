@@ -3395,16 +3395,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-select2",
-            "version": "v2.0.8",
+            "version": "v2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "4d03239c1e28ef8d3b96ab7fe360f5cbda34fb69"
+                "reference": "03f202e9e2415f4c84e93a64074d85677fd0cc51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/4d03239c1e28ef8d3b96ab7fe360f5cbda34fb69",
-                "reference": "4d03239c1e28ef8d3b96ab7fe360f5cbda34fb69",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/03f202e9e2415f4c84e93a64074d85677fd0cc51",
+                "reference": "03f202e9e2415f4c84e93a64074d85677fd0cc51",
                 "shasum": ""
             },
             "require": {
@@ -3444,7 +3444,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-02-17T11:49:30+00:00"
+            "time": "2017-04-12T09:00:24+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-sidenav",
@@ -4566,12 +4566,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/samdark/yii2-webshell.git",
-                "reference": "64688fc14e560344ce41ac0faed85854023b312d"
+                "reference": "b9ff25dff5e4f4a3210b749010871864250712c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/samdark/yii2-webshell/zipball/64688fc14e560344ce41ac0faed85854023b312d",
-                "reference": "64688fc14e560344ce41ac0faed85854023b312d",
+                "url": "https://api.github.com/repos/samdark/yii2-webshell/zipball/b9ff25dff5e4f4a3210b749010871864250712c9",
+                "reference": "b9ff25dff5e4f4a3210b749010871864250712c9",
                 "shasum": ""
             },
             "require": {
@@ -4602,7 +4602,7 @@
                 "webshell",
                 "yii2"
             ],
-            "time": "2016-06-24 14:28:22"
+            "time": "2017-04-07 19:09:43"
         },
         {
             "name": "scrivo/highlight.php",

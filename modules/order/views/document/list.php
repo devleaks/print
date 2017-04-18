@@ -18,6 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+	<?= Yii::$app->controller->renderPartial('../../../stats/views/order/_client_per_year', ['model'=> ['client_id' => $client->id] ]); ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
