@@ -145,8 +145,10 @@ class BillController extends Controller
 							
 						if($tmpBill = Bill::createFromBoms($docs))
 							$bills[] = $tmpBill;
-							
-						Yii::trace('client:'.$client->client_id.', bill='.$bills[count($bills)-1]->id, 'BillController::actionBillBoms');
+						
+						if(count($bills) > 0) {
+							Yii::trace('client:'.$client->client_id.', bill='.$bills[count($bills)-1]->id, 'BillController::actionBillBoms');
+						}
 					}
 			        $dataProvider = new ArrayDataProvider([
 						'allModels' => $bills,
