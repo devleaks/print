@@ -216,10 +216,16 @@ order by 5 desc
 		$accountLines = $client->getAccountLines();
 		$accountLines = array_reverse($accountLines); // 'bottomLine' => !empty($accountLines) ? end($accountLines)->account : 0,
 
+		$val = 0;
+		if(!empty($accountLines)) {
+			$arr = array_values($accountLines);
+			$arv = $arr[0];
+			$val = $arv['account'];
+		}
         return $this->render('client', [
             'dataProvider' => new ArrayDataProvider(['allModels' => $accountLines]),
 			'client' => $client,
-			'bottomLine' => !empty($accountLines) ? (array_values($accountLines)[0])['account'] : 0,
+			'bottomLine' => $val,
         ]);
 	}
 	
