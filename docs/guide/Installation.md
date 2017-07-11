@@ -120,3 +120,15 @@ Les dossiers suivants sont importants:
 Les images associées aux commandes (dossier @app/web/pictures),
 et tous les documents produits par l'application (dossier @app/web/documents):
 Factures, notse de crédit, lettres de rappel.
+
+## Documentation
+
+La documentation est écrite en format markdown dans le répertoire docs/guide.
+
+La documentation visible sur le site de l'application (onglet Aide) est générée
+par le logiciel yii2/apidoc fourni avec le framekwork Yii et installé avec l'application.
+
+```
+vendor/bin/apidoc guide docs/guide ./web/help
+```
+
