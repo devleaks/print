@@ -41,6 +41,34 @@ foreach($subdata as $k => $d)
 		'data' => $d
 	];
 
+$catdata2 = [];
+$subdata2 = [];
+foreach($dataProvider2->query->each() as $m) {
+	$cat = $m['category'] == ''? 'Sans' :$m['category'];
+	
+	if(!isset($catdata2[$cat])) {
+		$catdata2[$cat] = 0;
+		$subdata2[$cat] = [];
+	}
+	$catdata2[$cat] += intval($m['tot_count']);
+	$subdata2[$cat][] = [$m['name'] == '' ? 'Sans' : $m['name'], intval($m['tot_count'])];
+}
+
+$data2 = [];
+foreach($catdata2 as $k => $d)
+	$data2[] = [
+		'name' => $k,
+		'y' => $d,
+		'drilldown' => $k
+	];
+
+$drilldowns2 = [];
+foreach($subdata2 as $k => $d)
+	$drilldowns2[] = [
+		'id' => $k,
+		'data' => $d
+	];
+
 $this->title = Yii::t('store', 'Item Categories');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -65,7 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'type' => 'pie'
 			],
 		    'title' => [
-				'text' => Yii::t('store', 'Item Categories')
+				'text' => Yii::t('store', 'Item Categories (Quantity)')
 			],
 			'credits' => [
 	            'enabled' => false
@@ -81,6 +109,32 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 			'drilldown' => [
 				'series' => $drilldowns,
+			]
+		]
+	]);?>
+
+	<?= Highcharts::widget([
+		'options' => [
+			'chart' => [
+				'type' => 'pie'
+			],
+		    'title' => [
+				'text' => Yii::t('store', 'Item Categories (Money)')
+			],
+			'credits' => [
+	            'enabled' => false
+	        ],
+		    'xAxis' => [
+		        'type' => 'category'
+			],
+			'series' => [ [
+				'name' => 'Category',
+				'colorByPoint' => true,
+				'data' => $data2
+				]
+			],
+			'drilldown' => [
+				'series' => $drilldowns2,
 			]
 		]
 	]);?>

@@ -44,9 +44,21 @@ class ItemController extends Controller {
 			->groupBy('item.libelle_long')
 			;
 
+		$q2 = new Query();
+		$q2->select(['name' => 'item.libelle_long', 'tot_count' => 'sum(document_line.quantity * item.prix_de_vente)'])
+			->from(['document', 'document_line', 'item'])
+			->andwhere('document.id = document_line.document_id')
+			->andwhere('document_line.item_id = item.id')
+			->andWhere(['document.document_type' => Document::TYPE_ORDER])
+			->groupBy('item.libelle_long')
+			;
+
         return $this->render('item',[
 			'dataProvider' => new ActiveDataProvider([
 				'query' => $q
+			]),
+			'dataProvider2' => new ActiveDataProvider([
+				'query' => $q2
 			])
 		]);
     }
@@ -62,10 +74,22 @@ class ItemController extends Controller {
 			->groupBy('item.categorie')
 			;
 
+		$q2 = new Query();
+		$q2->select(['category' => 'item.categorie', 'tot_count' => 'sum(document_line.quantity * item.prix_de_vente)'])
+			->from(['document', 'document_line', 'item'])
+			->andwhere('document.id = document_line.document_id')
+			->andwhere('document_line.item_id = item.id')
+			->andWhere(['document.document_type' => Document::TYPE_ORDER])
+			->groupBy('item.categorie')
+			;
+
         return $this->render('category',[
 			'dataProvider' => new ActiveDataProvider([
 				'query' => $q
 			]),
+			'dataProvider2' => new ActiveDataProvider([
+				'query' => $q2
+			])
 		]);
     }
 
@@ -80,10 +104,22 @@ class ItemController extends Controller {
 			->groupBy('item.libelle_long')
 			;
 
+		$q2 = new Query();
+		$q2->select(['name' => 'item.libelle_long', 'category' => 'item.yii_category', 'tot_count' => 'sum(document_line.quantity * item.prix_de_vente)'])
+			->from(['document', 'document_line', 'item'])
+			->andwhere('document.id = document_line.document_id')
+			->andwhere('document_line.item_id = item.id')
+			->andWhere(['document.document_type' => Document::TYPE_ORDER])
+			->groupBy('item.libelle_long')
+			;
+
         return $this->render('yii-category',[
 			'dataProvider' => new ActiveDataProvider([
 				'query' => $q
 			]),
+			'dataProvider2' => new ActiveDataProvider([
+				'query' => $q2
+			])
 		]);
     }
 

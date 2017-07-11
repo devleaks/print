@@ -14,6 +14,11 @@ foreach($dataProvider->query->each() as $m) {
 	$data[] = [$m['category'] == ''? 'Sans' :$m['category'], intval($m['tot_count'])];
 }
 
+$data2 = [];
+foreach($dataProvider2->query->each() as $m) {
+	$data2[] = [$m['category'] == ''? 'Sans' :$m['category'], intval($m['tot_count'])];
+}
+
 $this->title = Yii::t('store', 'Items');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -37,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<?= Highcharts::widget([
 		'options' => [
-		    'title' => ['text' => Yii::t('store', 'Items')],
+		    'title' => ['text' => Yii::t('store', 'Items (Quantity)')],
 			'tooltip' => [
 				'pointFormat' => '{series.name}: <b>{point.percentage:.1f}%</b>'
 			],
@@ -48,6 +53,24 @@ $this->params['breadcrumbs'][] = $this->title;
 				'type' => 'pie',
 				'name' => 'Item',
 				'data' => $data
+				]
+			]
+		]
+	]);?>
+
+	<?= Highcharts::widget([
+		'options' => [
+		    'title' => ['text' => Yii::t('store', 'Items (Money)')],
+			'tooltip' => [
+				'pointFormat' => '{series.name}: <b>{point.percentage:.1f}%</b>'
+			],
+			'credits' => [
+	            'enabled' => false
+	        ],
+			'series' => [ [
+				'type' => 'pie',
+				'name' => 'Item',
+				'data' => $data2
 				]
 			]
 		]
