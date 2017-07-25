@@ -85,6 +85,12 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 
 		<div class="col-lg-6">
+			<h3>Analyse</h3>
+
+				<ul>
+					<li><a href="<?= Url::to(['/stats/bi/sales']) ?>"><?= Yii::t('store', 'Ventes') ?></a></li>
+					<li><a href="<?= Url::to(['/stats/bi/items']) ?>"><?= Yii::t('store', 'Articles') ?></a></li>
+				</ul>
 		</div>
 	
 	</div>

@@ -1,0 +1,14 @@
+h1 span {
+	font-size:14px;
+	font-weight:normal;
+}
+h2 a.reset,
+h2 span.reset,
+h4 a.reset,
+h4 span.reset {
+	font-size: small;
+}
+table tr td:nth-child(4) {
+	text-align: right;
+}
+.dc-chart g.row text {fill: black;}

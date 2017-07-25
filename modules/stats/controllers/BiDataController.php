@@ -2,7 +2,7 @@
 
 namespace app\modules\stats\controllers;
 
-use app\models\BiSale;
+use app\models\BiData;
 
 use Yii;
 use yii\rest\ActiveController;
@@ -10,7 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\db\Query;
 
-class BiSaleController extends ActiveController
+class BiDataController extends ActiveController
 {
 	public $modelClass = 'app\models\BiSale';
 	
@@ -26,7 +26,7 @@ class BiSaleController extends ActiveController
 	
 	public function prepareDataProvider() {
 	    return new ActiveDataProvider([
-	        'query' => $this->modelClass::find()->andWhere(['>','created_at','2017-06-01']),
+	        'query' => $this->modelClass::find(),
 	        'pagination' => false,
 	    ]);
 	}
