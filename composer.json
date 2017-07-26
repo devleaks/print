@@ -67,7 +67,8 @@
 		"devleaks/yii2-introjs": "~1.0",
 		"devleaks/yii2-metafizzy": "~1.0",
         "bower-asset/jquery.inputmask": "3.2.7",
-        "machour/yii2-sparkline": "*"
+        "machour/yii2-sparkline": "*",
+        "yii2mod/yii2-c3-chart": "^1.0"
   },
     "require-dev": {
 		"yiisoft/yii2-debug": "*",

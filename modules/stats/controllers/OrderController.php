@@ -79,7 +79,7 @@ class OrderController extends Controller
 			->orderBy('the_date')
 			->asArray()->all();
 
-        return $this->render('by-day',[
+        return $this->render('by-day3',[
 			'dataProvider' => new ArrayDataProvider([
 				'allModels' => $q
 			]),
@@ -123,7 +123,7 @@ class OrderController extends Controller
 			->union($archive)
 			->asArray()->all();
 
-        return $this->render('by-month',[
+        return $this->render('by-month3',[
 			'dataProvider' => new ArrayDataProvider([
 				'allModels' => $q
 			]),
@@ -195,7 +195,7 @@ class OrderController extends Controller
 			->union($archive)
 			->asArray()->all();
 
-        return $this->render('by-month',[
+        return $this->render('by-month3',[
 			'dataProvider' => new ArrayDataProvider([
 				'allModels' => $q
 			]),
@@ -218,7 +218,7 @@ class OrderController extends Controller
 			->groupBy('document_type,year,month')
 			->asArray()->all();
 
-        return $this->render('by-ca',[
+        return $this->render('by-ca3',[
 			'dataProvider' => new ArrayDataProvider([
 				'allModels' => $q
 			]),
@@ -434,7 +434,7 @@ class OrderController extends Controller
 			->asArray()->all();
 		;
 */
-	    return $this->render('nvb-by-month',[
+	    return $this->render('nvb-by-month3',[
 			'dataProvider' => new ArrayDataProvider([
 				'allModels' => $q
 			]),
