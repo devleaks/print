@@ -112,16 +112,16 @@
         },
         {
             "name": "2amigos/yii2-grid-view-library",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/2amigos/yii2-grid-view-library.git",
-                "reference": "6a79a8af43f23cd9471d58e9e19b763aacccaafb"
+                "reference": "0ac66fd783bffdd407b9de6cf0e5c4cbf4ddb8a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/2amigos/yii2-grid-view-library/zipball/6a79a8af43f23cd9471d58e9e19b763aacccaafb",
-                "reference": "6a79a8af43f23cd9471d58e9e19b763aacccaafb",
+                "url": "https://api.github.com/repos/2amigos/yii2-grid-view-library/zipball/0ac66fd783bffdd407b9de6cf0e5c4cbf4ddb8a8",
+                "reference": "0ac66fd783bffdd407b9de6cf0e5c4cbf4ddb8a8",
                 "shasum": ""
             },
             "require": {
@@ -169,7 +169,7 @@
                 "widget",
                 "yii"
             ],
-            "time": "2017-07-24T08:46:07+00:00"
+            "time": "2017-07-24T12:24:20+00:00"
         },
         {
             "name": "2amigos/yii2-qrcode-helper",
@@ -1943,16 +1943,16 @@
         },
         {
             "name": "kartik-v/dependent-dropdown",
-            "version": "v1.4.5",
+            "version": "v1.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/dependent-dropdown.git",
-                "reference": "1f6dbe5bcd144eaaec726409f03be49ce3392269"
+                "reference": "7b715958015d45ea6d43cc7f11060a29488e34fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/dependent-dropdown/zipball/1f6dbe5bcd144eaaec726409f03be49ce3392269",
-                "reference": "1f6dbe5bcd144eaaec726409f03be49ce3392269",
+                "url": "https://api.github.com/repos/kartik-v/dependent-dropdown/zipball/7b715958015d45ea6d43cc7f11060a29488e34fc",
+                "reference": "7b715958015d45ea6d43cc7f11060a29488e34fc",
                 "shasum": ""
             },
             "type": "library",
@@ -1986,7 +1986,7 @@
                 "option",
                 "select"
             ],
-            "time": "2017-07-11T08:14:34+00:00"
+            "time": "2017-07-25T14:32:03+00:00"
         },
         {
             "name": "kartik-v/php-date-formatter",

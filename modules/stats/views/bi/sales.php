@@ -143,7 +143,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript">
 <?php $this->beginBlock('JS_DC_SALES'); ?>
 
-var url = "<?= Url::to(['/stats/bi-data'],['_format' => 'json']) ?>";
+var url = "<?= Url::to(['/stats/bi-sale'],['_format' => 'json']) ?>";
 var salesChart = dc.barChart("#sales");
 var salesStackChart = dc.barChart("#salesStack");
 var yearChart = dc.pieChart("#years");

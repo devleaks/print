@@ -2,7 +2,7 @@
 
 namespace app\modules\stats\controllers;
 
-use app\models\BiData;
+use app\models\BiSale;
 
 use Yii;
 use yii\rest\ActiveController;
@@ -10,7 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\db\Query;
 
-class BiDataController extends ActiveController
+class BiSaleController extends ActiveController
 {
 	public $modelClass = 'app\models\BiSale';
 	
@@ -30,36 +30,4 @@ class BiDataController extends ActiveController
 	        'pagination' => false,
 	    ]);
 	}
-	
-/*	
-    public function behaviors()
-    {
-        return [
-	        'access' => [
-	            'class' => 'yii\filters\AccessControl',
-	            'ruleConfig' => [
-	                'class' => 'app\components\AccessRule'
-	            ],
-	            'rules' => [
-	                [
-	                    'allow' => false,
-	                    'roles' => ['?']
-               		],
-					[
-	                    'allow' => true,
-	                    'roles' => ['admin', 'manager'],
-	                ],
-	            ],
-	        ],
-        ];
-    }
-
-
-
-public function actionGet_permissions() {
-    $result = Auth_Item::find()->where(['owner_user_id' => NULL])->all();
-    return Json::encode($result);
-}
-
-*/
 }
