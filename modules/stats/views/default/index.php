@@ -51,6 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
 					<li>Durée moyenne entre commande et fin de réalisation</li>
 					<li>Durée moyenne par tâche</li>
 -->				</ul>		
+			<h3>Analyse</h3>
+
+				<ul>
+					<li><a href="<?= Url::to(['/stats/bi/sales']) ?>"><?= Yii::t('store', 'Ventes') ?></a></li>
+					<li><a href="<?= Url::to(['/stats/bi/items']) ?>"><?= Yii::t('store', 'Articles') ?></a></li>
+				</ul>
 		</div>
 
 		<div class="col-lg-6">
@@ -85,12 +91,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 
 		<div class="col-lg-6">
-			<h3>Analyse</h3>
-
-				<ul>
-					<li><a href="<?= Url::to(['/stats/bi/sales']) ?>"><?= Yii::t('store', 'Ventes') ?></a></li>
-					<li><a href="<?= Url::to(['/stats/bi/items']) ?>"><?= Yii::t('store', 'Articles') ?></a></li>
-				</ul>
 		</div>
 	
 	</div>
