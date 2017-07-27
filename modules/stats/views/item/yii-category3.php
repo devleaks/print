@@ -82,93 +82,19 @@ $this->params['breadcrumbs'][] = $this->title;
 	
 	<div class="row">
 
-		<div class="col-lg-6">
+		<div class="col-lg-12">
+			<span id="details"></span>&nbsp;<button id="btnShowBar" style="display:none;">Retour aux catégories</button>
 			<div id="c3chart"></div>
-			<?= Chart::widget([
-				'options' => [
-			        'id' => 'c3chart'
-				],
-				'clientOptions' => [
-					'data'=> [
-				        'columns' => $groups,
-						'type' => 'pie',
-						'onclick' => new JsExpression('function (d, element) {
-								c3.generate({
-									bindto: "#c3chartdd",
-									data: {
-										columns: datadd[d["name"]],
-										type: "pie"
-									},
-									legend: {
-										show: false
-									},
-									pie: {
-										label: {
-											format: function (value, ratio, id) { return id; }
-										}
-									},
-								});
-							}')
-				    ],
-					'pie' => [
-						'label' => [
-							'format' => new JsExpression('function (value, ratio, id) { return id; }')
-						]
-					]
-			    ]
-			]);?>
 		</div>
 
-
-		<div class="col-lg-6">
-			<div id="c3chartdd"></div>
-		</div>
 	</div>
 	
 	<h2>Chiffre d'affaire</h2>
 	
 	<div class="row">
 
-		<div class="col-lg-6">
+		<div class="col-lg-12">
 			<div id="c3chart2"></div>
-			<?= Chart::widget([
-				'options' => [
-			        'id' => 'c3chart2'
-				],
-				'clientOptions' => [
-					'data'=> [
-				        'columns' => $groups2,
-						'type' => 'pie',
-						'onclick' => new JsExpression('function (d, element) {
-								c3.generate({
-									bindto: "#c3chart2dd",
-									data: {
-										columns: datadd2[d["name"]],
-										type: "pie"
-									},
-									pie: {
-										label: {
-											format: function (value, ratio, id) { return id; }
-										}
-									},
-									legend: {
-										show: false
-									}
-								});
-							}')
-				    ],
-					'pie' => [
-						'label' => [
-							'format' => new JsExpression('function (value, ratio, id) { return id; }')
-						]
-					]
-			    ]
-			]);?>
-		</div>
-
-
-		<div class="col-lg-6">
-			<div id="c3chart2dd"></div>
 		</div>
 	</div>
 
@@ -191,7 +117,91 @@ var BE = d3.locale ({
 	});
 var datadd = <?= json_encode($datadd)?>;
 var datadd2 = <?= json_encode($datadd2)?>;
-
+var groups = <?= json_encode($groups)?>;
+var groups2 = <?= json_encode($groups2)?>;
+function generateFor(name) {
+	d3.select("#details").html('Détails pour « '+name+' »');
+	c3.generate({
+		bindto: "#c3chart",
+		data: {
+			columns: datadd[name],
+			type: "pie"
+		},
+		pie: {
+			label: {
+				format: function (value, ratio, id) { return id; }
+			}
+		},
+		legend: {
+			show: false
+		}
+	});
+	c3.generate({
+		bindto: "#c3chart2",
+		data: {
+			columns: datadd2[name],
+			type: "pie"
+		},
+		pie: {
+			label: {
+				format: function (value, ratio, id) { return id; }
+			}
+		},
+		tooltip: {
+			format: {
+				value: function (value, ratio, id, index) { var format = BE.numberFormat("$,"); return format(value); }
+			}
+		},
+		legend: {
+			show: false
+		}
+	});
+	d3.select("#btnShowBar").style("display","block");
+}
+function generateBarChart() {
+	d3.select("#details").html('');
+    c3.generate({
+		bindto: '#c3chart',
+        data: {
+            columns: groups,
+            type: 'pie',
+            onclick: function (d, element) {
+				generateFor(d["name"]);
+			}
+        },
+		pie: {
+			label: {
+				format: function (value, ratio, id) { return id; }
+			}
+		},
+    });
+    c3.generate({
+		bindto: '#c3chart2',
+        data: {
+            columns: groups2,
+            type: 'pie',
+            onclick: function (d, element) {
+				generateFor(d["name"]);
+			}
+        },
+		pie: {
+			label: {
+				format: function (value, ratio, id) { return id; }
+			}
+		},
+		tooltip: {
+			format: {
+				value: function (value, ratio, id, index) { var format = BE.numberFormat("$,"); return format(value); }
+			}
+		}
+    });
+}
+function showBarChart() {
+    chart = generateBarChart();
+    d3.select('#btnShowBar').style('display', 'none');
+}
+d3.select('#btnShowBar').on('click', showBarChart);
+generateBarChart();
 <?php $this->endBlock(); ?>
 </script>
 <?php
