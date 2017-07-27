@@ -8,16 +8,16 @@ use yii\helpers\Url;
 
 <div class="row">
 	<div class="col-lg-3">
-		<?= $this->render('_work_line', ['title' => 'Today', 'date' => Document::DATE_TODAY]) ?>
+		<?= $this->render('_work_line3', ['title' => 'Today', 'date' => Document::DATE_TODAY]) ?>
 	</div>
 	<div class="col-lg-3">
-		<?= $this->render('_work_line', ['title' => 'Tomorrow', 'date' => Document::DATE_NEXT]) ?>
+		<?= $this->render('_work_line3', ['title' => 'Tomorrow', 'date' => Document::DATE_NEXT]) ?>
 	</div>
 	<div class="col-lg-3">
-		<?= $this->render('_work_line', ['title' => 'Next week', 'date' => Document::DATE_NEXT_WEEK]) ?>
+		<?= $this->render('_work_line3', ['title' => 'Next week', 'date' => Document::DATE_NEXT_WEEK]) ?>
 	</div>
 	<div class="col-lg-3">
-		<?= $this->render('_work_line', ['title' => 'Late', 'date' => Document::DATE_LATE]) ?>
+		<?= $this->render('_work_line3', ['title' => 'Late', 'date' => Document::DATE_LATE]) ?>
 	</div>
 </div>
 

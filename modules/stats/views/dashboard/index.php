@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?= $this->render('_today', ['documents' => $documents, 'works' => $works]) ?>
 	</div>
 	<div class="col-lg-6">
-		<?= $this->render('_lately') ?>
+		<?= $this->render('_lately3') ?>
 	</div>
 </div>
 

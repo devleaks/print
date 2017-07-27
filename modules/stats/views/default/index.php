@@ -4,7 +4,7 @@ use yii\helpers\Url;
 $this->title = Yii::t('store', 'Statistics');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="stats-index">
+<div class="stats-index container">
 
     <div class="jumbotron">
 	    <p><a class="btn btn-lg btn-success" href="<?= Url::to(['/stats/dashboard']) ?>"><?= Yii::t('store', 'Dashboard')?></a></p>
