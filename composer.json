@@ -43,7 +43,7 @@
 		"kartik-v/yii2-label-inplace": "*",
 		"kartik-v/yii2-markdown": "dev-master",
 		"kartik-v/yii2-money": "*",
-		"kartik-v/yii2-mpdf": "dev-master",
+		"kartik-v/yii2-mpdf": "1.0.1",
         "kartik-v/yii2-password": "dev-master",
         "kartik-v/yii2-slider": "*",
         "kartik-v/yii2-widget-datepicker": "*",
