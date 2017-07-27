@@ -12,5 +12,5 @@ if($pic = $model->getPictures()->one()) {
 <div class="item"
 	style="width: <?= $model->work_width ?>px; height: <?= $model->work_height ?>px;<?= $bg ?>"
 	title="<?= $model->document->name ?>">
-	<?= $model->work_width.' &times; '.$model->work_height.'<br/>'.$model->quantity ?>
+	<a href="<?= Url::to(['/order/document/view', 'id' => $model->document->id]) ?>" style="text-decoration:none; color: black;"><?= $model->work_width.' &times; '.$model->work_height.'<br/>'.$model->quantity ?></a>
 </div>
