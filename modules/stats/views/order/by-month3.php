@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<?php VarDumper::dumpAsString($data1, 4, true) ?>
 	<?php  '<hr/>'.VarDumper::dumpAsString($data, 4, true) ?>
-	<?=  '<hr/>'.VarDumper::dumpAsString($groups, 4, true) ?>
+	<?php  '<hr/>'.VarDumper::dumpAsString($groups, 4, true) ?>
 	
 	<?= Chart::widget([
 		'options' => [

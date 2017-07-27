@@ -21,6 +21,7 @@ use Yii;
 CREATE OR REPLACE VIEW bi_sale
 AS SELECT
    d.document_type AS document_type,
+   d.status AS document_status,
    d.created_at AS created_at,
    d.updated_at AS updated_at,
    d.due_date AS due_date,date_format(d.created_at,'%Y') AS date_year,date_format(d.created_at,'%m') AS date_month,

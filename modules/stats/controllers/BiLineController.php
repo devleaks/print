@@ -2,7 +2,7 @@
 
 namespace app\modules\stats\controllers;
 
-use app\models\BiSale;
+use app\models\BiLine;
 
 use Yii;
 use yii\rest\ActiveController;
@@ -26,7 +26,7 @@ class BiLineController extends ActiveController
 	
 	public function prepareDataProvider() {
 	    return new ActiveDataProvider([
-	        'query' => $this->modelClass::find(), // ->where(['between','created_at','2017-01-01','2018-01-01']),
+	        'query' => BiLine::find(), // ->where(['between','created_at','2017-01-01','2018-01-01']),
 	        'pagination' => false,
 	    ]);
 	}

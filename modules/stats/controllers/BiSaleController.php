@@ -26,7 +26,7 @@ class BiSaleController extends ActiveController
 	
 	public function prepareDataProvider() {
 	    return new ActiveDataProvider([
-	        'query' => $this->modelClass::find(),
+	        'query' => BiSale::find(),
 	        'pagination' => false,
 	    ]);
 	}

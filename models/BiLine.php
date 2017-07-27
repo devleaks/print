@@ -28,6 +28,7 @@ use Yii;
 CREATE or replace VIEW bi_line
 AS SELECT
    d.document_type AS document_type,
+   d.status AS document_status,
    d.name AS document_name,
    date_format(dl.created_at,'%Y-%m-%dT%TZ') AS created_at,
    dl.work_width AS work_width,
@@ -48,7 +49,6 @@ AS SELECT
       item i
 where (dl.document_id = d.id)
   and (dl.item_id = i.id)
-
  */
 class BiLine extends \yii\db\ActiveRecord
 {
