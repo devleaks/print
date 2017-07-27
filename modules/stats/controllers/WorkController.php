@@ -50,7 +50,7 @@ order by diff_days desc
 			->orderBy('diff_days')
 			->asArray()->all();
 
-        return $this->render('index',[
+        return $this->render('index3',[
 			'dataProvider' => new ArrayDataProvider([
 				'allModels' => $q
 			]),
@@ -75,7 +75,7 @@ order by diff_days desc
 			->orderBy('diff_days')
 			->asArray()->all();
 
-        return $this->render('index',[
+        return $this->render('index3',[
 			'dataProvider' => new ArrayDataProvider([
 				'allModels' => $q
 			]),

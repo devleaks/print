@@ -16,25 +16,14 @@ ChartAsset::register($this);
 /* @var $searchModel app\models\ParameterSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$data1 = [];
-foreach($dataProvider->allModels as $m) {
-	if(!isset($data1[$m['year']][$m['month']])) $data1[$m['year']][$m['month']] = 0;
-	$data1[$m['year']][$m['month']] += intval($m['total_amount']);
-}
-
-ksort($data1);
-
+$keys = [];
+$keys[] = 'day';
 $data = [];
-foreach($data1 as $y => $am) {
-	$yr = [];
-	$yr[] = $y;
-	ksort($am);
-	for($i=1;$i<=12;$i++) {
-		$yr[] = isset($am[$i]) ? $am[$i] : 0;
-	}
-	$data[] = $yr;
+$data[] = 'count';
+foreach($dataProvider->allModels as $m) {
+	$keys[] = $m['diff_days'].' d';
+	$data[] = intval($m['tot_count']);
 }
-
 
 $this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
@@ -42,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="parameter-index container">
 
-	<?php  VarDumper::dumpAsString($data1, 4, true) ?>
+	<?php  VarDumper::dumpAsString($keys, 4, true) ?>
 	<?php  '<hr/>'.VarDumper::dumpAsString($data, 4, true) ?>
 	
 	<div id="c3chart"></div>
@@ -52,18 +41,20 @@ $this->params['breadcrumbs'][] = $this->title;
 	        'id' => 'c3chart'
 		],
 		'clientOptions' => [
-			'data'=> [
-		        'columns' => $data
-		    ],
-		    'axis'=> [
-		        'x'=> [
-		            'type' => 'category',
-		            'categories' => array_values(Enum::monthList())
-		        ],
-		        'y'=> [
-					'label' => "Chiffre d'affaire (€)"
+			'data' => [
+				'x' => 'day',
+		        'columns' => [
+		            $keys,
+		            $data
 		        ]
-		    ]
+		    ],
+	    'axis'=> [
+	        'x'=> [
+	            'type' => 'category',
+	            'categories' => $keys,
+				'max' => 20
+	        ]
+	    ]
 	    ]
 	]);?>
 

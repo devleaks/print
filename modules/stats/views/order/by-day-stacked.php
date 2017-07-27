@@ -16,7 +16,7 @@ $this->title = Yii::t('store', 'Orders by Day');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="parameter-index">
+<div class="parameter-index container">
 
 	<?= Highcharts::widget([
 		'options' => [

@@ -62,7 +62,7 @@ var BE = d3.locale ({
 <?php
 $this->registerJs($this->blocks['JS_C3_LOCALE'], yii\web\View::POS_END);
 ?>
-<div class="parameter-index">
+<div class="parameter-index container">
 	
 	<div id="c3chart"></div>
 
@@ -87,8 +87,7 @@ $this->registerJs($this->blocks['JS_C3_LOCALE'], yii\web\View::POS_END);
 			        'x' => [
 			            'type' => 'timeseries',
 			            'tick' => [
-			                'format' => '%B %Y'
-			 				,'dummy' => new \yii\web\JsExpression('BE.timeFormat("%B %Y")')
+			                'format' => new \yii\web\JsExpression('BE.timeFormat("%B %Y")')
 			            ]
 			     ]
 			]

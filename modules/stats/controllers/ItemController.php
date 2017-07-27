@@ -45,7 +45,7 @@ class ItemController extends Controller {
 			;
 
 		$q2 = new Query();
-		$q2->select(['name' => 'item.libelle_long', 'tot_count' => 'sum(document_line.quantity * item.prix_de_vente)'])
+		$q2->select(['name' => 'item.libelle_long', 'tot_count' => 'sum(document_line.price_htva + ifnull(document_line.price_htva, 0))'])
 			->from(['document', 'document_line', 'item'])
 			->andwhere('document.id = document_line.document_id')
 			->andwhere('document_line.item_id = item.id')
@@ -53,7 +53,7 @@ class ItemController extends Controller {
 			->groupBy('item.libelle_long')
 			;
 
-        return $this->render('item',[
+        return $this->render('item3',[
 			'dataProvider' => new ActiveDataProvider([
 				'query' => $q
 			]),
@@ -75,7 +75,7 @@ class ItemController extends Controller {
 			;
 
 		$q2 = new Query();
-		$q2->select(['category' => 'item.categorie', 'tot_count' => 'sum(document_line.quantity * item.prix_de_vente)'])
+		$q2->select(['category' => 'item.categorie', 'tot_count' => 'sum(document_line.price_htva + ifnull(document_line.price_htva, 0))'])
 			->from(['document', 'document_line', 'item'])
 			->andwhere('document.id = document_line.document_id')
 			->andwhere('document_line.item_id = item.id')
@@ -83,7 +83,7 @@ class ItemController extends Controller {
 			->groupBy('item.categorie')
 			;
 
-        return $this->render('category',[
+        return $this->render('category3',[
 			'dataProvider' => new ActiveDataProvider([
 				'query' => $q
 			]),
@@ -105,7 +105,7 @@ class ItemController extends Controller {
 			;
 
 		$q2 = new Query();
-		$q2->select(['name' => 'item.libelle_long', 'category' => 'item.yii_category', 'tot_count' => 'sum(document_line.quantity * item.prix_de_vente)'])
+		$q2->select(['name' => 'item.libelle_long', 'category' => 'item.yii_category', 'tot_count' => 'sum(document_line.price_htva + ifnull(document_line.price_htva, 0))'])
 			->from(['document', 'document_line', 'item'])
 			->andwhere('document.id = document_line.document_id')
 			->andwhere('document_line.item_id = item.id')
@@ -113,7 +113,7 @@ class ItemController extends Controller {
 			->groupBy('item.libelle_long')
 			;
 
-        return $this->render('yii-category',[
+        return $this->render('yii-category3',[
 			'dataProvider' => new ActiveDataProvider([
 				'query' => $q
 			]),
