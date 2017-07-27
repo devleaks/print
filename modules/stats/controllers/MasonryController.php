@@ -39,6 +39,7 @@ class MasonryController extends Controller
 												->andWhere(['>', 'work_width', 0])
 												->andWhere(['>', 'work_height', 0])
 												->andWhere(['document_type' => Document::TYPE_ORDER])
+												->orderBy('document.created_at desc')
 			])
 		]);
     }
