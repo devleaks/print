@@ -192,7 +192,7 @@ group by (wl.status)
 		$data = [];
 		foreach($this->workDial($date_clause)->each() as $w)
 			$data[] = [
-				'name' => $w['status'],
+				'name' => Yii::t('store', $w['status']),
 				'y' => intval($w['total_count']),
 				'color' => $color[$workColors[$w['status']]]
 			];

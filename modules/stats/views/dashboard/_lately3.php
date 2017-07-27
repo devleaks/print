@@ -43,6 +43,15 @@ $(function() {
 					columns: c3data,
 					groups: c3grarr,
 					type: 'bar'
+				},
+				axis: {
+					x: {
+						type: 'category',
+						categories: ["Jan", "Fév", "Mars", "Avr", "Mai", "Juin", "Jul", "Août", "Sep", "Oct", "Nov", "Déc"]
+					},
+					y: {
+						label: "Chiffre d'affaire (€)"
+					}
 				}
 			});			
 		} else {

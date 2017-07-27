@@ -12,14 +12,13 @@ Les logiciels suivants ont été utilisé pour le développement de l'applicatio
 
 ### Autres Librairies
 
-De nombreuses librairies, souvent intégrées à l'environnement Yii ont aussi été utilisées:
+Plusieurs librairies, souvent intégrées à l'environnement Yii ont aussi été utilisées pour accélérer les développements ou réaliser des fonctions complexes,
+principalement dans la partie d'analyse statistique (graphiques):
 
-* [Highcharts](https://www.highcharts.com) - Librairie graphiques, migration vers la librairie [C3.js](http://c3js.org) / [D3.js](https://d3js.org) prévue.
-(Highcharts possède une licence à caractère commercial, C3 et D3 ont une licence de logiciel libre. De plus, D3.js est utilisé dans Dc.js (uniformité des librairies utilisées).)
-* Dc.js - [Document Charting](https://dc-js.github.io/dc.js/), librairie de graphiques d'analyse (avec [Crossfilter](http://crossfilter.github.io/crossfilter/) et [D3](https://d3js.org))
+* [C3.js](http://c3js.org) - Librairie graphique basée sur D3.js.
+* Dc.js - [Document Charting](https://dc-js.github.io/dc.js/), librairie de graphiques d'analyse (avec [Crossfilter](http://crossfilter.github.io/crossfilter/) et [D3.js](https://d3js.org))
 
 Tous les logiciels utilisés sont libres de droits dans le cadre de leur utilisation dans ce projet.
-(A l'exception de _Highcharts_ qui n'est pas libre de droit et est progressivement remplacé par D3.)
 
 ## Codes Sources
 
@@ -33,7 +32,7 @@ Le repository est en accès libre.
 
 (L'application est pratiquement inutilisable sans données de base, qui elles ne sont pas disponibles publiquement.)
 
-L'installation locale du logiciel se fait par les procédures standards de github et Yii.
+L'installation locale du logiciel se fait par les procédures standards de git, github, Yii et [Composer](https://getcomposer.org)).
 
 ```
 git clone https://github.com/devleaks/print

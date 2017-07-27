@@ -33,6 +33,8 @@ phpunit.phar
 /config
 
 runtime/etc/yii2print.sql
+runtime/cache
+runtime/debug
 
 *.tmproj
 
