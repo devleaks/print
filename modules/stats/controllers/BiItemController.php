@@ -2,7 +2,7 @@
 
 namespace app\modules\stats\controllers;
 
-use app\models\BiLine;
+use app\models\BiItem;
 use app\models\Document;
 
 use Yii;
@@ -11,9 +11,9 @@ use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\db\Query;
 
-class BiLineController extends ActiveController
+class BiItemController extends ActiveController
 {
-	public $modelClass = 'app\models\BiLine';
+	public $modelClass = 'app\models\BiItem';
 	
 	public function actions()
 	{
@@ -27,7 +27,7 @@ class BiLineController extends ActiveController
 	
 	public function prepareDataProvider() {
 	    return new ActiveDataProvider([
-	        'query' => BiLine::find()
+	        'query' => BiItem::find()
 				->andWhere(['in','document_type',[Document::TYPE_TICKET,Document::TYPE_BILL]])
 				->andWhere(['not in','document_status',[Document::STATUS_OPEN,Document::STATUS_CANCELLED]])
 				//->andWhere(['between','created_at','2017-01-01','2018-01-01'])

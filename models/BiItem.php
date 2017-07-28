@@ -51,7 +51,7 @@ where (dl.document_id = d.id)
  and (dl.item_id = i.id)
 
  */
-class BiLine extends \yii\db\ActiveRecord
+class BiItem extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
