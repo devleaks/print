@@ -52,7 +52,10 @@ $this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="parameter-index">
+<div class="parameter-index container">
+	
+	<h1><?= Html::encode($this->title) ?></h1>
+	<br/><br/>
 	
 	<div id="c3chart"></div>
 

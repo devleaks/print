@@ -16,13 +16,15 @@ $this->params['breadcrumbs'][] = $this->title;
 $dataProvider->pagination = false;
 
 ?>
-<div class="jjm-graphic">
+<div class="jjm-graphic container">
 
     <h1><?= Html::encode($this->title) ?><span style="font-size: 14px;">
 	<?php for($i = 2014; $i <= date('Y'); $i++)
 			echo ' » '.Html::a($i, Url::to(['bricks', 'year' => $i]), ['title' => Yii::t('store', 'View Frames in '.$i)]);
 	?>
 	</span></h1>
+	
+	<br/><br/>
 
 <div id="container">
 	<?= ListView::widget([

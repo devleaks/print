@@ -27,7 +27,7 @@ for($i = 0; $i <= $color_level; $i++) {
 }
 $thick_level = 4;
 ?>
-<div class="jjm-graphic">
+<div class="jjm-graphic container">
 
     <h1><?= Html::encode($this->title)?></h1>
 
@@ -50,10 +50,10 @@ $thick_level = 4;
 
 <div class="jjm-frame-swatches"style="width: <?= $max_width * $factor ?>px;">
 <?php
-	echo Yii::t('store', 'Legend (Quantities)').' ';
+	echo Yii::t('store', 'Quantités').' ';
 	for($i = 1; $i <= $color_level; $i++): ?>
 		<div class="jjm-frame-swatch"
-			style="width: 40px; height: 40px;border: <?= 1 + intval(3*$i/$color_level) ?>px solid <?= $color_lut[intval($color_level-($i))] ?>;"
+			style="vertical-align: middle;width: 40px; height: 40px;border: <?= 1 + intval(3*$i/$color_level) ?>px solid <?= $color_lut[intval($color_level-($i))] ?>;"
 			title="<?= $i.'&times;'.$i ?>">
 			<?= round($i*$max/$color_level) ?>
 		</div>
