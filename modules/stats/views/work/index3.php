@@ -4,6 +4,7 @@ use kartik\helpers\Enum;
 
 use yii2mod\c3\chart\Chart;
 use yii2mod\c3\chart\ChartAsset;
+use app\assets\BeAsset;
 
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -11,6 +12,7 @@ use yii\helpers\VarDumper;
 use yii\web\JsExpression;
 
 ChartAsset::register($this);
+BeAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParameterSearch */

@@ -4,8 +4,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii2mod\c3\chart\Chart;
 use yii2mod\c3\chart\ChartAsset;
+use app\assets\BeAsset;
 
 ChartAsset::register($this);
+BeAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParameterSearch */

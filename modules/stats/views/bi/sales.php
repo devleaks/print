@@ -4,12 +4,14 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 use app\assets\BiAsset;
+use app\assets\BeAsset;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParameterSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 BiAsset::register($this);
+BeAsset::register($this);
 
 $this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
@@ -151,20 +153,6 @@ var typeChart = dc.rowChart("#types");
 var langChart = dc.pieChart("#langs");
 var cntrChart = dc.pieChart("#cntrs");
 var dataTable = dc.dataTable("#clients");
-var BE = d3.locale ({
-	  "decimal": ",",
-	  "thousands": ".",
-	  "grouping": [3],
-	  "currency": ["", " €"],
-	  "dateTime": "%a %b %e %X %Y",
-	  "date": "%d/%m/%Y",
-	  "time": "%H:%M:%S",
-	  "periods": ["AM", "PM"],
-	  "days": ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-	  "shortDays": ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"],
-	  "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-	  "shortMonths": ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
-	})
 var numberFormat = BE.numberFormat("$,.2f");
 var typeList = ["BID","ORDER","BILL","CREDIT","TICKET","REFUND"];
 var docType = {

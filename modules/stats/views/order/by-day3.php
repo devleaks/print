@@ -2,12 +2,15 @@
 
 use yii2mod\c3\chart\Chart;
 use yii2mod\c3\chart\ChartAsset;
+use app\assets\BeAsset;
 
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\VarDumper;
+use yii\web\JsExpression;
 
 ChartAsset::register($this);
+BeAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParameterSearch */
@@ -51,6 +54,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			                'format' => '%d-%m-%Y'
 			            ]
 			     ]
+			],
+			'tooltip' => [
+				'format' => [
+					'value' =>  new JsExpression('function (value, ratio, id, index) { var format = BE.numberFormat("$,"); return format(value); }')
+				]
 			]
 		]
 	]);?>

@@ -4,6 +4,7 @@ use kartik\helpers\Enum;
 
 use yii2mod\c3\chart\Chart;
 use yii2mod\c3\chart\ChartAsset;
+use app\assets\BeAsset;
 
 use Moment\Moment;
 
@@ -13,6 +14,7 @@ use yii\helpers\VarDumper;
 use yii\web\JsExpression;
 
 ChartAsset::register($this);
+BeAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParameterSearch */
@@ -40,27 +42,6 @@ foreach($data1 as $k => $v)
 $this->title = 'Clients NVB - Commandes via internet par mois';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
-?>
-<script type="text/javascript">
-<?php $this->beginBlock('JS_C3_LOCALE'); ?>
-var BE = d3.locale ({
-	  "decimal": ",",
-	  "thousands": ".",
-	  "grouping": [3],
-	  "currency": ["", " €"],
-	  "dateTime": "%a %b %e %X %Y",
-	  "date": "%d/%m/%Y",
-	  "time": "%H:%M:%S",
-	  "periods": ["AM", "PM"],
-	  "days": ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-	  "shortDays": ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"],
-	  "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-	  "shortMonths": ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
-	});
-<?php $this->endBlock(); ?>
-</script>
-<?php
-$this->registerJs($this->blocks['JS_C3_LOCALE'], yii\web\View::POS_END);
 ?>
 <div class="parameter-index container">
 	
@@ -90,58 +71,42 @@ $this->registerJs($this->blocks['JS_C3_LOCALE'], yii\web\View::POS_END);
 			                'format' => new JsExpression('BE.timeFormat("%B %Y")')
 			            ]
 			     ]
+		    ],
+			'tooltip' => [
+				'format' => [
+					'value' =>  new JsExpression('function (value, ratio, id, index) { var format = BE.numberFormat("$,"); return format(value); }')
+				]
 			]
 		] // clientOptions
-		
-		/*http://jsfiddle.net/3r39gknt/1/
-	       'data' => [
-	            'x' => 'x',
-	            'columns' => [
-	                ['x', 'week 1', 'week 2', 'week 3', 'week 4'],
-	                ['Popularity', 10, 20, 30, 50]
-	            ],
-	            'colors' => [
-	                'Popularity' => '#4EB269',
-	            ],
-	        ],
-	        'axis' => [
-	            'x' => [
-	                'label' => 'Month',
-	                'type' => 'category'
-	            ],
-	            'y' => [
-	                'label' => [
-	                    'text' => 'Popularity',
-	                    'position' => 'outer-top'
-	                ],
-	                'min' => 0,
-	                'max' => 100,
-	                'padding' => ['top' => 10, 'bottom' => 0]
-	            ]
+	
+	/*http://jsfiddle.net/3r39gknt/1/
+       'data' => [
+            'x' => 'x',
+            'columns' => [
+                ['x', 'week 1', 'week 2', 'week 3', 'week 4'],
+                ['Popularity', 10, 20, 30, 50]
+            ],
+            'colors' => [
+                'Popularity' => '#4EB269',
+            ],
+        ],
+        'axis' => [
+            'x' => [
+                'label' => 'Month',
+                'type' => 'category'
+            ],
+            'y' => [
+                'label' => [
+                    'text' => 'Popularity',
+                    'position' => 'outer-top'
+                ],
+                'min' => 0,
+                'max' => 100,
+                'padding' => ['top' => 10, 'bottom' => 0]
+            ]
 	        ]
 	    ] */
 	]);?>
 
 </div>
-<script type="text/javascript">
-<?php $this->beginBlock('JS_C3_LOCALE'); ?>
-var BE = d3.locale ({
-	  "decimal": ",",
-	  "thousands": ".",
-	  "grouping": [3],
-	  "currency": ["", " €"],
-	  "dateTime": "%a %b %e %X %Y",
-	  "date": "%d/%m/%Y",
-	  "time": "%H:%M:%S",
-	  "periods": ["AM", "PM"],
-	  "days": ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-	  "shortDays": ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"],
-	  "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-	  "shortMonths": ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
-	});
-console.log(BE);
-<?php $this->endBlock(); ?>
-</script>
-<?php
-$this->registerJs($this->blocks['JS_C3_LOCALE'], yii\web\View::POS_END);
 

@@ -4,6 +4,7 @@ use kartik\helpers\Enum;
 
 use yii2mod\c3\chart\Chart;
 use yii2mod\c3\chart\ChartAsset;
+use app\assets\BeAsset;
 
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -11,6 +12,7 @@ use yii\helpers\VarDumper;
 use yii\web\JsExpression;
 
 ChartAsset::register($this);
+BeAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParameterSearch */
@@ -101,20 +103,6 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <script type="text/javascript">
 <?php $this->beginBlock('JS_C3_DRILLDOWN'); ?>
-var BE = d3.locale ({
-	  "decimal": ",",
-	  "thousands": ".",
-	  "grouping": [3],
-	  "currency": ["", " €"],
-	  "dateTime": "%a %b %e %X %Y",
-	  "date": "%d/%m/%Y",
-	  "time": "%H:%M:%S",
-	  "periods": ["AM", "PM"],
-	  "days": ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-	  "shortDays": ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"],
-	  "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-	  "shortMonths": ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
-	});
 var datadd = <?= json_encode($datadd)?>;
 var datadd2 = <?= json_encode($datadd2)?>;
 var groups = <?= json_encode($groups)?>;

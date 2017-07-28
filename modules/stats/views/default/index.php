@@ -72,7 +72,8 @@ $this->params['breadcrumbs'][] = $this->title;
 					<ul>
 					    <li><a href="<?= Url::to(['/stats/masonry/frames']) ?>"><?= Yii::t('store', 'Tailles demandées')?></a>
 						 (<a href="<?= Url::to(['/stats/masonry/frames-straightened']) ?>"><?= Yii::t('store', 'straightened')?></a>)</li>
-					    <li><a href="<?= Url::to(['/stats/masonry/bricks']) ?>"><?= Yii::t('store', 'Représentation graphique de toutes les commandes par année')?></a></li>
+					    <li><a href="<?= Url::to(['/stats/masonry/bricks']) ?>"><?= Yii::t('store', 'Représentation graphique de toutes les commandes par année')?></a><br/>
+						    <span style="font-size:smaller;font-style:italic;">Patience, c'est un peu plus lent...<span></li>
 					</ul>
 		</div>
 

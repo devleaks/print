@@ -4,15 +4,19 @@ namespace app\assets;
 
 use yii\web\AssetBundle;
 
-class BiAsset extends AssetBundle
+class BeAsset extends AssetBundle
 {
     public $sourcePath = '@app/assets';
 
+    public $js = [
+		'js/be.js'
+    ];
+
     public $css = [
-    	'css/dclocal.css'
+    	'css/dclocal.css',
     ];
 
     public $depends = [
-        'app\assets\DcAsset'
+        'yii2mod\c3\chart\ChartAsset'
     ];
 }

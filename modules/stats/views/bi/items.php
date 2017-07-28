@@ -4,12 +4,14 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 use app\assets\BiAsset;
+use app\assets\BeAsset;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParameterSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 BiAsset::register($this);
+BeAsset::register($this);
 
 $this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
@@ -143,20 +145,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 var url = "<?= Url::to(['/stats/bi-line'],['_format' => 'json']) ?>";
 // count all the facts
-var BE = d3.locale ({
-	  "decimal": ",",
-	  "thousands": ".",
-	  "grouping": [3],
-	  "currency": ["", " €"],
-	  "dateTime": "%a %b %e %X %Y",
-	  "date": "%d/%m/%Y",
-	  "time": "%H:%M:%S",
-	  "periods": ["AM", "PM"],
-	  "days": ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-	  "shortDays": ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"],
-	  "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-	  "shortMonths": ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
-	})
 var numberFormat = BE.numberFormat("$,.2f");
 var typeList = ["BID","ORDER","BILL","CREDIT","TICKET","REFUND"];
 var docType = {
@@ -219,6 +207,8 @@ d3.json(url, function(error, data) {
 		sale.total_htva = +sale.total_htva;
 
 		sale.document_type = typeof(docType[sale.document_type]) != 'undefined' ? docType[sale.document_type] : sale.document_type;
+		if(! sale.categorie) sale.categorie = "Sans";
+		if(! sale.yii_category) sale.yii_category = "Sans";
 
 		var c=new Date(sale.created_at);
 		sale.period = new Date(c.getFullYear(),c.getMonth(),c.getDate(),0,0,0,0);
@@ -248,7 +238,7 @@ d3.json(url, function(error, data) {
 	var yearDim  = ndx.dimension(function(d) {return d.year;});
 	var year_total = yearDim.group().reduceSum(function(d) {return d.total_htva;});
 	
-	var cat1Dim  = ndx.dimension(function(d) {return d.categorie;});
+	var cat1Dim  = ndx.dimension(function(d) {return d.categorie});
 	var cat1_total = cat1Dim.group().reduceSum(function(d) {return d.total_htva;});
 	
 	var cat2Dim  = ndx.dimension(function(d) {return d.yii_category;});
