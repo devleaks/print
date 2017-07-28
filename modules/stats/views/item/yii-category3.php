@@ -81,11 +81,16 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php  VarDumper::dumpAsString($groups2, 4, true) ?>
 	
 	<h2>Quantités</h2>
+		
+	<div style="text-align:center;">
+			<h4 id="details"></h4>
+			<a id="btnShowBar" style="display:none;">&larr;&nbsp;Retour aux catégories</a>
+	</div>
 	
 	<div class="row">
 
 		<div class="col-lg-12">
-			<span id="details"></span>&nbsp;<button id="btnShowBar" style="display:none;">Retour aux catégories</button>
+			
 			<div id="c3chart"></div>
 		</div>
 
@@ -144,7 +149,7 @@ function generateFor(name) {
 			show: false
 		}
 	});
-	d3.select("#btnShowBar").style("display","block");
+	d3.select("#btnShowBar").style("display","inline");
 }
 function generateBarChart() {
 	d3.select("#details").html('');
