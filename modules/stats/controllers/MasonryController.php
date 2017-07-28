@@ -32,13 +32,18 @@ class MasonryController extends Controller
         ];
     }
 
-    public function actionBricks()
+	function brick($year) {
+	}
+
+    public function actionBricks($year = null)
     {
+        $y = ($year === null ? date('Y') : $year);
         return $this->render('bricks', ['dataProvider' => new ActiveDataProvider([
 				'query' =>  DocumentLine::find()->joinWith('document')
 												->andWhere(['>', 'work_width', 0])
 												->andWhere(['>', 'work_height', 0])
 												->andWhere(['document_type' => Document::TYPE_ORDER])
+												->andWhere(['between','document.created_at',$y.'-01-01',$y.'-12-31'])
 												->orderBy('document.created_at desc')
 			])
 		]);
