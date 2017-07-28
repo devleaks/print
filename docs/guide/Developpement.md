@@ -88,6 +88,9 @@ Cette opération devrait être répétée approximativement tous les 2 ans pour 
 Le danger est de ne plus pouvoir utiliser les nouvelles versions des logiciels installés,
 versions qui resteraient figées sans possibilités d'évolution et sans correction de problèmes éventuels dans ces modules.
 
+Par exemple, le module mPdf (pour la génération des PDF) ne peut plus être mis à jour car il requiert une version de PHP supérieure à la version 5.6.
+(La version installé au début, qui était la dernière version disponile à ce moment-là, est PHP 5.4.)
+
 ## En cas de problème
 
 En cas de problème avec le logiciel (erreur) sur l'environnement de production,

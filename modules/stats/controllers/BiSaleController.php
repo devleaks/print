@@ -3,6 +3,7 @@
 namespace app\modules\stats\controllers;
 
 use app\models\BiSale;
+use app\models\Document;
 
 use Yii;
 use yii\rest\ActiveController;
@@ -26,8 +27,11 @@ class BiSaleController extends ActiveController
 	
 	public function prepareDataProvider() {
 	    return new ActiveDataProvider([
-	        'query' => BiSale::find(),
-	        'pagination' => false,
+	        'query' => BiSale::find()
+				->andWhere(['in','document_type',[Document::TYPE_TICKET,Document::TYPE_BILL]])
+				->andWhere(['not in','document_status',[Document::STATUS_OPEN,Document::STATUS_CANCELLED]])
+				//->andWhere(['between','created_at','2017-01-01','2018-01-01'])
+	        ,'pagination' => false,
 	    ]);
 	}
 }

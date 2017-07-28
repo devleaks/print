@@ -68,6 +68,18 @@ $this->params['breadcrumbs'][] = $this->title;
 		        'type' => 'bar',
 		        'groups' => $groups,
 		        'order' => null,
+				'onclick' => new JsExpression('function (d, element) {
+						function encodeData(data) {
+						    return Object.keys(data).map(function(key) {
+						        return [key, data[key]].map(encodeURIComponent).join("=");
+						    }).join("&");
+						}
+						var dd = d["name"].substr(0,4) + "-" + ("00" + (parseInt(d["x"]) + 1)).slice(-2);
+						var dt = d["name"].substr(d["name"].indexOf("-")+1);
+						var url = "sales?" + encodeData({type: dt, date: dd});
+						// console.log(dd, dt, url);
+						window.location = url;
+					}')
 		    ],
 		    'axis'=> [
 		        'x'=> [

@@ -334,21 +334,29 @@ class OrderController extends Controller
 		
 	}
 	
+	function reverseType($in) {
+		foreach(Document::getDocumentTypes() as $key => $val)
+			if($in == $val) return $key;
+		return null;
+	}
 	
 	public function actionSales($type, $date) {
 		$year  = substr($date, 0, 4);
 		$month = substr($date, 5, 2);
 		$date_from = $year.'-'.str_pad($month, 2, '0', STR_PAD_LEFT).'-01';
 		$date_to = date("Y-m-t", strtotime($date_from));
-		if($type == Document::TYPE_BILL) {
+		
+		$type2 = $this->reverseType($type);
+		
+		if($type2 == Document::TYPE_BILL) {
 			$q = Bill::find()
-				->andWhere(['year(created_at)' => $year])
-				->andWhere(['month(created_at)' => $month]);
+				->andWhere(['year(created_at)' => intval($year)])
+				->andWhere(['month(created_at)' => intval($month)]);
 		} else {
 			$q = Document::find()
-				->andWhere(['document_type' => $type])
-				->andWhere(['year(created_at)' => $year])
-				->andWhere(['month(created_at)' => $month]);
+				->andWhere(['document_type' => $type2])
+				->andWhere(['year(created_at)' => intval($year)])
+				->andWhere(['month(created_at)' => intval($month)]);
 		}
 		
         return $this->render('sales',[

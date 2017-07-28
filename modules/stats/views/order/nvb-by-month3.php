@@ -87,7 +87,7 @@ $this->registerJs($this->blocks['JS_C3_LOCALE'], yii\web\View::POS_END);
 			        'x' => [
 			            'type' => 'timeseries',
 			            'tick' => [
-			                'format' => new \yii\web\JsExpression('BE.timeFormat("%B %Y")')
+			                'format' => new JsExpression('BE.timeFormat("%B %Y")')
 			            ]
 			     ]
 			]
