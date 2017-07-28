@@ -12,3 +12,23 @@ var BE = d3.locale ({
   "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
   "shortMonths": ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
 });
+
+var docTypes = {
+	BID: {label: "Offre", color: "Plum"},
+	BILL: {label: "Facture", color: "LimeGreen"},
+	ORDER: {label: "Commande", color: "LightGreen"},
+	TICKET: {label: "VC", color: "Aquamarine"},
+	REFUND: {label: "Remb", color: "SandyBrown"},
+	CREDIT: {label: "NC", color: "Coral"},
+}
+
+var colors = [];
+var labels = [];
+for (var t in docTypes) {
+    if (docTypes.hasOwnProperty(t)) {
+		colors.push(docTypes[t]['color']);
+		labels.push(docTypes[t]['label']);
+    }
+}
+var docTypesColors = d3.scale.ordinal().domain(labels)
+                                    .range(colors);

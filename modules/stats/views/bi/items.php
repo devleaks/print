@@ -146,33 +146,7 @@ $this->params['breadcrumbs'][] = $this->title;
 var url = "<?= Url::to(['/stats/bi-line'],['_format' => 'json']) ?>";
 // count all the facts
 var numberFormat = BE.numberFormat("$,.2f");
-var typeList = ["BID","ORDER","BILL","CREDIT","TICKET","REFUND"];
-var docType = {
-	ORDER: "Commande",
-	BILL: "Facture",
-	BID: "Offre",
-	TICKET: "VC",
-	REFUND: "Remb",
-	CREDIT: "NC"
-};
-var docTypeColor = {
-	"Commande": "darkgreen",
-	"Facture": "green",
-	"Offre": "lightblue",
-	"VC": "blue",
-	"Remb": "orange",
-	"NC": "red"
-};
 
-var colors = [];
-var colorIndices = [];
-for (var t in docTypeColor) {
-    if (docTypeColor.hasOwnProperty(t)) {
-		colors.push(docTypeColor[t]);
-		colorIndices.push(t);
-    }
-}
-	
 var salesChart = dc.barChart("#sales");
 var salesStackChart = dc.barChart("#salesStack");
 var yearChart = dc.pieChart("#years");
@@ -206,7 +180,7 @@ d3.json(url, function(error, data) {
 		sale.created_at = Date.parse(sale.created_at.replace(' ', 'T'));
 		sale.total_htva = +sale.total_htva;
 
-		sale.document_type = typeof(docType[sale.document_type]) != 'undefined' ? docType[sale.document_type] : sale.document_type;
+		sale.document_type = typeof(docTypes[sale.document_type]) != 'undefined' ? docTypes[sale.document_type]['label'] : sale.document_type;
 		if(! sale.categorie) sale.categorie = "Sans";
 		if(! sale.yii_category) sale.yii_category = "Sans";
 
@@ -260,9 +234,9 @@ d3.json(url, function(error, data) {
 		function() {
 			var e = {};
 			//["BID","ORDER","BILL","CREDIT","TICKET","REFUND"].forEach(function(t){e[t]=0;})
-			for (var t in docType) {
-			    if (docType.hasOwnProperty(t)) {
-					e[docType[t]]=0;
+			for (var t in docTypes) {
+			    if (docTypes.hasOwnProperty(t)) {
+					e[docTypes[t]['label']]=0;
 			    }
 			}
             return e;
@@ -283,18 +257,18 @@ d3.json(url, function(error, data) {
         .xUnits(d3.time.months)
         .dimension(monthDim)
         .group(typeSumGroup, "Commande")
+		.colors(docTypesColors)
 		.elasticY(true)
 		.renderHorizontalGridLines(true)
-		.ordinalColors(colors)
 		.valueAccessor(function (d) {
 			return d.value["Commande"];
 		});
-  	//console.log("stacking "+docType[ssinit]);
+  	//console.log("stacking "+docTypes[ssinit]);
 
-	for (var t in docType) {
-	    if (t != ssinit && docType.hasOwnProperty(t)) {
-			//console.log("stacking "+docType[t]);
-			salesStackChart.stack(typeSumGroup, docType[t], sel_stack(docType[t]));
+	for (var t in docTypes) {
+	    if (t != ssinit && docTypes.hasOwnProperty(t)) {
+			//console.log("stacking "+docTypes[t]);
+			salesStackChart.stack(typeSumGroup, docTypes[t]['label'], sel_stack(docTypes[t]['label']));
 	    }
 	}
 	
@@ -313,7 +287,6 @@ d3.json(url, function(error, data) {
 		.group(totals)
 		.x(d3.time.scale().domain([minDate,maxDate]))
 		.elasticY(true)
-		.renderHorizontalGridLines(true)
         .xUnits(d3.time.days)
 		.turnOnControls(true);
 
@@ -328,8 +301,7 @@ d3.json(url, function(error, data) {
 	    .width(250).height(150)
         .margins({left: 0, top: 0, right: 100, bottom: 0})
 	    .dimension(typeDim)
-		.ordinalColors(colors)
-		.colorAccessor(function (d, i){/*console.log(d, colorIndices.indexOf(d.key), i);*/return colorIndices.indexOf(d.key);})
+		.colors(docTypesColors)
 	    .group(type_total)
 		.turnOnControls(true);
 
