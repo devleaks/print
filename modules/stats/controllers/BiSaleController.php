@@ -30,7 +30,7 @@ class BiSaleController extends ActiveController
 	        'query' => BiSale::find()
 				->andWhere(['in','document_type',[Document::TYPE_TICKET,Document::TYPE_BILL]])
 				->andWhere(['not in','document_status',[Document::STATUS_OPEN,Document::STATUS_CANCELLED]])
-				->andWhere(['between','created_at','2017-01-01','2018-01-01'])
+//				->andWhere(['between','created_at','2017-01-01','2018-01-01'])
 	        ,'pagination' => false,
 	    ]);
 	}

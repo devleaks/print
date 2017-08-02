@@ -36,7 +36,7 @@ AS SELECT
    d.updated_at AS updated_at,
    d.price_htva AS total_price_htva,
    1 + dl.id - (select min(id) from document_line where document_id = d.id) as document_line,
-   (dl.price_htva+dl.extra_htva) AS line_price_htva,
+   (ifnull(dl.price_htva,0)+ifnull(dl.extra_htva,0)) AS line_price_htva,
    i2.libelle_court AS line_item_name,
    i2.categorie AS item_categorie,
    i2.yii_category AS item_yii_category,
@@ -47,7 +47,7 @@ AS SELECT
    wl.position as position,
    wl.created_at AS date_start,
    wl.updated_at AS date_finish,
-   (wl.updated_at - wl.created_at) as duration   
+   (UNIX_TIMESTAMP(wl.updated_at) - UNIX_TIMESTAMP(wl.created_at)) as duration   
  FROM work_line wl,
  	  document_line dl,
       work w,
@@ -61,7 +61,6 @@ where wl.work_id = w.id
   and wl.item_id = i.id
   and dl.item_id = i2.id
   and wl.task_id = t.id
-
 
  */
 class BiWork extends \yii\db\ActiveRecord

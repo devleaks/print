@@ -73,12 +73,12 @@ $this->params['breadcrumbs'][] = $this->title;
 			</h4>
 		</div><!--.col-lg-3-->
 		
-		<div class="col-lg-3" id="catgs">
+		<div class="col-lg-3" id="duras">
 			<h4>
-				Catégorie
+				Durée de réalisation (jours)
 		        <span>
 		          <a class="reset"
-		            href="javascript:catgChart.filterAll();dc.redrawAll();"
+		            href="javascript:duraChart.filterAll();dc.redrawAll();"
 		            style="display: none;">supprimer</a>
 		        </span><br/>
 				<span class='reset' style='display: none;'>Sélection: <span class='filter'></span></span>			
@@ -157,11 +157,10 @@ var salesStackChart = dc.barChart("#salesStack");
 var itemChart = dc.pieChart("#items");
 var typeChart = dc.rowChart("#types");
 var taskChart = dc.pieChart("#tasks");
-var catgChart = dc.pieChart("#catgs");
+var duraChart = dc.barChart("#duras");
 var dataTable = dc.dataTable("#clients");
 	
 d3.json(url, function(error, data) {
-	
 /**
 {
 	"document_type":"TICKET",
@@ -185,7 +184,7 @@ d3.json(url, function(error, data) {
 	"duration":1000999
 }
 */
-	var cli = {};
+	var cnt = 0;
 
 	data.forEach(function(d) {
 		d.created_at = Date.parse(d.created_at.replace(' ', 'T'));
@@ -230,12 +229,15 @@ d3.json(url, function(error, data) {
 	
 	var taskDim  = ndx.dimension(function(d) {return d.task_name;});
 	var task_total = taskDim.group().reduceCount();
+																		//  86400000
+	var duraDim  = ndx.dimension(function(d) {var r = Math.floor(d.duration/86400); return r > 15 ? 15 : r;});
+	var dura_total = duraDim.group().reduceCount();
 	
 	var catgDim  = ndx.dimension(function(d) {return d.item_categorie;});
 	var catg_total = catgDim.group().reduceCount();
 	
 	var cliDim  = ndx.dimension(function(d) {return [d.item_categorie, d.line_item_name, d.task_name];});
-	var cli_total = cliDim.group().reduceSum(function(d) {return d.duration;});
+	var cli_total = cliDim.group().reduceCount(); // Sum(function(d) {return d.duration;});
 	
 	// sum group by document_type
 	var typeSumGroup = monthDim.group().reduce(
@@ -288,13 +290,15 @@ d3.json(url, function(error, data) {
 		.turnOnControls(true)
 		.minAngleForLabel(Math.PI / 20);
 
-	catgChart
-	    .width(150).height(150)
-	    .dimension(catgDim)
-	    .group(catg_total)
-	    .innerRadius(30)
+	duraChart
+	    .width(250).height(150)
+	    .dimension(duraDim)
+	    .group(dura_total)
+		.x(d3.scale.linear().domain([0,15]))
+        .margins({left: 40, top: 0, right: 0, bottom: 20})
+//	    .innerRadius(30)
 		.turnOnControls(true)
-		.minAngleForLabel(Math.PI / 40);
+//		.minAngleForLabel(Math.PI / 40);
 
 	salesChart
 		.width(1140).height(200)
@@ -349,6 +353,7 @@ d3.json(url, function(error, data) {
 		            return d.key[2];
 		        },
 				function (d) {
+					return d.value;
 					var secs = d.value / 100000;
 					var yrs = Math.floor(secs / (3600*24*365.25));
 					secs -= yrs * (3600*24*365.25);

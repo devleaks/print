@@ -337,13 +337,6 @@ d3.json(url, function(error, data) {
 
 	dc.filterAll();
     dc.renderAll();
-
-	d3.selectAll('#version').text(dc.version);		
-	d3.json('https://api.github.com/repos/dc-js/dc.js/releases/latest', function (error, latestRelease) {
-	    /*jshint camelcase: false */
-	    /* jscs:disable */
-	    d3.selectAll('#latest').text(latestRelease.tag_name);
-	});
 });		
 <?php $this->endBlock(); ?>
 </script>

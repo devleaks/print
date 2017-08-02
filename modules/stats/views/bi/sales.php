@@ -159,7 +159,12 @@ var typeChart = dc.rowChart("#types");
 var langChart = dc.pieChart("#langs");
 var cntrChart = dc.pieChart("#cntrs");
 var dataTable = dc.dataTable("#clients");
-	
+
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
 d3.json(url, function(error, data) {
 	
 	var cli = {};
@@ -176,6 +181,26 @@ d3.json(url, function(error, data) {
 		sale.period_month = new Date(c.getFullYear(),c.getMonth(),1,0,0,0,0);
 
 		sale.document_type = typeof(docTypes[sale.document_type]) != 'undefined' ? docTypes[sale.document_type]['label'] : sale.document_type;
+
+		if(sale.country)
+			switch(sale.country.toLowerCase()) {
+				case	'allemagne': 	sale.country = 'Allemagne'; break;
+				case	'autriche': 	sale.country = 'Autriche'; break;
+				case	'belgie':
+				case	'belgique':
+				case	'belgium': 		sale.country = 'Belgique'; break;
+				case	'nederland':
+				case	'holland':
+				case	'hollande':
+				case	'the netherlands':
+				case	'pays-bas': 	sale.country = 'Pays-Bas'; break;
+				case	'italia':
+				case	'italie':c = 'Italie'; break;
+				default:
+					sale.country = toTitleCase(sale.country); break;
+			}
+		else
+			sale.country = 'Indéfini';
 
 		sale.language = sale.language == 'fr' ? 'Français' :
 						sale.language == 'nl' ? 'Nederlands' :
@@ -271,11 +296,9 @@ d3.json(url, function(error, data) {
 	    .width(150).height(150)
 	    .dimension(langDim)
 	    .group(lang_total)
-	    .innerRadius(20)
-		.externalRadiusPadding(40)
+	    .innerRadius(30)
 		.turnOnControls(true)
-		.externalLabels(30)
-		.minAngleForLabel(Math.PI / 20);
+		.minAngleForLabel(Math.PI / 40);
 
 	cntrChart
 	    .width(150).height(150)
