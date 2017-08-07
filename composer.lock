@@ -1701,12 +1701,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/devleaks/yii2-metafizzy.git",
-                "reference": "95bb5b0e47b1b29cd6a605d9955fc80fa543db80"
+                "reference": "1de157b044abbd95e3d87338656561eb33d36ac2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/devleaks/yii2-metafizzy/zipball/95bb5b0e47b1b29cd6a605d9955fc80fa543db80",
-                "reference": "95bb5b0e47b1b29cd6a605d9955fc80fa543db80",
+                "url": "https://api.github.com/repos/devleaks/yii2-metafizzy/zipball/1de157b044abbd95e3d87338656561eb33d36ac2",
+                "reference": "1de157b044abbd95e3d87338656561eb33d36ac2",
                 "shasum": ""
             },
             "require": {

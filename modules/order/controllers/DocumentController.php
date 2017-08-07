@@ -872,13 +872,13 @@ class DocumentController extends Controller
 			}
 			
 			if($captureEmail->email != '') {
+				$lang_before = Yii::$app->language;
+				Yii::$app->language = $client ? ($client->lang ? $client->lang : $lang_before) : $lang_before;
 				$pdf = new PrintedDocument([
 					'document' => $model,
 					'save' => true,
 					'images' => $send_with_image,
 				]);
-				$lang_before = Yii::$app->language;
-				Yii::$app->language = $client ? ($client->lang ? $client->lang : $lang_before) : $lang_before;
 				$pdf->send(Yii::t('print', $model->document_type).' '.$model->name, $captureEmail->body, $captureEmail->email);
 				Yii::$app->language = $lang_before;
 				Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
@@ -895,10 +895,12 @@ class DocumentController extends Controller
 	public function actionPdf($id, $format = PrintedDocument::FORMAT_A4) {
 		$model = $this->findModel($id);
 		$f = $format == PrintedDocument::IMAGES ? PrintedDocument::FORMAT_A4 : $format;
+		$client = Client::findOne($model->client_id);
 		$pdf = new PrintedDocument([
 			'document'	=> $model,
 			'format'	=> $f,
 			'images'	=> ($format == PrintedDocument::IMAGES),
+			'language'	=> $client ? ($client->lang ? $client->lang : Yii::$app->language) : Yii::$app->language
 		]);
 		return $pdf->render();
 	}

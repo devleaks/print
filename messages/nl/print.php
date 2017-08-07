@@ -120,6 +120,7 @@ return [
 	'VAT' => 'BTW',
 	'Vat' => 'BTW',
 	'Rate' => '% BTW',
+	'Page' => 'Pagina',
 	
 	/** Footer */
 	'Labo JJ Micheli SPRL • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85 • Fax. +32 (0)2 733 38 72<br>e-Mail: info@labojjmicheli.be • Web Site: www.labojjmicheli.be • VAT: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank 210-0381493-44 • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB' => 'Labo JJ Micheli SPRL • 21-23 Tervaetestraat • 1040 Brussel<br>Tel. +32 (0)2 733 21 85 • Fax. +32 (0)2 733 38 72<br>e-Mail: info@labojjmicheli.be • Web Site: www.labojjmicheli.be • BTW: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank 210-0381493-44 • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB',

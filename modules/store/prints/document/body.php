@@ -15,7 +15,7 @@ $use_gridview = false;
 <div class="document-print-body">
 
 	<?= $this->render('header', [
-			'model' => $model,
+			'model' => $model
 	    ])
 	?>
 
@@ -30,7 +30,7 @@ $use_gridview = false;
 	?>
 
 	<?= $this->render('footer', [
-			'model' => $model,
+			'model' => $model
 	    ])
 	?>
 	

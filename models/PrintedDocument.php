@@ -76,10 +76,12 @@ class PrintedDocument extends PDFLetter {
      * @inheritdoc
      */
 	public function render() {
-		Yii::trace('Image = '.($this->images?'T':'F'), 'PrintedDocument::render');
+		$lang_before = Yii::$app->language;
+		Yii::$app->language = $this->language;
 		$this->title = $this->document ? Yii::t('print', ($this->document->document_type == Document::TYPE_ORDER && $this->document->bom_bool) ? Document::TYPE_BOM : $this->document->document_type).' '.$this->document->name : '';
 	 	$vb = $this->viewBase ? $this->viewBase : '@app/modules/store/prints/document/';
 	    $this->content = Yii::$app->controller->renderPartial($vb.'body', ['model' => $this->document, 'images' => $this->images ? $this->images_loc : false]);
+		Yii::$app->language = $lang_before;
 
 		return parent::render();
 	}

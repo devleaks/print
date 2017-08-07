@@ -58,6 +58,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				'attribute' => 'name',
 	            'label' => Yii::t('store', 'Référence'),
 				'noWrap' => true,
+	            'value' => function ($model, $key, $index, $widget) {
+							return $model->name.($model->hasPicture()?'.':'');
+				}
 			],
             [
 	            'label' => Yii::t('store', 'Communication'),

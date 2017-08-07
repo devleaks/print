@@ -7,6 +7,11 @@ use yii\helpers\Url;
 $this->title = Yii::t('store', 'Tailles demandées');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
+if($straightened) {
+	$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'oriented'), 'url' => ['/stats/masonry/frames']];
+} else {
+	$this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'straightened'), 'url' => ['/stats/masonry/frames-straightened']];
+}
 
 $dataProvider->pagination = false;
 
@@ -29,7 +34,7 @@ $thick_level = 4;
 ?>
 <div class="jjm-graphic container">
 
-    <h1><?= Html::encode($this->title)?></h1>
+    <h1><?= Html::encode($this->title.' - '.Yii::t('store', $straightened?'straightened':'oriented'))?></h1>
 
 <div id="container"  class="jjm-frame-container" style="width: <?= $max_width * $factor ?>px; height: <?= $max_height * $factor ?>px; position: relative;">
 <?php

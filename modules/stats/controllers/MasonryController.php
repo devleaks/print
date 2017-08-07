@@ -79,7 +79,8 @@ class MasonryController extends Controller
         return $this->render('frames', ['dataProvider' => new ActiveDataProvider([
 				'query' =>  $q
 			]),
-			'max' => $max
+			'max' => $max,
+			'straightened' => false
 		]);
     }
 
@@ -114,7 +115,8 @@ class MasonryController extends Controller
         return $this->render('frames', ['dataProvider' => new ActiveDataProvider([
 				'query' =>  $q
 			]),
-			'max' => $max
+			'max' => $max,
+			'straightened' => true
 		]);
     }
 }
