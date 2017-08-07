@@ -756,16 +756,16 @@
         },
         {
             "name": "bower-asset/intro.js",
-            "version": "v2.5.0",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/usablica/intro.js.git",
-                "reference": "4571f2c5d8d97091a3a7eb2b9986377b141990cb"
+                "reference": "d7bbd3f9686e19927a1a730d9a150ba64cccb2e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/usablica/intro.js/zipball/4571f2c5d8d97091a3a7eb2b9986377b141990cb",
-                "reference": "4571f2c5d8d97091a3a7eb2b9986377b141990cb",
+                "url": "https://api.github.com/repos/usablica/intro.js/zipball/d7bbd3f9686e19927a1a730d9a150ba64cccb2e8",
+                "reference": "d7bbd3f9686e19927a1a730d9a150ba64cccb2e8",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -2047,16 +2047,16 @@
         },
         {
             "name": "kartik-v/dependent-dropdown",
-            "version": "v1.4.7",
+            "version": "v1.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/dependent-dropdown.git",
-                "reference": "7b715958015d45ea6d43cc7f11060a29488e34fc"
+                "reference": "1349e7f5816a65e89bc227098386aac5b2c89363"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/dependent-dropdown/zipball/7b715958015d45ea6d43cc7f11060a29488e34fc",
-                "reference": "7b715958015d45ea6d43cc7f11060a29488e34fc",
+                "url": "https://api.github.com/repos/kartik-v/dependent-dropdown/zipball/1349e7f5816a65e89bc227098386aac5b2c89363",
+                "reference": "1349e7f5816a65e89bc227098386aac5b2c89363",
                 "shasum": ""
             },
             "type": "library",
@@ -2090,7 +2090,7 @@
                 "option",
                 "select"
             ],
-            "time": "2017-07-25T14:32:03+00:00"
+            "time": "2017-08-01T11:43:55+00:00"
         },
         {
             "name": "kartik-v/php-date-formatter",
