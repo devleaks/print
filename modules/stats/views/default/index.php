@@ -56,6 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<ul>
 					<li><a href="<?= Url::to(['/stats/bi/sales']) ?>"><?= Yii::t('store', 'Ventes') ?></a></li>
 					<li><a href="<?= Url::to(['/stats/bi/items']) ?>"><?= Yii::t('store', 'Articles') ?></a></li>
+					<li><a href="<?= Url::to(['/stats/bi/works']) ?>"><?= Yii::t('store', 'Travaux') ?></a></li>
 				</ul>
 		</div>
 
@@ -73,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					    <li><a href="<?= Url::to(['/stats/masonry/frames']) ?>"><?= Yii::t('store', 'Tailles demandées')?></a>
 						 (<a href="<?= Url::to(['/stats/masonry/frames-straightened']) ?>"><?= Yii::t('store', 'straightened')?></a>)</li>
 					    <li><a href="<?= Url::to(['/stats/masonry/bricks']) ?>"><?= Yii::t('store', 'Représentation graphique de toutes les commandes par année')?></a><br/>
-						    <span style="font-size:smaller;font-style:italic;">Patience, c'est un peu plus lent...<span></li>
+						    <span style="font-size:smaller;font-style:italic;">Patience, c'est un peu plus lent... Patience, et cela apparaît...<span></li>
 					</ul>
 		</div>
 

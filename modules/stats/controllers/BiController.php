@@ -2,7 +2,7 @@
 
 namespace app\modules\stats\controllers;
 
-use app\models\BiLine;
+use app\models\BiItem;
 
 use Yii;
 use yii\web\Controller;
@@ -23,6 +23,12 @@ class BiController extends Controller
 	public function actionItems() {
         return $this->render('items',[
 			'title' => Yii::t('store', 'Articles')
+		]);
+	}
+
+	public function actionWorks() {
+        return $this->render('works',[
+			'title' => Yii::t('store', 'Travaux')
 		]);
 	}
 

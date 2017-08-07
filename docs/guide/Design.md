@@ -53,5 +53,5 @@ On peut envisager de normaliser les éléments suivants:
 En dehors de ces imperfections, l'application s'intègre bien avec le cadre de développement Yii,
 respecte les conventions, et usages des entités de Yii.
 
-De très nombreux packages ont été ajoutés, de Mpdf à Highcharts, en passant par la majorité des packages
+De très nombreux packages ont été ajoutés, de Mpdf à D3 (graphiques), en passant par la majorité des packages
 développés par M. Kartik Visweswaran.

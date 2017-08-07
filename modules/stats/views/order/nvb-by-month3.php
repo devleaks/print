@@ -45,6 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="parameter-index container">
 	
+	<h1><?= Html::encode($this->title) ?></h1>
+	<br/><br/>
+	
 	<div id="c3chart"></div>
 
 	<?php VarDumper::dumpAsString($data1, 4, true) ?>

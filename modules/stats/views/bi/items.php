@@ -141,9 +141,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div><!--.container -->
 <script type="text/javascript">
-<?php $this->beginBlock('JS_DC_SALES'); ?>
+<?php $this->beginBlock('JS_DC_ITEMS'); ?>
 
-var url = "<?= Url::to(['/stats/bi-line'],['_format' => 'json']) ?>";
+var url = "<?= Url::to(['/stats/bi-item'],['_format' => 'json']) ?>";
 // count all the facts
 var numberFormat = BE.numberFormat("$,.2f");
 
@@ -337,15 +337,8 @@ d3.json(url, function(error, data) {
 
 	dc.filterAll();
     dc.renderAll();
-
-	d3.selectAll('#version').text(dc.version);		
-	d3.json('https://api.github.com/repos/dc-js/dc.js/releases/latest', function (error, latestRelease) {
-	    /*jshint camelcase: false */
-	    /* jscs:disable */
-	    d3.selectAll('#latest').text(latestRelease.tag_name);
-	});
 });		
 <?php $this->endBlock(); ?>
 </script>
 <?php
-$this->registerJs($this->blocks['JS_DC_SALES'], yii\web\View::POS_END);
+$this->registerJs($this->blocks['JS_DC_ITEMS'], yii\web\View::POS_END);
