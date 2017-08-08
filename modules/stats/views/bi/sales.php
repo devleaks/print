@@ -61,18 +61,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			</h4>
 		</div><!--.col-lg-3-->
 		
-		<div class="col-lg-3" id="langs">
-			<h4>
-				Langue
-		        <span>
-		          <a class="reset"
-		            href="javascript:langChart.filterAll();dc.redrawAll();"
-		            style="display: none;">supprimer</a>
-		        </span><br/>
-				<span class='reset' style='display: none;'>Sélection: <span class='filter'></span></span>			
-			</h4>
-		</div><!--.col-lg-3-->
-		
 		<div class="col-lg-3" id="cntrs">
 			<h4>
 				Pays
@@ -107,23 +95,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<div class="row">
 		
-		<div class="col-lg-12" id="sales">
-			<h2>
-				Ventes par jour
-		        <span>
-		          <a class="reset"
-		            href="javascript:salesChart.filterAll();dc.redrawAll();"
-		            style="display: none;">supprimer</a>
-		        </span>
-				<span class='reset' style='display: none;'>Sélection: <span class='filter'></span></span>			
-			</h2>
-		</div><!--.col-lg-12-->
-		
-	</div><!--.row-->
-	
-
-	<div class="row">
-		
 		<div class="col-lg-12">
 			<div><h2>Clients</h2>
 			<table id="clients" class="table">
@@ -131,7 +102,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				<tr class="header">
 					<th>Client</th>
 					<th>Pays</th>
-					<th>Langue</th>
 					<th>Total</th>
 				</tr>
 				</thead>
@@ -152,12 +122,10 @@ var dateFormat = BE.timeFormat("%b %Y");
 
 dc.dateFormat = BE.timeFormat("%b %Y");
 
-var salesChart = dc.barChart("#sales");
 var salesStackChart = dc.barChart("#salesStack");
 var yearChart = dc.pieChart("#years");
 var typeChart = dc.rowChart("#types");
-var langChart = dc.pieChart("#langs");
-var cntrChart = dc.pieChart("#cntrs");
+var cntrChart = dc.rowChart("#cntrs");
 var dataTable = dc.dataTable("#clients");
 
 function toTitleCase(str)
@@ -166,52 +134,55 @@ function toTitleCase(str)
 }
 
 d3.json(url, function(error, data) {
-	
+	/**{
+		"document_type":"TICKET",
+		"document_status":"CLOSED",
+		"created_at":"2015-01-30 11:39:46",
+		"updated_at":"2015-10-05 10:11:50",
+		"due_date":"2015-01-30 00:00:00",
+		"price_htva":"130.50",
+		"client_name":"Client au comptoir",
+		"client_country":"Belgique"
+	}**/
 	var cli = {};
 
 	data.forEach(function(sale) {
 		sale.created_at = Date.parse(sale.created_at.replace(' ', 'T'));
 		sale.updated_at = Date.parse(sale.updated_at.replace(' ', 'T'));
 		sale.due_date = Date.parse(sale.due_date.replace(' ', 'T'));
-		sale.price_htva = +sale.price_htva;	// parseFloat(price_htva)
-		sale.date_year = +sale.date_year;	// parseInt(date_year)
-		sale.date_month = +sale.date_month;	// parseInt(date_year)
+		sale.price_htva = +sale.price_htva;	// parseFloat(price_htva)?
+
 		var c=new Date(sale.created_at);
 		sale.period = new Date(c.getFullYear(),c.getMonth(),c.getDate(),0,0,0,0);
 		sale.period_month = new Date(c.getFullYear(),c.getMonth(),1,0,0,0,0);
+		sale.date_year = c.getFullYear();
+		sale.date_month = c.getMonth() + 1;
 
 		sale.document_type = typeof(docTypes[sale.document_type]) != 'undefined' ? docTypes[sale.document_type]['label'] : sale.document_type;
 
-		if(sale.country)
-			switch(sale.country.toLowerCase()) {
-				case	'allemagne': 	sale.country = 'Allemagne'; break;
-				case	'autriche': 	sale.country = 'Autriche'; break;
+		if(sale.client_country)
+			switch(sale.client_country.toLowerCase()) {
+				case	'allemagne': 	sale.client_country = 'Allemagne'; break;
+				case	'autriche': 	sale.client_country = 'Autriche'; break;
 				case	'belgie':
 				case	'belgique':
-				case	'belgium': 		sale.country = 'Belgique'; break;
+				case	'belgium': 		sale.client_country = 'Belgique'; break;
 				case	'nederland':
 				case	'holland':
 				case	'hollande':
 				case	'the netherlands':
-				case	'pays-bas': 	sale.country = 'Pays-Bas'; break;
+				case	'pays-bas': 	sale.client_country = 'Pays-Bas'; break;
 				case	'italia':
 				case	'italie':c = 'Italie'; break;
 				default:
-					sale.country = toTitleCase(sale.country); break;
+					sale.client_country = toTitleCase(sale.client_country); break;
 			}
 		else
-			sale.country = 'Indéfini';
+			sale.client_country = 'Indéfini';
 
-		sale.language = sale.language == 'fr' ? 'Français' :
-						sale.language == 'nl' ? 'Nederlands' :
-						sale.language == 'en' ? 'English' :
-						sale.language;
-			
-		cli[sale.client_id] = {
-			name: sale.client_fn != '' ? sale.client_fn+' '+sale.client_ln :
-					(sale.client_ln != '' ? sale.client_ln : sale.client_id),
-			language: sale.language,
-			country: sale.country
+		cli[sale.client_name] = {
+			name: sale.client_name,
+			country: sale.client_country
 		}
 		
 		delete sale.client_fn,sale.client_ln,sale.client_an;
@@ -240,13 +211,10 @@ d3.json(url, function(error, data) {
 	var yearDim  = ndx.dimension(function(d) {return +d.date_year;});
 	var year_total = yearDim.group().reduceSum(function(d) {return d.price_htva;});
 	
-	var langDim  = ndx.dimension(function(d) {return d.language;});
-	var lang_total = langDim.group().reduceSum(function(d) {return d.price_htva;});
-	
-	var cntrDim  = ndx.dimension(function(d) {return d.country;});
+	var cntrDim  = ndx.dimension(function(d) {return d.client_country;});
 	var cntr_total = cntrDim.group().reduceSum(function(d) {return d.price_htva;});
 	
-	var cliDim  = ndx.dimension(function(d) {return d.client_id;});
+	var cliDim  = ndx.dimension(function(d) {return d.client_name;});
 	var cli_total = cliDim.group().reduceSum(function(d) {return d.price_htva;});
 	
 	// sum group by document_type
@@ -282,7 +250,8 @@ d3.json(url, function(error, data) {
 	    .dimension(yearDim)
 	    .group(year_total)
 	    .innerRadius(30)
-		.turnOnControls(true);
+		.turnOnControls(true)
+	;
 		
 	typeChart
 	    .width(250).height(150)
@@ -290,34 +259,16 @@ d3.json(url, function(error, data) {
         .margins({left: 0, top: 0, right: 100, bottom: 0})
 		.colors(docTypesColors)
 	    .group(type_total)
-		.turnOnControls(true);
-
-	langChart
-	    .width(150).height(150)
-	    .dimension(langDim)
-	    .group(lang_total)
-	    .innerRadius(30)
 		.turnOnControls(true)
-		.minAngleForLabel(Math.PI / 40);
+	;
 
 	cntrChart
-	    .width(150).height(150)
+	    .width(250).height(250)
 	    .dimension(cntrDim)
 	    .group(cntr_total)
-	    .innerRadius(30)
+        .margins({left: 0, top: 0, right: 100, bottom: 0})
 		.turnOnControls(true)
-		.minAngleForLabel(Math.PI / 40);
-
-	salesChart
-		.width(1140).height(200)
-		.dimension(dateDim)
-		.group(totals)
-		.x(d3.time.scale().domain([minDate,maxDate]))
-        .xUnits(d3.time.days)
-		.elasticY(true)
-		.renderHorizontalGridLines(true)
-        .margins({left: 50, top: 0, right: 50, bottom: 20})
-		.turnOnControls(true);
+	;
 
 	var ssinit = "ORDER";
 	salesStackChart
@@ -331,7 +282,8 @@ d3.json(url, function(error, data) {
 		.colors(docTypesColors)
 		.valueAccessor(function (d) {
 			return d.value["Commande"];
-		});
+		})
+	;
 
 	for (var t in docTypes) {
 	    if (t != ssinit && docTypes.hasOwnProperty(t)) {
@@ -357,16 +309,14 @@ d3.json(url, function(error, data) {
 		        function (d) {
 		            return cli[d.key].country;
 		        },
-		        function (d) {
-		            return cli[d.key].language;
-		        },
 				function (d) {
 		            return numberFormat(d.value);
 		        }
 
 		    ])
 		.sortBy(function(d){ return d.value; })
-	    .order(d3.descending);
+	    .order(d3.descending)
+	;
 
 	dc.filterAll();	
     dc.renderAll();
