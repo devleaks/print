@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e08028e46ad46acce4027419726513b",
+    "content-hash": "f487d67923a5d6b8ed08ff61a9b08e73",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -752,6 +752,50 @@
                 "height",
                 "size",
                 "width"
+            ]
+        },
+        {
+            "name": "bower-asset/imagesloaded",
+            "version": "v4.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/desandro/imagesloaded.git",
+                "reference": "a8e0dd3a463903014bf8071efece15dcd570b1b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/desandro/imagesloaded/zipball/a8e0dd3a463903014bf8071efece15dcd570b1b9",
+                "reference": "a8e0dd3a463903014bf8071efece15dcd570b1b9",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/ev-emitter": ">=1.0.0,<2.0.0"
+            },
+            "require-dev": {
+                "bower-asset/jquery": ">=1.9,<4.0",
+                "bower-asset/qunit": "~1.20.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "imagesloaded.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "test",
+                    "package.json",
+                    "composer.json",
+                    "node_modules",
+                    "bower_components",
+                    "tests",
+                    "sandbox/",
+                    "contributing.md"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "JavaScript is all like _You images done yet or what?_",
+            "keywords": [
+                "images"
             ]
         },
         {
@@ -1711,6 +1755,7 @@
             },
             "require": {
                 "bower-asset/draggabilly": "*",
+                "bower-asset/imagesloaded": "*",
                 "bower-asset/isotope": "*",
                 "bower-asset/masonry": "*",
                 "bower-asset/packery": "*",
@@ -1743,10 +1788,10 @@
                 "yii2"
             ],
             "support": {
-                "source": "https://github.com/devleaks/yii2-metafizzy/tree/1.0.1",
+                "source": "https://github.com/devleaks/yii2-metafizzy/tree/master",
                 "issues": "https://github.com/devleaks/yii2-metafizzy/issues"
             },
-            "time": "2015-02-19T14:17:18+00:00"
+            "time": "2015-04-02T14:33:08+00:00"
         },
         {
             "name": "doctrine/lexer",
