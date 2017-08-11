@@ -96,13 +96,20 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="row">
 		
 		<div class="col-lg-12">
-			<div><h2>Clients</h2>
+			<div><h4>Clients</h4>
 			<table id="clients" class="table">
 				<thead>
 				<tr class="header">
 					<th>Client</th>
 					<th>Pays</th>
+					<th>Total par client</th>
+					<th>%</th>
+				</tr>
+				<tr>
+					<th></th>
 					<th>Total</th>
+					<th><span id='localtotal'></span></th>
+					<th>Grand Total: <span id="grandtotal"></span><br/><span id='localpercent'></span> %</th>
 				</tr>
 				</thead>
 			</table>
@@ -117,19 +124,58 @@ $this->params['breadcrumbs'][] = $this->title;
 
 var url = "<?= Url::to(['/stats/bi-sale'],['_format' => 'json']) ?>";
 
-var numberFormat = BE.numberFormat("$,.2f");
+var BE = d3.locale ({
+	  "decimal": ",",
+	  "thousands": ".",
+	  "grouping": [3],
+	  "currency": ["", " €"],
+	  "dateTime": "%a %b %e %X %Y",
+	  "date": "%d/%m/%Y",
+	  "time": "%H:%M:%S",
+	  "periods": ["AM", "PM"],
+	  "days": ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+	  "shortDays": ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"],
+	  "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+	  "shortMonths": ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
+	})
+var formatCurrency = BE.numberFormat("$,.2f");
+var percentFormat = BE.numberFormat(",.1f");
 var dateFormat = BE.timeFormat("%b %Y");
 
 dc.dateFormat = BE.timeFormat("%b %Y");
 
+var docTypes = {
+	BID: {label: "Offre", color: "Plum"},
+	BILL: {label: "Facture", color: "LimeGreen"},
+	ORDER: {label: "Commande", color: "LightGreen"},
+	TICKET: {label: "VC", color: "Aquamarine"},
+	REFUND: {label: "Remb", color: "SandyBrown"},
+	CREDIT: {label: "NC", color: "Coral"},
+}
+
+var colors = [];
+var labels = [];
+for (var t in docTypes) {
+    if (docTypes.hasOwnProperty(t)) {
+		colors.push(docTypes[t]['color']);
+		labels.push(docTypes[t]['label']);
+    }
+}
+var docTypesColors = d3.scale.ordinal()
+							 .domain(labels)
+	                         .range(colors);
+
+var salesChart = dc.barChart("#sales");
 var salesStackChart = dc.barChart("#salesStack");
 var yearChart = dc.pieChart("#years");
 var typeChart = dc.rowChart("#types");
 var cntrChart = dc.rowChart("#cntrs");
 var dataTable = dc.dataTable("#clients");
+var localTotal = dc.numberDisplay("#localtotal");	
+var localPercent = dc.numberDisplay("#localpercent");	
+var grand_total = null;	
 
-function toTitleCase(str)
-{
+function toTitleCase(str) {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
@@ -144,20 +190,20 @@ d3.json(url, function(error, data) {
 		"client_name":"Client au comptoir",
 		"client_country":"Belgique"
 	}**/
+	
 	var cli = {};
 
 	data.forEach(function(sale) {
-		sale.created_at = Date.parse(sale.created_at.replace(' ', 'T'));
-		sale.updated_at = Date.parse(sale.updated_at.replace(' ', 'T'));
-		sale.due_date = Date.parse(sale.due_date.replace(' ', 'T'));
-		sale.price_htva = +sale.price_htva;	// parseFloat(price_htva)?
+		delete sale.updated_at, sale.due_date;
 
+		sale.created_at = Date.parse(sale.created_at.replace(' ', 'T'));
 		var c=new Date(sale.created_at);
 		sale.period = new Date(c.getFullYear(),c.getMonth(),c.getDate(),0,0,0,0);
 		sale.period_month = new Date(c.getFullYear(),c.getMonth(),1,0,0,0,0);
-		sale.date_year = c.getFullYear();
-		sale.date_month = c.getMonth() + 1;
+		sale.date_year = c.getFullYear();	// parseInt(date_year)
+		sale.date_month = c.getMonth() + 1;	// parseInt(date_year)
 
+		sale.price_htva = +sale.price_htva;	// parseFloat(price_htva)
 		sale.document_type = typeof(docTypes[sale.document_type]) != 'undefined' ? docTypes[sale.document_type]['label'] : sale.document_type;
 
 		if(sale.client_country)
@@ -167,6 +213,8 @@ d3.json(url, function(error, data) {
 				case	'belgie':
 				case	'belgique':
 				case	'belgium': 		sale.client_country = 'Belgique'; break;
+				case	'france':
+				case	'france ': 	sale.client_country = 'France'; break; //wrong trailing spc
 				case	'nederland':
 				case	'holland':
 				case	'hollande':
@@ -178,15 +226,12 @@ d3.json(url, function(error, data) {
 					sale.client_country = toTitleCase(sale.client_country); break;
 			}
 		else
-			sale.client_country = 'Indéfini';
+			sale.client_country = 'Indéfini';//'Belgique'?
 
 		cli[sale.client_name] = {
 			name: sale.client_name,
 			country: sale.client_country
 		}
-		
-		delete sale.client_fn,sale.client_ln,sale.client_an;
-
 	})
 
 	var ndx = crossfilter(data);
@@ -250,8 +295,7 @@ d3.json(url, function(error, data) {
 	    .dimension(yearDim)
 	    .group(year_total)
 	    .innerRadius(30)
-		.turnOnControls(true)
-	;
+		.turnOnControls(true);
 		
 	typeChart
 	    .width(250).height(150)
@@ -259,16 +303,28 @@ d3.json(url, function(error, data) {
         .margins({left: 0, top: 0, right: 100, bottom: 0})
 		.colors(docTypesColors)
 	    .group(type_total)
-		.turnOnControls(true)
-	;
+		.turnOnControls(true);
 
 	cntrChart
 	    .width(250).height(250)
 	    .dimension(cntrDim)
 	    .group(cntr_total)
         .margins({left: 0, top: 0, right: 100, bottom: 0})
+//	    .innerRadius(30)
 		.turnOnControls(true)
-	;
+//		.minAngleForLabel(Math.PI / 40)
+		;
+
+	salesChart
+		.width(1140).height(200)
+		.dimension(dateDim)
+		.group(totals)
+		.x(d3.time.scale().domain([minDate,maxDate]))
+        .xUnits(d3.time.days)
+		.elasticY(true)
+		.renderHorizontalGridLines(true)
+        .margins({left: 50, top: 0, right: 50, bottom: 20})
+		.turnOnControls(true);
 
 	var ssinit = "ORDER";
 	salesStackChart
@@ -282,8 +338,7 @@ d3.json(url, function(error, data) {
 		.colors(docTypesColors)
 		.valueAccessor(function (d) {
 			return d.value["Commande"];
-		})
-	;
+		});
 
 	for (var t in docTypes) {
 	    if (t != ssinit && docTypes.hasOwnProperty(t)) {
@@ -297,11 +352,31 @@ d3.json(url, function(error, data) {
         return items.reverse();
     });
 
+	localTotal.group(
+			cliDim.groupAll().reduceSum(function(d) {return +d.price_htva;})
+		).valueAccessor(function(d) {
+		//console.log(d);
+		return d;
+	}).formatNumber(formatCurrency);
 
+	if(grand_total === null) {
+		grand_total = localTotal.value();
+		d3.selectAll('#grandtotal').text(formatCurrency(grand_total));
+	}
+
+	localPercent.group(
+			cliDim.groupAll().reduceSum(function(d) {return +d.price_htva;})
+		).valueAccessor(function(d) {
+		//console.log(d);
+		return 100 * d / grand_total;
+	}).formatNumber(percentFormat);
+
+
+	var top = 16;
 	dataTable
 		.dimension(cli_total)
-		.group(function(d) { return "Meilleurs clients satisfaisant les critères sélectionnés." })
-		.size(16) // number of rows to return
+		.group(function(d) { return ""+top+" meilleurs clients satisfaisant les critères sélectionnés." })
+		.size(top) // number of rows to return
 		.columns([
 		        function (d) {
 		            return cli[d.key].name;
@@ -310,13 +385,15 @@ d3.json(url, function(error, data) {
 		            return cli[d.key].country;
 		        },
 				function (d) {
-		            return numberFormat(d.value);
+		            return formatCurrency(d.value);
+		        },
+				function (d) {
+		            return percentFormat(100 * d.value / localTotal.value());
 		        }
 
 		    ])
 		.sortBy(function(d){ return d.value; })
-	    .order(d3.descending)
-	;
+	    .order(d3.descending);
 
 	dc.filterAll();	
     dc.renderAll();
