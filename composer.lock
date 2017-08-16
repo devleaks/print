@@ -384,16 +384,16 @@
         },
         {
             "name": "bower-asset/c3",
-            "version": "v0.4.15",
+            "version": "v0.4.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c3js/c3.git",
-                "reference": "9372354e6c5a1637f02d08287fa3747f8ef0031b"
+                "reference": "6332b4690e4bd526012eaea3a7454e7ae2cc1b49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c3js/c3/zipball/9372354e6c5a1637f02d08287fa3747f8ef0031b",
-                "reference": "9372354e6c5a1637f02d08287fa3747f8ef0031b",
+                "url": "https://api.github.com/repos/c3js/c3/zipball/6332b4690e4bd526012eaea3a7454e7ae2cc1b49",
+                "reference": "6332b4690e4bd526012eaea3a7454e7ae2cc1b49",
                 "shasum": ""
             },
             "require": {
@@ -1957,12 +1957,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fightbulc/moment.php.git",
-                "reference": "8d164a2101e45bf1a8208ddfb3a15313f764a0f8"
+                "reference": "2fe6607fdbbd45b48708f539c70fde89ca9d10e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/8d164a2101e45bf1a8208ddfb3a15313f764a0f8",
-                "reference": "8d164a2101e45bf1a8208ddfb3a15313f764a0f8",
+                "url": "https://api.github.com/repos/fightbulc/moment.php/zipball/2fe6607fdbbd45b48708f539c70fde89ca9d10e6",
+                "reference": "2fe6607fdbbd45b48708f539c70fde89ca9d10e6",
                 "shasum": ""
             },
             "require": {
@@ -2012,7 +2012,7 @@
                 "translation",
                 "validate"
             ],
-            "time": "2017-07-22T07:37:47+00:00"
+            "time": "2017-08-14T05:06:04+00:00"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -5668,29 +5668,31 @@
         },
         {
             "name": "fzaninotto/faker",
-            "version": "v1.6.0",
+            "version": "v1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "44f9a286a04b80c76a4e5fb7aad8bb539b920123"
+                "reference": "d3ed4cc37051c1ca52d22d76b437d14809fc7e0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/44f9a286a04b80c76a4e5fb7aad8bb539b920123",
-                "reference": "44f9a286a04b80c76a4e5fb7aad8bb539b920123",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d3ed4cc37051c1ca52d22d76b437d14809fc7e0d",
+                "reference": "d3ed4cc37051c1ca52d22d76b437d14809fc7e0d",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3|^7.0"
+                "php": "^5.3.3 || ^7.0"
             },
             "require-dev": {
                 "ext-intl": "*",
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~1.5"
+                "phpunit/phpunit": "^4.0 || ^5.0",
+                "squizlabs/php_codesniffer": "^1.5"
             },
             "type": "library",
             "extra": {
-                "branch-alias": []
+                "branch-alias": {
+                    "dev-master": "1.8-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -5712,7 +5714,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-04-29T12:21:54+00:00"
+            "time": "2017-08-15T16:48:10+00:00"
         },
         {
             "name": "phpspec/php-diff",

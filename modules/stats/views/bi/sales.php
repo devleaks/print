@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		         ventes sélectionnées parmi  
 		        <span class="total-count"></span>
 		         ventes | 
-		        <a href="javascript:dc.filterAll(); dc.renderAll();">Supprimer tous les filtres</a>
+		        <a href="javascript:dc.filterAll(); dc.renderAll();">Annuler toutes les sélections</a>
 		      </span>
 		    </h1>
 		</div><!--.col-lg-12-->
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		        <span>
 		          <a class="reset"
 		            href="javascript:yearChart.filterAll();dc.redrawAll();"
-		            style="display: none;">supprimer</a>
+		            style="display: none;">- Annuler la sélection</a>
 		        </span><br/>
 				<span class='reset' style='display: none;'>Sélection: <span class='filter'></span></span>			
 			</h4>
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		        <span>
 		          <a class="reset"
 		            href="javascript:typeChart.filterAll();dc.redrawAll();"
-		            style="display: none;">supprimer</a>
+		            style="display: none;">- Annuler la sélection</a>
 		        </span><br/>
 				<span class='reset' style='display: none;'>Sélection: <span class='filter'></span></span>			
 			</h4>
@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		        <span>
 		          <a class="reset"
 		            href="javascript:cntrChart.filterAll();dc.redrawAll();"
-		            style="display: none;">supprimer</a>
+		            style="display: none;">- Annuler la sélection</a>
 		        </span><br/>
 				<span class='reset' style='display: none;'>Sélection: <span class='filter'></span></span>			
 			</h4>
@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		        <span>
 		          <a class="reset"
 		            href="javascript:salesStackChart.filterAll();dc.redrawAll();"
-		            style="display: none;">supprimer</a>
+		            style="display: none;">- Annuler la sélection</a>
 		        </span>
 				<span class='reset' style='display: none;'>Sélection: <span class='filter'></span></span>			
 			</h2>
