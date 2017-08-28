@@ -190,7 +190,7 @@ class OrderController extends Controller
 				'total_count' => 'count(id)',
 				'total_amount' => 'sum(price_htva)'
 			])
-			->andWhere(['document_type' => [Document::TYPE_BILL, Document::TYPE_TICKET]])
+			->andWhere(['document_type' => [Document::TYPE_BILL, Document::TYPE_CREDIT, Document::TYPE_TICKET, Document::TYPE_REFUND]])
 			->groupBy('document_type,year,month')
 			->union($archive)
 			->asArray()->all();

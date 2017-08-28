@@ -24,7 +24,10 @@ if(!isset($lang)||$lang=='')//we must have a value
 $title = !isset($title) ? '' : $title.' — ';
 	
 ?>
-<div style="text-align: center; font-size: <?= $fontSize ?>px; padding-bottom: 6px;"><?= Yii::t('print', $title).' '.Yii::t('print', 'Page').' ' ?>{PAGENO}/{nb}</div>
+<div style="text-align: center; font-size: <?= $fontSize ?>px; padding-bottom: 6px;">
+<p><?= Yii::t('print', $title).' '.Yii::t('print', 'Page').' ' ?>{PAGENO}/{nb}</p>
+<p style="font-size: <?= $fontSize - 1 ?>px;"><?= Yii::t('print', 'General Sales Conditions on our Website at www.labojjmicheli.be/fr/conditions') ?></p>
+</div>
 <div class="print-footer" style="text-align: center; border-top: 1px solid #888; padding: 2px;">
 	<?= Html::img('@app/assets/i/footer-'.$lang.'.png', ['width' => '80%']) ?>
 </div>

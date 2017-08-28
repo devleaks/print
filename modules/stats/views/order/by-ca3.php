@@ -27,16 +27,17 @@ foreach($dataProvider->allModels as $m) {
 ksort($data1);
 
 $data = [];
+$types = [];
 foreach($data1 as $y => $am) {
 	$yr = [];
 	$yr[] = $y;
+	$types[$y] = 'step';
 	ksort($am);
 	for($i=1;$i<=12;$i++) {
 		$yr[] = isset($am[$i]) ? $am[$i] : 0;
 	}
 	$data[] = $yr;
 }
-
 
 $this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
@@ -58,9 +59,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		'clientOptions' => [
 			'data'=> [
-		        'columns' => $data
+		        'columns' => $data,
+		        'types' => $types,
 		    ],
-
+	
 		    'axis'=> [
 		        'x'=> [
 		            'type' => 'category',

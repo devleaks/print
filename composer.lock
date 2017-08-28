@@ -226,6 +226,7 @@
                 "yii 2",
                 "yii2"
             ],
+            "abandoned": "2amigos/qrcode-library",
             "time": "2017-06-21T10:56:44+00:00"
         },
         {
@@ -384,16 +385,16 @@
         },
         {
             "name": "bower-asset/c3",
-            "version": "v0.4.16",
+            "version": "v0.4.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c3js/c3.git",
-                "reference": "6332b4690e4bd526012eaea3a7454e7ae2cc1b49"
+                "reference": "8e223a94a1e9815b2ad25c8e1eb23f47fe7c9b96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c3js/c3/zipball/6332b4690e4bd526012eaea3a7454e7ae2cc1b49",
-                "reference": "6332b4690e4bd526012eaea3a7454e7ae2cc1b49",
+                "url": "https://api.github.com/repos/c3js/c3/zipball/8e223a94a1e9815b2ad25c8e1eb23f47fe7c9b96",
+                "reference": "8e223a94a1e9815b2ad25c8e1eb23f47fe7c9b96",
                 "shasum": ""
             },
             "require": {
@@ -800,16 +801,16 @@
         },
         {
             "name": "bower-asset/intro.js",
-            "version": "v2.6.0",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/usablica/intro.js.git",
-                "reference": "d7bbd3f9686e19927a1a730d9a150ba64cccb2e8"
+                "reference": "cf080c1a8edbf984c94cb9bf61e5bedc5f6ab802"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/usablica/intro.js/zipball/d7bbd3f9686e19927a1a730d9a150ba64cccb2e8",
-                "reference": "d7bbd3f9686e19927a1a730d9a150ba64cccb2e8",
+                "url": "https://api.github.com/repos/usablica/intro.js/zipball/cf080c1a8edbf984c94cb9bf61e5bedc5f6ab802",
+                "reference": "cf080c1a8edbf984c94cb9bf61e5bedc5f6ab802",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -2106,16 +2107,16 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.4.2",
+            "version": "v4.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "28c89de2708f32814879241b6f112ee27b8f4ec8"
+                "reference": "e35391eb28e6c8d2f280d5d2b025437733058131"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/28c89de2708f32814879241b6f112ee27b8f4ec8",
-                "reference": "28c89de2708f32814879241b6f112ee27b8f4ec8",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/e35391eb28e6c8d2f280d5d2b025437733058131",
+                "reference": "e35391eb28e6c8d2f280d5d2b025437733058131",
                 "shasum": ""
             },
             "type": "library",
@@ -2155,20 +2156,20 @@
                 "progress",
                 "upload"
             ],
-            "time": "2017-06-24T05:15:30+00:00"
+            "time": "2017-08-27T18:51:18+00:00"
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
-            "version": "v4.0.1",
+            "version": "v4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-star-rating.git",
-                "reference": "d66083c14f9386ede23fccb76dea1a380db67ded"
+                "reference": "599c10e2456bc2215da7c6337d6b1c65892bff72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/d66083c14f9386ede23fccb76dea1a380db67ded",
-                "reference": "d66083c14f9386ede23fccb76dea1a380db67ded",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-star-rating/zipball/599c10e2456bc2215da7c6337d6b1c65892bff72",
+                "reference": "599c10e2456bc2215da7c6337d6b1c65892bff72",
                 "shasum": ""
             },
             "type": "library",
@@ -2199,7 +2200,7 @@
                 "star",
                 "svg"
             ],
-            "time": "2016-02-28T16:13:18+00:00"
+            "time": "2017-08-27T08:23:59+00:00"
         },
         {
             "name": "kartik-v/dependent-dropdown",

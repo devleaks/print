@@ -122,6 +122,7 @@ return [
 	'VAT excl.' => 'HTVA',
 	'VAT incl.' => 'TVAC',
 	'Number' => 'Numéro',
+	'General Sales Conditions on our Website at www.labojjmicheli.be/fr/conditions' => 'Conditions générales de ventes sur notre site www.labojjmicheli.be/fr/conditions',
 	
 	
 	
