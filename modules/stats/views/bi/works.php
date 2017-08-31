@@ -107,25 +107,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<div class="row">
 		
-		<div class="col-lg-12" id="salesStack">
-			<h2>
-				Tâches accomplies par mois
-		        <span>
-		          <a class="reset"
-		            href="javascript:salesStackChart.filterAll();dc.redrawAll();"
-		            style="display: none;">- Annuler la sélection</a>
-		        </span>
-				<span class='reset' style='display: none;'>Sélection: <span class='filter'></span></span>			
-			</h2>
-		</div><!--.col-lg-12-->
-		
-	</div><!--.row-->
-	
-
-	<div class="row">
-		
 		<div class="col-lg-12">
-			<div><h2>Durée des tâches</h2>
+			<div><h2>Tâches</h2>
 			<table id="clients" class="table">
 				<thead>
 				<tr class="header">

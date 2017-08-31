@@ -102,24 +102,24 @@ class OrderController extends Controller
 		$archive = new Query();
 		$archive->from('document_archive')
 				->select([
-				'document_type',
+				'docty' => 'document_type',
 				'year' => 'year(created_at)',
 				'month' => 'month(created_at)',
 				'total_count' => 'count(id)',
 				'total_amount' => 'sum(price_htva)'
 			])
-			->groupBy('document_type,year,month');
+			->groupBy('docty,year,month');
 			
 		$q = Document::find()
 			->select([
-				'document_type',
+				'docty' => 'document_type',
 				'year' => 'year(created_at)',
 				'month' => 'month(created_at)',
 				'total_count' => 'count(id)',
 				'total_amount' => 'sum(price_htva)'
 			])
 			->andWhere(['document_type' => [Document::TYPE_ORDER, Document::TYPE_TICKET]])
-			->groupBy('document_type,year,month')
+			->groupBy('docty,year,month')
 			->union($archive)
 			->asArray()->all();
 
@@ -129,6 +129,7 @@ class OrderController extends Controller
 			]),
 			'events' => Event::find(),
 			'title' => Yii::t('store', 'Sales (HTVA) by Due Date Month'),
+			'intro' => 'Commandes et ventes comptoir.'
 		]);
 	}
 
@@ -175,23 +176,25 @@ class OrderController extends Controller
 		$archive->from('document_archive')
 				->select([
 				'document_type' => 'replace(document_type, "ORDER", "BILL")',
+				'docty' => "replace(replace(replace(document_type, 'ORDER', 'BILL'), 'CREDIT', 'BILL'), 'REFUND', 'TICKET')",
 				'year' => 'year(due_date)',
 				'month' => 'month(due_date)',
 				'total_count' => 'count(id)',
 				'total_amount' => 'sum(price_htva)'
 			])
-			->groupBy('document_type,year,month');
+			->groupBy('docty,year,month');
 			
 		$q = Document::find()
 			->select([
 				'document_type',
+				'docty' => "replace(replace(document_type, 'CREDIT', 'BILL'), 'REFUND', 'TICKET')",
 				'year' => 'year(created_at)',
 				'month' => 'month(created_at)',
 				'total_count' => 'count(id)',
 				'total_amount' => 'sum(price_htva)'
 			])
 			->andWhere(['document_type' => [Document::TYPE_BILL, Document::TYPE_CREDIT, Document::TYPE_TICKET, Document::TYPE_REFUND]])
-			->groupBy('document_type,year,month')
+			->groupBy('docty,year,month')
 			->union($archive)
 			->asArray()->all();
 
@@ -201,14 +204,21 @@ class OrderController extends Controller
 			]),
 			'events' => Event::find(),
 			'title' => Yii::t('store', 'Billed (HTVA) by Month'),
+			'intro' => 'Facturé moins notes de crédits, et ventes comptoirs moins remboursements.'
 		]);
 	}
 
 
+		/**
+		  select  as docty, sum(price_htva)
+		    from document
+		   group by docty
+		*/
 	public function actionCa() {
 		$q = Document::find()
 			->select([
 				'document_type',
+				'docty' => "replace(replace(document_type, 'CREDIT', 'BILL'), 'REFUND', 'TICKET')",
 				'year' => 'year(created_at)',
 				'month' => 'month(created_at)',
 				'total_count' => 'count(id)',

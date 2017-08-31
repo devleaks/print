@@ -23,8 +23,8 @@ $curr_year = date('Y');
 
 $data1 = [];
 foreach($dataProvider->allModels as $m) {
-	if(!isset($data1[$m['year']][$m['document_type']])) $data[$m['year']][$m['document_type']] = [];
-	$data1[$m['year']][$m['document_type']][$m['month']] = intval($m['total_amount']);
+	if(!isset($data1[$m['year']][$m['docty']])) $data[$m['year']][$m['docty']] = [];
+	$data1[$m['year']][$m['docty']][$m['month']] = intval($m['total_amount']);
 }
 
 ksort($data1);
@@ -55,8 +55,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="parameter-index container">
 	
 	<h1><?= Html::encode($this->title) ?></h1>
+	<?php if(isset($intro)) echo '</br>'.$intro ; ?>
 	<br/><br/>
-	
 	<div id="c3chart"></div>
 
 	<?php VarDumper::dumpAsString($data1, 4, true) ?>
