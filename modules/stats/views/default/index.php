@@ -65,8 +65,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<ul>
 					<li><a href="<?= Url::to(['/stats/item/item']) ?>"><?= Yii::t('store', 'Articles achetés') ?></a></li>
-					<li><a href="<?= Url::to(['/stats/item/category']) ?>"><?= Yii::t('store', 'Articles achetés par categorie') ?></a></li>
-					<li><a href="<?= Url::to(['/stats/item/yii-category']) ?>"><?= Yii::t('store', 'Articles achetés par Yii Catégories') ?></a></li>
+					<li><a href="<?= Url::to(['/stats/item/category']) ?>"><?= Yii::t('store', 'Articles achetés par catégorie') ?></a></li>
+					<li><a href="<?= Url::to(['/stats/item/yii-category']) ?>"><?= Yii::t('store', 'Articles achetés par catégorie «spéciale pour cette application»') ?></a></li>
 				</ul>
 
 				<h4>Tailles</h4>
