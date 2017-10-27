@@ -93,6 +93,7 @@ class Ticket extends Order
 					'cash_id' => null,
 					'note' => 'Client transfer',
 				]);
+				History::record($account, 'ADD', 'Ticket::convert', true, null);
 				// it uses credit, so the money is already in the system, so DO NOT save new Account
 				// (Account object only used to add payment but NOT SAVED).
 				$ticket->addPayment($account, $amount, Payment::USE_CREDIT, 'VC -> C/F');

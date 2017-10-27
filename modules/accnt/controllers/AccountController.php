@@ -116,6 +116,7 @@ class AccountController extends Controller
 			]);
 			$account->save();
 			$account->refresh();
+			History::record($account, 'ADD', 'AccountController::actionCreate', true, null);
 			$payment = new Payment([
 				'sale' => $sale, // its a new sale transaction, payment is not added to any existing sale
 				'client_id' => $capture->client_id,
@@ -321,6 +322,7 @@ order by 5 desc
 			]);
 			$account->save();
 			$account->refresh();
+			History::record($account, 'ADD', 'AccountController::actionOldSystem', true, null);
 			$payment = new Payment([
 				'sale' => $model->sale,
 				'client_id' => $model->client_id,

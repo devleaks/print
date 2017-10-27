@@ -780,6 +780,7 @@ class DocumentController extends Controller
 					]);
 					$payment_entered->save();
 					$payment_entered->refresh();
+					History::record($payment_entered, 'ADD', 'DocumentController::actionPay', true, null);
 				}
 
 				if( $model->addPayment($payment_entered, $capturePayment->amount, $capturePayment->method, $capturePayment->note) ) {

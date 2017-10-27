@@ -265,6 +265,7 @@ class BankController extends Controller
 								]);
 								$account_entered->save();
 								$account_entered->refresh();
+								History::record($account_entered, 'ADD', 'BankController::actionMakePayments', true, null);
 								
 								$document->addPayment($account_entered, $trans->amount, Payment::METHOD_TRANSFER, $trans->name);
 								$trans->status = BankTransaction::STATUS_USED;

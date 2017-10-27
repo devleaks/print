@@ -197,6 +197,7 @@ class BillController extends Controller
 						]);
 						$account_entered->save();
 						$account_entered->refresh();
+						History::record($account_entered, 'ADD', 'BillController::actionMakePayments', true, null);
 
 						$more_needed = 0;
 						Yii::trace('available='.$available, 'BillController::actionAddPayment');

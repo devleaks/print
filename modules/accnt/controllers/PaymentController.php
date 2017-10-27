@@ -298,20 +298,26 @@ class PaymentController extends Controller
 					]);
 					$refund->save();
 					$refund->refresh();
+					History::record($refund, 'ADD', 'PaymentController::actionRefund', true, null);
 					//
 					$credit->addPayment($refund, -$total, $capture->method, $capture->note);
 					$credit_payment = $credit->getPayments()->one();
-					foreach(Payment::find()->andWhere(['id' => $_POST['selection']])->each() as $payment) {
-						$link = new PaymentLink([
-							'payment_id' => $credit_payment->id,
-							'linked_id' => $payment->id
-						]);
-						$link->save();
-					}
+					if($credit_payment) {
+						foreach(Payment::find()->andWhere(['id' => $_POST['selection']])->each() as $payment) {
+							$link = new PaymentLink([
+								'payment_id' => $credit_payment->id,
+								'linked_id' => $payment->id
+							]);
+							$link->save();
+						}
 
-					$transaction->commit();
-					Yii::$app->session->setFlash('success', Yii::t('store', 'Reimbursement created.'));
-					return $this->redirect(Url::to(['/order/document/view', 'id' => $credit->id]));
+						$transaction->commit();
+						Yii::$app->session->setFlash('success', Yii::t('store', 'Reimbursement created.'));
+						return $this->redirect(Url::to(['/order/document/view', 'id' => $credit->id]));
+					} else {
+						$transaction->rollback();
+						Yii::$app->session->setFlash('error', Yii::t('store', 'Reimbursement could not be created. Credit payment not found.'));
+					}
 				} else {
 					$transaction->rollback();
 					Yii::$app->session->setFlash('error', Yii::t('store', 'Credits must be for the same client.'));
