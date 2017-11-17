@@ -101,7 +101,7 @@ class ItemController extends Controller {
 			->andwhere('document.id = document_line.document_id')
 			->andwhere('document_line.item_id = item.id')
 			->andWhere(['document.document_type' => Document::TYPE_ORDER])
-			->groupBy('item.libelle_long')
+			->groupBy('item.libelle_long,item.yii_category')
 			;
 
 		$q2 = new Query();
@@ -110,7 +110,7 @@ class ItemController extends Controller {
 			->andwhere('document.id = document_line.document_id')
 			->andwhere('document_line.item_id = item.id')
 			->andWhere(['document.document_type' => Document::TYPE_ORDER])
-			->groupBy('item.libelle_long')
+			->groupBy('item.libelle_long,item.yii_category')
 			;
 
         return $this->render('yii-category3',[
