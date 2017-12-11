@@ -294,6 +294,9 @@ class DocumentLine extends _DocumentLine
 		if($this->item->reference == Item::TYPE_REBATE) {
 			$str = strpos($this->extra_type, "SUPPLEMENT_") > -1 ? Yii::t('store', 'Supplement') : Yii::t('store', 'Rebate');
 			$str .= ' ('.$this->getExtraDescription().')';
+			if($this->note != '') {
+				$str .= '<br/><small>'.$this->note.'</small>';
+			}
 			return $str;
 		}
 
