@@ -17,6 +17,7 @@ use app\models\OrderSearch;
 use app\models\Payment;
 use app\models\PrintedDocument;
 use app\models\Sequence;
+use app\models\History;
 
 use Yii;
 use yii\data\ActiveDataProvider;

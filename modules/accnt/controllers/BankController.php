@@ -8,6 +8,7 @@ use app\models\Payment;
 use app\models\Document;
 use app\models\BankTransaction;
 use app\models\BankTransactionSearch;
+use app\models\History;
 
 use Yii;
 use yii\web\Controller;
