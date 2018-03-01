@@ -305,6 +305,7 @@ return [
 	'Orders by Day' => 'Commandes, par jour',
 	'Orders sent.' => 'Commandes envoyées.',
 	'Orders' => 'Commandes',
+	'Open tickets' => 'Ventes comptoir non clôturées',
 	'Our Reference' => 'Notre référence',
 	'PDF Documents to Print' => 'Document PDF à imprimer',
 	'Paid Today' => "Payé aujourd'hui",

@@ -359,6 +359,7 @@ class Client extends _Client
 		}
 		// Unprocessed reimbursements
 		/* These are the outstanding "excess" payments */
+		Yii::trace('Getting payments', 'Client::getAccountLines');
 		foreach($this->getPayments()->andWhere(['status' => Payment::STATUS_OPEN])->each() as $payment) {
 			$creditLines[] = new CreditLine([
 				'source' => CreditLine::SOURCE_ACCOUNT,
