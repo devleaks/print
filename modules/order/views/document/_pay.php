@@ -48,6 +48,7 @@ History::record($capture, 'SET', $capture->click, false, null);
 
 	<?php 	$credit_lines = [];
 			if(!in_array($model->document_type, [$model::TYPE_CREDIT])) {
+				Yii::trace('Getting payments', 'Client::getAccountLines');
 				$exclude = ($model->document_type == $model::TYPE_REFUND) ? $model->id : null;
 				$credit_lines = $model->client->getCreditLines($exclude);
 				echo $this->render('_available_credit', [

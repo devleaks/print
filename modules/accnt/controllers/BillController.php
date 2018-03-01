@@ -10,6 +10,7 @@ use app\models\Bill;
 use app\models\BillSearch;
 use app\models\CaptureBalance;
 use app\models\Document;
+use app\models\DocumentSearch;
 use app\models\Cash;
 use app\models\Client;
 use app\models\Order;
@@ -79,6 +80,27 @@ class BillController extends Controller
     }
 
     /**
+     * Lists all Document models.
+     * @return mixed
+     */
+    public function actionOthers()
+    {
+        $searchModel = new DocumentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query
+          ->andWhere(['!=','document.status',Document::STATUS_CLOSED])
+          ->andWhere(['document.document_type' => Document::TYPE_TICKET])
+          ->orderBy('created_at desc')
+        ;
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+    /**
      * Lists all Bill models.
      * @return mixed
      */
@@ -103,7 +125,7 @@ class BillController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Bill::findOne($id)) !== null) {
+        if (($model = Document::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -202,7 +224,7 @@ class BillController extends Controller
 
 						$more_needed = 0;
 						Yii::trace('available='.$available, 'BillController::actionAddPayment');
-						$q = Bill::find()->andWhere(['id'=>$_POST['selection']]);
+						$q = Document::find()->andWhere(['id'=>$_POST['selection']]);
 						$client_id = null;
 						foreach($q->each() as $b) {
 							if($available > Bill::PAYMENT_LIMIT) {
@@ -246,7 +268,7 @@ class BillController extends Controller
 						$transaction->commit();
 					}
 		}
-		return $this->redirect(['index']);
+		return $this->redirect(['/accnt']);
 	}
 	
 
@@ -260,7 +282,7 @@ class BillController extends Controller
 						$action = $_POST['action'];
 						if(in_array($action, [Bill::ACTION_PAYMENT_RECEIVED, Bill::ACTION_SEND_REMINDER, Bill::ACTION_CLIENT_ACCOUNT])) {
 							if($action == Bill::ACTION_PAYMENT_RECEIVED) {
-								$bills = Bill::find()->andWhere(['id'=>$selection]);
+								$bills = Document::find()->andWhere(['id'=>$selection]);
 								$q = clone $bills;
 								$clients = [];
 								foreach($q->each() as $b)
@@ -275,7 +297,7 @@ class BillController extends Controller
 							} else { // ACTION_SEND_REMINDER, loop per client
 								$clg = new PdfDocumentGenerator($this);
 								
-								$q =  Bill::find()
+								$q =  Document::find()
 											->andWhere(['document.id' => $selection])
 											->andWhere(['!=','document.status',Bill::STATUS_CLOSED])
 //											->andWhere(['<=','created_at',$late])
