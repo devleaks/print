@@ -141,7 +141,7 @@ $base = 3;
 				    'class' => '\kartik\grid\FormulaColumn',
 				    'value' => function ($model, $key, $index, $widget) {
 						$p = compact('model', 'key', 'index');
-				        return round(($widget->col(6, $p) ? $widget->col(6, $p) : 0) + ($widget->col(7, $p) ? $widget->col(6, $p) : 0), 2);		
+				        return round( floatval($widget->col(6, $p)) + floatval($widget->col(7, $p)), 2);	
 				    },
 					'format' => 'currency',
 					'hAlign' => GridView::ALIGN_RIGHT,
@@ -153,7 +153,7 @@ $base = 3;
 				    'class' => '\kartik\grid\FormulaColumn',
 				    'value' => function ($model, $key, $index, $widget) {
 						$p = compact('model', 'key', 'index');
-				        return $model->document->vat_bool ? '0' : round( ($widget->col(8, $p)) * (1 + $widget->col(5, $p)), 2); // already /100 on col. 7.
+				        return $model->document->vat_bool ? '0' : round( floatval($widget->col(8, $p)) * (1 + floatval($widget->col(5, $p))) , 2); // already /100 on col. 7.
 				    },
 					'format' => 'currency',
 					'hAlign' => GridView::ALIGN_RIGHT,
