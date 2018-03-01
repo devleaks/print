@@ -141,7 +141,7 @@ $base = 3;
 				    'class' => '\kartik\grid\FormulaColumn',
 				    'value' => function ($model, $key, $index, $widget) {
 						$p = compact('model', 'key', 'index');
-				        return round($widget->col(6, $p) + $widget->col(7, $p), 2);		
+				        return round(($widget->col(6, $p) ? $widget->col(6, $p) : 0) + ($widget->col(7, $p) ? $widget->col(6, $p) : 0), 2);		
 				    },
 					'format' => 'currency',
 					'hAlign' => GridView::ALIGN_RIGHT,
