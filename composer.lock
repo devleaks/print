@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "81eee78c87d0fd727068eaaef76eb023",
+    "content-hash": "2f223a36b1ee416171126ed58c8f973a",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -328,16 +328,16 @@
         },
         {
             "name": "bower-asset/c3",
-            "version": "v0.4.21",
+            "version": "v0.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/c3js/c3.git",
-                "reference": "8780cdd4aac91334fddb6131dad3ed7972de2345"
+                "reference": "69f975cfcf54626a36566a8b8236f63aec001951"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/c3js/c3/zipball/8780cdd4aac91334fddb6131dad3ed7972de2345",
-                "reference": "8780cdd4aac91334fddb6131dad3ed7972de2345",
+                "url": "https://api.github.com/repos/c3js/c3/zipball/69f975cfcf54626a36566a8b8236f63aec001951",
+                "reference": "69f975cfcf54626a36566a8b8236f63aec001951",
                 "shasum": ""
             },
             "require": {
@@ -369,7 +369,7 @@
                 "chart",
                 "d3"
             ],
-            "time": "2018-02-15T02:03:18+00:00"
+            "time": "2017-09-14T14:36:18+00:00"
         },
         {
             "name": "bower-asset/chardin.js",
@@ -389,16 +389,16 @@
         },
         {
             "name": "bower-asset/crossfilter2",
-            "version": "1.4.5",
+            "version": "1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crossfilter/crossfilter.git",
-                "reference": "2ddc0e441d37172ad33cc94d18a3d640eebf0436"
+                "reference": "c58c7c8f544c25cfac3bdb591242ca680ca8662c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crossfilter/crossfilter/zipball/2ddc0e441d37172ad33cc94d18a3d640eebf0436",
-                "reference": "2ddc0e441d37172ad33cc94d18a3d640eebf0436",
+                "url": "https://api.github.com/repos/crossfilter/crossfilter/zipball/c58c7c8f544c25cfac3bdb591242ca680ca8662c",
+                "reference": "c58c7c8f544c25cfac3bdb591242ca680ca8662c",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -426,7 +426,7 @@
                 "crossfilter",
                 "visualization"
             ],
-            "time": "2018-02-16T19:30:31+00:00"
+            "time": "2017-09-22T15:48:07+00:00"
         },
         {
             "name": "bower-asset/d3",
@@ -620,16 +620,16 @@
         },
         {
             "name": "bower-asset/fizzy-ui-utils",
-            "version": "v2.0.7",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/fizzy-ui-utils.git",
-                "reference": "72feb9fc3d6de25696291941121bb3ec2db8221e"
+                "reference": "e2a9193c71f8ae8f1c43ae394f72af8ae61d16de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/fizzy-ui-utils/zipball/72feb9fc3d6de25696291941121bb3ec2db8221e",
-                "reference": "72feb9fc3d6de25696291941121bb3ec2db8221e",
+                "url": "https://api.github.com/repos/metafizzy/fizzy-ui-utils/zipball/e2a9193c71f8ae8f1c43ae394f72af8ae61d16de",
+                "reference": "e2a9193c71f8ae8f1c43ae394f72af8ae61d16de",
                 "shasum": ""
             },
             "require": {
@@ -657,8 +657,7 @@
             "keywords": [
                 "ui",
                 "utility"
-            ],
-            "time": "2018-01-25T15:03:10+00:00"
+            ]
         },
         {
             "name": "bower-asset/get-size",
@@ -704,16 +703,16 @@
         },
         {
             "name": "bower-asset/imagesloaded",
-            "version": "v4.1.4",
+            "version": "v4.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/imagesloaded.git",
-                "reference": "67c4e57453120935180c45c6820e7d3fbd2ea1f9"
+                "reference": "a8e0dd3a463903014bf8071efece15dcd570b1b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/imagesloaded/zipball/67c4e57453120935180c45c6820e7d3fbd2ea1f9",
-                "reference": "67c4e57453120935180c45c6820e7d3fbd2ea1f9",
+                "url": "https://api.github.com/repos/desandro/imagesloaded/zipball/a8e0dd3a463903014bf8071efece15dcd570b1b9",
+                "reference": "a8e0dd3a463903014bf8071efece15dcd570b1b9",
                 "shasum": ""
             },
             "require": {
@@ -721,7 +720,7 @@
             },
             "require-dev": {
                 "bower-asset/jquery": ">=1.9,<4.0",
-                "bower-asset/qunit": ">=2.0.0,<3.0.0"
+                "bower-asset/qunit": "~1.20.0"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -735,7 +734,6 @@
                     "bower_components",
                     "tests",
                     "sandbox/",
-                    "gulpfile.js",
                     "contributing.md"
                 ]
             },
@@ -745,8 +743,7 @@
             "description": "JavaScript is all like _You images done yet or what?_",
             "keywords": [
                 "images"
-            ],
-            "time": "2018-01-02T16:53:35+00:00"
+            ]
         },
         {
             "name": "bower-asset/inputmask",
@@ -986,16 +983,16 @@
         },
         {
             "name": "bower-asset/jquery.floatthead",
-            "version": "2.1.1",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mkoryak/floatThead.git",
-                "reference": "6eea4ccad2ae6fd48046b8cb459b270d581b9f7c"
+                "reference": "b1201f702994277b6b7a692692ffccad813cb26a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mkoryak/floatThead/zipball/6eea4ccad2ae6fd48046b8cb459b270d581b9f7c",
-                "reference": "6eea4ccad2ae6fd48046b8cb459b270d581b9f7c",
+                "url": "https://api.github.com/repos/mkoryak/floatThead/zipball/b1201f702994277b6b7a692692ffccad813cb26a",
+                "reference": "b1201f702994277b6b7a692692ffccad813cb26a",
                 "shasum": ""
             },
             "require": {
@@ -1029,8 +1026,7 @@
                 "sticky header",
                 "table",
                 "table header"
-            ],
-            "time": "2018-02-21T13:52:27+00:00"
+            ]
         },
         {
             "name": "bower-asset/jquery.inputmask",
@@ -1096,16 +1092,16 @@
         },
         {
             "name": "bower-asset/masonry",
-            "version": "v4.2.1",
+            "version": "v4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/masonry.git",
-                "reference": "31113c7ccaa4c26c50fa603ca3ad8578e03f1b66"
+                "reference": "dec5a382574eb62a2baf2867a0b0db4bd0b78ceb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/masonry/zipball/31113c7ccaa4c26c50fa603ca3ad8578e03f1b66",
-                "reference": "31113c7ccaa4c26c50fa603ca3ad8578e03f1b66",
+                "url": "https://api.github.com/repos/desandro/masonry/zipball/dec5a382574eb62a2baf2867a0b0db4bd0b78ceb",
+                "reference": "dec5a382574eb62a2baf2867a0b0db4bd0b78ceb",
                 "shasum": ""
             },
             "require": {
@@ -1140,8 +1136,7 @@
                 "layout",
                 "masonry",
                 "outlayer"
-            ],
-            "time": "2017-12-30T22:22:34+00:00"
+            ]
         },
         {
             "name": "bower-asset/outlayer",
@@ -1810,10 +1805,121 @@
                 "yii2"
             ],
             "support": {
-                "source": "https://github.com/devleaks/yii2-metafizzy/tree/master",
+                "source": "https://github.com/devleaks/yii2-metafizzy/tree/1.0.2",
                 "issues": "https://github.com/devleaks/yii2-metafizzy/issues"
             },
             "time": "2017-09-13T16:04:24+00:00"
+        },
+        {
+            "name": "doctrine/lexer",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/lexer.git",
+                "reference": "83893c552fd2045dd78aef794c31e694c37c0b8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/83893c552fd2045dd78aef794c31e694c37c0b8c",
+                "reference": "83893c552fd2045dd78aef794c31e694c37c0b8c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Common\\Lexer\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Base library for a lexer that can be used in Top-Down, Recursive Descent Parsers.",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "lexer",
+                "parser"
+            ],
+            "time": "2014-09-09T13:34:57+00:00"
+        },
+        {
+            "name": "egulias/email-validator",
+            "version": "2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/egulias/EmailValidator.git",
+                "reference": "1bec00a10039b823cc94eef4eddd47dcd3b2ca04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/1bec00a10039b823cc94eef4eddd47dcd3b2ca04",
+                "reference": "1bec00a10039b823cc94eef4eddd47dcd3b2ca04",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/lexer": "^1.0.1",
+                "php": ">= 5.5"
+            },
+            "require-dev": {
+                "dominicsayers/isemail": "dev-master",
+                "phpunit/phpunit": "^4.8.35",
+                "satooshi/php-coveralls": "^1.0.1"
+            },
+            "suggest": {
+                "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Egulias\\EmailValidator\\": "EmailValidator"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eduardo Gulias Davis"
+                }
+            ],
+            "description": "A library for validating emails against several RFCs",
+            "homepage": "https://github.com/egulias/EmailValidator",
+            "keywords": [
+                "email",
+                "emailvalidation",
+                "emailvalidator",
+                "validation",
+                "validator"
+            ],
+            "time": "2017-11-15T23:40:40+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -2891,20 +2997,20 @@
         },
         {
             "name": "kartik-v/yii2-mpdf",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-mpdf.git",
-                "reference": "17fda1cb084c58fee6014026d35af5faf73316ef"
+                "reference": "67980ab7861ae9541b1a1784be8938dbeba13045"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/17fda1cb084c58fee6014026d35af5faf73316ef",
-                "reference": "17fda1cb084c58fee6014026d35af5faf73316ef",
+                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/67980ab7861ae9541b1a1784be8938dbeba13045",
+                "reference": "67980ab7861ae9541b1a1784be8938dbeba13045",
                 "shasum": ""
             },
             "require": {
-                "mpdf/mpdf": "<7.0"
+                "mpdf/mpdf": "~7.0"
             },
             "type": "yii2-extension",
             "extra": {
@@ -2939,7 +3045,7 @@
                 "utf8",
                 "yii2"
             ],
-            "time": "2017-01-14T11:51:12+00:00"
+            "time": "2017-07-19T09:51:02+00:00"
         },
         {
             "name": "kartik-v/yii2-password",
@@ -3041,16 +3147,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-activeform",
-            "version": "v1.4.8",
+            "version": "v1.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-activeform.git",
-                "reference": "53c2f877f12ba0b79e8346b6cae50cbba2bcfc69"
+                "reference": "578de8c5dd751373a260e45122fe49211c33185a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-activeform/zipball/53c2f877f12ba0b79e8346b6cae50cbba2bcfc69",
-                "reference": "53c2f877f12ba0b79e8346b6cae50cbba2bcfc69",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-activeform/zipball/578de8c5dd751373a260e45122fe49211c33185a",
+                "reference": "578de8c5dd751373a260e45122fe49211c33185a",
                 "shasum": ""
             },
             "require": {
@@ -3089,7 +3195,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-04-27T18:38:05+00:00"
+            "time": "2018-03-05T04:35:50+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-affix",
@@ -4305,35 +4411,47 @@
         },
         {
             "name": "mpdf/mpdf",
-            "version": "v6.1.4",
+            "version": "v7.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpdf/mpdf.git",
-                "reference": "e7310ce53b5c11db1f0b781fe0a69066608ac6e2"
+                "reference": "5681a0cae1eea197143d5d27f06e19b0523cd8d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/e7310ce53b5c11db1f0b781fe0a69066608ac6e2",
-                "reference": "e7310ce53b5c11db1f0b781fe0a69066608ac6e2",
+                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/5681a0cae1eea197143d5d27f06e19b0523cd8d6",
+                "reference": "5681a0cae1eea197143d5d27f06e19b0523cd8d6",
                 "shasum": ""
             },
             "require": {
+                "ext-gd": "*",
                 "ext-mbstring": "*",
-                "php": "^5.4.0 || 7.0.*",
+                "paragonie/random_compat": "^1.4|^2.0",
+                "php": "^5.6 || ~7.0.0 || ~7.1.0 || ~7.2.0",
+                "psr/log": "^1.0",
                 "setasign/fpdi": "1.6.*"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.7"
+                "mockery/mockery": "^0.9.5",
+                "phpunit/phpunit": "^5.0",
+                "squizlabs/php_codesniffer": "^2.7.0",
+                "tracy/tracy": "^2.4"
             },
             "suggest": {
+                "ext-bcmath": "Needed for generation of some types of barcodes",
+                "ext-xml": "Needed mainly for SVG manipulation",
                 "ext-zlib": "Needed for compression of embedded resources, such as fonts"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-development": "7.0-dev"
+                }
+            },
             "autoload": {
-                "classmap": [
-                    "mpdf.php",
-                    "classes"
-                ]
+                "psr-4": {
+                    "Mpdf\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -4341,18 +4459,22 @@
             ],
             "authors": [
                 {
+                    "name": "Matěj Humpál",
+                    "role": "Developer, maintainer"
+                },
+                {
                     "name": "Ian Back",
-                    "role": "Developer"
+                    "role": "Developer (retired)"
                 }
             ],
             "description": "A PHP class to generate PDF files from HTML with Unicode/UTF-8 and CJK support",
-            "homepage": "http://mpdf.github.io",
+            "homepage": "https://mpdf.github.io",
             "keywords": [
                 "pdf",
                 "php",
                 "utf-8"
             ],
-            "time": "2017-07-09T16:46:12+00:00"
+            "time": "2018-01-03T07:32:36+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -4486,6 +4608,54 @@
                 "yii2"
             ],
             "time": "2018-01-23T07:57:10+00:00"
+        },
+        {
+            "name": "paragonie/random_compat",
+            "version": "v2.0.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/random_compat.git",
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*|5.*"
+            },
+            "suggest": {
+                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/random.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paragon Initiative Enterprises",
+                    "email": "security@paragonie.com",
+                    "homepage": "https://paragonie.com"
+                }
+            ],
+            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
+            "keywords": [
+                "csprng",
+                "pseudorandom",
+                "random"
+            ],
+            "time": "2017-09-27T21:40:39+00:00"
         },
         {
             "name": "perminder-klair/yii2-dropzone",
@@ -4856,29 +5026,30 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.9",
+            "version": "v6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "7ffc1ea296ed14bf8260b6ef11b80208dbadba91"
+                "reference": "412333372fb6c8ffb65496a2bbd7321af75733fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7ffc1ea296ed14bf8260b6ef11b80208dbadba91",
-                "reference": "7ffc1ea296ed14bf8260b6ef11b80208dbadba91",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/412333372fb6c8ffb65496a2bbd7321af75733fc",
+                "reference": "412333372fb6c8ffb65496a2bbd7321af75733fc",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "egulias/email-validator": "~2.0",
+                "php": ">=7.0.0"
             },
             "require-dev": {
                 "mockery/mockery": "~0.9.1",
-                "symfony/phpunit-bridge": "~3.2"
+                "symfony/phpunit-bridge": "~3.3@dev"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.4-dev"
+                    "dev-master": "6.0-dev"
                 }
             },
             "autoload": {
@@ -4900,13 +5071,13 @@
                 }
             ],
             "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "https://swiftmailer.symfony.com",
+            "homepage": "http://swiftmailer.symfony.com",
             "keywords": [
                 "email",
                 "mail",
                 "mailer"
             ],
-            "time": "2018-01-23T07:37:21+00:00"
+            "time": "2017-09-30T22:39:41+00:00"
         },
         {
             "name": "thomaspark/bootswatch",
@@ -5478,20 +5649,20 @@
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
-            "version": "2.0.7",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-swiftmailer.git",
-                "reference": "8a03a62cbcb82e7697d3002eb43a8d2637f566ec"
+                "reference": "563570c9aa19ca47c1b22e3032983229378e9274"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/8a03a62cbcb82e7697d3002eb43a8d2637f566ec",
-                "reference": "8a03a62cbcb82e7697d3002eb43a8d2637f566ec",
+                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/563570c9aa19ca47c1b22e3032983229378e9274",
+                "reference": "563570c9aa19ca47c1b22e3032983229378e9274",
                 "shasum": ""
             },
             "require": {
-                "swiftmailer/swiftmailer": "~5.0",
+                "swiftmailer/swiftmailer": "~6.0",
                 "yiisoft/yii2": "~2.0.4"
             },
             "type": "yii2-extension",
@@ -5524,7 +5695,7 @@
                 "swiftmailer",
                 "yii2"
             ],
-            "time": "2017-05-01T08:29:00+00:00"
+            "time": "2017-08-04T10:48:17+00:00"
         },
         {
             "name": "yurkinx/yii2-image",
@@ -5854,8 +6025,5 @@
     "platform": {
         "php": ">=5.4.0"
     },
-    "platform-dev": [],
-    "platform-overrides": {
-        "php": "5.4.45"
-    }
+    "platform-dev": []
 }
