@@ -49,6 +49,84 @@ use Yii;
  * @property integer $det_renfort_id
  * @property integer $det_support_id
  * @property integer $det_tirage_id
+
+ create or replace view bi_line
+as select
+   d.document_type as document_type,
+   d.status as document_status,
+   d.name as document_name,
+   date_format(dl.created_at,'%Y-%m-%dT%TZ') as created_at,
+   dl.work_width as work_width,
+   dl.work_height as work_height,
+   dl.unit_price as unit_price,
+   dl.quantity as quantity,
+   dl.extra_type as extra_type,
+   dl.extra_amount as extra_amount,
+   dl.extra_htva as extra_htva,
+   dl.price_htva as price_htva,
+   (dl.price_htva + ifnull(dl.extra_htva,0)) as total_htva,
+   i.libelle_court as item_name,
+   i.categorie as categorie,
+   i.yii_category as yii_category,
+   i.comptabilite as comptabilite
+ from document_line dl,
+      document d,
+      item i
+where (dl.document_id = d.id)
+  and (dl.item_id = i.id)
+
+******* FULL DETAIL:
+
+create or replace view bi_line
+as select
+    d.document_type as document_type,
+    d.status as document_status,
+    d.name as document_name,
+    date_format(dl.created_at,'%Y-%m-%dT%TZ') as created_at,
+    dl.work_width as work_width,
+    dl.work_height as work_height,
+    dl.unit_price as unit_price,
+    dl.quantity as quantity,
+    dl.extra_type as extra_type,
+    dl.extra_amount as extra_amount,
+    dl.extra_htva as extra_htva,
+    dl.price_htva as price_htva,
+    (dl.price_htva + ifnull(dl.extra_htva,0)) as total_htva,
+    i.libelle_court as item_name,
+    i.categorie as categorie,
+    i.yii_category as yii_category,
+    i.comptabilite as comptabilite,
+    det.chroma_id as det_chroma_id,
+    det.price_chroma as det_price_chroma,
+    det.corner_bool as det_corner_bool,
+    det.price_corner as det_price_corner,
+    det.renfort_bool as det_renfort_bool,
+    det.price_renfort as det_price_renfort,
+    det.frame_id as det_frame_id,
+    det.price_frame as det_price_frame,
+    det.montage_bool as det_montage_bool,
+    det.price_montage as det_price_montage,
+    det.finish_id as det_finish_id,
+    det.support_id as det_support_id,
+    det.price_support as det_price_support,
+    det.tirage_id as det_tirage_id,
+    det.price_tirage as det_price_tirage,
+    det.collage_id as det_collage_id,
+    det.price_collage as det_price_collage,
+    det.protection_id as det_protection_id,
+    det.price_protection as det_price_protection,
+    det.chassis_id as det_chassis_id,
+    det.price_chassis as det_price_chassis,
+    det.filmuv_bool as det_filmuv_bool,
+    det.price_filmuv as det_price_filmuv,
+    det.tirage_factor as det_tirage_factor,
+    det.renfort_id as det_renfort_id
+ from document_line dl left join document_line_detail det on dl.id = det.document_line_id,
+      document d,
+      item i
+where (dl.document_id = d.id)
+  and (dl.item_id = i.id)
+  
  */
 class BiItem extends \yii\db\ActiveRecord
 {

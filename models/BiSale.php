@@ -15,6 +15,21 @@ use Yii;
  * @property string $price_htva
  * @property string $client_name
  * @property string $client_country
+
+
+as select
+   d.document_type as document_type,
+   d.status as document_status,
+   d.created_at as created_at,
+   d.updated_at as updated_at,
+   d.due_date as due_date,
+   d.price_htva as price_htva,
+   ifnull(concat(c.nom, ' ', c.prenom),c.autre_nom) as client_name,
+   c.pays as client_country
+from (document d join client c) where (d.client_id = c.id)
+
+
+
  */
 class BiSale extends \yii\db\ActiveRecord
 {
