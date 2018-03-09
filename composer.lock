@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f223a36b1ee416171126ed58c8f973a",
+    "content-hash": "d9f7df567069d84d3fc00a15c3242ff0",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",

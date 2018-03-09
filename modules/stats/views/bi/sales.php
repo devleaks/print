@@ -148,9 +148,9 @@ var docTypes = {
 	BID: {label: "Offre", color: "Plum"},
 	BILL: {label: "Facture", color: "LimeGreen"},
 	ORDER: {label: "Commande", color: "LightGreen"},
-	TICKET: {label: "VC", color: "Aquamarine"},
+	TICKET: {label: "Comptoir", color: "Aquamarine"},
 	REFUND: {label: "Remb", color: "SandyBrown"},
-	CREDIT: {label: "NC", color: "Coral"},
+	CREDIT: {label: "Cred", color: "Coral"},
 }
 
 var colors = [];
