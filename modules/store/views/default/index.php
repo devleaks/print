@@ -1,6 +1,7 @@
 <?php
 use app\models\User;
 use app\models\Document;
+use app\models\Parameter;
 use app\models\WebsiteOrder;
 use yii\helpers\Url;
 
@@ -9,6 +10,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $opens = Document::find()->andWhere(['id' => WebsiteOrder::find()->select('document_id'), 'status' => Document::STATUS_OPEN])->count();
 $errors = WebsiteOrder::find()->andWhere(['status' => [WebsiteOrder::STATUS_WARN]])->count();
+
+$allowed = Parameter::getTextValue('application','stats');
+$allowed_arr = $allowed != '' ? explode(',', $allowed) : [];
+$viewstats = in_array(Yii::$app->user->identity->username, $allowed_arr);
 
 ?>
 <div class="order-default-index">
@@ -108,13 +113,18 @@ $errors = WebsiteOrder::find()->andWhere(['status' => [WebsiteOrder::STATUS_WARN
 			    <li><a href="<?= Url::to(['/accnt/pdf', 'sort' => '-created_at']) ?>"><?= Yii::t('store', 'Documents to Print')?></a></li>
 			</ul>
 
-			<?php if(User::is('jjm')): ?>
+		</div>
+		<?php if($viewstats): ?>
+  	<div class="col-lg-6">
+
+		<h3>Statistiques</h3>
+
 			<ul>
 		    	<li><a href="<?= Url::to(['/stats']) ?>"><?= Yii::t('store', 'Statistics')?></a></li>
 			</ul>
-			<?php endif; ?>
 
 		</div>
+		<?php endif; ?>
 
 	</div>
 	<?php endif; ?>

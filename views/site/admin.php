@@ -4,12 +4,17 @@ use app\models\Backup;
 use app\models\CaptureSearch;
 use app\models\Document;
 use app\models\WebsiteOrder;
+use app\models\Parameter;
 
 /* @var $this yii\web\View */
 $this->title = 'Labo JJ Micheli';
 
 $opens = Document::find()->andWhere(['id' => WebsiteOrder::find()->select('document_id'), 'status' => Document::STATUS_OPEN])->count();
 $errors = WebsiteOrder::find()->andWhere(['status' => [WebsiteOrder::STATUS_WARN]])->count();
+
+$allowed = Parameter::getTextValue('application','stats');
+$allowed_arr = $allowed != '' ? explode(',', $allowed) : [];
+$viewstats = in_array(Yii::$app->user->identity->username, $allowed_arr);
 
 ?>
 <div class="admin-index">
@@ -99,7 +104,9 @@ $errors = WebsiteOrder::find()->andWhere(['status' => [WebsiteOrder::STATUS_WARN
 				<p data-intro='Menu rapide vers actions les plus courantes'>
 					&raquo; <a href="<?= Url::to(['/order/document/', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'All documents')?></a>
 					&raquo; <a href="<?= Url::to(['/stats/dashboard']) ?>"><?= Yii::t('store', "Dashboard")?></a>
+                    <?php if($viewstats): ?>
 					&raquo; <a href="<?= Url::to(['/stats/']) ?>"><?= Yii::t('store', "Stats")?></a>
+                <?php endif; ?>
 				</p>
             </div>
 			<?php endif; ?>
