@@ -706,7 +706,7 @@ return [
 	
 	
 	/** Footer */
-	'Labo JJ Micheli SPRL • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85 • Fax. +32 (0)2 733 38 72<br>e-Mail: info@labojjmicheli.be • Web Site: www.labojjmicheli.be • VAT: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank 210-0381493-44 • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB' => 'Labo JJ Micheli SPRL • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)2 733 21 85 • Fax. +32 (0)2 733 38 72<br>e-Mail: info@labojjmicheli.be • Site Web: www.labojjmicheli.be • TVA: BE 0428 746 631 RPM: BXL<br>Banque BNP Paribas Fortis 210-0381493-44 • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB',
+	'MIKEMUKA SPRL • 37-39 rue Borrens • 1050 Brussels<br>Tél. (+32) 0477 35 09 17<br>e-Mail: info@mikemuka.be • Web Site: www.mikemuka.be • VAT: BE 507 714 727<br>ING Bank  IBAN: BE43 3631 4122 8101 • BIC: BBRUBEBB' => 'MIKEMUKA SPRL • 37-39 rue Borrens • 1050 Bruxelles<br>Tél. (+32) 0477 35 09 17<br>e-Mail: info@mikemuka.be • Site Web: www.mikemuka.be • TVA: BE 507 714 727<br>Banque ING IBAN: BE43 3631 4122 8101 • BIC: BBRUBEBB',
 
 
 	/** Mails */

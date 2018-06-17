@@ -146,6 +146,31 @@ function setItem(id, vat, name, category) {
 		$('#select2-chosen-1').html(name);
 }
 
+function setSizes(item) {
+  var match = item.libelle_long.match(/(\d+(x|×)\d+)/);
+  var sizes = [0,0];
+  if(match) {
+	sizes = match[1].split(match[2]);
+  }
+  $("#documentline-work_width_virgule").val(sizes[0]);
+  $("#documentline-work_width").val(sizes[0]);
+  $("#documentline-work_height_virgule").val(sizes[1]);
+  $("#documentline-work_height").val(sizes[1]);
+
+  $("#documentline-work_width").trigger('change');
+
+  console.log("setSizes: prices updated", item, match, sizes);
+}
+
+function updateMainItem(tirage) {
+	var curItem = needHandling();
+	console.log('updateMainItem', tirage, curItem);
+	if(!curItem || curItem.yii_category == "Tirage") { // set it
+		setItem(tirage.id, tirage.taux_de_tva, tirage.libelle_long, tirage.yii_category);
+		console.log('updateMainItem: updated');
+	}
+}
+
 /** Item dimensions. Raise error if not available */
 function getDimensions() {
 	needToFit = isChromaLuxe(); // ($("#documentline-item_id").val() == store_values.chroma);
@@ -558,6 +583,10 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 	// if it changed, need to change item_id as well
 	setItem(item.id, item.taux_de_tva, item.libelle_long, item.yii_category);
 
+	var tirage = getItemById(item_id, true)
+	setSizes(tirage);
+	updateMainItem(tirage);
+
 	// enable or disable options depending on paper type
 	paper_type = item.fournisseur;
 	//console.log('Paper type: '+paper_type);
@@ -766,6 +795,7 @@ function free_item_update() {
  */
 /** if user selects item with dpecial id, trigger tab opening */
 $("#documentline-item_id").change(function() {
+
 	$("ItemChromaLuxe").prop('disabled', true);
 	$("ItemTirage").prop('disabled', true);
 	$("ItemCanvas").prop('disabled', true);
@@ -788,6 +818,8 @@ $("#documentline-item_id").change(function() {
 		$('.document-line-options').toggle(false);
 		return;
 	}
+
+	var sizes = setSizes(item);
 
 	var yii_category = item.yii_category;
 

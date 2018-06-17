@@ -10,21 +10,21 @@ use yii\helpers\Html;
 
 <p>
 Ne répondez pas à ce message. Ce message a été envoyé automatiquement lorsque votre commande est terminée.
-Vous pouvez toujours nous contacter à <a htref=mailto:commande@labojjmicheli.be>commande@labojjmicheli.be</a>, ou par téléphone.
+Vous pouvez toujours nous contacter à <a htref=mailto:commande@mikemuka.be>commande@mikemuka.be</a>, ou par téléphone.
 </p>
 
 <hr />
 
-<p>Labo JJ Micheli SPRL</p>
+<p>MIKEMUKA SPRL</p>
 
 <p>Ouvert du lundi au vendredi de 9h00 à 18h30, sans interruption.</p>
 
-<p>21-23 rue de Tervaete, 1040 Bruxelles<br/>
+<p>37-39 rue Borrens, 1050 Bruxelles<br/>
 
-Tél. +32 (0)2 733 21 85<br/>
-e-Mail: info@labojjmicheli.be<br/>
-www.labojjmicheli.be</p>
+Tél. (+32) 0477 35 09 17<br/>
+e-Mail: info@mikemuka.be<br/>
+www.mikemuka.be</p>
 
 <p>BNP Paribas Fortis<br/>
-IBAN: BE55 2100 3814 9344 - BIC: GEBABEBB<br/>
-TVA: BE 0428 746 631</p>
+IBAN: BE43 3631 4122 8101 - BIC: BBRUBEBB<br/>
+TVA: BE 507 714 727</p>

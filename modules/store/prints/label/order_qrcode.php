@@ -9,4 +9,4 @@ QR1000
 ORDER: <?= $model->name ?>
 DATE: <?= $model->due_date ?>
 DATE: <?= $model->client->nom ?>
-Labo JJ Micheli SPRL • www.labojjmicheli.be
+MIKEMUKA SPRL • www.mikemuka.be

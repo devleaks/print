@@ -10,7 +10,7 @@ use yii\helpers\Html;
 
 <p>
 This mail was sent automatically upon completion of your order. Please DO NOT reply to this mail.
-You can always contact us at <a htref=mailto:commande@labojjmicheli.be>commande@labojjmicheli.be</a>, or by phone.
+You can always contact us at <a htref=mailto:commande@mikemuka.be>commande@mikemuka.be</a>, or by phone.
 </p>
 
 <hr />
@@ -19,12 +19,12 @@ You can always contact us at <a htref=mailto:commande@labojjmicheli.be>commande@
 
 <p>Open Mondays to Fridays from 9h00 to 18h30.</p>
 
-<p>21-23 Tervaete Street, 1040 Brussels<br/>
+<p>rue Borrens 37-39, 1050 Brussels<br/>
 
-Phone: +32 (0)2 733 21 85<br/>
-eMail: info@labojjmicheli.be<br/>
-www.labojjmicheli.be</p>
+Phone: (+32) 0477 35 09 17<br/>
+eMail: info@mikemuka.be<br/>
+www.mikemuka.be</p>
 
-<p>BNP Paribas Fortis Bank<br/>
-IBAN: BE55 2100 3814 9344 - BIC: GEBABEBB<br/>
-TVA: BE 0428 746 631</p>
+<p>ING Bank<br/>
+IBAN: BE**** - BIC: ****<br/>
+TVA: BE 507 714 727

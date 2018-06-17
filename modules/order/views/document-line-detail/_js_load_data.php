@@ -52,7 +52,7 @@ $js_itemrefs = json_encode($item_refs);
 <?php
 $this->beginBlock('JS_ITEM') ?>
 var store_values = {
-	chroma: <?= Item::findOne(['reference'=>Item::TYPE_CHROMALUXE])->id ?>,
+	chroma: 0,
 	param: <?= $js_params ?>,
 	item: <?= $js_items ?>,
 	item_ref: <?= $js_itemrefs ?>,

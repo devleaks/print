@@ -10,7 +10,7 @@ use yii\helpers\Html;
 
 <p>
 Niet reageren op dit bericht. Dit bericht is automatisch verzonden wanneer uw bestelling compleet is.
-U kunt altijd contact met ons opnemen op <a htref=mailto:commande@labojjmicheli.be>commande@labojjmicheli.be</a>, of per telefoon.
+U kunt altijd contact met ons opnemen op <a htref=mailto:commande@mikemuka.be>commande@mikemuka.be</a>, of per telefoon.
 </p>
 
 <hr />
@@ -19,12 +19,12 @@ U kunt altijd contact met ons opnemen op <a htref=mailto:commande@labojjmicheli.
 
 <p>Open maandag tot vrijdag, vanaf 9h00 tot 18h30.</p>
 
-<p>21-23 Tervaetestraat, 1040 Brussel<br/>
+<p>21-23 Tervaetestraat, 1050 Brussel<br/>
 
-Tel.: +32 (0)2 733 21 85<br/>
-eMail: info@labojjmicheli.be<br/>
-www.labojjmicheli.be</p>
+Tel.: (+32) 0477 35 09 17<br/>
+eMail: info@mikemuka.be<br/>
+www.mikemuka.be</p>
 
 <p>BNP Paribas Fortis<br/>
-IBAN: BE55 2100 3814 9344 - BIC: GEBABEBB<br/>
-TVA: BE 0428 746 631</p>
+IBAN: BE43 3631 4122 8101 - BIC: BBRUBEBB<br/>
+TVA: BE 507 714 727</p>

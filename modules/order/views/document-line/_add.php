@@ -63,8 +63,7 @@ $do_form = $form;
 			'columns' => 12,
 			'attributes' => [       // 2 column layout
 				'item_id' => [
-					'label' => Yii::t('store', 'Item').' <span class="label label-warning order-option" data-item_id="'.$chroma_item->id.'" data-item_name="'.$chroma_item->libelle_long.'" data-item-category="ChromaLuxe">ChromaLuxe</span>'
-													  .' <span class="label label-success order-option" data-item_id="'.$misc_item->id.'" data-item_name="'.$misc_item->libelle_long.'" data-item-category="Divers">Divers</span>',
+					'label' => Yii::t('store', 'Item').' <span class="label label-success order-option" data-item_id="'.$misc_item->id.'" data-item_name="'.$misc_item->libelle_long.'" data-item-category="Divers">Divers</span>',
 					'type' => Form::INPUT_WIDGET,
 					'widgetClass' => Select2::className(),
 		            'columnOptions' => ['colspan' => 6],
