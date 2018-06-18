@@ -166,7 +166,7 @@ SCRIPT;
 		$free_item = Item::findOne(['reference'=>Item::TYPE_MISC]);
 		$tirages = Item::find()->where(['yii_category'=>['Tirage','Canvas']])->select('id')->column();
 		$detail = $model->getDetail();
-	 	if($model->item_id == $chroma_item->id)
+	 	if( $chroma_item && $model->item_id == $chroma_item->id)
 			echo $this->render('../document-line-detail/_update_chroma', [
 			    'model' => $model,
 			    'form' => $form,

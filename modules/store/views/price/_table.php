@@ -238,7 +238,7 @@ chroma =  {
 	w_max: <?= Parameter::getIntegerValue('chroma_device', 'width') ?>,
 	h_max: <?= Parameter::getIntegerValue('chroma_device', 'height') ?>,
 	s_max: <?= $h_max * $w_max ?>,
-	min_price: <?= Item::findOne(['reference'=>Item::TYPE_CHROMALUXE])->prix_min ?>
+	min_price: <?= (Item::findOne(['reference'=>Item::TYPE_CHROMALUXE]) ? Item::findOne(['reference'=>Item::TYPE_CHROMALUXE])->prix_min : 0) ?>
 }
 
 function getSize(s) {

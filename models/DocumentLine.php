@@ -404,7 +404,7 @@ class DocumentLine extends _DocumentLine
 
 	public function isChromaLuxe() {
 		$item = Item::findOne($this->item_id);
-		return $item->yii_category == 'ChromaLuxe';
+		return $item ? $item->yii_category == 'ChromaLuxe' : false;
 	}
 
 	public function isTirage($canvasToo = false) {
