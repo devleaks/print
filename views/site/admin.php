@@ -7,7 +7,7 @@ use app\models\WebsiteOrder;
 use app\models\Parameter;
 
 /* @var $this yii\web\View */
-$this->title = 'Labo JJ Micheli';
+$this->title = 'MikeMuka';
 
 $opens = Document::find()->andWhere(['id' => WebsiteOrder::find()->select('document_id'), 'status' => Document::STATUS_OPEN])->count();
 $errors = WebsiteOrder::find()->andWhere(['status' => [WebsiteOrder::STATUS_WARN]])->count();

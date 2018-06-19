@@ -4,7 +4,7 @@
 
 Les logiciels suivants ont été installé:
 
-* /Applications/mamstack: Serveur "MAMP" + logiciel pour labo JJ Micheli
+* /Applications/mamstack: Serveur "MAMP" + logiciel pour MikeMuka
 * Sequel Pro: Gestionnaire de base de données mysql
 * Fraise et TextMate: Editeur de texte
 * Mou: Editeur de texte "markdown"

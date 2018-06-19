@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-$this->title = 'Labo JJ Micheli @Work';
+$this->title = 'MikeMuka App';
 ?>
 <div class="admin-index">
 

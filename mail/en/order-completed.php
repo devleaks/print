@@ -15,7 +15,7 @@ You can always contact us at <a htref=mailto:commande@mikemuka.be>commande@mikem
 
 <hr />
 
-<p>Labo JJ Micheli</p>
+<p>MikeMuka</p>
 
 <p>Open Mondays to Fridays from 9h00 to 18h30.</p>
 

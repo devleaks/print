@@ -220,7 +220,7 @@ return [
 	'Final TVAC' => 'Final TVAC',
 	'Frame ID'	=> 'Encadremenent',
 	'Frame Providers' => 'Fournisseurs de cadres',
-	'Frame order for Labo JJ Micheli' => 'Commande de cadres pour le Labo JJ Micheli',
+	'Frame order for MikeMuka' => 'Commande de cadres pour le MikeMuka',
 	'Frame'	=> 'Encadremenent',
 	'Free Item Libelle' => 'Libellé',
 	'Free Item Price Htva' => 'Prix HTVA',
