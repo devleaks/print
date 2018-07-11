@@ -1387,6 +1387,7 @@ class Document extends _Document
 			}
 		}
 
+		$due = 0;
 		if($notify_completed) {
 			$newstatus = self::STATUS_TOPAY;
 			// PAYMENT
@@ -1399,7 +1400,7 @@ class Document extends _Document
 				$this->blab(Yii::t('store', '{0} is paid.', $doc_type));
 				$newstatus = self::STATUS_CLOSED;
 			} else {
-				$this->blab(Yii::t('store', 'Amount due: {0}.', Yii::$app->formatter->asCurrency($total	 - $paid)));
+				$this->blab(Yii::t('store', 'Amount due: {0}.', Yii::$app->formatter->asCurrency($due)));
 			}
 		}
 		
@@ -1407,8 +1408,14 @@ class Document extends _Document
 			if($bill = $this->getBill()) {
 				$this->blab(Yii::t('store', '{0} was billed on {1}.', [$doc_type, $this->asDateTime($bill->created_at)]).' '.
 							Yii::t('store', 'Bill status is {0}.', Yii::t('store', $bill->status)));
-				if(in_array($newstatus, [self::STATUS_DONE,self::STATUS_TOPAY]) && in_array($bill->status, [self::STATUS_TOPAY,self::STATUS_CLOSED])) {
+				if(    in_array($newstatus, [self::STATUS_DONE,self::STATUS_TOPAY])
+					  && in_array($bill->status, [self::STATUS_TOPAY,self::STATUS_CLOSED])
+					  && ($due < self::PAYMENT_LIMIT)) {
 					$newstatus = self::STATUS_CLOSED; // we can close this one since TOPAY status carried by bill
+				}
+				if($this->status != $bill->status) {
+					$this->blab(Yii::t('store', 'Status «{0}» of {1} differs from status «{2}» of bill. {3}.',
+						   [Yii::t('store', $this->status), $doc_type, Yii::t('store', $bill->status), Html::a(Yii::t('store', 'Check status of bill {0}', $bill->name), ['/order/document/status', 'id' => $bill->id])]));
 				}
 			} else {
 				$this->blab(Yii::t('store', '{0} has not been billed yet.', $doc_type));

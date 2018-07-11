@@ -385,6 +385,8 @@ return [
 	'Special Item' => 'Articles Spéciaux',
 	'Start Price' => 'Prix de départ',
 	'Status' => 'Etat',
+	'Status «{0}» of {1} differs from status «{2}» of bill. {3}.' => "L'état «{0}» du/de la {1} diffère de l'état «{2}» de la facture. {3}.",
+	'Check status of bill {0}' => "Verifier l'état de la facture {0}",
 	'Structured Communication' => 'Communication Structurée',
 	'Submit Credit Note' => 'Envoyer la note de crédit',
 	'Submit Work' => 'Soumettre le travail',
