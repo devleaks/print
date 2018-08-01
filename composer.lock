@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9f7df567069d84d3fc00a15c3242ff0",
+    "content-hash": "beb14ad8567f7ee2b6c8b62e41bc3240",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -1445,16 +1445,16 @@
         },
         {
             "name": "cebe/markdown",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cebe/markdown.git",
-                "reference": "f681fee8303310415b746f3758eeda0a7ad08bda"
+                "reference": "8efb4268c90add2eee0edacf503ae71f22ccc745"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cebe/markdown/zipball/f681fee8303310415b746f3758eeda0a7ad08bda",
-                "reference": "f681fee8303310415b746f3758eeda0a7ad08bda",
+                "url": "https://api.github.com/repos/cebe/markdown/zipball/8efb4268c90add2eee0edacf503ae71f22ccc745",
+                "reference": "8efb4268c90add2eee0edacf503ae71f22ccc745",
                 "shasum": ""
             },
             "require": {
@@ -1501,7 +1501,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2015-03-06T05:21:16+00:00"
+            "time": "2018-03-26T11:15:02+00:00"
         },
         {
             "name": "cebe/markdown-latex",
@@ -1565,16 +1565,16 @@
         },
         {
             "name": "components/flag-icon-css",
-            "version": "2.9.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lipis/flag-icon-css.git",
-                "reference": "b3f81d10556e007c460444ec22489e68520eb79d"
+                "reference": "33ab3e40054e2a661202072a7be26344a19622eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/b3f81d10556e007c460444ec22489e68520eb79d",
-                "reference": "b3f81d10556e007c460444ec22489e68520eb79d",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/33ab3e40054e2a661202072a7be26344a19622eb",
+                "reference": "33ab3e40054e2a661202072a7be26344a19622eb",
                 "shasum": ""
             },
             "type": "component",
@@ -1599,20 +1599,20 @@
                 }
             ],
             "description": "CSS for vector based country flags",
-            "time": "2017-11-16T15:46:30+00:00"
+            "time": "2018-03-01T15:28:45+00:00"
         },
         {
             "name": "dektrium/yii2-user",
-            "version": "0.9.13",
+            "version": "0.9.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dektrium/yii2-user.git",
-                "reference": "120ab9eeadfbfbb9e594509b5ad1c98a128fbd9a"
+                "reference": "8f2daea532f7efefc3f808e50d74a91c0de71ff4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dektrium/yii2-user/zipball/120ab9eeadfbfbb9e594509b5ad1c98a128fbd9a",
-                "reference": "120ab9eeadfbfbb9e594509b5ad1c98a128fbd9a",
+                "url": "https://api.github.com/repos/dektrium/yii2-user/zipball/8f2daea532f7efefc3f808e50d74a91c0de71ff4",
+                "reference": "8f2daea532f7efefc3f808e50d74a91c0de71ff4",
                 "shasum": ""
             },
             "require": {
@@ -1658,7 +1658,7 @@
                 "yii2",
                 "yii2-user"
             ],
-            "time": "2017-12-28T17:35:06+00:00"
+            "time": "2018-04-03T12:24:41+00:00"
         },
         {
             "name": "devleaks/yii2-chardinjs",
@@ -1805,121 +1805,10 @@
                 "yii2"
             ],
             "support": {
-                "source": "https://github.com/devleaks/yii2-metafizzy/tree/1.0.2",
+                "source": "https://github.com/devleaks/yii2-metafizzy/tree/master",
                 "issues": "https://github.com/devleaks/yii2-metafizzy/issues"
             },
             "time": "2017-09-13T16:04:24+00:00"
-        },
-        {
-            "name": "doctrine/lexer",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/lexer.git",
-                "reference": "83893c552fd2045dd78aef794c31e694c37c0b8c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/83893c552fd2045dd78aef794c31e694c37c0b8c",
-                "reference": "83893c552fd2045dd78aef794c31e694c37c0b8c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Doctrine\\Common\\Lexer\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                }
-            ],
-            "description": "Base library for a lexer that can be used in Top-Down, Recursive Descent Parsers.",
-            "homepage": "http://www.doctrine-project.org",
-            "keywords": [
-                "lexer",
-                "parser"
-            ],
-            "time": "2014-09-09T13:34:57+00:00"
-        },
-        {
-            "name": "egulias/email-validator",
-            "version": "2.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "1bec00a10039b823cc94eef4eddd47dcd3b2ca04"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/1bec00a10039b823cc94eef4eddd47dcd3b2ca04",
-                "reference": "1bec00a10039b823cc94eef4eddd47dcd3b2ca04",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/lexer": "^1.0.1",
-                "php": ">= 5.5"
-            },
-            "require-dev": {
-                "dominicsayers/isemail": "dev-master",
-                "phpunit/phpunit": "^4.8.35",
-                "satooshi/php-coveralls": "^1.0.1"
-            },
-            "suggest": {
-                "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Egulias\\EmailValidator\\": "EmailValidator"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Eduardo Gulias Davis"
-                }
-            ],
-            "description": "A library for validating emails against several RFCs",
-            "homepage": "https://github.com/egulias/EmailValidator",
-            "keywords": [
-                "email",
-                "emailvalidation",
-                "emailvalidator",
-                "validation",
-                "validator"
-            ],
-            "time": "2017-11-15T23:40:40+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -2123,16 +2012,16 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.4.7",
+            "version": "v4.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "aebea0804d955af913d3cd5922e6b01be66290c9"
+                "reference": "7a2191d2b7ae65f5ca4ddb090a69d65805eb7edf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/aebea0804d955af913d3cd5922e6b01be66290c9",
-                "reference": "aebea0804d955af913d3cd5922e6b01be66290c9",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/7a2191d2b7ae65f5ca4ddb090a69d65805eb7edf",
+                "reference": "7a2191d2b7ae65f5ca4ddb090a69d65805eb7edf",
                 "shasum": ""
             },
             "type": "library",
@@ -2172,7 +2061,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2018-01-22T17:05:07+00:00"
+            "time": "2018-04-11T10:34:10+00:00"
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
@@ -2416,16 +2305,16 @@
         },
         {
             "name": "kartik-v/yii2-date-range",
-            "version": "1.6.8",
+            "version": "v1.6.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-date-range.git",
-                "reference": "908e8175f3f8c091d425bcaba6e18871d63291a0"
+                "reference": "ed12260339f4699c363360465a22a46c714eb6be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-date-range/zipball/908e8175f3f8c091d425bcaba6e18871d63291a0",
-                "reference": "908e8175f3f8c091d425bcaba6e18871d63291a0",
+                "url": "https://api.github.com/repos/kartik-v/yii2-date-range/zipball/ed12260339f4699c363360465a22a46c714eb6be",
+                "reference": "ed12260339f4699c363360465a22a46c714eb6be",
                 "shasum": ""
             },
             "require": {
@@ -2466,7 +2355,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-08-08T04:26:22+00:00"
+            "time": "2018-03-15T08:22:53+00:00"
         },
         {
             "name": "kartik-v/yii2-datecontrol",
@@ -2628,6 +2517,66 @@
             "time": "2017-11-06T16:04:54+00:00"
         },
         {
+            "name": "kartik-v/yii2-dynagrid",
+            "version": "v1.4.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-dynagrid.git",
+                "reference": "109b96e133beabe989f71864db137e3bff2ffe8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-dynagrid/zipball/109b96e133beabe989f71864db137e3bff2ffe8d",
+                "reference": "109b96e133beabe989f71864db137e3bff2ffe8d",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-grid": "~3.1",
+                "kartik-v/yii2-sortable": "~1.2",
+                "kartik-v/yii2-widget-activeform": "~1.4",
+                "kartik-v/yii2-widget-select2": "~2.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\dynagrid\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Turbo charge the Yii 2 GridView with personalized columns, page size, and themes.",
+            "homepage": "https://github.com/kartik-v/yii2-dynagrid",
+            "keywords": [
+                "columns",
+                "dynamic",
+                "extension",
+                "grid",
+                "hide",
+                "order",
+                "reorder",
+                "show",
+                "sort",
+                "visibility",
+                "widget",
+                "yii2"
+            ],
+            "time": "2018-02-15T17:31:12+00:00"
+        },
+        {
             "name": "kartik-v/yii2-grid",
             "version": "v3.1.7",
             "source": {
@@ -2737,12 +2686,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-icons.git",
-                "reference": "84a1da9a9b6df8728914487b1de5dacaa39b6fde"
+                "reference": "46dd67204e290b48c01ea50e9e44390f137b18f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/84a1da9a9b6df8728914487b1de5dacaa39b6fde",
-                "reference": "84a1da9a9b6df8728914487b1de5dacaa39b6fde",
+                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/46dd67204e290b48c01ea50e9e44390f137b18f6",
+                "reference": "46dd67204e290b48c01ea50e9e44390f137b18f6",
                 "shasum": ""
             },
             "require": {
@@ -2782,7 +2731,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2017-11-10T17:00:48+00:00"
+            "time": "2018-03-09T09:01:11+00:00"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -2894,12 +2843,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-markdown.git",
-                "reference": "42dc1b2461aa5d3da29583b81db3e10f95752de4"
+                "reference": "89bec4df3794ee9fe18271cef8f6d5fef0c079de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-markdown/zipball/42dc1b2461aa5d3da29583b81db3e10f95752de4",
-                "reference": "42dc1b2461aa5d3da29583b81db3e10f95752de4",
+                "url": "https://api.github.com/repos/kartik-v/yii2-markdown/zipball/89bec4df3794ee9fe18271cef8f6d5fef0c079de",
+                "reference": "89bec4df3794ee9fe18271cef8f6d5fef0c079de",
                 "shasum": ""
             },
             "require": {
@@ -2938,7 +2887,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-02-07T11:49:46+00:00"
+            "time": "2018-04-20T12:43:53+00:00"
         },
         {
             "name": "kartik-v/yii2-money",
@@ -2997,20 +2946,20 @@
         },
         {
             "name": "kartik-v/yii2-mpdf",
-            "version": "v1.0.2",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-mpdf.git",
-                "reference": "67980ab7861ae9541b1a1784be8938dbeba13045"
+                "reference": "17fda1cb084c58fee6014026d35af5faf73316ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/67980ab7861ae9541b1a1784be8938dbeba13045",
-                "reference": "67980ab7861ae9541b1a1784be8938dbeba13045",
+                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/17fda1cb084c58fee6014026d35af5faf73316ef",
+                "reference": "17fda1cb084c58fee6014026d35af5faf73316ef",
                 "shasum": ""
             },
             "require": {
-                "mpdf/mpdf": "~7.0"
+                "mpdf/mpdf": "<7.0"
             },
             "type": "yii2-extension",
             "extra": {
@@ -3045,7 +2994,7 @@
                 "utf8",
                 "yii2"
             ],
-            "time": "2017-07-19T09:51:02+00:00"
+            "time": "2017-01-14T11:51:12+00:00"
         },
         {
             "name": "kartik-v/yii2-password",
@@ -3053,12 +3002,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-password.git",
-                "reference": "d0d658590176998f7499d7677d8c66a965b6d114"
+                "reference": "733310f12dd46e70ae8afc87fbccaa9003aeefdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/d0d658590176998f7499d7677d8c66a965b6d114",
-                "reference": "d0d658590176998f7499d7677d8c66a965b6d114",
+                "url": "https://api.github.com/repos/kartik-v/yii2-password/zipball/733310f12dd46e70ae8afc87fbccaa9003aeefdf",
+                "reference": "733310f12dd46e70ae8afc87fbccaa9003aeefdf",
                 "shasum": ""
             },
             "require": {
@@ -3096,7 +3045,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2018-02-06T12:30:33+00:00"
+            "time": "2018-04-03T18:56:33+00:00"
         },
         {
             "name": "kartik-v/yii2-slider",
@@ -3144,6 +3093,53 @@
                 "yii2"
             ],
             "time": "2016-01-10T17:24:24+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-sortable",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-sortable.git",
+                "reference": "650dfd6876115fbb996eb6eb8f1d5d13ddb69285"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-sortable/zipball/650dfd6876115fbb996eb6eb8f1d5d13ddb69285",
+                "reference": "650dfd6876115fbb996eb6eb8f1d5d13ddb69285",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": "~1.7"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\sortable\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Create sortable lists and grids using HTML5 drag and drop API for Yii 2.0.",
+            "homepage": "https://github.com/kartik-v/yii2-sortable",
+            "keywords": [
+                "bootstrap",
+                "extension",
+                "jquery",
+                "range",
+                "sortable",
+                "widget",
+                "yii2"
+            ],
+            "time": "2015-06-17T17:34:48+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-activeform",
@@ -4411,47 +4407,35 @@
         },
         {
             "name": "mpdf/mpdf",
-            "version": "v7.0.3",
+            "version": "v6.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpdf/mpdf.git",
-                "reference": "5681a0cae1eea197143d5d27f06e19b0523cd8d6"
+                "reference": "e7310ce53b5c11db1f0b781fe0a69066608ac6e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/5681a0cae1eea197143d5d27f06e19b0523cd8d6",
-                "reference": "5681a0cae1eea197143d5d27f06e19b0523cd8d6",
+                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/e7310ce53b5c11db1f0b781fe0a69066608ac6e2",
+                "reference": "e7310ce53b5c11db1f0b781fe0a69066608ac6e2",
                 "shasum": ""
             },
             "require": {
-                "ext-gd": "*",
                 "ext-mbstring": "*",
-                "paragonie/random_compat": "^1.4|^2.0",
-                "php": "^5.6 || ~7.0.0 || ~7.1.0 || ~7.2.0",
-                "psr/log": "^1.0",
+                "php": "^5.4.0 || 7.0.*",
                 "setasign/fpdi": "1.6.*"
             },
             "require-dev": {
-                "mockery/mockery": "^0.9.5",
-                "phpunit/phpunit": "^5.0",
-                "squizlabs/php_codesniffer": "^2.7.0",
-                "tracy/tracy": "^2.4"
+                "phpunit/phpunit": "^4.7"
             },
             "suggest": {
-                "ext-bcmath": "Needed for generation of some types of barcodes",
-                "ext-xml": "Needed mainly for SVG manipulation",
                 "ext-zlib": "Needed for compression of embedded resources, such as fonts"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-development": "7.0-dev"
-                }
-            },
             "autoload": {
-                "psr-4": {
-                    "Mpdf\\": "src/"
-                }
+                "classmap": [
+                    "mpdf.php",
+                    "classes"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -4459,22 +4443,18 @@
             ],
             "authors": [
                 {
-                    "name": "Matěj Humpál",
-                    "role": "Developer, maintainer"
-                },
-                {
                     "name": "Ian Back",
-                    "role": "Developer (retired)"
+                    "role": "Developer"
                 }
             ],
             "description": "A PHP class to generate PDF files from HTML with Unicode/UTF-8 and CJK support",
-            "homepage": "https://mpdf.github.io",
+            "homepage": "http://mpdf.github.io",
             "keywords": [
                 "pdf",
                 "php",
                 "utf-8"
             ],
-            "time": "2018-01-03T07:32:36+00:00"
+            "time": "2017-07-09T16:46:12+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -4608,54 +4588,6 @@
                 "yii2"
             ],
             "time": "2018-01-23T07:57:10+00:00"
-        },
-        {
-            "name": "paragonie/random_compat",
-            "version": "v2.0.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
-                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*|5.*"
-            },
-            "suggest": {
-                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "lib/random.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Paragon Initiative Enterprises",
-                    "email": "security@paragonie.com",
-                    "homepage": "https://paragonie.com"
-                }
-            ],
-            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
-            "keywords": [
-                "csprng",
-                "pseudorandom",
-                "random"
-            ],
-            "time": "2017-09-27T21:40:39+00:00"
         },
         {
             "name": "perminder-klair/yii2-dropzone",
@@ -5026,30 +4958,29 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.0.2",
+            "version": "v5.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "412333372fb6c8ffb65496a2bbd7321af75733fc"
+                "reference": "7ffc1ea296ed14bf8260b6ef11b80208dbadba91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/412333372fb6c8ffb65496a2bbd7321af75733fc",
-                "reference": "412333372fb6c8ffb65496a2bbd7321af75733fc",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7ffc1ea296ed14bf8260b6ef11b80208dbadba91",
+                "reference": "7ffc1ea296ed14bf8260b6ef11b80208dbadba91",
                 "shasum": ""
             },
             "require": {
-                "egulias/email-validator": "~2.0",
-                "php": ">=7.0.0"
+                "php": ">=5.3.3"
             },
             "require-dev": {
                 "mockery/mockery": "~0.9.1",
-                "symfony/phpunit-bridge": "~3.3@dev"
+                "symfony/phpunit-bridge": "~3.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.0-dev"
+                    "dev-master": "5.4-dev"
                 }
             },
             "autoload": {
@@ -5071,13 +5002,13 @@
                 }
             ],
             "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "http://swiftmailer.symfony.com",
+            "homepage": "https://swiftmailer.symfony.com",
             "keywords": [
                 "email",
                 "mail",
                 "mailer"
             ],
-            "time": "2017-09-30T22:39:41+00:00"
+            "time": "2018-01-23T07:37:21+00:00"
         },
         {
             "name": "thomaspark/bootswatch",
@@ -5139,16 +5070,16 @@
         },
         {
             "name": "webcreate/jquery-ias",
-            "version": "v2.2.3",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webcreate/infinite-ajax-scroll.git",
-                "reference": "1deffb3b56a170098a53a06aeff66674146c09b6"
+                "reference": "97ba99a34e68a3fc186ceb518c9cff51370be24b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webcreate/infinite-ajax-scroll/zipball/1deffb3b56a170098a53a06aeff66674146c09b6",
-                "reference": "1deffb3b56a170098a53a06aeff66674146c09b6",
+                "url": "https://api.github.com/repos/webcreate/infinite-ajax-scroll/zipball/97ba99a34e68a3fc186ceb518c9cff51370be24b",
+                "reference": "97ba99a34e68a3fc186ceb518c9cff51370be24b",
                 "shasum": ""
             },
             "type": "library",
@@ -5160,12 +5091,12 @@
             "authors": [
                 {
                     "name": "fieg",
-                    "email": "jeroen@fieg.nl",
+                    "email": "jeroen@webcreate.nl",
                     "homepage": "http://webcreate.nl"
                 }
             ],
-            "description": "Infinite AJAX Scroll: A jQuery plugin that turns your server-side pagination into an infinite scrolling one using AJAX",
-            "homepage": "http://infiniteajaxscroll.com",
+            "description": "Infinite Ajax Scroll: A jQuery plugin that turns your server-side pagination into an infinite scrolling one using AJAX",
+            "homepage": "https://infiniteajaxscroll.com",
             "keywords": [
                 "ajax",
                 "ias",
@@ -5175,7 +5106,7 @@
                 "scroll",
                 "scrolling"
             ],
-            "time": "2017-06-29T21:13:27+00:00"
+            "time": "2018-03-21T20:14:31+00:00"
         },
         {
             "name": "yii2mod/yii2-c3-chart",
@@ -5230,16 +5161,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.14.1",
+            "version": "2.0.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "d99969394c66dc3606134af092b8ec561ea5d7c6"
+                "reference": "ed3a9e1c4abe206e1c3ce48a6b3624119b79850d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/d99969394c66dc3606134af092b8ec561ea5d7c6",
-                "reference": "d99969394c66dc3606134af092b8ec561ea5d7c6",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/ed3a9e1c4abe206e1c3ce48a6b3624119b79850d",
+                "reference": "ed3a9e1c4abe206e1c3ce48a6b3624119b79850d",
                 "shasum": ""
             },
             "require": {
@@ -5326,7 +5257,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2018-02-24T20:23:06+00:00"
+            "time": "2018-03-21T18:36:53+00:00"
         },
         {
             "name": "yiisoft/yii2-apidoc",
@@ -5506,16 +5437,16 @@
         },
         {
             "name": "yiisoft/yii2-composer",
-            "version": "2.0.5",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-composer.git",
-                "reference": "3f4923c2bde6caf3f5b88cc22fdd5770f52f8df2"
+                "reference": "163419f1f197e02f015713b0d4f85598d8f8aa80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/3f4923c2bde6caf3f5b88cc22fdd5770f52f8df2",
-                "reference": "3f4923c2bde6caf3f5b88cc22fdd5770f52f8df2",
+                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/163419f1f197e02f015713b0d4f85598d8f8aa80",
+                "reference": "163419f1f197e02f015713b0d4f85598d8f8aa80",
                 "shasum": ""
             },
             "require": {
@@ -5544,6 +5475,10 @@
                 {
                     "name": "Qiang Xue",
                     "email": "qiang.xue@gmail.com"
+                },
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc"
                 }
             ],
             "description": "The composer plugin for Yii extension installer",
@@ -5552,7 +5487,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2016-12-20T13:26:02+00:00"
+            "time": "2018-03-21T16:15:55+00:00"
         },
         {
             "name": "yiisoft/yii2-httpclient",
@@ -5649,20 +5584,20 @@
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
-            "version": "2.1.0",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-swiftmailer.git",
-                "reference": "563570c9aa19ca47c1b22e3032983229378e9274"
+                "reference": "8a03a62cbcb82e7697d3002eb43a8d2637f566ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/563570c9aa19ca47c1b22e3032983229378e9274",
-                "reference": "563570c9aa19ca47c1b22e3032983229378e9274",
+                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/8a03a62cbcb82e7697d3002eb43a8d2637f566ec",
+                "reference": "8a03a62cbcb82e7697d3002eb43a8d2637f566ec",
                 "shasum": ""
             },
             "require": {
-                "swiftmailer/swiftmailer": "~6.0",
+                "swiftmailer/swiftmailer": "~5.0",
                 "yiisoft/yii2": "~2.0.4"
             },
             "type": "yii2-extension",
@@ -5695,7 +5630,7 @@
                 "swiftmailer",
                 "yii2"
             ],
-            "time": "2017-08-04T10:48:17+00:00"
+            "time": "2017-05-01T08:29:00+00:00"
         },
         {
             "name": "yurkinx/yii2-image",
@@ -5953,22 +5888,22 @@
         },
         {
             "name": "yiisoft/yii2-gii",
-            "version": "2.0.6",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-gii.git",
-                "reference": "db41f647d9b73702ceb6864fdfce827a72b5ce42"
+                "reference": "9ec1374d0844f448d2af29c707f77c9f8d1375c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/db41f647d9b73702ceb6864fdfce827a72b5ce42",
-                "reference": "db41f647d9b73702ceb6864fdfce827a72b5ce42",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/9ec1374d0844f448d2af29c707f77c9f8d1375c8",
+                "reference": "9ec1374d0844f448d2af29c707f77c9f8d1375c8",
                 "shasum": ""
             },
             "require": {
                 "bower-asset/typeahead.js": "0.10.* | ~0.11.0",
                 "phpspec/php-diff": ">=1.0.2",
-                "yiisoft/yii2": "~2.0.13",
+                "yiisoft/yii2": "~2.0.14",
                 "yiisoft/yii2-bootstrap": "~2.0.0"
             },
             "type": "yii2-extension",
@@ -5983,7 +5918,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "yii\\gii\\": ""
+                    "yii\\gii\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -6002,7 +5937,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2017-12-22T23:53:06+00:00"
+            "time": "2018-05-02T22:05:25+00:00"
         }
     ],
     "aliases": [],
@@ -6011,6 +5946,7 @@
         "fightbulc/moment": 20,
         "kartik-v/yii2-builder": 20,
         "kartik-v/yii2-datecontrol": 20,
+        "kartik-v/yii2-dynagrid": 20,
         "kartik-v/yii2-icons": 20,
         "kartik-v/yii2-markdown": 20,
         "kartik-v/yii2-password": 20,
@@ -6025,5 +5961,8 @@
     "platform": {
         "php": ">=5.4.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "platform-overrides": {
+        "php": "5.4.45"
+    }
 }

@@ -78,6 +78,21 @@ class ClientController extends Controller
     }
 
     /**
+     * Lists all Client models with email address.
+     * @return mixed
+     */
+    public function actionExtract()
+    {
+        $searchModel = new ClientSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('extract', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
      * Displays a single Client model.
      * @param integer $id
      * @return mixed
