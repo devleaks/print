@@ -175,7 +175,6 @@ class OrderController extends Controller
 		$archive = new Query();
 		$archive->from('document_archive')
 				->select([
-				'document_type' => 'replace(document_type, "ORDER", "BILL")',
 				'docty' => "replace(replace(replace(document_type, 'ORDER', 'BILL'), 'CREDIT', 'BILL'), 'REFUND', 'TICKET')",
 				'year' => 'year(due_date)',
 				'month' => 'month(due_date)',
@@ -186,7 +185,6 @@ class OrderController extends Controller
 			
 		$q = Document::find()
 			->select([
-				'document_type',
 				'docty' => "replace(replace(document_type, 'CREDIT', 'BILL'), 'REFUND', 'TICKET')",
 				'year' => 'year(created_at)',
 				'month' => 'month(created_at)',
