@@ -56,8 +56,8 @@ SCRIPT;
 				'item_id' => [
 					'type' => Form::INPUT_RAW,
 					'value' => Html::label(Yii::t('store', 'Item')  , 'item', ['class' => 'control-label'])
-					// <input type="text" id="documentline-item_id" class="form-control kv-hide input-md" name="DocumentLine[item_id]">
-							 . Html::hiddenInput('item_id', $model->item_id, ['id' => 'documentline-item_id', 'name' => 'DocumentLine[item_id]'])
+							 . '<input type="hidden" id="documentline-item_id" name="DocumentLine[item_id]" value="'.$model->item_id.'">'
+//							 . Html::hiddenInput('item_id', $model->item_id, ['id' => 'documentline-item_id', 'name' => 'DocumentLine[item_id]'])
 							 . Html::textInput('item', $model->item->libelle_long, ['id' => 'itemDescription', 'class' => 'form-control', 'readonly' => true]),
 		            'columnOptions' => ['colspan' => 3],
 				],
