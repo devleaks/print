@@ -133,17 +133,23 @@ function isChromaLuxe() {
 	return false;
 }
 
-function setItem(id, vat, name, category) {
-	$("#documentline-item_id").append('<option value='+id+'>'+name+'</option>');
-	$("#documentline-item_id").val(id);
-	$("#documentline-vat").val(vat);
-	$("#documentline-item-yii_category").val(category);
+function setMainItem(altitem) {
+	item = altitem;
+	$("#documentline-item_id").append('<option value='+altitem.id+'>'+altitem.libelle_long+'</option>');
+	$("#documentline-item_id").val(altitem.id);
+
+	$("#documentline-vat").prop("readonly", false).val(altitem.taux_de_tva).prop("readonly", true);
+	$("#documentline-unit_price").prop("readonly", false).val(altitem.prix_de_vente).prop("readonly", true);
+	$("#documentline-item-yii_category").val(altitem.yii_category);
+
+	$('#itemDescription').prop("readonly", false).val(altitem.libelle_long).prop("readonly", true);
+
 	///ATTENTION SELECT_DISPLAY_ID HARDCODED HERE
 	test = $('#select2-chosen-2');
 	if($('#select2-chosen-2').length != 0)
-		$('#select2-chosen-2').html(name);
+		$('#select2-chosen-2').html(altitem.libelle_long);
 	else
-		$('#select2-chosen-1').html(name);
+		$('#select2-chosen-1').html(altitem.libelle_long);
 }
 
 function setSizes(item) {
@@ -166,7 +172,7 @@ function updateMainItem(tirage) {
 	var curItem = needHandling();
 	console.log('updateMainItem', tirage, curItem);
 	if(!curItem || curItem.yii_category == "Tirage") { // set it
-		setItem(tirage.id, tirage.taux_de_tva, tirage.libelle_long, tirage.yii_category);
+		setMainItem(tirage);
 		console.log('updateMainItem: updated');
 	}
 }
@@ -578,11 +584,6 @@ $("#documentlinedetail-tirage_id:enabled, #documentlinedetail-tirage_id:disabled
 	}
 	del_error("FINEART_NO_TIRAGE");
 	
-	//console.log('tirage_id: prix: '+item.prix_de_vente);
-
-	// if it changed, need to change item_id as well
-	setItem(item.id, item.taux_de_tva, item.libelle_long, item.yii_category);
-
 	var tirage = getItemById(item_id, true)
 	setSizes(tirage);
 	updateMainItem(tirage);
@@ -858,7 +859,10 @@ $(".order-option").click(function () {
 	item_name = $(this).data('item_name');
 	item_vat  = $(this).data('item_vat');
 	item_yii_category  = $(this).data('item_category');
-	setItem(item_id, item_vat, item_name, item_yii_category);
+	var itm = getItemById(item_id, true);
+	if(itm) {
+		setMainItem(itm);
+	}
 	$("#documentline-item_id").trigger('change');
 });
 
