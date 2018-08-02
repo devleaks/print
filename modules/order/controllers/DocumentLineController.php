@@ -98,19 +98,20 @@ class DocumentLineController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			//Yii::trace($model->image_add, 'DocumentLineController::actionUpdate');
-			if($model->image_add == DocumentLine::IMAGE_REPLACE)
-				$model->deletePictures();
-			$this->loadImages($model);
+    			//Yii::trace($model->image_add, 'DocumentLineController::actionUpdate');
+    			if($model->image_add == DocumentLine::IMAGE_REPLACE)
+    				$model->deletePictures();
 
-			if($detail = $model->getDetail())
-				$this->updateDetail($model, $detail);
+    			$this->loadImages($model);
 
-			$model->document->updatePrice();
+    			if($detail = $model->getDetail())
+    				$this->updateDetail($model, $detail);
 
-			$newDocumentLine = new DocumentLine();
-			$newDocumentLine->document_id = $model->document_id;
-            return $this->redirect(Url::to(['create', 'id' => $model->document_id]));
+    			$model->document->updatePrice();
+
+    			$newDocumentLine = new DocumentLine();
+    			$newDocumentLine->document_id = $model->document_id;
+          return $this->redirect(Url::to(['create', 'id' => $model->document_id]));
         } else {
             return $this->render('update', [
                 'model' => $model,
