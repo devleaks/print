@@ -490,29 +490,31 @@ class DocumentController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-	public function actionClientList($search = null, $id = null, $ret = null) {
-	    $out = ['more' => false];
-	    if (!is_null($search)) {
-	        $query = new Query;
-	        $query->select(['id', 'text' => 'nom'])
-	            ->from('client')
-	            ->orWhere(['like', 'nom', $search])
-	            ->orWhere(['like', 'autre_nom', $search])
-	            ->limit(20);
-	        $command = $query->createCommand();
-	        $data = $command->queryAll();
-	        $out['results'] = array_values($data);
-	    }
-	    elseif ($id > 0) {
-			$client = Client::findOne($id);
-			$addr = $client->makeAddress(! $client->isComptoir(), $ret);//$this->render('_header_client', ['client' => $client])
-	        $out['results'] = ['id' => $id, 'text' => $client->nom, 'addr' => $addr];
-	    }
-	    else {
-	        $out['results'] = ['id' => 0, 'text' => 'No matching client found'];
-	    }
-	    echo Json::encode($out);
-	}
+   public function actionClientList($search = null, $id = null, $ret = null) {
+        $out = ['more' => false];
+        if (!is_null($search)) {
+            $query = new Query;
+            $query->select(['id', 'text' => 'nom'])
+                ->from('client')
+                ->orWhere(['like', 'nom', $search])
+                ->orWhere(['like', 'autre_nom', $search])
+                ->andWhere(['<>', 'comptabilite', Client::COMPTOIR])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $client = Client::findOne($id);
+            $addr = $client->makeAddress(! $client->isComptoir(), $ret);//$this->render('_header_client', ['client' => $client])
+            $out['results'] = ['id' => $id, 'text' => $client->nom, 'addr' => $addr];
+        }
+        else {
+            $out['results'] = ['id' => 0, 'text' => 'No matching client found'];
+        }
+        echo Json::encode($out);
+    }
+
 	
 	public function actionDocumentList($search = null, $sale = null, $ret = null) {
 	    $out = ['more' => false];
