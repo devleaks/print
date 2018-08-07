@@ -42,7 +42,7 @@ $apphomedir = Yii::getAlias('@app');
 <?php $this->beginBody() ?>
     <div class="wrap">
         <?php
-			$name = Yii::$app->name . (YII_ENV_DEV ? ' –DEV='.`cd $apphomedir ; git describe --tags` : '') . (YII_DEBUG ? '–DEBUG' : '') ;
+			$name = Yii::$app->name . (YII_ENV_DEV ? ' //'.`git rev-parse --abbrev-ref HEAD`.'-'.`cd $apphomedir ; git describe --tags` : '') . (YII_DEBUG ? '–DEBUG' : '') ;
             NavBar::begin([
                 'brandLabel' => $name,
                 'brandUrl' => Yii::$app->homeUrl,
