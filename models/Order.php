@@ -350,7 +350,7 @@ class Order extends Document
 
 	public static function getSparkline($client_id, $date_from, $date_to)
 	{
-		$q = Order::find()
+		$q = Bill::find()
 			->select(['date_year' => 'year(created_at)', 'date_month' => 'month(created_at)', 'total' => 'sum(price_htva)'])
 			->andWhere(['client_id' => $client_id])
 			->andWhere(['between', 'created_at', $date_from, $date_to])
@@ -365,5 +365,6 @@ class Order extends Document
 		}
 		return $r;
 	}
+
 }
 

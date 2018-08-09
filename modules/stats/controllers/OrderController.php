@@ -52,7 +52,7 @@ class OrderController extends Controller
     public function actionIndex()
     {
 		$ccc = Client::auComptoir()->id;
-		$q = Order::find()
+		$q = Bill::find()
 			->select(['client_id', 'tot_price' => 'sum(price_htva)', 'tot_count' => 'count(id)'])
 			->andWhere(['not', ['client_id' => $ccc]])
 			->groupBy('client_id')

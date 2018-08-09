@@ -1,4 +1,5 @@
 <?php
+use app\models\Bill;
 use app\models\Order;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
@@ -9,7 +10,7 @@ use kartik\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 /* TOTALS */
-$q = Order::find()
+$q = Bill::find()
 	->select(['client_id', 'year' => 'year(created_at)', 'tot_price' => 'sum(price_htva)', 'tot_count' => 'count(id)'])
 	->andWhere(['client_id' => $model['client_id']])
 	->groupBy('year')
@@ -28,7 +29,7 @@ for($year = 2015; $year <= date('Y'); $year++) {
 	$timeClause .= "(created_at between '".$year."/01/01' and '".$year.date('/m/d')."')";
 }
 
-$q2 = Order::find()
+$q2 = Bill::find()
 	->select(['client_id', 'year' => 'year(created_at)', 'tot_price' => 'sum(price_htva)', 'tot_count' => 'count(id)'])
 	->andWhere(['client_id' => $model['client_id']])
 	->andWhere($timeClause)
@@ -72,7 +73,7 @@ $dp2 = new ArrayDataProvider([
 			[
 				'attribute' => 'tot_price',
 				'format' => 'currency',
-				'label' => Yii::t('store','Montant commandes'),
+				'label' => Yii::t('store','Facturé'),
 				'hAlign' => GridView::ALIGN_RIGHT,
 			],
 			[
@@ -96,7 +97,7 @@ $dp2 = new ArrayDataProvider([
 			[
 				'attribute' => 'tot_price',
 				'format' => 'currency',
-				'label' => Yii::t('store','Montant commandes'),
+				'label' => Yii::t('store','Facturé'),
 				'hAlign' => GridView::ALIGN_RIGHT,
 			],
 			[

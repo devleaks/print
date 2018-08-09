@@ -8,7 +8,7 @@ use kartik\grid\GridView;
 /* @var $searchModel app\models\ParameterSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('store', 'Commandes par clients');
+$this->title = Yii::t('store', 'Facturé par clients');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 				'attribute' => 'tot_price',
 				'format' => 'currency',
-				'label' => Yii::t('store','Montant commandes'),
+				'label' => Yii::t('store','Facturé'),
 				'hAlign' => GridView::ALIGN_RIGHT,
 			],
 			[
