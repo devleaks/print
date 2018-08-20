@@ -411,7 +411,7 @@ class DocumentLineController extends Controller
 		$out = [];
 		if ( $item = Item::findOne($id) ) {
 			if ( $pc = $item->getPriceCalculator() ) {
-				$price = ($item->prix_de_vente > 0 ? $item->prix_de_vente : $pc->roundPrice($w, $h));
+				$price = $pc->roundPrice($w, $h);
 				$out = ['price' => $price, 'error_msg' => null];
 			} else // item not found
 				$out = ['price' => 0, 'error_msg' => 'Price calculator not found.'];
