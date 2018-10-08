@@ -17,7 +17,7 @@ U kunt altijd contact met ons opnemen op <a htref=mailto:commande@labojjmicheli.
 
 <p>BVBA Labo JJ Micheli</p>
 
-<p>Open maandag tot vrijdag, vanaf 9h00 tot 18h30.</p>
+<p>Open van Maandag tot Donderdag van 9u00 tot 18h30 zonder onderbreking en op Vrijdag tot 18h00.</p>
 
 <p>21-23 Tervaetestraat, 1040 Brussel<br/>
 

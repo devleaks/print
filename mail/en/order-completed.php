@@ -17,7 +17,7 @@ You can always contact us at <a htref=mailto:commande@labojjmicheli.be>commande@
 
 <p>Labo JJ Micheli</p>
 
-<p>Open Mondays to Fridays from 9h00 to 18h30.</p>
+<p>Open Monday - Thursday : 9h00 - 18h30 without interruption and Friday till 18h00.</p>
 
 <p>21-23 Tervaete Street, 1040 Brussels<br/>
 

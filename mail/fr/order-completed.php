@@ -17,7 +17,7 @@ Vous pouvez toujours nous contacter à <a htref=mailto:commande@labojjmicheli.be
 
 <p>Labo JJ Micheli SPRL</p>
 
-<p>Ouvert du lundi au vendredi de 9h00 à 18h30, sans interruption.</p>
+<p>Ouvert du lundi au jeudi de 9h00 à 18h30 sans interruption et le vendredi jusqu’à 18h00.</p>
 
 <p>21-23 rue de Tervaete, 1040 Bruxelles<br/>
 
