@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteBase /mikemuka
+RewriteBase /print
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /mikemuka/index.php
+RewriteRule . /print/index.php

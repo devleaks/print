@@ -20,8 +20,8 @@ class TestController extends Controller {
 		    ->setFrom( Yii::$app->params['fromEmail'] )
 		    ->setTo(  $email ? $email : Yii::$app->params['testEmail'])
 			->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
-		    ->setSubject('Test')
-			->setTextBody('No body.')
+		    ->setSubject('This is a test, you can discard this message')
+			->setTextBody('Thank you.')
 			->send();
     }
 
