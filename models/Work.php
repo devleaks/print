@@ -241,6 +241,7 @@ class Work extends _Work
 				[$this->asDateTime($wl->updated_at), ($updated_at ? $updated_at->username : '?'), $wl->task->name]));
 		}
 		if($this->status == self::STATUS_DONE) {
+			$updated_at = $this->getUpdatedBy()->one();
 			$this->blab(Yii::t('store', 'Work completed on {0} by {1}.',
 				[$this->asDateTime($this->updated_at), ($updated_at ? $updated_at->username : '?')]));
 		} else {
