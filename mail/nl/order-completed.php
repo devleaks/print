@@ -25,6 +25,6 @@ Tel.: (+32) 0477 35 09 17<br/>
 eMail: info@mikemuka.be<br/>
 www.mikemuka.be</p>
 
-<p>BNP Paribas Fortis<br/>
+<p>ING Bank<br/>
 IBAN: BE43 3631 4122 8101 - BIC: BBRUBEBB<br/>
 TVA: BE 507 714 727</p>
