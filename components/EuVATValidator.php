@@ -51,16 +51,24 @@ class EuVATValidator
 			),
 		);
 		$context  = stream_context_create($options);
-		$result = file_get_contents($this->soapAPIAddress, false, $context);
-		
-		// Verify response
-		// You can parse the xml and get more info but we are only looking for the string we need
-		Yii::trace('result='.$result, 'EuVATValidator::sendCheckRequest');
-		if (strpos($result, "<valid>true</valid>"))
-		{
-			return true;
-		}
-		
+		$result = '';
+
+    try{
+			$result = file_get_contents($this->soapAPIAddress, false, $context);
+      Yii::$app->session->addFlash('success', Yii::t('store', 'VAT Number validated').'.');
+			Yii::trace('result='.$result, 'EuVATValidator::sendCheckRequest');
+			// Verify response
+			// You can parse the xml and get more info but we are only looking for the string we need
+			if (strpos($result, "<valid>true</valid>"))
+			{
+				return true;
+			}
+    } catch (Exception $e) {
+				Yii::trace('result='.$result, 'EuVATValidator::sendCheckRequest');
+        Yii::$app->session->setFlash('error', Yii::t('store', 'VAT Number was not validated').': Error received: «'.$e->getMessage().'»');
+    }
+
+		// validation failed, either logically or physically		
 		return false;
 	}
 	

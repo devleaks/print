@@ -882,9 +882,14 @@ class DocumentController extends Controller
 					'save' => true,
 					'images' => $send_with_image,
 				]);
-				$pdf->send(Yii::t('print', $model->document_type).' '.$model->name, $captureEmail->body, $captureEmail->email);
-				Yii::$app->language = $lang_before;
-				Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
+                try {
+                    $pdf->send(Yii::t('print', $model->document_type).' '.$model->name, $captureEmail->body, $captureEmail->email);
+                    Yii::$app->language = $lang_before;
+                    Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
+                } catch (Exception $e) {
+                    Yii::$app->language = $lang_before;
+                    Yii::$app->session->setFlash('error', Yii::t('store', 'Mail not sent').': Error received: «'.$e->getMessage().'»');
+                }
 			} else {
 				Yii::$app->session->setFlash('warning', Yii::t('store', 'Client has no email address.'));
 			}
