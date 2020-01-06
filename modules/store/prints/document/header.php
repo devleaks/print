@@ -42,6 +42,9 @@ $h = ($format == PdfDocument::FORMAT_A4) ?  96 : floor( 96/sqrt(2)) ;
 			<td><?= '+++ '.$model->reference.' +++' ?></td>
 			<td><?= $model->getRelatedReference() ?></td>
 	</tr>
+	<tr>
+			<td colspan="5" style="text-align: center; font-style: italic;"><?= Yii::t('print', 'Bill must be paid on receipt or delivery.') ?></td>
+	</tr>
 	<?php if($model->note != ''): ?>
 	<tr>
 			<th style="text-align: center;"><?= Yii::t('print', 'Note') ?></th>
