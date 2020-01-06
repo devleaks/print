@@ -494,7 +494,7 @@ class Document extends _Document
 					$asigne = strpos($rebate_line->extra_type, "SUPPLEMENT_") > -1 ? 1 : -1;
 					$rebate_line->price_htva = 0;											// global rebate HTVA is in EXTRA, not in line price
 					$rebate_line->extra_htva = round( $asigne * $amount, 2 );				// global rebate HTVA
-					$rebate_line->price_tvac = round( $rebate_line->price_htva * 1.21 );	// global rebate TVAC
+					$rebate_line->price_tvac = round( $rebate_line->price_htva * 1.21, 2 );	// global rebate TVAC
 					$rebate_line->save();
 					// re-ajust global order sums
 					$this->price_htva += $rebate_line->extra_htva;
