@@ -77,6 +77,14 @@ $this->params['breadcrumbs'][] = $this->title;
 							return $model->getAmount(true);
 				},
 			],
+      [
+				'attribute' => 'note',
+	      'label' => Yii::t('store', 'Note'),
+	      'value' => function ($model, $key, $index, $widget) {
+							return $model->note;
+				},
+				'width' => '12%'
+			],
 			[
 	            'label' => Yii::t('store', 'Prepaid'),
 				'format' => 'currency',
