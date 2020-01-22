@@ -29,7 +29,7 @@ class TestController extends Controller
 				'vat' => "BE0428759497",
 				'client' => "NVB123456",
 				'phone' => "+32-2-123 45 67",
-				'email' => "labojjmicheli@gmail.com",
+				'email' => "info@colorfields.be",
 				'comments' => "Customer comment. In het vlaams.",		// length limit 160 chars
 				'promocode' => "cera",
 				'delivery' => "send",

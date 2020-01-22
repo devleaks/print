@@ -10,7 +10,7 @@ use yii\helpers\Html;
 
 <p>
 Niet reageren op dit bericht. Dit bericht is automatisch verzonden wanneer uw bestelling compleet is.
-U kunt altijd contact met ons opnemen op <a htref=mailto:commande@labojjmicheli.be>commande@labojjmicheli.be</a>, of per telefoon.
+U kunt altijd contact met ons opnemen op <a htref=mailto:commande@colorfields.be>commande@colorfields.be</a>, of per telefoon.
 </p>
 
 <hr />
@@ -22,8 +22,8 @@ U kunt altijd contact met ons opnemen op <a htref=mailto:commande@labojjmicheli.
 <p>21-23 Tervaetestraat, 1040 Brussel<br/>
 
 Tel.: +32 (0)2 733 21 85<br/>
-eMail: info@labojjmicheli.be<br/>
-www.labojjmicheli.be</p>
+eMail: info@colorfields.be<br/>
+www.colorfields.be</p>
 
 <p>BNP Paribas Fortis<br/>
 IBAN: BE55 2100 3814 9344 - BIC: GEBABEBB<br/>

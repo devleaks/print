@@ -20,5 +20,4 @@ $h = ($format == PdfDocument::FORMAT_A4) ?  64 : floor( 64/sqrt(2)) ;
 ?>
 <div class="print-header">	
 	<?= Html::img('@app/assets/i/cl.png', ['width' => 1300]) ?>
-	<?= Html::img('@app/assets/i/logo-bw.png', ['width' => $w, 'height' => $h]) ?>
 </div>

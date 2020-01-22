@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'adminEmail' => 'info@labojjmicheli.be',
+    'adminEmail' => 'info@colorfields.be',
 	// print store app data
-    'testEmail' => 'info@labojjmicheli.be',
+    'testEmail' => 'info@colorfields.be',
     'picturePath' => '/Applications/mampstack/apps/devl/web/pictures/',
 	// Font Awesome Icon framework
 	'icon-framework' => 'fa',

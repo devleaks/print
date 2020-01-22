@@ -19,7 +19,7 @@ use Yii;
 ],
 **/
 class WebsiteController extends Controller {
-	protected $url = 'http://www.labojjmicheli.be/nl/plugins/';
+	protected $url = 'http://www.colorfields.be/nl/plugins/';
 	protected $newOrders = false;
 	
 	const DIRECTORY_EMPTY = 'none';
