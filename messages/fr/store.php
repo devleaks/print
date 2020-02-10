@@ -220,7 +220,7 @@ return [
 	'Final TVAC' => 'Final TVAC',
 	'Frame ID'	=> 'Encadremenent',
 	'Frame Providers' => 'Fournisseurs de cadres',
-	'Frame order for Labo JJ Micheli' => 'Commande de cadres pour le Labo JJ Micheli',
+	'Frame order for Colorfields' => 'Commande de cadres pour le Colorfields',
 	'Frame'	=> 'Encadremenent',
 	'Free Item Libelle' => 'Libellé',
 	'Free Item Price Htva' => 'Prix HTVA',
@@ -708,7 +708,7 @@ return [
 	
 	
 	/** Footer */
-	'Labo JJ Micheli SPRL • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Web Site: www.colorfields.be • VAT: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB' => 'Labo JJ Micheli SPRL • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Site Web: www.colorfields.be • TVA: BE 0428 746 631 RPM: BXL<br>Banque BNP Paribas Fortis • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB',
+	'Colorfields SRL • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Web Site: www.colorfields.be • VAT: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB' => 'Colorfields SRL • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Site Web: www.colorfields.be • TVA: BE 0428 746 631 RPM: BXL<br>Banque BNP Paribas Fortis • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB',
 
 
 	/** Mails */

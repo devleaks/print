@@ -124,7 +124,7 @@ return [
 	'General Sales Conditions on our Website at www.colorfields.be/fr/conditions' => 'Algemene verkoopvoorwaarden op onze website www.colorfields.be/fr/conditions',
 	
 	/** Footer */
-	'Labo JJ Micheli SPRL • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Web Site: www.colorfields.be • VAT: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB' => 'Labo JJ Micheli SPRL • 21-23 Tervaetestraat • 1040 Brussel<br>Tel. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Web Site: www.colorfields.be • BTW: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB',
+	'Colorfields SRL • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Web Site: www.colorfields.be • VAT: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB' => 'Colorfields SRL • 21-23 Tervaetestraat • 1040 Brussel<br>Tel. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Web Site: www.colorfields.be • BTW: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB',
 
 
 	/** Mails */

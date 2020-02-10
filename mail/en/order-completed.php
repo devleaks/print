@@ -15,7 +15,7 @@ You can always contact us at <a htref=mailto:commande@colorfields.be>commande@co
 
 <hr />
 
-<p>Labo JJ Micheli</p>
+<p>Colorfields</p>
 
 <p>Open Monday - Thursday : 9h00 - 18h30 without interruption and Friday till 18h00.</p>
 

@@ -22,7 +22,7 @@ class TestController extends Controller
 				'date' => "10-10-2015",					// dd-mm-yyyy
 				'order_id' => "WEB-001",
 				'name' => "Fullname",
-				'company' => "Labo JJ Micheli",
+				'company' => "Colorfields",
 				'address' => "Street Adress and 34",
 				'city' => "City",
 				'zipcode' => "1000",

@@ -10,7 +10,7 @@ use Yii;
 * License : GPLv3
 * 
 *
-* Note: Local VAT for checks: BE0428746631 (Labo JJ Micheli)
+* Note: Local VAT for checks: BE0428746631 (Colorfields)
 **/
 
 class EuVATValidator

@@ -15,7 +15,7 @@ Vous pouvez toujours nous contacter à <a htref=mailto:commande@colorfields.be>c
 
 <hr />
 
-<p>Labo JJ Micheli SPRL</p>
+<p>Colorfields SRL</p>
 
 <p>Ouvert du lundi au jeudi de 9h00 à 18h30 sans interruption et le vendredi jusqu’à 18h00.</p>
 

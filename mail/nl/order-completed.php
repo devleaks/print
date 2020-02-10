@@ -15,7 +15,7 @@ U kunt altijd contact met ons opnemen op <a htref=mailto:commande@colorfields.be
 
 <hr />
 
-<p>BVBA Labo JJ Micheli</p>
+<p>BVBA Colorfields</p>
 
 <p>Open van Maandag tot Donderdag van 9u00 tot 18h30 zonder onderbreking en op Vrijdag tot 18h00.</p>
 
