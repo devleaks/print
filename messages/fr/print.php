@@ -136,7 +136,34 @@ return [
 	'Please read attached document(s).' => 'Veuillez lire le(s) document(s) joint(s) à ce message. Merci.',
 	'Unpaid Bills' => 'Factures impayées',
 
-	'STD_SIGNATURE' => "Veuillez, s'il vous plaît, vérifier votre commande, les dimensions, et les options de finition. Veuillez également rappeler le numéro du bon de commande lors de toutes communications et lors du paiement de l'acompte. Merci.",
+	'STD_SIGNATURE' => "Bonjour,
+
+Voici votre bon de commande ou devis.  Nous vous demandons de bien vérifier les types de tirages repris, les dimensions et les options de finition.
+S’il n’était pas correct, veuillez prendre contact au 02/733 21 85 ou par mail à info@colorfields.be.
+S’il est parfaitement correct, merci de bien vouloir régler un acompte de 50% en reprenant la communication structurée reprise sur ce document.  Merci.
+
+Cordialement,
+
+COLORFIELDS srl
+Rue de Tervaete, 21-23
+1040 Bruxelles
+02/733 21 85
+www.colorfields.be",
+
+'STD_SIGNATURE_HTML' => "<p>Bonjour,</p>
+<br/>
+Voici votre bon de commande ou devis.  Nous vous demandons de bien vérifier les types de tirages repris, les dimensions et les options de finition.</p>
+<p>S’il n’était pas correct, veuillez prendre contact au 02/733 21 85 ou par mail à info@colorfields.be.</p>
+<p>S’il est parfaitement correct, merci de bien vouloir régler un acompte de 50% en reprenant la communication structurée reprise sur ce document.  Merci.</p>
+</br>
+<p>Cordialement,</p>
+</br>
+</br>
+<p style='font-weight: bolder'>COLORFIELDS srl
+<br/>Rue de Tervaete, 21-23
+<br/>1040 Bruxelles
+<br/>02/733 21 85</p>
+<p><a href='http://www.colorfields.be/'>www.colorfields.be</a>",
 
 	/** Letters: Headings, subjects, date, place & Footers */
 	'Brussels, {0}' => 'Bruxelles, le {0}',

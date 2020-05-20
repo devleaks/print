@@ -58,6 +58,7 @@ class Pdf extends _Pdf
 					->setFrom( Yii::$app->params['fromEmail'] )
 					->setTo( YII_ENV_DEV ? Yii::$app->params['testEmail'] : $dest )
 					->setReplyTo(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['replyToEmail'] )
+					->setBcc(  YII_ENV_DEV ? Yii::$app->params['testEmail'] : Yii::$app->params['BccEmail'] )
 					->setSubject( $subject )
 					->setTextBody( $body )
 					->attach( $fn, ['fileName' => basename($this->filename), 'contentType' => 'application/pdf'] )

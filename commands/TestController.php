@@ -16,6 +16,7 @@ use Yii;
 class TestController extends Controller {
 
     public function actionEmail($email = null) {
+    	echo $email ? $email : Yii::$app->params['testEmail']; 
 		$mail = Yii::$app->mailer->compose()
 		    ->setFrom( Yii::$app->params['fromEmail'] )
 		    ->setTo(  $email ? $email : Yii::$app->params['testEmail'])

@@ -135,11 +135,32 @@ return [
 	/** Severine De Meulemeester 15-OCT-2015 */
 	'STD_SIGNATURE' => "Beste,
 
-	We bedanken u voor uw bestelling en bezorgen u in bijlage de daarbij behorende bestelbon.
-	Mogen we u vragen om alle gegevens nogmaals te checken op persoonlijke gegevens, formaat, afwerking en verzending? 
-	Gelieve bij eventuele vragen of wijzigingen het bestelnummer te vermelden in uw communicatie.
+Hier vindt U uw bestelformulier of bestek.  We vragen u de soorten afdrukken, de afmetingen en de afwerkingsopties zorvuldig te controleren.
+Als er fouten zijn, gelieve met ons contact te nemen op 02/733 21 85 of per mail aan info@colorfields.be
+Als het volkomen correct is, gelieve ons een voorschot van 50% te storten met de gespecifieerde gestructureerde communicatie.  Dank U.
 
-	Vriendelijke groeten,",
+Hoogachtend,
+
+COLORFIELDS srl
+Tervaetestraat, 21-23
+1040 Brussel
+02/733 21 85
+www.colorfields.be",
+
+'STD_SIGNATURE_HTML' => "<p>Beste,</p>
+<br/>
+Hier vindt U uw bestelformulier of bestek.  We vragen u de soorten afdrukken, de afmetingen en de afwerkingsopties zorvuldig te controleren.</p>
+<p>Als er fouten zijn, gelieve met ons contact te nemen op 02/733 21 85 of per mail aan info@colorfields.be.</p>
+<p>Als het volkomen correct is, gelieve ons een voorschot van 50% te storten met de gespecifieerde gestructureerde communicatie.  Dank U.</p>
+</br>
+<p>Hoogachtend,</p>
+</br>
+</br>
+<p style='font-weight: bolder'>COLORFIELDS srl
+<br/>Tervaetestraat, 21-23
+<br/>1040 Brussel
+<br/>02/733 21 85</p>
+<p><a href='https://www.colorfields.be/nl/colorfields-nl/'>www.colorfields.be</a>",
 
 	/** Letters: Headings, subjects, date, place & Footers */
 	'Brussels, {0}' => 'Brussel, {0}',
