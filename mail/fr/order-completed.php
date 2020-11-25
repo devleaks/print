@@ -10,21 +10,21 @@ use yii\helpers\Html;
 
 <p>
 Ne répondez pas à ce message. Ce message a été envoyé automatiquement lorsque votre commande est terminée.
-Vous pouvez toujours nous contacter à <a htref=mailto:commande@colorfields.be>commande@colorfields.be</a>, ou par téléphone.
+Vous pouvez toujours nous contacter à <a htref=mailto:commande@joz-srl.be>commande@joz-srl.be</a>, ou par téléphone.
 </p>
 
 <hr />
 
-<p>Colorfields SRL</p>
+<p>Jo Z srl</p>
 
 <p>Ouvert du lundi au jeudi de 9h00 à 18h30 sans interruption et le vendredi jusqu’à 18h00.</p>
 
 <p>21-23 rue de Tervaete, 1040 Bruxelles<br/>
 
 Tél. +32 (0)2 733 21 85<br/>
-e-Mail: info@colorfields.be<br/>
-www.colorfields.be</p>
+e-Mail: info@joz-srl.be<br/>
+www.joz-srl.be</p>
 
-<p>BNP Paribas Fortis<br/>
-IBAN: BE55 2100 3814 9344 - BIC: GEBABEBB<br/>
-TVA: BE 0428 746 631</p>
+<p>JOZ BANK<br/>
+IBAN: BE00 0000 0000 0000 - BIC: GEBABEBB<br/>
+TVA: BE 0756 789 050</p>

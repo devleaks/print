@@ -377,7 +377,7 @@ class WorkLineController extends Controller
 										'pays' => 'Belgique'
 									   ]),			
 						'date'		=> date('d/m/Y', strtotime('now')),			
-						'subject'	=> Yii::t('store', 'Frame order for Colorfields'),			
+						'subject'	=> Yii::t('store', 'Frame order for Jo and Z srl'),			
 						'body'		=> Yii::t('store', 'Please read attached document(s).'),
 						'table'		=> $table, 			
 						'watermark' => false,			

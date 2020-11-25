@@ -20,31 +20,31 @@ return [
 	'STD_SIGNATURE' => "Dear,
 
 Please find attached your order form or quote.  Would you please be so kind to check all the elements (paper type, dimensions, finishing options) ?
-If you have any corrections or comments on this, please contact us on 02/733 21 85 or by mail at info@colorfields.be
+If you have any corrections or comments on this, please contact us on 02/733 21 85 or by mail at info@joz-srl.be
 If it is perfectly correct, please pay a 50% deposit by resuming the structured communication included in this document.  Thank you.
 
 Best Regards,
 
-COLORFIELDS srl
+Jo Z srl
 Rue de Tervaete, 21-23
 1040 Brussels
 02/733 21 85
-www.colorfields.be",
+www.joz-srl.be",
 
 'STD_SIGNATURE_HTML' => "<p>Dear,</p>
 <br/>
 Please find attached your order form or quote.  Would you please be so kind to check all the elements (paper type, dimensions, finishing options) ?</p>
-<p>If you have any corrections or comments on this, please contact us on 02/733 21 85 or by mail at info@colorfields.be.</p>
+<p>If you have any corrections or comments on this, please contact us on 02/733 21 85 or by mail at info@joz-srl.be.</p>
 <p>If it is perfectly correct, please pay a 50% deposit by resuming the structured communication included in this document.  Thank you.</p>
 </br>
 <p>Best Regards,</p>
 </br>
 </br>
-<p style='font-weight: bolder'>COLORFIELDS srl
+<p style='font-weight: bolder'>Jo Z srl
 <br/>Rue de Tervaete, 21-23
 <br/>1040 Brussels
 <br/>02/733 21 85</p>
-<p><a href='https://www.colorfields.be/en/colorfields-fine-art-printing/'>www.colorfields.be</a>"
+<p><a href='https://www.joz-srl.be/en/'>www.joz-srl.be</a>"
 
 
 ];

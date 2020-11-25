@@ -9,4 +9,4 @@ QR1000
 ORDER: <?= $model->name ?>
 DATE: <?= $model->due_date ?>
 DATE: <?= $model->client->nom ?>
-Colorfields SRL • www.colorfields.be
+Jo Z srl • www.joz-srl.be

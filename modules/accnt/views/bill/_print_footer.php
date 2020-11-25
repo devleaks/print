@@ -5,14 +5,14 @@
 <hr>
 <div class="account-print-page-footer" style="text-align: center; font-size: 9px;">
 <?php if($model->lang == 'nl'): ?>
-	Colorfields SRL • 21-23 Tervaetestraat • 1040 Brussel<br>
+	Jo Z srl • 21-23 Tervaetestraat • 1040 Brussel<br>
 	Tel. +32 (0)2 733 21 85<br>
-	e-Mail: info@colorfields.be • Web Site: www.colorfields.be • BTW: BE 0428 746 631 RPM: BXL<br>
-	BNP Paribas Fortis Bank • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB
+	e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • BTW: BE 0756 789 050 RPM: BXL<br>
+	JOZ BANK Bank • IBAN: BE00 0000 0000 0000 • BIC: GEBABEBB
 <?php else: ?>
-	Colorfields SRL • 21-23 rue de Tervaete • 1040 Bruxelles<br>
+	Jo Z srl • 21-23 rue de Tervaete • 1040 Bruxelles<br>
 	Tél. +32 (0)2 733 21 85<br>
-	e-Mail: info@colorfields.be • Site Web: www.colorfields.be • TVA: BE 0428 746 631 RPM: BXL<br>
-	Banque BNP Paribas Fortis • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB
+	e-Mail: info@joz-srl.be • Site Web: www.joz-srl.be • TVA: BE 0756 789 050 RPM: BXL<br>
+	Banque JOZ BANK • IBAN: BE00 0000 0000 0000 • BIC: GEBABEBB
 <?php endif; ?>
 </div>

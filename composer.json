@@ -8,6 +8,10 @@
 	"prefer-stable": true,
 	"repositories": [
 		{
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+        {
 		    "type": "vcs",
 		    "url": "https://github.com/devleaks/yii2-introjs"
 		},
@@ -21,7 +25,7 @@
 		}
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.6.0",
         "2amigos/yii2-gallery-widget": "*",
         "2amigos/yii2-grid-view-library": "*",
         "bower-asset/chardin.js": "*",
@@ -78,13 +82,7 @@
 		"sort-packages": true,
 		"process-timeout": 1800,
 		"fxp-asset": {
-			"installer-paths": {
-	            "npm-asset-library": "vendor/npm",
-	            "bower-asset-library": "vendor/bower"
-	        }
-		},
-        "platform": {
-           "php": "5.4.45"
+            "enabled": false
         }
     }
 }

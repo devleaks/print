@@ -220,7 +220,7 @@ return [
 	'Final TVAC' => 'Final TVAC',
 	'Frame ID'	=> 'Encadremenent',
 	'Frame Providers' => 'Fournisseurs de cadres',
-	'Frame order for Colorfields' => 'Commande de cadres pour le Colorfields',
+	'Frame order for Jo and Z srl' => 'Commande de cadres pour Jo and Z srl',
 	'Frame'	=> 'Encadremenent',
 	'Free Item Libelle' => 'Libellé',
 	'Free Item Price Htva' => 'Prix HTVA',
@@ -708,7 +708,7 @@ return [
 	
 	
 	/** Footer */
-	'Colorfields SRL • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Web Site: www.colorfields.be • VAT: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB' => 'Colorfields SRL • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Site Web: www.colorfields.be • TVA: BE 0428 746 631 RPM: BXL<br>Banque BNP Paribas Fortis • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB',
+	'Jo Z srl • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • VAT: BE 0756 789 050 RPM: BXL<br>JOZ BANK Bank • IBAN: BE00 0000 0000 0000 • BIC: GEBABEBB' => 'Jo Z srl • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@joz-srl.be • Site Web: www.joz-srl.be • TVA: BE 0756 789 050 RPM: BXL<br>Banque JOZ BANK • IBAN: BE00 0000 0000 0000 • BIC: GEBABEBB',
 
 
 	/** Mails */
@@ -737,35 +737,35 @@ return [
 	'ACCOUNT_UNBALANCED::AFTER_LIST' => " ",
 	'ACCOUNT_UNBALANCED::BEFORE_LIST' => "Nous nous référons à notre précédent relevé de compte resté sans suite à ce jour. Nous nous permettons de vous rappeler avec insistance les factures ci-dessous arrivées à échéance.",
 	'ACCOUNT_UNBALANCED::CALL_ACTION' => "Nous vous demandons d'avoir l'obligeance de régulariser votre situation immédiatement. Si votre paiement a été exécuté entre-temps, vous voudrez bien ne pas tenir compte du présent rappel.",
-	'ACCOUNT_UNBALANCED::GREETINGS' => "Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de nos sentiments distingués.</p><p>Pour Labo JJ. Micheli,<br />La comptabilité.",
+	'ACCOUNT_UNBALANCED::GREETINGS' => "Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de nos sentiments distingués.</p><p>Pour Jo and Z srl,<br />La comptabilité.",
 
 	'Reminder Type 0' => 'Duplicatat',
 	'Duplicate' => 'Duplicatat',
-	'LATE_BILL_COVER0::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE55 2100 3814 9344</strong>.",
+	'LATE_BILL_COVER0::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE00 0000 0000 0000</strong>.",
 	'LATE_BILL_COVER0::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER0::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER0::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Labo JJ. Micheli,",
+	'LATE_BILL_COVER0::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z srl,",
 
 	'Reminder Type 1' => 'Rappel',
 	'Reminder' => 'Rappel',
-	'LATE_BILL_COVER1::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE55 2100 3814 9344</strong>.",
+	'LATE_BILL_COVER1::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE00 0000 0000 0000</strong>.",
 	'LATE_BILL_COVER1::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER1::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER1::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Labo JJ. Micheli,",
+	'LATE_BILL_COVER1::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z srl,",
 
 	'Reminder Type 2' => 'Deuxième rappel',
 	'2nd Reminder' => 'Deuxième Rappel',
-	'LATE_BILL_COVER2::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE55 2100 3814 9344</strong>.",
+	'LATE_BILL_COVER2::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE00 0000 0000 0000</strong>.",
 	'LATE_BILL_COVER2::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER2::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER2::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Labo JJ. Micheli,",
+	'LATE_BILL_COVER2::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z srl,",
 
 	'Reminder Type 3' => 'Dernier rappel',
 	'Last Reminder' => 'Dernier Rappel',
 	'LATE_BILL_COVER3::AFTER_LIST'  => "Sans régularisation de votre part dans les 15 jours nous serons obligé de confier votre dossier au tribunal compétent, tous frais à votre charge.",
 	'LATE_BILL_COVER3::BEFORE_LIST' => "Malgré nos derniers rappels, nous n’avons toujours pas été crédité de vos paiements (*).",
 	'LATE_BILL_COVER3::CALL_ACTION' => "Si vous estimez qu’un problème quelconque vous empêche de vous acquitter de cette dette, veuillez prendre contact avec notre service comptable au plus tôt au n°&nbsp;de tel 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85.",
-	'LATE_BILL_COVER3::GREETINGS' => "(*) Voir annexe(s) jointe(s).</p><p>Pour Labo JJ. Micheli,",
+	'LATE_BILL_COVER3::GREETINGS' => "(*) Voir annexe(s) jointe(s).</p><p>Pour Jo and Z srl,",
 
 
 	'ACCOUNT_SLIP' => 'Résumé client',

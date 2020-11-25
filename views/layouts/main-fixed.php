@@ -141,7 +141,7 @@ $apphomedir = Yii::getAlias('@app');
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; Colorfields <?= date('Y') ?>
+            <p class="pull-left">&copy; Jo and Z srl <?= date('Y') ?>
 				<small><?php echo ' — Version '.`cd $apphomedir ; git describe --tags`;
 					if(YII_DEBUG) {
 						echo ' — Last commit: '.`git log -1 --format=%cd --relative-date`;
