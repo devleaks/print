@@ -9,4 +9,4 @@ QR1000
 ORDER: <?= $model->name ?>
 DATE: <?= $model->due_date ?>
 DATE: <?= $model->client->nom ?>
-MIKEMUKA SPRL • www.mikemuka.be
+Jo and Z srl • www.joz-srl.be

@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 use app\models\CaptureSearch;
 /* @var $this yii\web\View */
-$this->title = 'MikeMuka App';
+$this->title = 'Jo and Z App';
 ?>
 <div class="admin-index">
 

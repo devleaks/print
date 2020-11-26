@@ -122,14 +122,14 @@ return [
 	'VAT excl.' => 'HTVA',
 	'VAT incl.' => 'TVAC',
 	'Number' => 'Numéro',
-	'General Sales Conditions on our Website at www.mikemuka.be/contact/conditions-dutilisation' => 'Conditions générales de ventes sur notre site www.mikemuka.be/contact/conditions-dutilisation',
+	'General Sales Conditions on our Website at www.joz-srl.be/contact/conditions-dutilisation' => 'Conditions générales de ventes sur notre site www.joz-srl.be/contact/conditions-dutilisation',
 	'Bill must be paid on receipt or delivery.' => 'Les factures sont payables au comptant.',
 	
 	
 	
 	
 	/** Footer */
-	'MIKEMUKA SPRL • 37-39 rue Borrens • 1050 Brussels<br>Tél. (+32) 0477 35 09 17<br>e-Mail: info@mikemuka.be • Web Site: www.mikemuka.be • VAT: BE 507 714 727<br>ING Bank  IBAN: BE43 3631 4122 8101 • BIC: BBRUBEBB' => 'MIKEMUKA SPRL • 37-39 rue Borrens • 1050 Bruxelles<br>Tél. (+32) 0477 35 09 17<br>e-Mail: info@mikemuka.be • Site Web: www.mikemuka.be • TVA: BE 507 714 727<br>Banque ING IBAN: BE43 3631 4122 8101 • BIC: BBRUBEBB',
+	'Jo and Z srl • 21-23 rue Tervaete • 1040 Brussels<br>Tél. (+32) 0000 00 00 00<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • VAT: BE 0000 000 000<br>Joz Bank  IBAN: BE00 0000 0000 0000 • BIC: BBRUBEBB' => 'Jo and Z srl • 21-23 rue Tervaete • 1040 Bruxelles<br>Tél. (+32) 0000 00 00 00<br>e-Mail: info@joz-srl.be • Site Web: www.joz-srl.be • TVA: BE 0000 000 000<br>Banque ING IBAN: BE00 0000 0000 0000 • BIC: BBRUBEBB',
 
 
 	/** Mails */
@@ -153,42 +153,42 @@ return [
 	'FRAME_ORDERS::BEFORE_LIST' => "Veuillez trouver en annexe la liste des cadres que nous commandons.",
 	'FRAME_ORDERS::AFTER_LIST'  => " ",
 	'FRAME_ORDERS::CALL_ACTION' => "Pour toute question, n'hésitez pas à nous contacter au numéro de téléphone 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85, du lundi au vendredi, entre 8h30 et 18h30.",
-	'FRAME_ORDERS::GREETINGS' => "Commercialement vôtre.</p><p>Pour Mikemuka,",
+	'FRAME_ORDERS::GREETINGS' => "Commercialement vôtre.</p><p>Pour Jo and Z,",
 
 
 
 	'ACCOUNT_UNBALANCED::AFTER_LIST' => "Pour rappel, toutes nos factures sont payables au comptant.",
 	'ACCOUNT_UNBALANCED::BEFORE_LIST' => "Nous nous référons à notre précédent relevé de compte resté sans suite à ce jour. Nous nous permettons de vous rappeler avec insistance les factures ci-dessous arrivées à échéance.",
 	'ACCOUNT_UNBALANCED::CALL_ACTION' => "Nous vous demandons d'avoir l'obligeance de régulariser votre situation immédiatement. Si votre paiement a été exécuté entre-temps, vous voudrez bien ne pas tenir compte du présent rappel.",
-	'ACCOUNT_UNBALANCED::GREETINGS' => "Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de nos sentiments distingués.</p><p>Pour Mikemuka,<br />La comptabilité.",
+	'ACCOUNT_UNBALANCED::GREETINGS' => "Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de nos sentiments distingués.</p><p>Pour Jo and Z,<br />La comptabilité.",
 
 	'Reminder Type 0' => 'Duplicatat',
 	'Duplicate' => 'Duplicatat',
-	'LATE_BILL_COVER0::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE43 3631 4122 8101</strong>.",
+	'LATE_BILL_COVER0::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE00 0000 0000 0000</strong>.",
 	'LATE_BILL_COVER0::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER0::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER0::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Mikemuka,",
+	'LATE_BILL_COVER0::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z,",
 
 	'Reminder Type 1' => 'Rappel',
 	'Reminder' => 'Rappel',
-	'LATE_BILL_COVER1::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE43 3631 4122 8101</strong>.",
+	'LATE_BILL_COVER1::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE00 0000 0000 0000</strong>.",
 	'LATE_BILL_COVER1::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER1::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER1::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Mikemuka,",
+	'LATE_BILL_COVER1::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z,",
 
 	'Reminder Type 2' => 'Deuxième rappel',
 	'2nd Reminder' => 'Deuxième Rappel',
-	'LATE_BILL_COVER2::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE43 3631 4122 8101</strong>.",
+	'LATE_BILL_COVER2::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE00 0000 0000 0000</strong>.",
 	'LATE_BILL_COVER2::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER2::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER2::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Mikemuka,",
+	'LATE_BILL_COVER2::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z,",
 
 	'Reminder Type 3' => 'Dernier rappel',
 	'Last Reminder' => 'Dernier Rappel',
 	'LATE_BILL_COVER3::AFTER_LIST'  => "Nos factures sont payables au comptant. Sans régularisation de votre part dans les 15 jours nous serons obligé de confier votre dossier au tribunal compétent, tous frais à votre charge.",
 	'LATE_BILL_COVER3::BEFORE_LIST' => "Malgré nos derniers rappels, nous n’avons toujours pas été crédité de vos paiements (*).",
 	'LATE_BILL_COVER3::CALL_ACTION' => "Si vous estimez qu’un problème quelconque vous empêche de vous acquitter de cette dette, veuillez prendre contact avec notre service comptable au plus tôt au n°&nbsp;de tel 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85.",
-	'LATE_BILL_COVER3::GREETINGS' => "(*) Voir annexe(s) jointe(s).</p><p>Pour Mikemuka,",
+	'LATE_BILL_COVER3::GREETINGS' => "(*) Voir annexe(s) jointe(s).</p><p>Pour Jo and Z,",
 
 	
 	/** Document Types and Statuses */

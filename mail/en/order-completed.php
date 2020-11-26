@@ -10,21 +10,21 @@ use yii\helpers\Html;
 
 <p>
 This mail was sent automatically upon completion of your order. Please DO NOT reply to this mail.
-You can always contact us at <a htref=mailto:commande@mikemuka.be>commande@mikemuka.be</a>, or by phone.
+You can always contact us at <a htref=mailto:commande@joz-srl.be>commande@joz-srl.be</a>, or by phone.
 </p>
 
 <hr />
 
-<p>MikeMuka</p>
+<p>Jo and Z</p>
 
 <p>Open Mondays to Fridays from 9h00 to 18h30.</p>
 
-<p>rue Borrens 37-39, 1050 Brussels<br/>
+<p>rue Tervaete 21-23, 1040 Brussels<br/>
 
-Phone: (+32) 0477 35 09 17<br/>
-eMail: info@mikemuka.be<br/>
-www.mikemuka.be</p>
+Phone: (+32) 0000 00 00 00<br/>
+eMail: info@joz-srl.be<br/>
+www.joz-srl.be</p>
 
-<p>ING Bank<br/>
+<p>Joz Bank<br/>
 IBAN: BE**** - BIC: ****<br/>
-TVA: BE 507 714 727
+TVA: BE 0000 000 000

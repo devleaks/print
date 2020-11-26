@@ -121,11 +121,11 @@ return [
 	'Vat' => 'BTW',
 	'Rate' => '% BTW',
 	'Page' => 'Pagina',
-	'General Sales Conditions on our Website at www.mikemuka.be/contact/conditions-dutilisation' => 'Algemene verkoopvoorwaarden op onze website www.mikemuka.be/contact/conditions-dutilisation',
+	'General Sales Conditions on our Website at www.joz-srl.be/contact/conditions-dutilisation' => 'Algemene verkoopvoorwaarden op onze website www.joz-srl.be/contact/conditions-dutilisation',
   'Bill must be paid on receipt or delivery.' => 'Facturen zijn contant betaalbaar.',
 
 	/** Footer */
-	'MIKEMUKA SPRL • 37-39 rue Borrens • 1050 Brussels<br>Tél. (+32) 0477 35 09 17<br>e-Mail: info@mikemuka.be • Web Site: www.mikemuka.be • VAT: BE 507 714 727<br>ING Bank  IBAN: BE43 3631 4122 8101 • BIC: BBRUBEBB' => 'MIKEMUKA SPRL • 21-23 Tervaetestraat • 1050 Brussel<br>Tel. (+32) 0477 35 09 17<br>e-Mail: info@mikemuka.be • Web Site: www.mikemuka.be • BTW: BE 507 714 727<br>ING Bank  IBAN: BE43 3631 4122 8101 • BIC: BBRUBEBB',
+	'Jo and Z srl • 21-23 rue Tervaete • 1040 Brussels<br>Tél. (+32) 0000 00 00 00<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • VAT: BE 0000 000 000<br>Joz Bank  IBAN: BE00 0000 0000 0000 • BIC: BBRUBEBB' => 'Jo and Z srl • 21-23 Tervaetestraat • 1040 Brussel<br>Tel. (+32) 0000 00 00 00<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • BTW: BE 0000 000 000<br>Joz Bank  IBAN: BE00 0000 0000 0000 • BIC: BBRUBEBB',
 
 
 	/** Mails */
@@ -155,37 +155,37 @@ return [
 
 	/** Letters: General texts & watermarks */
 	'ACCOUNT_UNBALANCED::BEFORE_LIST' => "Bij controle van uw rekening in onze boeken bemerken wij dat een bedrag nog open staat. Het betreft met de volgende factuur(s):",
-	'ACCOUNT_UNBALANCED::AFTER_LIST'  => "Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE43 3631 4122 8101</strong>.",
+	'ACCOUNT_UNBALANCED::AFTER_LIST'  => "Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE00 0000 0000 0000</strong>.",
 	'ACCOUNT_UNBALANCED::CALL_ACTION' => "Indien u deze betaling intussen reeds zou hebben uitgevoerd, gelieve u deze herinnering als niet geschreven te beschouwen.",
-	'ACCOUNT_UNBALANCED::GREETINGS' => "Met hoogachting,</p><p>Voor Mikemuka,",
+	'ACCOUNT_UNBALANCED::GREETINGS' => "Met hoogachting,</p><p>Voor Jo and Z,",
 
 	'Reminder Type 0' => 'Duplicatat',
 	'Duplicate' => 'Duplicatat',
 	'LATE_BILL_COVER0::BEFORE_LIST' => "Bij controle van uw rekening in onze boeken bemerken wij dat een bedrag nog open staat. Het betreft met de volgende factuur(s):",
-	'LATE_BILL_COVER0::AFTER_LIST'  => "Facturen zijn contant betaalbaar. Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE43 3631 4122 8101</strong>.",
+	'LATE_BILL_COVER0::AFTER_LIST'  => "Facturen zijn contant betaalbaar. Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE00 0000 0000 0000</strong>.",
 	'LATE_BILL_COVER0::CALL_ACTION' => "Indien u deze betaling intussen reeds zou hebben uitgevoerd, gelieve u deze herinnering als niet geschreven te beschouwen.",
-	'LATE_BILL_COVER0::GREETINGS' => "Met hoogachting,</p><p>Voor Mikemuka,",
+	'LATE_BILL_COVER0::GREETINGS' => "Met hoogachting,</p><p>Voor Jo and Z,",
 
 	'Reminder Type 1' => 'Rappel',
 	'Reminder' => 'Rappel',
 	'LATE_BILL_COVER1::BEFORE_LIST' => "Bij controle van uw rekening in onze boeken bemerken wij dat een bedrag nog open staat. Het betreft met de volgende factuur(s):",
-	'LATE_BILL_COVER1::AFTER_LIST'  => "Facturen zijn contant betaalbaar. Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE43 3631 4122 8101</strong>.",
+	'LATE_BILL_COVER1::AFTER_LIST'  => "Facturen zijn contant betaalbaar. Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE00 0000 0000 0000</strong>.",
 	'LATE_BILL_COVER1::CALL_ACTION' => "Indien u deze betaling intussen reeds zou hebben uitgevoerd, gelieve u deze herinnering als niet geschreven te beschouwen.",
-	'LATE_BILL_COVER1::GREETINGS' => "Met hoogachting,</p><p>Voor Mikemuka,",
+	'LATE_BILL_COVER1::GREETINGS' => "Met hoogachting,</p><p>Voor Jo and Z,",
 
 	'Reminder Type 2' => 'Deuxième rappel',
 	'2nd Reminder' => 'Deuxième Rappel',
 	'LATE_BILL_COVER2::BEFORE_LIST' => "Uit onze boekhouding blijkt dat, ondanks onze herinneringsbrief van verlede maand, volgende facturen nog niet betaald zijn:",
-	'LATE_BILL_COVER2::AFTER_LIST'  => "Facturen zijn contant betaalbaar. Wij verzoeken u dan ook met aandrang het achterstallige bedrag per kerende te betalen op onze rekening nr <strong>BE43 3631 4122 8101</strong>.",
+	'LATE_BILL_COVER2::AFTER_LIST'  => "Facturen zijn contant betaalbaar. Wij verzoeken u dan ook met aandrang het achterstallige bedrag per kerende te betalen op onze rekening nr <strong>BE00 0000 0000 0000</strong>.",
 	'LATE_BILL_COVER2::CALL_ACTION' => "U zal ongetwijfeld begrijpen dat wij genoodzaakt zijn de strikte naleving van onze betalingsvoorwaarden te eisen.  D.w.z. dat intresten verschuldigd zullen zijn.",
-	'LATE_BILL_COVER2::GREETINGS' => "Hoogachtend,</p><p>Voor Mikemuka,",
+	'LATE_BILL_COVER2::GREETINGS' => "Hoogachtend,</p><p>Voor Jo and Z,",
 
 	'Reminder Type 3' => 'Dernier rappel',
 	'Last Reminder' => 'Dernier Rappel',
 	'LATE_BILL_COVER3::BEFORE_LIST' => "Ondanks herhaalde herinneringen blijkt uit mijn boekhouding dat de volgende factuur nog steeds niet betaald is:",
-	'LATE_BILL_COVER3::AFTER_LIST'  => "Facturen zijn contant betaalbaar. Bij deze brief wil ik u een laatste keer verzoeken dit bedrag over te maken op mijn rekeningnummer <strong>BE43 3631 4122 8101</strong>.",
+	'LATE_BILL_COVER3::AFTER_LIST'  => "Facturen zijn contant betaalbaar. Bij deze brief wil ik u een laatste keer verzoeken dit bedrag over te maken op mijn rekeningnummer <strong>BE00 0000 0000 0000</strong>.",
 	'LATE_BILL_COVER3::CALL_ACTION' => "Te uwer informatie verwijs ik hierbij naar art. E. van onze algemene verkoopsvoorwaarden.",
-	'LATE_BILL_COVER3::GREETINGS' => "Hoogachtend,</p><p>Voor Mikemuka,",
+	'LATE_BILL_COVER3::GREETINGS' => "Hoogachtend,</p><p>Voor Jo and Z,",
 
 	
 	/** Document Types and Statuses */

@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use app\models\Parameter;
 
 /* @var $this yii\web\View */
-$this->title = 'MikeMuka App';
+$this->title = 'Jo and Z App';
 ?>
 <div class="admin-index">
 

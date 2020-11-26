@@ -10,21 +10,21 @@ use yii\helpers\Html;
 
 <p>
 Niet reageren op dit bericht. Dit bericht is automatisch verzonden wanneer uw bestelling compleet is.
-U kunt altijd contact met ons opnemen op <a htref=mailto:commande@mikemuka.be>commande@mikemuka.be</a>, of per telefoon.
+U kunt altijd contact met ons opnemen op <a htref=mailto:commande@joz-srl.be>commande@joz-srl.be</a>, of per telefoon.
 </p>
 
 <hr />
 
-<p>BVBA MikeMuka</p>
+<p>BVBA Jo and Z</p>
 
 <p>Open maandag tot vrijdag, vanaf 9h00 tot 18h30.</p>
 
-<p>21-23 Tervaetestraat, 1050 Brussel<br/>
+<p>21-23 Tervaetestraat, 1040 Brussel<br/>
 
-Tel.: (+32) 0477 35 09 17<br/>
-eMail: info@mikemuka.be<br/>
-www.mikemuka.be</p>
+Tel.: (+32) 0000 00 00 00<br/>
+eMail: info@joz-srl.be<br/>
+www.joz-srl.be</p>
 
-<p>ING Bank<br/>
-IBAN: BE43 3631 4122 8101 - BIC: BBRUBEBB<br/>
-TVA: BE 507 714 727</p>
+<p>Joz Bank<br/>
+IBAN: BE00 0000 0000 0000 - BIC: BBRUBEBB<br/>
+TVA: BE 0000 000 000</p>

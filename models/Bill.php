@@ -81,7 +81,7 @@ class Bill extends Document {
 
 		if($today) {
 			$date_from = date('Y-m-d 00:00:00', strtotime('today'));
-			$date_to = str_replace($date_from, '00:00:00', '23:59:59');
+			$date_to = str_replace('00:00:00', '23:59:59', $date_from);
 			$ret = Payment::find()->andWhere(['sale' => $sales])
 							->andWhere(['>=','created_at',$date_from])
 							->andWhere(['<=','created_at',$date_to])

@@ -5,5 +5,5 @@ use yii\helpers\Html;
 // <?= Html::img(Url::to('@web/assets/i/logo-bw.png', true), ['width' => 200, 'height' => 64])
 ?>
 <div class="account-print-page-header">	
-	<?= Html::img('/Applications/mampstack/apps/mikemuka/web/assets/i/logo-bw.png', ['width' => 200, 'height' => 64]) ?>
+	<?= Html::img('/Users/admin/Sites/yii2print/assets/i/logo-bw.png', ['width' => 200, 'height' => 64]) ?>
 </div>

@@ -219,7 +219,7 @@ class Document extends _Document
 	public function getPrepaid($today = false) {
 		if($today) {
 			$date_from = date('Y-m-d 00:00:00', strtotime('today'));
-			$date_to = str_replace($date_from, '00:00:00', '23:59:59'); // date('Y-m-d 00:00:00', strtotime('tomorrow'));
+			$date_to = str_replace('00:00:00', '23:59:59', $date_from); // date('Y-m-d 00:00:00', strtotime('tomorrow'));
 			$ret = Payment::find()->andWhere(['sale' => $this->sale])
 							->andWhere(['>=','created_at',$date_from])
 							->andWhere(['<=','created_at',$date_to])

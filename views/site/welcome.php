@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-$this->title = 'MikeMuka App';
+$this->title = 'Jo and Z App';
 ?>
 <div class="site-index">
 
