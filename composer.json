@@ -2,34 +2,37 @@
     "name": "devleaks/print",
     "description": "devleaks Order and Work Order Management",
     "type": "project",
-    "keywords": ["yii2"],
+    "keywords": [
+        "yii2"
+    ],
     "license": "BSD-3-Clause",
     "minimum-stability": "dev",
-	"prefer-stable": true,
-	"repositories": [
-		{
+    "prefer-stable": true,
+    "repositories": [
+        {
             "type": "composer",
             "url": "https://asset-packagist.org"
         },
         {
-		    "type": "vcs",
-		    "url": "https://github.com/devleaks/yii2-introjs"
-		},
-		{
-		    "type": "vcs",
-		    "url": "https://github.com/devleaks/yii2-chardinjs"
-		},
-		{
-		    "type": "vcs",
-		    "url": "https://github.com/devleaks/yii2-metafizzy"
-		}
+            "type": "vcs",
+            "url": "https://github.com/devleaks/yii2-introjs"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/devleaks/yii2-chardinjs"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/devleaks/yii2-metafizzy"
+        }
     ],
     "require": {
         "php": ">=5.6.0",
         "2amigos/yii2-gallery-widget": "*",
         "2amigos/yii2-grid-view-library": "*",
         "bower-asset/chardin.js": "*",
-        "bower-asset/dcjs": "^2.1",
+        "bower-asset/crossfilter2": "^1.5",
+        "bower-asset/dcjs": "^4.1",
         "bower-asset/draggabilly": "*",
         "bower-asset/isotope": "*",
         "bower-asset/jquery.inputmask": "3.2.7",
@@ -74,14 +77,14 @@
         "yurkinx/yii2-image": "@dev"
     },
     "require-dev": {
-		"yiisoft/yii2-debug": "*",
-		"yiisoft/yii2-gii": "*",
-		"yiisoft/yii2-faker": "*"
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "yiisoft/yii2-faker": "*"
     },
     "config": {
-		"sort-packages": true,
-		"process-timeout": 1800,
-		"fxp-asset": {
+        "sort-packages": true,
+        "process-timeout": 1800,
+        "fxp-asset": {
             "enabled": false
         }
     }

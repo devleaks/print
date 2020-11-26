@@ -1,5 +1,7 @@
 <?php
 
+use app\models\User;
+
 use app\models\Parameter;
 use yii\helpers\Html;
 use kartik\grid\GridView;
@@ -9,6 +11,7 @@ use kartik\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('store', 'Events');
+$this->params['breadcrumbs'][] = User::getRole() == 'compta' ? ['label' => Yii::t('store', 'Accounting'), 'url' => ['/accnt']] : ['label' => Yii::t('store', 'Statistics'), 'url' => ['/stats']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-index">

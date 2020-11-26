@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd616f56be9d0d03b3bc082404039e84",
+    "content-hash": "30d82798a8d3656a5b1d5d403c250d5b",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -203,7 +203,7 @@
             "version": "v3.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
+                "url": "git@github.com:twbs/bootstrap.git",
                 "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {
@@ -239,19 +239,19 @@
         },
         {
             "name": "bower-asset/c3",
-            "version": "v0.5.1",
+            "version": "v0.7.20",
             "source": {
                 "type": "git",
                 "url": "git@github.com:masayuki0812/c3.git",
-                "reference": "3d6037ee2162cc11a72af61d00f53fa7968fb5a1"
+                "reference": "2f3cddb818065f1d0c45f562745d4249e12980ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/masayuki0812/c3/zipball/3d6037ee2162cc11a72af61d00f53fa7968fb5a1",
-                "reference": "3d6037ee2162cc11a72af61d00f53fa7968fb5a1"
+                "url": "https://api.github.com/repos/masayuki0812/c3/zipball/2f3cddb818065f1d0c45f562745d4249e12980ff",
+                "reference": "2f3cddb818065f1d0c45f562745d4249e12980ff"
             },
             "require": {
-                "bower-asset/d3": "~3.5.0"
+                "bower-asset/d3": ">=5.0.0,<6.0.0"
             },
             "type": "bower-asset",
             "license": [
@@ -293,16 +293,16 @@
         },
         {
             "name": "bower-asset/d3",
-            "version": "v3.5.17",
+            "version": "v5.16.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:mbostock-bower/d3-bower.git",
-                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e"
+                "reference": "c15b85ce115be200bd4ca473f97fcd0bb43bba07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mbostock-bower/d3-bower/zipball/7a826d211d5067867debf9ce24a9987e0cb02b6e",
-                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e"
+                "url": "https://api.github.com/repos/mbostock-bower/d3-bower/zipball/c15b85ce115be200bd4ca473f97fcd0bb43bba07",
+                "reference": "c15b85ce115be200bd4ca473f97fcd0bb43bba07"
             },
             "type": "bower-asset",
             "license": [
@@ -311,20 +311,16 @@
         },
         {
             "name": "bower-asset/dcjs",
-            "version": "2.2.2",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:NickQiZhu/dc.js.git",
-                "reference": "eacb1104f84d97f0c4c4e348b13f7f6f15facec5"
+                "reference": "d0c4a0383df2cbc7c8593bf524748571deae20b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NickQiZhu/dc.js/zipball/eacb1104f84d97f0c4c4e348b13f7f6f15facec5",
-                "reference": "eacb1104f84d97f0c4c4e348b13f7f6f15facec5"
-            },
-            "require": {
-                "bower-asset/crossfilter2": "~1.4",
-                "bower-asset/d3": "dev-3.x|3.x"
+                "url": "https://api.github.com/repos/NickQiZhu/dc.js/zipball/d0c4a0383df2cbc7c8593bf524748571deae20b2",
+                "reference": "d0c4a0383df2cbc7c8593bf524748571deae20b2"
             },
             "type": "bower-asset"
         },
