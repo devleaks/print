@@ -7,6 +7,10 @@
     "minimum-stability": "dev",
 	"prefer-stable": true,
 	"repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
 		{
 		    "type": "vcs",
 		    "url": "https://github.com/devleaks/yii2-introjs"
@@ -77,10 +81,7 @@
 		"sort-packages": true,
 		"process-timeout": 1800,
 		"fxp-asset": {
-			"installer-paths": {
-	            "npm-asset-library": "vendor/npm",
-	            "bower-asset-library": "vendor/bower"
-	        }
+			"enable": false
 		}
     }
 }
