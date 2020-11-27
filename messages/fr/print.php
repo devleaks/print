@@ -129,7 +129,7 @@ return [
 	
 	
 	/** Footer */
-	'Jo and Z srl • 21-23 rue Tervaete • 1040 Brussels<br>Tél. (+32) 0000 00 00 00<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • VAT: BE 0000 000 000<br>Joz Bank  IBAN: BE00 0000 0000 0000 • BIC: BBRUBEBB' => 'Jo and Z srl • 21-23 rue Tervaete • 1040 Bruxelles<br>Tél. (+32) 0000 00 00 00<br>e-Mail: info@joz-srl.be • Site Web: www.joz-srl.be • TVA: BE 0000 000 000<br>Banque ING IBAN: BE00 0000 0000 0000 • BIC: BBRUBEBB',
+	'Jo and Z srl • 21-23 rue Tervaete • 1040 Brussels<br>Tél. (+32) 477 88 61 22<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • VAT: BE 0756 789 050<br>Joz Bank  IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB' => 'Jo and Z srl • 21-23 rue Tervaete • 1040 Bruxelles<br>Tél. (+32) 477 88 61 22<br>e-Mail: info@joz-srl.be • Site Web: www.joz-srl.be • TVA: BE 0756 789 050<br>Banque ING IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB',
 
 
 	/** Mails */
@@ -164,21 +164,21 @@ return [
 
 	'Reminder Type 0' => 'Duplicatat',
 	'Duplicate' => 'Duplicatat',
-	'LATE_BILL_COVER0::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE00 0000 0000 0000</strong>.",
+	'LATE_BILL_COVER0::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE48 3632 0307 7927</strong>.",
 	'LATE_BILL_COVER0::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER0::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
 	'LATE_BILL_COVER0::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z,",
 
 	'Reminder Type 1' => 'Rappel',
 	'Reminder' => 'Rappel',
-	'LATE_BILL_COVER1::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE00 0000 0000 0000</strong>.",
+	'LATE_BILL_COVER1::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE48 3632 0307 7927</strong>.",
 	'LATE_BILL_COVER1::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER1::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
 	'LATE_BILL_COVER1::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z,",
 
 	'Reminder Type 2' => 'Deuxième rappel',
 	'2nd Reminder' => 'Deuxième Rappel',
-	'LATE_BILL_COVER2::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE00 0000 0000 0000</strong>.",
+	'LATE_BILL_COVER2::AFTER_LIST'  => "Nos factures sont payables au comptant. Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE48 3632 0307 7927</strong>.",
 	'LATE_BILL_COVER2::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER2::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
 	'LATE_BILL_COVER2::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z,",
