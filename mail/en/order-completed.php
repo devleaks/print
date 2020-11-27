@@ -21,10 +21,10 @@ You can always contact us at <a htref=mailto:commande@joz-srl.be>commande@joz-sr
 
 <p>21-23 Tervaete Street, 1040 Brussels<br/>
 
-Phone: +32 (0)2 733 21 85<br/>
+Phone: +32 (0)477 88 61 22<br/>
 eMail: info@joz-srl.be<br/>
 www.joz-srl.be</p>
 
-<p>JOZ BANK Bank<br/>
-IBAN: BE00 0000 0000 0000 - BIC: GEBABEBB<br/>
+<p>ING Bank<br/>
+IBAN: BE48 3632 0307 7927 - BIC: BBRUBEBB<br/>
 TVA: BE 0756 789 050</p>

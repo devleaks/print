@@ -124,46 +124,50 @@ $this->params['breadcrumbs'][] = $this->title;
 
 var url = "<?= Url::to(['/stats/bi-sale'],['_format' => 'json']) ?>";
 
-var BE = d3.locale ({
-	  "decimal": ",",
-	  "thousands": ".",
-	  "grouping": [3],
-	  "currency": ["", " €"],
-	  "dateTime": "%a %b %e %X %Y",
-	  "date": "%d/%m/%Y",
-	  "time": "%H:%M:%S",
-	  "periods": ["AM", "PM"],
-	  "days": ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-	  "shortDays": ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"],
-	  "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-	  "shortMonths": ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
-	})
-var formatCurrency = BE.numberFormat("$,.2f");
-var percentFormat = BE.numberFormat(",.1f");
-var dateFormat = BE.timeFormat("%b %Y");
+var BEn = d3.formatLocale({
+    "decimal": ",",
+    "thousands": ".",
+    "grouping": [3],
+    "currency": ["", " €"]
+})
+var BEd = d3.timeFormatLocale({
+    "dateTime": "%a %b %e %X %Y",
+    "date": "%d/%m/%Y",
+    "time": "%H:%M:%S",
+    "periods": ["AM", "PM"],
+    "days": ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+    "shortDays": ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+    "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+    "shortMonths": ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"]
+})
+var formatCurrency = BEn.format("$,.2f");
+var percentFormat = BEn.format(",.1f");
+var dateFormat = BEd.format("%b %Y");
 
-dc.dateFormat = BE.timeFormat("%b %Y");
+dc.dateFormat = BEd.format("%b %Y");
 
 var docTypes = {
-	BID: {label: "Offre", color: "Plum"},
-	BILL: {label: "Facture", color: "LimeGreen"},
-	ORDER: {label: "Commande", color: "LightGreen"},
-	TICKET: {label: "Comptoir", color: "Aquamarine"},
-	REFUND: {label: "Remb", color: "SandyBrown"},
-	CREDIT: {label: "Cred", color: "Coral"},
+    BID: { label: "Offre", color: "Plum" },
+    BILL: { label: "Facture", color: "LimeGreen" },
+    ORDER: { label: "Commande", color: "LightGreen" },
+    TICKET: { label: "VC", color: "Aquamarine" },
+    REFUND: { label: "Remb", color: "SandyBrown" },
+    CREDIT: { label: "NC", color: "Coral" },
 }
 
 var colors = [];
 var labels = [];
 for (var t in docTypes) {
     if (docTypes.hasOwnProperty(t)) {
-		colors.push(docTypes[t]['color']);
-		labels.push(docTypes[t]['label']);
+        colors.push(docTypes[t]['color']);
+        labels.push(docTypes[t]['label']);
     }
 }
-var docTypesColors = d3.scale.ordinal()
-							 .domain(labels)
-	                         .range(colors);
+var docTypesColors = d3.scaleOrdinal()
+    .domain(labels)
+    .range(colors);
+
+dc.config.defaultColors(d3.schemePaired);
 
 var salesChart = dc.barChart("#sales");
 var salesStackChart = dc.barChart("#salesStack");
@@ -171,15 +175,15 @@ var yearChart = dc.pieChart("#years");
 var typeChart = dc.rowChart("#types");
 var cntrChart = dc.rowChart("#cntrs");
 var dataTable = dc.dataTable("#clients");
-var localTotal = dc.numberDisplay("#localtotal");	
-var localPercent = dc.numberDisplay("#localpercent");	
-var grand_total = null;	
+var localTotal = dc.numberDisplay("#localtotal");
+var localPercent = dc.numberDisplay("#localpercent");
+var grand_total = null;
 
 function toTitleCase(str) {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    return str.replace(/\w\S*/g, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
 }
 
-d3.json(url, function(error, data) {
+d3.json(url).then( (data) => {
 	/**{
 		"document_type":"TICKET",
 		"document_status":"CLOSED",
@@ -191,213 +195,232 @@ d3.json(url, function(error, data) {
 		"client_country":"Belgique"
 	}**/
 	
-	var cli = {};
+    var cli = {};
 
-	data.forEach(function(sale) {
-		delete sale.updated_at, sale.due_date;
+    console.log(data)
 
-		sale.created_at = Date.parse(sale.created_at.replace(' ', 'T'));
-		var c=new Date(sale.created_at);
-		sale.period = new Date(c.getFullYear(),c.getMonth(),c.getDate(),0,0,0,0);
-		sale.period_month = new Date(c.getFullYear(),c.getMonth(),1,0,0,0,0);
-		sale.date_year = c.getFullYear();	// parseInt(date_year)
-		sale.date_month = c.getMonth() + 1;	// parseInt(date_year)
+    data.forEach(function(sale) {
+        delete sale.updated_at, sale.due_date;
 
-		sale.price_htva = +sale.price_htva;	// parseFloat(price_htva)
-		sale.document_type = typeof(docTypes[sale.document_type]) != 'undefined' ? docTypes[sale.document_type]['label'] : sale.document_type;
+        sale.created_at = Date.parse(sale.created_at.replace(' ', 'T'));
+        var c = new Date(sale.created_at);
+        sale.period = new Date(c.getFullYear(), c.getMonth(), c.getDate(), 0, 0, 0, 0);
+        sale.period_month = new Date(c.getFullYear(), c.getMonth(), 1, 0, 0, 0, 0);
+        sale.date_year = c.getFullYear(); // parseInt(date_year)
+        sale.date_month = c.getMonth() + 1; // parseInt(date_year)
 
-		if(sale.client_country)
-			switch(sale.client_country.toLowerCase()) {
-				case	'allemagne': 	sale.client_country = 'Allemagne'; break;
-				case	'autriche': 	sale.client_country = 'Autriche'; break;
-				case	'belgie':
-				case	'belgique':
-				case	'belgium': 		sale.client_country = 'Belgique'; break;
-				case	'france':
-				case	'france ': 	sale.client_country = 'France'; break; //wrong trailing spc
-				case	'nederland':
-				case	'holland':
-				case	'hollande':
-				case	'the netherlands':
-				case	'pays-bas': 	sale.client_country = 'Pays-Bas'; break;
-				case	'italia':
-				case	'italie':c = 'Italie'; break;
-				default:
-					sale.client_country = toTitleCase(sale.client_country); break;
-			}
-		else
-			sale.client_country = 'Indéfini';//'Belgique'?
+        sale.price_htva = +sale.price_htva; // parseFloat(price_htva)
+        sale.document_type = typeof(docTypes[sale.document_type]) != 'undefined' ? docTypes[sale.document_type]['label'] : sale.document_type;
 
-		cli[sale.client_name] = {
-			name: sale.client_name,
-			country: sale.client_country
-		}
-	})
+        if (sale.client_country)
+            switch (sale.client_country.toLowerCase()) {
+                case 'allemagne':
+                    sale.client_country = 'Allemagne';
+                    break;
+                case 'autriche':
+                    sale.client_country = 'Autriche';
+                    break;
+                case 'belgie':
+                case 'belgique':
+                case 'belgium':
+                    sale.client_country = 'Belgique';
+                    break;
+                case 'france':
+                case 'france ':
+                    sale.client_country = 'France';
+                    break; //wrong trailing spc
+                case 'nederland':
+                case 'holland':
+                case 'hollande':
+                case 'the netherlands':
+                case 'pays-bas':
+                    sale.client_country = 'Pays-Bas';
+                    break;
+                case 'italia':
+                case 'italie':
+                    c = 'Italie';
+                    break;
+                default:
+                    sale.client_country = toTitleCase(sale.client_country);
+                    break;
+            }
+        else
+            sale.client_country = 'Indéfini'; //'Belgique'?
 
-	var ndx = crossfilter(data);
-	var all = ndx.groupAll();
+        cli[sale.client_name] = {
+            name: sale.client_name,
+            country: sale.client_country
+        }
+    })
 
-	var dateDim = ndx.dimension(function(d) { return d.period; });
-	var totals = dateDim.group().reduceSum(function(d) {return d.price_htva;});
+    var ndx = crossfilter(data);
+    var all = ndx.groupAll();
 
-	var monthDim = ndx.dimension(function(d) { return d.period_month; });
-	var monthTotals = monthDim.group().reduceSum(function(d) {return d.price_htva;});
+    var dateDim = ndx.dimension(function(d) { return d.period; });
+    var totals = dateDim.group().reduceSum(function(d) { return d.price_htva; });
 
-	var minDate = dateDim.bottom(1)[0].period_month;
-	var maxDate = dateDim.top(1)[0].period_month;
-	//console.log(minDate, maxDate)
-	dc.dataCount(".dc-data-count")
-	  .dimension(ndx)
-	  .group(all);
+    var monthDim = ndx.dimension(function(d) { return d.period_month; });
+    var monthTotals = monthDim.group().reduceSum(function(d) { return d.price_htva; });
 
-	var typeDim = ndx.dimension(function(d) { return d.document_type; });
-	var type_total = typeDim.group().reduceSum(function(d) {return d.price_htva;});
-	
-	var yearDim  = ndx.dimension(function(d) {return +d.date_year;});
-	var year_total = yearDim.group().reduceSum(function(d) {return d.price_htva;});
-	
-	var cntrDim  = ndx.dimension(function(d) {return d.client_country;});
-	var cntr_total = cntrDim.group().reduceSum(function(d) {return d.price_htva;});
-	
-	var cliDim  = ndx.dimension(function(d) {return d.client_name;});
-	var cli_total = cliDim.group().reduceSum(function(d) {return d.price_htva;});
-	
-	// sum group by document_type
-	var typeSumGroup = monthDim.group().reduce(
-		function(p, v) {
-			p[v.document_type] = (p[v.document_type] || 0) + v.price_htva;
-			return p;
-		},
-		function(p, v) {
-			p[v.document_type] = (p[v.document_type] || 0) - v.price_htva;
-			return p;
-		},
-		function() {
-			var e = {};
-			//["BID","ORDER","BILL","CREDIT","TICKET","REFUND"].forEach(function(t){e[t]=0;})
-			for (var t in docTypes) {
-			    if (docTypes.hasOwnProperty(t)) {
-					e[docTypes[t]['label']]=0;
-			    }
-			}
+    var minDate = dateDim.bottom(1)[0].period_month;
+    var maxDate = dateDim.top(1)[0].period_month;
+
+    //console.log(minDate, maxDate)
+    dc.dataCount(".dc-data-count")
+        .crossfilter(ndx)
+        .groupAll(all);
+
+    var typeDim = ndx.dimension(function(d) { return d.document_type; });
+    var type_total = typeDim.group().reduceSum(function(d) { return d.price_htva; });
+
+    var yearDim = ndx.dimension(function(d) { return +d.date_year; });
+    var year_total = yearDim.group().reduceSum(function(d) { return d.price_htva; });
+
+    var cntrDim = ndx.dimension(function(d) { return d.client_country; });
+    var cntr_total = cntrDim.group().reduceSum(function(d) { return d.price_htva; });
+
+    var cliDim = ndx.dimension(function(d) { return d.client_name; });
+    var cli_total = cliDim.group().reduceSum(function(d) { return d.price_htva; });
+
+    // sum group by document_type
+    var typeSumGroup = monthDim.group().reduce(
+        function(p, v) {
+            p[v.document_type] = (p[v.document_type] || 0) + v.price_htva;
+            return p;
+        },
+        function(p, v) {
+            p[v.document_type] = (p[v.document_type] || 0) - v.price_htva;
+            return p;
+        },
+        function() {
+            var e = {};
+            //["BID","ORDER","BILL","CREDIT","TICKET","REFUND"].forEach(function(t){e[t]=0;})
+            for (var t in docTypes) {
+                if (docTypes.hasOwnProperty(t)) {
+                    e[docTypes[t]['label']] = 0;
+                }
+            }
             return e;
-		}
-	);
+        }
+    );
 
-	function sel_stack(i) {
-		return function(d) {
-			return d.value[i];
-		};
-	}
-		
-	yearChart
-	    .width(150).height(150)
-	    .dimension(yearDim)
-	    .group(year_total)
-	    .innerRadius(30)
-		.turnOnControls(true);
-		
-	typeChart
-	    .width(250).height(150)
-	    .dimension(typeDim)
-        .margins({left: 0, top: 0, right: 100, bottom: 0})
-		.colors(docTypesColors)
-	    .group(type_total)
-		.turnOnControls(true);
+    function sel_stack(i) {
+        return function(d) {
+            return d.value[i];
+        };
+    }
 
-	cntrChart
-	    .width(250).height(250)
-	    .dimension(cntrDim)
-	    .group(cntr_total)
-        .margins({left: 0, top: 0, right: 100, bottom: 0})
-//	    .innerRadius(30)
-		.turnOnControls(true)
-//		.minAngleForLabel(Math.PI / 40)
-		;
+    yearChart
+        .width(150).height(150)
+        .dimension(yearDim)
+        .group(year_total)
+        .innerRadius(30)
+        .turnOnControls(true);
 
-	salesChart
-		.width(1140).height(200)
-		.dimension(dateDim)
-		.group(totals)
-		.x(d3.time.scale().domain([minDate,maxDate]))
-        .xUnits(d3.time.days)
-		.elasticY(true)
-		.renderHorizontalGridLines(true)
-        .margins({left: 50, top: 0, right: 50, bottom: 20})
-		.turnOnControls(true);
+    typeChart
+        .width(250).height(150)
+        .dimension(typeDim)
+        .margins({ left: 0, top: 0, right: 100, bottom: 0 })
+        .colors(docTypesColors)
+        .group(type_total)
+        .turnOnControls(true);
 
-	var ssinit = "ORDER";
-	salesStackChart
-		.width(1140).height(200)
-		.x(d3.time.scale().domain([minDate,maxDate]))
-        .margins({left: 50, top: 0, right: 50, bottom: 20})
-		.elasticY(true)
-        .xUnits(d3.time.months)
+    cntrChart
+        .width(250).height(250)
+        .dimension(cntrDim)
+        .group(cntr_total)
+        .margins({ left: 0, top: 0, right: 100, bottom: 0 })
+        //	    .innerRadius(30)
+        .turnOnControls(true)
+    //		.minAngleForLabel(Math.PI / 40)
+    ;
+
+    salesChart
+        .width(1140).height(200)
+        .dimension(dateDim)
+        .group(totals)
+        .x(d3.scaleTime().domain([minDate, maxDate]))
+        .xUnits(d3.timeDays)
+        .elasticY(true)
+        .renderHorizontalGridLines(true)
+        .margins({ left: 50, top: 0, right: 50, bottom: 20 })
+        .turnOnControls(true);
+
+    var ssinit = "ORDER";
+    salesStackChart
+        .width(1140).height(200)
+        .x(d3.scaleTime().domain([minDate, maxDate]))
+        .margins({ left: 50, top: 0, right: 50, bottom: 20 })
+        .elasticY(true)
+        .xUnits(d3.timeMonths)
         .dimension(monthDim)
         .group(typeSumGroup, "Commande")
-		.colors(docTypesColors)
-		.valueAccessor(function (d) {
-			return d.value["Commande"];
-		});
+        .colors(docTypesColors)
+        .valueAccessor(function(d) {
+            return d.value["Commande"];
+        });
 
-	for (var t in docTypes) {
-	    if (t != ssinit && docTypes.hasOwnProperty(t)) {
-			//console.log("stacking "+docTypes[t]);
-			salesStackChart.stack(typeSumGroup, docTypes[t]['label'], sel_stack(docTypes[t]['label']));
-	    }
-	}
+    for (var t in docTypes) {
+        if (t != ssinit && docTypes.hasOwnProperty(t)) {
+            //console.log("stacking "+docTypes[t]);
+            salesStackChart.stack(typeSumGroup, docTypes[t]['label'], sel_stack(docTypes[t]['label']));
+        }
+    }
 
-    dc.override(salesStackChart, 'legendables', function() {
-        var items = salesStackChart._legendables();
+    // https://stackoverflow.com/questions/39811210/dc-charts-change-legend-order
+    const super_legendables = salesStackChart.legendables;
+    salesStackChart.legendables = function() {
+        const items = super_legendables.call(this);
         return items.reverse();
-    });
+    }
 
-	localTotal.group(
-			cliDim.groupAll().reduceSum(function(d) {return +d.price_htva;})
-		).valueAccessor(function(d) {
-		//console.log(d);
-		return d;
-	}).formatNumber(formatCurrency);
+    localTotal.group(
+        cliDim.groupAll().reduceSum(function(d) { return +d.price_htva; })
+    ).valueAccessor(function(d) {
+        //console.log(d);
+        return d;
+    }).formatNumber(formatCurrency);
 
-	if(grand_total === null) {
-		grand_total = localTotal.value();
-		d3.selectAll('#grandtotal').text(formatCurrency(grand_total));
-	}
+    if (grand_total === null) {
+        grand_total = localTotal.value();
+        d3.selectAll('#grandtotal').text(formatCurrency(grand_total));
+    }
 
-	localPercent.group(
-			cliDim.groupAll().reduceSum(function(d) {return +d.price_htva;})
-		).valueAccessor(function(d) {
-		//console.log(d);
-		return 100 * d / grand_total;
-	}).formatNumber(percentFormat);
+    localPercent.group(
+        cliDim.groupAll().reduceSum(function(d) { return +d.price_htva; })
+    ).valueAccessor(function(d) {
+        //console.log(d);
+        return 100 * d / grand_total;
+    }).formatNumber(percentFormat);
 
 
-	var top = 16;
-	dataTable
-		.dimension(cli_total)
-		.group(function(d) { return ""+top+" meilleurs clients satisfaisant les critères sélectionnés." })
-		.size(top) // number of rows to return
-		.columns([
-		        function (d) {
-		            return cli[d.key].name;
-		        },
-		        function (d) {
-		            return cli[d.key].country;
-		        },
-				function (d) {
-		            return formatCurrency(d.value);
-		        },
-				function (d) {
-		            return percentFormat(100 * d.value / localTotal.value());
-		        }
+    var top = 16;
+    dataTable
+        .dimension(cli_total)
+        .section(function(d) { return "" + top + " meilleurs clients satisfaisant les critères sélectionnés." })
+        .size(top) // number of rows to return
+        .columns([
+            function(d) {
+                return cli[d.key].name;
+            },
+            function(d) {
+                return cli[d.key].country;
+            },
+            function(d) {
+                return formatCurrency(d.value);
+            },
+            function(d) {
+                return percentFormat(100 * d.value / localTotal.value());
+            }
 
-		    ])
-		.sortBy(function(d){ return d.value; })
-	    .order(d3.descending);
+        ])
+        .sortBy(function(d) { return d.value; })
+        .order(d3.descending);
 
-	dc.filterAll();	
     dc.renderAll();
-});	
+    dc.filterAll();
+
+});
 <?php $this->endBlock(); ?>
 </script>
 <?php

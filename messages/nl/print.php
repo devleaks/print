@@ -124,7 +124,7 @@ return [
 	'General Sales Conditions on our Website at www.joz-srl.be/fr/conditions' => 'Algemene verkoopvoorwaarden op onze website www.joz-srl.be/fr/conditions',
 	
 	/** Footer */
-	'Jo Z srl • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • VAT: BE 0756 789 050 RPM: BXL<br>JOZ BANK Bank • IBAN: BE00 0000 0000 0000 • BIC: GEBABEBB' => 'Jo Z srl • 21-23 Tervaetestraat • 1040 Brussel<br>Tel. +32 (0)2 733 21 85<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • BTW: BE 0756 789 050 RPM: BXL<br>JOZ BANK Bank • IBAN: BE00 0000 0000 0000 • BIC: GEBABEBB',
+	'Jo Z srl • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • VAT: BE 0756 789 050 RPM: BXL<br>ING Bank • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB' => 'Jo Z srl • 21-23 Tervaetestraat • 1040 Brussel<br>Tel. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • BTW: BE 0756 789 050 RPM: BXL<br>ING Bank • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB',
 
 
 	/** Mails */
@@ -175,35 +175,35 @@ Hier vindt U uw bestelformulier of bestek.  We vragen u de soorten afdrukken, de
 
 	/** Letters: General texts & watermarks */
 	'ACCOUNT_UNBALANCED::BEFORE_LIST' => "Bij controle van uw rekening in onze boeken bemerken wij dat een bedrag nog open staat. Het betreft met de volgende factuur(s):",
-	'ACCOUNT_UNBALANCED::AFTER_LIST'  => "Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE00 0000 0000 0000</strong>.",
+	'ACCOUNT_UNBALANCED::AFTER_LIST'  => "Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE48 3632 0307 7927</strong>.",
 	'ACCOUNT_UNBALANCED::CALL_ACTION' => "Indien u deze betaling intussen reeds zou hebben uitgevoerd, gelieve u deze herinnering als niet geschreven te beschouwen.",
 	'ACCOUNT_UNBALANCED::GREETINGS' => "Met hoogachting,</p><p>Voor Jo and Z srl,",
 
 	'Reminder Type 0' => 'Duplicatat',
 	'Duplicate' => 'Duplicatat',
 	'LATE_BILL_COVER0::BEFORE_LIST' => "Bij controle van uw rekening in onze boeken bemerken wij dat een bedrag nog open staat. Het betreft met de volgende factuur(s):",
-	'LATE_BILL_COVER0::AFTER_LIST'  => "Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE00 0000 0000 0000</strong>.",
+	'LATE_BILL_COVER0::AFTER_LIST'  => "Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE48 3632 0307 7927</strong>.",
 	'LATE_BILL_COVER0::CALL_ACTION' => "Indien u deze betaling intussen reeds zou hebben uitgevoerd, gelieve u deze herinnering als niet geschreven te beschouwen.",
 	'LATE_BILL_COVER0::GREETINGS' => "Met hoogachting,</p><p>Voor Jo and Z srl,",
 
 	'Reminder Type 1' => 'Rappel',
 	'Reminder' => 'Rappel',
 	'LATE_BILL_COVER1::BEFORE_LIST' => "Bij controle van uw rekening in onze boeken bemerken wij dat een bedrag nog open staat. Het betreft met de volgende factuur(s):",
-	'LATE_BILL_COVER1::AFTER_LIST'  => "Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE00 0000 0000 0000</strong>.",
+	'LATE_BILL_COVER1::AFTER_LIST'  => "Mogen wij u verzoeken deze zaak na te zien en het genoemde bedrag over te schrijven op onze rekening <strong>BE48 3632 0307 7927</strong>.",
 	'LATE_BILL_COVER1::CALL_ACTION' => "Indien u deze betaling intussen reeds zou hebben uitgevoerd, gelieve u deze herinnering als niet geschreven te beschouwen.",
 	'LATE_BILL_COVER1::GREETINGS' => "Met hoogachting,</p><p>Voor Jo and Z srl,",
 
 	'Reminder Type 2' => 'Deuxième rappel',
 	'2nd Reminder' => 'Deuxième Rappel',
 	'LATE_BILL_COVER2::BEFORE_LIST' => "Uit onze boekhouding blijkt dat, ondanks onze herinneringsbrief van verlede maand, volgende facturen nog niet betaald zijn:",
-	'LATE_BILL_COVER2::AFTER_LIST'  => "Wij verzoeken u dan ook met aandrang het achterstallige bedrag per kerende te betalen op onze rekening nr <strong>BE00 0000 0000 0000</strong>.",
+	'LATE_BILL_COVER2::AFTER_LIST'  => "Wij verzoeken u dan ook met aandrang het achterstallige bedrag per kerende te betalen op onze rekening nr <strong>BE48 3632 0307 7927</strong>.",
 	'LATE_BILL_COVER2::CALL_ACTION' => "U zal ongetwijfeld begrijpen dat wij genoodzaakt zijn de strikte naleving van onze betalingsvoorwaarden te eisen.  D.w.z. dat intresten verschuldigd zullen zijn.",
 	'LATE_BILL_COVER2::GREETINGS' => "Hoogachtend,</p><p>Voor Jo and Z srl,",
 
 	'Reminder Type 3' => 'Dernier rappel',
 	'Last Reminder' => 'Dernier Rappel',
 	'LATE_BILL_COVER3::BEFORE_LIST' => "Ondanks herhaalde herinneringen blijkt uit mijn boekhouding dat de volgende factuur nog steeds niet betaald is:",
-	'LATE_BILL_COVER3::AFTER_LIST'  => "Bij deze brief wil ik u een laatste keer verzoeken dit bedrag over te maken op mijn rekeningnummer <strong>BE00 0000 0000 0000</strong>.",
+	'LATE_BILL_COVER3::AFTER_LIST'  => "Bij deze brief wil ik u een laatste keer verzoeken dit bedrag over te maken op mijn rekeningnummer <strong>BE48 3632 0307 7927</strong>.",
 	'LATE_BILL_COVER3::CALL_ACTION' => "Te uwer informatie verwijs ik hierbij naar art. E. van onze algemene verkoopsvoorwaarden.",
 	'LATE_BILL_COVER3::GREETINGS' => "Hoogachtend,</p><p>Voor Jo and Z srl,",
 

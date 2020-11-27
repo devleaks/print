@@ -21,10 +21,10 @@ Vous pouvez toujours nous contacter à <a htref=mailto:commande@joz-srl.be>comma
 
 <p>21-23 rue de Tervaete, 1040 Bruxelles<br/>
 
-Tél. +32 (0)2 733 21 85<br/>
+Tél. +32 (0)477 88 61 22<br/>
 e-Mail: info@joz-srl.be<br/>
 www.joz-srl.be</p>
 
 <p>JOZ BANK<br/>
-IBAN: BE00 0000 0000 0000 - BIC: GEBABEBB<br/>
+IBAN: BE48 3632 0307 7927 - BIC: BBRUBEBB<br/>
 TVA: BE 0756 789 050</p>
