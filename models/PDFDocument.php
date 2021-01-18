@@ -46,8 +46,8 @@ class PDFDocument extends Model {
 
 	public $title;
 	public $subject;
-	public $author  = 'Jo and Z srl';
-	public $creator = 'Jo and Z srl';
+	public $author  = 'Jo and Z';
+	public $creator = 'Jo and Z';
 	public $keywords;
 
 	

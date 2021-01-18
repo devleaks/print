@@ -22,14 +22,14 @@ class TestController extends Controller
 				'date' => "10-10-2015",					// dd-mm-yyyy
 				'order_id' => "WEB-001",
 				'name' => "Fullname",
-				'company' => "Jo and Z srl",
+				'company' => "Jo and Z",
 				'address' => "Street Adress",
 				'city' => "City",
 				'zipcode' => "1000",
 				'vat' => "BE0428759497",
 				'client' => "NVB123456",
 				'phone' => "+32-2-123 45 67",
-				'email' => "info@joz-srl.be",
+				'email' => "info@joetzlab.be",
 				'comments' => "Customer comment. In het vlaams.",		// length limit 160 chars
 				'promocode' => "cera",
 				'delivery' => "send",

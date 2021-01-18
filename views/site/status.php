@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
 
-$this->title = 'Jo and Z srl @Work';
+$this->title = 'JO AND Z App';
 
 ?>
 <div class="site-index">

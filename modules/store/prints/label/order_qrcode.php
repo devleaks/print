@@ -9,4 +9,4 @@ QR1000
 ORDER: <?= $model->name ?>
 DATE: <?= $model->due_date ?>
 DATE: <?= $model->client->nom ?>
-Jo Z srl • www.joetzlab.be
+JO and Z • www.joetzlab.be

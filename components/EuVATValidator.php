@@ -10,7 +10,7 @@ use Yii;
 * License : GPLv3
 * 
 *
-* Note: Local VAT for checks: BE0000000000 (Jo and Z srl)
+* Note: Local VAT for checks: BE0000000000 (Jo and Z)
 **/
 
 class EuVATValidator

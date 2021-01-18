@@ -33,7 +33,10 @@ $apphomedir = Yii::getAlias('@app');
 <head>
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="<?= Yii::$app->homeUrl ?>favicon.ico">
+	<link rel="icon" type="image/png" href="<?= Yii::$app->homeUrl ?>icon-192x192.png" sizes="192x192"/>
+	<link rel="shortcut icon" href="<?= Yii::$app->homeUrl ?>favicon.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="?= Yii::$app->homeUrl ?>icon-180x180.png" />
+
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -141,7 +144,7 @@ $apphomedir = Yii::getAlias('@app');
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; Jo and Z srl <?= date('Y') ?>
+            <p class="pull-left">&copy; Jo and Z <?= date('Y') ?>
 				<small><?php echo ' — Version '.`cd $apphomedir ; git describe --tags`;
 					if(YII_DEBUG) {
 						echo ' — Last commit: '.`git log -1 --format=%cd --relative-date`;

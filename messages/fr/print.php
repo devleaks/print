@@ -128,7 +128,7 @@ return [
 	
 	
 	/** Footer */
-	'Jo Z srl • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Web Site: www.joetzlab.be • VAT: BE 0756 789 050 RPM: BXL<br>ING Bank • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB' => 'Jo Z srl • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Site Web: www.joetzlab.be • TVA: BE 0756 789 050 RPM: BXL<br>Banque JOZ BANK • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB',
+	'JO and Z • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joetzlab.be • Web Site: www.joetzlab.be • VAT: BE 0756 789 050 RPM: BXL<br>ING Bank • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB' => 'JO and Z • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joetzlab.be • Site Web: www.joetzlab.be • TVA: BE 0756 789 050 RPM: BXL<br>Banque JOZ BANK • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB',
 
 
 	/** Mails */
@@ -139,12 +139,12 @@ return [
 	'STD_SIGNATURE' => "Bonjour,
 
 Voici votre bon de commande ou devis.  Nous vous demandons de bien vérifier les types de tirages repris, les dimensions et les options de finition.
-S’il n’était pas correct, veuillez prendre contact au 02/733 21 85 ou par mail à info@joz-srl.be.
+S’il n’était pas correct, veuillez prendre contact au 02/733 21 85 ou par mail à info@joetzlab.be.
 S’il est parfaitement correct, merci de bien vouloir régler un acompte de 50% en reprenant la communication structurée reprise sur ce document.  Merci.
 
 Cordialement,
 
-Jo Z srl
+JO and Z
 Rue de Tervaete, 21-23
 1040 Bruxelles
 02/733 21 85
@@ -153,13 +153,13 @@ www.joetzlab.be",
 'STD_SIGNATURE_HTML' => "<p>Bonjour,</p>
 <br/>
 Voici votre bon de commande ou devis.  Nous vous demandons de bien vérifier les types de tirages repris, les dimensions et les options de finition.</p>
-<p>S’il n’était pas correct, veuillez prendre contact au 02/733 21 85 ou par mail à info@joz-srl.be.</p>
+<p>S’il n’était pas correct, veuillez prendre contact au 02/733 21 85 ou par mail à info@joetzlab.be.</p>
 <p>S’il est parfaitement correct, merci de bien vouloir régler un acompte de 50% en reprenant la communication structurée reprise sur ce document.  Merci.</p>
 </br>
 <p>Cordialement,</p>
 </br>
 </br>
-<p style='font-weight: bolder'>Jo Z srl
+<p style='font-weight: bolder'>JO and Z
 <br/>Rue de Tervaete, 21-23
 <br/>1040 Bruxelles
 <br/>02/733 21 85</p>
@@ -179,42 +179,42 @@ Voici votre bon de commande ou devis.  Nous vous demandons de bien vérifier les
 	'FRAME_ORDERS::BEFORE_LIST' => "Veuillez trouver en annexe la liste des cadres que nous commandons.",
 	'FRAME_ORDERS::AFTER_LIST'  => " ",
 	'FRAME_ORDERS::CALL_ACTION' => "Pour toute question, n'hésitez pas à nous contacter au numéro de téléphone 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85, du lundi au vendredi, entre 8h30 et 18h30.",
-	'FRAME_ORDERS::GREETINGS' => "Commercialement vôtre.</p><p>Pour Jo and Z srl,",
+	'FRAME_ORDERS::GREETINGS' => "Commercialement vôtre.</p><p>Pour Jo and Z,",
 
 
 
 	'ACCOUNT_UNBALANCED::AFTER_LIST' => " ",
 	'ACCOUNT_UNBALANCED::BEFORE_LIST' => "Nous nous référons à notre précédent relevé de compte resté sans suite à ce jour. Nous nous permettons de vous rappeler avec insistance les factures ci-dessous arrivées à échéance.",
 	'ACCOUNT_UNBALANCED::CALL_ACTION' => "Nous vous demandons d'avoir l'obligeance de régulariser votre situation immédiatement. Si votre paiement a été exécuté entre-temps, vous voudrez bien ne pas tenir compte du présent rappel.",
-	'ACCOUNT_UNBALANCED::GREETINGS' => "Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de nos sentiments distingués.</p><p>Pour Jo and Z srl,<br />La comptabilité.",
+	'ACCOUNT_UNBALANCED::GREETINGS' => "Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de nos sentiments distingués.</p><p>Pour Jo and Z,<br />La comptabilité.",
 
 	'Reminder Type 0' => 'Duplicatat',
 	'Duplicate' => 'Duplicatat',
 	'LATE_BILL_COVER0::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE48 3632 0307 7927</strong>.",
 	'LATE_BILL_COVER0::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER0::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER0::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z srl,",
+	'LATE_BILL_COVER0::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z,",
 
 	'Reminder Type 1' => 'Rappel',
 	'Reminder' => 'Rappel',
 	'LATE_BILL_COVER1::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE48 3632 0307 7927</strong>.",
 	'LATE_BILL_COVER1::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER1::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER1::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z srl,",
+	'LATE_BILL_COVER1::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z,",
 
 	'Reminder Type 2' => 'Deuxième rappel',
 	'2nd Reminder' => 'Deuxième Rappel',
 	'LATE_BILL_COVER2::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE48 3632 0307 7927</strong>.",
 	'LATE_BILL_COVER2::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER2::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER2::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z srl,",
+	'LATE_BILL_COVER2::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Jo and Z,",
 
 	'Reminder Type 3' => 'Dernier rappel',
 	'Last Reminder' => 'Dernier Rappel',
 	'LATE_BILL_COVER3::AFTER_LIST'  => "Sans régularisation de votre part dans les 15 jours nous serons obligé de confier votre dossier au tribunal compétent, tous frais à votre charge.",
 	'LATE_BILL_COVER3::BEFORE_LIST' => "Malgré nos derniers rappels, nous n’avons toujours pas été crédité de vos paiements (*).",
 	'LATE_BILL_COVER3::CALL_ACTION' => "Si vous estimez qu’un problème quelconque vous empêche de vous acquitter de cette dette, veuillez prendre contact avec notre service comptable au plus tôt au n°&nbsp;de tel 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85.",
-	'LATE_BILL_COVER3::GREETINGS' => "(*) Voir annexe(s) jointe(s).</p><p>Pour Jo and Z srl,",
+	'LATE_BILL_COVER3::GREETINGS' => "(*) Voir annexe(s) jointe(s).</p><p>Pour Jo and Z,",
 
 	
 	/** Document Types and Statuses */

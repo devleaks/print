@@ -20,12 +20,12 @@ return [
 	'STD_SIGNATURE' => "Dear,
 
 Please find attached your order form or quote.  Would you please be so kind to check all the elements (paper type, dimensions, finishing options) ?
-If you have any corrections or comments on this, please contact us on 02/733 21 85 or by mail at info@joz-srl.be
+If you have any corrections or comments on this, please contact us on 02/733 21 85 or by mail at info@joetzlab.be
 If it is perfectly correct, please pay a 50% deposit by resuming the structured communication included in this document.  Thank you.
 
 Best Regards,
 
-Jo Z srl
+JO and Z
 Rue de Tervaete, 21-23
 1040 Brussels
 02/733 21 85
@@ -34,13 +34,13 @@ www.joetzlab.be",
 'STD_SIGNATURE_HTML' => "<p>Dear,</p>
 <br/>
 Please find attached your order form or quote.  Would you please be so kind to check all the elements (paper type, dimensions, finishing options) ?</p>
-<p>If you have any corrections or comments on this, please contact us on 02/733 21 85 or by mail at info@joz-srl.be.</p>
+<p>If you have any corrections or comments on this, please contact us on 02/733 21 85 or by mail at info@joetzlab.be.</p>
 <p>If it is perfectly correct, please pay a 50% deposit by resuming the structured communication included in this document.  Thank you.</p>
 </br>
 <p>Best Regards,</p>
 </br>
 </br>
-<p style='font-weight: bolder'>Jo Z srl
+<p style='font-weight: bolder'>JO and Z
 <br/>Rue de Tervaete, 21-23
 <br/>1040 Brussels
 <br/>02/733 21 85</p>

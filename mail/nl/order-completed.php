@@ -10,19 +10,19 @@ use yii\helpers\Html;
 
 <p>
 Niet reageren op dit bericht. Dit bericht is automatisch verzonden wanneer uw bestelling compleet is.
-U kunt altijd contact met ons opnemen op <a htref=mailto:commande@joz-srl.be>commande@joz-srl.be</a>, of per telefoon.
+U kunt altijd contact met ons opnemen op <a htref=mailto:commande@joetzlab.be>commande@joetzlab.be</a>, of per telefoon.
 </p>
 
 <hr />
 
-<p>BVBA Jo &amp; Z srl</p>
+<p>BVBA JO &amp; Z</p>
 
 <p>Open van Maandag tot Donderdag van 9u00 tot 18h30 zonder onderbreking en op Vrijdag tot 18h00.</p>
 
 <p>21-23 Tervaetestraat, 1040 Brussel<br/>
 
 Tel.: +32 (0)477 88 61 22<br/>
-eMail: info@joz-srl.be<br/>
+eMail: info@joetzlab.be<br/>
 www.joetzlab.be</p>
 
 <p>JOZ BANK<br/>

@@ -10,19 +10,19 @@ use yii\helpers\Html;
 
 <p>
 Ne répondez pas à ce message. Ce message a été envoyé automatiquement lorsque votre commande est terminée.
-Vous pouvez toujours nous contacter à <a htref=mailto:commande@joz-srl.be>commande@joz-srl.be</a>, ou par téléphone.
+Vous pouvez toujours nous contacter à <a htref=mailto:commande@joetzlab.be>commande@joetzlab.be</a>, ou par téléphone.
 </p>
 
 <hr />
 
-<p>Jo Z srl</p>
+<p>JO and Z</p>
 
 <p>Ouvert du lundi au jeudi de 9h00 à 18h30 sans interruption et le vendredi jusqu’à 18h00.</p>
 
 <p>21-23 rue de Tervaete, 1040 Bruxelles<br/>
 
 Tél. +32 (0)477 88 61 22<br/>
-e-Mail: info@joz-srl.be<br/>
+e-Mail: info@joetzlab.be<br/>
 www.joetzlab.be</p>
 
 <p>JOZ BANK<br/>
