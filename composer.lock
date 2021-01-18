@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30d82798a8d3656a5b1d5d403c250d5b",
+    "content-hash": "729d312b4925f3963b1eb651842f46d5",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -601,21 +601,6 @@
             "license": [
                 "http://opensource.org/licenses/mit-license.php"
             ]
-        },
-        {
-            "name": "bower-asset/jquery.terminal",
-            "version": "0.8.8",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:jcubic/jquery.terminal.git",
-                "reference": "8f5407975498807076a76b83424d295091cf9600"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jcubic/jquery.terminal/zipball/8f5407975498807076a76b83424d295091cf9600",
-                "reference": "8f5407975498807076a76b83424d295091cf9600"
-            },
-            "type": "bower-asset"
         },
         {
             "name": "bower-asset/masonry",
@@ -4427,6 +4412,67 @@
             "time": "2020-07-15T09:48:00+00:00"
         },
         {
+            "name": "mpdf/qrcode",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpdf/qrcode.git",
+                "reference": "f3c0a99e37e8489f0b91b7d2c394dcba0b38d71c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpdf/qrcode/zipball/f3c0a99e37e8489f0b91b7d2c394dcba0b38d71c",
+                "reference": "f3c0a99e37e8489f0b91b7d2c394dcba0b38d71c",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/random_compat": "^1.4|^2.0|^9.99.99",
+                "php": "^5.6 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.5",
+                "phpunit/phpunit": "^5.0",
+                "squizlabs/php_codesniffer": "^3.4",
+                "tracy/tracy": "^2.5"
+            },
+            "suggest": {
+                "ext-gd": "To output QR codes to PNG files"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mpdf\\QrCode\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Matěj Humpál",
+                    "role": "maintainer"
+                },
+                {
+                    "name": "Laurent Minguet",
+                    "role": "author"
+                }
+            ],
+            "description": "QR code generator for mPDF",
+            "keywords": [
+                "mpdf",
+                "pdf",
+                "php",
+                "qr",
+                "qrcode"
+            ],
+            "support": {
+                "issues": "https://github.com/mpdf/qrcode/issues",
+                "source": "https://github.com/mpdf/qrcode/tree/v1.1.1"
+            },
+            "time": "2021-01-12T18:16:41+00:00"
+        },
+        {
             "name": "myclabs/deep-copy",
             "version": "1.10.2",
             "source": {
@@ -4939,65 +4985,6 @@
                 "source": "https://github.com/raoul2000/yii2-bootswatch-asset/tree/1.2.7"
             },
             "time": "2016-09-14T12:17:27+00:00"
-        },
-        {
-            "name": "samdark/yii2-webshell",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/samdark/yii2-webshell.git",
-                "reference": "fd0ac74c409ae13dd5ff89a22ef844fdd903cdb9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/samdark/yii2-webshell/zipball/fd0ac74c409ae13dd5ff89a22ef844fdd903cdb9",
-                "reference": "fd0ac74c409ae13dd5ff89a22ef844fdd903cdb9",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/jquery.terminal": "~0.8.8",
-                "yiisoft/yii2": "~2.0.0"
-            },
-            "default-branch": true,
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "samdark\\webshell\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Alexander Makarov",
-                    "email": "sam@rmcreative.ru"
-                }
-            ],
-            "description": "A web shell that allows to run yii console commands and create your own commands.",
-            "keywords": [
-                "console",
-                "extension",
-                "shell",
-                "webshell",
-                "yii2"
-            ],
-            "support": {
-                "issues": "https://github.com/samdark/yii2-webshell/issues",
-                "source": "https://github.com/samdark/yii2-webshell/tree/master"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/samdark",
-                    "type": "github"
-                },
-                {
-                    "url": "https://www.patreon.com/samdark",
-                    "type": "patreon"
-                }
-            ],
-            "time": "2019-05-23T15:45:39+00:00"
         },
         {
             "name": "scrivo/highlight.php",
@@ -6897,7 +6884,6 @@
         "kartik-v/yii2-widgets": 20,
         "nirvana-msu/yii2-infinite-scroll": 20,
         "perminder-klair/yii2-dropzone": 20,
-        "samdark/yii2-webshell": 20,
         "yurkinx/yii2-image": 20
     },
     "prefer-stable": true,

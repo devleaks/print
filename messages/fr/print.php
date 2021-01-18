@@ -122,13 +122,13 @@ return [
 	'VAT excl.' => 'HTVA',
 	'VAT incl.' => 'TVAC',
 	'Number' => 'Numéro',
-	'General Sales Conditions on our Website at www.joz-srl.be/fr/conditions' => 'Conditions générales de ventes sur notre site www.joz-srl.be/fr/conditions',
+	'General Sales Conditions on our Website at www.joetzlab.be/fr/conditions' => 'Conditions générales de ventes sur notre site www.joetzlab.be/fr/conditions',
 	
 	
 	
 	
 	/** Footer */
-	'Jo Z srl • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • VAT: BE 0756 789 050 RPM: BXL<br>ING Bank • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB' => 'Jo Z srl • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Site Web: www.joz-srl.be • TVA: BE 0756 789 050 RPM: BXL<br>Banque JOZ BANK • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB',
+	'Jo Z srl • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Web Site: www.joetzlab.be • VAT: BE 0756 789 050 RPM: BXL<br>ING Bank • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB' => 'Jo Z srl • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Site Web: www.joetzlab.be • TVA: BE 0756 789 050 RPM: BXL<br>Banque JOZ BANK • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB',
 
 
 	/** Mails */
@@ -148,7 +148,7 @@ Jo Z srl
 Rue de Tervaete, 21-23
 1040 Bruxelles
 02/733 21 85
-www.joz-srl.be",
+www.joetzlab.be",
 
 'STD_SIGNATURE_HTML' => "<p>Bonjour,</p>
 <br/>
@@ -163,7 +163,7 @@ Voici votre bon de commande ou devis.  Nous vous demandons de bien vérifier les
 <br/>Rue de Tervaete, 21-23
 <br/>1040 Bruxelles
 <br/>02/733 21 85</p>
-<p><a href='http://www.joz-srl.be/'>www.joz-srl.be</a>",
+<p><a href='http://www.joetzlab.be/'>www.joetzlab.be</a>",
 
 	/** Letters: Headings, subjects, date, place & Footers */
 	'Brussels, {0}' => 'Bruxelles, le {0}',

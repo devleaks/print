@@ -708,7 +708,7 @@ return [
 	
 	
 	/** Footer */
-	'Jo Z srl • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Web Site: www.joz-srl.be • VAT: BE 0756 789 050 RPM: BXL<br>ING Bank • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB' => 'Jo Z srl • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Site Web: www.joz-srl.be • TVA: BE 0756 789 050 RPM: BXL<br>Banque JOZ BANK • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB',
+	'Jo Z srl • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Web Site: www.joetzlab.be • VAT: BE 0756 789 050 RPM: BXL<br>ING Bank • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB' => 'Jo Z srl • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joz-srl.be • Site Web: www.joetzlab.be • TVA: BE 0756 789 050 RPM: BXL<br>Banque JOZ BANK • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB',
 
 
 	/** Mails */

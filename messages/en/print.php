@@ -29,7 +29,7 @@ Jo Z srl
 Rue de Tervaete, 21-23
 1040 Brussels
 02/733 21 85
-www.joz-srl.be",
+www.joetzlab.be",
 
 'STD_SIGNATURE_HTML' => "<p>Dear,</p>
 <br/>
@@ -44,7 +44,7 @@ Please find attached your order form or quote.  Would you please be so kind to c
 <br/>Rue de Tervaete, 21-23
 <br/>1040 Brussels
 <br/>02/733 21 85</p>
-<p><a href='https://www.joz-srl.be/en/'>www.joz-srl.be</a>"
+<p><a href='https://www.joetzlab.be/en/'>www.joetzlab.be</a>"
 
 
 ];

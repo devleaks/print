@@ -6,13 +6,13 @@
         <string>com.bitnami-print.mysql.service</string>
         <key>ProgramArguments</key>
         <array>
-                <string>/Applications/mampstack/mysql/bin/mysqld_safe</string>
-                <string>--defaults-file=/Applications/mampstack/mysql/my.cnf</string>
+                <string>/Applications/mampstack-7.4.14-0/mysql/bin/mysqld_safe</string>
+                <string>--defaults-file=/Applications/mampstack-7.4.14-0/mysql/my.cnf</string>
                 <string>--port=3306</string>
-                <string>--socket=/Applications/mampstack/mysql/tmp/mysql.sock</string>
-                <string>--datadir=/Applications/mampstack/mysql/data</string>
-                <string>--log-error=/Applications/mampstack/mysql/data/mysqld.log</string>
-                <string>--pid-file=/Applications/mampstack/mysql/data/mysqld.pid</string>
+                <string>--socket=/Applications/mampstack-7.4.14-0/mysql/tmp/mysql.sock</string>
+                <string>--datadir=/Applications/mampstack-7.4.14-0/mysql/data</string>
+                <string>--log-error=/Applications/mampstack-7.4.14-0/mysql/data/mysqld.log</string>
+                <string>--pid-file=/Applications/mampstack-7.4.14-0/mysql/data/mysqld.pid</string>
        </array>
         <key>RunAtLoad</key>
         <true/>

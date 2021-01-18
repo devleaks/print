@@ -23,7 +23,7 @@ U kunt altijd contact met ons opnemen op <a htref=mailto:commande@joz-srl.be>com
 
 Tel.: +32 (0)477 88 61 22<br/>
 eMail: info@joz-srl.be<br/>
-www.joz-srl.be</p>
+www.joetzlab.be</p>
 
 <p>JOZ BANK<br/>
 IBAN: BE48 3632 0307 7927 - BIC: BBRUBEBB<br/>

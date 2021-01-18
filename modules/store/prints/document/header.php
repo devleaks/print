@@ -9,13 +9,13 @@ if(!isset($format))
 	$format = PdfDocument::FORMAT_A4;
 
 $w = ($format == PdfDocument::FORMAT_A4) ? 200 : floor(200/sqrt(2)) ;
-$h = ($format == PdfDocument::FORMAT_A4) ?  64 : floor( 64/sqrt(2)) ;
+$h = ($format == PdfDocument::FORMAT_A4) ? 140 : floor( 64/sqrt(2)) ;
 
 ?>
 <div class="document-print-header">
 	<table width="100%">
 	<tr>
-			<td style="page-break-inside:avoid;">	<?= Html::img('@app/assets/i/logo-bw.png', ['width' => $w, 'height' => $h]) ?></td>
+			<td style="page-break-inside:avoid;">	<?= Html::img('@app/assets/i/logo-paper.jpg', ['width' => $w, 'height' => $h]) ?></td>
 			<td width="40%" style='font-size: 1.1em;'><?= $this->render('../common/client', ['model' => $model->client]) ?></td>
 	</tr>
 	</table>

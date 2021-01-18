@@ -1,0 +1,2 @@
+PATH=/Applications/mampstack-7.4.14-0/php/bin:$PATH
+export PATH

@@ -6,7 +6,7 @@
     <string>com.bitnami-print.apache.service</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/Applications/mampstack/ctlscript.sh</string>
+      <string>/Applications/mampstack-7.4.14-0/ctlscript.sh</string>
       <string>start</string>   
       <string>apache</string>    
     </array>
