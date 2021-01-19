@@ -15,11 +15,12 @@ if(!isset($format))
 
 $fontSize = ($format == PdfDocument::FORMAT_A4) ? 9 : 8 ;
 
-$lang = isset(Yii::$app->language) ? Yii::$app->language : (isset($language) ? $language : 'fr');
+$lang = isset($language) ? $language : (isset(Yii::$app->language) ? Yii::$app->language : 'fr');
 
 if(!isset($lang)||$lang=='')//we must have a value
 	$lang='fr';
 	
+Yii::$app->language = $lang;
 
 $title = !isset($title) ? '' : $title.' — ';
 	

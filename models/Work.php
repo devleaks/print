@@ -213,7 +213,7 @@ class Work extends _Work
 			if($link)
 				$str .= Html::a(Icon::show($icon, ['class'=>'fa'. ($button ? '':' text-'.$color)]),
 						Url::to(['/work/work-line/detail', 'id' => $wl->id]), [
-							'class'=>'fa'.($button ? ' btn btn-':'-2x text-').$color
+							'class'=>($button ? ' btn btn-':'-2x text-').$color
 						]
 				) . ' ';
 			else

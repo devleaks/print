@@ -121,7 +121,7 @@ return [
 	'Vat' => 'BTW',
 	'Rate' => '% BTW',
 	'Page' => 'Pagina',
-	'General Sales Conditions on our Website at www.joetzlab.be/fr/conditions' => 'Algemene verkoopvoorwaarden op onze website www.joetzlab.be/fr/conditions',
+	'General Sales Conditions on our Website at www.joetzlab.be/fr/conditions' => 'Algemene verkoopvoorwaarden op onze website www.joetzlab.be/nl/conditions',
 	
 	/** Footer */
 	'JO and Z • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)477 88 61 22<br>e-Mail: info@joetzlab.be • Web Site: www.joetzlab.be • VAT: BE 0756 789 050 RPM: BXL<br>ING Bank • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB' => 'JO and Z • 21-23 Tervaetestraat • 1040 Brussel<br>Tel. +32 (0)477 88 61 22<br>e-Mail: info@joetzlab.be • Web Site: www.joetzlab.be • BTW: BE 0756 789 050 RPM: BXL<br>ING Bank • IBAN: BE48 3632 0307 7927 • BIC: BBRUBEBB',

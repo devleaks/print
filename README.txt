@@ -16,6 +16,7 @@ Installé le 19-JAN-2021. devleaks.be@gmail.com.
 INSTALL NOTES == NE PAS TOUCHER
 
 This is the "labojjm" version (not the "mikemuka").
+Git branched to "joz".
 Yii2print has all mysql pries.
 ! Views with 'prod'@localhost for executor.
 Composer Install
