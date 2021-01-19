@@ -138,14 +138,14 @@ $apphomedir = Yii::getAlias('@app');
 
     <footer class="footer">
         <div class="container-fluid">
-            <p class="pull-left">&copy; Jo and Z <?= date('Y') ?>
+            <p class="pull-left">«&nbsp;Print&nbsp;App&nbsp;» for JO &amp; Z
 				<small><?php echo ' — Version '.`cd $apphomedir ; git describe --tags`;
 					if(YII_DEBUG) {
 						echo ' — Last commit: '.`git log -1 --format=%cd --relative-date`;
 						echo ' — '.`hostname`;
 						echo ' — '.Yii::$app->getDb()->dsn;
 					}
-				?></small>
+				?> &copy; 2014-<?= date('Y') ?> Pierre <i>devleaks</i> M.</small>
 			</p>
         </div>
     </footer>
