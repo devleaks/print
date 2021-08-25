@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c241f4cde849d6109b25059cd8873e39",
+    "content-hash": "c473138b87f5fe677628b136b8cfe1dc",
     "packages": [
         {
             "name": "2amigos/yii2-dosamigos-asset-bundle",
@@ -275,16 +275,16 @@
         },
         {
             "name": "bower-asset/crossfilter2",
-            "version": "1.5.4",
+            "version": "1.4.8",
             "source": {
                 "type": "git",
                 "url": "git@github.com:crossfilter/crossfilter.git",
-                "reference": "3bc0ad278776fa38eced87dff2a38657322c0dfe"
+                "reference": "80f867aa82fd440b1fa0e33801a6e951c9de19a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crossfilter/crossfilter/zipball/3bc0ad278776fa38eced87dff2a38657322c0dfe",
-                "reference": "3bc0ad278776fa38eced87dff2a38657322c0dfe"
+                "url": "https://api.github.com/repos/crossfilter/crossfilter/zipball/80f867aa82fd440b1fa0e33801a6e951c9de19a0",
+                "reference": "80f867aa82fd440b1fa0e33801a6e951c9de19a0"
             },
             "type": "bower-asset",
             "license": [
