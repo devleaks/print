@@ -19,8 +19,6 @@ use yii\widgets\ActiveForm;
           ]);
 	?>
 
-    <?php $form = ActiveForm::begin(); ?>
-
     <?= Html::activeHiddenInput($model, 'price_list_id') ?>
 
     <?= $form->field($model, 'item_id')->dropDownList(ArrayHelper::map(Item::find()->where(['yii_category' => [

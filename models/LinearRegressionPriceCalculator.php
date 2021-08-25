@@ -31,7 +31,7 @@ class LinearRegressionPriceCalculator extends PriceCalculator
 		$price = ($this->item->prix_a ? $this->item->prix_a : 0) * $x + ($this->item->prix_b ? $this->item->prix_b : 0);
 
 		if($w < 60 && $h < 60)
-			Yii::trace($w.'x'.$h.'='.$x.'=>'.$price, 'now');
+			Yii::trace($this->item->reference.'/'.$this->type.':'.$w.'x'.$h.'='.$x.'*'.$this->item->prix_a.'+'.$this->item->prix_b.'=>'.$price, 'now');
 
 		return round($price, 2);
 	}

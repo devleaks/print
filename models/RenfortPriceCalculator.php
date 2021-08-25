@@ -47,7 +47,7 @@ class RenfortPriceCalculator extends PriceCalculator {
 		$x = ($w + $h - $this->inside) / 50;
 
 		$price = $this->item->prix_de_vente > 0 ? $this->item->prix_de_vente * $x :
-					$this->prix_a * $x + $this->prix_b;
+					$this->item->prix_a * $x + $this->item->prix_b;
 //		Yii::trace('w='.$w.', h='.$h.', in='.$this->inside.', p='.(100*$x).' €='.$price, 'RenfortPriceCalculator::price');
 
 		$minReference = $this->item->reference . self::MIN_PRICE;

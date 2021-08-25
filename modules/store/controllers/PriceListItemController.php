@@ -45,7 +45,8 @@ class PriceListItemController extends Controller
 	public function actionAdd()
     {
         $model = new PriceListItem;
- 
+        yii::trace('actionAdd '.print_r(Yii::$app->request->post(), true), 'BankController::actionMakePayments');
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Url::to(['price-list/view', 'id' => $model->price_list_id]));
         } else {
