@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'initRangeExpr' => true,
 					'presetDropdown' => false,
 					'pluginOptions'=>[                                          
-	                    'format'=>'Y-m-d',
+	                    'locale'=>['format'=>'Y-m-d'],
 	                    'opens'=>'left',
 						'ranges' => [
 						    Yii::t('store', "Today") => ["moment().startOf('day')", "moment()"],
@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	                'presetDropdown'=>TRUE,                
 	                'convertFormat'=>true,                
 	                'pluginOptions'=>[                                          
-	                    'format'=>'Y-m-d',
+	                    'locale'=>['format'=>'Y-m-d'],
 	                    'opens'=>'left'
 	                ],
 					'pluginEvents' => [
@@ -183,7 +183,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	                'presetDropdown'=>TRUE,                
 	                'convertFormat'=>true,                
 	                'pluginOptions'=>[                                          
-	                    'format'=>'Y-m-d',
+	                    'locale'=>['format'=>'Y-m-d'],
 	                    'opens'=>'left'
 	                ],
 					'pluginEvents' => [

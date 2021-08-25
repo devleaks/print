@@ -6,7 +6,7 @@ use yii\web\AssetBundle;
 
 class DcAsset extends AssetBundle
 {
-    public $sourcePath = '@vendor/bower';
+    public $sourcePath = '@bower';
 
     public $js = [
         'crossfilter2/crossfilter.js',

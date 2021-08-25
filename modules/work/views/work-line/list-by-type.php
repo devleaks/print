@@ -1,4 +1,4 @@
-<?php
+∑<?php
 use app\models\Task;
 use app\models\User;
 use app\models\Work;
@@ -104,7 +104,7 @@ if($task->name == 'Commande Encadrement') {
 					'initRangeExpr' => true,
 					'presetDropdown' => false,
 					'pluginOptions'=>[                                          
-	                    'format'=>'Y-m-d',
+	                    'locale'=>['format'=>'Y-m-d'],
 	                    'opens'=>'left',
 						'ranges' => [
 						    Yii::t('store', "Today") => ["moment().startOf('day')", "moment()"],
