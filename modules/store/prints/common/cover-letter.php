@@ -22,7 +22,7 @@ Yii::$app->i18n->translations['store']->forceTranslation = true
 <br>
 <br>
 <p style="text-align: right;">
-	<?= Yii::t('print', 'Brussels, {0}', $model->date) ?>
+	<?= Yii::t('print', 'Wavre, {0}', $model->date) ?>
 </p>
 <br>
 <br>

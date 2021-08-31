@@ -125,7 +125,7 @@ class PDFDocument extends Model {
 		if($this->author)	$pdfData['methods']['SetAuthor']     = $this->author;
 		if($this->creator)	$pdfData['methods']['SetCreator']    = $this->creator;
 		if($this->subject)	$pdfData['methods']['SetSubject']    = ( $this->subject ? $this->subject : $this->title );
-		if($this->keywords)	$pdfData['methods']['SetKeywords']   = $this->keywords.' labo jjmicheli micheli labojjmicheli.be colorfields.be colorfields photo chromaluxe fine arts printing frame';
+		if($this->keywords)	$pdfData['methods']['SetKeywords']   = $this->keywords.'colorfields.be colorfields photo chromaluxe fine arts printing frame';
 
 		if($this->watermark) {
 			$pdfData['options']['showWatermarkText'] = true;

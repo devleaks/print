@@ -17,11 +17,11 @@ U kunt altijd contact met ons opnemen op <a htref=mailto:commande@colorfields.be
 
 <p>BVBA Colorfields</p>
 
-<p>Open van Maandag tot Donderdag van 9u00 tot 18h30 zonder onderbreking en op Vrijdag tot 18h00.</p>
+<p>Open van Maandag tot Vrijdag, van 9u tot 18u zonder onderbreking.</p>
 
-<p>21-23 Tervaetestraat, 1040 Brussel<br/>
+<p>Avenue Franklin 4 b 19, 1300 Waver<br/>
 
-Tel.: +32 (0)2 733 21 85<br/>
+Tel.: +32 (0)10 45 97 77<br/>
 eMail: info@colorfields.be<br/>
 www.colorfields.be</p>
 

@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 use app\models\CaptureSearch;
 /* @var $this yii\web\View */
-$this->title = 'Colorfields @Work';
+$this->title = 'Colorfields';
 ?>
 <div class="admin-index">
 

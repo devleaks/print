@@ -128,7 +128,7 @@ return [
 	
 	
 	/** Footer */
-	'Colorfields SRL • 21-23 rue de Tervaete • 1040 Brussels<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Web Site: www.colorfields.be • VAT: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB' => 'Colorfields SRL • 21-23 rue de Tervaete • 1040 Bruxelles<br>Tél. +32 (0)2 733 21 85<br>e-Mail: info@colorfields.be • Site Web: www.colorfields.be • TVA: BE 0428 746 631 RPM: BXL<br>Banque BNP Paribas Fortis • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB',
+	'Colorfields SRL • Avenue Franklin 4 b 19 • 1300 Wavre<br>Tél. +32 (0)10 45 97 77<br>e-Mail: info@colorfields.be • Web Site: www.colorfields.be • VAT: BE 0428 746 631 RPM: BXL<br>BNP Paribas Fortis Bank • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB' => 'Colorfields SRL • Avenue Franklin 4 b 19 • 1300 Wavre<br>Tél. +32 (0)10 45 97 77<br>e-Mail: info@colorfields.be • Site Web: www.colorfields.be • TVA: BE 0428 746 631 RPM: BXL<br>Banque BNP Paribas Fortis • IBAN: BE55 2100 3814 9344 • BIC: GEBABEBB',
 
 
 	/** Mails */
@@ -139,34 +139,34 @@ return [
 	'STD_SIGNATURE' => "Bonjour,
 
 Voici votre bon de commande ou devis.  Nous vous demandons de bien vérifier les types de tirages repris, les dimensions et les options de finition.
-S’il n’était pas correct, veuillez prendre contact au 02/733 21 85 ou par mail à info@colorfields.be.
-S’il est parfaitement correct, merci de bien vouloir régler un acompte de 50% en reprenant la communication structurée reprise sur ce document.  Merci.
+S’il n’était pas correct, veuillez prendre contact au 010/45 97 77 ou par mail à info@colorfields.be.
+S’il est parfaitement correct, merci de bien vouloir régler un acompte de 50% en reprenant la communication structurée reprise sur ce document.
 
 Cordialement,
 
 COLORFIELDS srl
-Rue de Tervaete, 21-23
-1040 Bruxelles
-02/733 21 85
+Avenue Franklin 4 b 19
+1300 Wavre
+010/45 97 77
 www.colorfields.be",
 
 'STD_SIGNATURE_HTML' => "<p>Bonjour,</p>
 <br/>
 Voici votre bon de commande ou devis.  Nous vous demandons de bien vérifier les types de tirages repris, les dimensions et les options de finition.</p>
-<p>S’il n’était pas correct, veuillez prendre contact au 02/733 21 85 ou par mail à info@colorfields.be.</p>
-<p>S’il est parfaitement correct, merci de bien vouloir régler un acompte de 50% en reprenant la communication structurée reprise sur ce document.  Merci.</p>
+<p>S’il n’était pas correct, veuillez prendre contact au 010/45 97 77 ou par mail à info@colorfields.be.</p>
+<p>S’il est parfaitement correct, merci de bien vouloir régler un acompte de 50% en reprenant la communication structurée reprise sur ce document.</p>
 </br>
 <p>Cordialement,</p>
 </br>
 </br>
 <p style='font-weight: bolder'>COLORFIELDS srl
-<br/>Rue de Tervaete, 21-23
-<br/>1040 Bruxelles
-<br/>02/733 21 85</p>
+<br/>Avenue Franklin 4 b 19
+<br/>1300 Wavre
+<br/>010/45 97 77</p>
 <p><a href='http://www.colorfields.be/'>www.colorfields.be</a>",
 
 	/** Letters: Headings, subjects, date, place & Footers */
-	'Brussels, {0}' => 'Bruxelles, le {0}',
+	'Wavre, {0}' => 'Wavre, le {0}',
 	'Your Client Account' => 'Votre compte client',
 	'Unbalanced Orders' => 'Extrait de compte',
 	'Last Update' => 'Dernière MàJ',
@@ -178,43 +178,43 @@ Voici votre bon de commande ou devis.  Nous vous demandons de bien vérifier les
 	/** Letters: General texts & watermarks */
 	'FRAME_ORDERS::BEFORE_LIST' => "Veuillez trouver en annexe la liste des cadres que nous commandons.",
 	'FRAME_ORDERS::AFTER_LIST'  => " ",
-	'FRAME_ORDERS::CALL_ACTION' => "Pour toute question, n'hésitez pas à nous contacter au numéro de téléphone 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85, du lundi au vendredi, entre 8h30 et 18h30.",
-	'FRAME_ORDERS::GREETINGS' => "Commercialement vôtre.</p><p>Pour Labo JJ. Micheli,",
+	'FRAME_ORDERS::CALL_ACTION' => "Pour toute question, n'hésitez pas à nous contacter au numéro de téléphone 010&nbsp;/&nbsp;45&nbsp;97&nbsp;77, du lundi au vendredi, entre 9h et 18h.",
+	'FRAME_ORDERS::GREETINGS' => "Commercialement vôtre.</p><p>Pour Colorfields,",
 
 
 
 	'ACCOUNT_UNBALANCED::AFTER_LIST' => " ",
 	'ACCOUNT_UNBALANCED::BEFORE_LIST' => "Nous nous référons à notre précédent relevé de compte resté sans suite à ce jour. Nous nous permettons de vous rappeler avec insistance les factures ci-dessous arrivées à échéance.",
 	'ACCOUNT_UNBALANCED::CALL_ACTION' => "Nous vous demandons d'avoir l'obligeance de régulariser votre situation immédiatement. Si votre paiement a été exécuté entre-temps, vous voudrez bien ne pas tenir compte du présent rappel.",
-	'ACCOUNT_UNBALANCED::GREETINGS' => "Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de nos sentiments distingués.</p><p>Pour Labo JJ. Micheli,<br />La comptabilité.",
+	'ACCOUNT_UNBALANCED::GREETINGS' => "Dans l'attente de votre réponse, veuillez agréer, Madame, Monsieur, l'expression de nos sentiments distingués.</p><p>Pour Colorfields,<br />La comptabilité.",
 
 	'Reminder Type 0' => 'Duplicatat',
 	'Duplicate' => 'Duplicatat',
 	'LATE_BILL_COVER0::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE55 2100 3814 9344</strong>.",
 	'LATE_BILL_COVER0::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER0::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER0::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Labo JJ. Micheli,",
+	'LATE_BILL_COVER0::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Colorfields,",
 
 	'Reminder Type 1' => 'Rappel',
 	'Reminder' => 'Rappel',
 	'LATE_BILL_COVER1::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE55 2100 3814 9344</strong>.",
 	'LATE_BILL_COVER1::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER1::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER1::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Labo JJ. Micheli,",
+	'LATE_BILL_COVER1::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Colorfields,",
 
 	'Reminder Type 2' => 'Deuxième rappel',
 	'2nd Reminder' => 'Deuxième Rappel',
 	'LATE_BILL_COVER2::AFTER_LIST'  => "Supposant qu’il s’agit d’un oubli de votre part, nous vous serions gré d’effectuer le paiement dans les plus brefs délais sur notre compte <strong>BE55 2100 3814 9344</strong>.",
 	'LATE_BILL_COVER2::BEFORE_LIST' => "Sauf erreur de notre part, l’examen de nos comptes montre que les factures suivantes sont impayées.",
 	'LATE_BILL_COVER2::CALL_ACTION' => "Si entre temps vous aviez procédé au paiement, veuillez considérer la présente comme nulle.",
-	'LATE_BILL_COVER2::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Labo JJ. Micheli,",
+	'LATE_BILL_COVER2::GREETINGS' => "En vous remerciant d’avance, veuillez agréer, Madame, Monsieur, nos salutations distinguées.</p><p>Pour Colorfields,",
 
 	'Reminder Type 3' => 'Dernier rappel',
 	'Last Reminder' => 'Dernier Rappel',
 	'LATE_BILL_COVER3::AFTER_LIST'  => "Sans régularisation de votre part dans les 15 jours nous serons obligé de confier votre dossier au tribunal compétent, tous frais à votre charge.",
 	'LATE_BILL_COVER3::BEFORE_LIST' => "Malgré nos derniers rappels, nous n’avons toujours pas été crédité de vos paiements (*).",
-	'LATE_BILL_COVER3::CALL_ACTION' => "Si vous estimez qu’un problème quelconque vous empêche de vous acquitter de cette dette, veuillez prendre contact avec notre service comptable au plus tôt au n°&nbsp;de tel 02&nbsp;/&nbsp;733&nbsp;21&nbsp;85.",
-	'LATE_BILL_COVER3::GREETINGS' => "(*) Voir annexe(s) jointe(s).</p><p>Pour Labo JJ. Micheli,",
+	'LATE_BILL_COVER3::CALL_ACTION' => "Si vous estimez qu’un problème quelconque vous empêche de vous acquitter de cette dette, veuillez prendre contact avec notre service comptable au plus tôt au n°&nbsp;de tel 010&nbsp;/&nbsp;45&nbsp;97&nbsp;77.",
+	'LATE_BILL_COVER3::GREETINGS' => "(*) Voir annexe(s) jointe(s).</p><p>Pour Colorfields,",
 
 	
 	/** Document Types and Statuses */

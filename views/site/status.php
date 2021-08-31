@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Document */
 
-$this->title = 'Colorfields @Work';
+$this->title = 'Colorfields';
 
 ?>
 <div class="site-index">

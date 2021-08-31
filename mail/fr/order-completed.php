@@ -17,11 +17,11 @@ Vous pouvez toujours nous contacter à <a htref=mailto:commande@colorfields.be>c
 
 <p>Colorfields SRL</p>
 
-<p>Ouvert du lundi au jeudi de 9h00 à 18h30 sans interruption et le vendredi jusqu’à 18h00.</p>
+<p>Ouvert du lundi au vendredi de 9h à 18h sans interruption.</p>
 
-<p>21-23 rue de Tervaete, 1040 Bruxelles<br/>
+<p>Avenue Franklin 4 b 19, 1300 Wavre<br/>
 
-Tél. +32 (0)2 733 21 85<br/>
+Tél. +32 (0)10 45 97 77<br/>
 e-Mail: info@colorfields.be<br/>
 www.colorfields.be</p>
 

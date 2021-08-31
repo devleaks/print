@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-$this->title = 'Colorfields @Work';
+$this->title = 'Colorfields';
 ?>
 <div class="site-index">
 

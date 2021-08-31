@@ -15,7 +15,7 @@ Yii::$app->language = $lang;
 	<br>
 	<br>
 <p style="text-align: right;">
-<?= Yii::t('store', 'Brussels, {0}', $date) ?>
+<?= Yii::t('store', 'Wavre, {0}', $date) ?>
 </p>
 	<br>
 	<br>

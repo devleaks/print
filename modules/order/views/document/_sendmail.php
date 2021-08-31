@@ -21,7 +21,7 @@ $capture->email = $model->getNotificationEmail();
 
 $lang_before = Yii::$app->language;
 Yii::$app->language = isset($model->client->lang) ? $model->client->lang : 'fr';
-$sign = Parameter::getMLText('communication', 'signature');
+$sign = ''; // Parameter::getMLText('communication', 'signature');
 if($sign != '') {
 	$capture->body = $sign;
 } else {
