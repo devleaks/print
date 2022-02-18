@@ -169,10 +169,6 @@ class Order extends Document
 						$this->save();
 						if(!$batch) Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
 						else Yii::trace('Order '.$this->name.' mail sent to '.$destinataire, 'Order::notify');
-					} catch (Swift_TransportException $STe) {
-						Yii::error($STe->getMessage(), 'CoverLetter::send::ste');
-						if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
-						else Yii::trace('The system could not send mail.', 'Order::notify');
 					} catch (Exception $e) {
 						Yii::error($e->getMessage(), 'CoverLetter::send::e');				
 						if(!$batch) Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));

@@ -78,7 +78,7 @@ class RuntimeDirectoryManager {
 	 *
 	 *	@return string|null	Directory name if exists and is writable, null otherwise.
 	 */
-	private function checkDir($dirname) {
+	private static function checkDir($dirname) {
 		$dirpath = self::getDocumentRoot().$dirname;
 		if(!is_dir($dirpath))
 		    if(!mkdir($dirpath, 0777, true))
@@ -89,7 +89,7 @@ class RuntimeDirectoryManager {
 	/**
 	 * Adds .pdf if not present
 	 */
-	private function checkPDF($filename) {
+	private static function checkPDF($filename) {
 		return (strtolower(substr($filename, -4, 4)) != '.pdf') ? $filename.'.pdf' : $filename;
 	}	
 
@@ -147,7 +147,7 @@ class RuntimeDirectoryManager {
 	 *
 	 *	@return string|null	File name (full) if parent directory exists and is writable, null otherwise.
 	 */
-	public function getFilename($for, $name, $model = null, $client = null) {
+	public static function getFilename($for, $name, $model = null, $client = null) {
 		Yii::trace('for='.$for, 'RuntimeDirectoryManager::getFilename');
 		if($for == self::PICTURES)
 			return $model ? RuntimeDirectoryManager::getPictureRoot().DIRECTORY_SEPARATOR.$model->id.DIRECTORY_SEPARATOR.$name : null;

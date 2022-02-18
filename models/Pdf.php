@@ -65,9 +65,6 @@ class Pdf extends _Pdf
 					->send();
 				$this->sent();
 				Yii::$app->session->setFlash('success', Yii::t('store', 'Mail sent').'.');
-			} catch (Swift_TransportException $STe) {
-				Yii::error($STe->getMessage(), 'Pdf::send::ste');
-				Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));
 			} catch (Exception $e) {
 				Yii::error($e->getMessage(), 'Pdf::send::e');				
 				Yii::$app->session->setFlash('error', Yii::t('store', 'The system could not send mail.'));

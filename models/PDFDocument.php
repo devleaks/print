@@ -77,7 +77,7 @@ class PDFDocument extends Model {
 	        'content' => $this->content,  
 	        // format content from your own css file if needed or use the
 	        // enhanced bootstrap css built by Krajee for mPDF formatting 
-	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+	        'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
 	        // any css to be embedded if required
 			'cssInline' => $this->format == PDFDocument::FORMAT_A5 ?
 				'.kv-wrap{padding:14px;}' .

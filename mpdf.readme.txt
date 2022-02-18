@@ -1,8 +1,0 @@
-# Problem with MPDF < 6 and PHP > 7.1
-#
-See:
-https://stackoverflow.com/questions/43994365/upgrade-to-php7-1-and-mpdf-show-error-a-non-numeric-value-encountered-at-line
-https://github.com/baselbers/mpdf/commit/5cbaff4303604247f698afc6b13a51987a58f5bc
-#
-
-$  cp mpdf.php vendor/mpdf/mpdf/mpdf.php

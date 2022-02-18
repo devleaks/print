@@ -22,7 +22,7 @@ use app\models\Parameter;
 
 		<td style="text-align: center;"><?= Yii::$app->formatter->asCurrency($model->price_htva) ?></td>
 		<td style="text-align: center;"><?= $model->vat_bool ? '' : Yii::$app->formatter->asCurrency($model->price_tvac - $model->price_htva) ?></td>
-		<td style="text-align: center;"><?= $model->vat_bool ? '' : $model->vat ? $model->vat: '21'.'&nbsp;%' ?></td>
+		<td style="text-align: center;"><?= $model->vat_bool ? '' : ($model->vat ? $model->vat: '21'.'&nbsp;%') ?></td>
 
 		<th style="text-align: center;"><?= Yii::t('print', 'VAT') ?></th>
 		<td style="text-align: ',' center;"><?= $model->vat_bool ? '' : Yii::$app->formatter->asCurrency($model->price_tvac - $model->price_htva) ?></td>

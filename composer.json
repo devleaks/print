@@ -25,7 +25,7 @@
 		}
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7.0.0",
         "2amigos/yii2-gallery-widget": "*",
         "2amigos/yii2-grid-view-library": "*",
         "bower-asset/c3": "<0.5",
@@ -53,7 +53,7 @@
         "kartik-v/yii2-label-inplace": "*",
         "kartik-v/yii2-markdown": "dev-master",
         "kartik-v/yii2-money": "*",
-        "kartik-v/yii2-mpdf": "*",
+        "kartik-v/yii2-mpdf": "^1.0",
         "kartik-v/yii2-password": "dev-master",
         "kartik-v/yii2-slider": "*",
         "kartik-v/yii2-widget-datepicker": "*",
@@ -68,11 +68,11 @@
         "raoul2000/yii2-bootswatch-asset": "*",
         "samdark/yii2-webshell": "dev-master",
         "yii2mod/yii2-c3-chart": "^1.0",
-        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2": "<3.0.0",
         "yiisoft/yii2-apidoc": "*",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-jui": "*",
-        "yiisoft/yii2-swiftmailer": "*",
+        "yiisoft/yii2-symfonymailer": "^2.0",
         "yurkinx/yii2-image": "@dev"
     },
     "require-dev": {
@@ -83,8 +83,8 @@
     "config": {
 		"sort-packages": true,
 		"process-timeout": 1800,
-        "platform": {
-           "php": "5.4.45"
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
         }
     }
 }
