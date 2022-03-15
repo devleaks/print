@@ -185,19 +185,25 @@ class Picture extends _Picture
 		$imagePath = $this->getFilepath();
 		$pic = Yii::$app->image->load($imagePath);
 		$thumbPath = $this->getThumbpath();
-		//Yii::trace('Image:'.$pic->width.' X '.$pic->height.'.', 'DocumentLineController::loadImages');
+		Yii::trace('Image:'.$pic->width.' X '.$pic->height.'.', 'DocumentLineController::loadImages');
 		if($pic->width > self::thumbsize || $pic->height > self::thumbsize) {
 			$ratio = ($pic->width > $pic->height) ? $pic->width / self::thumbsize : $pic->height / self::thumbsize;
 			$newidth  = round($pic->width  / $ratio);
 			$neheight = round($pic->height / $ratio);
 			$pic->resize($newidth, $neheight);
-		} // else picture already smaller than thumbnail, so we leave it as it is
-		$pic->save($thumbPath);
+			$pic->flip(\yii\image\drivers\Image::HORIZONTAL);
+			Yii::trace('Image:'.$pic->width.' X '.$pic->height.' for thumbnail.', 'DocumentLineController::loadImages');
+			$pic->save($thumbPath);
+			Yii::trace('Image:'.$pic->width.' X '.$pic->height.' for thumbnail ('.$thumbPath.').', 'DocumentLineController::loadImages');
+		} else { // else picture already smaller than thumbnail, so we leave it as it is
+			$pic->save($thumbPath);
+		}
 		if($pic->width > self::maxsize || $pic->height > self::maxsize) {
 		    $ratio = ($pic->width > $pic->height) ? $pic->width / self::maxsize : $pic->height / self::maxsize;
 		    $newidth  = $pic->width  / $ratio;
 		    $neheight = $pic->height / $ratio;
 		    $pic->resize($newidth, $neheight);
+			Yii::trace('Image:'.$pic->width.' X '.$pic->height.' after resize.', 'DocumentLineController::loadImages');
 		    $pic->save();
 		}
 	}

@@ -6,8 +6,11 @@ use Yii;
 use app\models\Client;
 use app\models\ClientSearch;
 use app\models\Document;
+use app\models\Ticket;
+use app\models\TicketSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -73,6 +76,27 @@ class ClientController extends Controller
 
         return $this->render('mailing', [
             'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Lists all Client models with email address.
+     * @return mixed
+     */
+    public function actionMailingTicket()
+    {
+        $q = Ticket::find()
+            ->select(['email',
+                      'total' => 'sum(price_htva)',
+                      'last' => 'max(updated_at)',
+                      'notes' => 'substr(group_concat(note), 1, 60)'])
+            ->andWhere(['!=','email',''])
+            ->groupBy('email')
+            ->orderBy(['total' => SORT_DESC])
+            ->asArray();
+        $dataProvider = new ArrayDataProvider(['allModels' => $q->all()]);
+        return $this->render('mailing-ticket', [
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -287,6 +311,6 @@ class ClientController extends Controller
 
 
 	public function actionGetUniqueIdentifier($s) {
-		echo Json::encode(['result' => Client::getUniqueIdentifier($s)]);
+		return Json::encode(['result' => Client::getUniqueIdentifier($s)]);
 	}
 }

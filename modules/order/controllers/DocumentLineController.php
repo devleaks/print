@@ -403,7 +403,7 @@ class DocumentLineController extends Controller
 	    else {
 	        $out['results'] = ['id' => 0, 'text' => 'No matching records found'];
 	    }
-	    echo Json::encode($out);
+	    return Json::encode($out);
 	}
 
 	
@@ -417,7 +417,7 @@ class DocumentLineController extends Controller
 				$out = ['price' => 0, 'error_msg' => 'Price calculator not found.'];
 		} else // item not found
 			$out = ['price' => 0, 'error_msg' => 'Item not found.'];
-	    echo Json::encode($out);
+	    return Json::encode($out);
 	}
 	
 	

@@ -1371,7 +1371,15 @@ class Document extends _Document
 					$this->blab(Yii::t('store', 'Client was notified on {0}.', $this->asDateTime($this->notified_at)));
 					$notify_completed = true;
 				} else {
-					$this->blab(Yii::t('store', 'Client has not been notified yet.'));
+					$this->blab(Yii::t('store', 'Client has not been notified yet.') . " "
+						. Html::a(Yii::t('store', 'Do not notify the client').'.',
+								[
+									'skip-notify',
+									'id' => $this->id
+								],[
+									'title' => Yii::t('store', 'Do not notify the client'),
+					        		'data-confirm' => Yii::t('store', 'Are you sure you do not want to notify the client?'),
+								]));
 					if($this->due_date > date("Y-m-d-H-i-s")) {
 						$this->blab(Yii::t('store', 'Due date is {0}.', Yii::$app->formatter->asDate($this->due_date)));
 						$days = Parameter::getIntegerValue('application', 'min_days', Order::DEFAULT_MINIMUM_DAYS);
@@ -1438,7 +1446,15 @@ class Document extends _Document
 						}
 					}
 				} else {
-					$this->blab(Yii::t('store', 'Client has not been notified yet.', Yii::$app->formatter->asDate($this->due_date)));
+					$this->blab(Yii::t('store', 'Client has not been notified yet.', Yii::$app->formatter->asDate($this->due_date)) . " "
+						. Html::a(Yii::t('store', 'Do not notify the client').'.',
+								[
+									'skip-notify',
+									'id' => $this->id
+								],[
+									'title' => Yii::t('store', 'Do not notify the client'),
+					        		'data-confirm' => Yii::t('store', 'Are you sure you do not want to notify the client?'),
+								]));
 					$this->blab(Yii::t('store', 'Due date is {0}.', Yii::$app->formatter->asDate($this->due_date)));
 					$days = Parameter::getIntegerValue('application', 'min_days', Order::DEFAULT_MINIMUM_DAYS);
 					$date_notif = date('Y-m-d', strtotime($this->due_date.' - '.$days.' days'));
@@ -1453,6 +1469,13 @@ class Document extends _Document
 		$this->blab(Yii::t('store', 'Current status is <q>{0}</q>.', Yii::t('store', $this->status)));
 
 		return $newstatus;
+	}
+
+	public function skipNotify() {
+		$this->notified_at = date('Y-m-d H:i:s');
+		$this->status = $this->guessStatus();
+		$this->appendNote(Yii::t('store', '(The client has not been notified.)'));
+		$this->save();
 	}
 
 }

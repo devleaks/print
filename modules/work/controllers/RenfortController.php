@@ -227,9 +227,9 @@ class RenfortController extends Controller
 			// delete masters where id not in (select master_id from segment)
 			Master::deleteUnusedMasters();
 			
-			echo Json::encode(['result' => 'WorkLineController::actionSaveCuts: saved '.$str]);
+			return Json::encode(['result' => 'WorkLineController::actionSaveCuts: saved '.$str]);
 		} else
-			echo Json::encode(['result' => 'WorkLineController::actionSaveCuts not cuts?']);
+			return Json::encode(['result' => 'WorkLineController::actionSaveCuts not cuts?']);
 	}
 
 
@@ -291,7 +291,7 @@ class RenfortController extends Controller
 
 	
 	public function actionSplit($id) {
-		echo Json::encode(['result' => $id.'-1']);
+		return Json::encode(['result' => $id.'-1']);
 	}
 	
 }

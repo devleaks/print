@@ -80,6 +80,7 @@ $viewstats = in_array(Yii::$app->user->identity->username, $allowed_arr);
 		    <li><a href="<?= Url::to(['/store/client/', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Customers')?></a>
 				<a href="<?= Url::to(['/store/client/new']) ?>"><span class="label label-primary"><i class="glyphicon glyphicon-plus"></i> <?= Yii::t('store', 'Add')?></span></a></li>
 		    <li><a href="<?= Url::to(['/store/client/mailing', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Mailing List')?></a></li>
+		    <li><a href="<?= Url::to(['/store/client/mailing-ticket', 'sort' => '-updated_at']) ?>"><?= Yii::t('store', 'Mailing List from Tickets')?></a></li>
 		</ul>
 
 		<ul>

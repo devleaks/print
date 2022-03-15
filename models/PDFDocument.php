@@ -132,7 +132,7 @@ class PDFDocument extends Model {
 			$pdfData['methods']['SetWatermarkText'] = $this->watermark;
 		}
 
-		//Yii::trace('save?='.$this->save, 'PDFDocument::getPdfData');		
+		Yii::trace('save?='.$this->save, 'PDFDocument::getPdfData');		
 		if($this->save) {
 			$this->generateFilename();
 			$pdfData['destination'] = MPdf::DEST_FILE;

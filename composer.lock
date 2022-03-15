@@ -430,7 +430,7 @@
             "version": "v4.1.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:desandro/imagesloaded.git",
+                "url": "https://github.com/desandro/imagesloaded.git",
                 "reference": "67c4e57453120935180c45c6820e7d3fbd2ea1f9"
             },
             "dist": {
@@ -451,7 +451,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -512,7 +512,7 @@
             "version": "3.6.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "e786e3d9707ffd9b0dd330ca135b66344dcef85a"
             },
             "dist": {
@@ -1232,16 +1232,16 @@
         },
         {
             "name": "doctrine/lexer",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/lexer.git",
-                "reference": "9c50f840f257bbb941e6f4a0e94ccf5db5c3f76c"
+                "reference": "c268e882d4dbdd85e36e4ad69e02dc284f89d229"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/9c50f840f257bbb941e6f4a0e94ccf5db5c3f76c",
-                "reference": "9c50f840f257bbb941e6f4a0e94ccf5db5c3f76c",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/c268e882d4dbdd85e36e4ad69e02dc284f89d229",
+                "reference": "c268e882d4dbdd85e36e4ad69e02dc284f89d229",
                 "shasum": ""
             },
             "require": {
@@ -1249,7 +1249,7 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0",
-                "phpstan/phpstan": "1.3",
+                "phpstan/phpstan": "^1.3",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
                 "vimeo/psalm": "^4.11"
             },
@@ -1288,7 +1288,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/lexer/issues",
-                "source": "https://github.com/doctrine/lexer/tree/1.2.2"
+                "source": "https://github.com/doctrine/lexer/tree/1.2.3"
             },
             "funding": [
                 {
@@ -1304,7 +1304,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-12T08:27:12+00:00"
+            "time": "2022-02-28T11:07:21+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -1393,12 +1393,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "HTMLPurifier": "library/"
-                },
                 "files": [
                     "library/HTMLPurifier.composer.php"
                 ],
+                "psr-0": {
+                    "HTMLPurifier": "library/"
+                },
                 "exclude-from-classmap": [
                     "/library/HTMLPurifier/Language/"
                 ]
@@ -1847,122 +1847,6 @@
             "time": "2018-01-20T17:52:01+00:00"
         },
         {
-            "name": "kartik-v/yii2-bootstrap4-dropdown",
-            "version": "v1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kartik-v/yii2-bootstrap4-dropdown.git",
-                "reference": "b65783f2de8ff0733e3787c853a53e9f13bebac1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-bootstrap4-dropdown/zipball/b65783f2de8ff0733e3787c853a53e9f13bebac1",
-                "reference": "b65783f2de8ff0733e3787c853a53e9f13bebac1",
-                "shasum": ""
-            },
-            "require": {
-                "kartik-v/yii2-krajee-base": ">=3.0"
-            },
-            "suggest": {
-                "yiisoft/yii2-bootstrap4": "The Yii 2 Bootstrap 4 extension must be installed separately for this extension to work."
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "kartik\\bs4dropdown\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Kartik Visweswaran",
-                    "email": "kartikv2@gmail.com",
-                    "homepage": "http://www.krajee.com/"
-                }
-            ],
-            "description": "Enhanced Bootstrap 4.x dropdown widget for Yii2 with nested submenu support",
-            "homepage": "https://github.com/kartik-v/yii2-bootstrap4-dropdown",
-            "keywords": [
-                "bootstrap",
-                "dropdown",
-                "jquery",
-                "nested",
-                "submenu",
-                "yii2"
-            ],
-            "support": {
-                "issues": "https://github.com/kartik-v/yii2-bootstrap4-dropdown/issues",
-                "source": "https://github.com/kartik-v/yii2-bootstrap4-dropdown/tree/v1.0.4"
-            },
-            "time": "2022-01-10T04:03:23+00:00"
-        },
-        {
-            "name": "kartik-v/yii2-bootstrap5-dropdown",
-            "version": "v1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kartik-v/yii2-bootstrap5-dropdown.git",
-                "reference": "459e4c06c64e49f89ac372ce7c2cabb961f56ec9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-bootstrap5-dropdown/zipball/459e4c06c64e49f89ac372ce7c2cabb961f56ec9",
-                "reference": "459e4c06c64e49f89ac372ce7c2cabb961f56ec9",
-                "shasum": ""
-            },
-            "require": {
-                "kartik-v/yii2-krajee-base": ">=2.0"
-            },
-            "suggest": {
-                "yiisoft/yii2-bootstrap5": "The Yii 2 Bootstrap 4 extension must be installed separately for this extension to work."
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "kartik\\bs5dropdown\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Kartik Visweswaran",
-                    "email": "kartikv2@gmail.com",
-                    "homepage": "http://www.krajee.com/"
-                }
-            ],
-            "description": "Enhanced Bootstrap 4 dropdown widget for Yii2 with nested submenu support",
-            "homepage": "https://github.com/kartik-v/yii2-bootstrap5-dropdown",
-            "keywords": [
-                "bootstrap",
-                "dropdown",
-                "jquery",
-                "nested",
-                "submenu",
-                "yii2"
-            ],
-            "support": {
-                "issues": "https://github.com/kartik-v/yii2-bootstrap5-dropdown/issues",
-                "source": "https://github.com/kartik-v/yii2-bootstrap5-dropdown/tree/v1.0.2"
-            },
-            "time": "2022-01-10T04:05:31+00:00"
-        },
-        {
             "name": "kartik-v/yii2-builder",
             "version": "dev-master",
             "source": {
@@ -2089,17 +1973,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-datecontrol.git",
-                "reference": "83abdbe6e6f7b52a705e4649fae027a80670c04a"
+                "reference": "88ac2401ce1858b0da98b498197373691953c3d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-datecontrol/zipball/83abdbe6e6f7b52a705e4649fae027a80670c04a",
-                "reference": "83abdbe6e6f7b52a705e4649fae027a80670c04a",
+                "url": "https://api.github.com/repos/kartik-v/yii2-datecontrol/zipball/88ac2401ce1858b0da98b498197373691953c3d6",
+                "reference": "88ac2401ce1858b0da98b498197373691953c3d6",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/php-date-formatter": ">1.3",
-                "kartik-v/yii2-krajee-base": ">=1.9"
+                "kartik-v/yii2-krajee-base": ">=3.0.4"
             },
             "default-branch": true,
             "type": "yii2-extension",
@@ -2136,27 +2020,28 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-datecontrol/issues",
-                "source": "https://github.com/kartik-v/yii2-datecontrol/tree/v1.9.8"
+                "source": "https://github.com/kartik-v/yii2-datecontrol/tree/v1.9.9"
             },
-            "time": "2021-06-12T11:11:36+00:00"
+            "time": "2022-03-04T09:47:47+00:00"
         },
         {
             "name": "kartik-v/yii2-detail-view",
-            "version": "v1.8.6",
+            "version": "v1.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-detail-view.git",
-                "reference": "833d79eac2ed72183e9d870e003de48db4b15ce2"
+                "reference": "0b130581bce1ff26a98750433489cdc4816080a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/833d79eac2ed72183e9d870e003de48db4b15ce2",
-                "reference": "833d79eac2ed72183e9d870e003de48db4b15ce2",
+                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/0b130581bce1ff26a98750433489cdc4816080a1",
+                "reference": "0b130581bce1ff26a98750433489cdc4816080a1",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/yii2-dialog": "~1.0",
-                "kartik-v/yii2-widget-activeform": ">=1.6.0"
+                "kartik-v/yii2-krajee-base": ">=3.0.4",
+                "kartik-v/yii2-widget-activeform": ">=1.6.2"
             },
             "type": "yii2-extension",
             "extra": {
@@ -2193,9 +2078,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-detail-view/issues",
-                "source": "https://github.com/kartik-v/yii2-detail-view/tree/v1.8.6"
+                "source": "https://github.com/kartik-v/yii2-detail-view/tree/v1.8.7"
             },
-            "time": "2022-01-11T07:37:00+00:00"
+            "time": "2022-03-04T09:42:29+00:00"
         },
         {
             "name": "kartik-v/yii2-dialog",
@@ -2254,23 +2139,24 @@
         },
         {
             "name": "kartik-v/yii2-dynagrid",
-            "version": "v1.5.2",
+            "version": "v1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-dynagrid.git",
-                "reference": "277151070b57f813cf804f339880b3c6e1f36ada"
+                "reference": "5f0c8eeed4d0339c5bb8098eb3315924cb7e9ba5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-dynagrid/zipball/277151070b57f813cf804f339880b3c6e1f36ada",
-                "reference": "277151070b57f813cf804f339880b3c6e1f36ada",
+                "url": "https://api.github.com/repos/kartik-v/yii2-dynagrid/zipball/5f0c8eeed4d0339c5bb8098eb3315924cb7e9ba5",
+                "reference": "5f0c8eeed4d0339c5bb8098eb3315924cb7e9ba5",
                 "shasum": ""
             },
             "require": {
-                "kartik-v/yii2-grid": ">= 3.3.6",
+                "kartik-v/yii2-grid": ">= 3.5.0",
+                "kartik-v/yii2-krajee-base": ">= 3.0.4",
                 "kartik-v/yii2-sortable": "~1.2",
-                "kartik-v/yii2-widget-activeform": ">= 1.6.0",
-                "kartik-v/yii2-widget-select2": ">= 2.2.2"
+                "kartik-v/yii2-widget-activeform": ">= 1.6.2",
+                "kartik-v/yii2-widget-select2": ">= 2.2.3"
             },
             "type": "yii2-extension",
             "extra": {
@@ -2312,30 +2198,31 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-dynagrid/issues",
-                "source": "https://github.com/kartik-v/yii2-dynagrid/tree/v1.5.2"
+                "source": "https://github.com/kartik-v/yii2-dynagrid/tree/v1.5.3"
             },
-            "time": "2021-09-03T14:01:27+00:00"
+            "time": "2022-03-04T10:18:59+00:00"
         },
         {
             "name": "kartik-v/yii2-grid",
-            "version": "v3.3.6",
+            "version": "v3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "61fd7499317608ea7c910bd918a7c208d1962284"
+                "reference": "7f8c9270dde525b60960b8c4cb2d40d861b3bdb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/61fd7499317608ea7c910bd918a7c208d1962284",
-                "reference": "61fd7499317608ea7c910bd918a7c208d1962284",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/7f8c9270dde525b60960b8c4cb2d40d861b3bdb9",
+                "reference": "7f8c9270dde525b60960b8c4cb2d40d861b3bdb9",
                 "shasum": ""
             },
             "require": {
-                "kartik-v/yii2-bootstrap4-dropdown": "~1.0",
-                "kartik-v/yii2-bootstrap5-dropdown": "~1.0",
-                "kartik-v/yii2-dialog": "~1.0"
+                "kartik-v/yii2-dialog": "~1.0",
+                "kartik-v/yii2-krajee-base": ">=3.0.3"
             },
             "suggest": {
+                "kartik-v/yii2-bootstrap4-dropdown": "For enabling dropdown support when using with Bootstrap v4.x",
+                "kartik-v/yii2-bootstrap5-dropdown": "For enabling dropdown support when using with Bootstrap v5.x",
                 "kartik-v/yii2-mpdf": "For exporting grids to PDF"
             },
             "type": "yii2-extension",
@@ -2370,7 +2257,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-grid/issues",
-                "source": "https://github.com/kartik-v/yii2-grid/tree/v3.3.6"
+                "source": "https://github.com/kartik-v/yii2-grid/tree/v3.5.0"
             },
             "funding": [
                 {
@@ -2378,7 +2265,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2021-09-03T14:08:46+00:00"
+            "time": "2022-02-26T18:18:49+00:00"
         },
         {
             "name": "kartik-v/yii2-helpers",
@@ -2441,17 +2328,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-icons.git",
-                "reference": "8e4364de3b2f44e257c2e131ba0cf825a8077494"
+                "reference": "81334b3d888d4baaeb6ac458475258130474237e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/8e4364de3b2f44e257c2e131ba0cf825a8077494",
-                "reference": "8e4364de3b2f44e257c2e131ba0cf825a8077494",
+                "url": "https://api.github.com/repos/kartik-v/yii2-icons/zipball/81334b3d888d4baaeb6ac458475258130474237e",
+                "reference": "81334b3d888d4baaeb6ac458475258130474237e",
                 "shasum": ""
             },
             "require": {
                 "components/flag-icon-css": "*",
-                "kartik-v/yii2-krajee-base": ">=1.9",
+                "kartik-v/yii2-krajee-base": ">=3.0.4",
                 "yiisoft/yii2-jui": "*"
             },
             "default-branch": true,
@@ -2488,22 +2375,22 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-icons/issues",
-                "source": "https://github.com/kartik-v/yii2-icons/tree/v1.4.7"
+                "source": "https://github.com/kartik-v/yii2-icons/tree/v1.4.8"
             },
-            "time": "2021-04-08T09:12:30+00:00"
+            "time": "2022-03-04T10:34:44+00:00"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
-            "version": "v3.0.2",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-krajee-base.git",
-                "reference": "23234fce6abc4b6f3f9ba1c7f66f56fbebcde139"
+                "reference": "b37e19a346e36cc0c612dcbab76bf771dc506f14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/23234fce6abc4b6f3f9ba1c7f66f56fbebcde139",
-                "reference": "23234fce6abc4b6f3f9ba1c7f66f56fbebcde139",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/b37e19a346e36cc0c612dcbab76bf771dc506f14",
+                "reference": "b37e19a346e36cc0c612dcbab76bf771dc506f14",
                 "shasum": ""
             },
             "suggest": {
@@ -2545,9 +2432,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-krajee-base/issues",
-                "source": "https://github.com/kartik-v/yii2-krajee-base/tree/v3.0.2"
+                "source": "https://github.com/kartik-v/yii2-krajee-base/tree/v3.0.4"
             },
-            "time": "2022-01-10T03:59:20+00:00"
+            "time": "2022-03-04T08:41:33+00:00"
         },
         {
             "name": "kartik-v/yii2-label-inplace",
@@ -2959,20 +2846,20 @@
         },
         {
             "name": "kartik-v/yii2-widget-activeform",
-            "version": "v1.6.1",
+            "version": "v1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-activeform.git",
-                "reference": "c2f60855af6ca9e66e25380e7ce746b50e504a33"
+                "reference": "98dbf789c9f71a35c76a8c2b667e86815ae51ac1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-activeform/zipball/c2f60855af6ca9e66e25380e7ce746b50e504a33",
-                "reference": "c2f60855af6ca9e66e25380e7ce746b50e504a33",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-activeform/zipball/98dbf789c9f71a35c76a8c2b667e86815ae51ac1",
+                "reference": "98dbf789c9f71a35c76a8c2b667e86815ae51ac1",
                 "shasum": ""
             },
             "require": {
-                "kartik-v/yii2-krajee-base": ">=3.0.0"
+                "kartik-v/yii2-krajee-base": ">=3.0.3"
             },
             "type": "yii2-extension",
             "extra": {
@@ -3009,7 +2896,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-widget-activeform/issues",
-                "source": "https://github.com/kartik-v/yii2-widget-activeform/tree/v1.6.1"
+                "source": "https://github.com/kartik-v/yii2-widget-activeform/tree/v1.6.2"
             },
             "funding": [
                 {
@@ -3017,7 +2904,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2022-02-13T18:09:01+00:00"
+            "time": "2022-02-26T18:53:51+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-affix",
@@ -3606,20 +3493,20 @@
         },
         {
             "name": "kartik-v/yii2-widget-select2",
-            "version": "v2.2.2",
+            "version": "v2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "5b3c91df7908193981033cb7ca52e83303197753"
+                "reference": "25fbe4b93b8acbac325fa4f594a983be1e84a780"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/5b3c91df7908193981033cb7ca52e83303197753",
-                "reference": "5b3c91df7908193981033cb7ca52e83303197753",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/25fbe4b93b8acbac325fa4f594a983be1e84a780",
+                "reference": "25fbe4b93b8acbac325fa4f594a983be1e84a780",
                 "shasum": ""
             },
             "require": {
-                "kartik-v/yii2-krajee-base": ">=3.0",
+                "kartik-v/yii2-krajee-base": ">=3.0.4",
                 "select2/select2": ">=4.0"
             },
             "type": "yii2-extension",
@@ -3658,7 +3545,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-widget-select2/issues",
-                "source": "https://github.com/kartik-v/yii2-widget-select2/tree/v2.2.2"
+                "source": "https://github.com/kartik-v/yii2-widget-select2/tree/v2.2.3"
             },
             "funding": [
                 {
@@ -3666,7 +3553,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2021-09-02T14:24:31+00:00"
+            "time": "2022-03-04T10:11:54+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-sidenav",
@@ -4478,25 +4365,29 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.10.2",
+            "version": "1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "776f831124e9c62e1a2c601ecc52e776d8bb7220"
+                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/776f831124e9c62e1a2c601ecc52e776d8bb7220",
-                "reference": "776f831124e9c62e1a2c601ecc52e776d8bb7220",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/14daed4296fae74d9e3201d2c4925d1acb7aa614",
+                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0"
             },
+            "conflict": {
+                "doctrine/collections": "<1.6.8",
+                "doctrine/common": "<2.13.3 || >=3,<3.2.2"
+            },
             "require-dev": {
-                "doctrine/collections": "^1.0",
-                "doctrine/common": "^2.6",
-                "phpunit/phpunit": "^7.1"
+                "doctrine/collections": "^1.6.8",
+                "doctrine/common": "^2.13.3 || ^3.2.2",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.23 || ^9.5.13"
             },
             "type": "library",
             "autoload": {
@@ -4521,7 +4412,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.10.2"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.11.0"
             },
             "funding": [
                 {
@@ -4529,7 +4420,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-13T09:40:50+00:00"
+            "time": "2022-03-03T13:19:32+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -5291,13 +5182,13 @@
             },
             "type": "library",
             "autoload": {
+                "files": [
+                    "HighlightUtilities/functions.php"
+                ],
                 "psr-0": {
                     "Highlight\\": "",
                     "HighlightUtilities\\": ""
-                },
-                "files": [
-                    "HighlightUtilities/functions.php"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -5694,16 +5585,16 @@
         },
         {
             "name": "symfony/mailer",
-            "version": "v6.0.3",
+            "version": "v6.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mailer.git",
-                "reference": "d958befe7dbee9d2b2157ef6dfa9b103efa94f82"
+                "reference": "0f4772db6521a1beb44529aa2c0c1e56f671be8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailer/zipball/d958befe7dbee9d2b2157ef6dfa9b103efa94f82",
-                "reference": "d958befe7dbee9d2b2157ef6dfa9b103efa94f82",
+                "url": "https://api.github.com/repos/symfony/mailer/zipball/0f4772db6521a1beb44529aa2c0c1e56f671be8f",
+                "reference": "0f4772db6521a1beb44529aa2c0c1e56f671be8f",
                 "shasum": ""
             },
             "require": {
@@ -5748,7 +5639,7 @@
             "description": "Helps sending emails",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/mailer/tree/v6.0.3"
+                "source": "https://github.com/symfony/mailer/tree/v6.0.5"
             },
             "funding": [
                 {
@@ -5764,7 +5655,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-02T09:55:41+00:00"
+            "time": "2022-02-25T10:48:52+00:00"
         },
         {
             "name": "symfony/mime",
@@ -5849,7 +5740,7 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -5881,12 +5772,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Ctype\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -5911,7 +5802,7 @@
                 "portable"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.25.0"
             },
             "funding": [
                 {
@@ -5931,7 +5822,7 @@
         },
         {
             "name": "symfony/polyfill-iconv",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-iconv.git",
@@ -5994,7 +5885,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-iconv/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-iconv/tree/v1.25.0"
             },
             "funding": [
                 {
@@ -6014,7 +5905,7 @@
         },
         {
             "name": "symfony/polyfill-intl-idn",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-idn.git",
@@ -6081,7 +5972,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.25.0"
             },
             "funding": [
                 {
@@ -6101,7 +5992,7 @@
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
@@ -6165,7 +6056,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.25.0"
             },
             "funding": [
                 {
@@ -6185,7 +6076,7 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -6248,7 +6139,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.25.0"
             },
             "funding": [
                 {
@@ -6268,7 +6159,7 @@
         },
         {
             "name": "symfony/polyfill-php72",
-            "version": "v1.24.0",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php72.git",
@@ -6324,7 +6215,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php72/tree/v1.24.0"
+                "source": "https://github.com/symfony/polyfill-php72/tree/v1.25.0"
             },
             "funding": [
                 {
@@ -6767,16 +6658,16 @@
         },
         {
             "name": "yiisoft/yii2-apidoc",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-apidoc.git",
-                "reference": "69e59ad0fe1874343df78b6ef3f31ade99e62d89"
+                "reference": "678886be49131853a421c81dc5d67b80c185fa7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-apidoc/zipball/69e59ad0fe1874343df78b6ef3f31ade99e62d89",
-                "reference": "69e59ad0fe1874343df78b6ef3f31ade99e62d89",
+                "url": "https://api.github.com/repos/yiisoft/yii2-apidoc/zipball/678886be49131853a421c81dc5d67b80c185fa7f",
+                "reference": "678886be49131853a421c81dc5d67b80c185fa7f",
                 "shasum": ""
             },
             "require": {
@@ -6847,7 +6738,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-16T13:27:52+00:00"
+            "time": "2022-02-19T12:56:07+00:00"
         },
         {
             "name": "yiisoft/yii2-authclient",
@@ -7552,12 +7443,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Opis\\Closure\\": "src/"
-                },
                 "files": [
                     "functions.php"
-                ]
+                ],
+                "psr-4": {
+                    "Opis\\Closure\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [

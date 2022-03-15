@@ -26,7 +26,7 @@ trait Blab {
 	
 	protected function blabOut() {
 		$this->blabInit();
-		$str = implode($this->_blab, '<br/>');
+		$str = implode('<br/>', $this->_blab);
 		$this->blabReset();
 		return $str;
 	}

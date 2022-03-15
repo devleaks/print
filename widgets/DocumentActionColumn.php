@@ -459,7 +459,7 @@ class DocumentActionColumn extends Column {
             Html::addCssStyle($this->footerOptions, "vertical-align:{$this->vAlign};");
             Html::addCssStyle($this->pageSummaryOptions, "text-align:{$this->vAlign};");
         }
-        if (trim($this->width) != '') {
+        if ($this->width !== null && trim($this->width) != '') {
             Html::addCssStyle($this->headerOptions, "width:{$this->width};");
             Html::addCssStyle($this->contentOptions, "width:{$this->width};");
             Html::addCssStyle($this->footerOptions, "width:{$this->width};");

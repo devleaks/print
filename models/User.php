@@ -52,7 +52,7 @@ class User extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getList()
+    public static function getList()
     {
 		return ArrayHelper::map(User::find()->orderBy('username')->asArray()->all(), 'id', 'username');
     }

@@ -512,7 +512,7 @@ class DocumentController extends Controller
         else {
             $out['results'] = ['id' => 0, 'text' => 'No matching client found'];
         }
-        echo Json::encode($out);
+        return Json::encode($out);
     }
 
 	
@@ -544,19 +544,19 @@ class DocumentController extends Controller
 	        $out['results'] = ['id' => 0, 'text' => 'No matching document found', 'id' => 0];
 	    }
 		Yii::trace('ret='.print_r($out,true));
-	    echo Json::encode($out);
+	    return Json::encode($out);
 	}
 	
 	public function actionGetItem($id) {
         if (($model = Item::findOne($id)) !== null) {
-	    	echo Json::encode(['item' => $model->attributes]);
+	    	return Json::encode(['item' => $model->attributes]);
 		} else
         	throw new NotFoundHttpException('The requested page does not exist.');
 	}
 	
 	public function actionGetItemByRef($ref) {
         if (($model = Item::findOne(['reference' => $ref])) !== null) {
-	    	echo Json::encode(['item' => $model->attributes]);
+	    	return Json::encode(['item' => $model->attributes]);
 		} else
         	throw new NotFoundHttpException('The requested page does not exist.');
 	}
@@ -710,6 +710,14 @@ class DocumentController extends Controller
 	protected function actionUpdateStatus($id, $status) {
 		$model = $this->findModel($id);
 		$model->setStatus($status);
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+	}
+
+	public function actionSkipNotify($id) {
+		$model = $this->findModel($id);
+		$model->skipNotify();
         return $this->render('view', [
             'model' => $model,
         ]);
